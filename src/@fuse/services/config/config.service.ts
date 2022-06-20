@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { merge } from 'lodash-es';
-import { FUSE_APP_CONFIG } from '@fuse/services/config/config.constants';
+import {Inject, Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {merge} from 'lodash-es';
+import {FUSE_APP_CONFIG} from '@fuse/services/config/config.constants';
+import {tema} from "@app/core/config/app.config";
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,10 @@ export class FuseConfigService
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
+    get config$(): Observable<any>
+    {
+        return this._config.asObservable();
+    }
 
     /**
      * Setter & getter for config
@@ -30,15 +35,11 @@ export class FuseConfigService
     {
         // Merge the new config over to the current config
         const config = merge({}, this._config.getValue(), value);
-
+        localStorage.setItem(tema, JSON.stringify(config));
         // Execute the observable
         this._config.next(config);
     }
 
-    get config$(): Observable<any>
-    {
-        return this._config.asObservable();
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
