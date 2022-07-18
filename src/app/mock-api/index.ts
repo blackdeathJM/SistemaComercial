@@ -12,7 +12,7 @@ import { HelpCenterMockApi } from 'app/mock-api/apps/help-center/api';
 import { IconsMockApi } from 'app/mock-api/ui/icons/api';
 import { MailboxMockApi } from 'app/mock-api/apps/mailbox/api';
 import { MessagesMockApi } from 'app/mock-api/common/messages/api';
-import { NavigationMockApi } from 'app/mock-api/common/navigation/api';
+import { NavigationMockApi } from 'navigation/api';
 import { NotesMockApi } from 'app/mock-api/apps/notes/api';
 import { NotificationsMockApi } from 'app/mock-api/common/notifications/api';
 import { ProjectMockApi } from 'app/mock-api/dashboards/project/api';
