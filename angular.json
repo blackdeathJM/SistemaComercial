@@ -33,7 +33,9 @@
                             "crypto-js/enc-utf8",
                             "crypto-js/hmac-sha256",
                             "crypto-js/enc-base64",
-                            "subscriptions-transport-ws"
+                            "subscriptions-transport-ws",
+                            "flat",
+                            "moment"
                         ],
                         "assets": [
                             "src/favicon-16x16.png",

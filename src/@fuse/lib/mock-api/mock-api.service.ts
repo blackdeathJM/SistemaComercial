@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { compact, fromPairs } from 'lodash-es';
-import { FuseMockApiHandler } from '@fuse/lib/mock-api/mock-api.request-handler';
-import { FuseMockApiMethods } from '@fuse/lib/mock-api/mock-api.types';
+import {Injectable} from '@angular/core';
+import {compact, fromPairs} from 'lodash-es';
+import {FuseMockApiHandler} from '@fuse/lib/mock-api/mock-api.request-handler';
+import {FuseMockApiMethods} from '@fuse/lib/mock-api/mock-api.types';
 
 @Injectable({
     providedIn: 'root'
@@ -9,13 +9,13 @@ import { FuseMockApiMethods } from '@fuse/lib/mock-api/mock-api.types';
 export class FuseMockApiService
 {
     private _handlers: { [key: string]: Map<string, FuseMockApiHandler> } = {
-        'get'    : new Map<string, FuseMockApiHandler>(),
-        'post'   : new Map<string, FuseMockApiHandler>(),
-        'patch'  : new Map<string, FuseMockApiHandler>(),
-        'delete' : new Map<string, FuseMockApiHandler>(),
-        'put'    : new Map<string, FuseMockApiHandler>(),
-        'head'   : new Map<string, FuseMockApiHandler>(),
-        'jsonp'  : new Map<string, FuseMockApiHandler>(),
+        'get': new Map<string, FuseMockApiHandler>(),
+        'post': new Map<string, FuseMockApiHandler>(),
+        'patch': new Map<string, FuseMockApiHandler>(),
+        'delete': new Map<string, FuseMockApiHandler>(),
+        'put': new Map<string, FuseMockApiHandler>(),
+        'head': new Map<string, FuseMockApiHandler>(),
+        'jsonp': new Map<string, FuseMockApiHandler>(),
         'options': new Map<string, FuseMockApiHandler>()
     };
 
@@ -41,7 +41,7 @@ export class FuseMockApiService
     {
         // Prepare the return object
         const matchingHandler: { handler: FuseMockApiHandler | undefined; urlParams: { [key: string]: string } } = {
-            handler  : undefined,
+            handler: undefined,
             urlParams: {}
         };
 
@@ -52,10 +52,11 @@ export class FuseMockApiService
         const handlers = this._handlers[method.toLowerCase()];
 
         // Iterate through the handlers
-        handlers.forEach((handler, handlerUrl) => {
+        handlers.forEach((handler, handlerUrl) =>
+        {
 
             // Skip if there is already a matching handler
-            if ( matchingHandler.handler )
+            if (matchingHandler.handler)
             {
                 return;
             }
@@ -64,7 +65,7 @@ export class FuseMockApiService
             const handlerUrlParts = handlerUrl.split('/');
 
             // Skip if the lengths of the urls we are comparing are not the same
-            if ( urlParts.length !== handlerUrlParts.length )
+            if (urlParts.length !== handlerUrlParts.length)
             {
                 return;
             }
@@ -73,7 +74,7 @@ export class FuseMockApiService
             const matches = handlerUrlParts.every((handlerUrlPart, index) => handlerUrlPart === urlParts[index] || handlerUrlPart.startsWith(':'));
 
             // If there is a match...
-            if ( matches )
+            if (matches)
             {
                 // Assign the matching handler
                 matchingHandler.handler = handler;
@@ -195,7 +196,6 @@ export class FuseMockApiService
 
         // Store the handler to access it from the interceptor
         this._handlers[method].set(url, fuseMockHttp);
-
         // Return the instance
         return fuseMockHttp;
     }
