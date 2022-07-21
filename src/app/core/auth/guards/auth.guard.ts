@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
-import { AuthService } from 'app/core/auth/auth.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
+import {Observable, of, switchMap} from 'rxjs';
+import {AuthService} from 'app/core/auth/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,10 +11,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     /**
      * Constructor
      */
-    constructor(
-        private _authService: AuthService,
-        private _router: Router
-    )
+    constructor(private _authService: AuthService, private _router: Router)
     {
     }
 
@@ -71,22 +68,23 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     {
         // Check the authentication status
         return this._authService.check()
-                   .pipe(
-                       switchMap((authenticated) => {
+            .pipe(
+                switchMap((authenticated) =>
+                {
 
-                           // If the user is not authenticated...
-                           if ( !authenticated )
-                           {
-                               // Redirect to the sign-in page
-                               this._router.navigate(['sign-in'], {queryParams: {redirectURL}});
+                    // If the user is not authenticated...
+                    if (!authenticated)
+                    {
+                        // Redirect to the sign-in page
+                        this._router.navigate(['sign-in'], {queryParams: {redirectURL}}).then();
 
-                               // Prevent the access
-                               return of(false);
-                           }
+                        // Prevent the access
+                        return of(false);
+                    }
 
-                           // Allow the access
-                           return of(true);
-                       })
-                   );
+                    // Allow the access
+                    return of(true);
+                })
+            );
     }
 }

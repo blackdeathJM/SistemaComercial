@@ -14,6 +14,8 @@ import {AppComponent} from 'app/app.component';
 import {appRoutes} from 'app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {ApolloConfigModule} from '@apollo/apollo-config.module';
+import {NgxsGlobalModule} from '@NGXS/ngxsGlobal.module';
+import {AdminModule} from "@app/modules/admin/admin.module";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -21,34 +23,37 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(appRoutes, routerConfig),
+    declarations:
+        [
+            AppComponent
+        ],
+    imports:
+        [
+            BrowserModule,
+            BrowserAnimationsModule,
+            RouterModule.forRoot(appRoutes, routerConfig),
 
-        // Fuse, FuseConfig & FuseMockAPI
-        FuseModule,
-        FuseConfigModule.forRoot(appConfig),
-        FuseMockApiModule.forRoot(mockApiServices),
+            // Fuse, FuseConfig & FuseMockAPI
+            FuseModule,
+            FuseConfigModule.forRoot(appConfig),
+            FuseMockApiModule.forRoot(mockApiServices),
 
-        // Core module of your application
-        CoreModule,
+            // Core module of your application
+            CoreModule,
 
-        // Layout module of your application
-        LayoutModule,
+            // Layout module of your application
+            LayoutModule,
 
-        // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({}),
-        ApolloConfigModule,
-
-        HttpClientModule
-    ],
-    bootstrap: [
-        AppComponent
-    ]
+            // 3rd party modules that require global configuration via forRoot
+            MarkdownModule.forRoot({}),
+            ApolloConfigModule,
+            HttpClientModule,
+            NgxsGlobalModule
+        ],
+    bootstrap:
+        [
+            AppComponent
+        ]
 })
 export class AppModule
 {

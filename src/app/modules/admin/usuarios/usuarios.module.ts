@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DeptosPrincipalComponent } from './deptos-principal/deptos-principal.component';
+import { UsuariosComponent } from './usuarios.component';
 
 
 
 @NgModule({
   declarations: [
-    DeptosPrincipalComponent
+    UsuariosComponent
   ],
   imports: [
     CommonModule
   ]
 })
-export class DeptosModule { }
+export class UsuariosModule { }

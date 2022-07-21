@@ -1,15 +1,16 @@
 import {NgModule} from '@angular/core';
-import {NgxsModule} from '@ngxs/store';
+import {NgxsModule, NoopNgxsExecutionStrategy} from '@ngxs/store';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
-import {environment} from '@environments/environment';
+import {NgxsDataPluginModule} from '@angular-ru/ngxs';
+import {NGXS_DATA_STORAGE_CONTAINER, NGXS_DATA_STORAGE_EXTENSION} from '@angular-ru/ngxs/storage';
 
 
 @NgModule({
-    declarations: [],
     imports:
         [
-            NgxsModule.forRoot([]),
-            NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production})
+            NgxsModule.forRoot([], {executionStrategy: NoopNgxsExecutionStrategy}),
+            NgxsReduxDevtoolsPluginModule.forRoot(),
+            NgxsDataPluginModule.forRoot([NGXS_DATA_STORAGE_EXTENSION, NGXS_DATA_STORAGE_EXTENSION, NGXS_DATA_STORAGE_CONTAINER])
         ]
 })
 export class NgxsGlobalModule

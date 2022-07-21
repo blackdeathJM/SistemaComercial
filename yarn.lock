@@ -176,6 +176,13 @@
     "@angular-eslint/bundled-angular-compiler" "14.0.2"
     "@typescript-eslint/utils" "5.29.0"
 
+"@angular-ru/cdk@^13.2.0":
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/@angular-ru/cdk/-/cdk-13.2.0.tgz#bb70dfeccda826cba5a91c651aefc745fcb33d0c"
+  integrity sha512-SeZPZz24wsYFWQ6pE3G/5slcL4/9kOUeoRAgJ6xH8caRc3qTbiLG1T3jv/bOdZymPOlWPu3nzQT8pzkz1CUCFg==
+  dependencies:
+    tslib "^2.3.0"
+
 "@angular-ru/ngxs@^13.1.0":
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/@angular-ru/ngxs/-/ngxs-13.1.0.tgz#6676d1b8a23b6e74c9d52184c75a873eb1210026"

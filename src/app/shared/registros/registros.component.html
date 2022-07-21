@@ -1,0 +1,17 @@
+<mat-action-row class="flex flex-row gap-2 w-full">
+    <button mat-raised-button color="warn" type="button" class="grow">
+        <mat-icon>close</mat-icon>
+        Cancelar
+    </button>
+    <button mat-raised-button color="primary" type="button" class="grow">
+        <ng-container *ngIf="false; else cargando"></ng-container>
+        Aceptar
+    </button>
+</mat-action-row>
+
+<ng-template #cargando>
+    <mat-icon>
+        <mat-progress-spinner mode="indeterminate" diameter="20" color="accent"></mat-progress-spinner>
+    </mat-icon>
+</ng-template>
+
