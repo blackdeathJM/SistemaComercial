@@ -1,11 +1,13 @@
-<mat-action-row class="flex flex-row gap-2 w-full">
-    <button mat-raised-button color="warn" type="button" class="grow">
+<mat-action-row class="flex flex-row gap-2">
+    <button mat-raised-button color="warn" type="button" class="grow" (click)="cancelar()">
         <mat-icon>close</mat-icon>
         Cancelar
     </button>
-    <button mat-raised-button color="primary" type="button" class="grow">
-        <ng-container *ngIf="false; else cargando"></ng-container>
-        Aceptar
+    <button mat-raised-button color="primary" type="button" class="grow" (click)="aceptar()">
+        <ng-container *ngIf="false; else cargando">
+            <mat-icon>save</mat-icon>
+            Aceptar
+        </ng-container>
     </button>
 </mat-action-row>
 
@@ -13,5 +15,6 @@
     <mat-icon>
         <mat-progress-spinner mode="indeterminate" diameter="20" color="accent"></mat-progress-spinner>
     </mat-icon>
+    Procesando...
 </ng-template>
 

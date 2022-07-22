@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-registros',
-  templateUrl: './registros.component.html',
-  styleUrls: ['./registros.component.scss']
+    selector: 'app-registros',
+    templateUrl: './registros.component.html',
+    styleUrls: ['./registros.component.scss']
 })
-export class RegistrosComponent implements OnInit {
+export class RegistrosComponent
+{
 
-  constructor() { }
+    cancelar()
+    {
 
-  ngOnInit(): void {
-  }
+    }
 
+    aceptar()
+    {
+
+    }
 }

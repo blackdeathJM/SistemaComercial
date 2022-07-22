@@ -1868,6 +1868,13 @@
     node-addon-api "^3.2.1"
     node-gyp-build "^4.3.0"
 
+"@rxweb/reactive-form-validators@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@rxweb/reactive-form-validators/-/reactive-form-validators-2.1.7.tgz#fab1d469ac83bbfbfcbdedcb3fdad5f6775036cf"
+  integrity sha512-3AA10s0H0GC4pcQMXMGJvK58qEzFXNChWv4n832ZXP+0y8mVmOXOYQ9pr79dbPtP4/K3ZnnVMwC0WDQFfICuHQ==
+  dependencies:
+    tslib "2.2.0"
+
 "@schematics/angular@14.1.0":
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.1.0.tgz#a1e2d2b27efa9d1a8177851f89695c5fe6f27d9d"
@@ -8499,6 +8506,11 @@ tsconfig-paths@^3.14.1, tsconfig-paths@^3.9.0:
     json5 "^1.0.1"
     minimist "^1.2.6"
     strip-bom "^3.0.0"
+
+tslib@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
+  integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
 
 tslib@2.4.0, tslib@^2.0.0, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0:
   version "2.4.0"

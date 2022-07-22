@@ -33,6 +33,7 @@
     "@ngxs/logger-plugin": "^3.7.4",
     "@ngxs/storage-plugin": "^3.7.4",
     "@ngxs/store": "^3.7.4",
+    "@rxweb/reactive-form-validators": "^2.1.7",
     "apexcharts": "3.35.3",
     "apollo-angular": "3.0.1",
     "apollo-upload-client": "^17.0.0",
