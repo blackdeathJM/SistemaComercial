@@ -15,12 +15,14 @@ import {appRoutes} from 'app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {ApolloConfigModule} from '@apollo/apollo-config.module';
 import {NgxsGlobalModule} from '@NGXS/ngxsGlobal.module';
-import {AdminModule} from "@app/modules/admin/admin.module";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 
-const routerConfig: ExtraOptions = {
-    preloadingStrategy: PreloadAllModules,
-    scrollPositionRestoration: 'enabled'
-};
+const routerConfig: ExtraOptions =
+    {
+        preloadingStrategy: PreloadAllModules,
+        scrollPositionRestoration: 'enabled'
+    };
 
 @NgModule({
     declarations:
@@ -30,6 +32,9 @@ const routerConfig: ExtraOptions = {
     imports:
         [
             BrowserModule,
+            FormsModule,
+            ReactiveFormsModule,
+            RxReactiveFormsModule,
             BrowserAnimationsModule,
             RouterModule.forRoot(appRoutes, routerConfig),
 

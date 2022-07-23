@@ -3,8 +3,8 @@
         <mat-icon>close</mat-icon>
         Cancelar
     </button>
-    <button mat-raised-button color="primary" type="button" class="grow" (click)="aceptar()">
-        <ng-container *ngIf="false; else cargando">
+    <button mat-raised-button color="primary" type="button" class="grow" (click)="aceptar()" [disabled]="_deshabilitar">
+        <ng-container *ngIf="_cargando; else cargando">
             <mat-icon>save</mat-icon>
             Aceptar
         </ng-container>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
     selector: 'app-registros',
@@ -7,14 +7,31 @@ import {Component} from '@angular/core';
 })
 export class RegistrosComponent
 {
+    @Output() reg = new EventEmitter<void>();
+    @Output() can = new EventEmitter<void>();
 
-    cancelar()
+    _cargando = false;
+    _deshabilitar = false;
+
+    @Input() set cargando(v: boolean)
     {
-
+        this._cargando = v;
     }
 
-    aceptar()
+    @Input() set deshabilitar(v: boolean)
     {
-
+        this._deshabilitar = v;
     }
+
+
+    cancelar(): void
+    {
+        this.can.emit();
+    }
+
+    aceptar(): void
+    {
+        this.reg.emit();
+    }
+
 }

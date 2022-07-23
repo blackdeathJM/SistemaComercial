@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {DeptosComponent} from './deptos.component';
 import {ModDeptoComponent} from './mod-depto/mod-depto.component';
 import {SharedModule} from '@app/shared/shared.module';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {DirectivesModule} from "../../../../directives/directives.module";
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import {SharedModule} from '@app/shared/shared.module';
     imports:
         [
             CommonModule,
-            SharedModule
+            SharedModule,
+            MatFormFieldModule,
+            DirectivesModule
         ]
 })
 export class DeptosModule

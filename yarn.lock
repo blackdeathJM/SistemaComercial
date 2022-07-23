@@ -1875,6 +1875,13 @@
   dependencies:
     tslib "2.2.0"
 
+"@rxweb/sanitizers@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@rxweb/sanitizers/-/sanitizers-0.0.1.tgz#fd2f39bb91795b0d0c7ea679fb24d853b4301a71"
+  integrity sha512-QWPfMc69tZZ/uwvlrv+PSj4Eptr+M1KLZKVMQVTrDcZ1kPnkuf3MqZ0vh9h45ou7h5jaYbcWkYGXVqAiQ90yaQ==
+  dependencies:
+    tslib "^1.9.0"
+
 "@schematics/angular@14.1.0":
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.1.0.tgz#a1e2d2b27efa9d1a8177851f89695c5fe6f27d9d"
@@ -8971,9 +8978,9 @@ zen-observable@0.8.15:
   resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.15.tgz#96415c512d8e3ffd920afd3889604e30b9eaac15"
   integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
 
-zone.js@0.11.6:
-  version "0.11.6"
-  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.11.6.tgz#c7cacfc298fe24bb585329ca04a44d9e2e840e74"
-  integrity sha512-umJqFtKyZlPli669gB1gOrRE9hxUUGkZr7mo878z+NEBJZZixJkKeVYfnoLa7g25SseUDc92OZrMKKHySyJrFg==
+zone.js@0.11.7:
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.11.7.tgz#262194267c7b964e8da77ce16b9fba9bea23cfdc"
+  integrity sha512-e39K2EdK5JfA3FDuUTVRvPlYV4aBfnOOcGuILhQAT7nzeV12uSrLBzImUM9CDVoncDSX4brR/gwqu0heQ3BQ0g==
   dependencies:
     tslib "^2.3.0"
