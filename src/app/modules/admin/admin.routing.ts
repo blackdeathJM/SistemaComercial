@@ -1,10 +1,9 @@
-import {RouterModule, Routes} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {AdminComponent} from '@app/modules/admin/admin.component';
 import {DeptosComponent} from '@app/modules/admin/deptos/deptos.component';
-import {UsuariosComponent} from '@app/modules/admin/usuarios/usuarios.component';
 
-const adminRouting: Routes =
+const adminRouting: Route[] =
     [
         {
             path: 'administrador',
@@ -14,10 +13,6 @@ const adminRouting: Routes =
                     {
                         path: 'deptos',
                         component: DeptosComponent
-                    },
-                    {
-                        path: 'usuarios',
-                        component: UsuariosComponent
                     }
                 ]
         }

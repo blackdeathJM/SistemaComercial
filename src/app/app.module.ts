@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExtraOptions, PreloadAllModules, RouterModule} from '@angular/router';
@@ -17,6 +17,7 @@ import {ApolloConfigModule} from '@apollo/apollo-config.module';
 import {NgxsGlobalModule} from '@NGXS/ngxsGlobal.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {DeptosModule} from '@app/modules/admin/deptos/deptos.module';
 
 const routerConfig: ExtraOptions =
     {
@@ -53,12 +54,14 @@ const routerConfig: ExtraOptions =
             MarkdownModule.forRoot({}),
             ApolloConfigModule,
             HttpClientModule,
-            NgxsGlobalModule
+            NgxsGlobalModule,
+            DeptosModule
         ],
     bootstrap:
         [
             AppComponent
-        ]
+        ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule
 {

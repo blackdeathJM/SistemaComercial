@@ -19,10 +19,12 @@
         ],
         "paths": {
             "@app/*": [ "app/*" ],
+            "@directives/*": [ "directives/*" ],
+            "@ng-material/*": [ "ng-material/*" ],
             "@environments/*": [ "environments/*" ],
             "@apollo/*": [ "apollo/*" ],
             "@shared/*": [ "Shared/*" ],
-            "@NGXS/*": ["NGXS/*"]
+            "@NGXS/*": [ "NGXS/*" ]
         }
     },
     "angularCompilerOptions": {
