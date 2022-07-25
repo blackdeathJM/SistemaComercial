@@ -20,8 +20,7 @@ import {ListaDeptosComponent} from './components/lista-deptos/lista-deptos.compo
             PlantillasModule,
             NgMaterialModule,
             SharedModule,
-            DirectivesModule,
-
+            DirectivesModule
         ]
 })
 export class DeptosModule
