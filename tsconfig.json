@@ -18,6 +18,7 @@
             "esnext.asynciterable"
         ],
         "paths": {
+            "@fuse/*": ["@fuse/*"],
             "@app/*": [ "app/*" ],
             "@directives/*": [ "directives/*" ],
             "@ng-material/*": [ "ng-material/*" ],

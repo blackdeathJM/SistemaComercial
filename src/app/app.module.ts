@@ -37,6 +37,10 @@ const routerConfig: ExtraOptions =
             ReactiveFormsModule,
             RxReactiveFormsModule,
             BrowserAnimationsModule,
+
+            // modulos
+            DeptosModule,
+
             RouterModule.forRoot(appRoutes, routerConfig),
 
             // Fuse, FuseConfig & FuseMockAPI
@@ -55,7 +59,6 @@ const routerConfig: ExtraOptions =
             ApolloConfigModule,
             HttpClientModule,
             NgxsGlobalModule,
-            DeptosModule
         ],
     bootstrap:
         [

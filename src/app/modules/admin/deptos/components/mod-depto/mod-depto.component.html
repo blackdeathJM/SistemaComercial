@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Registro de nuevos departamentos</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <form *ngIf="formDepto" [formGroup]="formDepto">
+        <div class="flex flex-col">
+            <mat-form-field>
+                <mat-label>Nombre del departamento</mat-label>
+                <input matInput type="text" formControlName="nombre">
+                <mat-error *ngIf="formDepto.controls.nombre.errors">{{formDepto.controls.nombre.errors.required.message}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Centro gestor</mat-label>
+                <input matInput type="text" formControlName="centroGestor">
+                <mat-error>{{formDepto.controls.centroGestor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<app-registros></app-registros>

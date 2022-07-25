@@ -8,7 +8,7 @@ import {crearDepto} from '@app/modules/admin/deptos/gql/deptos';
 @Injectable({
     providedIn: 'root'
 })
-export class DeptoService extends ApiService
+export class DeptosService extends ApiService
 {
 
     constructor(apollo: Apollo)

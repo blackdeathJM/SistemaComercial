@@ -10,8 +10,8 @@ export class RegistrosComponent
     @Output() reg = new EventEmitter<void>();
     @Output() can = new EventEmitter<void>();
 
-    _cargando = false;
-    _deshabilitar = false;
+    _cargando: boolean;
+    _deshabilitar: boolean;
 
     @Input() set cargando(v: boolean)
     {

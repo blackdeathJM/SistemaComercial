@@ -1,18 +1,19 @@
-<div class="flex flex-col flex-auto min-w-0">
-    <div class="mt-2">
-        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-            Departamentos
-        </h2>
-    </div>
+<app-tarjeta-contenido-scroll>
+    <ng-container titulo>
+        Departamentos
+    </ng-container>
+    <ng-container acciones>
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <button mat-flat-button color="primary" (click)="registro()">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                Nuevo
+            </button>
+        </div>
+    </ng-container>
+    <ng-container contenido>
+        <!--        <div [@animate]="{value:'1000',params:{y:'100%'}}">-->
 
-    <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-        <button mat-raised-button color="primary">
-            <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-            Nuevo departngamento
-        </button>
-        <button class="ml-3" mat-raised-button>
-            <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:link'"></mat-icon>
-            View
-        </button>
-    </div>
-</div>
+        <!--        </div>-->
+        <div></div>
+    </ng-container>
+</app-tarjeta-contenido-scroll>

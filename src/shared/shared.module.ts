@@ -1,11 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RegistrosComponent} from './registros/registros.component';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {RegistrosComponent} from '@shared/registros/registros.component';
+import {NgMaterialModule} from '@ng-material/ng-material.module';
+import { PortalComponent } from './portal/portal.component';
 
 @NgModule({
     imports:
@@ -13,10 +11,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
             CommonModule,
             FormsModule,
             ReactiveFormsModule,
-            MatExpansionModule,
-            MatButtonModule,
-            MatIconModule,
-            MatProgressSpinnerModule
+            NgMaterialModule,
         ],
     exports:
         [
@@ -27,7 +22,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         ],
     declarations:
         [
-            RegistrosComponent
+            RegistrosComponent,
+            PortalComponent
         ]
 })
 export class SharedModule

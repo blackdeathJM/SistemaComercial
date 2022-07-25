@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
 import {DeptoModel} from '@app/modules/admin/deptos/models/depto.model';
@@ -8,13 +8,13 @@ import {DeptoModel} from '@app/modules/admin/deptos/models/depto.model';
     templateUrl: './mod-depto.component.html',
     styleUrls: ['./mod-depto.component.scss']
 })
-export class ModDeptoComponent implements OnInit
+export class ModDeptoComponent implements OnInit, AfterViewInit
 {
     cargandoDatos = false;
 
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder)
+    constructor(private fb: RxFormBuilder, private cd: ChangeDetectorRef)
     {
     }
 
@@ -24,4 +24,18 @@ export class ModDeptoComponent implements OnInit
         this.formDepto = this.fb.formGroup(depto);
     }
 
+    registrar(): void
+    {
+        console.log(this.formDepto.value);
+    }
+
+    cancelar(): void
+    {
+
+    }
+
+    ngAfterViewInit(): void
+    {
+        this.cd.detectChanges();
+    }
 }

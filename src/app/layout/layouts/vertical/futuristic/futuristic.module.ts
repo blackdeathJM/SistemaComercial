@@ -15,7 +15,7 @@ import { QuickChatModule } from 'app/layout/common/quick-chat/quick-chat.module'
 import { SearchModule } from 'app/layout/common/search/search.module';
 import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
-import { SharedModule } from 'app/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { FuturisticLayoutComponent } from 'app/layout/layouts/vertical/futuristic/futuristic.component';
 
 @NgModule({
