@@ -1,1 +1,18 @@
-<p>lista-deptos works!</p>
+<li class="bg-gray-400 dark:bg-cyan-900 p-4 mb-3 flex justify-between items-center shadow-lg shadow-indigo-500/50 rounded-lg"
+    *ngFor="let depto of deptos; index as i; trackBy: trackByFn">
+    <div class="flex items-center">
+        <img class="w-12 h-12 rounded-l-lg" alt="" src="assets/images/deptos/deptos.png">
+        <div class="flex flex-col">
+            <h2 mat-dialog-title>{{depto.nombre}}</h2>
+            <p class="decoration-sky-700">{{depto.centroGestor}}</p>
+        </div>
+    </div>
+    <div class="flex">
+        <button mat-icon-button type="button">
+            <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="text-red-800 dark:text-red-600">delete_sweep</mat-icon>
+        </button>
+    </div>
+</li>

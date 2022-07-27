@@ -1,11 +1,11 @@
 <mat-action-row class="flex flex-row gap-2">
     <button mat-raised-button color="warn" type="button" class="grow" (click)="cancelar()">
-        <mat-icon [svgIcon]="'mat_outline:cancel'" class="icon-size-5 mr-2"></mat-icon>
+        <mat-icon class="icon-size-5 mr-2">cancel</mat-icon>
         Cancelar
     </button>
-    <button mat-raised-button color="primary" type="button" class="grow" (click)="aceptar()">
-        <ng-container *ngIf="true; else cargando">
-            <mat-icon [svgIcon]="'mat_outline:save'" class="icon-size-5 mr-2"></mat-icon>
+    <button mat-raised-button color="primary" type="button" class="grow" (click)="aceptar()" [disabled]="_deshabilitar">
+        <ng-container *ngIf="!_cargando; else cargando">
+            <mat-icon class="icon-size-5 mr-2">save</mat-icon>
             Aceptar
         </ng-container>
     </button>
@@ -17,4 +17,3 @@
     </mat-icon>
     Procesando...
 </ng-template>
-

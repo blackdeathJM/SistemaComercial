@@ -5,7 +5,8 @@ import {SharedModule} from '@shared/shared.module';
 import {DirectivesModule} from '@directives/directives.module';
 import {NgMaterialModule} from '@ng-material/ng-material.module';
 import {PlantillasModule} from '@shared/plantillas/plantillas.module';
-import {ListaDeptosComponent} from './components/lista-deptos/lista-deptos.component';
+import {ListaDeptosComponent} from '@app/modules/admin/deptos/components/lista-deptos/lista-deptos.component';
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 
 @NgModule({
@@ -17,10 +18,11 @@ import {ListaDeptosComponent} from './components/lista-deptos/lista-deptos.compo
         ],
     imports:
         [
-            PlantillasModule,
             NgMaterialModule,
+            PlantillasModule,
             SharedModule,
-            DirectivesModule
+            DirectivesModule,
+            NgxSkeletonLoaderModule
         ]
 })
 export class DeptosModule

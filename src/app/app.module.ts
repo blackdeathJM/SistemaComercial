@@ -14,10 +14,10 @@ import {AppComponent} from 'app/app.component';
 import {appRoutes} from 'app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {ApolloConfigModule} from '@apollo/apollo-config.module';
-import {NgxsGlobalModule} from '@NGXS/ngxsGlobal.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DeptosModule} from '@app/modules/admin/deptos/deptos.module';
+import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 
 const routerConfig: ExtraOptions =
     {
@@ -58,7 +58,7 @@ const routerConfig: ExtraOptions =
             MarkdownModule.forRoot({}),
             ApolloConfigModule,
             HttpClientModule,
-            NgxsGlobalModule,
+            NgxSkeletonLoaderModule.forRoot()
         ],
     bootstrap:
         [
