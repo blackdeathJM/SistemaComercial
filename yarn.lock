@@ -1898,6 +1898,11 @@
   dependencies:
     tslib "^2.0.0"
 
+"@sweetalert2/themes@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/themes/-/themes-5.0.11.tgz#5e5e5f8aee7452f2e71cd0299ae3f459163fbe3b"
+  integrity sha512-2i7YpRNMjTCRzHQJwUhvhRNqctcrTGejpAKnycPL1nsRrhdDMxNDIleMkac8FA/tEq9riR1174qzd8HtLmzzVA==
+
 "@tailwindcss/aspect-ratio@0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@tailwindcss/aspect-ratio/-/aspect-ratio-0.4.0.tgz#c635dd7331cbcc1b111cebdc2647dd3493ebdd3e"
