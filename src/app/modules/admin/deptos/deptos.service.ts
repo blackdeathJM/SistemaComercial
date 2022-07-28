@@ -4,7 +4,8 @@ import {Apollo} from 'apollo-angular';
 import {Observable, tap} from 'rxjs';
 import {crearDepto, deptos} from '@app/modules/admin/deptos/gql/deptos';
 import {DeptoModel} from '@app/modules/admin/deptos/models/depto.model';
-import {IErrors, IRespuesta} from '@shared/models/respuesta.model';
+import {IRespuesta} from '@shared/models/respuesta.model';
+import {useQuery} from '@apollo/client';
 
 @Injectable({
     providedIn: 'root'
@@ -26,4 +27,8 @@ export class DeptosService extends ApiService
         return this.query(deptos, {}, {});
     }
 
+    usarQuery(input: DeptoModel): void
+    {
+        const {error, data, loading} = useQuery(crearDepto, {errorPolicy: 'all', variables: {}});
+    }
 }

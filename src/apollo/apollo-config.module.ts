@@ -19,11 +19,13 @@ export class ApolloConfigModule
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
         {
-            // if (graphQLErrors)
-            // {
-            //     console.log('Apollo config', graphQLErrors);
-            // }
+            if (graphQLErrors)
+            {
+                for (const i of graphQLErrors)
+                {
 
+                }
+            }
             // if (networkError)
             // {
             //     console.log('Networkd Errors', networkError);
