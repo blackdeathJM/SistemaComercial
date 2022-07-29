@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@app/modules/admin/deptos/components/mod-depto/mod-depto.component';
 import {fuseAnimations} from '@fuse/animations';
 import {DeptosService} from '@app/modules/admin/deptos/deptos.service';
-import {tap} from 'rxjs';
+import {finalize, Subscription, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@app/modules/admin/deptos/deptos.state';
 
 @Component({
@@ -12,9 +12,10 @@ import {STATE_DEPTOS} from '@app/modules/admin/deptos/deptos.state';
     styleUrls: ['./deptos.component.scss'],
     animations: fuseAnimations
 })
-export class DeptosComponent implements OnInit
+export class DeptosComponent implements OnInit, OnDestroy
 {
     datosCargados = true;
+    subscripciones: Subscription = new Subscription();
 
     constructor(private dRef: MatDialog, private deptosService: DeptosService)
     {
@@ -27,10 +28,18 @@ export class DeptosComponent implements OnInit
 
     ngOnInit(): void
     {
-        this.deptosService.deptos().pipe(tap((res) =>
+        this.subscripciones.add(this.deptosService.deptos().pipe(tap((res) =>
         {
-            this.datosCargados = res.loading;
-            STATE_DEPTOS(res.data['deptos']);
-        })).subscribe();
+            if (res.data !== undefined)
+            {
+                this.datosCargados = false;
+                STATE_DEPTOS(res.data['deptos']);
+            }
+        }, finalize(() => console.log('Todo termino correctamente')))).subscribe());
+    }
+
+    ngOnDestroy(): void
+    {
+        this.subscripciones.unsubscribe();
     }
 }

@@ -6465,6 +6465,20 @@ ngx-skeleton-loader@^5.0.0:
     perf-marks "^1.13.4"
     tslib "^2.0.0"
 
+ngx-toastr@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-15.0.0.tgz#7d9d664a264b8b39d1bf762bb0a124bde5be8f01"
+  integrity sha512-dseyONSYcbm+8hQUCzzyP6CnHGa8WAOGJN7dzGqgBV4sHCDiv5eZ4x/3uo7Fov2OR0O5T47keP7ND3z7tufXeg==
+  dependencies:
+    tslib "^2.3.0"
+
+ngx-trim-directive@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-trim-directive/-/ngx-trim-directive-2.0.0.tgz#58e7f87a03dc76b942a95a2bd398b0f9a251940d"
+  integrity sha512-GC3Cx+VIoIq9izTKH3x0opGVsZUaKCZpDl686CI54OdZRYIZvI/hTUGASaj7A17U2jDsI3c9Q2RP9ezU1indng==
+  dependencies:
+    tslib "^2.3.0"
+
 nice-napi@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nice-napi/-/nice-napi-1.0.2.tgz#dc0ab5a1eac20ce548802fc5686eaa6bc654927b"

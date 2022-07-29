@@ -7,6 +7,8 @@ import {WebSocketLink} from '@apollo/client/link/ws';
 import {environment} from '@environments/environment';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {createUploadLink} from 'apollo-upload-client';
+import {GRAPHQL_STATE} from '@apollo/graphql.state';
+import Swal from 'sweetalert2';
 
 @NgModule({
     // imports: [HttpClientModule, ApolloModule, HttpLinkModule]
@@ -23,13 +25,15 @@ export class ApolloConfigModule
             {
                 for (const i of graphQLErrors)
                 {
-
+                    GRAPHQL_STATE(i.extensions.response['message']);
                 }
             }
-            // if (networkError)
-            // {
-            //     console.log('Networkd Errors', networkError);
-            // }
+
+
+            if (networkError)
+            {
+                Swal.fire('Error de red', networkError.message, 'error').then();
+            }
         });
 
         const uri = environment.apiGraphql;

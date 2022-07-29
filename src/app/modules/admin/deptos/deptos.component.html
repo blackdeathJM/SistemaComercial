@@ -16,9 +16,5 @@
 </app-tarjeta-contenido-scroll>
 
 <ng-template #cargando>
-    <div class="flex flex-row">
-        <ngx-skeleton-loader appearance="line" class="w-full" animation="progress" count="5" loadingText="Cargando..."
-                             [theme]="{width: '100%', 'border-radius': '10', height:'90px', 'background-color': 'gray', 'animation-duration': '2s'}">
-        </ngx-skeleton-loader>
-    </div>
+<app-tailwind-loading></app-tailwind-loading>
 </ng-template>

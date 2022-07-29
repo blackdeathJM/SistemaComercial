@@ -4,8 +4,10 @@ import {FormGroup} from '@angular/forms';
 import {DeptoModel} from '@app/modules/admin/deptos/models/depto.model';
 import {MatDialog} from '@angular/material/dialog';
 import {DeptosService} from '@app/modules/admin/deptos/deptos.service';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@app/modules/admin/deptos/deptos.state';
+import {GRAPHQL_STATE} from '@apollo/graphql.state';
+import {NgxToastService} from '@shared/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-depto',
@@ -16,10 +18,9 @@ import {STATE_DEPTOS} from '@app/modules/admin/deptos/deptos.state';
 export class ModDeptoComponent implements OnInit
 {
     cargandoDatos = false;
-
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, private cd: ChangeDetectorRef, private dRef: MatDialog, private deptosService: DeptosService)
+    constructor(private fb: RxFormBuilder, private cd: ChangeDetectorRef, private dRef: MatDialog, private deptosService: DeptosService, private ngxToast: NgxToastService)
     {
     }
 
@@ -31,21 +32,23 @@ export class ModDeptoComponent implements OnInit
 
     registrar(): void
     {
-        this.deptosService.crearDepto(this.formDepto.value).pipe(tap((res) =>
+        this.deptosService.crearDepto(this.formDepto.value).pipe(finalize(() =>
         {
-            // console.log('Modal', res[0]['graphQLErrors']['0']['extensions']['response']['message']);
-            console.log('respuesta', res);
-            if (!res)
+            GRAPHQL_STATE(null);
+            this.cargandoDatos = false;
+            this.cancelar();
+        }), tap((res) =>
+        {
+            if (!GRAPHQL_STATE())
             {
-                console.log('Modal', res);
-            } else
-            {
-                console.log('esta registrando de nuez');
-                const elementos = STATE_DEPTOS();
-                this.cargandoDatos = res.loading;
-                STATE_DEPTOS([...elementos, res.data['crearDepto']]);
+                console.log(res);
+                if (res.data)
+                {
+                    const elementos = STATE_DEPTOS();
+                    STATE_DEPTOS([...elementos, res.data['crearDepto']]);
+                    this.ngxToast.satisfactorioToast('El registro se ha creado correctamente', 'Registro de departamentos');
+                }
             }
-
         })).subscribe();
     }
 

@@ -18,6 +18,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DeptosModule} from '@app/modules/admin/deptos/deptos.module';
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
+import {ToastrModule} from 'ngx-toastr';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {NgxTrimDirectiveModule} from "ngx-trim-directive";
 
 const routerConfig: ExtraOptions =
     {
@@ -58,7 +61,10 @@ const routerConfig: ExtraOptions =
             MarkdownModule.forRoot({}),
             ApolloConfigModule,
             HttpClientModule,
-            NgxSkeletonLoaderModule.forRoot()
+            NgxSkeletonLoaderModule.forRoot(),
+            SweetAlert2Module.forRoot(),
+            ToastrModule.forRoot(),
+            NgxTrimDirectiveModule
         ],
     bootstrap:
         [

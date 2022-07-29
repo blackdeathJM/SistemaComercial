@@ -4,6 +4,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RegistrosComponent} from '@shared/registros/registros.component';
 import {NgMaterialModule} from '@ng-material/ng-material.module';
 import {PortalComponent} from './portal/portal.component';
+import {NgxToastComponent} from './ngx-toast/ngx-toast.component';
+import { TailwindLoadingComponent } from './tailwind-loading/tailwind-loading.component';
 
 @NgModule({
     imports:
@@ -18,12 +20,16 @@ import {PortalComponent} from './portal/portal.component';
             CommonModule,
             FormsModule,
             ReactiveFormsModule,
-            RegistrosComponent
+            RegistrosComponent,
+            NgxToastComponent,
+            TailwindLoadingComponent
         ],
     declarations:
         [
             RegistrosComponent,
-            PortalComponent
+            PortalComponent,
+            NgxToastComponent,
+            TailwindLoadingComponent
         ]
 })
 export class SharedModule

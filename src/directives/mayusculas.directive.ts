@@ -2,7 +2,7 @@ import {Directive, HostListener, Input} from '@angular/core';
 import {NgControl} from '@angular/forms';
 
 @Directive({
-    selector: '[directive-mayusculas]'
+    selector: '[appMayusculas]'
 })
 export class MayusculasDirective
 {

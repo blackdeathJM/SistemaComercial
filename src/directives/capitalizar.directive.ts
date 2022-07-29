@@ -2,7 +2,7 @@ import {Directive, HostListener, Input} from '@angular/core';
 import {NgControl} from '@angular/forms';
 
 @Directive({
-    selector: '[directive-capitalizar]'
+    selector: '[appCapitalizar]'
 })
 export class CapitalizarDirective
 {
@@ -12,16 +12,9 @@ export class CapitalizarDirective
     {
     }
 
-    @HostListener('input', ['$event.tarjet']) onInput(input: HTMLInputElement): void
+    @HostListener('input', ['$event.target']) onInput(input: HTMLInputElement): void
     {
-        const caretPos = input.selectionStart;
-        if (!this.capitalizar)
-        {
-            this.control.control.setValue(input.value.toUpperCase());
-        } else
-        {
-            this.control.control.setValue(input['value'].replace(/\b\w/g, c => c.toUpperCase()));
-        }
-        input.setSelectionRange(caretPos, caretPos);
+        const cambio = input.value.toLowerCase().replace(/\w\S*/g, w => (w.replace(/^\w/, (c) => c.toUpperCase())));
+        this.control.control.setValue(cambio);
     }
 }

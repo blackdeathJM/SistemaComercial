@@ -1,9 +1,12 @@
 import {maxLength, minLength, required} from '@rxweb/reactive-form-validators';
 import {sanitize, upperCase} from '@rxweb/sanitizers';
 
+
 @sanitize
 export class DeptoModel implements IDepto
 {
+
+
     @required({message: 'El nombre del departamento es requerido'})
     nombre: string;
 
