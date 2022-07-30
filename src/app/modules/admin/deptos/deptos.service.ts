@@ -24,6 +24,11 @@ export class DeptosService extends ApiService
         return this.mutation(crearDepto, {input});
     }
 
+    actualizarDepto(): Observable<IRespuesta>
+    {
+        return null;
+    }
+
     deptos(): Observable<IRespuesta>
     {
         return this.query(deptos);

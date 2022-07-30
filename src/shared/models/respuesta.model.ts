@@ -14,10 +14,3 @@ export interface IRespuesta
     data: any;
     loading: boolean;
 }
-
-export interface IErrors
-{
-    error: object[];
-    data: any;
-    loading: boolean;
-}
