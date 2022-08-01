@@ -1,9 +1,8 @@
 {
-  "name": "@fuse/starter",
+  "name": "sistema-comercial",
   "version": "14.2.0",
-  "description": "Fuse - Angular Admin Template and Starter Project",
-  "author": "https://themeforest.net/user/srcn",
-  "license": "https://themeforest.net/licenses/standard",
+  "description": "Sistema comercial para sistemas de agua potable",
+  "author": "BLACKDEATH",
   "private": true,
   "scripts": {
     "ng": "ng",
