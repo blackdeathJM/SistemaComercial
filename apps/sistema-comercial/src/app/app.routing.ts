@@ -31,7 +31,7 @@ export const appRoutes: Route[] = [
             },
         children:
             [
-                {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)}
+                {path: 'sign-in', loadChildren: () => import('@s-app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)}
             ]
     },
 
@@ -46,8 +46,8 @@ export const appRoutes: Route[] = [
                 layout: 'empty'
             },
         children: [
-            {path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
-            {path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
+            {path: 'sign-out', loadChildren: () => import('@s-app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
+            {path: 'unlock-session', loadChildren: () => import('@s-app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
         ]
     },
     // Admin routes
@@ -59,8 +59,8 @@ export const appRoutes: Route[] = [
         resolve: {initialData: InitialDataResolver},
         children:
             [
-                {path: 'inicio', loadChildren: () => import('app/modules/inicio/inicio.module').then(i => i.InicioModule)},
-                {path: 'admin', loadChildren: () => import('app/modules/admin/admin.module').then(a => a.AdminModule)}
+                {path: 'inicio', loadChildren: () => import('@s-app/modules/inicio/inicio.module').then(i => i.InicioModule)},
+                {path: 'admin', loadChildren: () => import('@s-app/modules/admin/admin.module').then(a => a.AdminModule)}
             ]
     }
 ];

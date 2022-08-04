@@ -30,8 +30,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics",
-    "analytics": "72039219-f7a1-4da5-a2d1-30b99f220760"
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "defaultProject": "sistema-comercial"
 }

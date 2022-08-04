@@ -1,3 +1,3 @@
-export * from '@fuse/services/confirmation/confirmation.module';
-export * from '@fuse/services/confirmation/confirmation.service';
-export * from '@fuse/services/confirmation/confirmation.types';
+export * from '../../../@fuse/services/confirmation/confirmation.module';
+export * from '../../../@fuse/services/confirmation/confirmation.service';
+export * from '../../../@fuse/services/confirmation/confirmation.types';

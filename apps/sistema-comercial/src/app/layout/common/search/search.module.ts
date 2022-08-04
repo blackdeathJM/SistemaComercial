@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@s-shared/shared.module';
-import { SearchComponent } from 'app/layout/common/search/search.component';
+import { SearchComponent } from '@s-app/layout/common/search/search.component';
 
 @NgModule({
     declarations: [

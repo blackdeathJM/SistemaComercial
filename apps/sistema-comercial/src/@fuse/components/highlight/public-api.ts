@@ -1,3 +1,3 @@
-export * from '@fuse/components/highlight/highlight.component';
-export * from '@fuse/components/highlight/highlight.module';
-export * from '@fuse/components/highlight/highlight.service';
+export * from '../../../@fuse/components/highlight/highlight.component';
+export * from '../../../@fuse/components/highlight/highlight.module';
+export * from '../../../@fuse/components/highlight/highlight.service';

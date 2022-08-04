@@ -1,1 +1,1 @@
-export * from '@fuse/components/masonry/public-api';
+export * from '../../../@fuse/components/masonry/public-api';

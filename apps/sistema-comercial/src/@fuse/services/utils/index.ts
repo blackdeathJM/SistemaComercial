@@ -1,1 +1,1 @@
-export * from '@fuse/services/utils/public-api';
+export * from '../../../@fuse/services/utils/public-api';

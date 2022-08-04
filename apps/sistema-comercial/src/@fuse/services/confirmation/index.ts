@@ -1,1 +1,1 @@
-export * from '@fuse/services/confirmation/public-api';
+export * from '../../../@fuse/services/confirmation/public-api';
