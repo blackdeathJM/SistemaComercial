@@ -18,14 +18,31 @@
             "esnext.asynciterable"
         ],
         "paths": {
-            "@fuse/*": ["@fuse/*"],
-            "@app/*": [ "app/*" ],
-            "@directives/*": [ "directives/*" ],
-            "@ng-material/*": [ "ng-material/*" ],
-            "@environments/*": [ "environments/*" ],
-            "@apollo/*": [ "apollo/*" ],
-            "@shared/*": [ "Shared/*" ],
-            "@NGXS/*": [ "NGXS/*" ]
+            "@s-fuse/*": [
+                "@fuse/*",
+                "@fuse/animations/*",
+                "@fuse/components/*",
+                "@fuse/directives/*",
+                "@fuse-lib/*",
+                "@fuse/pipes/*",
+                "@fuse/services/*",
+                "@fuse/tailwind/*",
+                "@fuse/validators/*",
+                "@fuse/version"
+            ],
+            "@s-app/*": [
+                "app/*",
+                "app/core/*",
+                "app/layout/*",
+                "app/mock-api/*",
+                "app/modules/*",
+            ],
+            "@s-directives/*": [ "directives/*" ],
+            "@s-ng-material/*": [ "ng-material/*" ],
+            "@s-environments/*": [ "environments/*" ],
+            "@s-apollo/*": [ "apollo/*" ],
+            "@s-shared/*": [ "Shared/*" ],
+            "@s-NGXS/*": [ "NGXS/*" ]
         }
     },
     "angularCompilerOptions": {

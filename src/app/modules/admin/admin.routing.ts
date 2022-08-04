@@ -1,7 +1,7 @@
 import {Route, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {AdminComponent} from '@app/modules/admin/admin.component';
-import {DeptosComponent} from '@app/modules/admin/deptos/deptos.component';
+import {AdminComponent} from '@s-app/modules/admin/admin.component';
+import {DeptosComponent} from '@s-app/modules/admin/deptos/deptos.component';
 
 const adminRouting: Route[] =
     [

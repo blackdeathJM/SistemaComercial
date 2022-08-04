@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FuseDrawerComponent } from '@fuse/components/drawer/drawer.component';
+import {FuseDrawerComponent} from '@s-fuse/drawer/drawer.component';
+
 
 @NgModule({
     declarations: [

@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, OnD
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime, filter, map, Subject, takeUntil } from 'rxjs';
-import { fuseAnimations } from '@fuse/animations/public-api';
+import { fuseAnimations } from '@s-fuse/animations/public-api';
 
 @Component({
     selector     : 'search',

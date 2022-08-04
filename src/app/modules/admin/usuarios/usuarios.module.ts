@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsuariosComponent } from './usuarios.component';
+import {UsuariosComponent} from '@s-app/admin/usuarios/usuarios.component';
+
 
 
 

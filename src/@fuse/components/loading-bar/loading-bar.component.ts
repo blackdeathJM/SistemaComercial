@@ -1,7 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {Subject, takeUntil} from 'rxjs';
-import {FuseLoadingService} from '@fuse/services/loading';
+import {FuseLoadingService} from '@s-fuse/loading';
+
 
 @Component({
     selector: 'fuse-loading-bar',

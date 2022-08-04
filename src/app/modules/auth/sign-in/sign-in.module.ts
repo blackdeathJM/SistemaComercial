@@ -6,11 +6,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FuseCardModule } from '@fuse/components/card';
-import { FuseAlertModule } from '@fuse/components/alert';
-import { SharedModule } from '@shared/shared.module';
-import { AuthSignInComponent } from 'app/modules/auth/sign-in/sign-in.component';
-import { authSignInRoutes } from 'app/modules/auth/sign-in/sign-in.routing';
+import { FuseCardModule } from '@s-fuse/components/card';
+import { FuseAlertModule } from '@s-fuse/components/alert';
+import { SharedModule } from '@s-shared/shared.module';
+import { AuthSignInComponent } from '@s-app/modules/auth/sign-in/sign-in.component';
+import { authSignInRoutes } from '@s-app/modules/auth/sign-in/sign-in.routing';
 
 @NgModule({
     declarations: [

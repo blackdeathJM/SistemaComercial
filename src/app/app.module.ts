@@ -3,24 +3,24 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExtraOptions, PreloadAllModules, RouterModule} from '@angular/router';
 import {MarkdownModule} from 'ngx-markdown';
-import {FuseModule} from '@fuse';
-import {FuseConfigModule} from '@fuse/services/config';
-import {FuseMockApiModule} from '@fuse/lib/mock-api';
-import {CoreModule} from 'app/core/core.module';
-import {appConfig} from 'app/core/config/app.config';
-import {mockApiServices} from 'app/mock-api';
-import {LayoutModule} from 'app/layout/layout.module';
-import {AppComponent} from 'app/app.component';
-import {appRoutes} from 'app/app.routing';
+import {FuseConfigModule} from '@s-fuse/services/config';
+import {FuseMockApiModule} from '@s-fuse/lib/mock-api';
+import {CoreModule} from '@s-app/core/core.module';
+import {appConfig} from '@s-app/core/config/app.config';
+import {mockApiServices} from '@s-app/mock-api';
+import {LayoutModule} from '@s-app/layout/layout.module';
+import {AppComponent} from '@s-app/app.component';
+import {appRoutes} from '@s-app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
-import {ApolloConfigModule} from '@apollo/apollo-config.module';
+import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {DeptosModule} from '@app/modules/admin/deptos/deptos.module';
+import {DeptosModule} from '@s-app/modules/admin/deptos/deptos.module';
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
-import {NgxTrimDirectiveModule} from "ngx-trim-directive";
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {FuseModule} from '@s-fuse/fuse.module';
 
 const routerConfig: ExtraOptions =
     {

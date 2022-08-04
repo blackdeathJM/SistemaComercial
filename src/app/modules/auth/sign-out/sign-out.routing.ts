@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AuthSignOutComponent } from 'app/modules/auth/sign-out/sign-out.component';
+import { AuthSignOutComponent } from '@s-app/modules/auth/sign-out/sign-out.component';
 
 export const authSignOutRoutes: Route[] = [
     {

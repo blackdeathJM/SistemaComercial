@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ModDeptoComponent} from '@app/modules/admin/deptos/components/mod-depto/mod-depto.component';
-import {fuseAnimations} from '@fuse/animations';
-import {DeptosService} from '@app/modules/admin/deptos/deptos.service';
+import {ModDeptoComponent} from '@s-app/modules/admin/deptos/components/mod-depto/mod-depto.component';
+import {fuseAnimations} from '@s-fuse/animations';
+import {DeptosService} from '@s-app/modules/admin/deptos/deptos.service';
 import {finalize, Subscription, tap} from 'rxjs';
-import {STATE_DEPTOS} from '@app/modules/admin/deptos/deptos.state';
+import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 
 @Component({
     selector: 'app-deptos-principal',

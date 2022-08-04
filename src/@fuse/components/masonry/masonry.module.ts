@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FuseMasonryComponent } from '@fuse/components/masonry/masonry.component';
+import {FuseMasonryComponent} from '@s-fuse/masonry/masonry.component';
+
 
 @NgModule({
     declarations: [

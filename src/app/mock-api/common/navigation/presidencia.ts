@@ -1,4 +1,4 @@
-import {FuseNavigationItem} from '../../../../@fuse/components/navigation';
+import {FuseNavigationItem} from '@s-fuse/navigation';
 
 export const PRESIDENCIA: FuseNavigationItem[] =
     [];

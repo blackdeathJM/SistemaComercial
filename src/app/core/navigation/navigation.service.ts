@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, tap } from 'rxjs';
-import { Navigation } from 'app/core/navigation/navigation.types';
+import { Navigation } from '@s-app/core/navigation/navigation.types';
 
 @Injectable({
     providedIn: 'root'

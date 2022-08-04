@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FuseCardComponent } from '@fuse/components/card/card.component';
+import {FuseCardComponent} from '@s-fuse/card/card.component';
+
 
 @NgModule({
     declarations: [

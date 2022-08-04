@@ -4,11 +4,11 @@ import {Apollo, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
-import {environment} from '@environments/environment';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {createUploadLink} from 'apollo-upload-client';
-import {GRAPHQL_STATE} from '@apollo/graphql.state';
 import Swal from 'sweetalert2';
+import {GRAPHQL_STATE} from '@s-apollo/graphql.state';
+import {environment} from '@s-environments/environment';
 
 @NgModule({
     // imports: [HttpClientModule, ApolloModule, HttpLinkModule]

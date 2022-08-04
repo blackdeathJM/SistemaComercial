@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { FuseHorizontalNavigationComponent } from '@fuse/components/navigation/horizontal/horizontal.component';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
+import { FuseHorizontalNavigationComponent } from '@s-fuse/components/navigation/horizontal/horizontal.component';
+import { FuseNavigationService } from '@s-fuse/components/navigation/navigation.service';
+import { FuseNavigationItem } from '@s-fuse/components/navigation/navigation.types';
 
 @Component({
     selector       : 'fuse-horizontal-navigation-divider-item',

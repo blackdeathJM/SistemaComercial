@@ -1,5 +1,5 @@
-import {FuseNavigationItem} from '../../../../@fuse/components/navigation';
-import {rutaBaseAdministrador} from '@app/mock-api/common/navigation/constantes/rutas';
+import {FuseNavigationItem} from '@s-fuse/navigation';
+import {rutaBaseAdministrador} from '@s-app/mock-api/common/navigation/constantes/rutas';
 
 export const ADMINISTRADOR: FuseNavigationItem[] =
     [

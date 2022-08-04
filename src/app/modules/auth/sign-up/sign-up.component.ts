@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertType } from '@fuse/components/alert';
-import { AuthService } from 'app/core/auth/auth.service';
+import { fuseAnimations } from '@s-fuse/animations';
+import { FuseAlertType } from '@s-fuse/components/alert';
+import { AuthService } from '@s-app/core/auth/auth.service';
 
 @Component({
     selector     : 'auth-sign-up',

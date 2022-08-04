@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {InicioComponent} from './inicio.component';
-import {InicioRouting} from '@app/modules/inicio/inicio.routing';
+import {InicioRouting} from '@s-app/modules/inicio/inicio.routing';
 
 @NgModule({
     declarations:

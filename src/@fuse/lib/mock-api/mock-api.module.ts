@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FUSE_MOCK_API_DEFAULT_DELAY } from '@fuse/lib/mock-api/mock-api.constants';
-import { FuseMockApiInterceptor } from '@fuse/lib/mock-api/mock-api.interceptor';
+import { FUSE_MOCK_API_DEFAULT_DELAY } from '@s-fuse/lib/mock-api/mock-api.constants';
+import { FuseMockApiInterceptor } from '@s-fuse/lib/mock-api/mock-api.interceptor';
 
 @NgModule({
     providers: [

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher/media-watcher.service';
+import { FuseMediaWatcherService } from '@s-fuse/services/media-watcher/media-watcher.service';
 
 @NgModule({
     providers: [

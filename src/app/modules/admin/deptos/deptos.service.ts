@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from '@shared/services/api.service';
+import {ApiService} from '@s-shared/services/api.service';
 import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';
-import {crearDepto, deptos} from '@app/modules/admin/deptos/gql/deptos';
-import {DeptoModel} from '@app/modules/admin/deptos/models/depto.model';
-import {IRespuesta} from '@shared/models/respuesta.model';
-import {NgxToastService} from '@shared/services/ngx-toast.service';
+import {crearDepto, deptos} from '@s-app/modules/admin/deptos/gql/deptos';
+import {DeptoModel} from '@s-app/modules/admin/deptos/models/depto.model';
+import {IRespuesta} from '@s-shared/models/respuesta.model';
+import {NgxToastService} from '@s-shared/services/ngx-toast.service';
 
 @Injectable({
     providedIn: 'root'

@@ -5,8 +5,8 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NotificationsComponent } from 'app/layout/common/notifications/notifications.component';
-import { SharedModule } from '@shared/shared.module';
+import { NotificationsComponent } from '@s-app/layout/common/notifications/notifications.component';
+import { SharedModule } from '@s-shared/shared.module';
 
 @NgModule({
     declarations: [

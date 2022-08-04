@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { FSDocument, FSDocumentElement } from '@fuse/components/fullscreen/fullscreen.types';
+import {FSDocument, FSDocumentElement} from '@s-fuse/fullscreen/fullscreen.types';
+
 
 @Component({
     selector       : 'fuse-fullscreen',

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FuseScrollbarDirective } from '@fuse/directives/scrollbar/scrollbar.directive';
+import { FuseScrollbarDirective } from '@s-fuse/directives/scrollbar/scrollbar.directive';
 
 @NgModule({
     declarations: [

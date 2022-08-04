@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import {fuseAnimations} from '@s-fuse/animations';
+import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
+
 
 @Component({
     selector     : 'fuse-masonry',

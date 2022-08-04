@@ -2,10 +2,10 @@ import {DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators'
 import {State} from '@ngxs/store';
 import {Injectable} from '@angular/core';
 import {NgxsDataRepository} from '@angular-ru/ngxs/repositories';
-import {DeptosService} from '@app/modules/admin/deptos/deptos.service';
-import {ApiService} from '@shared/services/api.service';
+import {DeptosService} from '@s-app/modules/admin/deptos/deptos.service';
+import {ApiService} from '@s-shared/services/api.service';
 import {Observable, tap} from 'rxjs';
-import {crearDepto, deptos} from '@app/modules/admin/deptos/gql/deptos';
+import {crearDepto, deptos} from '@s-app/modules/admin/deptos/gql/deptos';
 import {IDepto} from './models/depto.model';
 import {makeVar, ReactiveVar} from '@apollo/client';
 

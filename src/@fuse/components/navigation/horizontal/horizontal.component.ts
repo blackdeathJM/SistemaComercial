@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import { FuseUtilsService } from '@fuse/services/utils/utils.service';
+import { fuseAnimations } from '@s-fuse/animations';
+import { FuseNavigationItem } from '@s-fuse/components/navigation/navigation.types';
+import { FuseNavigationService } from '@s-fuse/components/navigation/navigation.service';
+import { FuseUtilsService } from '@s-fuse/services/utils/utils.service';
 
 @Component({
     selector       : 'fuse-horizontal-navigation',

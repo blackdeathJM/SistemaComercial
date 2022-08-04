@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EmbeddedViewRef, Input, OnChanges, Renderer2, SecurityContext, SimpleChanges, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FuseHighlightService } from '@fuse/components/highlight/highlight.service';
+import {FuseHighlightService} from '@s-fuse/highlight/highlight.service';
+
 
 @Component({
     selector       : 'textarea[fuse-highlight]',

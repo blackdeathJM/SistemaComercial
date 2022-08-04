@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IsActiveMatchOptions } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
-import { FuseUtilsService } from '@fuse/services/utils/utils.service';
+import { FuseVerticalNavigationComponent } from '@s-fuse/components/navigation/vertical/vertical.component';
+import { FuseNavigationService } from '@s-fuse/components/navigation/navigation.service';
+import { FuseNavigationItem } from '@s-fuse/components/navigation/navigation.types';
+import { FuseUtilsService } from '@s-fuse/services/utils/utils.service';
 
 @Component({
     selector       : 'fuse-vertical-navigation-basic-item',

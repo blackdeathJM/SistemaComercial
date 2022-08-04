@@ -1,8 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {merge} from 'lodash-es';
-import {FUSE_APP_CONFIG} from '@fuse/services/config/config.constants';
-import {tema} from "@app/core/config/app.config";
+import {FUSE_APP_CONFIG} from '@s-fuse/services/config/config.constants';
+import {tema} from '@s-app/config/app.config';
+
 
 @Injectable({
     providedIn: 'root'
