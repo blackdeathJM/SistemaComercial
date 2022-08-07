@@ -1,0 +1,19 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type DeptoType {
+  _id: ID
+  nombre: String
+  centroGestor: String
+}
+
+input DeptoInput {
+  _id: ID
+  nombre: String = ""
+  centroGestor: String = ""
+}
+
+type Query {
+  deptos: [DeptoType!]!
+}

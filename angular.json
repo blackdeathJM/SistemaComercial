@@ -1,6 +1,8 @@
 {
-  "version": 2,
-  "projects": {
-    "sistema-comercial": "apps/sistema-comercial"
-  }
+    "version": 2,
+    "projects": {
+        "api": "apps/api",
+        "common": "libs/common",
+        "sistema-comercial": "apps/sistema-comercial"
+    }
 }

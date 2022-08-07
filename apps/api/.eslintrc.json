@@ -1,0 +1,27 @@
+{
+    "extends": [ "../../.eslintrc.json" ],
+    "ignorePatterns": [ "!**/*" ],
+    "overrides": [
+        {
+            "files": [ "*.ts", "*.tsx", "*.js", "*.jsx" ],
+            "rules": {
+                "quotes": "warn",
+                "camelcase": "off"
+            }
+        },
+        {
+            "files": [ "*.ts", "*.tsx" ],
+            "rules": {
+                "quotes": "warn",
+                "camelcase": "off"
+            }
+        },
+        {
+            "files": [ "*.js", "*.jsx" ],
+            "rules": {
+                "quotes": "warn",
+                "camelcase": "off"
+            }
+        }
+    ]
+}

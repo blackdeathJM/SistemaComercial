@@ -39,9 +39,7 @@
                     }
                 ],
                 "stylePreprocessorOptions": {
-                    "includePaths": [
-                        "apps/sistema-comercial/src/@fuse/styles"
-                    ]
+                    "includePaths": ["apps/sistema-comercial/src/@fuse/styles"]
                 },
                 "styles": [
                     "apps/sistema-comercial/src/@fuse/styles/tailwind.scss",
@@ -52,7 +50,7 @@
                     "apps/sistema-comercial/src/styles/styles.scss",
                     "apps/sistema-comercial/src/styles/tailwind.scss"
                 ],
-                "scripts": [ ]
+                "scripts": []
             },
             "configurations": {
                 "production": {
@@ -97,7 +95,10 @@
                     "browserTarget": "sistema-comercial:build:development"
                 }
             },
-            "defaultConfiguration": "development"
+            "defaultConfiguration": "development",
+            "options": {
+                "proxyConfig": "apps/sistema-comercial/proxy.conf.json"
+            }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -118,10 +119,8 @@
                     "apps/sistema-comercial/src/favicon-32x32.png",
                     "apps/sistema-comercial/src/assets"
                 ],
-                "styles": [
-                    "apps/sistema-comercial/src/styles/styles.scss"
-                ],
-                "scripts": [ ]
+                "styles": ["apps/sistema-comercial/src/styles/styles.scss"],
+                "scripts": []
             }
         },
         "lint": {
