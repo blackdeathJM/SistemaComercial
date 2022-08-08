@@ -1,13 +1,13 @@
 import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
-import {DeptoModel} from '@s-app/modules/admin/deptos/models/depto.model';
 import {MatDialog} from '@angular/material/dialog';
 import {DeptosService} from '@s-app/modules/admin/deptos/deptos.service';
 import {finalize, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {GRAPHQL_STATE} from '@s-apollo/graphql.state';
 import {NgxToastService} from '@s-shared/services/ngx-toast.service';
+import {Depto} from '../../../../../../../../../libs/models';
 
 @Component({
     selector: 'app-mod-depto',
@@ -26,7 +26,7 @@ export class ModDeptoComponent implements OnInit
 
     ngOnInit(): void
     {
-        const depto = new DeptoModel();
+        const depto = new Depto();
         this.formDepto = this.fb.formGroup(depto);
     }
 

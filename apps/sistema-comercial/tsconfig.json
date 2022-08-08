@@ -1,0 +1,53 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "references": [
+        {
+            "path": "./tsconfig.json"
+        },
+        {
+            "path": "./tsconfig.spec.json"
+        },
+        {
+            "path": "./tsconfig.editor.json"
+        }
+    ],
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "outDir": "../../dist/out-tsc",
+        "paths": {
+            "@s-apollo/*": [ "apps/sistema-comercial/src/apollo/*" ],
+            "@s-app/*": [
+                "apps/sistema-comercial/src/app/*",
+                "apps/sistema-comercial/src/app/core/*",
+                "apps/sistema-comercial/src/app/layout/*",
+                "apps/sistema-comercial/src/app/mock-api/*",
+                "apps/sistema-comercial/src/app/modules/*",
+                "apps/sistema-comercial/src/app/modules/admin/*"
+            ],
+            "@s-directives/*": [ "apps/sistema-comercial/src/directives/*" ],
+            "@s-environments/*": [ "apps/sistema-comercial/src/environments/*" ],
+            "@s-fuse/*": [
+                "apps/sistema-comercial/src/@fuse/*",
+                "apps/sistema-comercial/src/@fuse/animations/*",
+                "apps/sistema-comercial/src/@fuse/components/*",
+                "apps/sistema-comercial/src/@fuse/directives/*",
+                "apps/sistema-comercial/src/@fuse-lib/*",
+                "apps/sistema-comercial/src/@fuse/pipes/*",
+                "apps/sistema-comercial/src/@fuse/services/*",
+                "apps/sistema-comercial/src/@fuse/tailwind/*",
+                "apps/sistema-comercial/src/@fuse/validators/*",
+                "apps/sistema-comercial/src/@fuse/version"
+            ],
+            "@s-ng-material/*": [ "apps/sistema-comercial/src/ng-material/*" ],
+            "@s-shared/*": [ "apps/sistema-comercial/src/Shared/*" ]
+        },
+        "types": [ ]
+    },
+    "files": [
+        "src/main.ts",
+        "src/polyfills.ts"
+    ],
+    "include": [
+        "src/**/*.d.ts"
+    ]
+}

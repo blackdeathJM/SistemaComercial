@@ -1,6 +1,7 @@
 import {AfterContentChecked, Component, OnInit} from '@angular/core';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
-import {IDepto} from '@s-app/modules/admin/deptos/models/depto.model';
+import {IDepto} from '../../../../../../../../../libs/models';
+
 
 @Component({
     selector: 'app-lista-deptos',

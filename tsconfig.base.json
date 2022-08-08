@@ -12,39 +12,15 @@
         "importHelpers": true,
         "target": "es2017",
         "module": "es2020",
-        "lib": ["es2020", "dom", "esnext.asynciterable"],
+        "lib": [ "es2020", "dom", "esnext.asynciterable" ],
         "paths": {
-            "@lib-common": ["libs/common/src/index.ts"],
-            "@s-NGXS/*": ["apps/sistema-comercial/src/NGXS/*"],
-            "@s-apollo/*": ["apps/sistema-comercial/src/apollo/*"],
-            "@s-app/*": [
-                "apps/sistema-comercial/src/app/*",
-                "apps/sistema-comercial/src/app/core/*",
-                "apps/sistema-comercial/src/app/layout/*",
-                "apps/sistema-comercial/src/app/mock-api/*",
-                "apps/sistema-comercial/src/app/modules/*"
-            ],
-            "@s-directives/*": ["apps/sistema-comercial/src/directives/*"],
-            "@s-environments/*": ["apps/sistema-comercial/src/environments/*"],
-            "@s-fuse/*": [
-                "apps/sistema-comercial/src/@fuse/*",
-                "apps/sistema-comercial/src/@fuse/animations/*",
-                "apps/sistema-comercial/src/@fuse/components/*",
-                "apps/sistema-comercial/src/@fuse/directives/*",
-                "apps/sistema-comercial/src/@fuse-lib/*",
-                "apps/sistema-comercial/src/@fuse/pipes/*",
-                "apps/sistema-comercial/src/@fuse/services/*",
-                "apps/sistema-comercial/src/@fuse/tailwind/*",
-                "apps/sistema-comercial/src/@fuse/validators/*",
-                "apps/sistema-comercial/src/@fuse/version"
-            ],
-            "@s-ng-material/*": ["apps/sistema-comercial/src/ng-material/*"],
-            "@s-shared/*": ["apps/sistema-comercial/src/Shared/*"]
+            "@lib-common": [ "libs/common/src/index.ts" ],
+            "modelos": [ "libs/models/index.ts" ]
         },
         "rootDir": "."
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false
     },
-    "exclude": ["node_modules", "tmp"]
+    "exclude": [ "node_modules", "tmp" ]
 }

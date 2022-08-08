@@ -1,8 +1,8 @@
-import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
-import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Document} from 'mongoose';
-import {IsNotEmpty, IsUppercase, Length} from 'class-validator';
-import {IDepto} from './depto.interface';
+import {Field, ID, InputType, ObjectType} from "@nestjs/graphql";
+import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
+import {Document} from "mongoose";
+import {IsNotEmpty, IsUppercase, Length} from "class-validator";
+import {IDepto} from "./depto.interface";
 
 // definimos el esquema para la base de datos y el tipo para la generacion del dsl de graphql en una sola clase
 @ObjectType('DeptoType')
@@ -16,15 +16,15 @@ export class Depto implements IDepto
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre del departamento es requerido'})
-    nombre: string = '';
+    nombre: string;
 
     @Field({nullable: true})
     @Prop({unique: true})
     @IsNotEmpty({message: 'Es necesario asignar un centro gestor'})
     @Length(3, 3, {message: 'El centro gestor tiene que tener como minimo y maximo 3 caracteres'})
     @IsUppercase({message: 'El centro gestor debe estar en mayusculas'})
-    centroGestor: string = '';
+    centroGestor: string;
 }
 
 export type DeptoType = Depto & Document;
-export const DEPTO_SCHEMA = SchemaFactory.createForClass(Depto);
+export const DeptoSchema = SchemaFactory.createForClass(Depto);
