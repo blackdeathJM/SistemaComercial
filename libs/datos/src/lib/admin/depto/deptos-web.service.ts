@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from '@s-shared/services/api.service';
+import {ApiService} from 'libs/services/src/lib/api.service';
 import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';
-import {crearDepto, deptos} from '@s-app/modules/admin/deptos/gql/deptos';
-import {IRespuesta} from '@s-shared/models/respuesta.model';
-import {NgxToastService} from '@s-shared/services/ngx-toast.service';
-import {Depto} from '#/libs/models/src';
+import {crearDepto, deptos} from 'libs/datos/src/lib/admin/depto/graphql/deptos';
+import {IRespuesta} from 'libs/models/src/lib/respuesta.model';
+import {NgxToastService} from 'libs/services/src/lib/ngx-toast.service';
+import {Depto} from 'apps/sistema-comercial/src/app/modules/admin/deptos/model/depto';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DeptosService extends ApiService
+export class DeptosWebService extends ApiService
 {
-    errorGraphql: string[] = null;
-
     constructor(apollo: Apollo, ngxToast: NgxToastService)
     {
         super(apollo, ngxToast);
@@ -24,7 +22,7 @@ export class DeptosService extends ApiService
         return this.mutation(crearDepto, {input});
     }
 
-    actualizarDepto(): Observable<IRespuesta>
+    actualizarDepto(): Observable<IRespuesta> | null
     {
         return null;
     }

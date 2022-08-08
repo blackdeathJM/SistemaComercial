@@ -1,12 +1,17 @@
 import {Query, Resolver} from '@nestjs/graphql';
-import {Depto} from '@lib-common';
+import {Depto} from './DTO/depto.dto';
+import {DeptosService} from './deptos.service';
+import {IDepto} from '@sistema-comercial/models';
 
 @Resolver()
 export class DeptoResolver
 {
-    @Query(() => [Depto])
-    async deptos(): Promise<Depto[]>
+    constructor(private deptosService: DeptosService)
     {
-        return [];
+    }
+    @Query(() => [Depto])
+    async deptos(): Promise<IDepto[]>
+    {
+        return this.deptosService.deptos();
     }
 }

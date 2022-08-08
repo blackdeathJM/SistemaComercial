@@ -1,0 +1,25 @@
+{
+    "projectType": "library",
+    "sourceRoot": "libs/datos/src",
+    "prefix": "sistema-comercial",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/datos"],
+            "options": {
+                "jestConfig": "libs/datos/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/datos/**/*.ts",
+                    "libs/datos/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

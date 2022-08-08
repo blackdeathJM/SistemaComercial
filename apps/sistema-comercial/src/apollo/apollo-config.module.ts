@@ -5,13 +5,13 @@ import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
 import {getMainDefinition} from '@apollo/client/utilities';
-import {createUploadLink} from 'apollo-upload-client';
-import Swal from 'sweetalert2';
-import {GRAPHQL_STATE} from '@s-apollo/graphql.state';
+import { createUploadLink } from 'apollo-upload-client';
 import {environment} from '@s-environments/environment';
 
+
+
 @NgModule({
-    // imports: [HttpClientModule, ApolloModule, HttpLinkModule]
+    // imports: [HttpClientModule, ApolloConfigModule, HttpLinkModule]
     imports: [HttpClientModule, ApolloModule]
 })
 export class ApolloConfigModule
@@ -23,16 +23,12 @@ export class ApolloConfigModule
         {
             if (graphQLErrors)
             {
-                for (const i of graphQLErrors)
-                {
-                    GRAPHQL_STATE(i.extensions.response['message']);
-                }
+                console.log('GraphQL Errors', graphQLErrors);
             }
-
 
             if (networkError)
             {
-                Swal.fire('Error de red', networkError.message, 'error').then();
+                console.log('Networkd Errors', networkError);
             }
         });
 

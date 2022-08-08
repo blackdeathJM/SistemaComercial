@@ -14,7 +14,6 @@
         <app-lista-deptos *ngIf="!datosCargados; else cargando "></app-lista-deptos>
     </ng-container>
 </app-tarjeta-contenido-scroll>
-
 <ng-template #cargando>
-<app-tailwind-loading></app-tailwind-loading>
+    <sistema-comercial-tailwind-loading></sistema-comercial-tailwind-loading>
 </ng-template>

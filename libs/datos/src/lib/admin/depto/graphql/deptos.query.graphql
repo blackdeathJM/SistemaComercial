@@ -1,0 +1,6 @@
+query Departamentos
+{
+    deptos {
+        ...fragDeptos
+    }
+}

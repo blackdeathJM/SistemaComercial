@@ -4,7 +4,6 @@ import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {DeptosModule} from './deptos/deptos.module';
-import {DeptosService} from './deptos/deptos.service';
 
 @Module({
     imports: [
@@ -15,7 +14,7 @@ import {DeptosService} from './deptos/deptos.service';
                 'graphql-ws': true,
                 'subscriptions-transport-ws': true,
             },
-            autoSchemaFile: 'apps/api/schema.gql',
+            autoSchemaFile: 'apps/api/schema.graphql',
             cors: {origin: '*', credentials: false},
             introspection: true,
             path: '/graphql',
@@ -28,7 +27,7 @@ import {DeptosService} from './deptos/deptos.service';
         ),
         DeptosModule,
     ],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, DeptosService],
+    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}],
 })
 export class AppModule
 {

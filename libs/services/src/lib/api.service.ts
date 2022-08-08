@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {DocumentNode} from 'graphql';
 import {catchError, Observable, of} from 'rxjs';
-import {NgxToastService} from '@s-shared/services/ngx-toast.service';
-import {GRAPHQL_STATE} from '@s-apollo/graphql.state';
+import {NgxToastService} from 'libs/services/src/lib/ngx-toast.service';
+import {GRAPHQL_STATE} from 'apps/sistema-comercial/src/apollo/graphql.state';
 import {concat, isArray} from 'lodash-es';
 
 @Injectable({

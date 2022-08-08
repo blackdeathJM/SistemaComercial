@@ -4,9 +4,9 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:3000/file',
-    apiGraphql: 'http://localhost:3000/graphql',
-    wsGraphql: 'ws://localhost:3000/graphql',
+    apiUrl: 'http://localhost:3333/file',
+    apiGraphql: 'http://localhost:3333/graphql',
+    wsGraphql: 'ws://localhost:3333/graphql',
 };
 
 /*

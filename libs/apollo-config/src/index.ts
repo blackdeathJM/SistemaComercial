@@ -1,1 +1,1 @@
-export * from './lib/apollo-config.module';
+export * from './lib/nx-apollo.module';

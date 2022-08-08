@@ -12,7 +12,6 @@ import {LayoutModule} from '@s-app/layout/layout.module';
 import {AppComponent} from '@s-app/app.component';
 import {appRoutes} from '@s-app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
-import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DeptosModule} from '@s-app/modules/admin/deptos/deptos.module';
@@ -21,6 +20,8 @@ import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FuseModule} from '@s-fuse/fuse.module';
+import {CommonModule} from '@angular/common';
+import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 
 const routerConfig: ExtraOptions =
     {
@@ -36,13 +37,12 @@ const routerConfig: ExtraOptions =
     imports:
         [
             BrowserModule,
+            HttpClientModule,
+            CommonModule,
             FormsModule,
             ReactiveFormsModule,
             RxReactiveFormsModule,
             BrowserAnimationsModule,
-
-            // modulos
-            DeptosModule,
 
             RouterModule.forRoot(appRoutes, routerConfig),
 
@@ -60,11 +60,12 @@ const routerConfig: ExtraOptions =
             // 3rd party modules that require global configuration via forRoot
             MarkdownModule.forRoot({}),
             ApolloConfigModule,
-            HttpClientModule,
             NgxSkeletonLoaderModule.forRoot(),
             SweetAlert2Module.forRoot(),
             ToastrModule.forRoot(),
-            NgxTrimDirectiveModule
+            NgxTrimDirectiveModule,
+            // modulos
+            DeptosModule,
         ],
     bootstrap:
         [

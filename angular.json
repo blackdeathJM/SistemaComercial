@@ -4,7 +4,10 @@
     "projects": {
         "api": "apps/api",
         "apollo-config": "libs/apollo-config",
+        "datos": "libs/datos",
         "models": "libs/models",
-        "sistema-comercial": "apps/sistema-comercial"
+        "services": "libs/services",
+        "sistema-comercial": "apps/sistema-comercial",
+        "ui": "libs/ui"
     }
 }

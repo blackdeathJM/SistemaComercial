@@ -1,4 +1,4 @@
-import {AfterContentChecked, Component, OnInit} from '@angular/core';
+import {AfterContentChecked, Component} from '@angular/core';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src';
 
@@ -7,7 +7,7 @@ import {IDepto} from '#/libs/models/src';
     templateUrl: './lista-deptos.component.html',
     styleUrls: ['./lista-deptos.component.scss']
 })
-export class ListaDeptosComponent implements AfterContentChecked, OnInit
+export class ListaDeptosComponent implements AfterContentChecked
 {
     deptos = STATE_DEPTOS();
 
@@ -19,10 +19,5 @@ export class ListaDeptosComponent implements AfterContentChecked, OnInit
     trackByFn(index: number, item: IDepto): string
     {
         return item._id;
-    }
-
-    ngOnInit(): void
-    {
-        // this.deptos = STATE_DEPTOS();
     }
 }
