@@ -1,8 +1,8 @@
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
-import {Depto, DEPTO_SCHEMA} from '@lib-common';
 import {DeptoResolver} from './depto.resolver';
 import {DeptosService} from './deptos.service';
+import {Depto, DEPTO_SCHEMA} from '@models';
 
 @Module({
     imports: [MongooseModule.forFeature([{name: Depto.name, schema: DEPTO_SCHEMA}])],
