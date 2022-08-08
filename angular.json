@@ -3,6 +3,7 @@
     "version": 2,
     "projects": {
         "api": "apps/api",
+        "apollo-config": "libs/apollo-config",
         "models": "libs/models",
         "sistema-comercial": "apps/sistema-comercial"
     }
