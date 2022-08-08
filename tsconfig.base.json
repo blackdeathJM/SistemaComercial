@@ -13,9 +13,9 @@
         "target": "es2017",
         "module": "es2020",
         "lib": [ "es2020", "dom", "esnext.asynciterable" ],
+        "removeComments": true,
         "paths": {
-            "@lib-common": [ "libs/common/src/index.ts" ],
-            "modelos": [ "libs/models/index.ts" ]
+            "@models": [ "libs/models/src/index.ts" ]
         },
         "rootDir": "."
     },

@@ -15,6 +15,7 @@
         "experimentalDecorators": true,
         "outDir": "../../dist/out-tsc",
         "paths": {
+            "#/*": ["./*"],
             "@s-apollo/*": [ "apps/sistema-comercial/src/apollo/*" ],
             "@s-app/*": [
                 "apps/sistema-comercial/src/app/*",

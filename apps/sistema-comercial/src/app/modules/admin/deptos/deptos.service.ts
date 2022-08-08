@@ -5,7 +5,6 @@ import {Observable} from 'rxjs';
 import {crearDepto, deptos} from '@s-app/modules/admin/deptos/gql/deptos';
 import {IRespuesta} from '@s-shared/models/respuesta.model';
 import {NgxToastService} from '@s-shared/services/ngx-toast.service';
-import {Depto} from '../../../../../../../libs/models';
 
 @Injectable({
     providedIn: 'root'
@@ -19,10 +18,10 @@ export class DeptosService extends ApiService
         super(apollo, ngxToast);
     }
 
-    crearDepto(input: Depto): Observable<IRespuesta>
-    {
-        return this.mutation(crearDepto, {input});
-    }
+    // crearDepto(input: Depto): Observable<IRespuesta>
+    // {
+    //     return this.mutation(crearDepto, {input});
+    // }
 
     actualizarDepto(): Observable<IRespuesta>
     {

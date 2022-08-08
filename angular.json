@@ -3,7 +3,7 @@
     "version": 2,
     "projects": {
         "api": "apps/api",
-        "common": "libs/common",
+        "models": "libs/models",
         "sistema-comercial": "apps/sistema-comercial"
     }
 }
