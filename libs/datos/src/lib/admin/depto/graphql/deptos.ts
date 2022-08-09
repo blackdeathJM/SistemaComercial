@@ -17,9 +17,8 @@ export const crearDepto = gql`
     {
         crearDepto(input: $input)
         {
-            _id
-            nombre
-            centroGestor
+            ...fragDeptos
         }
     }
+    ${FRAG_DEPTOS}
 `;

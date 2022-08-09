@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {NgMaterialModule} from 'libs/ui/src/lib/ng-material/ng-material.module';
-import {TarjetaContenidoScrollComponent} from 'libs/ui/src/lib/plantillas/tarjeta-contenido-scroll/tarjeta-contenido-scroll.component';
-import {TarjetaScrollPagComponent} from 'libs/ui/src/lib/plantillas/tarjeta-scroll-pag/tarjeta-scroll-pag.component';
+import {NgMaterialMaterialModule} from '@s-shared/ng-material/ng-material-material.module';
+import {TarjetaContenidoScrollComponent} from '@s-shared/plantillas/tarjeta-contenido-scroll/tarjeta-contenido-scroll.component';
+import {TarjetaScrollPagComponent} from '@s-shared/plantillas/tarjeta-scroll-pag/tarjeta-scroll-pag.component';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import {TarjetaScrollPagComponent} from 'libs/ui/src/lib/plantillas/tarjeta-scro
     imports:
         [
             CommonModule,
-            NgMaterialModule
+            NgMaterialMaterialModule
         ]
 })
 export class PlantillasModule

@@ -3,7 +3,7 @@ import {Apollo} from 'apollo-angular';
 import {DocumentNode} from 'graphql';
 import {catchError, Observable, of} from 'rxjs';
 import {NgxToastService} from 'libs/services/src/lib/ngx-toast.service';
-import {GRAPHQL_STATE} from 'apps/sistema-comercial/src/apollo/graphql.state';
+import {STATE_GRAPHQL} from 'apps/sistema-comercial/src/apollo/graphql.state';
 import {concat, isArray} from 'lodash-es';
 
 @Injectable({
@@ -56,14 +56,14 @@ export class ApiService
 
     private errorServidor(): void
     {
-        if (GRAPHQL_STATE())
+        if (STATE_GRAPHQL())
         {
-            if (isArray(GRAPHQL_STATE()))
+            if (isArray(STATE_GRAPHQL()))
             {
-                this.errorGraphql = GRAPHQL_STATE();
+                this.errorGraphql = STATE_GRAPHQL();
             } else
             {
-                this.errorGraphql = concat(GRAPHQL_STATE());
+                this.errorGraphql = concat(STATE_GRAPHQL());
             }
             this.errorGraphql.map((res) =>
             {

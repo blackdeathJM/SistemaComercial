@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Depto, DeptoType} from './DTO/depto.dto';
 import {Model} from 'mongoose';
@@ -14,5 +14,17 @@ export class DeptosService
     async deptos(): Promise<IDepto[]>
     {
         return this.depto.find().exec();
+    }
+
+    async crearDepto(input: Depto): Promise<IDepto>
+    {
+        const buscarDepto = await this.depto.findOne({nombre: input.nombre, centroGestor: input.centroGestor}).exec();
+        if (buscarDepto)
+        {
+            throw new NotAcceptableException('No se puede registrar un documento duplicado', 'Crear departamento');
+        }
+
+        const depto = new this.depto(input);
+        return depto.save();
     }
 }

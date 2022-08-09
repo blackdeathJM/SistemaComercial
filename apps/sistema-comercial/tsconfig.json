@@ -15,7 +15,7 @@
         "experimentalDecorators": true,
         "outDir": "../../dist/out-tsc",
         "paths": {
-            "#/*": ["./*"],
+            "#/*": [ "./*" ],
             "@s-apollo/*": [ "apps/sistema-comercial/src/apollo/*" ],
             "@s-app/*": [
                 "apps/sistema-comercial/src/app/*",
@@ -39,7 +39,6 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version"
             ],
-            "@s-ng-material/*": [ "apps/sistema-comercial/src/ng-material/*" ],
             "@s-shared/*": [ "apps/sistema-comercial/src/Shared/*" ]
         },
         "types": [ ]

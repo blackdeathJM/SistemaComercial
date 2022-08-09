@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Registro de nuevos departamentos</h2>
 <mat-dialog-content>
-    <form *ngIf="formDepto" [formGroup]="formDepto">
+    <form *ngIf="formDepto" [formGroup]="formDepto" autocomplete="off">
         <div class="flex flex-col">
             <mat-form-field>
                 <mat-label>Nombre del departamento</mat-label>
@@ -17,4 +17,4 @@
 </mat-dialog-content>
 
 <!--<app-registros (reg)="registrar()" (can)="cancelar()" [cargando]="cargandoDatos" [deshabilitar]="formDepto.invalid || cargandoDatos"></app-registros>-->
-<app-registros (reg)="registrar()" (can)="cancelar()" [cargando]="cargandoDatos"></app-registros>
+<app-registros (reg)="registrar()" (can)="cancelar()"></app-registros>

@@ -18,8 +18,7 @@
             "@sistema-comercial/apollo-config": [ "libs/apollo-config/src/index.ts" ],
             "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
             "@sistema-comercial/models": [ "libs/models/src/index.ts" ],
-            "@sistema-comercial/services": [ "libs/services/src/index.ts" ],
-            "@sistema-comercial/ui": [ "libs/ui/src/index.ts" ]
+            "@sistema-comercial/services": [ "libs/services/src/index.ts" ]
         },
         "rootDir": "."
     },

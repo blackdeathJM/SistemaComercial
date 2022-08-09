@@ -5,9 +5,11 @@ import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
 import {getMainDefinition} from '@apollo/client/utilities';
-import { createUploadLink } from 'apollo-upload-client';
+import {createUploadLink} from 'apollo-upload-client';
 import {environment} from '@s-environments/environment';
-
+import {ToastrService} from 'ngx-toastr';
+import Swal from 'sweetalert2';
+import {concat, isArray} from 'lodash-es';
 
 
 @NgModule({
@@ -16,19 +18,26 @@ import {environment} from '@s-environments/environment';
 })
 export class ApolloConfigModule
 {
-    constructor(apollo: Apollo)
+    constructor(apollo: Apollo, private ngxToast: ToastrService)
     {
         // Para capturar los errores de consulta y/o de red
-        const errorLink = onError(({graphQLErrors, networkError}) =>
+        const errorLink = onError(({graphQLErrors, networkError, response}) =>
         {
             if (graphQLErrors)
             {
-                console.log('GraphQL Errors', graphQLErrors);
+                const arreglo = response.errors[0]['extensions']['response']['message'];
+                const arreglo2 = isArray(arreglo) ? arreglo : concat(arreglo);
+
+                arreglo2.map((res) =>
+                {
+                    this.ngxToast.error(res, 'Error en el servidor',
+                        {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 20000});
+                });
             }
 
             if (networkError)
             {
-                console.log('Networkd Errors', networkError);
+                Swal.fire('Error de conexion', networkError.message, 'error').then();
             }
         });
 

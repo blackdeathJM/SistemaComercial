@@ -1,4 +1,4 @@
-import {Query, Resolver} from '@nestjs/graphql';
+import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {Depto} from './DTO/depto.dto';
 import {DeptosService} from './deptos.service';
 import {IDepto} from '@sistema-comercial/models';
@@ -9,9 +9,16 @@ export class DeptoResolver
     constructor(private deptosService: DeptosService)
     {
     }
+
     @Query(() => [Depto])
     async deptos(): Promise<IDepto[]>
     {
         return this.deptosService.deptos();
+    }
+
+    @Mutation(() => Depto)
+    async crearDepto(@Args('input') input: Depto): Promise<IDepto>
+    {
+        return await this.deptosService.crearDepto(input);
     }
 }

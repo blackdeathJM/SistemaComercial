@@ -17,3 +17,7 @@ input DeptoInput {
 type Query {
   deptos: [DeptoType!]!
 }
+
+type Mutation {
+  crearDepto(input: DeptoInput!): DeptoType!
+}

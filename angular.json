@@ -7,7 +7,6 @@
         "datos": "libs/datos",
         "models": "libs/models",
         "services": "libs/services",
-        "sistema-comercial": "apps/sistema-comercial",
-        "ui": "libs/ui"
+        "sistema-comercial": "apps/sistema-comercial"
     }
 }

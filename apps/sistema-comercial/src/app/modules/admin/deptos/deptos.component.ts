@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
 import {DepartamentosGQL, deptos} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src';
+import {STATE_GRAPHQL} from '@s-apollo/graphql.state';
 
 @Component({
     selector: 'app-deptos-principal',
@@ -31,22 +32,14 @@ export class DeptosComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        // this.subscripciones.add(this.deptosWebService.deptos().pipe(tap((res) =>
-        // {
-        //     if (res.data !== undefined)
-        //     {
-        //         this.datosCargados = false;
-        //         STATE_DEPTOS(res.data['deptos']);
-        //     }
-        //     console.log('respu', typeof res.data['deptos'], res.data['deptos']);
-        // }, finalize(() => console.log('Todo termino correctamente')))).subscribe());
-
-        this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(finalize(() => console.log('finalizo esta madre')),
-            map((res) =>
+        this.subscripciones.add(this.deptosGQL.watch({},
             {
-                this.datosCargados = false;
-                STATE_DEPTOS(res.data.deptos as IDepto[]);
-            })).subscribe());
+                notifyOnNetworkStatusChange: true
+            }).valueChanges.pipe(finalize(() => this.datosCargados = false)).subscribe((res) =>
+        {
+            this.datosCargados = res.loading;
+            STATE_DEPTOS(res.data.deptos as IDepto[]);
+        }));
     }
 
     ngOnDestroy(): void

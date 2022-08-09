@@ -39,6 +39,6 @@ import {MatDividerModule} from '@angular/material/divider';
             PortalModule
         ]
 })
-export class NgMaterialModule
+export class NgMaterialMaterialModule
 {
 }
