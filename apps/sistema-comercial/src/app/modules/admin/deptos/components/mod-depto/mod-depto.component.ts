@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {NgxToastService} from '#/libs/services/src/lib/ngx-toast.service';
 import {Depto} from '@s-app/deptos/depto';
 import {CrearDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
@@ -20,14 +20,22 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL)
+    constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
+                @Inject(MAT_DIALOG_DATA) private data: IDepto)
     {
     }
 
     ngOnInit(): void
     {
         const depto = new Depto();
-        this.formDepto = this.fb.formGroup(depto);
+        console.log('ingresando la data', this.data);
+        if (this.data)
+        {
+            this.formDepto.patchValue(this.data);
+        } else
+        {
+            this.formDepto = this.fb.formGroup(depto);
+        }
     }
 
     registrar(): void
@@ -47,6 +55,7 @@ export class ModDeptoComponent implements OnInit
             {
                 const elementos = STATE_DEPTOS();
                 STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
+                this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
             }
             this.cargandoDatos = res.loading;
         });

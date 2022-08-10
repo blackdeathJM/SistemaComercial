@@ -1,13 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
 import {DeptosWebService} from '#/libs/datos/src/lib/admin/depto/deptos-web.service';
-import {finalize, map, Subscription} from 'rxjs';
+import {finalize, Subscription} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
-import {DepartamentosGQL, deptos} from '#/libs/datos/src';
+import {DepartamentosGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src';
-import {STATE_GRAPHQL} from '@s-apollo/graphql.state';
 
 @Component({
     selector: 'app-deptos-principal',
@@ -45,5 +44,10 @@ export class DeptosComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.subscripciones.unsubscribe();
+    }
+
+    editar(data: IDepto): void
+    {
+        this.dRef.open(ModDeptoComponent, {width: '40%', data});
     }
 }

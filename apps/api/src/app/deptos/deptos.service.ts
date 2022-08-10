@@ -18,7 +18,7 @@ export class DeptosService
 
     async crearDepto(input: Depto): Promise<IDepto>
     {
-        const buscarDepto = await this.depto.findOne({nombre: input.nombre, centroGestor: input.centroGestor}).exec();
+        const buscarDepto = await this.depto.findOne({$or: [{nombre: input.nombre}, {centroGestor: input.centroGestor}]}).exec();
         if (buscarDepto)
         {
             throw new NotAcceptableException('No se puede registrar un documento duplicado', 'Crear departamento');
