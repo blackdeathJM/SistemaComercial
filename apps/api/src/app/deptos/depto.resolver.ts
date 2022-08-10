@@ -21,4 +21,11 @@ export class DeptoResolver
     {
         return await this.deptosService.crearDepto(input);
     }
+
+    @Mutation(() => Depto)
+    async actualizarDepto(@Args('input') input: Depto): Promise<IDepto>
+    {
+        return await this.deptosService.actualizarDepto(input);
+    }
+
 }

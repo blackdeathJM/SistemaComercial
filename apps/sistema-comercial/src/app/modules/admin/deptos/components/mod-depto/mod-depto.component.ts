@@ -4,10 +4,10 @@ import {FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {NgxToastService} from '#/libs/services/src/lib/ngx-toast.service';
 import {Depto} from '@s-app/deptos/depto';
-import {CrearDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
+import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src';
-import {finalize} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 
 @Component({
     selector: 'app-mod-depto',
@@ -21,7 +21,7 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
 
     constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
-                @Inject(MAT_DIALOG_DATA) private data: IDepto)
+                @Inject(MAT_DIALOG_DATA) private data: IDepto, private actualizarDeptoGQL: ActualizarDeptoGQL)
     {
     }
 
@@ -29,6 +29,7 @@ export class ModDeptoComponent implements OnInit
     {
         const depto = new Depto();
         this.formDepto = this.fb.formGroup(depto);
+
         if (this.data)
         {
             this.formDepto.patchValue(this.data);
@@ -38,24 +39,36 @@ export class ModDeptoComponent implements OnInit
     registrar(): void
     {
         this.cargandoDatos = true;
-        this.crearDeptoGQL.mutate({input: this.formDepto.value}, {
-            useMutationLoading: true,
-            // update: (store, result) =>
-            // {
-            //     const data: DepartamentosQuery = store.readQuery({query: DepartamentosDocument});
-            //     data.deptos = [...data.deptos, result.data.crearDepto];
-            //     store.writeQuery({query: DepartamentosDocument, data});
-            // }
-        }).pipe(finalize(() => this.cancelar())).subscribe((res) =>
+        if (this.data)
         {
-            if (res.data)
+            const input = {_id: this.data._id, ...this.formDepto.value};
+            this.actualizarDeptoGQL.mutate({input}, {
+                useMutationLoading: true,
+            }).pipe(tap((res) =>
             {
-                const elementos = STATE_DEPTOS();
-                STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
-                this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
-            }
-            this.cargandoDatos = res.loading;
-        });
+
+            })).subscribe();
+        } else
+        {
+            this.crearDeptoGQL.mutate({input: this.formDepto.value}, {
+                useMutationLoading: true,
+                // update: (store, result) =>
+                // {
+                //     const data: DepartamentosQuery = store.readQuery({query: DepartamentosDocument});
+                //     data.deptos = [...data.deptos, result.data.crearDepto];
+                //     store.writeQuery({query: DepartamentosDocument, data});
+                // }
+            }).pipe(finalize(() => this.cancelar())).subscribe((res) =>
+            {
+                if (res.data)
+                {
+                    const elementos = STATE_DEPTOS();
+                    STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
+                    this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
+                }
+                this.cargandoDatos = res.loading;
+            });
+        }
     }
 
     cancelar(): void

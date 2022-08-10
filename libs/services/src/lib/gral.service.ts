@@ -1,9 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class GralService {
+export class GralService
+{
 
-  constructor() { }
+    constructor()
+    {
+    }
+
+    static nvoEdo(_id: string, estado: any): any
+    {
+        return estado.filter((id: { _id: string }) => id._id !== _id);
+    }
 }

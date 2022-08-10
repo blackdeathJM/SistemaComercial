@@ -3,6 +3,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Depto, DeptoType} from './DTO/depto.dto';
 import {Model} from 'mongoose';
 import {IDepto} from '@sistema-comercial/models';
+import {ObjectId} from 'bson';
 
 @Injectable()
 export class DeptosService
@@ -26,5 +27,12 @@ export class DeptosService
 
         const depto = new this.depto(input);
         return depto.save();
+    }
+
+    async actualizarDepto(input: Depto): Promise<IDepto>
+    {
+        const buscarDepto = await this.depto.findByIdAndUpdate(new ObjectId(input._id)).exec();
+        Object.assign(buscarDepto, {...input});
+        return buscarDepto.save();
     }
 }

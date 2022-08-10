@@ -11,3 +11,11 @@ mutation crearDepto($input: DeptoInput!)
         ...fragDeptos
     }
 }
+mutation actualizarDepto($input: DeptoInput!)
+{
+    actualizarDepto(input: $input)
+    {
+        ...fragDeptos
+    }
+}
+

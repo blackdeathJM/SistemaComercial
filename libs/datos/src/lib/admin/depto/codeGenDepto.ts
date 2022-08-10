@@ -30,7 +30,13 @@ export type DeptoType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  actualizarDepto: DeptoType;
   crearDepto: DeptoType;
+};
+
+
+export type MutationActualizarDeptoArgs = {
+  input: DeptoInput;
 };
 
 
@@ -56,6 +62,13 @@ export type CrearDeptoMutationVariables = Exact<{
 
 
 export type CrearDeptoMutation = { __typename?: 'Mutation', crearDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
+
+export type ActualizarDeptoMutationVariables = Exact<{
+  input: DeptoInput;
+}>;
+
+
+export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -95,6 +108,24 @@ export const CrearDeptoDocument = gql`
   })
   export class CrearDeptoGQL extends Apollo.Mutation<CrearDeptoMutation, CrearDeptoMutationVariables> {
     document = CrearDeptoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActualizarDeptoDocument = gql`
+    mutation actualizarDepto($input: DeptoInput!) {
+  actualizarDepto(input: $input) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
+    document = ActualizarDeptoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
