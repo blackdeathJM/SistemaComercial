@@ -28,13 +28,10 @@ export class ModDeptoComponent implements OnInit
     ngOnInit(): void
     {
         const depto = new Depto();
-        console.log('ingresando la data', this.data);
+        this.formDepto = this.fb.formGroup(depto);
         if (this.data)
         {
             this.formDepto.patchValue(this.data);
-        } else
-        {
-            this.formDepto = this.fb.formGroup(depto);
         }
     }
 
