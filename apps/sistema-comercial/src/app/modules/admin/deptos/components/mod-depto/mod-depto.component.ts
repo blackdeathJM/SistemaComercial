@@ -8,6 +8,8 @@ import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src/lib/admin/dept
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src';
 import {finalize, tap} from 'rxjs';
+import {unionBy} from 'lodash-es';
+import {FuseConfirmationService} from '@s-fuse/confirmation';
 
 @Component({
     selector: 'app-mod-depto',
@@ -39,15 +41,21 @@ export class ModDeptoComponent implements OnInit
     registrar(): void
     {
         this.cargandoDatos = true;
+        // si vienen datos cuando se abre el modal cargamos los datos en el formulario para poder actualizarlos y si no realizamos un nuevo registro
         if (this.data)
         {
-            const input = {_id: this.data._id, ...this.formDepto.value};
-            this.actualizarDeptoGQL.mutate({input}, {
-                useMutationLoading: true,
-            }).pipe(tap((res) =>
-            {
-
-            })).subscribe();
+            const input = {_id: this.data._id, ...this.formDepto.value} as IDepto;
+            this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.cancelar()),
+                tap((res) =>
+                {
+                    if (res.data)
+                    {
+                        unionBy(STATE_DEPTOS(), res.data.actualizarDepto);
+                        this.cargandoDatos = false;
+                        this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
+                    }
+                })
+            ).subscribe();
         } else
         {
             this.crearDeptoGQL.mutate({input: this.formDepto.value}, {

@@ -18,4 +18,10 @@ mutation actualizarDepto($input: DeptoInput!)
         ...fragDeptos
     }
 }
-
+mutation eliminarDepto($_id: String!)
+{
+    eliminarDepto(_id: $_id)
+    {
+        ...fragDeptos
+    }
+}

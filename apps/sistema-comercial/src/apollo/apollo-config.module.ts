@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {Apollo, ApolloModule} from 'apollo-angular';
+import {Apollo, APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
@@ -13,7 +13,6 @@ import {concat, isArray} from 'lodash-es';
 
 
 @NgModule({
-    // imports: [HttpClientModule, ApolloConfigModule, HttpLinkModule]
     imports: [HttpClientModule, ApolloModule]
 })
 export class ApolloConfigModule
@@ -61,7 +60,16 @@ export class ApolloConfigModule
 
         apollo.create({
             link,
+            defaultOptions: {
+                watchQuery:
+                    {
+                        notifyOnNetworkStatusChange: true,
+                        fetchPolicy: 'cache-and-network',
+                    },
+            },
+
             cache: new InMemoryCache(),
+            connectToDevTools: true
         });
     }
 }

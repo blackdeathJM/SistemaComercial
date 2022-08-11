@@ -28,4 +28,9 @@ export class DeptoResolver
         return await this.deptosService.actualizarDepto(input);
     }
 
+    @Mutation(() => Depto)
+    async eliminarDepto(@Args('_id') _id: string): Promise<IDepto>
+    {
+        return await this.deptosService.eliminarDepto(_id);
+    }
 }

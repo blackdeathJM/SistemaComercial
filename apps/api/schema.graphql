@@ -21,4 +21,5 @@ type Query {
 type Mutation {
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
+  eliminarDepto(_id: String!): DeptoType!
 }

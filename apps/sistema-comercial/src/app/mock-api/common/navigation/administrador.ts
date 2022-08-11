@@ -16,6 +16,13 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             children:
                 [
                     {
+                        id: 'adminGeneral',
+                        title: 'Admin Gral',
+                        type: 'basic',
+                        icon: '',
+                        link: rutaBaseAdministrador + ''
+                    },
+                    {
                         id: 'deptos',
                         title: 'Departamentos',
                         type: 'basic',

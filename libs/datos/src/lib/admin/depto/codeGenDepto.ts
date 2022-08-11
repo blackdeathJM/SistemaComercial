@@ -32,6 +32,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   actualizarDepto: DeptoType;
   crearDepto: DeptoType;
+  eliminarDepto: DeptoType;
 };
 
 
@@ -42,6 +43,11 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationCrearDeptoArgs = {
   input: DeptoInput;
+};
+
+
+export type MutationEliminarDeptoArgs = {
+  _id: Scalars['String'];
 };
 
 export type Query = {
@@ -69,6 +75,13 @@ export type ActualizarDeptoMutationVariables = Exact<{
 
 
 export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
+
+export type EliminarDeptoMutationVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type EliminarDeptoMutation = { __typename?: 'Mutation', eliminarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -126,6 +139,24 @@ export const ActualizarDeptoDocument = gql`
   })
   export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
     document = ActualizarDeptoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EliminarDeptoDocument = gql`
+    mutation eliminarDepto($_id: String!) {
+  eliminarDepto(_id: $_id) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EliminarDeptoGQL extends Apollo.Mutation<EliminarDeptoMutation, EliminarDeptoMutationVariables> {
+    document = EliminarDeptoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

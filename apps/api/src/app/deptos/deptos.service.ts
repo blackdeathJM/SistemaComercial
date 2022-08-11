@@ -19,11 +19,8 @@ export class DeptosService
 
     async crearDepto(input: Depto): Promise<IDepto>
     {
-        const buscarDepto = await this.depto.findOne({$or: [{nombre: input.nombre}, {centroGestor: input.centroGestor}]}).exec();
-        if (buscarDepto)
-        {
-            throw new NotAcceptableException('No se puede registrar un documento duplicado', 'Crear departamento');
-        }
+
+        await this.buscarDepto(input.nombre, input.centroGestor);
 
         const depto = new this.depto(input);
         return depto.save();
@@ -31,8 +28,24 @@ export class DeptosService
 
     async actualizarDepto(input: Depto): Promise<IDepto>
     {
-        const buscarDepto = await this.depto.findByIdAndUpdate(new ObjectId(input._id)).exec();
+        await this.buscarDepto(input.nombre, input.centroGestor);
+
+        const buscarDepto = await this.depto.findByIdAndUpdate(new ObjectId(input._id));
         Object.assign(buscarDepto, {...input});
         return buscarDepto.save();
+    }
+
+    async eliminarDepto(_id: string): Promise<IDepto>
+    {
+        return await this.depto.findByIdAndDelete(new ObjectId(_id)).exec();
+    }
+
+    async buscarDepto(nombre: string, centroGestor: string): Promise<void>
+    {
+        const buscarDepto = await this.depto.findOne({nombre, centroGestor}).exec();
+        if (buscarDepto)
+        {
+            throw new NotAcceptableException('El documento tiene campos duplicados', 'Departamentos');
+        }
     }
 }
