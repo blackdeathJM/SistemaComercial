@@ -9,6 +9,7 @@ import {PortalModule} from '@angular/cdk/portal';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MatDividerModule} from '@angular/material/divider';
             MatDialogModule,
             MatDividerModule,
             CdkScrollableModule,
+            MatSidenavModule,
             PortalModule,
         ],
     exports:
@@ -36,6 +38,7 @@ import {MatDividerModule} from '@angular/material/divider';
             MatDialogModule,
             MatDividerModule,
             CdkScrollableModule,
+            MatSidenavModule,
             PortalModule
         ]
 })

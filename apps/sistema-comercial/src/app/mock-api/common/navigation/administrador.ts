@@ -19,22 +19,8 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
                         id: 'adminGeneral',
                         title: 'Admin Gral',
                         type: 'basic',
-                        icon: '',
-                        link: rutaBaseAdministrador + ''
-                    },
-                    {
-                        id: 'deptos',
-                        title: 'Departamentos',
-                        type: 'basic',
-                        icon: 'corporate_fare',
-                        link: rutaBaseAdministrador + 'deptos'
-                    },
-                    {
-                        id: 'usuarios',
-                        title: 'Usuarios',
-                        type: 'basic',
-                        icon: 'heroicons_outline:users',
-                        link: rutaBaseAdministrador + 'usuarios'
+                        icon: 'heroicons_outline:cog',
+                        link: rutaBaseAdministrador
                     }
                 ]
         }

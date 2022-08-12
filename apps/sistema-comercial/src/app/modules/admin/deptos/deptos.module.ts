@@ -17,6 +17,9 @@ import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
             ModDeptoComponent,
             ListaDeptosComponent
         ],
+    exports: [
+        DeptosComponent
+    ],
     imports:
         [
             NgMaterialMaterialModule,
