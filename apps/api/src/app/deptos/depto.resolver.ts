@@ -1,5 +1,5 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {Depto} from './DTO/depto.dto';
+import {Depto} from '@sistema-comercial/models';
 import {DeptosService} from './deptos.service';
 import {IDepto} from '@sistema-comercial/models';
 

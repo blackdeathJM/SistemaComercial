@@ -1,5 +1,5 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
-import {Prop, Schema} from '@nestjs/mongoose';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IAuth, IEmpleado} from '@sistema-comercial/models';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 
@@ -37,10 +37,27 @@ export class EmpleadoDto implements IEmpleado
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
     fechaIngreso: string;
+
+    @Field({nullable: true})
+    @Prop()
+    @IsNotEmpty({message: 'no se proporcion el usuario que modifico el registro'})
     modificadoPor: string[];
+
+    @Field({nullable: true})
+    @Prop()
+    @IsNotEmpty({message: 'El nombre completo es requerido'})
     nombreCompleto: string;
+
+    @Field({nullable: true})
+    @Prop()
+    @IsOptional()
     auth: IAuth;
 
+    @Field({nullable: true})
+    @Prop()
+    @IsNotEmpty({message: 'Es nesario el id del departamento al que sera asignado el empleado'})
     deptoId: string;
-
 }
+
+export type EmpleadoType = EmpleadoDto & Document;
+export const EMPLEADO_SCHEMA = SchemaFactory.createForClass(EmpleadoDto);
