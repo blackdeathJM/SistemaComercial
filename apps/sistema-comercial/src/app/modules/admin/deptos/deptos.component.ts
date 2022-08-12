@@ -9,9 +9,8 @@ import {DepartamentosGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
-import {EliminarDeptoGQL} from "#/libs/datos/src/lib/admin/depto/codeGenDepto";
-import {pullAllBy} from "lodash";
-import {concat, remove} from "lodash-es";
+import {EliminarDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
+import {remove} from 'lodash-es';
 
 @Component({
     selector: 'app-deptos-principal',
@@ -71,11 +70,8 @@ export class DeptosComponent implements OnInit, OnDestroy
                 {
                     if (respuesta.data)
                     {
-                        remove(STATE_DEPTOS(), function (value)
-                        {
-                            console.log(value._id, respuesta.data.eliminarDepto._id);
-                            return value._id === respuesta.data.eliminarDepto._id;
-                        });
+                        const nvoState = STATE_DEPTOS().filter(value => value._id !== respuesta.data.eliminarDepto._id);
+                        STATE_DEPTOS(nvoState);
                     }
                 })).subscribe();
             }
