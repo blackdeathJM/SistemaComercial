@@ -7,7 +7,7 @@ import {IDepto} from '@sistema-comercial/models';
 // definimos el esquema para la base de datos y el tipo para la generacion del dsl de graphql en una sola clase
 @ObjectType('DeptoType')
 @InputType('DeptoInput')
-@Schema({collection: 'Departamentos'})
+@Schema({collection: 'departamentos'})
 export class Depto implements IDepto
 {
     @Field(() => ID, {nullable: true})

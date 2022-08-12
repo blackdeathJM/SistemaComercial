@@ -4,6 +4,7 @@ import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {DeptosModule} from './deptos/deptos.module';
+import {EmpleadoModule} from './empleado/empleado.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import {DeptosModule} from './deptos/deptos.module';
             {autoIndex: true, retryWrites: false}
         ),
         DeptosModule,
+        EmpleadoModule,
     ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}],
 })

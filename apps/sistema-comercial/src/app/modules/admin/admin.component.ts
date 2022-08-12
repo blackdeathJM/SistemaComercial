@@ -33,10 +33,10 @@ export class AdminComponent implements OnInit, OnDestroy
                     description: 'Agrega informacion de los departamentos existentes en el organismo'
                 },
                 {
-                    id: 'empleados',
+                    id: 'empleado',
                     icon: 'heroicons_outline:user-circle',
                     title: 'Empleados',
-                    description: 'Adminitra los empleados, crea cuentas, reasigna contrasenas perdidas, asigna roles'
+                    description: 'Adminitra los empleado, crea cuentas, reasigna contrasenas perdidas, asigna roles'
                 }
             ];
         this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.eliminarSubscripcion)).subscribe(({matchingAliases}) =>
