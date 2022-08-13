@@ -8,15 +8,34 @@ export class AuthDto implements IAuth
 {
     @Field({nullable: true})
     @IsNotEmpty({message: 'La contrasena es requerida'})
-    contrasena: string;
+    contrasena!: string;
+
     @Field({nullable: true})
     @IsOptional()
     correo?: string;
-    @Field({defaultValue: null})
-    @IsNotEmpty({message: 'Es necesario asignar un role'})
-    rol: IRol[];
+
     @Field({nullable: true})
     @IsNotEmpty({message: 'El usuario es necesario'})
-    usuario: string;
+    usuario!: string;
+
+    @Field(() => [RolDto], {defaultValue: null})
+    @IsNotEmpty({message: 'Es necesario asignar un role'})
+    rol!: RolDto[];
 }
 
+@ObjectType('RolType')
+@InputType('RolInput')
+export class RolDto implements IRol
+{
+    @Field({nullable: true})
+    @IsNotEmpty({message: 'El id del departamento es necesario'})
+    departamentoId: string;
+
+    @Field({nullable: true})
+    @IsNotEmpty({message: 'El ro es necesario'})
+    rol: string;
+
+    @Field({nullable: true})
+    @IsNotEmpty({message: 'Es necesario asignar un rol'})
+    tipoAcceso: 'ninguno' | 'lectura' | 'completo';
+}

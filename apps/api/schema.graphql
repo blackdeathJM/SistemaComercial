@@ -8,14 +8,76 @@ type DeptoType {
   centroGestor: String
 }
 
+type EmpleadoType {
+  _id: String
+  activo: Boolean!
+  calle: String
+  colonia: String
+  fechaBaja: DateTime
+  fechaIngreso: DateTime
+  modificadoPor: [String!]
+  nombreCompleto: String
+  puesto: String
+  telefono: String
+  auth: [AuthType!]
+  deptoId: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AuthType {
+  contrasena: String
+  correo: String
+  usuario: String
+  rol: [RolType!]!
+}
+
+type RolType {
+  departamentoId: String
+  rol: String
+  tipoAcceso: String
+}
+
 input DeptoInput {
   _id: ID
-  nombre: String = ""
-  centroGestor: String = ""
+  nombre: String
+  centroGestor: String
+}
+
+input EmpleadoInput {
+  _id: String
+  activo: Boolean = false
+  calle: String
+  colonia: String
+  fechaBaja: DateTime
+  fechaIngreso: DateTime
+  modificadoPor: [String!] = []
+  nombreCompleto: String
+  puesto: String
+  telefono: String
+  auth: [AuthInput!]
+  deptoId: String
+}
+
+input AuthInput {
+  contrasena: String
+  correo: String
+  usuario: String
+  rol: [RolInput!] = null
+}
+
+input RolInput {
+  departamentoId: String
+  rol: String
+  tipoAcceso: String
 }
 
 type Query {
   deptos: [DeptoType!]!
+  empleados: [EmpleadoType!]!
 }
 
 type Mutation {

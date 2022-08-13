@@ -16,14 +16,14 @@ export class Depto implements IDepto
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre del departamento es requerido'})
-    nombre: string = '';
+    nombre: string;
 
     @Field({nullable: true})
     @Prop({unique: true})
     @IsNotEmpty({message: 'Es necesario asignar un centro gestor'})
     @Length(3, 3, {message: 'El centro gestor tiene que tener como minimo y maximo 3 caracteres'})
     @IsUppercase({message: 'El centro gestor debe estar en mayusculas'})
-    centroGestor: string = '';
+    centroGestor: string;
 }
 
 export type DeptoType = Depto & Document;

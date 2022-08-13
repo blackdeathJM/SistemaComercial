@@ -6,10 +6,12 @@ export interface IEmpleado
     nombreCompleto: string;
     calle: string;
     colonia: string;
-    fechaIngreso: string;
-    fechaBaja?: string;
+    // fechaIngreso: Date;
+    // fechaBaja?: Date;
     activo: boolean;
+    puesto: string;
     modificadoPor: string[];
-    auth: IAuth;
+    telefono: string;
+    // // auth: IAuth;
     deptoId: string;
 }

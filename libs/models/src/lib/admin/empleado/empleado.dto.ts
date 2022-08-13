@@ -1,6 +1,6 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IAuth, IEmpleado} from '@sistema-comercial/models';
+import {AuthDto, IEmpleado} from '@sistema-comercial/models';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 
 @ObjectType('EmpleadoType')
@@ -16,32 +16,30 @@ export class EmpleadoDto implements IEmpleado
     @Field({defaultValue: false})
     @Prop()
     @IsNotEmpty({message: 'Se necesita especificar si esta activo'})
-    activo: boolean;
+    activo: boolean = false;
 
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La calle es necesaria'})
-    calle: string;
+    calle!: string;
 
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La colonia es necesaria'})
-    colonia: string;
+    colonia!: string;
 
     @Field({nullable: true})
     @Prop()
-    @IsOptional()
-    fechaBaja: string;
+    fechaBaja!: Date;
 
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
-    fechaIngreso: string;
+    fechaIngreso!: Date;
 
-    @Field({nullable: true})
+    @Field(() => [String], {nullable: true, defaultValue: []})
     @Prop()
-    @IsNotEmpty({message: 'no se proporcion el usuario que modifico el registro'})
-    modificadoPor: string[];
+    modificadoPor: string[] = [];
 
     @Field({nullable: true})
     @Prop()
@@ -50,8 +48,17 @@ export class EmpleadoDto implements IEmpleado
 
     @Field({nullable: true})
     @Prop()
-    @IsOptional()
-    auth: IAuth;
+    @IsNotEmpty({message: 'Debers asignar un puesto para el empleado'})
+    puesto: string;
+
+    @Field({nullable: true})
+    @Prop()
+    @IsNotEmpty({message: 'Es requerido al menos un numero de telefono'})
+    telefono: string;
+
+    @Field(() => [AuthDto], {nullable: true})
+    @Prop()
+    auth?: AuthDto[];
 
     @Field({nullable: true})
     @Prop()

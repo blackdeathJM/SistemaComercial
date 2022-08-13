@@ -17,6 +17,7 @@ import {EmpleadoModule} from './empleado/empleado.module';
             },
             autoSchemaFile: 'apps/api/schema.graphql',
             cors: {origin: '*', credentials: false},
+            buildSchemaOptions: {dateScalarMode: 'isoDate'},
             introspection: true,
             path: '/graphql',
             debug: true,
