@@ -7,23 +7,26 @@ import {IsNotEmpty, IsOptional} from 'class-validator';
 export class AuthDto implements IAuth
 {
     @Field({nullable: true})
+    _id: string;
+
+    @Field({nullable: true})
     @IsNotEmpty({message: 'La contrasena es requerida'})
-    // @Prop()
+        // @Prop()
     contrasena!: string;
 
     @Field({nullable: true})
     @IsOptional()
-    // @Prop()
+        // @Prop()
     correo?: string;
 
     @Field({nullable: true})
     @IsNotEmpty({message: 'El usuario es necesario'})
-    // @Prop()
+        // @Prop()
     usuario: string;
 
     @Field(() => [RolDto], {defaultValue: null})
     @IsNotEmpty({message: 'Es necesario asignar un role'})
-    // @Prop()
+        // @Prop()
     rol: RolDto[];
 }
 

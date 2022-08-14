@@ -5,12 +5,17 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {DeptosModule} from './deptos/deptos.module';
 import {EmpleadoModule} from './empleado/empleado.module';
-import {ConfigModule} from '@nestjs/config';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 import config from '../config/config';
 
 @Module({
     imports: [
-        ConfigModule.forRoot({load: [config]}),
+        ConfigModule.forRoot({
+            envFilePath: ['.env', '.env.dev'],
+            load: [config],
+            expandVariables: true,
+            isGlobal: true,
+        }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -22,16 +27,24 @@ import config from '../config/config';
             cors: {origin: '*', credentials: false},
             buildSchemaOptions: {dateScalarMode: 'isoDate'},
             introspection: true,
-            path: '/graphql',
-            debug: true,
             context: ({req}) => ({req}),
         }),
-        MongooseModule.forRoot(
-            'mongodb+srv://blackdeath:FernandaTeamo1017@simapas-api-k3zc5.mongodb.net/simapas-api?retryWrites=true&w=majority',
-            {autoIndex: true, retryWrites: false}
-        ),
+        // MongooseModule.forRoot(
+        //     'mongodb+srv://blackdeath:FernandaTeamo1017@simapas-api-k3zc5.mongodb.net/simapas-api?retryWrites=true&w=majority',
+        //     {autoIndex: true, retryWrites: false}
+        // ),
+        MongooseModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: async (configService: ConfigService) => (
+                {
+                    uri: configService.get('database.uriMongo'),
+                    useNewUrlParser: true
+                }
+            )
+        }),
         DeptosModule,
-        EmpleadoModule,
+        EmpleadoModule
     ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}],
 })

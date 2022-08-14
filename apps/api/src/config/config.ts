@@ -2,6 +2,7 @@
 export default () => ({
     port: parseInt(process.env.PORT, 10),
     database: {
-        host: process.env.baseDatos,
-    }
+        uriMongo: process.env.URI_MONGO,
+    },
+    palabraSecreta: process.env.PALABRA_SECRETA
 });

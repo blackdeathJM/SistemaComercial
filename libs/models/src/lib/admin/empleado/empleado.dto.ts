@@ -5,11 +5,10 @@ import {IsNotEmpty, IsOptional} from 'class-validator';
 
 @ObjectType('EmpleadoType')
 @InputType('EmpleadoInput')
-@Schema({collection: 'empleados'})
+@Schema({collection: 'Empleados'})
 export class EmpleadoDto implements IEmpleado
 {
     @Field({nullable: true})
-    @Prop()
     @IsOptional()
     _id?: string;
 

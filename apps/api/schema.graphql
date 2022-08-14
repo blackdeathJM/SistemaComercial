@@ -29,6 +29,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type AuthType {
+  _id: String
   contrasena: String
   correo: String
   usuario: String
@@ -63,6 +64,7 @@ input EmpleadoInput {
 }
 
 input AuthInput {
+  _id: String
   contrasena: String
   correo: String
   usuario: String
