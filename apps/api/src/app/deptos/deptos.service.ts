@@ -1,6 +1,6 @@
 import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {Depto, DeptoType} from '@sistema-comercial/models';
+import {DeptoDto, DeptoType} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {IDepto} from '@sistema-comercial/models';
 import {ObjectId} from 'bson';
@@ -8,7 +8,7 @@ import {ObjectId} from 'bson';
 @Injectable()
 export class DeptosService
 {
-    constructor(@InjectModel(Depto.name) private depto: Model<DeptoType>)
+    constructor(@InjectModel(DeptoDto.name) private depto: Model<DeptoType>)
     {
     }
 
@@ -17,16 +17,15 @@ export class DeptosService
         return this.depto.find().exec();
     }
 
-    async crearDepto(input: Depto): Promise<IDepto>
+    async crearDepto(input: DeptoDto): Promise<IDepto>
     {
-
         await this.buscarDepto(input.nombre, input.centroGestor);
 
         const depto = new this.depto(input);
         return depto.save();
     }
 
-    async actualizarDepto(input: Depto): Promise<IDepto>
+    async actualizarDepto(input: DeptoDto): Promise<IDepto>
     {
         await this.buscarDepto(input.nombre, input.centroGestor);
 

@@ -8,7 +8,7 @@ import {IDepto} from '@sistema-comercial/models';
 @ObjectType('DeptoType')
 @InputType('DeptoInput')
 @Schema({collection: 'departamentos'})
-export class Depto implements IDepto
+export class DeptoDto implements IDepto
 {
     @Field(() => ID, {nullable: true})
     _id?: string;
@@ -26,5 +26,5 @@ export class Depto implements IDepto
     centroGestor: string;
 }
 
-export type DeptoType = Depto & Document;
-export const DEPTO_SCHEMA = SchemaFactory.createForClass(Depto);
+export type DeptoType = DeptoDto & Document;
+export const DEPTO_SCHEMA = SchemaFactory.createForClass(DeptoDto);

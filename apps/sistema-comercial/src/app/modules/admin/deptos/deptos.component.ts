@@ -10,7 +10,6 @@ import {IDepto} from '#/libs/models/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
 import {EliminarDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
-import {remove} from 'lodash-es';
 
 @Component({
     selector: 'app-deptos-principal',

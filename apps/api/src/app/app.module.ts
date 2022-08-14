@@ -5,9 +5,12 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {DeptosModule} from './deptos/deptos.module';
 import {EmpleadoModule} from './empleado/empleado.module';
+import {ConfigModule} from '@nestjs/config';
+import config from '../config/config';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({load: [config]}),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             // eslint-disable-next-line @typescript-eslint/naming-convention

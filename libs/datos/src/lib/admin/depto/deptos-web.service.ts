@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {crearDepto, deptos} from 'libs/datos/src/lib/admin/depto/graphql/deptos';
 import {IRespuesta} from 'libs/models/src/lib/respuesta.model';
 import {NgxToastService} from 'libs/services/src/lib/ngx-toast.service';
-import {Depto} from 'apps/sistema-comercial/src/app/modules/admin/deptos/depto';
+import {Depto} from 'libs/models/src/lib/admin/deptos/depto';
 
 @Injectable({
     providedIn: 'root'

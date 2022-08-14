@@ -1,5 +1,5 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {Depto} from '@sistema-comercial/models';
+import {DeptoDto} from '@sistema-comercial/models';
 import {DeptosService} from './deptos.service';
 import {IDepto} from '@sistema-comercial/models';
 
@@ -10,25 +10,25 @@ export class DeptoResolver
     {
     }
 
-    @Query(() => [Depto])
+    @Query(() => [DeptoDto])
     async deptos(): Promise<IDepto[]>
     {
         return this.deptosService.deptos();
     }
 
-    @Mutation(() => Depto)
-    async crearDepto(@Args('input') input: Depto): Promise<IDepto>
+    @Mutation(() => DeptoDto)
+    async crearDepto(@Args('input') input: DeptoDto): Promise<IDepto>
     {
         return await this.deptosService.crearDepto(input);
     }
 
-    @Mutation(() => Depto)
-    async actualizarDepto(@Args('input') input: Depto): Promise<IDepto>
+    @Mutation(() => DeptoDto)
+    async actualizarDepto(@Args('input') input: DeptoDto): Promise<IDepto>
     {
         return await this.deptosService.actualizarDepto(input);
     }
 
-    @Mutation(() => Depto)
+    @Mutation(() => DeptoDto)
     async eliminarDepto(@Args('_id') _id: string): Promise<IDepto>
     {
         return await this.deptosService.eliminarDepto(_id);

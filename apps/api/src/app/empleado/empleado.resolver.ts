@@ -1,4 +1,4 @@
-import {Query, Resolver} from '@nestjs/graphql';
+import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {EmpleadoService} from './empleado.service';
 import {EmpleadoDto, IEmpleado} from '@sistema-comercial/models';
 
@@ -10,8 +10,14 @@ export class EmpleadoResolver
     }
 
     @Query(() => [EmpleadoDto])
-    empleados(): Promise<IEmpleado[]>
+    async empleados(): Promise<IEmpleado[]>
     {
-        return this.empleadoService.empleados();
+        return await this.empleadoService.empleados();
+    }
+
+    @Mutation(() => EmpleadoDto)
+    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: EmpleadoDto): Promise<IEmpleado>
+    {
+        return await this.empleadoService.crearEmpleado(empleadoDatos);
     }
 }

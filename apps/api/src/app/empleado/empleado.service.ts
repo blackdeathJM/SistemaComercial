@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
-import {InjectModel} from "@nestjs/mongoose";
-import {EmpleadoDto, EmpleadoType, IEmpleado} from "@sistema-comercial/models";
-import {Model} from "mongoose";
+import {InjectModel} from '@nestjs/mongoose';
+import {EmpleadoDto, EmpleadoType, IEmpleado} from '@sistema-comercial/models';
+import {Model} from 'mongoose';
 
 @Injectable()
 export class EmpleadoService
@@ -13,5 +13,10 @@ export class EmpleadoService
     async empleados(): Promise<IEmpleado[]>
     {
         return this.empleado.find().exec();
+    }
+
+    async crearEmpleado(datosEmpleado: IEmpleado): Promise<IEmpleado>
+    {
+        return this.empleado.create(datosEmpleado);
     }
 }

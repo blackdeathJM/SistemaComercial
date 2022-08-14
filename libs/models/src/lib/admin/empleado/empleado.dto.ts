@@ -21,21 +21,21 @@ export class EmpleadoDto implements IEmpleado
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La calle es necesaria'})
-    calle!: string;
+    calle: string;
 
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La colonia es necesaria'})
-    colonia!: string;
+    colonia: string;
 
     @Field({nullable: true})
     @Prop()
-    fechaBaja!: Date;
+    fechaBaja: Date;
 
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
-    fechaIngreso!: Date;
+    fechaIngreso: Date;
 
     @Field(() => [String], {nullable: true, defaultValue: []})
     @Prop()
@@ -56,9 +56,9 @@ export class EmpleadoDto implements IEmpleado
     @IsNotEmpty({message: 'Es requerido al menos un numero de telefono'})
     telefono: string;
 
-    @Field(() => [AuthDto], {nullable: true})
-    @Prop()
-    auth?: AuthDto[];
+    @Field(() => AuthDto, {nullable: true})
+    @Prop({type: Object})
+    auth?: AuthDto;
 
     @Field({nullable: true})
     @Prop()

@@ -19,7 +19,7 @@ type EmpleadoType {
   nombreCompleto: String
   puesto: String
   telefono: String
-  auth: [AuthType!]
+  auth: AuthType
   deptoId: String
 }
 
@@ -58,7 +58,7 @@ input EmpleadoInput {
   nombreCompleto: String
   puesto: String
   telefono: String
-  auth: [AuthInput!]
+  auth: AuthInput
   deptoId: String
 }
 
@@ -84,4 +84,5 @@ type Mutation {
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
+  crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
 }
