@@ -11,7 +11,7 @@
         </div>
     </ng-container>
     <ng-container contenido>
-        <app-lista-deptos *ngIf="!datosCargados; else cargando " (eventoEditar)="editar($event)" (eventoEliminar)="eliminar($event)"></app-lista-deptos>
+        <app-lista-deptos *ngIf="!datosCargados; else cargando " (eventoEditar)="editar($event)" (eventoEliminar)="eliminar($event)" [datos]="stateDepto"></app-lista-deptos>
     </ng-container>
 </app-tarjeta-contenido-scroll>
 <ng-template #cargando>

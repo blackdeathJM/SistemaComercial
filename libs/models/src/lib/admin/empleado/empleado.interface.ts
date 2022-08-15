@@ -3,7 +3,7 @@ import {IAuth} from './auth.interface';
 export interface IEmpleado
 {
     _id?: string;
-    avatar?: string;
+    avatar: string;
     nombreCompleto: string;
     calle: string;
     colonia: string;

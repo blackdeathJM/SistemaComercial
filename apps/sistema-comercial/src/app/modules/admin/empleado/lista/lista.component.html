@@ -1,0 +1,85 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <mat-drawer-container class="flex-auto h-full bg-card dark:bg-transparent" (backdropClick)="onBackdropClicked()">
+        <!-- Drawer -->
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="false" [position]="'end'" [disableClose]="true" #matDrawer>
+            <router-outlet></router-outlet>
+        </mat-drawer>
+        <mat-drawer-content class="flex flex-col">
+            <!-- Main -->
+            <div class="flex-auto">
+                <!-- Header -->
+                <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+                    <!-- Title -->
+                    <div>
+                        <div class="text-4xl font-extrabold tracking-tight leading-none">Empleados</div>
+                        <div class="ml-0.5 font-medium text-secondary">
+                            <ng-container *ngIf="cantidadEmpleados > 0">
+                                {{cantidadEmpleados}}
+                            </ng-container>
+                            {{cantidadEmpleados | i18nPlural: {'=0': 'No hay empleados', '=1': 'empleado', 'otro': 'empleados'} }}
+                        </div>
+                    </div>
+
+                    <!-- Main actions -->
+                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+                        <!-- Search -->
+                        <div class="flex-auto">
+                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                                <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar empleado'">
+                            </mat-form-field>
+                        </div>
+                        <!-- Add contact button -->
+                        <button class="ml-4" mat-flat-button [color]="'primary'" (click)="crearEmpleado()">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Agregar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contacts list -->
+                <div class="relative">
+                    <ng-container *ngIf="stateEmpleados">
+                        <ng-container *ngIf="stateEmpleados.length; else noContacts">
+                            <ng-container *ngFor="let empleado of stateEmpleados; let i = index; trackBy: trackByFn">
+                                <!-- Group -->
+                                <ng-container *ngIf="i === 0 || empleado.nombreCompleto.charAt(0) !== stateEmpleados[i - 1].nombreCompleto.charAt(0)">
+                                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                                        {{empleado.nombreCompleto.charAt(0)}}
+                                    </div>
+                                </ng-container>
+                                <!-- Contact -->
+                                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !empleadoSeleccionado || empleadoSeleccionado._id !== empleado._id,
+                                                'bg-primary-50 dark:bg-hover': empleadoSeleccionado && empleadoSeleccionado._id === empleado._id}" [routerLink]="['./', empleado._id]">
+                                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                                        <ng-container *ngIf="empleado.avatar">
+                                            <img class="object-cover w-full h-full" [src]="empleado.avatar" alt="Avatar"/>
+                                        </ng-container>
+                                        <ng-container *ngIf="!empleado.avatar">
+                                            <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                                {{empleado.nombreCompleto.charAt(0)}}
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="min-w-0 ml-4">
+                                        <div class="font-medium leading-5 truncate">{{empleado.nombreCompleto}}</div>
+                                        <div class="leading-5 truncate text-secondary">{{empleado.deptoId}}</div>
+                                    </div>
+                                </a>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <!-- No contacts -->
+                    <ng-template #noContacts>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No se encontraron registros</div>
+                    </ng-template>
+                </div>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>
+
+<!--<ng-template #cargando>-->
+<!--    <app-tailwind-loading></app-tailwind-loading>-->
+<!--</ng-template>-->

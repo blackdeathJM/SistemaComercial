@@ -1,6 +1,6 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
-import {IAuth, IRol} from '@sistema-comercial/models';
 import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IAuth, IRol} from './auth.interface';
 
 @ObjectType('AuthType')
 @InputType('AuthInput')

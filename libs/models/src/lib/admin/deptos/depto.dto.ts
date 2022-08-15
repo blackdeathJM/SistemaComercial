@@ -2,7 +2,7 @@ import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Document} from 'mongoose';
 import {IsNotEmpty, IsUppercase, Length} from 'class-validator';
-import {IDepto} from '@sistema-comercial/models';
+import {IDepto} from './depto.interface';
 
 // definimos el esquema para la base de datos y el tipo para la generacion del dsl de graphql en una sola clase
 @ObjectType('DeptoType')

@@ -1,6 +1,6 @@
-import {IDepto} from '@sistema-comercial/models';
 import {maxLength, minLength, required} from '@rxweb/reactive-form-validators';
 import {sanitize, upperCase} from '@rxweb/sanitizers';
+import {IDepto} from './depto.interface';
 
 @sanitize
 export class Depto implements IDepto
@@ -15,5 +15,4 @@ export class Depto implements IDepto
     centroGestor: string;
 
     _id?: string;
-
 }

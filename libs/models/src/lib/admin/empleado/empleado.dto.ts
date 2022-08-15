@@ -1,7 +1,8 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {AuthDto, IEmpleado} from '@sistema-comercial/models';
 import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IEmpleado} from './empleado.interface';
+import {AuthDto} from './auth.dto';
 
 @ObjectType('EmpleadoType')
 @InputType('EmpleadoInput')
@@ -11,6 +12,10 @@ export class EmpleadoDto implements IEmpleado
     @Field({nullable: true})
     @IsOptional()
     _id?: string;
+
+    @Field({nullable: true, defaultValue: null})
+    @Prop()
+    avatar: string;
 
     @Field({defaultValue: false})
     @Prop()

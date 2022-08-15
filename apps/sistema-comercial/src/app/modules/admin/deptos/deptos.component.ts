@@ -22,6 +22,7 @@ export class DeptosComponent implements OnInit, OnDestroy
     datosCargados = true;
     subscripciones: Subscription = new Subscription();
     confirmacionDialogo: FuseConfirmationConfig = modalConfirmacionEliminar;
+    stateDepto: IDepto[];
 
     constructor(private dRef: MatDialog, private deptosWebService: DeptosWebService, private deptosGQL: DepartamentosGQL,
                 private confirmacionService: FuseConfirmationService, private eliminarGQL: EliminarDeptoGQL)
@@ -42,7 +43,7 @@ export class DeptosComponent implements OnInit, OnDestroy
             }).valueChanges.pipe(finalize(() => this.datosCargados = false)).subscribe((res) =>
         {
             this.datosCargados = res.loading;
-            STATE_DEPTOS(res.data.deptos as IDepto[]);
+            this.stateDepto = STATE_DEPTOS(res.data.deptos as IDepto[]);
         }));
     }
 
