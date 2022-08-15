@@ -7,9 +7,6 @@ import {IAuth, IRol} from './auth.interface';
 export class AuthDto implements IAuth
 {
     @Field({nullable: true})
-    _id: string;
-
-    @Field({nullable: true})
     @IsNotEmpty({message: 'La contrasena es requerida'})
         // @Prop()
     contrasena: string;

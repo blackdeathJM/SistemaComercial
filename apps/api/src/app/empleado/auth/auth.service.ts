@@ -1,6 +1,6 @@
 import {HttpException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta, IRol} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -13,7 +13,7 @@ export class AuthService
     {
     }
 
-    async asignarAuth(auth: AuthDto): Promise<IEmpleado | HttpException>
+    async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado | HttpException>
     {
         const salt = 10;
         const buscarEmpleado = await this.empleado.findOne({'auth.usuario': auth.usuario}).exec();
@@ -24,10 +24,19 @@ export class AuthService
 
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, salt);
-        const {_id, ...resto} = auth;
 
         return await this.empleado.findByIdAndUpdate(new ObjectId(_id),
-            {$set: {auth: resto}}, {returnOriginal: false, runValidators: true}).exec();
+            {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
+    }
+
+    async asignarRol(_id: string, rol: IRol[]): Promise<IEmpleado | HttpException>
+    {
+        const buscar = await this.empleado.findByIdAndUpdate(new ObjectId(_id)).exec();
+        if (buscar)
+        {
+            throw new HttpException('Ocurrio una excepcion', 500);
+        }
+        return buscar;
     }
 
     async validarUsuario(username: string, password: string): Promise<IEmpleado>

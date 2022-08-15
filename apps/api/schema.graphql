@@ -9,7 +9,6 @@ type DeptoType {
 }
 
 type AuthType {
-  _id: String
   contrasena: String
   correo: String
   usuario: String
@@ -54,7 +53,6 @@ input DeptoInput {
 }
 
 input AuthInput {
-  _id: String
   contrasena: String
   correo: String
   usuario: String
@@ -92,7 +90,7 @@ type Mutation {
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
   crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
-  asignarAuth(auth: AuthInput!): EmpleadoType!
+  asignarAuth(_id: String!, auth: AuthInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
 }
 
