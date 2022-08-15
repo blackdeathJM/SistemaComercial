@@ -5,11 +5,10 @@ import {finalize, Subscription, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
-import {DepartamentosGQL} from '#/libs/datos/src';
+import {DepartamentosGQL, EliminarDeptoGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
-import {EliminarDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
 
 @Component({
     selector: 'app-deptos-principal',
@@ -66,14 +65,14 @@ export class DeptosComponent implements OnInit, OnDestroy
         {
             if (res === 'confirmed')
             {
-                this.eliminarGQL.mutate({_id: data._id}).pipe(tap((respuesta) =>
+                this.subscripciones.add(this.eliminarGQL.mutate({_id: data._id}).pipe(tap((respuesta) =>
                 {
                     if (respuesta.data)
                     {
                         const nvoState = STATE_DEPTOS().filter(value => value._id !== respuesta.data.eliminarDepto._id);
                         STATE_DEPTOS(nvoState);
                     }
-                })).subscribe();
+                })).subscribe());
             }
         });
     }

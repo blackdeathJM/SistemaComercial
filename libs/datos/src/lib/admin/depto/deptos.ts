@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {FRAG_DEPTOS} from 'libs/datos/src/lib/admin/depto/graphql/deptos.fragment';
+import {FRAG_DEPTOS} from 'libs/datos/src/lib/admin/depto/deptos.fragment';
 
 export const deptos = gql`
     query

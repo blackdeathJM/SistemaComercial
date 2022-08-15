@@ -4,11 +4,11 @@ import {FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {NgxToastService} from '#/libs/services/src/lib/ngx-toast.service';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
-import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src/lib/admin/depto/codeGenDepto';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src';
 import {finalize, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
+import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 
 @Component({
     selector: 'app-mod-depto',

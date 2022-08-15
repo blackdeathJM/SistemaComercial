@@ -2,8 +2,8 @@ overwrite: true
 schema:
     - "apps/api/schema.graphql"
 generates:
-    libs/datos/src/lib/admin/depto/codeGenDepto.ts:
-        documents: "libs/datos/src/lib/admin/depto/graphql/**/*.graphql"
+    libs/datos/src/lib/generated/generated.ts:
+        documents: "libs/datos/src/lib/**/*.graphql"
         plugins:
             - typescript
             - typescript-operations

@@ -23,6 +23,7 @@ type RolType {
 
 type EmpleadoType {
   _id: String
+  avatar: String
   activo: Boolean!
   calle: String
   colonia: String
@@ -67,6 +68,7 @@ input RolInput {
 
 input EmpleadoInput {
   _id: String
+  avatar: String = null
   activo: Boolean = false
   calle: String
   colonia: String

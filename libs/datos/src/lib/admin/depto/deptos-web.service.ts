@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from 'libs/services/src/lib/api.service';
 import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';
-import {crearDepto, deptos} from 'libs/datos/src/lib/admin/depto/graphql/deptos';
+import {crearDepto, deptos} from 'libs/datos/src/lib/admin/depto/deptos';
 import {IRespuesta} from 'libs/models/src/lib/respuesta.model';
 import {NgxToastService} from 'libs/services/src/lib/ngx-toast.service';
 import {Depto} from 'libs/models/src/lib/admin/deptos/depto';

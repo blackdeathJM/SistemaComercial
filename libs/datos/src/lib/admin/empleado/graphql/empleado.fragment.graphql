@@ -1,5 +1,0 @@
-fragment fragEmpleado on EmpleadoType
-{
-    _id
-    nombreCompleto
-}

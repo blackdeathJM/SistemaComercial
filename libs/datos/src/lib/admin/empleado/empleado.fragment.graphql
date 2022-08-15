@@ -1,0 +1,32 @@
+fragment fragEmpleado on EmpleadoType
+{
+    _id
+    nombreCompleto
+    avatar
+    activo
+    calle
+    colonia
+    fechaBaja
+    fechaIngreso
+    modificadoPor
+    telefono
+    puesto
+    auth {
+        ...fragAuth
+    }
+}
+
+fragment fragAuth on AuthType
+{
+    usuario
+    correo
+    rol {
+        ...fragRol
+    }
+}
+
+fragment fragRol on RolType
+{
+    departamentoId
+    tipoAcceso
+}
