@@ -38,8 +38,12 @@ type AuthType {
 
 type RolType {
   departamentoId: String
-  rol: String
   tipoAcceso: String
+}
+
+type LoginRespuestaType {
+  token: String!
+  empleado: EmpleadoType
 }
 
 input DeptoInput {
@@ -59,7 +63,7 @@ input EmpleadoInput {
   nombreCompleto: String
   puesto: String
   telefono: String
-  auth: AuthInput
+  auth: AuthInput = null
   deptoId: String
 }
 
@@ -73,7 +77,6 @@ input AuthInput {
 
 input RolInput {
   departamentoId: String
-  rol: String
   tipoAcceso: String
 }
 
@@ -87,4 +90,11 @@ type Mutation {
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
   crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
+  asignarAuth(auth: AuthInput!): EmpleadoType!
+  login(login: LoginInput!): LoginRespuestaType
+}
+
+input LoginInput {
+  usuario: String
+  contrasena: String
 }

@@ -3,7 +3,7 @@ import {DeptoDto} from '@sistema-comercial/models';
 import {DeptosService} from './deptos.service';
 import {IDepto} from '@sistema-comercial/models';
 
-@Resolver()
+@Resolver(DeptoDto)
 export class DeptoResolver
 {
     constructor(private deptosService: DeptosService)

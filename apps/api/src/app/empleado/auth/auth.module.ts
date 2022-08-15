@@ -14,12 +14,12 @@ import {JwtStrategy} from './strategy/jwt.strategy';
             MongooseModule.forFeature([{name: EmpleadoDto.name, schema: EMPLEADO_SCHEMA}]),
             JwtModule.registerAsync({
                 imports: [ConfigModule],
+                inject:[ConfigService],
                 useFactory: async (configService: ConfigService) => ({
-                    secretOrPrivateKey: configService.get('palabraSecreta'),
+                    secret: configService.get('palabraSecreta'),
                     signOptions: {expiresIn: '8h'}
                 })
             })
-            // JwtModule.register({secret: 'Mari(.Y.)1017', signOptions: {expiresIn: '8h'}})
         ],
     providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy]
 })

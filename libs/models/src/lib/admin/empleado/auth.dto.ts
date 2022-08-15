@@ -12,7 +12,7 @@ export class AuthDto implements IAuth
     @Field({nullable: true})
     @IsNotEmpty({message: 'La contrasena es requerida'})
         // @Prop()
-    contrasena!: string;
+    contrasena: string;
 
     @Field({nullable: true})
     @IsOptional()
@@ -38,11 +38,6 @@ export class RolDto implements IRol
     @IsNotEmpty({message: 'El id del departamento es necesario'})
         // @Prop()
     departamentoId: string;
-
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'El ro es necesario'})
-        // @Prop()
-    rol: string;
 
     @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesario asignar un rol'})

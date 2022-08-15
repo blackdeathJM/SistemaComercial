@@ -12,7 +12,6 @@ async function bootstrap(): Promise<void>
     app.enableCors();
     app.setGlobalPrefix(globalPrefix);
     const configService = app.get(ConfigService);
-    console.log('configService', configService);
     const port = configService.get('port') || 3000;
     await app.listen(port);
     Logger.log(

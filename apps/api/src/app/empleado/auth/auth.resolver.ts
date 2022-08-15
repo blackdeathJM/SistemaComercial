@@ -1,6 +1,6 @@
 import {Args, Context, Mutation, Resolver} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
-import {AuthDto, EmpleadoDto, IEmpleado, LoginDto} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, IEmpleado, ILoginRespuesta, LoginDto} from '@sistema-comercial/models';
 import {LoginRespuesta} from '@sistema-comercial/models';
 import {HttpException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
@@ -18,9 +18,9 @@ export class AuthResolver
         return await this.authService.asignarAuth(auth);
     }
 
-    @Mutation(() => LoginRespuesta)
+    @Mutation(() => LoginRespuesta, {nullable: true})
     @UseGuards(GqlAuthGuard)
-    login(@Args('login') login: LoginDto, @Context() context): LoginRespuesta
+    login(@Args('login') login: LoginDto, @Context() context): ILoginRespuesta
     {
         return this.authService.login(context);
     }

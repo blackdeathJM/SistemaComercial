@@ -29,10 +29,6 @@ import config from '../config/config';
             introspection: true,
             context: ({req}) => ({req}),
         }),
-        // MongooseModule.forRoot(
-        //     'mongodb+srv://blackdeath:FernandaTeamo1017@simapas-api-k3zc5.mongodb.net/simapas-api?retryWrites=true&w=majority',
-        //     {autoIndex: true, retryWrites: false}
-        // ),
         MongooseModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

@@ -1,6 +1,6 @@
-import {HttpException, Injectable} from '@nestjs/common';
+import {HttpException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, LoginRespuesta} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -33,8 +33,13 @@ export class AuthService
     async validarUsuario(username: string, password: string): Promise<IEmpleado>
     {
         const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
+        if (!empleado)
+        {
+            throw new NotFoundException('El usuario no fuen encontrado para autenticarse');
+        }
         const validar = await bcrypt.compare(password, empleado.auth.contrasena);
-        if (empleado && validar)
+
+        if (validar)
         {
             delete empleado.auth.contrasena;
             return empleado;
@@ -42,9 +47,8 @@ export class AuthService
         return null;
     }
 
-    login(empleado: any): LoginRespuesta
+    login(empleado: any): ILoginRespuesta
     {
-        console.log('login', empleado);
         return {
             token: this.jwtService.sign({_id: empleado.user._id, auth: empleado.user.auth, avatar: empleado.user.avatar}),
             empleado: empleado.user

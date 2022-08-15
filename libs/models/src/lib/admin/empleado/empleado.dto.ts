@@ -55,7 +55,7 @@ export class EmpleadoDto implements IEmpleado
     @IsNotEmpty({message: 'Es requerido al menos un numero de telefono'})
     telefono: string;
 
-    @Field(() => AuthDto, {nullable: true})
+    @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop({type: Object})
     auth?: AuthDto;
 
