@@ -18,7 +18,6 @@ export type Scalars = {
 };
 
 export type AuthInput = {
-  _id?: InputMaybe<Scalars['String']>;
   contrasena?: InputMaybe<Scalars['String']>;
   correo?: InputMaybe<Scalars['String']>;
   rol?: InputMaybe<Array<RolInput>>;
@@ -27,7 +26,6 @@ export type AuthInput = {
 
 export type AuthType = {
   __typename?: 'AuthType';
-  _id?: Maybe<Scalars['String']>;
   contrasena?: Maybe<Scalars['String']>;
   correo?: Maybe<Scalars['String']>;
   rol: Array<RolType>;
@@ -108,6 +106,7 @@ export type MutationActualizarDeptoArgs = {
 
 
 export type MutationAsignarAuthArgs = {
+  _id: Scalars['String'];
   auth: AuthInput;
 };
 
@@ -182,10 +181,10 @@ export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | nul
 
 export type FragRolFragment = { __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null };
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_1_Query = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, modificadoPor?: Array<string> | null, telefono?: string | null, puesto?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, correo?: string | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null }> };
+export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, modificadoPor?: Array<string> | null, telefono?: string | null, puesto?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, correo?: string | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -299,8 +298,8 @@ export const EliminarDeptoDocument = gql`
       super(apollo);
     }
   }
-export const Document = gql`
-    {
+export const EmpleadosDocument = gql`
+    query empleados {
   empleados {
     ...fragEmpleado
   }
@@ -310,8 +309,8 @@ export const Document = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class GQL extends Apollo.Query<Query, QueryVariables> {
-    document = Document;
+  export class EmpleadosGQL extends Apollo.Query<EmpleadosQuery, EmpleadosQueryVariables> {
+    document = EmpleadosDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

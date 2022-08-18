@@ -2,19 +2,20 @@ import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild, View
 import {MatDrawer} from '@angular/material/sidenav';
 import {FormControl} from '@angular/forms';
 import {IEmpleado} from '#/libs/models/src';
-import {filter, fromEvent, Subject, takeUntil} from 'rxjs';
+import {filter, fromEvent, Subject, Subscription, takeUntil, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {EmpleadosGQL} from '#/libs/datos/src';
 
 @Component({
     selector: 'app-lista',
-    templateUrl: './lista.component.html',
-    styleUrls: ['./lista.component.scss'],
+    templateUrl: './lista-empleado.component.html',
+    styleUrls: ['./lista-empleados.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ListaComponent implements OnInit, OnDestroy
+export class ListaEmpleadosComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     cantidadEmpleados = 0;
@@ -23,16 +24,20 @@ export class ListaComponent implements OnInit, OnDestroy
     controlBuscar: FormControl = new FormControl();
     empleadoSeleccionado: IEmpleado;
     stateEmpleados: IEmpleado[];
+    subscripciones: Subscription = new Subscription();
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService)
+                private fuseMediaWatcherService: FuseMediaWatcherService, private empleadosGQL: EmpleadosGQL)
     {
     }
 
     ngOnInit(): void
     {
-        this.stateEmpleados = STATE_EMPLEADOS();
+        this.subscripciones.add(this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
+        {
+            this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as IEmpleado[]);
+        })).subscribe());
         this.matDrawer.openedChange.subscribe((opened) =>
         {
             if (!opened)

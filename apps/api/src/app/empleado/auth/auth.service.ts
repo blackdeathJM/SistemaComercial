@@ -31,7 +31,7 @@ export class AuthService
 
     async asignarRol(_id: string, rol: IRol[]): Promise<IEmpleado | HttpException>
     {
-        const buscar = await this.empleado.findByIdAndUpdate(new ObjectId(_id)).exec();
+        const buscar = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$addToSet: {rol}}, {returnOriginal: false}).exec();
         if (buscar)
         {
             throw new HttpException('Ocurrio una excepcion', 500);

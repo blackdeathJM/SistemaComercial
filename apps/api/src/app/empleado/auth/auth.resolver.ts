@@ -18,11 +18,11 @@ export class AuthResolver
         return await this.authService.asignarAuth(_id, auth);
     }
 
-    @Mutation(() => EmpleadoDto)
-    async asignarRol(_id: string, rol: RolDto[]): Promise<IEmpleado | HttpException>
-    {
-
-    }
+    // @Mutation(() => EmpleadoDto)
+    // async asignarRol(_id: string, rol: RolDto[]): Promise<IEmpleado | HttpException>
+    // {
+    //
+    // }
 
     @Mutation(() => LoginRespuesta, {nullable: true})
     @UseGuards(GqlAuthGuard)
