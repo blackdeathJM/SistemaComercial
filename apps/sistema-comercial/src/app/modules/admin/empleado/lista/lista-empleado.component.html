@@ -9,18 +9,8 @@
             <div class="flex-auto">
                 <!-- Header -->
                 <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
-
                     <!-- Title -->
-                    <div>
-                        <div class="text-4xl font-extrabold tracking-tight leading-none">Empleados</div>
-                        <div class="ml-0.5 font-medium text-secondary">
-                            <ng-container *ngIf="cantidadEmpleados > 0">
-                                {{cantidadEmpleados}}
-                            </ng-container>
-                            {{cantidadEmpleados | i18nPlural: {'=0': 'No hay empleados', '=1': 'empleado', 'otro': 'empleados'} }}
-                        </div>
-                    </div>
-
+                    <div class="text-4xl font-extrabold tracking-tight leading-none">Trabajadores</div>
                     <!-- Main actions -->
                     <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
                         <!-- Search -->

@@ -5,12 +5,12 @@ import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
 import {NgMaterialMaterialModule} from '@s-shared/ng-material/ng-material-material.module';
 import {SharedModule} from '@s-shared/shared.module';
 import {ListaEmpleadosComponent} from './lista/lista-empleados.component';
-import {DetalleComponent} from './detalle/detalle.component';
+import {DetalleEmpleadoComponent} from './detalle/detalle-empleado.component';
 import {RouterModule} from '@angular/router';
 import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
 
 @NgModule({
-    declarations: [EmpleadoComponent, ListaEmpleadosComponent, DetalleComponent],
+    declarations: [EmpleadoComponent, ListaEmpleadosComponent, DetalleEmpleadoComponent],
     exports: [
         EmpleadoComponent
     ],

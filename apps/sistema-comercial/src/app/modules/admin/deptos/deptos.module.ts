@@ -8,6 +8,7 @@ import {ListaDeptosComponent} from '@s-app/modules/admin/deptos/components/lista
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
             NgxSkeletonLoaderModule,
             NgxTrimDirectiveModule,
             PlantillasModule,
+            RouterModule,
         ]
 })
 export class DeptosModule

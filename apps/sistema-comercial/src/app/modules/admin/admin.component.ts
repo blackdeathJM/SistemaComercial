@@ -63,11 +63,6 @@ export class AdminComponent implements OnInit, OnDestroy
         }
     }
 
-    obtenerInfoPanel(id: string): any
-    {
-        return this.panels.find(panel => panel.id === id);
-    }
-
     trackByFn(index: number, item: any): any
     {
         return item.id || index;

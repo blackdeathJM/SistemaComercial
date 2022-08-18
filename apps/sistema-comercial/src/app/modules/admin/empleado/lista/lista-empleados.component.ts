@@ -10,7 +10,7 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {EmpleadosGQL} from '#/libs/datos/src';
 
 @Component({
-    selector: 'app-lista',
+    selector: 'app-lista-empleados',
     templateUrl: './lista-empleado.component.html',
     styleUrls: ['./lista-empleados.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -19,7 +19,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     cantidadEmpleados = 0;
-    tablaColumnasEmpleados: string[] = ['nombre', 'departamento'];
+    // tablaColumnasEmpleados: string[] = ['nombre', 'departamento'];
     drawerMode: 'side' | 'over';
     controlBuscar: FormControl = new FormControl();
     empleadoSeleccionado: IEmpleado;

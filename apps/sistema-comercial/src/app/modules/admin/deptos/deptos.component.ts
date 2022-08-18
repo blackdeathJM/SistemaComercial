@@ -9,6 +9,7 @@ import {DepartamentosGQL, EliminarDeptoGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'app-deptos-principal',
@@ -20,6 +21,8 @@ export class DeptosComponent implements OnInit, OnDestroy
 {
     datosCargados = true;
     subscripciones: Subscription = new Subscription();
+    controlBuscar: FormControl = new FormControl();
+    deptoSeleccionado: IDepto;
     confirmacionDialogo: FuseConfirmationConfig = modalConfirmacionEliminar;
     stateDepto: IDepto[];
 
@@ -75,5 +78,10 @@ export class DeptosComponent implements OnInit, OnDestroy
                 })).subscribe());
             }
         });
+    }
+
+    trackByFn(index: number, item: any): any
+    {
+        return item.id || index;
     }
 }
