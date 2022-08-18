@@ -1,18 +1,32 @@
-<li class="bg-gray-400 dark:bg-cyan-900 p-4 mb-3 flex justify-between items-center shadow-lg shadow-indigo-500/50 rounded-lg"
-    *ngFor="let dato of _datos; index as i; trackBy: trackByFn">
-    <div class="flex items-center">
-        <img class="w-12 h-12 rounded-l-lg" alt="" src="assets/images/deptos/deptos.png">
-        <div class="flex flex-col">
-            <h2 mat-dialog-title>{{dato.nombre}}</h2>
-            <p class="decoration-sky-700">{{dato.centroGestor}}</p>
-        </div>
-    </div>
-    <div class="flex">
-        <button mat-icon-button type="button">
-            <mat-icon class="text-green-800 dark:text-green-600" (click)="editar(dato)">edit</mat-icon>
-        </button>
-        <button mat-icon-button>
-            <mat-icon class="text-red-800 dark:text-red-600" (click)="eliminar(dato)">delete_sweep</mat-icon>
-        </button>
-    </div>
-</li>
+<!--<div class="relative">-->
+<!--    <ng-container *ngIf="stateDepto">-->
+<!--        <ng-container *ngIf="stateDepto.length; else cargando">-->
+<!--            <ng-container *ngFor="let depto of stateDepto; let i = index; trackBy: trackByFn">-->
+<!--                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !deptoSeleccionado || deptoSeleccionado._id !== depto._id,-->
+<!--                                                'bg-primary-50 dark:bg-hover': deptoSeleccionado && deptoSeleccionado._id === depto._id}">-->
+<!--                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">-->
+<!--                        <ng-container>-->
+<!--                            <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">-->
+<!--                                {{depto.nombre.charAt(0)}}-->
+<!--                            </div>-->
+<!--                        </ng-container>-->
+<!--                    </div>-->
+<!--                    <div class="flex w-full">-->
+<!--                        <div class="ml-4 flex-grow">-->
+<!--                            <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>-->
+<!--                            <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <button mat-icon-button type="button" (click)="editar(depto)">-->
+<!--                                <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>-->
+<!--                            </button>-->
+<!--                            <button mat-icon-button type="button" (click)="eliminar(depto)">-->
+<!--                                <mat-icon class="text-red-800 dark:text-red-600">delete_sweep</mat-icon>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            </ng-container>-->
+<!--        </ng-container>-->
+<!--    </ng-container>-->
+<!--</div>-->

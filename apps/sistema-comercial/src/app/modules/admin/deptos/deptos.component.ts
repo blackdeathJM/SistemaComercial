@@ -49,11 +49,6 @@ export class DeptosComponent implements OnInit, OnDestroy
         }));
     }
 
-    ngOnDestroy(): void
-    {
-        this.subscripciones.unsubscribe();
-    }
-
     editar(data: IDepto): void
     {
         this.dRef.open(ModDeptoComponent, {width: '40%', data});
@@ -83,5 +78,10 @@ export class DeptosComponent implements OnInit, OnDestroy
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
+    }
+
+    ngOnDestroy(): void
+    {
+        this.subscripciones.unsubscribe();
     }
 }
