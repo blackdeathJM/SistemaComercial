@@ -1,12 +1,9 @@
 <ng-container *ngFor="let depto of _deptos; let i = index; trackBy: trackByFn">
-    <!--    <div class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !deptoSeleccionado || deptoSeleccionado._id !== depto._id,-->
-    <!--                                                'bg-primary-50 dark:bg-hover': deptoSeleccionado && deptoSeleccionado._id === depto._id}">   -->
-    <div class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b hover:bg-gray-100 dark:hover:bg-hover bg-primary-50 dark:bg-hover">
+    <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b hover:bg-gray-100 dark:hover:bg-gray-700 bg-on-primary-800 dark:bg-hover my-1">
         <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
             <ng-container>
                 <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                    <!--                    {{depto.nombre.charAt(0)}}-->
-                    <mat-icon [svgIcon]="'heroicons_outline:library'"></mat-icon>
+                    <mat-icon class="text-amber-600" [svgIcon]="'heroicons_outline:library'"></mat-icon>
                 </div>
             </ng-container>
         </div>

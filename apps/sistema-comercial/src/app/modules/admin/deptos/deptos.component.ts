@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
 import {DeptosWebService} from '#/libs/datos/src/lib/admin/depto/deptos-web.service';
 import {finalize, Subscription, tap} from 'rxjs';
@@ -10,14 +10,15 @@ import {IDepto} from '#/libs/models/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
 import {FormControl} from '@angular/forms';
+import {NgxToastService} from '#/libs/services/src/lib/ngx-toast.service';
 
 @Component({
     selector: 'app-deptos-principal',
     templateUrl: './deptos.component.html',
     styleUrls: ['./deptos.component.scss'],
-    animations: fuseAnimations
+    animations: [fuseAnimations]
 })
-export class DeptosComponent implements OnInit, OnDestroy, AfterContentInit
+export class DeptosComponent implements OnInit, OnDestroy
 {
     datosCargados = true;
     subscripciones: Subscription = new Subscription();
@@ -26,7 +27,7 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterContentInit
     stateDepto: IDepto[];
 
     constructor(private dRef: MatDialog, private deptosWebService: DeptosWebService, private deptosGQL: DepartamentosGQL,
-                private confirmacionService: FuseConfirmationService, private eliminarGQL: EliminarDeptoGQL)
+                private confirmacionService: FuseConfirmationService, private eliminarGQL: EliminarDeptoGQL, private ngxToastService: NgxToastService)
     {
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
     }
@@ -38,7 +39,14 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterContentInit
 
     ngOnInit(): void
     {
-
+        this.subscripciones.add(this.deptosGQL.watch({},
+            {
+                notifyOnNetworkStatusChange: true
+            }).valueChanges.pipe(finalize(() => this.datosCargados = false)).subscribe((res) =>
+        {
+            this.datosCargados = res.loading;
+            this.stateDepto = STATE_DEPTOS(res.data.deptos as IDepto[]);
+        }));
     }
 
     editar(data: IDepto): void
@@ -61,6 +69,7 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterContentInit
                     {
                         const nvoState = STATE_DEPTOS().filter(value => value._id !== respuesta.data.eliminarDepto._id);
                         STATE_DEPTOS(nvoState);
+                        this.ngxToastService.satisfactorioToast('El departamento fue eliminado con exito', 'Eliminar registro');
                     }
                 })).subscribe());
             }
@@ -75,17 +84,5 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterContentInit
     ngOnDestroy(): void
     {
         this.subscripciones.unsubscribe();
-    }
-
-    ngAfterContentInit(): void
-    {
-        this.subscripciones.add(this.deptosGQL.watch({},
-            {
-                notifyOnNetworkStatusChange: true
-            }).valueChanges.pipe(finalize(() => this.datosCargados = false)).subscribe((res) =>
-        {
-            this.datosCargados = res.loading;
-            this.stateDepto = STATE_DEPTOS(res.data.deptos as IDepto[]);
-        }));
     }
 }
