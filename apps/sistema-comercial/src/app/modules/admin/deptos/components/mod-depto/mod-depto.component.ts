@@ -69,10 +69,10 @@ export class ModDeptoComponent implements OnInit
             {
                 if (res.data)
                 {
-                    // const elementos = STATE_DEPTOS();
-                    // STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
-                    console.log(unionBy(STATE_DEPTOS(), res.data.crearDepto));
+                    const elementos = STATE_DEPTOS();
+                    STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
+                    console.log('Estado', STATE_DEPTOS());
                 }
                 this.cargandoDatos = res.loading;
             });

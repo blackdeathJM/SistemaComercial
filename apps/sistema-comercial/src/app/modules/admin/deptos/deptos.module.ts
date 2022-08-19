@@ -9,6 +9,7 @@ import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
 import {RouterModule} from "@angular/router";
+import {EmpleadoModule} from "@s-app/empleado/empleado.module";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {RouterModule} from "@angular/router";
             NgxTrimDirectiveModule,
             PlantillasModule,
             RouterModule,
+            EmpleadoModule,
         ]
 })
 export class DeptosModule

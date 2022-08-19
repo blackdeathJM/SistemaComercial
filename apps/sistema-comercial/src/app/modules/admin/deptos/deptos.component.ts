@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
 import {DeptosWebService} from '#/libs/datos/src/lib/admin/depto/deptos-web.service';
 import {finalize, Subscription, tap} from 'rxjs';
@@ -17,12 +17,11 @@ import {FormControl} from '@angular/forms';
     styleUrls: ['./deptos.component.scss'],
     animations: fuseAnimations
 })
-export class DeptosComponent implements OnInit, OnDestroy
+export class DeptosComponent implements OnInit, OnDestroy, AfterContentInit
 {
     datosCargados = true;
     subscripciones: Subscription = new Subscription();
     controlBuscar: FormControl = new FormControl();
-    deptoSeleccionado: IDepto;
     confirmacionDialogo: FuseConfirmationConfig = modalConfirmacionEliminar;
     stateDepto: IDepto[];
 
@@ -39,14 +38,7 @@ export class DeptosComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.subscripciones.add(this.deptosGQL.watch({},
-            {
-                notifyOnNetworkStatusChange: true
-            }).valueChanges.pipe(finalize(() => this.datosCargados = false)).subscribe((res) =>
-        {
-            this.datosCargados = res.loading;
-            this.stateDepto = STATE_DEPTOS(res.data.deptos as IDepto[]);
-        }));
+
     }
 
     editar(data: IDepto): void
@@ -83,5 +75,17 @@ export class DeptosComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.subscripciones.unsubscribe();
+    }
+
+    ngAfterContentInit(): void
+    {
+        this.subscripciones.add(this.deptosGQL.watch({},
+            {
+                notifyOnNetworkStatusChange: true
+            }).valueChanges.pipe(finalize(() => this.datosCargados = false)).subscribe((res) =>
+        {
+            this.datosCargados = res.loading;
+            this.stateDepto = STATE_DEPTOS(res.data.deptos as IDepto[]);
+        }));
     }
 }

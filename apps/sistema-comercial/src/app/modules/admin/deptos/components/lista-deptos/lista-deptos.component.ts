@@ -10,10 +10,11 @@ export class ListaDeptosComponent
 {
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
     @Output() eventoEliminar: EventEmitter<any> = new EventEmitter<any>();
-    _datos: IDepto[];
+    _deptos: IDepto[];
+
     @Input() set datos(valor: IDepto[])
     {
-        this._datos = valor;
+        this._deptos = valor;
     }
 
     trackByFn(index: number, item: IDepto): string

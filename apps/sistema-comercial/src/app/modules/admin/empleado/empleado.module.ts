@@ -12,7 +12,8 @@ import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
 @NgModule({
     declarations: [EmpleadoComponent, ListaEmpleadosComponent, DetalleEmpleadoComponent],
     exports: [
-        EmpleadoComponent
+        EmpleadoComponent,
+        ListaEmpleadosComponent
     ],
     imports: [
         CommonModule,
