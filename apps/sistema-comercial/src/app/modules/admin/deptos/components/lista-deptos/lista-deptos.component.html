@@ -1,26 +1,31 @@
-<ng-container *ngFor="let depto of _deptos; let i = index; trackBy: trackByFn">
-    <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b hover:bg-gray-100 dark:hover:bg-gray-700 bg-on-primary-800 dark:bg-hover my-1">
-        <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-            <ng-container>
-                <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                    <mat-icon class="text-amber-600" [svgIcon]="'heroicons_outline:library'"></mat-icon>
+<ng-container *ngIf="deptos && deptos.length; else cargando">
+    <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
+        <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b hover:bg-gray-100 dark:hover:bg-gray-700 bg-on-primary-800 dark:bg-hover my-1">
+            <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                <ng-container>
+                    <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                        <mat-icon class="text-amber-600" [svgIcon]="'heroicons_outline:library'"></mat-icon>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="flex w-full">
+                <div class="ml-4 flex-grow">
+                    <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>
+                    <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>
                 </div>
-            </ng-container>
-        </div>
-        <div class="flex w-full">
-            <div class="ml-4 flex-grow">
-                <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>
-                <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>
-            </div>
-            <div>
-                <button mat-icon-button type="button" (click)="editar(depto)">
-                    <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
-                </button>
-                <button mat-icon-button type="button" (click)="eliminar(depto)">
-                    <mat-icon class="text-red-800 dark:text-red-600">delete_sweep</mat-icon>
-                </button>
+                <div>
+                    <button mat-icon-button type="button" (click)="editar(depto)">
+                        <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button type="button" (click)="eliminar(depto)">
+                        <mat-icon class="text-red-800 dark:text-red-600">delete_sweep</mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 </ng-container>
 
+<ng-template #cargando>
+    <app-tailwind-loading></app-tailwind-loading>
+</ng-template>

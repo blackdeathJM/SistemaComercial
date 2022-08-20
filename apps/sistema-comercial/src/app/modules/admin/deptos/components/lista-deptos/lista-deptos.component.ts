@@ -1,20 +1,21 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterContentChecked, Component, EventEmitter, Output} from '@angular/core';
 import {IDepto} from '#/libs/models/src';
+import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 
 @Component({
     selector: 'app-lista-deptos',
     templateUrl: './lista-deptos.component.html',
-    styleUrls: ['./lista-deptos.component.scss']
+    styleUrls: ['./lista-deptos.component.scss'],
 })
-export class ListaDeptosComponent
+export class ListaDeptosComponent implements AfterContentChecked
 {
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
     @Output() eventoEliminar: EventEmitter<any> = new EventEmitter<any>();
-    _deptos: IDepto[];
+    deptos: IDepto[];
 
-    @Input() set datos(valor: IDepto[])
+    ngAfterContentChecked(): void
     {
-        this._deptos = valor;
+        this.deptos = STATE_DEPTOS();
     }
 
     trackByFn(index: number, item: IDepto): string

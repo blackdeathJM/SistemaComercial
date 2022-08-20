@@ -21,12 +21,8 @@
                 </div>
             </div>
             <!-- Contacts list -->
-            <ng-container *ngIf="stateDepto && stateDepto.length; else cargando">
-                <app-lista-deptos [datos]="stateDepto" (eventoEditar)="editar($event)" (eventoEliminar)="eliminar($event)"></app-lista-deptos>
-            </ng-container>
+            <app-lista-deptos (eventoEditar)="editar($event)" (eventoEliminar)="eliminar($event)"></app-lista-deptos>
         </div>
     </div>
 </div>
-<ng-template #cargando>
-    <app-tailwind-loading></app-tailwind-loading>
-</ng-template>
+
