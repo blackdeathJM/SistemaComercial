@@ -39,7 +39,6 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngOnInit(): void
     {
-        // this.controlBuscar.valueChanges.subscribe(res => console.log(res));
         this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
         {
             this.datosCargados = res.loading;
@@ -52,6 +51,8 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngAfterViewInit(): void
     {
+        // Hacemos una pequena demora para que pueda cargar el estado y lo asignamos a una variable para tener una copia y poder realizar el filtrado siempre desde una
+        // copia para tener los valores disponibles y de esa manera asignar el nuevo estado dependiendo de la busqueda
         setTimeout(() =>
         {
             const stadoActual = cloneDeep(STATE_DEPTOS());
