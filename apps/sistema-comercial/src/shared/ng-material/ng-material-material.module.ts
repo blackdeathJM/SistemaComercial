@@ -10,6 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
             CdkScrollableModule,
             MatSidenavModule,
             PortalModule,
+            MatTooltipModule
         ],
     exports:
         [
@@ -39,7 +41,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
             MatDividerModule,
             CdkScrollableModule,
             MatSidenavModule,
-            PortalModule
+            PortalModule,
+            MatTooltipModule
         ]
 })
 export class NgMaterialMaterialModule

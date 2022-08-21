@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material/sidenav';
 import {FormControl} from '@angular/forms';
 import {IEmpleado} from '#/libs/models/src';
@@ -12,8 +12,7 @@ import {EmpleadosGQL} from '#/libs/datos/src';
 @Component({
     selector: 'app-lista-empleado',
     templateUrl: './lista-empleado.component.html',
-    styleUrls: ['./lista-empleados.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./lista-empleados.component.scss']
 })
 export class ListaEmpleadosComponent implements OnInit, OnDestroy
 {
@@ -68,7 +67,6 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
 
     onBackdropClicked(): void
     {
-        console.log('haciendo click');
         this.router.navigate(['./'], {relativeTo: this.activatedRoute}).then();
         this.cdr.markForCheck();
     }
@@ -82,5 +80,16 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     {
         this.eliminarSubscripcion.next(null);
         this.eliminarSubscripcion.complete();
+    }
+
+    seleccionarEmpleado(empleado: IEmpleado): void
+    {
+        this.empleadoSeleccionado = empleado;
+        this.matDrawer.opened = true;
+    }
+
+    abrirPanel(evento: boolean): void
+    {
+        this.matDrawer.opened = evento;
     }
 }

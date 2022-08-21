@@ -9,17 +9,8 @@ import {InitialDataResolver} from '@s-app/app.resolvers';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
 
-    // Redirect empty path to '/example'
     {path: '', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
-
-    // Redirect signed in user to the '/example'
-    //
-    // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
-    // path. Below is another redirection for that path to redirect the user to the desired
-    // location. This is a small convenience to keep all main routes together here on this file.
     {path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
-
-    // Auth routes for guests
     {
         path: '',
         canActivate: [NoAuthGuard],
@@ -34,8 +25,6 @@ export const appRoutes: Route[] = [
                 {path: 'sign-in', loadChildren: () => import('@s-app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)}
             ]
     },
-
-    // Auth routes for authenticated users
     {
         path: '',
         canActivate: [AuthGuard],
@@ -50,7 +39,6 @@ export const appRoutes: Route[] = [
             {path: 'unlock-session', loadChildren: () => import('@s-app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
         ]
     },
-    // Admin routes
     {
         path: 'sistema-comercial',
         component: LayoutComponent,

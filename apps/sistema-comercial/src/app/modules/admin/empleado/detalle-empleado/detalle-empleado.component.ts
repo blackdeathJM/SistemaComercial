@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {IEmpleado} from '#/libs/models/src';
 
 @Component({
-  selector: 'app-detalle-empleado',
-  templateUrl: './detalle-empleado.component.html',
-  styleUrls: ['./detalle-empleado.component.scss']
+    selector: 'app-detalle-empleado',
+    templateUrl: './detalle-empleado.component.html',
+    styleUrls: ['./detalle-empleado.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetalleEmpleadoComponent implements OnInit {
+export class DetalleEmpleadoComponent
+{
+    @Output() abrirPanel = new EventEmitter<boolean>();
+    _empleado: IEmpleado;
 
-  constructor() { }
+    constructor()
+    {
+    }
 
-  ngOnInit(): void {
-  }
+    @Input() set empleado(valor: IEmpleado)
+    {
+        this._empleado = valor;
+    }
 
+    abrir(): void
+    {
+        this.abrirPanel.emit(false);
+    }
 }
