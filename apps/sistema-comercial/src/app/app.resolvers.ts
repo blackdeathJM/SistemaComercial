@@ -7,7 +7,6 @@ import {NotificationsService} from '@s-app/layout/common/notifications/notificat
 import {QuickChatService} from '@s-app/layout/common/quick-chat/quick-chat.service';
 import {ShortcutsService} from '@s-app/layout/common/shortcuts/shortcuts.service';
 import {UserService} from '@s-app/core/user/user.service';
-import {DepartamentosGQL} from '#/libs/datos/src';
 
 @Injectable({
     providedIn: 'root'
@@ -18,8 +17,7 @@ export class InitialDataResolver implements Resolve<any>
      * Constructor
      */
     constructor(private _messagesService: MessagesService, private _navigationService: NavigationService, private _notificationsService: NotificationsService,
-                private _quickChatService: QuickChatService, private _shortcutsService: ShortcutsService, private _userService: UserService, private deptosGQL: DepartamentosGQL
-    )
+                private _quickChatService: QuickChatService, private _shortcutsService: ShortcutsService, private _userService: UserService)
     {
     }
 
