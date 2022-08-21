@@ -63,8 +63,6 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
             {
                 STATE_DEPTOS(res);
             });
-
-            console.log('Estado actual', stadoActual);
         }, 100);
     }
 

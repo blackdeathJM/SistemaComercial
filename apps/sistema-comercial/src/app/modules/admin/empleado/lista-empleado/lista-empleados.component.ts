@@ -10,7 +10,7 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {EmpleadosGQL} from '#/libs/datos/src';
 
 @Component({
-    selector: 'app-lista-empleados',
+    selector: 'app-lista-empleado',
     templateUrl: './lista-empleado.component.html',
     styleUrls: ['./lista-empleados.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -18,7 +18,6 @@ import {EmpleadosGQL} from '#/libs/datos/src';
 export class ListaEmpleadosComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
-    cantidadEmpleados = 0;
     // tablaColumnasEmpleados: string[] = ['nombre', 'departamento'];
     drawerMode: 'side' | 'over';
     controlBuscar: FormControl = new FormControl();
@@ -38,6 +37,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
         {
             this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as IEmpleado[]);
         })).subscribe());
+
         this.matDrawer.openedChange.subscribe((opened) =>
         {
             if (!opened)
@@ -68,6 +68,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
 
     onBackdropClicked(): void
     {
+        console.log('haciendo click');
         this.router.navigate(['./'], {relativeTo: this.activatedRoute}).then();
         this.cdr.markForCheck();
     }

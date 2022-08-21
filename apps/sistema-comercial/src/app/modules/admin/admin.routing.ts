@@ -7,6 +7,10 @@ const adminRouting: Route[] =
         {
             path: 'administrador',
             component: AdminComponent,
+            children:
+                [
+                    {path: '', loadChildren: () => import('@s-app/empleado/empleado.module').then(m => m.EmpleadoModule)}
+                ]
         }
     ];
 

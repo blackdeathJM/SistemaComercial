@@ -4,8 +4,8 @@ import {EmpleadoComponent} from '@s-app/empleado/empleado.component';
 import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
 import {NgMaterialMaterialModule} from '@s-shared/ng-material/ng-material-material.module';
 import {SharedModule} from '@s-shared/shared.module';
-import {ListaEmpleadosComponent} from './lista/lista-empleados.component';
-import {DetalleEmpleadoComponent} from './detalle/detalle-empleado.component';
+import {ListaEmpleadosComponent} from './lista-empleado/lista-empleados.component';
+import {DetalleEmpleadoComponent} from './detalle-empleado/detalle-empleado.component';
 import {RouterModule} from '@angular/router';
 import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
 
@@ -16,11 +16,11 @@ import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
         ListaEmpleadosComponent
     ],
     imports: [
+        RouterModule,
         CommonModule,
         PlantillasModule,
         NgMaterialMaterialModule,
         SharedModule,
-        RouterModule,
         EmpleadoRouting
     ]
 })
