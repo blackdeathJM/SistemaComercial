@@ -76,12 +76,6 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
         return item.id || index;
     }
 
-    ngOnDestroy(): void
-    {
-        this.eliminarSubscripcion.next(null);
-        this.eliminarSubscripcion.complete();
-    }
-
     seleccionarEmpleado(empleado: IEmpleado): void
     {
         this.empleadoSeleccionado = empleado;
@@ -91,5 +85,11 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     abrirPanel(evento: boolean): void
     {
         this.matDrawer.opened = evento;
+    }
+
+    ngOnDestroy(): void
+    {
+        this.eliminarSubscripcion.next(null);
+        this.eliminarSubscripcion.complete();
     }
 }

@@ -2,7 +2,6 @@ export interface IAuth
 {
     usuario: string;
     contrasena: string;
-    correo?: string;
     rol: IRol[];
 }
 
