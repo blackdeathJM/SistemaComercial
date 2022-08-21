@@ -10,10 +10,10 @@ export interface IEmpleado
     fechaIngreso: Date;
     fechaBaja?: Date;
     activo: boolean;
-    puesto: string;
+    puesto: IPuesto[];
     modificadoPor: IModificado[];
     telefono: ITelefono[];
-    correo?: ICorreo[];
+    correo: ICorreo[];
     auth?: IAuth;
     deptoId: string;
 }
@@ -34,4 +34,13 @@ export interface ICorreo
 {
     correo: string;
     etiqueta: string;
+}
+
+export interface IPuesto
+{
+    puesto: string;
+    sueldo: number;
+    isr: number;
+    fecha: Date;
+    modificado: IModificado[];
 }

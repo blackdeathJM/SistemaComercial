@@ -20,26 +20,42 @@ type RolType {
   tipoAcceso: String
 }
 
-type EmpleadoType {
-  _id: String
-  avatar: String
-  activo: Boolean!
-  calle: String
-  colonia: String
-  fechaBaja: DateTime
-  fechaIngreso: DateTime
-  modificadoPor: [String!]
-  nombreCompleto: String
-  puesto: String
-  telefono: String
-  auth: AuthType
-  deptoId: String
+type ModificadoType {
+  fecha: DateTime
+  usuario: String
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type TelefonoType {
+  etiqueta: String
+  telefono: String
+}
+
+type CorreoType {
+  correo: String
+  etiqueta: String
+}
+
+type EmpleadoType {
+  _id: String
+  avatar: String
+  activo: Boolean!
+  calle: String
+  colonia: String
+  correo: [CorreoType!]
+  fechaBaja: DateTime
+  fechaIngreso: DateTime
+  modificadoPor: [ModificadoType!]
+  nombreCompleto: String
+  puesto: String
+  telefono: [TelefonoType!]
+  auth: AuthType
+  deptoId: String
+}
 
 type LoginRespuestaType {
   token: String!
@@ -64,18 +80,34 @@ input RolInput {
   tipoAcceso: String
 }
 
+input ModificadoInput {
+  fecha: DateTime
+  usuario: String
+}
+
+input TelefonoInput {
+  etiqueta: String
+  telefono: String
+}
+
+input CorreoInput {
+  correo: String
+  etiqueta: String
+}
+
 input EmpleadoInput {
   _id: String
   avatar: String = null
   activo: Boolean = false
   calle: String
   colonia: String
+  correo: [CorreoInput!]
   fechaBaja: DateTime
   fechaIngreso: DateTime
-  modificadoPor: [String!] = []
+  modificadoPor: [ModificadoInput!] = []
   nombreCompleto: String
   puesto: String
-  telefono: String
+  telefono: [TelefonoInput!]
   auth: AuthInput = null
   deptoId: String
 }
