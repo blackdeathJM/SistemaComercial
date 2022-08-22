@@ -4,7 +4,7 @@ import {DeptosService} from './deptos.service';
 import {IDepto} from '@sistema-comercial/models';
 
 @Resolver(DeptoDto)
-export class DeptoResolver
+export class DeptosResolver
 {
     constructor(private deptosService: DeptosService)
     {

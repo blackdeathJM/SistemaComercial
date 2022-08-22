@@ -3,10 +3,9 @@ import {GraphQLModule} from '@nestjs/graphql';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
-import {DeptosModule} from './deptos/deptos.module';
-import {EmpleadoModule} from './empleado/empleado.module';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import config from '../config/config';
+import {AdminModule} from "./admin/admin.module";
 
 @Module({
     imports: [
@@ -39,8 +38,7 @@ import config from '../config/config';
                 }
             )
         }),
-        DeptosModule,
-        EmpleadoModule
+        AdminModule
     ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}],
 })

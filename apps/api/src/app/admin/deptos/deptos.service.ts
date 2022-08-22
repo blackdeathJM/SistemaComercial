@@ -47,4 +47,9 @@ export class DeptosService
             throw new NotAcceptableException('El documento tiene campos duplicados', 'Departamentos');
         }
     }
+
+    async deptoPorId(_id: string): Promise<IDepto>
+    {
+        return this.depto.findById(new ObjectId(_id)).exec();
+    }
 }

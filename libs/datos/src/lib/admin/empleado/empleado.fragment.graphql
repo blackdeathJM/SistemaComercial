@@ -8,18 +8,13 @@ fragment fragEmpleado on EmpleadoType
     colonia
     fechaBaja
     fechaIngreso
-    modificadoPor
-    telefono
-    puesto
-    auth {
-        ...fragAuth
-    }
+    deptoId
 }
 
 fragment fragAuth on AuthType
 {
     usuario
-    correo
+    activo
     rol {
         ...fragRol
     }
@@ -29,4 +24,9 @@ fragment fragRol on RolType
 {
     departamentoId
     tipoAcceso
+}
+fragment fragModificadoPor on ModificadoType
+{
+    usuario
+    fecha
 }

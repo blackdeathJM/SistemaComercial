@@ -1,4 +1,5 @@
 import {IAuth} from './auth.interface';
+import {IDepto} from '../deptos/depto.interface';
 
 export interface IEmpleado
 {
@@ -10,12 +11,13 @@ export interface IEmpleado
     fechaIngreso: Date;
     fechaBaja?: Date;
     activo: boolean;
-    puesto: IPuesto[];
     modificadoPor: IModificado[];
-    telefono: ITelefono[];
-    correo: ICorreo[];
     auth?: IAuth;
+
+    //Relacion
     deptoId: string;
+    //Resolve
+    empleadoDepto?: IDepto;
 }
 
 export interface IModificado
@@ -43,4 +45,9 @@ export interface IPuesto
     isr: number;
     fecha: Date;
     modificado: IModificado[];
+}
+
+export interface ISeguroSocial
+{
+    nss: string;
 }

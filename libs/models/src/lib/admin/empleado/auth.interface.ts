@@ -1,5 +1,6 @@
 export interface IAuth
 {
+    activo: boolean;
     usuario: string;
     contrasena: string;
     rol: IRol[];

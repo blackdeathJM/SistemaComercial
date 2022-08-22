@@ -18,16 +18,16 @@ export type Scalars = {
 };
 
 export type AuthInput = {
+  activo?: InputMaybe<Scalars['Boolean']>;
   contrasena?: InputMaybe<Scalars['String']>;
-  correo?: InputMaybe<Scalars['String']>;
   rol?: InputMaybe<Array<RolInput>>;
   usuario?: InputMaybe<Scalars['String']>;
 };
 
 export type AuthType = {
   __typename?: 'AuthType';
+  activo?: Maybe<Scalars['Boolean']>;
   contrasena?: Maybe<Scalars['String']>;
-  correo?: Maybe<Scalars['String']>;
   rol: Array<RolType>;
   usuario?: Maybe<Scalars['String']>;
 };
@@ -52,13 +52,12 @@ export type EmpleadoInput = {
   avatar?: InputMaybe<Scalars['String']>;
   calle?: InputMaybe<Scalars['String']>;
   colonia?: InputMaybe<Scalars['String']>;
+  deptoEmpleado: DeptoInput;
   deptoId?: InputMaybe<Scalars['String']>;
   fechaBaja?: InputMaybe<Scalars['DateTime']>;
   fechaIngreso?: InputMaybe<Scalars['DateTime']>;
-  modificadoPor?: InputMaybe<Array<Scalars['String']>>;
+  modificadoPor?: InputMaybe<Array<ModificadoInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
-  puesto?: InputMaybe<Scalars['String']>;
-  telefono?: InputMaybe<Scalars['String']>;
 };
 
 export type EmpleadoType = {
@@ -69,13 +68,12 @@ export type EmpleadoType = {
   avatar?: Maybe<Scalars['String']>;
   calle?: Maybe<Scalars['String']>;
   colonia?: Maybe<Scalars['String']>;
+  deptoEmpleado: DeptoType;
   deptoId?: Maybe<Scalars['String']>;
   fechaBaja?: Maybe<Scalars['DateTime']>;
   fechaIngreso?: Maybe<Scalars['DateTime']>;
-  modificadoPor?: Maybe<Array<Scalars['String']>>;
+  modificadoPor?: Maybe<Array<ModificadoType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
-  puesto?: Maybe<Scalars['String']>;
-  telefono?: Maybe<Scalars['String']>;
 };
 
 export type LoginInput = {
@@ -87,6 +85,17 @@ export type LoginRespuestaType = {
   __typename?: 'LoginRespuestaType';
   empleado?: Maybe<EmpleadoType>;
   token: Scalars['String'];
+};
+
+export type ModificadoInput = {
+  fecha?: InputMaybe<Scalars['DateTime']>;
+  usuario?: InputMaybe<Scalars['String']>;
+};
+
+export type ModificadoType = {
+  __typename?: 'ModificadoType';
+  fecha?: Maybe<Scalars['DateTime']>;
+  usuario?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -175,22 +184,37 @@ export type EliminarDeptoMutationVariables = Exact<{
 
 export type EliminarDeptoMutation = { __typename?: 'Mutation', eliminarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
-export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, modificadoPor?: Array<string> | null, telefono?: string | null, puesto?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, correo?: string | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null };
+export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null };
 
-export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, correo?: string | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> };
+export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> };
 
 export type FragRolFragment = { __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null };
+
+export type FragModificadoPorFragment = { __typename?: 'ModificadoType', usuario?: string | null, fecha?: any | null };
 
 export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, modificadoPor?: Array<string> | null, telefono?: string | null, puesto?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, correo?: string | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null }> };
+export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
   _id
   nombre
   centroGestor
+}
+    `;
+export const FragEmpleadoFragmentDoc = gql`
+    fragment fragEmpleado on EmpleadoType {
+  _id
+  nombreCompleto
+  avatar
+  activo
+  calle
+  colonia
+  fechaBaja
+  fechaIngreso
+  deptoId
 }
     `;
 export const FragRolFragmentDoc = gql`
@@ -202,30 +226,18 @@ export const FragRolFragmentDoc = gql`
 export const FragAuthFragmentDoc = gql`
     fragment fragAuth on AuthType {
   usuario
-  correo
+  activo
   rol {
     ...fragRol
   }
 }
     ${FragRolFragmentDoc}`;
-export const FragEmpleadoFragmentDoc = gql`
-    fragment fragEmpleado on EmpleadoType {
-  _id
-  nombreCompleto
-  avatar
-  activo
-  calle
-  colonia
-  fechaBaja
-  fechaIngreso
-  modificadoPor
-  telefono
-  puesto
-  auth {
-    ...fragAuth
-  }
+export const FragModificadoPorFragmentDoc = gql`
+    fragment fragModificadoPor on ModificadoType {
+  usuario
+  fecha
 }
-    ${FragAuthFragmentDoc}`;
+    `;
 export const DepartamentosDocument = gql`
     query Departamentos {
   deptos {
@@ -301,10 +313,19 @@ export const EliminarDeptoDocument = gql`
 export const EmpleadosDocument = gql`
     query empleados {
   empleados {
-    ...fragEmpleado
+    _id
+    avatar
+    nombreCompleto
+    auth {
+      ...fragAuth
+    }
+    deptoEmpleado {
+      ...fragDeptos
+    }
   }
 }
-    ${FragEmpleadoFragmentDoc}`;
+    ${FragAuthFragmentDoc}
+${FragDeptosFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

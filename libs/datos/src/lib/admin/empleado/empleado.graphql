@@ -1,6 +1,14 @@
 query empleados
 {
     empleados {
-        ...fragEmpleado
+        _id
+        avatar
+        nombreCompleto
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
     }
 }

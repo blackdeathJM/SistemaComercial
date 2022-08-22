@@ -23,13 +23,6 @@
                         {{_empleado.nombreCompleto.charAt(0)}}
                     </div>
                 </div>
-                <!-- Actions -->
-                <div class="flex items-center ml-auto mb-1">
-                    <button mat-stroked-button>
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
-                        <span class="ml-2">Editar</span>
-                    </button>
-                </div>
             </div>
 
             <!-- Name -->
@@ -39,86 +32,22 @@
             <div class="flex flex-wrap items-center mt-2">
                 <!-- Tag -->
                 <div class="flex items-center justify-center py-1 px-3 mr-3 mb-3 rounded-full leading-normal text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                    <span class="text-sm font-medium whitespace-nowrap">{{_empleado.puesto}}</span>
+                    <span class="text-sm font-medium whitespace-nowrap">Puesto</span>
                 </div>
             </div>
-
-            <div class="flex flex-col mt-4 pt-6 border-t space-y-4">
-                <!-- Title -->
-                <div class="flex sm:items-center">
-                    <div class="font-bold text-2xl leading-6 text-amber-600">Datos Generales</div>
+            <ng-container *ngIf="_empleado.auth">
+                <div class="flex flex-col mt-4 pt-6 border-t space-y-4">
+                    <div class="flex sm:items-center border-b">
+                        <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                        <div class="ml-6 leading-6">{{_empleado.auth.usuario}}</div>
+                    </div>
+                    <!-- Permisos -->
+                    <div class="flex sm:items-center">
+                        <div class="font-bold text-2xl leading-6 text-amber-600">Permisos</div>
+                    </div>
                 </div>
+            </ng-container>
 
-                <!-- Address -->
-                <div class="flex sm:items-center">
-                    <mat-icon [svgIcon]="'heroicons_outline:location-marker'"></mat-icon>
-                    <div class="mx-4 leading-3">{{_empleado.calle}}</div>
-                </div>
-                <div class="flex sm:items-center">
-                    <mat-icon [svgIcon]="'heroicons_outline:library'"></mat-icon>
-                    <div class="ml-6 leading-3">{{_empleado.colonia}}</div>
-                </div>
-                <div class="flex sm:items-center">
-                    <mat-icon [svgIcon]="'heroicons_outline:cake'"></mat-icon>
-                    <div class="ml-6 leading-6">{{_empleado.fechaIngreso | date:'longDate'}}</div>
-                </div>
-                <div class="flex sm:items-center">
-                    <div class="font-bold text-2xl leading-6 text-amber-600">Datos de contacto</div>
-                </div>
-
-                <!-- Emails -->
-                <!--                <ng-container *ngIf="contact.emails.length">-->
-                <!--                    <div class="flex">-->
-                <!--                        <mat-icon [svgIcon]="'heroicons_outline:mail'"></mat-icon>-->
-                <!--                        <div class="min-w-0 ml-6 space-y-1">-->
-                <!--                            <ng-container *ngFor="let email of contact.emails; trackBy: trackByFn">-->
-                <!--                                <div class="flex items-center leading-6">-->
-                <!--                                    <a class="hover:underline text-primary-500" [href]="'mailto:' + email.email" target="_blank">-->
-                <!--                                        {{email.email}}-->
-                <!--                                    </a>-->
-                <!--                                    <div class="text-md truncate text-secondary" *ngIf="email.label">-->
-                <!--                                        <span class="mx-2">&bull;</span>-->
-                <!--                                        <span class="font-medium">{{email.label}}</span>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                            </ng-container>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </ng-container>-->
-
-                <!--Telefono-->
-                <!--                <ng-container *ngIf="contact.phoneNumbers.length">-->
-                <!--                    <div class="flex">-->
-                <!--                        <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>-->
-                <!--                        <div class="min-w-0 ml-6 space-y-1">-->
-                <!--                            <ng-container *ngFor="let phoneNumber of contact.phoneNumbers; trackBy: trackByFn">-->
-                <!--                                <div class="flex items-center leading-6">-->
-                <!--                                    <div class="hidden sm:flex w-6 h-4 overflow-hidden" [matTooltip]="getCountryByIso(phoneNumber.country).name" [style.background]="'url(\'/assets/images/apps/contacts/flags.png\') no-repeat 0 0'" [style.backgroundSize]="'24px 3876px'" [style.backgroundPosition]="getCountryByIso(phoneNumber.country).flagImagePos"></div>-->
-                <!--                                    <div class="sm:ml-3 font-mono">{{getCountryByIso(phoneNumber.country).code}}</div>-->
-                <!--                                    <div class="ml-2.5 font-mono">{{phoneNumber.phoneNumber}}</div>-->
-                <!--                                    <div class="text-md truncate text-secondary" *ngIf="phoneNumber.label">-->
-                <!--                                        <span class="mx-2">&bull;</span>-->
-                <!--                                        <span class="font-medium">{{phoneNumber.label}}</span>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                            </ng-container>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </ng-container>-->
-
-
-                <!-- Notes -->
-                <!--                <ng-container *ngIf="contact.notes">-->
-                <!--                    <div class="flex">-->
-                <!--                        <mat-icon [svgIcon]="'heroicons_outline:menu-alt-2'"></mat-icon>-->
-                <!--                        <div class="max-w-none ml-6 prose prose-sm" [innerHTML]="contact.notes"></div>-->
-                <!--                    </div>-->
-                <!--                </ng-container>-->
-
-                <div class="flex sm:items-center">
-                    <div class="font-bold text-2xl leading-6 text-amber-600">Permisos</div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

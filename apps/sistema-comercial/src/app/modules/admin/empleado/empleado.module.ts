@@ -8,6 +8,7 @@ import {ListaEmpleadosComponent} from './lista-empleado/lista-empleados.componen
 import {DetalleEmpleadoComponent} from './detalle-empleado/detalle-empleado.component';
 import {RouterModule} from '@angular/router';
 import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
+import {FuseNavigationModule} from "@s-fuse/navigation";
 
 @NgModule({
     declarations: [EmpleadoComponent, ListaEmpleadosComponent, DetalleEmpleadoComponent],
@@ -21,7 +22,8 @@ import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
         PlantillasModule,
         NgMaterialMaterialModule,
         SharedModule,
-        EmpleadoRouting
+        EmpleadoRouting,
+        FuseNavigationModule
     ]
 })
 export class EmpleadoModule

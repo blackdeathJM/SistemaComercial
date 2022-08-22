@@ -1,17 +1,16 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material/sidenav';
 import {FormControl} from '@angular/forms';
-import {IEmpleado} from '#/libs/models/src';
+import {AuthDto, IEmpleado} from '#/libs/models/src';
 import {filter, fromEvent, Subject, Subscription, takeUntil, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {EmpleadosGQL} from '#/libs/datos/src';
 
 @Component({
     selector: 'app-lista-empleado',
-    templateUrl: './lista-empleado.component.html',
+    templateUrl: './lista-empleados.component.html',
     styleUrls: ['./lista-empleados.component.scss']
 })
 export class ListaEmpleadosComponent implements OnInit, OnDestroy
@@ -20,8 +19,8 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     // tablaColumnasEmpleados: string[] = ['nombre', 'departamento'];
     drawerMode: 'side' | 'over';
     controlBuscar: FormControl = new FormControl();
-    empleadoSeleccionado: IEmpleado;
-    stateEmpleados: IEmpleado[];
+    empleadoSeleccionado: AuthDto;
+    stateEmpleados: AuthDto[];
     subscripciones: Subscription = new Subscription();
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
 
@@ -34,7 +33,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     {
         this.subscripciones.add(this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
         {
-            this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as IEmpleado[]);
+            // this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as AuthDto[]);
         })).subscribe());
 
         this.matDrawer.openedChange.subscribe((opened) =>
@@ -56,13 +55,9 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
                 this.drawerMode = 'over';
             }
         });
+
         fromEvent(this.document, 'keydown').pipe(takeUntil(this.eliminarSubscripcion),
-            filter<KeyboardEvent>(event => (event.ctrlKey === true || event.metaKey) && (event.key === '/'))).subscribe(() => this.crearEmpleado());
-    }
-
-    crearEmpleado(): void
-    {
-
+            filter<KeyboardEvent>(event => (event.ctrlKey === true || event.metaKey) && (event.key === '/'))).subscribe(() => this.asignarAuth());
     }
 
     onBackdropClicked(): void
@@ -78,7 +73,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
 
     seleccionarEmpleado(empleado: IEmpleado): void
     {
-        this.empleadoSeleccionado = empleado;
+        // this.empleadoSeleccionado = empleado;
         this.matDrawer.opened = true;
     }
 
@@ -91,5 +86,10 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     {
         this.eliminarSubscripcion.next(null);
         this.eliminarSubscripcion.complete();
+    }
+
+    asignarAuth(): void
+    {
+
     }
 }
