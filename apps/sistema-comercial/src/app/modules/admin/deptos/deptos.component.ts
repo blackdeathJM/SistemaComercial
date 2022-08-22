@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
-import {DeptosWebService} from '#/libs/datos/src/lib/admin/depto/deptos-web.service';
 import {debounceTime, map, Subscription, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
@@ -26,8 +25,8 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
     controlBuscar: FormControl = new FormControl();
     confirmacionDialogo: FuseConfirmationConfig = modalConfirmacionEliminar;
 
-    constructor(private dRef: MatDialog, private deptosWebService: DeptosWebService, private deptosGQL: DepartamentosGQL,
-                private confirmacionService: FuseConfirmationService, private eliminarGQL: EliminarDeptoGQL, private ngxToastService: NgxToastService)
+    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL, private confirmacionService: FuseConfirmationService,
+                private eliminarGQL: EliminarDeptoGQL, private ngxToastService: NgxToastService)
     {
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
     }

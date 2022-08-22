@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material/sidenav';
 import {FormControl} from '@angular/forms';
-import {AuthDto, IEmpleado} from '#/libs/models/src';
+import {IEmpleado} from '#/libs/models/src';
 import {filter, fromEvent, Subject, Subscription, takeUntil, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
@@ -16,11 +16,10 @@ import {EmpleadosGQL} from '#/libs/datos/src';
 export class ListaEmpleadosComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
-    // tablaColumnasEmpleados: string[] = ['nombre', 'departamento'];
     drawerMode: 'side' | 'over';
     controlBuscar: FormControl = new FormControl();
-    empleadoSeleccionado: AuthDto;
-    stateEmpleados: AuthDto[];
+    empleadoSeleccionado: IEmpleado;
+    stateEmpleados: IEmpleado[];
     subscripciones: Subscription = new Subscription();
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
 
@@ -33,6 +32,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     {
         this.subscripciones.add(this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
         {
+            console.log('res[iesta', res);
             // this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as AuthDto[]);
         })).subscribe());
 
@@ -73,7 +73,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
 
     seleccionarEmpleado(empleado: IEmpleado): void
     {
-        // this.empleadoSeleccionado = empleado;
+        this.empleadoSeleccionado = empleado;
         this.matDrawer.opened = true;
     }
 
