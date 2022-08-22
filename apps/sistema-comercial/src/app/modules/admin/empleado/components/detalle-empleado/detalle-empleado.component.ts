@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {IEmpleado} from '#/libs/models/src';
 import {MatDialog} from '@angular/material/dialog';
-import {RegistroSesionComponent} from "@s-app/empleado/components/registro-sesion/registro-sesion.component";
+import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
 
 @Component({
     selector: 'app-detalle-empleado',

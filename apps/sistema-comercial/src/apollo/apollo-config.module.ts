@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {Apollo, APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
+import {Apollo, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
@@ -24,6 +24,7 @@ export class ApolloConfigModule
         {
             if (graphQLErrors)
             {
+                console.log('response', response, graphQLErrors);
                 const arreglo = response.errors[0]['extensions']['response']['message'];
                 const arreglo2 = isArray(arreglo) ? arreglo : concat(arreglo);
 

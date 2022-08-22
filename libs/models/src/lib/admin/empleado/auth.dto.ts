@@ -29,7 +29,7 @@ export class RolDto implements IRol
     id: string;
     @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesario asignar un rol'})
-    tipoAcceso: 'ninguno' | 'lectura' | 'completo';
+    tipoAcceso: 'N' | 'L' | 'C';
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     oculto: boolean;
 }

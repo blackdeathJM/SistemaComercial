@@ -18,9 +18,10 @@
             <div class="flex flex-auto items-end -mt-16">
                 <!-- Avatar -->
                 <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
-                    <img class="object-cover w-full h-full" *ngIf="_empleado.avatar" [src]="_empleado.avatar" alt="Avatar">
-                    <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200" *ngIf="!_empleado.avatar">
-                        {{_empleado.nombreCompleto.charAt(0)}}
+                    <img class="object-cover w-full h-full" *ngIf="_empleado?.avatar" [src]="_empleado?.avatar" alt="Avatar">
+                    <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                         *ngIf="!_empleado?.avatar">
+                        {{_empleado?.nombreCompleto?.charAt(0)}}
                     </div>
                 </div>
                 <div class="flex items-center ml-auto mb-1">
@@ -32,7 +33,7 @@
             </div>
 
             <!-- Name -->
-            <div class="mt-3 text-4xl font-bold truncate">{{_empleado.nombreCompleto}}</div>
+            <div class="mt-3 text-4xl font-bold truncate">{{_empleado?.nombreCompleto}}</div>
 
             <!--Tags -->
             <div class="flex flex-wrap items-center mt-2">
@@ -41,11 +42,11 @@
                     <span class="text-sm font-medium whitespace-nowrap">Puesto</span>
                 </div>
             </div>
-            <ng-container *ngIf="_empleado.auth">
+            <ng-container *ngIf="_empleado?.auth">
                 <div class="flex flex-col mt-4 pt-6 border-t space-y-4">
-                    <div class="flex sm:items-center border-b">
+                    <div class="flex sm:items-center border-b pb-6">
                         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-                        <div class="ml-6 leading-6">{{_empleado.auth.usuario}}</div>
+                        <div class="ml-6 leading-6">{{_empleado?.auth?.usuario}}</div>
                     </div>
                     <!-- Permisos -->
                     <div class="flex sm:items-center">
