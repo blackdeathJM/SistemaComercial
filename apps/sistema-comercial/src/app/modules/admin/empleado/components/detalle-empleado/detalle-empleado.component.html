@@ -25,9 +25,9 @@
                     </div>
                 </div>
                 <div class="flex items-center ml-auto mb-1">
-                    <button mat-stroked-button (click)="asignarSesion(_empleado._id)">
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:key'"></mat-icon>
-                        <span class="ml-2">Asignar sesion</span>
+                    <button mat-stroked-button (click)="asignarSesion(_empleado)">
+                        <mat-icon class="icon-size-5" [svgIcon]="_empleado?.auth ? 'heroicons_solid:key' : 'heroicons_outline:user-add'"></mat-icon>
+                        <span class="ml-2">{{_empleado?.auth ? 'Modificar contrasena' : 'Asignar Sesion'}}</span>
                     </button>
                 </div>
             </div>

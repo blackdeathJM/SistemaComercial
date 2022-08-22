@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {IRol} from '#/libs/models/src';
+import {IEmpleado, IRol} from '#/libs/models/src';
 import {AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
@@ -19,6 +19,7 @@ export class RegistroSesionComponent implements OnInit
 {
     cargandoDatos = false;
     formAuth: FormGroup;
+    soloLectura = false;
     #rol: IRol[] =
         [
             {
@@ -33,7 +34,7 @@ export class RegistroSesionComponent implements OnInit
             }
         ];
 
-    constructor(@Inject(MAT_DIALOG_DATA) private data: string, private fb: RxFormBuilder, private dialogRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
+    constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dialogRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
                 private ngxToastService: NgxToastService)
     {
     }
@@ -41,22 +42,34 @@ export class RegistroSesionComponent implements OnInit
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
+        if (this.data)
+        {
+            this.soloLectura = true;
+            this.formAuth.patchValue(this.data);
+        }
     }
 
     registrar(): void
     {
         this.cargandoDatos = true;
         const {confirmContrasena, ...resto} = this.formAuth.value;
-        const auth = {rol: this.#rol, ...resto};
-        this.asignarAuthGQL.mutate({_id: this.data, auth}, {fetchPolicy: 'network-only'}).pipe(finalize(() => this.cancelar()), tap((res) =>
+        if (this.data)
         {
-            if (res.data)
+
+        } else
+        {
+            const auth = {rol: this.#rol, ...resto};
+            this.asignarAuthGQL.mutate({_id: this.data._id, auth}, {fetchPolicy: 'network-only'}).pipe(finalize(() => this.cancelar()), tap((res) =>
             {
-                unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
-                this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
-            }
-            this.cargandoDatos = false;
-        })).subscribe();
+                if (res.data)
+                {
+                    unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
+                    this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
+                }
+                this.cargandoDatos = false;
+            })).subscribe();
+        }
+
     }
 
     cancelar(): void

@@ -13,3 +13,16 @@ mutation asignarAuth($_id: String!, $auth: AuthInput!)
         }
     }
 }
+mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!)
+{
+    actualizarContrasenaAdmin(datos: $datos)
+    {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}

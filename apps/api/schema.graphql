@@ -102,9 +102,15 @@ type Mutation {
   crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
   asignarAuth(_id: String!, auth: AuthInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
+  actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
 }
 
 input LoginInput {
   usuario: String
+  contrasena: String
+}
+
+input CambioContrasenaInput {
+  _id: String
   contrasena: String
 }

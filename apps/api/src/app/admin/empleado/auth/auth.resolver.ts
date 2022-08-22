@@ -1,11 +1,11 @@
 import {Args, Context, Mutation, Resolver} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
-import {AuthDto, EmpleadoDto, IEmpleado, ILoginRespuesta, LoginDto} from '@sistema-comercial/models';
+import {AuthDto, CambioContrsenaDto, EmpleadoDto, IEmpleado, ILoginRespuesta, LoginDto} from '@sistema-comercial/models';
 import {LoginRespuesta} from '@sistema-comercial/models';
-import {HttpException, UseGuards} from '@nestjs/common';
+import {HttpException, NotFoundException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 
-@Resolver()
+@Resolver(() => AuthDto)
 export class AuthResolver
 {
     constructor(private authService: AuthService)
@@ -18,12 +18,6 @@ export class AuthResolver
         return await this.authService.asignarAuth(_id, auth);
     }
 
-    // @Mutation(() => EmpleadoDto)
-    // async asignarRol(_id: string, rol: RolDto[]): Promise<IEmpleado | HttpException>
-    // {
-    //
-    // }
-
     @Mutation(() => LoginRespuesta, {nullable: true})
     @UseGuards(GqlAuthGuard)
     login(@Args('login') login: LoginDto, @Context() context): ILoginRespuesta
@@ -31,4 +25,9 @@ export class AuthResolver
         return this.authService.login(context);
     }
 
+    @Mutation(() => EmpleadoDto)
+    async actualizarContrasenaAdmin(@Args('datos') datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
+    {
+        return await this.authService.actualizarContrasenaAdmin(datos);
+    }
 }

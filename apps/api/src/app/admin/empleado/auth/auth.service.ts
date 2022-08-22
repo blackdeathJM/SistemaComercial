@@ -1,21 +1,23 @@
 import {HttpException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta, IRol} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
+import {CambioContrsenaDto} from '@sistema-comercial/models';
 
 @Injectable()
 export class AuthService
 {
+    salt = 10;
+
     constructor(@InjectModel(EmpleadoDto.name) private empleado: Model<EmpleadoType>, private jwtService: JwtService)
     {
     }
 
     async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado | HttpException>
     {
-        const salt = 10;
         const buscarEmpleado = await this.empleado.findOne({'auth.usuario': auth.usuario}).exec();
         if (buscarEmpleado)
         {
@@ -23,18 +25,20 @@ export class AuthService
         }
 
         const contrasena = auth.contrasena;
-        auth.contrasena = await bcrypt.hash(contrasena, salt);
+        auth.contrasena = await bcrypt.hash(contrasena, this.salt);
         return await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
     }
 
-    async asignarRol(_id: string, rol: IRol[]): Promise<IEmpleado | HttpException>
+    async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
     {
-        const buscar = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$addToSet: {rol}}, {returnOriginal: false}).exec();
-        if (buscar)
+        const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
+        const empleado = await this.empleado.findOneAndUpdate(new ObjectId(datos._id), {$set: {'auth.contrsena': nvaContrasena}}, {returnOriginal: false}).exec();
+        if (!empleado)
         {
-            throw new HttpException('Ocurrio una excepcion', 500);
+            throw new NotFoundException('No se encontro registro para actualizar la contrasena');
         }
-        return buscar;
+
+        return empleado;
     }
 
     async validarUsuario(username: string, password: string): Promise<IEmpleado>
