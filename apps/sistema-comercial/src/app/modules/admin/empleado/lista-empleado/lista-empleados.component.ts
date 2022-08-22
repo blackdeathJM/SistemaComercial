@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
+import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 
 @Component({
     selector: 'app-lista-empleado',
@@ -32,8 +33,7 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     {
         this.subscripciones.add(this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
         {
-            console.log('res[iesta', res);
-            // this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as AuthDto[]);
+            this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as IEmpleado[]);
         })).subscribe());
 
         this.matDrawer.openedChange.subscribe((opened) =>

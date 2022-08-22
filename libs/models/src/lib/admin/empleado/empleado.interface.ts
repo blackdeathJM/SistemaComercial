@@ -17,7 +17,7 @@ export interface IEmpleado
     //Relacion
     deptoId: string;
     //Resolve
-    empleadoDepto?: IDepto;
+    deptoEmpleado?: IDepto;
 }
 
 export interface IModificado

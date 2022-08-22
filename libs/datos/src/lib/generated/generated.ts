@@ -195,7 +195,7 @@ export type FragModificadoPorFragment = { __typename?: 'ModificadoType', usuario
 export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } }> };
+export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -313,9 +313,7 @@ export const EliminarDeptoDocument = gql`
 export const EmpleadosDocument = gql`
     query empleados {
   empleados {
-    _id
-    avatar
-    nombreCompleto
+    ...fragEmpleado
     auth {
       ...fragAuth
     }
@@ -324,7 +322,8 @@ export const EmpleadosDocument = gql`
     }
   }
 }
-    ${FragAuthFragmentDoc}
+    ${FragEmpleadoFragmentDoc}
+${FragAuthFragmentDoc}
 ${FragDeptosFragmentDoc}`;
 
   @Injectable({

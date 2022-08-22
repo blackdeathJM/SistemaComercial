@@ -1,9 +1,7 @@
 query empleados
 {
     empleados {
-        _id
-        avatar
-        nombreCompleto
+        ...fragEmpleado
         auth {
             ...fragAuth
         }
