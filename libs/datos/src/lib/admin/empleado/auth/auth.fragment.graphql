@@ -9,6 +9,7 @@ fragment fragAuth on AuthType
 
 fragment fragRol on RolType
 {
-    departamentoId
+    id
     tipoAcceso
+    oculto
 }

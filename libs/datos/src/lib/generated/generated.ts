@@ -146,13 +146,15 @@ export type Query = {
 };
 
 export type RolInput = {
-  departamentoId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  oculto?: InputMaybe<Scalars['Boolean']>;
   tipoAcceso?: InputMaybe<Scalars['String']>;
 };
 
 export type RolType = {
   __typename?: 'RolType';
-  departamentoId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  oculto?: Maybe<Scalars['Boolean']>;
   tipoAcceso?: Maybe<Scalars['String']>;
 };
 
@@ -184,9 +186,9 @@ export type EliminarDeptoMutationVariables = Exact<{
 
 export type EliminarDeptoMutation = { __typename?: 'Mutation', eliminarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
-export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> };
+export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> };
 
-export type FragRolFragment = { __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null };
+export type FragRolFragment = { __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null };
 
 export type AsignarAuthMutationVariables = Exact<{
   _id: Scalars['String'];
@@ -194,7 +196,7 @@ export type AsignarAuthMutationVariables = Exact<{
 }>;
 
 
-export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } } };
+export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } } };
 
 export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null };
 
@@ -203,7 +205,7 @@ export type FragModificadoPorFragment = { __typename?: 'ModificadoType', usuario
 export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } }> };
+export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -214,8 +216,9 @@ export const FragDeptosFragmentDoc = gql`
     `;
 export const FragRolFragmentDoc = gql`
     fragment fragRol on RolType {
-  departamentoId
+  id
   tipoAcceso
+  oculto
 }
     `;
 export const FragAuthFragmentDoc = gql`

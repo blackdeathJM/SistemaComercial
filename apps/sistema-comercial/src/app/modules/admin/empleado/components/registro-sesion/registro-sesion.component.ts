@@ -3,7 +3,6 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {rol} from '#/libs/models/src';
 
 @Component({
     selector: 'app-registro-sesion',
@@ -14,6 +13,14 @@ export class RegistroSesionComponent implements OnInit
 {
     cargandoDatos = false;
     formAuth: FormGroup;
+    #rol =
+        [
+            {
+                id: 'administrador',
+                accesso: 'ninguno',
+                oculto: true
+            }
+        ];
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: string, private fb: RxFormBuilder, private dialogRef: MatDialog)
     {
@@ -27,7 +34,7 @@ export class RegistroSesionComponent implements OnInit
     registrar(): void
     {
         // const auth = {rol, ...this.formAuth.value};
-        // console.log('auth', auth);
+        console.log('auth', this.#rol);
     }
 
     cancelar(): void
