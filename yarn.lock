@@ -3806,10 +3806,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@sweetalert2/themes@^5.0.11":
-  version "5.0.11"
-  resolved "https://registry.yarnpkg.com/@sweetalert2/themes/-/themes-5.0.11.tgz#5e5e5f8aee7452f2e71cd0299ae3f459163fbe3b"
-  integrity sha512-2i7YpRNMjTCRzHQJwUhvhRNqctcrTGejpAKnycPL1nsRrhdDMxNDIleMkac8FA/tEq9riR1174qzd8HtLmzzVA==
+"@sweetalert2/themes@^5.0.12":
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/themes/-/themes-5.0.12.tgz#d234d73f7aad92e98b78ffa3805750a03b4042c3"
+  integrity sha512-pdbIoSM9+PIyt4LRPNwr3awwnOTza4MnBFAtnWvPueQ6x1OmRH8oyeIUvJiCApfIe6dYaB0lUAqzb6Z2HeVJSQ==
 
 "@tailwindcss/aspect-ratio@0.4.0":
   version "0.4.0"
@@ -4263,10 +4263,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.34.tgz#3b0b6a50ff797280b8d000c6281d229f9c538cef"
   integrity sha512-XImEz7XwTvDBtzlTnm8YvMqGW/ErMWBsKZ+hMTvnDIjGCKxwK5Xpc+c/oQjOauwq8M4OS11hEkpjX8rrI/eEgA==
 
-"@types/node@18.7.8":
-  version "18.7.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.8.tgz#6bbf2be6fbf9c187a5040d4277d24a06a18957a1"
-  integrity sha512-/YP55EMK2341JkODUb8DM9O0x1SIz2aBvyF33Uf1c76St3VpsMXEIW0nxuKkq/5cxnbz0RD9cfwNZHEAZQD3ag==
+"@types/node@18.7.9":
+  version "18.7.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.9.tgz#180bfc495c91dc62573967edf047e15dbdce1491"
+  integrity sha512-0N5Y1XAdcl865nDdjbO0m3T6FdmQ4ijE89/urOHLREyTXbpMWbSafx9y7XIsgWGtwUP2iYTinLyyW3FatAxBLQ==
 
 "@types/node@^10.1.0":
   version "10.17.60"
@@ -5022,10 +5022,10 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apexcharts@3.35.4:
-  version "3.35.4"
-  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.35.4.tgz#347140240fad6e646a76c7bc8e7e75294c2206b2"
-  integrity sha512-dsXjETHF2OmKtxNv66wBeFGU2qtZQnr6kp/vcNY05GWs4vcBepg54qNgOJ2Gp/gXskiGw/frrmIKGi8lJ/UDnQ==
+apexcharts@3.35.5:
+  version "3.35.5"
+  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.35.5.tgz#c5a950f6f7be35ff4f4509b2179ff538d366c6ec"
+  integrity sha512-Bi3aq35xWntI71JlywXTBBAOhuKTbB4wijKw4ClkIAFV904YDkHPIJ8N9LcZq9fvVb0VX1AEmyOFBOB2Vwsuew==
   dependencies:
     svg.draggable.js "^2.2.2"
     svg.easing.js "^2.0.0"
@@ -14868,10 +14868,10 @@ swap-case@^2.0.2:
   dependencies:
     tslib "^2.0.3"
 
-sweetalert2@^11.4.28:
-  version "11.4.28"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.28.tgz#651bd309768dceb62c1cb8e3ff4bfa5121195ef6"
-  integrity sha512-leCf8Kc/o+R0LNWmLjWXI7l0roMchEHg6X+XibmfTYaOMvOoHXmoxmegHl0it+8vvvZlPIjzyfM6bYBOKTFnRg==
+sweetalert2@^11.4.29:
+  version "11.4.29"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.29.tgz#0b42c924dc79eda6580a753e045a5ec7044a0e2e"
+  integrity sha512-UMCZgyEk0m+KizxspB8Bsm5ZQRdguba2t2+Rf0r8XBmq5YqhXq7ItV2C15A3VLfRlxHnEJBTYg6hkSk/x+5Ofw==
 
 symbol-observable@4.0.0, symbol-observable@^4.0.0:
   version "4.0.0"

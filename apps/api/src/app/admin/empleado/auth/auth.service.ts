@@ -24,9 +24,7 @@ export class AuthService
 
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, salt);
-
-        return await this.empleado.findByIdAndUpdate(new ObjectId(_id),
-            {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
+        return await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
     }
 
     async asignarRol(_id: string, rol: IRol[]): Promise<IEmpleado | HttpException>

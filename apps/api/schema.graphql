@@ -16,8 +16,9 @@ type AuthType {
 }
 
 type RolType {
-  departamentoId: String
+  id: String
   tipoAcceso: String
+  oculto: Boolean
 }
 
 type ModificadoType {
@@ -64,8 +65,9 @@ input AuthInput {
 }
 
 input RolInput {
-  departamentoId: String
+  id: String
   tipoAcceso: String
+  oculto: Boolean = true
 }
 
 input ModificadoInput {

@@ -6,7 +6,7 @@ import { FuseAlertType } from '@s-fuse/components/alert';
 import { AuthService } from '@s-app/core/auth/auth.service';
 
 @Component({
-    selector     : 'auth-forgot-password',
+    selector     : 'auth.ts-forgot-password',
     templateUrl  : './forgot-password.component.html',
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations

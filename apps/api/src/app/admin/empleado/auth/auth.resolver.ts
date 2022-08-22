@@ -1,6 +1,6 @@
 import {Args, Context, Mutation, Resolver} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
-import {AuthDto, EmpleadoDto, IEmpleado, ILoginRespuesta, LoginDto, RolDto} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, IEmpleado, ILoginRespuesta, LoginDto} from '@sistema-comercial/models';
 import {LoginRespuesta} from '@sistema-comercial/models';
 import {HttpException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';

@@ -9,5 +9,6 @@ export interface IAuth
 export interface IRol
 {
     tipoAcceso: 'ninguno' | 'lectura' | 'completo';
-    departamentoId: string;
+    id: string;
+    oculto: boolean;
 }

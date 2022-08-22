@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from
 import {MatDrawer} from '@angular/material/sidenav';
 import {FormControl} from '@angular/forms';
 import {IEmpleado} from '#/libs/models/src';
-import {filter, fromEvent, Subject, Subscription, takeUntil, tap} from 'rxjs';
+import {Subject, Subscription, takeUntil, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
@@ -56,8 +56,8 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
             }
         });
 
-        fromEvent(this.document, 'keydown').pipe(takeUntil(this.eliminarSubscripcion),
-            filter<KeyboardEvent>(event => (event.ctrlKey === true || event.metaKey) && (event.key === '/'))).subscribe(() => this.asignarAuth());
+        // fromEvent(this.document, 'keydown').pipe(takeUntil(this.eliminarSubscripcion),
+        //     filter<KeyboardEvent>(event => (event.ctrlKey === true || event.metaKey) && (event.key === '/'))).subscribe(() => this.asignarAuth());
     }
 
     onBackdropClicked(): void
@@ -86,10 +86,5 @@ export class ListaEmpleadosComponent implements OnInit, OnDestroy
     {
         this.eliminarSubscripcion.next(null);
         this.eliminarSubscripcion.complete();
-    }
-
-    asignarAuth(): void
-    {
-
     }
 }

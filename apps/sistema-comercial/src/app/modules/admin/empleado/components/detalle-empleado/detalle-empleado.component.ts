@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {IEmpleado} from '#/libs/models/src';
+import {MatDialog} from '@angular/material/dialog';
+import {RegistroSesionComponent} from "@s-app/empleado/components/registro-sesion/registro-sesion.component";
 
 @Component({
     selector: 'app-detalle-empleado',
@@ -12,7 +14,7 @@ export class DetalleEmpleadoComponent
     @Output() abrirPanel = new EventEmitter<boolean>();
     _empleado: IEmpleado;
 
-    constructor()
+    constructor(private dialogRef: MatDialog)
     {
     }
 
@@ -24,5 +26,10 @@ export class DetalleEmpleadoComponent
     abrir(): void
     {
         this.abrirPanel.emit(false);
+    }
+
+    asignarSesion(_id: string): void
+    {
+        this.dialogRef.open(RegistroSesionComponent, {data: _id, width: '40%'});
     }
 }

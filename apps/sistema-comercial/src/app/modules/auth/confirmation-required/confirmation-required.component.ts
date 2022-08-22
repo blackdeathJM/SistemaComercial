@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@s-fuse/animations';
 
 @Component({
-    selector     : 'auth-confirmation-required',
+    selector     : 'auth.ts-confirmation-required',
     templateUrl  : './confirmation-required.component.html',
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations

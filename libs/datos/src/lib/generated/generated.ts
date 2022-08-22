@@ -184,11 +184,19 @@ export type EliminarDeptoMutationVariables = Exact<{
 
 export type EliminarDeptoMutation = { __typename?: 'Mutation', eliminarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
-export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null };
-
 export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> };
 
 export type FragRolFragment = { __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null };
+
+export type AsignarAuthMutationVariables = Exact<{
+  _id: Scalars['String'];
+  auth: AuthInput;
+}>;
+
+
+export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', departamentoId?: string | null, tipoAcceso?: string | null }> } | null, deptoEmpleado: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } } };
+
+export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null };
 
 export type FragModificadoPorFragment = { __typename?: 'ModificadoType', usuario?: string | null, fecha?: any | null };
 
@@ -202,19 +210,6 @@ export const FragDeptosFragmentDoc = gql`
   _id
   nombre
   centroGestor
-}
-    `;
-export const FragEmpleadoFragmentDoc = gql`
-    fragment fragEmpleado on EmpleadoType {
-  _id
-  nombreCompleto
-  avatar
-  activo
-  calle
-  colonia
-  fechaBaja
-  fechaIngreso
-  deptoId
 }
     `;
 export const FragRolFragmentDoc = gql`
@@ -232,6 +227,19 @@ export const FragAuthFragmentDoc = gql`
   }
 }
     ${FragRolFragmentDoc}`;
+export const FragEmpleadoFragmentDoc = gql`
+    fragment fragEmpleado on EmpleadoType {
+  _id
+  nombreCompleto
+  avatar
+  activo
+  calle
+  colonia
+  fechaBaja
+  fechaIngreso
+  deptoId
+}
+    `;
 export const FragModificadoPorFragmentDoc = gql`
     fragment fragModificadoPor on ModificadoType {
   usuario
@@ -305,6 +313,32 @@ export const EliminarDeptoDocument = gql`
   })
   export class EliminarDeptoGQL extends Apollo.Mutation<EliminarDeptoMutation, EliminarDeptoMutationVariables> {
     document = EliminarDeptoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AsignarAuthDocument = gql`
+    mutation asignarAuth($_id: String!, $auth: AuthInput!) {
+  asignarAuth(_id: $_id, auth: $auth) {
+    ...fragEmpleado
+    auth {
+      ...fragAuth
+    }
+    deptoEmpleado {
+      ...fragDeptos
+    }
+  }
+}
+    ${FragEmpleadoFragmentDoc}
+${FragAuthFragmentDoc}
+${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AsignarAuthGQL extends Apollo.Mutation<AsignarAuthMutation, AsignarAuthMutationVariables> {
+    document = AsignarAuthDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

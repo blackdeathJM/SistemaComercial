@@ -13,18 +13,20 @@
         "importHelpers": true,
         "target": "es2017",
         "module": "es2020",
-        "lib": [ "es2020", "dom", "esnext.asynciterable" ],
+        "lib": ["es2020", "dom", "esnext.asynciterable"],
         "removeComments": true,
         "paths": {
-            "@sistema-comercial/apollo-config": [ "libs/apollo-config/src/index.ts" ],
-            "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
-            "@sistema-comercial/models": [ "libs/models/src/index.ts" ],
-            "@sistema-comercial/services": [ "libs/services/src/index.ts" ]
+            "@sistema-comercial/apollo-config": [
+                "libs/apollo-config/src/index.ts"
+            ],
+            "@sistema-comercial/datos": ["libs/datos/src/index.ts"],
+            "@sistema-comercial/models": ["libs/models/src/index.ts"],
+            "@sistema-comercial/services": ["libs/services/src/index.ts"]
         },
         "rootDir": "."
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false
     },
-    "exclude": [ "node_modules", "tmp" ]
+    "exclude": ["node_modules", "tmp"]
 }

@@ -7,7 +7,7 @@ import { FuseAlertType } from '@s-fuse/components/alert';
 import { AuthService } from '@s-app/core/auth/auth.service';
 
 @Component({
-    selector     : 'auth-reset-password',
+    selector     : 'auth.ts-reset-password',
     templateUrl  : './reset-password.component.html',
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations

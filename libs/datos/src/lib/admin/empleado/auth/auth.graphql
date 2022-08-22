@@ -1,6 +1,6 @@
-query empleados
+mutation asignarAuth($_id: String!, $auth: AuthInput!)
 {
-    empleados
+    asignarAuth(_id: $_id, auth: $auth)
     {
         ...fragEmpleado
         auth

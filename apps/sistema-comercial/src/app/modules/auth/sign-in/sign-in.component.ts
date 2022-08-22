@@ -6,7 +6,7 @@ import {FuseAlertType} from '@s-fuse/components/alert';
 import {AuthService} from '@s-app/core/auth/auth.service';
 
 @Component({
-    selector: 'auth-sign-in',
+    selector: 'auth.ts-sign-in',
     templateUrl: './sign-in.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations

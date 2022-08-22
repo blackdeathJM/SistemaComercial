@@ -1,5 +1,5 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
-import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IsNotEmpty} from 'class-validator';
 import {IAuth, IRol} from './auth.interface';
 
 @ObjectType('AuthType')
@@ -26,9 +26,10 @@ export class RolDto implements IRol
 {
     @Field({nullable: true})
     @IsNotEmpty({message: 'El id del departamento es necesario'})
-    departamentoId: string;
-
+    id: string;
     @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesario asignar un rol'})
     tipoAcceso: 'ninguno' | 'lectura' | 'completo';
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    oculto: boolean;
 }

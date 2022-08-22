@@ -1,0 +1,14 @@
+fragment fragAuth on AuthType
+{
+    usuario
+    activo
+    rol {
+        ...fragRol
+    }
+}
+
+fragment fragRol on RolType
+{
+    departamentoId
+    tipoAcceso
+}
