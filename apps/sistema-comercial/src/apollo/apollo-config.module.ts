@@ -20,18 +20,15 @@ export class ApolloConfigModule
     constructor(apollo: Apollo, private ngxToast: ToastrService)
     {
         // Para capturar los errores de consulta y/o de red
-        const errorLink = onError(({graphQLErrors, networkError, response}) =>
+        const errorLink = onError(({graphQLErrors, networkError}) =>
         {
             if (graphQLErrors)
             {
-                console.log('response', response, graphQLErrors);
-                const arreglo = response.errors[0]['extensions']['response']['message'];
-                const arreglo2 = isArray(arreglo) ? arreglo : concat(arreglo);
-
-                arreglo2.map((res) =>
+                graphQLErrors.map((value) =>
                 {
-                    this.ngxToast.error(res, 'Error en el servidor',
+                    this.ngxToast.error(value.message, 'Error en el servidor',
                         {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 20000});
+                    console.log(value.extensions['response']['message']);
                 });
             }
 

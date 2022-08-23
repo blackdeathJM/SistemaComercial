@@ -32,7 +32,7 @@ export class AuthService
     async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
-        const empleado = await this.empleado.findOneAndUpdate(new ObjectId(datos._id), {$set: {'auth.contrsena': nvaContrasena}}, {returnOriginal: false}).exec();
+        const empleado = await this.empleado.findOneAndUpdate(new ObjectId(datos._id), {$set: {'auth.contrasena': nvaContrasena}}, {returnOriginal: false}).exec();
         if (!empleado)
         {
             throw new NotFoundException('No se encontro registro para actualizar la contrasena');

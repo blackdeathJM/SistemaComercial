@@ -4,7 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {IEmpleado, IRol} from '#/libs/models/src';
-import {AsignarAuthGQL} from '#/libs/datos/src';
+import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
@@ -35,17 +35,17 @@ export class RegistroSesionComponent implements OnInit
         ];
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dialogRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
-                private ngxToastService: NgxToastService)
+                private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL)
     {
     }
 
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
-        if (this.data)
+        if (this.data.auth)
         {
             this.soloLectura = true;
-            this.formAuth.patchValue(this.data);
+            this.formAuth.patchValue(this.data.auth);
         }
     }
 
@@ -53,9 +53,25 @@ export class RegistroSesionComponent implements OnInit
     {
         this.cargandoDatos = true;
         const {confirmContrasena, ...resto} = this.formAuth.value;
-        if (this.data)
+        if (this.data.auth)
         {
-
+            const datos =
+                {
+                    _id: this.data._id,
+                    contrasena: this.formAuth.get('contrasena').value
+                };
+            this.actualizarContrasenaAdminGQL.mutate({datos}).pipe(finalize(() =>
+            {
+                this.cargandoDatos = false;
+                this.cancelar();
+            }), tap((res) =>
+            {
+                if (res.data)
+                {
+                    unionBy(STATE_EMPLEADOS(), res.data.actualizarContrasenaAdmin);
+                    this.ngxToastService.satisfactorioToast('La contrasena fue reasignada con exito', 'Cambio de contrasena');
+                }
+            })).subscribe();
         } else
         {
             const auth = {rol: this.#rol, ...resto};
