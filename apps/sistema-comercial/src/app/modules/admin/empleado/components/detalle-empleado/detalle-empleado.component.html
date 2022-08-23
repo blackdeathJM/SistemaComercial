@@ -55,6 +55,37 @@
                 </div>
             </ng-container>
 
+            <ng-container *ngIf="_empleado.auth && _empleado.auth.rol.length">
+                <ng-container *ngFor="let permiso of _empleado.auth.rol; let i = index; trackBy: trackByFn">
+                    <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b hover:bg-gray-100 dark:hover:bg-gray-700 bg-on-primary-800 dark:bg-hover my-1">
+                        <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                            <ng-container>
+                                <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                    <mat-icon class="text-amber-600" [svgIcon]="'heroicons_outline:library'"></mat-icon>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="flex w-full items-center">
+                            <div class="ml-4 flex-grow">
+                                <div class="font-medium truncate">Cartera vencida y comercializacion</div>
+                                <!--                                <div class="leading-5 truncate text-secondary">{{permiso.tipoAcceso}}</div>-->
+                            </div>
+                            <mat-button-toggle-group>
+                                <mat-button-toggle value="ninguno">
+                                    <mat-icon [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                </mat-button-toggle>
+                                <mat-button-toggle value="lectura">
+                                    <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                </mat-button-toggle>
+                                <mat-button-toggle value="todo">
+                                    <mat-icon [svgIcon]="'heroicons_outline:lock-open'"></mat-icon>
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+
         </div>
     </div>
 </div>

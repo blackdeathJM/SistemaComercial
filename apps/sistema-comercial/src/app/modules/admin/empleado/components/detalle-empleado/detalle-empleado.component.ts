@@ -42,6 +42,12 @@ export class DetalleEmpleadoComponent implements OnDestroy
         }));
     }
 
+    trackByFn(index: number, item: any): any
+    {
+        console.log('item del trackby', item);
+        return item.id || index;
+    }
+
     ngOnDestroy(): void
     {
         this.subscripcion.unsubscribe();
