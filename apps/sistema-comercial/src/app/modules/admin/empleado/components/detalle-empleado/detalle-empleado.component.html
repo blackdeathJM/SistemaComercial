@@ -65,20 +65,20 @@
                                 </div>
                             </ng-container>
                         </div>
-                        <div class="flex w-full items-center">
+                        <div class="flex w-full">
                             <div class="ml-4 flex-grow">
                                 <div class="font-medium truncate">{{permiso.id}}</div>
-                                <!--                                <div class="leading-5 truncate text-secondary">{{permiso.tipoAcceso}}</div>-->
+                                <div class="leading-5 truncate text-secondary">{{permiso.tipoAcceso}}</div>
                             </div>
-                            <mat-button-toggle-group>
-                                <mat-button-toggle value="ninguno">
-                                    <mat-icon [svgIcon]="'lock'"></mat-icon>
+                            <mat-button-toggle-group apparence="legacy">
+                                <mat-button-toggle value="ninguno" [ng-class]="{'bg-green':selected==='N'}">
+                                    <mat-icon [svgIcon]="'lock'" class="text-green-800 dark:text-green-600"></mat-icon>
                                 </mat-button-toggle>
-                                <mat-button-toggle value="lectura">
-                                    <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                                <mat-button-toggle value="lectura" [ng-class]="{'bg-green':selected==='L'}">
+                                    <mat-icon [svgIcon]="'heroicons_outline:eye'" class="text-green-800 dark:text-green-600"></mat-icon>
                                 </mat-button-toggle>
-                                <mat-button-toggle value="todo">
-                                    <mat-icon [svgIcon]="'lock_open'"></mat-icon>
+                                <mat-button-toggle value="todo" [ng-class]="{'bg-green':selected==='T'}">
+                                    <mat-icon [svgIcon]="'lock_open'" class="text-green-800 dark:text-green-600"></mat-icon>
                                 </mat-button-toggle>
                             </mat-button-toggle-group>
                         </div>

@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\apps",
+    "\\apps\\sistema-comercial",
+    "\\apps\\sistema-comercial\\src",
+    "\\apps\\sistema-comercial\\src\\app",
+    "\\apps\\sistema-comercial\\src\\app\\modules",
+    "\\apps\\sistema-comercial\\src\\app\\modules\\admin",
+    "\\apps\\sistema-comercial\\src\\app\\modules\\admin\\empleado",
+    "\\apps\\sistema-comercial\\src\\app\\modules\\admin\\empleado\\models"
+  ],
+  "PreviewInSolutionExplorer": false
+}
