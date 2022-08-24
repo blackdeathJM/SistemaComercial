@@ -12,6 +12,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
             MatSidenavModule,
             PortalModule,
             MatTooltipModule,
-            MatButtonToggleModule
+            MatButtonToggleModule,
+            MatSelectModule
         ],
     exports:
         [
@@ -45,7 +47,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
             MatSidenavModule,
             PortalModule,
             MatTooltipModule,
-            MatButtonToggleModule
+            MatButtonToggleModule,
+            MatSelectModule
         ]
 })
 export class NgMaterialMaterialModule
