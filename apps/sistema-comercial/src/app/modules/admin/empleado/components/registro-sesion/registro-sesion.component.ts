@@ -23,13 +23,13 @@ export class RegistroSesionComponent implements OnInit
     #rol: IRol[] =
         [
             {
-                id: 'administrador',
-                tipoAcceso: 'N',
+                id: 'Administrador',
+                tipoAcceso: 'ninguno',
                 oculto: true
             },
             {
-                id: 'telemetria',
-                tipoAcceso: 'N',
+                id: 'Telemetria',
+                tipoAcceso: 'ninguno',
                 oculto: true
             }
         ];

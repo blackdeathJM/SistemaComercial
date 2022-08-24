@@ -15,6 +15,8 @@ export class DetalleEmpleadoComponent implements OnDestroy
     @Output() abrirPanel = new EventEmitter<boolean>();
     _empleado: IEmpleado;
     subscripcion: Subscription = new Subscription();
+    roles = ['ninguno', 'lectura', 'completo'];
+    permisoAsignado: string;
 
     constructor(private dialogRef: MatDialog)
     {
@@ -51,5 +53,10 @@ export class DetalleEmpleadoComponent implements OnDestroy
     ngOnDestroy(): void
     {
         this.subscripcion.unsubscribe();
+    }
+
+    permisoSeleccionado(): void
+    {
+
     }
 }
