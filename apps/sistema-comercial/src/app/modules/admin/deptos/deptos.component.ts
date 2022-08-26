@@ -40,7 +40,7 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
     {
         this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
         {
-            this.datosCargados = res.loading;
+            this.datosCargados = false;
             if (res.data.deptos)
             {
                 STATE_DEPTOS(res.data.deptos as IDepto[]);

@@ -4,6 +4,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
 import {Subscription} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {FormControl} from '@angular/forms';
+import {MatButtonToggleChange} from '@angular/material/button-toggle';
 
 @Component({
     selector: 'app-detalle-empleado',
@@ -16,7 +18,9 @@ export class DetalleEmpleadoComponent implements OnDestroy
     _empleado: IEmpleado;
     subscripcion: Subscription = new Subscription();
     roles = ['ninguno', 'lectura', 'completo'];
-    permisoAsignado: string;
+
+    controlRoles: FormControl = new FormControl();
+
 
     constructor(private dialogRef: MatDialog)
     {
@@ -46,7 +50,6 @@ export class DetalleEmpleadoComponent implements OnDestroy
 
     trackByFn(index: number, item: any): any
     {
-        console.log('item del trackby', item);
         return item.id || index;
     }
 
@@ -55,8 +58,24 @@ export class DetalleEmpleadoComponent implements OnDestroy
         this.subscripcion.unsubscribe();
     }
 
-    permisoSeleccionado(): void
+    permisoSeleccionado(evento: void | MatButtonToggleChange, empleado: IEmpleado): void
     {
+        console.log('evento toggle', evento['value']);
 
     }
+
+    // ngOnInit(): void
+    // {
+    //     setTimeout(() =>
+    //     {
+    //         this._empleado?.auth?.rol.filter(value => this.controlRoles.setValue(value));
+    //     }, 200);
+    //
+    // }
+
+    // compareFunction(o1: string, o2: string): boolean
+    // {
+    //     console.log(o1, o2);
+    //     return true;
+    // }
 }

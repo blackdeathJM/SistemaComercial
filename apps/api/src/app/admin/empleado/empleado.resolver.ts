@@ -22,7 +22,7 @@ export class EmpleadoResolver
         return await this.empleadoService.crearEmpleado(empleadoDatos);
     }
 
-    @ResolveField(() => DeptoDto)
+    @ResolveField(() => DeptoDto, {nullable: true})
     async deptoEmpleado(@Parent() parent: EmpleadoDto): Promise<IDepto>
     {
         return this.deptosService.deptoPorId(parent.deptoId);

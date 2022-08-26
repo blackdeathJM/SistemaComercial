@@ -1,5 +1,3 @@
-export type tipoAcceso = 'ninguno' | 'lectura' | 'completo';
-
 export interface IAuth
 {
     activo: boolean;
@@ -10,7 +8,7 @@ export interface IAuth
 
 export interface IRol
 {
-    tipoAcceso: tipoAcceso;
+    tipoAcceso: 'ninguno' | 'lectura' | 'completo';
     id: string;
     oculto: boolean;
 }

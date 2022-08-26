@@ -57,40 +57,44 @@
 
 
             <div class="flex flex-col mt-8 divide-y border-t border-b">
-                <ng-container *ngFor="let permiso of _empleado.auth.rol; trackBy: trackByFn;">
+                <ng-container *ngFor="let permiso of _empleado?.auth?.rol; trackBy: trackByFn;">
                     <div class="flex flex-col sm:flex-row sm:items-center py-6">
                         <div class="flex items-center">
                             <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                                 <ng-container>
                                     <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-<!--                                        <mat-icon [svgIcon]="permiso.tipoAcceso === 'Ninguno' ? 'lock' : permiso.tipoAcceso === 'Lectura' ? 'heroicons_outline:eye': 'lock_open'"></mat-icon>-->
-                                        <mat-icon [svgIcon]="permiso.tipoAcceso | cambioIconoRol"></mat-icon>
+                                        <!--                                        <mat-icon [svgIcon]="permiso.tipoAcceso === 'Ninguno' ? 'lock' : permiso.tipoAcceso === 'Lectura' ? 'heroicons_outline:eye': 'lock_open'"></mat-icon>-->
+                                        <mat-icon [svgIcon]="permiso?.tipoAcceso | cambioIconoRol"></mat-icon>
                                     </div>
                                 </ng-container>
                             </div>
                             <div class="ml-4">
-                                <div class="font-medium">{{permiso.id}}</div>
+                                <div class="font-medium">{{permiso?.id}}</div>
                             </div>
                         </div>
-<!--                        lock_open-->
-<!--                        heroicons_outline:eye-->
+
                         <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">
                             <div class="order-2 sm:order-1 ml-4 sm:ml-0">
-                                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript w-32">
-                                    <mat-select [panelClass]="'w-72 min-w-72 max-w-72 h-auto max-h-none'" [value]="permiso.tipoAcceso" [(value)]="permisoAsignado" disableOptionCentering (closed)="permisoSeleccionado()">
-                                        <ng-container *ngFor="let role of roles ">
-                                            <mat-option class="h-auto py-4 leading-none" [value]="role">
-                                                <div class="font-medium">{{role}}</div>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-select>
-                                </mat-form-field>
+                                <!--                                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript w-32">-->
+                                <!--                                    <mat-select [formControl]="controlRoles" [panelClass]="'w-72 min-w-72 max-w-72 h-auto max-h-none'" disableOptionCentering (closed)="permisoSeleccionado($event)">-->
+                                <!--                                        <ng-container>-->
+                                <!--                                            <mat-option *ngFor="let role of roles" class="h-auto py-4 leading-none" [value]="role">-->
+                                <!--                                                <div class="font-medium">{{role}}</div>-->
+                                <!--                                            </mat-option>-->
+                                <!--                                        </ng-container>-->
+                                <!--                                    </mat-select>-->
+                                <!--                                </mat-form-field>-->
+
+
+                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, _empleado)">
+                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>
+                                </mat-button-toggle-group>
+
                             </div>
                         </div>
                     </div>
                 </ng-container>
             </div>
-
 
         </div>
     </div>

@@ -43,7 +43,7 @@ type EmpleadoType {
   nombreCompleto: String
   auth: AuthType
   deptoId: String
-  deptoEmpleado: DeptoType!
+  deptoEmpleado: DeptoType
 }
 
 type LoginRespuestaType {
@@ -87,7 +87,7 @@ input EmpleadoInput {
   nombreCompleto: String
   auth: AuthInput = null
   deptoId: String
-  deptoEmpleado: DeptoInput!
+  deptoEmpleado: DeptoInput
 }
 
 type Query {
@@ -111,6 +111,6 @@ input LoginInput {
 }
 
 input CambioContrasenaInput {
-  _id: String
+  _id: ID
   contrasena: String
 }

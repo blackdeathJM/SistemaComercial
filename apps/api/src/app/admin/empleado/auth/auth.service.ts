@@ -1,11 +1,12 @@
 import {HttpException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta, RolDto} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
 import {CambioContrsenaDto} from '@sistema-comercial/models';
+import {toArray} from 'lodash-es';
 
 @Injectable()
 export class AuthService
@@ -32,12 +33,22 @@ export class AuthService
     async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
-        const empleado = await this.empleado.findOneAndUpdate(new ObjectId(datos._id), {$set: {'auth.contrasena': nvaContrasena}}, {returnOriginal: false}).exec();
+        const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(datos._id), {$set: {'auth.contrasena': nvaContrasena}}, {returnOriginal: false}).exec();
         if (!empleado)
         {
             throw new NotFoundException('No se encontro registro para actualizar la contrasena');
         }
 
+        return empleado;
+    }
+
+    async actualizarRol(_id: string, rol: RolDto): Promise<IEmpleado>
+    {
+        const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {'auth.rol': [rol]}}).exec();
+        if (!empleado)
+        {
+            throw new NotFoundException('No se encontro registro para actualizar el rol');
+        }
         return empleado;
     }
 

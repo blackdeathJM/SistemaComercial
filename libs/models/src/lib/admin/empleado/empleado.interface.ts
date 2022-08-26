@@ -13,7 +13,6 @@ export interface IEmpleado
     activo: boolean;
     modificadoPor: IModificado[];
     auth?: IAuth;
-
     //Relacion
     deptoId: string;
     //Resolve

@@ -1,10 +1,10 @@
-import {Field, InputType} from '@nestjs/graphql';
+import {Field, ID, InputType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
 
 @InputType('CambioContrasenaInput')
 export class CambioContrsenaDto
 {
-    @Field({nullable: true})
+    @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id del empleado es necesario'})
     _id: string;
     @Field({nullable: true})
