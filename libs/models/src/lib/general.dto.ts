@@ -1,7 +1,6 @@
-import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
-import {IsNotEmpty} from "class-validator";
+import {Field, ID, InputType} from '@nestjs/graphql';
+import {IsNotEmpty} from 'class-validator';
 
-@ObjectType('GeneralType')
 @InputType('GeneralInput')
 export class GeneralDto
 {

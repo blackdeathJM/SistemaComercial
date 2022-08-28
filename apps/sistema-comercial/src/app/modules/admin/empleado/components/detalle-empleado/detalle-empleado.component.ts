@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {IEmpleado} from '#/libs/models/src';
+import {IEmpleado, IRol} from '#/libs/models/src';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
-import {Subscription} from 'rxjs';
+import {Subscription, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import {ActualizarRolGQL} from '#/libs/datos/src';
+import {unionBy} from 'lodash-es';
+import {NgxToastService} from '#/libs/services/src';
 
 @Component({
     selector: 'app-detalle-empleado',
@@ -22,7 +25,7 @@ export class DetalleEmpleadoComponent implements OnDestroy
     controlRoles: FormControl = new FormControl();
 
 
-    constructor(private dialogRef: MatDialog)
+    constructor(private dialogRef: MatDialog, private actualizarRolGQL: ActualizarRolGQL, private ngxToast: NgxToastService)
     {
     }
 
@@ -58,10 +61,22 @@ export class DetalleEmpleadoComponent implements OnDestroy
         this.subscripcion.unsubscribe();
     }
 
-    permisoSeleccionado(evento: void | MatButtonToggleChange, empleado: IEmpleado): void
+    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: IRol, empleado: IEmpleado): void
     {
-        console.log('evento toggle', evento['value']);
+        const rol = {...permiso};
+        rol.tipoAcceso = evento['value'];
+        rol.oculto = evento['value'] === 'ninguno';
 
+        delete rol['__typename'];
+
+        this.actualizarRolGQL.mutate({_id: empleado._id, rol}).pipe(tap((res) =>
+        {
+            if (res.data)
+            {
+                unionBy(STATE_EMPLEADOS(), res.data.actualizarRol);
+                this.ngxToast.satisfactorioToast('El permiso se ha cambiado con exito', 'Cambio de rol');
+            }
+        })).subscribe();
     }
 
     // ngOnInit(): void

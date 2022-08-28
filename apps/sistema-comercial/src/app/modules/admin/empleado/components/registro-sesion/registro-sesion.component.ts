@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {IEmpleado, IRol} from '#/libs/models/src';
+import {IEmpleado} from '#/libs/models/src';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
@@ -20,19 +20,6 @@ export class RegistroSesionComponent implements OnInit
     cargandoDatos = false;
     formAuth: FormGroup;
     soloLectura = false;
-    #rol: IRol[] =
-        [
-            {
-                id: 'Administrador',
-                tipoAcceso: 'ninguno',
-                oculto: true
-            },
-            {
-                id: 'Telemetria',
-                tipoAcceso: 'ninguno',
-                oculto: true
-            }
-        ];
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dialogRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
                 private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL)
@@ -42,6 +29,7 @@ export class RegistroSesionComponent implements OnInit
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
+
         if (this.data.auth)
         {
             this.soloLectura = true;
@@ -52,7 +40,9 @@ export class RegistroSesionComponent implements OnInit
     registrar(): void
     {
         this.cargandoDatos = true;
+
         const {confirmContrasena, ...resto} = this.formAuth.value;
+            // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
         if (this.data.auth)
         {
             const datos =
@@ -60,6 +50,7 @@ export class RegistroSesionComponent implements OnInit
                     _id: this.data._id,
                     contrasena: this.formAuth.get('contrasena').value
                 };
+
             this.actualizarContrasenaAdminGQL.mutate({datos}).pipe(finalize(() =>
             {
                 this.cargandoDatos = false;
@@ -74,8 +65,7 @@ export class RegistroSesionComponent implements OnInit
             })).subscribe();
         } else
         {
-            const auth = {rol: this.#rol, ...resto};
-            this.asignarAuthGQL.mutate({_id: this.data._id, auth}, {fetchPolicy: 'network-only'}).pipe(finalize(() => this.cancelar()), tap((res) =>
+            this.asignarAuthGQL.mutate({_id: this.data._id, auth: resto}, {fetchPolicy: 'network-only'}).pipe(finalize(() => this.cancelar()), tap((res) =>
             {
                 if (res.data)
                 {

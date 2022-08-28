@@ -13,7 +13,6 @@ export class AuthDto implements IAuth
     @IsNotEmpty({message: 'El usuario es necesario'})
     usuario: string;
     @Field(() => [RolDto], {defaultValue: null})
-    @IsNotEmpty({message: 'Es necesario asignar un role'})
     rol: RolDto[];
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsNotEmpty({message: 'El activo es necesario'})
@@ -29,7 +28,7 @@ export class RolDto implements IRol
     id: string;
     @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesario asignar un rol'})
-    tipoAcceso: 'ninguno' | 'lectura'| 'completo';
+    tipoAcceso: 'ninguno' | 'lectura' | 'completo';
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     oculto: boolean;
 }

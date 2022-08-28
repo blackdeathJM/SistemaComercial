@@ -50,7 +50,7 @@
                     </div>
                     <!-- Permisos -->
                     <div class="flex sm:items-center">
-                        <div class="font-bold text-2xl leading-6 text-amber-600">Permisos</div>
+                        <div class="font-bold text-2xl leading-6 text-amber-600">Permisos - ({{_empleado?.deptoEmpleado?.nombre}})</div>
                     </div>
                 </div>
             </ng-container>
@@ -75,18 +75,7 @@
 
                         <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">
                             <div class="order-2 sm:order-1 ml-4 sm:ml-0">
-                                <!--                                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript w-32">-->
-                                <!--                                    <mat-select [formControl]="controlRoles" [panelClass]="'w-72 min-w-72 max-w-72 h-auto max-h-none'" disableOptionCentering (closed)="permisoSeleccionado($event)">-->
-                                <!--                                        <ng-container>-->
-                                <!--                                            <mat-option *ngFor="let role of roles" class="h-auto py-4 leading-none" [value]="role">-->
-                                <!--                                                <div class="font-medium">{{role}}</div>-->
-                                <!--                                            </mat-option>-->
-                                <!--                                        </ng-container>-->
-                                <!--                                    </mat-select>-->
-                                <!--                                </mat-form-field>-->
-
-
-                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, _empleado)">
+                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">
                                     <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>
                                 </mat-button-toggle-group>
 
