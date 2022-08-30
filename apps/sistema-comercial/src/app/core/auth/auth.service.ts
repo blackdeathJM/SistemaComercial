@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
-import { AuthUtils } from '@s-app/core/auth/auth.utils';
-import { UserService } from '@s-app/core/user/user.service';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {catchError, Observable, of, switchMap, throwError} from 'rxjs';
+import {AuthUtils} from '@s-app/core/auth/auth.utils';
 
 @Injectable()
 export class AuthService
@@ -12,17 +11,11 @@ export class AuthService
     /**
      * Constructor
      */
-    constructor(
-        private _httpClient: HttpClient,
-        private _userService: UserService
-    )
+    constructor(private _httpClient: HttpClient)
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
+// todo: obtener los datos del usuario en este caso estoy utilizando las variables reactivas de apollo por lo que puedo acceder directamente
     /**
      * Setter & getter for access token
      */
@@ -68,13 +61,14 @@ export class AuthService
     signIn(credentials: { email: string; password: string }): Observable<any>
     {
         // Throw error, if the user is already logged in
-        if ( this._authenticated )
+        if (this._authenticated)
         {
             return throwError('User is already logged in.');
         }
 
         return this._httpClient.post('api/auth/sign-in', credentials).pipe(
-            switchMap((response: any) => {
+            switchMap((response: any) =>
+            {
 
                 // Store the access token in the local storage
                 this.accessToken = response.accessToken;
@@ -105,7 +99,8 @@ export class AuthService
                 // Return false
                 of(false)
             ),
-            switchMap((response: any) => {
+            switchMap((response: any) =>
+            {
 
                 // Store the access token in the local storage
                 this.accessToken = response.accessToken;
@@ -163,19 +158,19 @@ export class AuthService
     check(): Observable<boolean>
     {
         // Check if the user is logged in
-        if ( this._authenticated )
+        if (this._authenticated)
         {
             return of(true);
         }
 
         // Check the access token availability
-        if ( !this.accessToken )
+        if (!this.accessToken)
         {
             return of(false);
         }
 
         // Check the access token expire date
-        if ( AuthUtils.isTokenExpired(this.accessToken) )
+        if (AuthUtils.isTokenExpired(this.accessToken))
         {
             return of(false);
         }
