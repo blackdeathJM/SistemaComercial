@@ -3,7 +3,6 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {ICorreo, IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
 import {AuthDto} from './auth.dto';
-import {DeptoDto} from "../deptos/depto.dto";
 
 @ObjectType('ModificadoType')
 @InputType('ModificadoInput')

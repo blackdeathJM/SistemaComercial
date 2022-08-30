@@ -1,6 +1,6 @@
 import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {AuthDto, EmpleadoDto, EmpleadoType, IEmpleado, ILoginRespuesta, RolDto} from '@sistema-comercial/models';
+import {AuthDto, EmpleadoDto, EmpleadoType, IDatosSesion, IEmpleado, ILoginRespuesta, RolDto} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -85,9 +85,16 @@ export class AuthService
 
     login(empleado: any): ILoginRespuesta
     {
+        const datosSesion: IDatosSesion =
+            {
+                _id: empleado.user._id,
+                avatar: empleado.user.avatar,
+                nombreCompleto: empleado.user.nombreCompleto,
+                activo: empleado.user.activo,
+                auth: empleado.user.auth
+            };
         return {
-            token: this.jwtService.sign({_id: empleado.user._id, auth: empleado.user.auth, avatar: empleado.user.avatar}),
-            empleado: empleado.user
+            token: this.jwtService.sign(datosSesion),
         };
     }
 

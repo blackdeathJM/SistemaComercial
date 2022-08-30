@@ -48,7 +48,6 @@ type EmpleadoType {
 
 type LoginRespuestaType {
   token: String!
-  empleado: EmpleadoType
 }
 
 input DeptoInput {

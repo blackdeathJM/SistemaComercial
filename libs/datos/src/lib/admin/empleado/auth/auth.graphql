@@ -40,3 +40,10 @@ mutation actualizarRol($_id: String!, $rol: RolInput!)
         }
     }
 }
+mutation login($login: LoginInput!)
+{
+    login(login: $login)
+    {
+        token
+    }
+}

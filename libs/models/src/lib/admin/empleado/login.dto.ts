@@ -1,16 +1,11 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
-import {EmpleadoDto} from './empleado.dto';
-import {IEmpleado} from './empleado.interface';
 
 @ObjectType('LoginRespuestaType')
-export class LoginRespuesta
+export class LoginRespuesta implements ILoginRespuesta
 {
     @Field()
     token: string;
-
-    @Field(() => EmpleadoDto, {nullable: true})
-    empleado: EmpleadoDto;
 }
 
 @InputType('LoginInput')
@@ -25,8 +20,8 @@ export class LoginDto
     contrasena: string;
 }
 
-export class ILoginRespuesta
+export interface ILoginRespuesta
 {
     token: string;
-    empleado: IEmpleado;
+
 }

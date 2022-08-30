@@ -12,3 +12,12 @@ export interface IRol
     id: string;
     oculto: boolean;
 }
+
+export interface IDatosSesion
+{
+    _id: string;
+    avatar: string;
+    nombreCompleto: string;
+    activo: boolean;
+    auth: IAuth;
+}
