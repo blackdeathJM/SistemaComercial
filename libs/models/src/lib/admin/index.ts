@@ -6,3 +6,4 @@ export * from './empleado/auth.interface';
 export * from './empleado/auth.dto';
 export * from './empleado/login.dto';
 export * from './empleado/auth.input.dto';
+export * from './empleado/prueba';

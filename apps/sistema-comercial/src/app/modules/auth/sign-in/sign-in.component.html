@@ -3,18 +3,11 @@
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
-                <img src="assets/images/logo/logo.svg">
+                <img src="assets/images/logo/logo.svg" alt="">
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
-            <div class="flex items-baseline mt-0.5 font-medium">
-                <div>Don't have an account?</div>
-                <a
-                    class="ml-1 text-primary-500 hover:underline"
-                    [routerLink]="['/sign-up']">Sign up
-                </a>
-            </div>
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sesion</div>
 
             <!-- Alert -->
             <fuse-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
@@ -27,8 +20,8 @@
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Usuario</mat-label>
-                    <input id="email" matInput [formControlName]="'email'">
-                    <mat-error *ngIf="signInForm.get('email').hasError('required')">
+                    <input id="usuario" matInput [formControlName]="'usuario'">
+                    <mat-error *ngIf="signInForm.get('usuario').hasError('required')">
                         Usuario requerido
                     </mat-error>
                 </mat-form-field>
@@ -36,7 +29,7 @@
                 <!-- Password field -->
                 <mat-form-field class="w-full">
                     <mat-label>Contrasena</mat-label>
-                    <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                    <input id="contrasena" matInput type="password" [formControlName]="'contrasena'" #passwordField>
                     <button mat-icon-button type="button" (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'" matSuffix>
                         <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'" [svgIcon]="'heroicons_solid:eye'"></mat-icon>
                         <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'" [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
@@ -47,15 +40,6 @@
                 </mat-form-field>
 
                 <!-- Actions -->
-                <div class="inline-flex items-end justify-between w-full mt-1.5">
-                    <mat-checkbox [color]="'primary'" [formControlName]="'rememberMe'">
-                        Recordar sesion
-                    </mat-checkbox>
-                    <a
-                        class="text-md font-medium text-primary-500 hover:underline"
-                        [routerLink]="['/forgot-password']">Forgot password?
-                    </a>
-                </div>
 
                 <!-- Submit button -->
                 <button class="fuse-mat-button-large w-full mt-6" mat-flat-button [color]="'primary'" [disabled]="signInForm.disabled" (click)="signIn()">
@@ -66,24 +50,13 @@
                 </button>
 
                 <!-- Separator -->
-                <div class="flex items-center mt-8">
-                    <div class="flex-auto mt-px border-t"></div>
-                    <div class="mx-2 text-secondary">Or continue with</div>
-                    <div class="flex-auto mt-px border-t"></div>
-                </div>
+<!--                <div class="flex items-center mt-8">-->
+<!--                    <div class="flex-auto mt-px border-t"></div>-->
+<!--                    <div class="mx-2 text-secondary">Or continue with</div>-->
+<!--                    <div class="flex-auto mt-px border-t"></div>-->
+<!--                </div>-->
 
                 <!-- Single sign-on buttons -->
-                <div class="flex items-center mt-8 space-x-4">
-                    <button class="flex-auto" type="button" mat-stroked-button>
-                        <mat-icon class="icon-size-5" [svgIcon]="'feather:facebook'"></mat-icon>
-                    </button>
-                    <button class="flex-auto" type="button" mat-stroked-button>
-                        <mat-icon class="icon-size-5" [svgIcon]="'feather:twitter'"></mat-icon>
-                    </button>
-                    <button class="flex-auto" type="button" mat-stroked-button>
-                        <mat-icon class="icon-size-5" [svgIcon]="'feather:github'"></mat-icon>
-                    </button>
-                </div>
             </form>
         </div>
     </div>
@@ -111,29 +84,12 @@
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
+                <div>Bienvenido a</div>
+                <div>sistema comercial</div>
             </div>
             <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
                 Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
                 Join us and start building your application today.
-            </div>
-            <div class="flex items-center mt-8">
-                <div class="flex flex-0 items-center -space-x-1.5">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-18.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-11.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-09.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-16.jpg">
-                </div>
-                <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {BooleanInput} from '@angular/cdk/coercion';
 import {Subject} from 'rxjs';
@@ -12,7 +12,7 @@ import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user'
 })
-export class UserComponent implements OnInit, OnDestroy, AfterContentInit
+export class UserComponent implements OnDestroy, AfterContentInit
 {
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
@@ -25,11 +25,6 @@ export class UserComponent implements OnInit, OnDestroy, AfterContentInit
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, private _router: Router,)
     {
-    }
-
-    ngOnInit(): void
-    {
-
     }
 
     ngAfterContentInit(): void

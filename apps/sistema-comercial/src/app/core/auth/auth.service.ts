@@ -1,29 +1,31 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {catchError, Observable, of, switchMap, throwError} from 'rxjs';
+import {catchError, Observable, of, switchMap, tap} from 'rxjs';
 import {AuthUtils} from '@s-app/core/auth/auth.utils';
+import {LoginGQL} from '#/libs/datos/src';
+import {NgxToastService} from '#/libs/services/src';
 
 @Injectable()
 export class AuthService
 {
+    #token = 'token-sistema-comercial';
     private _authenticated: boolean = false;
 
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient)
+    constructor(private _httpClient: HttpClient, private ngxToastService: NgxToastService, private loginGQL: LoginGQL)
     {
     }
 
-// todo: obtener los datos del usuario en este caso estoy utilizando las variables reactivas de apollo por lo que puedo acceder directamente
     get accessToken(): string
     {
-        return localStorage.getItem('accessToken') ?? '';
+        return localStorage.getItem(this.#token) ?? '';
     }
 
     set accessToken(token: string)
     {
-        localStorage.setItem('accessToken', token);
+        localStorage.setItem(this.#token, token);
     }
 
     forgotPassword(email: string): Observable<any>
@@ -37,36 +39,26 @@ export class AuthService
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
-    signIn(credentials: { email: string; password: string }): Observable<any>
+    signIn(credenciales: { usuario: string; contrasena: string }): Observable<any>
     {
         // Throw error, if the user is already logged in
         if (this._authenticated)
         {
-            return throwError('User is already logged in.');
+            this.ngxToastService.alertaToast('Ya tienes una sesion activa', 'Sesion Activa');
+            return;
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
-            switchMap((response: any) =>
+        return this.loginGQL.mutate({login: credenciales},).pipe(tap((res) =>
+        {
+            if (res.data)
             {
-
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
-
-                // Set the authenticated flag to true
+                this.accessToken = res.data.login.token;
                 this._authenticated = true;
-
-                // TODO: asignacion del usuario de la secion
-                // this._userService.user = response.user;
-
-                // Return a new observable with the response
-                return of(response);
-            })
-        );
+                return of(res);
+            }
+        }));
     }
 
-    /**
-     * Sign in using the access token
-     */
     signInUsingToken(): Observable<any>
     {
         // Renew token

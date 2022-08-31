@@ -10,7 +10,7 @@ import {InitialDataResolver} from '@s-app/app.resolvers';
 export const appRoutes: Route[] = [
 
     {path: '', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
-    {path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
+    {path: 'redireccionar', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
     {
         path: '',
         canActivate: [NoAuthGuard],

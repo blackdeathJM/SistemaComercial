@@ -4,6 +4,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {fuseAnimations} from '@s-fuse/animations';
 import {FuseAlertType} from '@s-fuse/components/alert';
 import {AuthService} from '@s-app/core/auth/auth.service';
+import {LoginGQL} from '#/libs/datos/src';
+import {catchError, of, tap} from 'rxjs';
+import {pruebaArrow} from '#/libs/models/src';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -25,7 +28,8 @@ export class AuthSignInComponent implements OnInit
     /**
      * Constructor
      */
-    constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router)
+    constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router,
+                private loginGQL: LoginGQL)
     {
     }
 
@@ -33,10 +37,10 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email: ['hughes.brian@company.com', [Validators.required]],
-            password: ['admin', Validators.required],
-            rememberMe: ['']
+            usuario: ['', [Validators.required]],
+            contrasena: ['', Validators.required]
         });
+        console.log(pruebaArrow());
     }
 
     signIn(): void
@@ -54,33 +58,27 @@ export class AuthSignInComponent implements OnInit
         this.showAlert = false;
 
         // Sign in
-        this._authService.signIn(this.signInForm.value)
-            .subscribe(
-                () =>
-                {
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-
-                    // Navigate to the redirect url
-                    this._router.navigateByUrl(redirectURL).then();
-
-                },
-                (response) =>
-                {
-                    // Re-enable the form
-                    this.signInForm.enable();
-
-                    // Reset the form
-                    this.signInNgForm.resetForm();
-
-                    // Set the alert
-                    this.alert = {
-                        type: 'error',
-                        message: 'Wrong email or password'
-                    };
-
-                    // Show the alert
-                    this.showAlert = true;
-                }
-            );
+        this.loginGQL.mutate({login: this.signInForm.value}).pipe(catchError((err) =>
+        {
+            console.log('donde madres estoy', err);
+            return of(err);
+        }), tap((res) =>
+        {
+            console.log('respuesta login', res);
+            // if (res.data.login.token)
+            // {
+            //     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
+            //     this._router.navigateByUrl(redirectURL).then();
+            // } else
+            // {
+            //     this.signInForm.enable();
+            //     this.signInNgForm.resetForm();
+            //     this.alert = {
+            //         type: 'error',
+            //         message: 'Wrong email or password'
+            //     };
+            //     this.showAlert = true;
+            // }
+        })).subscribe();
     }
 }
