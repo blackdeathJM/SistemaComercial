@@ -1,23 +1,22 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { fuseAnimations } from '@s-fuse/animations';
-import { AuthService } from '@s-app/core/auth/auth.service';
-import { UserService } from '@s-app/core/user/user.service';
-import { FuseAlertType } from '@s-fuse/components/alert';
+import {AfterContentInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {fuseAnimations} from '@s-fuse/animations';
+import {AuthService} from '@s-app/core/auth/auth.service';
+import {FuseAlertType} from '@s-fuse/components/alert';
 
 @Component({
-    selector     : 'auth.ts-unlock-session',
-    templateUrl  : './unlock-session.component.html',
+    selector: 'auth.ts-unlock-session',
+    templateUrl: './unlock-session.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class AuthUnlockSessionComponent implements OnInit
+export class AuthUnlockSessionComponent implements OnInit, AfterContentInit
 {
     @ViewChild('unlockSessionNgForm') unlockSessionNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
+        type: 'success',
         message: ''
     };
     name: string;
@@ -28,36 +27,16 @@ export class AuthUnlockSessionComponent implements OnInit
     /**
      * Constructor
      */
-    constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _authService: AuthService,
-        private _formBuilder: FormBuilder,
-        private _router: Router,
-        private _userService: UserService
-    )
+    constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router)
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
-        // Get the user's name
-        this._userService.user$.subscribe((user) => {
-            this.name = user.name;
-            this._email = user.email;
-        });
-
-        // Create the form
         this.unlockSessionForm = this._formBuilder.group({
-            name    : [
+            name: [
                 {
-                    value   : this.name,
+                    value: this.name,
                     disabled: true
                 }
             ],
@@ -65,17 +44,14 @@ export class AuthUnlockSessionComponent implements OnInit
         });
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+    ngAfterContentInit(): void
+    {
+    }
 
-    /**
-     * Unlock
-     */
     unlock(): void
     {
         // Return if the form is invalid
-        if ( this.unlockSessionForm.invalid )
+        if (this.unlockSessionForm.invalid)
         {
             return;
         }
@@ -87,10 +63,11 @@ export class AuthUnlockSessionComponent implements OnInit
         this.showAlert = false;
 
         this._authService.unlockSession({
-            email   : this._email ?? '',
+            email: this._email ?? '',
             password: this.unlockSessionForm.get('password').value
         }).subscribe(
-            () => {
+            () =>
+            {
 
                 // Set the redirect url.
                 // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
@@ -102,7 +79,8 @@ export class AuthUnlockSessionComponent implements OnInit
                 this._router.navigateByUrl(redirectURL);
 
             },
-            (response) => {
+            (response) =>
+            {
 
                 // Re-enable the form
                 this.unlockSessionForm.enable();
@@ -110,14 +88,14 @@ export class AuthUnlockSessionComponent implements OnInit
                 // Reset the form
                 this.unlockSessionNgForm.resetForm({
                     name: {
-                        value   : this.name,
+                        value: this.name,
                         disabled: true
                     }
                 });
 
                 // Set the alert
                 this.alert = {
-                    type   : 'error',
+                    type: 'error',
                     message: 'Invalid password'
                 };
 

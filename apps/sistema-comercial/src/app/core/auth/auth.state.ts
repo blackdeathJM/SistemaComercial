@@ -8,6 +8,7 @@ const datosPrueba: IDatosSesion =
                 activo: true,
                 usuario: 'blackdeath',
                 contrasena: '123',
+                estatus: 'En-linea',
                 rol:
                     [
                         {
@@ -22,4 +23,4 @@ const datosPrueba: IDatosSesion =
 
 export const STATE_TOKEN: ReactiveVar<string> = makeVar<string>(null);
 
-export const STATE_DATOS_SESIO: ReactiveVar<IDatosSesion> = makeVar<IDatosSesion>(datosPrueba);
+export const STATE_DATOS_SESION: ReactiveVar<IDatosSesion> = makeVar<IDatosSesion>(datosPrueba);

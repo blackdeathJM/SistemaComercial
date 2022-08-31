@@ -13,6 +13,7 @@ type AuthType {
   usuario: String
   rol: [RolType!]!
   activo: Boolean
+  estatus: String
 }
 
 type RolType {
@@ -61,6 +62,7 @@ input AuthInput {
   usuario: String
   rol: [RolInput!] = null
   activo: Boolean = true
+  estatus: String = "en-linea"
 }
 
 input RolInput {

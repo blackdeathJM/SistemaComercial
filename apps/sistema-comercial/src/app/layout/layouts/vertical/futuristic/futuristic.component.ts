@@ -1,82 +1,62 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { FuseMediaWatcherService } from '@s-fuse/services/media-watcher';
-import { FuseNavigationService, FuseVerticalNavigationComponent } from '@s-fuse/components/navigation';
-import { Navigation } from '@s-app/core/navigation/navigation.types';
-import { NavigationService } from '@s-app/core/navigation/navigation.service';
-import { User } from '@s-app/core/user/user.types';
-import { UserService } from '@s-app/core/user/user.service';
+import {AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subject, takeUntil} from 'rxjs';
+import {FuseMediaWatcherService} from '@s-fuse/services/media-watcher';
+import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/components/navigation';
+import {Navigation} from '@s-app/core/navigation/navigation.types';
+import {NavigationService} from '@s-app/core/navigation/navigation.service';
+import {IDatosSesion} from '#/libs/models/src';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 
 @Component({
-    selector     : 'futuristic-layout',
-    templateUrl  : './futuristic.component.html',
+    selector: 'futuristic-layout',
+    templateUrl: './futuristic.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FuturisticLayoutComponent implements OnInit, OnDestroy
+export class FuturisticLayoutComponent implements OnInit, OnDestroy, AfterContentInit
 {
     isScreenSmall: boolean;
     navigation: Navigation;
-    user: User;
+    user: IDatosSesion;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
      */
-    constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
-        private _navigationService: NavigationService,
-        private _userService: UserService,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
-    )
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService,
+                private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for current year
-     */
     get currentYear(): number
     {
         return new Date().getFullYear();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) => {
+            .subscribe((navigation: Navigation) =>
+            {
                 this.navigation = navigation;
-            });
-
-        // Subscribe to the user service
-        this._userService.user$
-            .pipe((takeUntil(this._unsubscribeAll)))
-            .subscribe((user: User) => {
-                this.user = user;
             });
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({matchingAliases}) => {
+            .subscribe(({matchingAliases}) =>
+            {
 
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
+    }
+
+    ngAfterContentInit(): void
+    {
+        this.user = STATE_DATOS_SESION();
     }
 
     /**
@@ -103,7 +83,7 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy
         // Get the navigation
         const navigation = this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(name);
 
-        if ( navigation )
+        if (navigation)
         {
             // Toggle the opened status
             navigation.toggle();

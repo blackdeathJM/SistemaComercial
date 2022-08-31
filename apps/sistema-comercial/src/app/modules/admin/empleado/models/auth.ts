@@ -16,4 +16,5 @@ export class Auth implements IAuth
     usuario: string;
     rol: IRol[];
     activo: boolean = true;
+    estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }

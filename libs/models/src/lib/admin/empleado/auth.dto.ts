@@ -17,6 +17,9 @@ export class AuthDto implements IAuth
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsNotEmpty({message: 'El activo es necesario'})
     activo: boolean;
+    @Field({nullable: true, defaultValue: 'en-linea'})
+    @IsNotEmpty({message: 'El valor del estatus es necesario',})
+    estatus: 'En-linea' | 'Desconectado'| 'Ocupado'| 'No-visible';
 }
 
 @ObjectType('RolType')

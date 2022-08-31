@@ -16,48 +16,27 @@ export class AuthService
     }
 
 // todo: obtener los datos del usuario en este caso estoy utilizando las variables reactivas de apollo por lo que puedo acceder directamente
-    /**
-     * Setter & getter for access token
-     */
-    set accessToken(token: string)
-    {
-        localStorage.setItem('accessToken', token);
-    }
-
     get accessToken(): string
     {
         return localStorage.getItem('accessToken') ?? '';
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+    set accessToken(token: string)
+    {
+        localStorage.setItem('accessToken', token);
+    }
 
-    /**
-     * Forgot password
-     *
-     * @param email
-     */
     forgotPassword(email: string): Observable<any>
     {
         return this._httpClient.post('api/auth/forgot-password', email);
     }
 
-    /**
-     * Reset password
-     *
-     * @param password
-     */
+
     resetPassword(password: string): Observable<any>
     {
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
-    /**
-     * Sign in
-     *
-     * @param credentials
-     */
     signIn(credentials: { email: string; password: string }): Observable<any>
     {
         // Throw error, if the user is already logged in
@@ -76,8 +55,8 @@ export class AuthService
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
-                // Store the user on the user service
-                this._userService.user = response.user;
+                // TODO: asignacion del usuario de la secion
+                // this._userService.user = response.user;
 
                 // Return a new observable with the response
                 return of(response);
@@ -109,7 +88,8 @@ export class AuthService
                 this._authenticated = true;
 
                 // Store the user on the user service
-                this._userService.user = response.user;
+                // TODO: Refrescar usuario cuando el token se ha actualizado
+                // this._userService.user = response.user;
 
                 // Return true
                 return of(true);
@@ -132,29 +112,19 @@ export class AuthService
         return of(true);
     }
 
-    /**
-     * Sign up
-     *
-     * @param user
-     */
+
     signUp(user: { name: string; email: string; password: string; company: string }): Observable<any>
     {
         return this._httpClient.post('api/auth/sign-up', user);
     }
 
-    /**
-     * Unlock session
-     *
-     * @param credentials
-     */
+
     unlockSession(credentials: { email: string; password: string }): Observable<any>
     {
         return this._httpClient.post('api/auth/unlock-session', credentials);
     }
 
-    /**
-     * Check the authentication status
-     */
+
     check(): Observable<boolean>
     {
         // Check if the user is logged in
