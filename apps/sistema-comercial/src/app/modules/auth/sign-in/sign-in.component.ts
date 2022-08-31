@@ -6,7 +6,6 @@ import {FuseAlertType} from '@s-fuse/components/alert';
 import {AuthService} from '@s-app/core/auth/auth.service';
 import {LoginGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
-import {pruebaArrow} from '#/libs/models/src';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -40,7 +39,6 @@ export class AuthSignInComponent implements OnInit
             usuario: ['', [Validators.required]],
             contrasena: ['', Validators.required]
         });
-        console.log(pruebaArrow());
     }
 
     signIn(): void
@@ -60,25 +58,22 @@ export class AuthSignInComponent implements OnInit
         // Sign in
         this.loginGQL.mutate({login: this.signInForm.value}).pipe(catchError((err) =>
         {
-            console.log('donde madres estoy', err);
+            this.signInForm.enable();
+            this.signInNgForm.resetForm();
+            this.alert = {
+                type: 'error',
+                message: 'Datos erroneos'
+            };
+            this.showAlert = true;
             return of(err);
         }), tap((res) =>
         {
             console.log('respuesta login', res);
-            // if (res.data.login.token)
-            // {
-            //     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
-            //     this._router.navigateByUrl(redirectURL).then();
-            // } else
-            // {
-            //     this.signInForm.enable();
-            //     this.signInNgForm.resetForm();
-            //     this.alert = {
-            //         type: 'error',
-            //         message: 'Wrong email or password'
-            //     };
-            //     this.showAlert = true;
-            // }
+            if (res.data.login.token)
+            {
+                const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
+                this._router.navigateByUrl(redirectURL).then();
+            }
         })).subscribe();
     }
 }

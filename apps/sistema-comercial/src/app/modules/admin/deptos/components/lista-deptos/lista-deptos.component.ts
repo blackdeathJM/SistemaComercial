@@ -1,6 +1,6 @@
 import {AfterContentChecked, Component, EventEmitter, Output} from '@angular/core';
-import {IDepto} from '#/libs/models/src';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
+import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 
 @Component({
     selector: 'app-lista-deptos',

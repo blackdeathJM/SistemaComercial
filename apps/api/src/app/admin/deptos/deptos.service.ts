@@ -1,9 +1,10 @@
 import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {DeptoDto, DeptoType} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
-import {IDepto} from '@sistema-comercial/models';
 import {ObjectId} from 'bson';
+import { IDepto } from '@sistema-comercial/modelos/depto.interface';
+import {DeptoDto, DeptoType} from '@sistema-comercial/modelos/depto.dto';
+
 
 @Injectable()
 export class DeptosService

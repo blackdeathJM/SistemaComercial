@@ -5,12 +5,12 @@ import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
 import {DepartamentosGQL, EliminarDeptoGQL} from '#/libs/datos/src';
-import {IDepto} from '#/libs/models/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
 import {FormControl} from '@angular/forms';
 import {NgxToastService} from '#/libs/services/src';
 import {cloneDeep} from 'lodash-es';
+import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 
 @Component({
     selector: 'app-deptos-principal',

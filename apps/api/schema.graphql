@@ -2,12 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type DeptoType {
-  _id: ID
-  nombre: String
-  centroGestor: String
-}
-
 type AuthType {
   contrasena: String
   usuario: String
@@ -51,7 +45,7 @@ type LoginRespuestaType {
   token: String!
 }
 
-input DeptoInput {
+type DeptoType {
   _id: ID
   nombre: String
   centroGestor: String
@@ -89,6 +83,12 @@ input EmpleadoInput {
   auth: AuthInput = null
   deptoId: String
   deptoEmpleado: DeptoInput
+}
+
+input DeptoInput {
+  _id: ID
+  nombre: String
+  centroGestor: String
 }
 
 type Query {
