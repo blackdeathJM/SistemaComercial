@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable, of, switchMap, tap} from 'rxjs';
-import {AuthUtils} from '@s-app/core/auth/auth.utils';
 import {LoginGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService
@@ -25,6 +25,7 @@ export class AuthService
 
     set accessToken(token: string)
     {
+        console.log('se recibe bien el token', token);
         localStorage.setItem(this.#token, token);
     }
 
@@ -131,11 +132,11 @@ export class AuthService
             return of(false);
         }
 
-        // Check the access token expire date
-        if (AuthUtils.isTokenExpired(this.accessToken))
-        {
-            return of(false);
-        }
+        // TODO: checar la expiracion del token
+        // if (this.jwtHelperService.isTokenExpired(this.accessToken))
+        // {
+        //     return of(false);
+        // }
 
         // If the access token exists and it didn't expire, sign in using it
         return this.signInUsingToken();

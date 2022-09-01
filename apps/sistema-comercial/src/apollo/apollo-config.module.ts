@@ -9,7 +9,7 @@ import {createUploadLink} from 'apollo-upload-client';
 import {environment} from '@s-environments/environment';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import {concat, isArray} from 'lodash-es';
+import {setContext} from '@apollo/client/link/context';
 
 
 @NgModule({
@@ -28,7 +28,7 @@ export class ApolloConfigModule
                 {
                     this.ngxToast.error(value.message, 'Error en el servidor',
                         {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 20000});
-                    console.log(value.extensions['response']['message']);
+                    // console.log(value.extensions['response']['message']);
                 });
             }
 
@@ -45,7 +45,21 @@ export class ApolloConfigModule
             uri: environment.wsGraphql, options: {reconnect: true},
         });
 
-        const http = ApolloLink.from([errorLink, httpLink]);
+
+        const token = localStorage.getItem('token-sistema-comercial');
+        const auth = setContext((operation, context) =>
+        {
+            if (token)
+            {
+                return {
+                    headers: {
+                        // eslint-disable-next-line @typescript-eslint/naming-convention
+                        Authorization: `Bearer ${token}`
+                    }
+                };
+            }
+        });
+        const http = ApolloLink.from([auth, errorLink, httpLink]);
 
         const link = split(({query}) =>
             {

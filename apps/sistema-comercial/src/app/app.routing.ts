@@ -50,5 +50,9 @@ export const appRoutes: Route[] = [
                 {path: 'inicio', loadChildren: () => import('@s-app/modules/inicio/inicio.module').then(i => i.InicioModule)},
                 {path: 'admin', loadChildren: () => import('@s-app/modules/admin/admin.module').then(a => a.AdminModule)}
             ]
+    },
+    {
+        path: '**',
+        redirectTo: ''
     }
 ];
