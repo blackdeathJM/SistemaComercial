@@ -2,6 +2,8 @@ import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {DeptosService} from './deptos.service';
 import {DeptoDto} from '@sistema-comercial/modelos/depto.dto';
 import {IDepto} from '@sistema-comercial/modelos/depto.interface';
+import {UseGuards} from "@nestjs/common";
+import {JwtAuthGuard} from "../empleado/auth/guards/jwt-guard.guard";
 
 @Resolver(() => DeptoDto)
 export class DeptosResolver
@@ -11,6 +13,7 @@ export class DeptosResolver
     }
 
     @Query(() => [DeptoDto])
+    @UseGuards(JwtAuthGuard)
     async deptos(): Promise<IDepto[]>
     {
         return this.deptosService.deptos();

@@ -9,7 +9,6 @@ import {JwtHelperService} from '@auth0/angular-jwt';
         [
             HttpClientModule
         ],
-    providers: [AuthService, JwtHelperService]
     // providers: [
     //     AuthService,
     //     {

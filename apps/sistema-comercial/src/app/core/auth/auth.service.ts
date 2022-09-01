@@ -5,16 +5,15 @@ import {LoginGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
-import {Apollo} from 'apollo-angular';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {Router} from '@angular/router';
+import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService
 {
-    private _authenticated: boolean = false;
-
     constructor(private _httpClient: HttpClient, private ngxToastService: NgxToastService, private loginGQL: LoginGQL, private jwtHelperService: JwtHelperService,
-                private apollo: Apollo)
+                private router: Router)
     {
     }
 
@@ -32,7 +31,7 @@ export class AuthService
     signIn(credenciales: { usuario: string; contrasena: string }): Observable<any>
     {
         // Throw error, if the user is already logged in
-        if (this._authenticated)
+        if (STATE_AUTENTICADO())
         {
             this.ngxToastService.alertaToast('Ya tienes una sesion activa', 'Sesion Activa');
             return;
@@ -43,36 +42,40 @@ export class AuthService
             if (res.data)
             {
                 localStorage.setItem(TOKEN, res.data.login.token);
-                this._authenticated = true;
+                STATE_AUTENTICADO(true);
                 return of(res);
             }
         }));
     }
 
-    signInUsingToken(): Observable<any>
+    iniciarSesionConToken(): Observable<any>
     {
         // Renew token
 
         if (this.jwtHelperService.tokenGetter() && !this.jwtHelperService.isTokenExpired())
         {
-            STATE_DATOS_SESION(this.jwtHelperService.decodeToken());
-            this._authenticated = true;
-            return of(true);
+            const datosSesion: IDatosSesion = this.jwtHelperService.decodeToken();
+            if (datosSesion)
+            {
+                STATE_DATOS_SESION(datosSesion);
+                STATE_AUTENTICADO(true);
+                return of(true);
+            } else
+            {
+                this.signOut();
+                return of(false);
+            }
         }
         return of(false);
     }
 
-    signOut(): Observable<any>
+    signOut(): void
     {
         // Remove the access token from the local storage
         localStorage.removeItem(TOKEN);
-        this.apollo.getClient().resetStore().then();
-
         // Set the authenticated flag to false
-        this._authenticated = false;
-
-        // Return the observable
-        return of(true);
+        STATE_AUTENTICADO(false);
+        this.router.navigate(['/sign-in']).then();
     }
 
 
@@ -91,7 +94,7 @@ export class AuthService
     check(): Observable<boolean>
     {
         // Check if the user is logged in
-        if (this._authenticated)
+        if (STATE_AUTENTICADO())
         {
             return of(true);
         }
@@ -109,6 +112,6 @@ export class AuthService
 
         // If the access token exists and it didn't expire, sign in using it
 
-        return this.signInUsingToken();
+        return this.iniciarSesionConToken();
     }
 }

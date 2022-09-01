@@ -1,9 +1,9 @@
 import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
 import {BooleanInput} from '@angular/cdk/coercion';
 import {Subject} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
+import {AuthService} from '@s-app/auth/auth.service';
 
 @Component({
     selector: 'user',
@@ -23,23 +23,13 @@ export class UserComponent implements OnDestroy, AfterContentInit
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private _router: Router,)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService)
     {
     }
 
     ngAfterContentInit(): void
     {
         this.user = STATE_DATOS_SESION();
-    }
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
     }
 
     updateUserStatus(status: string): void
@@ -59,6 +49,13 @@ export class UserComponent implements OnDestroy, AfterContentInit
 
     signOut(): void
     {
-        this._router.navigate(['/sign-out']).then();
+        this.authService.signOut();
+    }
+
+    ngOnDestroy(): void
+    {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
     }
 }

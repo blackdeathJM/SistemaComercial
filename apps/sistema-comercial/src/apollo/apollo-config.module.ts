@@ -11,6 +11,7 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {setContext} from '@apollo/client/link/context';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {AuthService} from '@s-app/auth/auth.service';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 })
 export class ApolloConfigModule
 {
-    constructor(apollo: Apollo, private ngxToast: ToastrService, private jwtHelperService: JwtHelperService)
+    constructor(apollo: Apollo, private ngxToast: ToastrService, private jwtHelperService: JwtHelperService, private authService: AuthService)
     {
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
@@ -50,7 +51,7 @@ export class ApolloConfigModule
         const token = this.jwtHelperService.tokenGetter();
         const auth = setContext(() =>
         {
-            if (token)
+            if (token && this.jwtHelperService.isTokenExpired())
             {
                 return {
                     headers: {
@@ -58,6 +59,9 @@ export class ApolloConfigModule
                         Authorization: `Bearer ${token}`
                     }
                 };
+            } else
+            {
+                this.authService.signOut();
             }
         });
         const http = ApolloLink.from([auth, errorLink, httpLink]);

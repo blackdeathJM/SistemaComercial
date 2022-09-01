@@ -3,7 +3,7 @@
     mat-icon-button
     [matMenuTriggerFor]="userActions">
     <span class="relative">
-        <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && user.avatar" [src]="user.avatar">
+        <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && user.avatar" [src]="user.avatar" alt="">
         <mat-icon *ngIf="!showAvatar || !user.avatar" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
         <span class="absolute right-0 bottom-0 w-2 h-2 rounded-full" [ngClass]="{'mr-px mb-px': !showAvatar || !user.avatar,
                           'bg-green-500': user.auth.estatus === 'En-linea',
@@ -52,14 +52,14 @@
     </button>
     <button mat-menu-item (click)="updateUserStatus('Desconectado')">
         <span class="w-4 h-4 mr-3 rounded-full bg-amber-500"></span>
-        <span>Away</span>
+        <span>Desconectado</span>
     </button>
     <button mat-menu-item (click)="updateUserStatus('Ocupado')">
         <span class="w-4 h-4 mr-3 rounded-full bg-red-500"></span>
-        <span>Busy</span>
+        <span>Ocupado</span>
     </button>
     <button mat-menu-item (click)="updateUserStatus('No-visible')">
         <span class="w-4 h-4 mr-3 rounded-full bg-gray-400"></span>
-        <span>Invisible</span>
+        <span>No visible</span>
     </button>
 </mat-menu>
