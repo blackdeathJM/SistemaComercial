@@ -5,25 +5,17 @@ import {LoginGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
+import {Apollo} from 'apollo-angular';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 
 @Injectable()
 export class AuthService
 {
     private _authenticated: boolean = false;
 
-    constructor(private _httpClient: HttpClient, private ngxToastService: NgxToastService, private loginGQL: LoginGQL, private jwtHelperService: JwtHelperService)
+    constructor(private _httpClient: HttpClient, private ngxToastService: NgxToastService, private loginGQL: LoginGQL, private jwtHelperService: JwtHelperService,
+                private apollo: Apollo)
     {
-    }
-
-    get accessToken(): string
-    {
-        console.log(this.jwtHelperService.tokenGetter());
-        return localStorage.getItem(TOKEN) ?? '';
-    }
-
-    set accessToken(token: string)
-    {
-        localStorage.setItem(TOKEN, token);
     }
 
     forgotPassword(email: string): Observable<any>
@@ -46,11 +38,11 @@ export class AuthService
             return;
         }
 
-        return this.loginGQL.mutate({login: credenciales},).pipe(tap((res) =>
+        return this.loginGQL.mutate({login: credenciales}).pipe(tap((res) =>
         {
             if (res.data)
             {
-                this.accessToken = res.data.login.token;
+                localStorage.setItem(TOKEN, res.data.login.token);
                 this._authenticated = true;
                 return of(res);
             }
@@ -60,41 +52,21 @@ export class AuthService
     signInUsingToken(): Observable<any>
     {
         // Renew token
-        // return this._httpClient.post('api/auth/refresh-access-token', {
-        //     accessToken: this.accessToken
-        // }).pipe(
-        //     catchError(() =>
-        //
-        //         // Return false
-        //         of(false)
-        //     ),
-        //     switchMap((response: any) =>
-        //     {
-        //
-        //         // Store the access token in the local storage
-        //         this.accessToken = response.accessToken;
-        //
-        //         // Set the authenticated flag to true
-        //         this._authenticated = true;
-        //
-        //         // Store the user on the user service
-        //         // TODO: Refrescar usuario cuando el token se ha actualizado
-        //         // this._userService.user = response.user;
-        //
-        //         // Return true
-        //         return of(true);
-        //     })
-        // );
-        return of(true);
+
+        if (this.jwtHelperService.tokenGetter() && !this.jwtHelperService.isTokenExpired())
+        {
+            STATE_DATOS_SESION(this.jwtHelperService.decodeToken());
+            this._authenticated = true;
+            return of(true);
+        }
+        return of(false);
     }
 
-    /**
-     * Sign out
-     */
     signOut(): Observable<any>
     {
         // Remove the access token from the local storage
         localStorage.removeItem(TOKEN);
+        this.apollo.getClient().resetStore().then();
 
         // Set the authenticated flag to false
         this._authenticated = false;
@@ -125,19 +97,18 @@ export class AuthService
         }
 
         // Check the access token availability
-        if (!this.accessToken)
+        if (!this.jwtHelperService.tokenGetter())
         {
             return of(false);
         }
 
-        // TODO: checar la expiracion del token
-        // if (this.jwtHelperService.isTokenExpired(this.accessToken))
-        // {
-        //     return of(false);
-        // }
+        if (this.jwtHelperService.isTokenExpired())
+        {
+            return of(false);
+        }
 
         // If the access token exists and it didn't expire, sign in using it
 
-        // return this.signInUsingToken();
+        return this.signInUsingToken();
     }
 }

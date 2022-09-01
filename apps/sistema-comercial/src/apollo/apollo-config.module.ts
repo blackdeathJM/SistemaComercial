@@ -10,7 +10,7 @@ import {environment} from '@s-environments/environment';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {setContext} from '@apollo/client/link/context';
-import {TOKEN} from "@s-app/auth/const";
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import {TOKEN} from "@s-app/auth/const";
 })
 export class ApolloConfigModule
 {
-    constructor(apollo: Apollo, private ngxToast: ToastrService)
+    constructor(apollo: Apollo, private ngxToast: ToastrService, private jwtHelperService: JwtHelperService)
     {
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
@@ -43,12 +43,12 @@ export class ApolloConfigModule
         const httpLink = createUploadLink({uri});
 
         const wsClient = new WebSocketLink({
-            uri: environment.wsGraphql, options: {reconnect: true},
+            uri: environment.wsGraphql, options: {reconnect: true}
         });
 
 
-        const token = localStorage.getItem(TOKEN);
-        const auth = setContext((operation, context) =>
+        const token = this.jwtHelperService.tokenGetter();
+        const auth = setContext(() =>
         {
             if (token)
             {

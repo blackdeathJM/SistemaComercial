@@ -7,6 +7,7 @@ import {AuthService} from '@s-app/core/auth/auth.service';
 import {LoginGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {TOKEN} from "@s-app/auth/const";
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -69,7 +70,7 @@ export class AuthSignInComponent implements OnInit
             if (res.data.login.token)
             {
                 STATE_DATOS_SESION(res.data.login.datosSesion);
-                this._authService.accessToken = res.data.login.token;
+                localStorage.setItem(TOKEN, res.data.login.token);
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
                 this._router.navigateByUrl(redirectURL).then();
             }
