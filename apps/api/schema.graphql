@@ -47,8 +47,17 @@ type DeptoType {
   centroGestor: String
 }
 
+type DatosSesionType {
+  _id: String!
+  activo: Boolean!
+  auth: AuthType!
+  avatar: String
+  nombreCompleto: String!
+}
+
 type LoginRespuestaType {
   token: String!
+  datosSesion: DatosSesionType!
 }
 
 input AuthInput {

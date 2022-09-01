@@ -13,3 +13,14 @@ fragment fragRol on RolType
     tipoAcceso
     oculto
 }
+
+fragment fragDatosSesion on DatosSesionType
+{
+    _id
+    nombreCompleto
+    avatar
+    activo
+    auth {
+        ...fragAuth
+    }
+}

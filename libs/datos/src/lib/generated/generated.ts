@@ -20,6 +20,7 @@ export type Scalars = {
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   contrasena?: InputMaybe<Scalars['String']>;
+  estatus?: InputMaybe<Scalars['String']>;
   rol?: InputMaybe<Array<RolInput>>;
   usuario?: InputMaybe<Scalars['String']>;
 };
@@ -28,6 +29,7 @@ export type AuthType = {
   __typename?: 'AuthType';
   activo?: Maybe<Scalars['Boolean']>;
   contrasena?: Maybe<Scalars['String']>;
+  estatus?: Maybe<Scalars['String']>;
   rol: Array<RolType>;
   usuario?: Maybe<Scalars['String']>;
 };
@@ -35,6 +37,15 @@ export type AuthType = {
 export type CambioContrasenaInput = {
   _id?: InputMaybe<Scalars['ID']>;
   contrasena?: InputMaybe<Scalars['String']>;
+};
+
+export type DatosSesionType = {
+  __typename?: 'DatosSesionType';
+  _id: Scalars['String'];
+  activo: Scalars['Boolean'];
+  auth: AuthType;
+  avatar?: Maybe<Scalars['String']>;
+  nombreCompleto: Scalars['String'];
 };
 
 export type DeptoInput = {
@@ -88,6 +99,7 @@ export type LoginInput = {
 
 export type LoginRespuestaType = {
   __typename?: 'LoginRespuestaType';
+  datosSesion: DatosSesionType;
   token: Scalars['String'];
 };
 
@@ -207,6 +219,8 @@ export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | nul
 
 export type FragRolFragment = { __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null };
 
+export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } };
+
 export type AsignarAuthMutationVariables = Exact<{
   _id: Scalars['String'];
   auth: AuthInput;
@@ -235,7 +249,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginRespuestaType', token: string } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } } } | null };
 
 export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null };
 
@@ -269,6 +283,17 @@ export const FragAuthFragmentDoc = gql`
   }
 }
     ${FragRolFragmentDoc}`;
+export const FragDatosSesionFragmentDoc = gql`
+    fragment fragDatosSesion on DatosSesionType {
+  _id
+  nombreCompleto
+  avatar
+  activo
+  auth {
+    ...fragAuth
+  }
+}
+    ${FragAuthFragmentDoc}`;
 export const FragEmpleadoFragmentDoc = gql`
     fragment fragEmpleado on EmpleadoType {
   _id
@@ -442,9 +467,12 @@ export const LoginDocument = gql`
     mutation login($login: LoginInput!) {
   login(login: $login) {
     token
+    datosSesion {
+      ...fragDatosSesion
+    }
   }
 }
-    `;
+    ${FragDatosSesionFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

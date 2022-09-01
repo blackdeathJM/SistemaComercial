@@ -1,13 +1,31 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
 import {IDatosSesion} from '../empleado/auth.interface';
+import {AuthDto} from '../empleado/auth.dto';
+
+
+@ObjectType('DatosSesionType')
+export class DatosSesionDto implements IDatosSesion
+{
+    @Field()
+    _id: string;
+    @Field(() => Boolean)
+    activo: boolean;
+    @Field(() => AuthDto)
+    auth: AuthDto;
+    @Field({nullable: true})
+    avatar: string;
+    @Field()
+    nombreCompleto: string;
+}
 
 @ObjectType('LoginRespuestaType')
-export class LoginRespuesta implements ILoginRespuesta
+export class LoginRespuestaDto implements ILoginRespuesta
 {
     @Field()
     token: string;
-    datosSesion: IDatosSesion;
+    @Field(() => DatosSesionDto)
+    datosSesion: DatosSesionDto;
 }
 
 @InputType('LoginInput')

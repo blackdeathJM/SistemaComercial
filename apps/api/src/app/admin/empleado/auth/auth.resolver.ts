@@ -4,7 +4,7 @@ import {HttpException, NotFoundException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
 import { EmpleadoDto } from '@sistema-comercial/modelos/empleado.dto';
-import {ILoginRespuesta, LoginDto, LoginRespuesta} from '@sistema-comercial/modelos/login.dto';
+import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '@sistema-comercial/modelos/login.dto';
 import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
 import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
 
@@ -21,7 +21,7 @@ export class AuthResolver
         return await this.authService.asignarAuth(_id, auth);
     }
 
-    @Mutation(() => LoginRespuesta, {nullable: true})
+    @Mutation(() => LoginRespuestaDto, {nullable: true})
     @UseGuards(GqlAuthGuard)
     login(@Args('login') login: LoginDto, @Context() context): ILoginRespuesta
     {

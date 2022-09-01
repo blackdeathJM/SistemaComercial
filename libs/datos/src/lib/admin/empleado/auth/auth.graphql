@@ -45,5 +45,8 @@ mutation login($login: LoginInput!)
     login(login: $login)
     {
         token
+        datosSesion {
+            ...fragDatosSesion
+        }
     }
 }

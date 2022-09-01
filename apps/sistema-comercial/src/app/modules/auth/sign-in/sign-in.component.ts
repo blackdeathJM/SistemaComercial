@@ -6,6 +6,7 @@ import {FuseAlertType} from '@s-fuse/components/alert';
 import {AuthService} from '@s-app/core/auth/auth.service';
 import {LoginGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -24,9 +25,6 @@ export class AuthSignInComponent implements OnInit
     signInForm: FormGroup;
     showAlert: boolean = false;
 
-    /**
-     * Constructor
-     */
     constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router,
                 private loginGQL: LoginGQL)
     {
@@ -62,15 +60,16 @@ export class AuthSignInComponent implements OnInit
             this.signInNgForm.resetForm();
             this.alert = {
                 type: 'error',
-                message: 'Datos erroneos'
+                message: 'Los datos proporcionados no son correctos'
             };
             this.showAlert = true;
             return of(err);
         }), tap((res) =>
         {
-            console.log('respuesta login', res);
             if (res.data.login.token)
             {
+                this._authService.accessToken = res.data.login.token;
+                STATE_DATOS_SESION(res.data.login.datosSesion);
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
                 this._router.navigateByUrl(redirectURL).then();
             }
