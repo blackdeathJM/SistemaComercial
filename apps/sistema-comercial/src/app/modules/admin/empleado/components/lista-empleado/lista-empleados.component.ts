@@ -1,13 +1,13 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDrawer} from '@angular/material/sidenav';
 import {FormControl} from '@angular/forms';
-import {IEmpleado} from '#/libs/models/src';
 import {Subject, Subscription, takeUntil, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Component({
     selector: 'app-lista-empleado',

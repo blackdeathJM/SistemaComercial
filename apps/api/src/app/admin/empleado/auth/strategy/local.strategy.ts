@@ -15,6 +15,7 @@ export class LocalStrategy extends PassportStrategy(Strategy)
     async validate(usarname: string, password: string): Promise<IEmpleado | UnauthorizedException>
     {
         const empleado = await this.authService.validarUsuario(usarname, password);
+
         if (!empleado)
         {
             throw new UnauthorizedException('No estas autorizado');

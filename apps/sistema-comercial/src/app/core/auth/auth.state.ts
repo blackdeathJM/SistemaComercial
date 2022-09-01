@@ -1,5 +1,5 @@
 import {makeVar, ReactiveVar} from '@apollo/client';
-import {IDatosSesion} from '#/libs/models/src';
+import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
 
 const datosPrueba: IDatosSesion =
     {

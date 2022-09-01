@@ -3,12 +3,12 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {IEmpleado} from '#/libs/models/src';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {NgxToastService} from '#/libs/services/src';
+import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Component({
     selector: 'app-registro-sesion',

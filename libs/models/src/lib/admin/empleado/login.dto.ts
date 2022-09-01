@@ -1,11 +1,13 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
+import {IDatosSesion} from '../empleado/auth.interface';
 
 @ObjectType('LoginRespuestaType')
 export class LoginRespuesta implements ILoginRespuesta
 {
     @Field()
     token: string;
+    datosSesion: IDatosSesion;
 }
 
 @InputType('LoginInput')
@@ -23,5 +25,5 @@ export class LoginDto
 export interface ILoginRespuesta
 {
     token: string;
-
+    datosSesion: IDatosSesion;
 }

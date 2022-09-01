@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {IEmpleado, IRol} from '#/libs/models/src';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
 import {Subscription, tap} from 'rxjs';
@@ -9,6 +8,8 @@ import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {ActualizarRolGQL} from '#/libs/datos/src';
 import {unionBy} from 'lodash-es';
 import {NgxToastService} from '#/libs/services/src';
+import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IRol} from '#/libs/models/src/lib/admin/empleado/auth.interface';
 
 @Component({
     selector: 'app-detalle-empleado',

@@ -2,8 +2,8 @@ import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
 import {Router} from '@angular/router';
 import {BooleanInput} from '@angular/cdk/coercion';
 import {Subject} from 'rxjs';
-import {IDatosSesion} from '#/libs/models/src';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
 
 @Component({
     selector: 'user',

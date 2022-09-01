@@ -72,17 +72,18 @@ export class AuthService
     async validarUsuario(username: string, password: string): Promise<IEmpleado>
     {
         const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
-        if (!empleado)
+        if (empleado)
         {
-            throw new NotFoundException('El usuario no fuen encontrado para autenticarse');
-        }
+            const validar = await bcrypt.compare(password, empleado.auth.contrasena);
+            if (validar)
+            {
+                delete empleado.auth.contrasena;
+                return empleado;
+            }
 
-        const validar = await bcrypt.compare(password, empleado.auth.contrasena);
-
-        if (validar)
+        } else
         {
-            delete empleado.auth.contrasena;
-            return empleado;
+            throw new NotFoundException({message: 'Usuario o contrasena no correctas'});
         }
         return null;
     }
@@ -99,6 +100,7 @@ export class AuthService
             };
         return {
             token: this.jwtService.sign(datosSesion),
+            datosSesion
         };
     }
 
