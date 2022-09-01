@@ -22,6 +22,8 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FuseModule} from '@s-fuse/fuse.module';
 import {CommonModule} from '@angular/common';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
+import {JwtModule} from "@auth0/angular-jwt";
+import {TOKEN} from "@s-app/auth/const";
 
 const routerConfig: ExtraOptions =
     {
@@ -43,7 +45,12 @@ const routerConfig: ExtraOptions =
             ReactiveFormsModule,
             RxReactiveFormsModule,
             BrowserAnimationsModule,
-
+            JwtModule.forRoot({
+                config: {
+                    tokenGetter: () => localStorage.getItem(TOKEN),
+                    skipWhenExpired: false
+                }
+            }),
             RouterModule.forRoot(appRoutes, routerConfig),
 
             // Fuse, FuseConfig & FuseMockAPI

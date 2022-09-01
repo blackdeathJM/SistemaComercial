@@ -26,20 +26,6 @@ export const appRoutes: Route[] = [
             ]
     },
     {
-        path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        component: LayoutComponent,
-        data:
-            {
-                layout: 'empty'
-            },
-        children: [
-            {path: 'sign-out', loadChildren: () => import('@s-app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
-            {path: 'unlock-session', loadChildren: () => import('@s-app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
-        ]
-    },
-    {
         path: 'sistema-comercial',
         component: LayoutComponent,
         canActivate: [AuthGuard],

@@ -10,6 +10,7 @@ import {environment} from '@s-environments/environment';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {setContext} from '@apollo/client/link/context';
+import {TOKEN} from "@s-app/auth/const";
 
 
 @NgModule({
@@ -46,7 +47,7 @@ export class ApolloConfigModule
         });
 
 
-        const token = localStorage.getItem('token-sistema-comercial');
+        const token = localStorage.getItem(TOKEN);
         const auth = setContext((operation, context) =>
         {
             if (token)

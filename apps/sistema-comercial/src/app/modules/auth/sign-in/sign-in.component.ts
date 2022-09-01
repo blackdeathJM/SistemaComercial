@@ -68,8 +68,8 @@ export class AuthSignInComponent implements OnInit
         {
             if (res.data.login.token)
             {
-                localStorage.setItem('token-sistema-comercial', res.data.login.token);
                 STATE_DATOS_SESION(res.data.login.datosSesion);
+                this._authService.accessToken = res.data.login.token;
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
                 this._router.navigateByUrl(redirectURL).then();
             }
