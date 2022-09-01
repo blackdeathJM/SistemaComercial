@@ -21,7 +21,7 @@
             ],
             "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
             "@sistema-comercial/models": [ "libs/models/src/index.ts" ],
-            "@sistema-comercial/modelos/*": [ "libs/models/src/lib/admin/deptos/*" ],
+            "@sistema-comercial/modelos/*": [ "libs/models/src/lib/admin/deptos/*", "libs/models/src/lib/admin/empleado/*" ],
             "@sistema-comercial/services": [ "libs/services/src/index.ts" ]
         },
         "rootDir": "."

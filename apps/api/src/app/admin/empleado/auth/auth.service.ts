@@ -1,12 +1,16 @@
 import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {AuthDto, EmpleadoDto, EmpleadoType, IDatosSesion, IEmpleado, ILoginRespuesta, RolDto} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
-import {CambioContrsenaDto} from '@sistema-comercial/models';
 import {ROLES_POR_DEFECTO} from './rol.model';
+import {EmpleadoDto, EmpleadoType} from '@sistema-comercial/modelos/empleado.dto';
+import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
+import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
+import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
+import {ILoginRespuesta} from '@sistema-comercial/modelos/login.dto';
+import {IDatosSesion} from '@sistema-comercial/modelos/auth.interface';
 
 @Injectable()
 export class AuthService

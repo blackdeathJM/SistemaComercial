@@ -1,8 +1,9 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {EmpleadoDto, EmpleadoType, IEmpleado} from '@sistema-comercial/models';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
+import {EmpleadoDto, EmpleadoType} from '@sistema-comercial/modelos/empleado.dto';
+import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
 
 @Injectable()
 export class EmpleadoService

@@ -41,14 +41,14 @@ type EmpleadoType {
   deptoEmpleado: DeptoType
 }
 
-type LoginRespuestaType {
-  token: String!
-}
-
 type DeptoType {
   _id: ID
   nombre: String
   centroGestor: String
+}
+
+type LoginRespuestaType {
+  token: String!
 }
 
 input AuthInput {

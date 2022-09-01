@@ -1,12 +1,12 @@
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
-import {EMPLEADO_SCHEMA, EmpleadoDto} from '@sistema-comercial/models';
 import {JwtModule} from '@nestjs/jwt';
 import {AuthService} from './auth.service';
 import {AuthResolver} from './auth.resolver';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {LocalStrategy} from './strategy/local.strategy';
 import {JwtStrategy} from './strategy/jwt.strategy';
+import {EMPLEADO_SCHEMA, EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
 
 @Module({
     imports:
