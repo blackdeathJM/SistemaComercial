@@ -12,12 +12,10 @@ export class DeptoDto implements IDepto
 {
     @Field(() => ID, {nullable: true})
     _id?: string;
-
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre del departamento es requerido'})
     nombre: string;
-
     @Field({nullable: true})
     @Prop({unique: true})
     @IsNotEmpty({message: 'Es necesario asignar un centro gestor'})
