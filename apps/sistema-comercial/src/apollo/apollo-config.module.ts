@@ -11,15 +11,14 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {setContext} from '@apollo/client/link/context';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {AuthService} from '@s-app/auth/auth.service';
 
 
 @NgModule({
-    imports: [HttpClientModule, ApolloModule]
+    imports: [HttpClientModule, ApolloModule,]
 })
 export class ApolloConfigModule
 {
-    constructor(apollo: Apollo, private ngxToast: ToastrService, private jwtHelperService: JwtHelperService, private authService: AuthService)
+    constructor(apollo: Apollo, private ngxToast: ToastrService, private jwtHelperService: JwtHelperService)
     {
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
@@ -47,11 +46,16 @@ export class ApolloConfigModule
             uri: environment.wsGraphql, options: {reconnect: true}
         });
 
+        // const auth = setContext( async (_, {headers}) =>
+        // ({
+        //
+        //     }));
 
-        const token = this.jwtHelperService.tokenGetter();
+
         const auth = setContext(() =>
         {
-            if (token && this.jwtHelperService.isTokenExpired())
+            const token = this.jwtHelperService.tokenGetter();
+            if (token)
             {
                 return {
                     headers: {
@@ -59,12 +63,10 @@ export class ApolloConfigModule
                         Authorization: `Bearer ${token}`
                     }
                 };
-            } else
-            {
-                this.authService.signOut();
             }
         });
-        const http = ApolloLink.from([auth, errorLink, httpLink]);
+
+        const http = ApolloLink.from([errorLink, auth, httpLink]);
 
         const link = split(({query}) =>
             {
