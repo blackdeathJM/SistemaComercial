@@ -3,8 +3,9 @@ import {EmpleadoService} from './empleado.service';
 import {DeptosService} from '../deptos/deptos.service';
 import {DeptoDto} from '@sistema-comercial/modelos/depto.dto';
 import {IDepto} from '@sistema-comercial/modelos/depto.interface';
-import { EmpleadoDto } from '@sistema-comercial/modelos/empleado.dto';
+import {EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
 import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
+import {NotFoundException} from '@nestjs/common';
 
 @Resolver(() => EmpleadoDto)
 export class EmpleadoResolver
@@ -29,5 +30,11 @@ export class EmpleadoResolver
     async deptoEmpleado(@Parent() parent: EmpleadoDto): Promise<IDepto>
     {
         return this.deptosService.deptoPorId(parent.deptoId);
+    }
+
+    @ResolveField(() => EmpleadoDto, {nullable: true})
+    async buscarEmpleadoPorId(@Args('_id') _id: string): Promise<IEmpleado | NotFoundException>
+    {
+        return await this.empleadoService.buscarEmpleadoPorId(_id);
     }
 }

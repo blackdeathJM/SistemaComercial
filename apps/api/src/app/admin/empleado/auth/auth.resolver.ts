@@ -7,12 +7,16 @@ import {EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
 import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '@sistema-comercial/modelos/login.dto';
 import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
 import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
+import {PubSub} from 'graphql-subscriptions';
 
 @Resolver(() => AuthDto)
 export class AuthResolver
 {
+    #pubSub: PubSub;
+
     constructor(private authService: AuthService)
     {
+        this.#pubSub = new PubSub();
     }
 
     @Mutation(() => EmpleadoDto)
@@ -21,28 +25,44 @@ export class AuthResolver
         return await this.authService.asignarAuth(_id, auth);
     }
 
-    @Mutation(() => LoginRespuestaDto, {nullable: true})
-    @UseGuards(GqlAuthGuard)
-    login(@Args('login') login: LoginDto, @Context() context): ILoginRespuesta
-    {
-        return this.authService.login(context);
-    }
-
     @Mutation(() => EmpleadoDto)
     async actualizarContrasenaAdmin(@Args('datos') datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
     {
         return await this.authService.actualizarContrasenaAdmin(datos);
     }
 
+    @Mutation(() => LoginRespuestaDto, {nullable: true})
+    @UseGuards(GqlAuthGuard)
+    login(@Args('login') login: LoginDto, @Context() context): ILoginRespuesta
+    {
+        return this.authService.login(context.user);
+    }
+
     @Mutation(() => EmpleadoDto)
     async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto): Promise<IEmpleado | NotFoundException>
     {
-        return await this.authService.actualizarRol(_id, rol);
+        const rolCambiado = await this.authService.actualizarRol(_id, rol);
+        await this.#pubSub.publish('rolCambiado', this.authService.login(rolCambiado));
+        return rolCambiado;
     }
 
-    @Subscription(() => LoginRespuestaDto)
-    async rolCambiado(@Args('usuario') usuario: string): Promise<ILoginRespuesta>
+    @Subscription(() => LoginRespuestaDto, {
+        filter: (payload, variables) => payload.datosSesion._id.toString() === variables._id, resolve: value => value
+    })
+    rolCambiado(@Args('_id') _id: string): AsyncIterator<ILoginRespuesta>
     {
-
+        return this.#pubSub.asyncIterator('rolCambiado');
     }
+
+    // @Subscription(() => LoginRespuestaDto, {
+    //     resolve: (value) =>
+    //     {
+    //         console.log('Resolver', value);
+    //         return null;
+    //     }
+    // })
+    // async rolCambiado(@Args('_id') _id: string): Promise<any>
+    // {
+    //     return this.#pubSub.asyncIterator('rolCambiado');
+    // }
 }

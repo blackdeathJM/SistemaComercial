@@ -1,9 +1,12 @@
-import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {BooleanInput} from '@angular/cdk/coercion';
-import {Subject} from 'rxjs';
+import {Subject, Subscription, tap} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
 import {AuthService} from '@s-app/auth/auth.service';
+import {RolCambiadoGQL} from '#/libs/datos/src';
+import {TOKEN} from '@s-app/auth/const';
+import {NgxToastService} from '#/libs/services/src';
 
 @Component({
     selector: 'user',
@@ -12,7 +15,7 @@ import {AuthService} from '@s-app/auth/auth.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user'
 })
-export class UserComponent implements OnDestroy, AfterContentInit
+export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
 {
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
@@ -20,16 +23,30 @@ export class UserComponent implements OnDestroy, AfterContentInit
 
     @Input() showAvatar: boolean = true;
     user: IDatosSesion;
+    subscripciones: Subscription = new Subscription();
 
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private rolCambiado: RolCambiadoGQL,
+                private ngxToatService: NgxToastService)
     {
     }
 
     ngAfterContentInit(): void
     {
         this.user = STATE_DATOS_SESION();
+    }
+
+    ngAfterViewInit(): void
+    {
+        this.subscripciones.add(this.rolCambiado.subscribe({_id: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
+        {
+            console.log('Subscripcion', res.data);
+            if (res.data)
+            {
+                localStorage.setItem(TOKEN, res.data.rolCambiado.token);
+                STATE_DATOS_SESION(res.data.rolCambiado.datosSesion as IDatosSesion);
+                this.ngxToatService.infoToast('Se han cambiado tus permisos', 'Permisos');
+            }
+        })).subscribe());
     }
 
     updateUserStatus(status: string): void
@@ -54,8 +71,6 @@ export class UserComponent implements OnDestroy, AfterContentInit
 
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
+
     }
 }

@@ -1,4 +1,4 @@
-import {Field, InputType, ObjectType} from '@nestjs/graphql';
+import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
 import {IDatosSesion} from '../empleado/auth.interface';
 import {AuthDto} from '../empleado/auth.dto';
@@ -7,7 +7,7 @@ import {AuthDto} from '../empleado/auth.dto';
 @ObjectType('DatosSesionType')
 export class DatosSesionDto implements IDatosSesion
 {
-    @Field()
+    @Field(() => ID)
     _id: string;
     @Field(() => Boolean)
     activo: boolean;

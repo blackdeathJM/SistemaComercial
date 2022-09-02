@@ -40,6 +40,17 @@ mutation actualizarRol($_id: String!, $rol: RolInput!)
         }
     }
 }
+subscription rolCambiado($_id: String!)
+{
+    rolCambiado(_id: $_id)
+    {
+        token
+        datosSesion {
+            ...fragDatosSesion
+        }
+    }
+}
+
 mutation login($login: LoginInput!)
 {
     login(login: $login)

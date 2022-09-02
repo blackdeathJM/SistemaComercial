@@ -47,29 +47,14 @@ export class ApolloConfigModule
 
         const auth = setContext((_, {headers}) =>
         {
-            // get the authentication token from local storage if it exists
             const token = this.jwtHelperService.tokenGetter();
-            // return the headers to the context so httpLink can read them
             return {
                 headers: {
                     ...headers,
                     authorization: token ? `Bearer ${token}` : '',
-                },
+                }
             };
         });
-        // const auth = setContext(() =>
-        // {
-        //     const token = this.jwtHelperService.tokenGetter();
-        //     if (token)
-        //     {
-        //         return {
-        //             headers: {
-        //                 // eslint-disable-next-line @typescript-eslint/naming-convention
-        //                 Authorization: `Bearer ${token}`
-        //             }
-        //         };
-        //     }
-        // });
         const http = ApolloLink.from([errorLink, auth, httpLink]);
 
         const link = split(({query}) =>
@@ -90,7 +75,6 @@ export class ApolloConfigModule
                         fetchPolicy: 'cache-and-network',
                     },
             },
-
             cache: new InMemoryCache(),
             connectToDevTools: true
         });

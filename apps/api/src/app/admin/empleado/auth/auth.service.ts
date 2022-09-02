@@ -88,11 +88,11 @@ export class AuthService
     {
         const datosSesion: IDatosSesion =
             {
-                _id: empleado.user._id,
-                avatar: empleado.user.avatar,
-                nombreCompleto: empleado.user.nombreCompleto,
-                activo: empleado.user.activo,
-                auth: empleado.user.auth
+                _id: empleado._id,
+                avatar: empleado.avatar,
+                nombreCompleto: empleado.nombreCompleto,
+                activo: empleado.activo,
+                auth: empleado.auth
             };
         return {
             token: this.jwtService.sign(datosSesion),
@@ -100,19 +100,6 @@ export class AuthService
         };
     }
 
-    async cambioDeRol(respuesta: IEmpleado): Promise<ILoginRespuesta>
-    {
-        // const datosSesion: IDatosSesion =
-        //     {
-        //         _id: respuesta._id,
-        //         activo: respuesta.activo,
-        //         auth: respuesta.auth,
-        //         avatar: respuesta.avatar,
-        //         nombreCompleto: respuesta.nombreCompleto
-        //     };
-        //
-        // return
-    }
     async buscarEmpleadoPorUsuario(usuario: string): Promise<void>
     {
         const buscarEmpleado = await this.empleado.findOne({'auth.usuario': usuario}).exec();

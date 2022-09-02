@@ -41,7 +41,7 @@ export type CambioContrasenaInput = {
 
 export type DatosSesionType = {
   __typename?: 'DatosSesionType';
-  _id: Scalars['String'];
+  _id: Scalars['ID'];
   activo: Scalars['Boolean'];
   auth: AuthType;
   avatar?: Maybe<Scalars['String']>;
@@ -66,6 +66,7 @@ export type EmpleadoInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   auth?: InputMaybe<AuthInput>;
   avatar?: InputMaybe<Scalars['String']>;
+  buscarEmpleadoPorId?: InputMaybe<EmpleadoInput>;
   calle?: InputMaybe<Scalars['String']>;
   colonia?: InputMaybe<Scalars['String']>;
   deptoEmpleado?: InputMaybe<DeptoInput>;
@@ -82,6 +83,7 @@ export type EmpleadoType = {
   activo: Scalars['Boolean'];
   auth?: Maybe<AuthType>;
   avatar?: Maybe<Scalars['String']>;
+  buscarEmpleadoPorId?: Maybe<EmpleadoType>;
   calle?: Maybe<Scalars['String']>;
   colonia?: Maybe<Scalars['String']>;
   deptoEmpleado?: Maybe<DeptoType>;
@@ -90,6 +92,11 @@ export type EmpleadoType = {
   fechaIngreso?: Maybe<Scalars['DateTime']>;
   modificadoPor?: Maybe<Array<ModificadoType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
+};
+
+
+export type EmpleadoTypeBuscarEmpleadoPorIdArgs = {
+  _id: Scalars['String'];
 };
 
 export type LoginInput = {
@@ -187,6 +194,16 @@ export type RolType = {
   tipoAcceso?: Maybe<Scalars['String']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  rolCambiado: LoginRespuestaType;
+};
+
+
+export type SubscriptionRolCambiadoArgs = {
+  _id: Scalars['String'];
+};
+
 export type FragDeptosFragment = { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null };
 
 export type DepartamentosQueryVariables = Exact<{ [key: string]: never; }>;
@@ -243,6 +260,13 @@ export type ActualizarRolMutationVariables = Exact<{
 
 
 export type ActualizarRolMutation = { __typename?: 'Mutation', actualizarRol: { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null } };
+
+export type RolCambiadoSubscriptionVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type RolCambiadoSubscription = { __typename?: 'Subscription', rolCambiado: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } } } };
 
 export type LoginMutationVariables = Exact<{
   login: LoginInput;
@@ -458,6 +482,27 @@ ${FragDeptosFragmentDoc}`;
   })
   export class ActualizarRolGQL extends Apollo.Mutation<ActualizarRolMutation, ActualizarRolMutationVariables> {
     document = ActualizarRolDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RolCambiadoDocument = gql`
+    subscription rolCambiado($_id: String!) {
+  rolCambiado(_id: $_id) {
+    token
+    datosSesion {
+      ...fragDatosSesion
+    }
+  }
+}
+    ${FragDatosSesionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RolCambiadoGQL extends Apollo.Subscription<RolCambiadoSubscription, RolCambiadoSubscriptionVariables> {
+    document = RolCambiadoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
