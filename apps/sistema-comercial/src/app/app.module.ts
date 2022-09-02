@@ -24,6 +24,7 @@ import {CommonModule} from '@angular/common';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
+import {GeneralModule} from '@s-app/general/general.module';
 
 const routerConfig: ExtraOptions =
     {

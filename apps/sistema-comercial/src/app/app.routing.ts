@@ -22,7 +22,9 @@ export const appRoutes: Route[] = [
             },
         children:
             [
-                {path: 'sign-in', loadChildren: () => import('@s-app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)}
+                {
+                    path: 'sign-in', loadChildren: () => import('@s-app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)
+                }
             ]
     },
     {
@@ -33,8 +35,17 @@ export const appRoutes: Route[] = [
         resolve: {initialData: InitialDataResolver},
         children:
             [
-                {path: 'inicio', loadChildren: () => import('@s-app/modules/inicio/inicio.module').then(i => i.InicioModule)},
-                {path: 'admin', loadChildren: () => import('@s-app/modules/admin/admin.module').then(a => a.AdminModule)}
+                {
+                    path: 'inicio', loadChildren: () => import('@s-app/modules/inicio/inicio.module').then(i => i.InicioModule)
+                },
+                {
+                    path: 'admin',
+                    loadChildren: () => import('@s-app/modules/admin/admin.module').then(a => a.AdminModule)
+                },
+                {
+                    path: 'general',
+                    loadChildren: () => import('@s-app/modules/general/general.module').then(g => g.GeneralModule)
+                }
             ]
     },
     {

@@ -1,4 +1,5 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
+import {rutaGeneral} from '@s-app/common/navigation/constantes/rutas';
 
 export const GENERAL: FuseNavigationItem[] =
     [
@@ -14,14 +15,21 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Mis documentos',
                         type: 'basic',
                         icon: 'feather:folder',
-                        link: ''
+                        link: rutaGeneral + 'mis-documentos'
                     },
                     {
                         id: 'misResguardos',
                         title: 'Mis resguardos',
                         type: 'basic',
                         icon: 'feather:archive',
-                        link: ''
+                        link: rutaGeneral + 'mis-resguardos'
+                    },
+                    {
+                        id: 'ordenesDeAtencion',
+                        title: 'Ordenes de atencion',
+                        type: 'basic',
+                        icon: 'feather:file-text',
+                        link: rutaGeneral + 'ordenes-atencion'
                     }
                 ]
         }
