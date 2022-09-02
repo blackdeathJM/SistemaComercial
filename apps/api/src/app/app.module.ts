@@ -5,7 +5,7 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import config from '../config/config';
-import {AdminModule} from "./admin/admin.module";
+import {AdminModule} from './admin/admin.module';
 
 @Module({
     imports: [

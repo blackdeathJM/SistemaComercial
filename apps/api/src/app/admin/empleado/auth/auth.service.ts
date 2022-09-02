@@ -51,24 +51,6 @@ export class AuthService
         return empleado;
     }
 
-    async actualizarRol(_id: string, rol: RolDto): Promise<IEmpleado | NotFoundException>
-    {
-        // buscamos el empleado por el id principal
-        // const empleado = await this.empleado.findOneAndUpdate({_id: new ObjectId(_id._id), "auth.rol.id": rol.id}, {});
-        const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id),
-            {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
-                arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
-            });
-
-        if (!empleado)
-        {
-            throw new NotFoundException({message: 'El usuario no fue encontrado'});
-        }
-
-        return empleado;
-
-    }
-
     async validarUsuario(username: string, password: string): Promise<IEmpleado>
     {
         const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
@@ -88,6 +70,20 @@ export class AuthService
         return null;
     }
 
+    async actualizarRol(_id: string, rol: RolDto): Promise<IEmpleado | NotFoundException>
+    {
+        const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id),
+            {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
+                arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
+            });
+
+        if (!empleado)
+        {
+            throw new NotFoundException({message: 'El usuario no fue encontrado'});
+        }
+        return empleado;
+    }
+
     login(empleado: any): ILoginRespuesta
     {
         const datosSesion: IDatosSesion =
@@ -104,6 +100,19 @@ export class AuthService
         };
     }
 
+    async cambioDeRol(respuesta: IEmpleado): Promise<ILoginRespuesta>
+    {
+        // const datosSesion: IDatosSesion =
+        //     {
+        //         _id: respuesta._id,
+        //         activo: respuesta.activo,
+        //         auth: respuesta.auth,
+        //         avatar: respuesta.avatar,
+        //         nombreCompleto: respuesta.nombreCompleto
+        //     };
+        //
+        // return
+    }
     async buscarEmpleadoPorUsuario(usuario: string): Promise<void>
     {
         const buscarEmpleado = await this.empleado.findOne({'auth.usuario': usuario}).exec();

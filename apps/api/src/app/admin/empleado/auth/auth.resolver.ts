@@ -1,9 +1,9 @@
-import {Args, Context, Mutation, Resolver} from '@nestjs/graphql';
+import {Args, Context, Mutation, Resolver, Subscription} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
 import {HttpException, NotFoundException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
-import { EmpleadoDto } from '@sistema-comercial/modelos/empleado.dto';
+import {EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
 import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '@sistema-comercial/modelos/login.dto';
 import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
 import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
@@ -38,5 +38,11 @@ export class AuthResolver
     async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto): Promise<IEmpleado | NotFoundException>
     {
         return await this.authService.actualizarRol(_id, rol);
+    }
+
+    @Subscription(() => LoginRespuestaDto)
+    async rolCambiado(@Args('usuario') usuario: string): Promise<ILoginRespuesta>
+    {
+
     }
 }
