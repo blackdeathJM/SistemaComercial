@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
@@ -45,12 +45,6 @@ export class ApolloConfigModule
         const wsClient = new WebSocketLink({
             uri: environment.wsGraphql, options: {reconnect: true}
         });
-
-        // const auth = setContext( async (_, {headers}) =>
-        // ({
-        //
-        //     }));
-
 
         const auth = setContext(() =>
         {
