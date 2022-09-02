@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {HttpClientModule, HttpHeaders} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
@@ -11,7 +11,6 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {setContext} from '@apollo/client/link/context';
 import {JwtHelperService} from '@auth0/angular-jwt';
-
 
 @NgModule({
     imports: [HttpClientModule, ApolloModule,]
@@ -46,20 +45,31 @@ export class ApolloConfigModule
             uri: environment.wsGraphql, options: {reconnect: true}
         });
 
-        const auth = setContext(() =>
+        const auth = setContext((_, {headers}) =>
         {
+            // get the authentication token from local storage if it exists
             const token = this.jwtHelperService.tokenGetter();
-            if (token)
-            {
-                return {
-                    headers: {
-                        // eslint-disable-next-line @typescript-eslint/naming-convention
-                        Authorization: `Bearer ${token}`
-                    }
-                };
-            }
+            // return the headers to the context so httpLink can read them
+            return {
+                headers: {
+                    ...headers,
+                    authorization: token ? `Bearer ${token}` : '',
+                },
+            };
         });
-
+        // const auth = setContext(() =>
+        // {
+        //     const token = this.jwtHelperService.tokenGetter();
+        //     if (token)
+        //     {
+        //         return {
+        //             headers: {
+        //                 // eslint-disable-next-line @typescript-eslint/naming-convention
+        //                 Authorization: `Bearer ${token}`
+        //             }
+        //         };
+        //     }
+        // });
         const http = ApolloLink.from([errorLink, auth, httpLink]);
 
         const link = split(({query}) =>

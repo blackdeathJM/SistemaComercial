@@ -28,26 +28,6 @@ export class AuthService
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
-    signIn(credenciales: { usuario: string; contrasena: string }): Observable<any>
-    {
-        // Throw error, if the user is already logged in
-        if (STATE_AUTENTICADO())
-        {
-            this.ngxToastService.alertaToast('Ya tienes una sesion activa', 'Sesion Activa');
-            return;
-        }
-
-        return this.loginGQL.mutate({login: credenciales}).pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                localStorage.setItem(TOKEN, res.data.login.token);
-                STATE_AUTENTICADO(true);
-                return of(res);
-            }
-        }));
-    }
-
     iniciarSesionConToken(): Observable<any>
     {
         // Renew token
