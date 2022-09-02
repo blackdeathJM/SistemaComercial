@@ -12,9 +12,16 @@ export const AREA_TECNICA: FuseNavigationItem[] =
                     {
                         id: 'telemetria',
                         title: 'Telemetria',
-                        type: 'basic',
-                        icon: 'heroicons_outline:chip',
-                        link: ''
+                        type: 'collapsable',
+                        icon: 'feather:cpu',
+                        children:
+                            [
+                                {
+                                    id: 'instalaciones',
+                                    title: 'Instalaciones',
+                                    type: 'basic',
+                                }
+                            ]
                     }
                 ]
         }

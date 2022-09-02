@@ -27,9 +27,9 @@ mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!)
     }
 }
 
-mutation actualizarRol($_id: String!, $rol: RolInput!)
+mutation actualizarRol($_id: String!, $rol: RolInput!, $modificadoPor: ModificadoInput!)
 {
-    actualizarRol(_id: $_id, rol: $rol)
+    actualizarRol(_id: $_id, rol: $rol, modificadoPor: $modificadoPor)
     {
         ...fragEmpleado
         auth {

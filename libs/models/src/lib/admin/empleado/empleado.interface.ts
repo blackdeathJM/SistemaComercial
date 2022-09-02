@@ -22,7 +22,8 @@ export interface IEmpleado
 export interface IModificado
 {
     usuario: string;
-    fecha: Date;
+    fecha: string;
+    accion: string;
 }
 
 export interface ITelefono
@@ -43,7 +44,6 @@ export interface IPuesto
     sueldo: number;
     isr: number;
     fecha: Date;
-    modificado: IModificado[];
 }
 
 export interface ISeguroSocial

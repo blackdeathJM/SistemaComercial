@@ -11,7 +11,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             id: 'administrador',
             title: 'Administrador',
             type: 'group',
-            icon: 'heroicons_outline:cog',
+            icon: 'feather:settings',
             tooltip: 'Modulo para las establecer configuraciones para el funcionamiento del sistema comercial',
             children:
                 [
@@ -19,7 +19,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
                         id: 'adminGeneral',
                         title: 'Admin Gral',
                         type: 'basic',
-                        icon: 'heroicons_outline:cog',
+                        icon: 'feather:settings',
                         link: rutaBaseAdministrador
                     }
                 ]

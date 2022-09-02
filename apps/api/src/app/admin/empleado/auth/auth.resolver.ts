@@ -3,7 +3,7 @@ import {AuthService} from './auth.service';
 import {HttpException, NotFoundException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
-import {EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
+import {EmpleadoDto, ModificadoDto} from '@sistema-comercial/modelos/empleado.dto';
 import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '@sistema-comercial/modelos/login.dto';
 import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
 import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
@@ -39,9 +39,9 @@ export class AuthResolver
     }
 
     @Mutation(() => EmpleadoDto)
-    async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto): Promise<IEmpleado | NotFoundException>
+    async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto, @Args('modificadoPor') modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
     {
-        const rolCambiado = await this.authService.actualizarRol(_id, rol);
+        const rolCambiado = await this.authService.actualizarRol(_id, rol, modificadoPor);
         await this.#pubSub.publish('rolCambiado', this.authService.login(rolCambiado));
         return rolCambiado;
     }
@@ -53,16 +53,4 @@ export class AuthResolver
     {
         return this.#pubSub.asyncIterator('rolCambiado');
     }
-
-    // @Subscription(() => LoginRespuestaDto, {
-    //     resolve: (value) =>
-    //     {
-    //         console.log('Resolver', value);
-    //         return null;
-    //     }
-    // })
-    // async rolCambiado(@Args('_id') _id: string): Promise<any>
-    // {
-    //     return this.#pubSub.asyncIterator('rolCambiado');
-    // }
 }

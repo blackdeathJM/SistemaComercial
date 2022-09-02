@@ -5,11 +5,13 @@ import {Subscription, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
-import {ActualizarRolGQL} from '#/libs/datos/src';
 import {unionBy} from 'lodash-es';
 import {NgxToastService} from '#/libs/services/src';
-import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado, IModificado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {IRol} from '#/libs/models/src/lib/admin/empleado/auth.interface';
+import moment from 'moment';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {ActualizarRolGQL} from '#/libs/datos/src';
 
 @Component({
     selector: 'app-detalle-empleado',
@@ -70,7 +72,13 @@ export class DetalleEmpleadoComponent implements OnDestroy
 
         delete rol['__typename'];
 
-        this.actualizarRolGQL.mutate({_id: empleado._id, rol}).pipe(tap((res) =>
+        const modificadoPor: IModificado =
+            {
+                accion: `Se cambio el rol a: ${rol.id} - ${rol.tipoAcceso}`,
+                fecha: moment().format('MM-DD-YYYY HH:mm'),
+                usuario: STATE_DATOS_SESION().nombreCompleto
+            };
+        this.actualizarRolGQL.mutate({_id: empleado._id, rol, modificadoPor}).pipe(tap((res) =>
         {
             if (res.data)
             {

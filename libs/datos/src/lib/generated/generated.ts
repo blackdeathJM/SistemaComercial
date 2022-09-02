@@ -111,13 +111,15 @@ export type LoginRespuestaType = {
 };
 
 export type ModificadoInput = {
-  fecha?: InputMaybe<Scalars['DateTime']>;
+  accion?: InputMaybe<Scalars['String']>;
+  fecha?: InputMaybe<Scalars['String']>;
   usuario?: InputMaybe<Scalars['String']>;
 };
 
 export type ModificadoType = {
   __typename?: 'ModificadoType';
-  fecha?: Maybe<Scalars['DateTime']>;
+  accion?: Maybe<Scalars['String']>;
+  fecha?: Maybe<Scalars['String']>;
   usuario?: Maybe<Scalars['String']>;
 };
 
@@ -146,6 +148,7 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationActualizarRolArgs = {
   _id: Scalars['String'];
+  modificadoPor: ModificadoInput;
   rol: RolInput;
 };
 
@@ -256,6 +259,7 @@ export type ActualizarContrasenaAdminMutation = { __typename?: 'Mutation', actua
 export type ActualizarRolMutationVariables = Exact<{
   _id: Scalars['String'];
   rol: RolInput;
+  modificadoPor: ModificadoInput;
 }>;
 
 
@@ -277,7 +281,7 @@ export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'L
 
 export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null };
 
-export type FragModificadoPorFragment = { __typename?: 'ModificadoType', usuario?: string | null, fecha?: any | null };
+export type FragModificadoPorFragment = { __typename?: 'ModificadoType', usuario?: string | null, fecha?: string | null };
 
 export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -462,8 +466,8 @@ ${FragDeptosFragmentDoc}`;
     }
   }
 export const ActualizarRolDocument = gql`
-    mutation actualizarRol($_id: String!, $rol: RolInput!) {
-  actualizarRol(_id: $_id, rol: $rol) {
+    mutation actualizarRol($_id: String!, $rol: RolInput!, $modificadoPor: ModificadoInput!) {
+  actualizarRol(_id: $_id, rol: $rol, modificadoPor: $modificadoPor) {
     ...fragEmpleado
     auth {
       ...fragAuth

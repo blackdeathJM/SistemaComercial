@@ -8,9 +8,12 @@ import {AuthDto} from './auth.dto';
 @InputType('ModificadoInput')
 export class ModificadoDto implements IModificado
 {
-    @Field(() => Date, {nullable: true})
+    @Field({nullable: true})
+    @IsNotEmpty({message: 'Se requiere una accion'})
+    accion: string;
+    @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesaria la fecha'})
-    fecha: Date;
+    fecha: string;
     @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario'})
     usuario: string;
@@ -48,9 +51,6 @@ export class PuestoDto implements IPuesto
     @Field(() => Float, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el ISR'})
     isr: number;
-    @Field(() => [ModificadoDto], {nullable: true})
-    @IsNotEmpty({message: 'Es necesario quien esta modificando el documento'})
-    modificado: ModificadoDto[];
     @Field({nullable: true})
     @IsNotEmpty({message: 'Es necesario el puesto'})
     puesto: string;

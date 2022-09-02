@@ -11,6 +11,8 @@ import {EmpleadoRouting} from '@s-app/empleado/empleado.routing';
 import {FuseNavigationModule} from '@s-fuse/navigation';
 import {RegistroSesionComponent} from './components/registro-sesion/registro-sesion.component';
 import { CambioIconoRolPipe } from './pipes/cambio-icono-rol.pipe';
+import { EmpleadoGuardModule } from './guards/empleado-guard.module';
+import { PerfilModule } from './perfil/perfil.module';
 
 @NgModule({
     declarations: [
@@ -33,6 +35,8 @@ import { CambioIconoRolPipe } from './pipes/cambio-icono-rol.pipe';
         SharedModule,
         EmpleadoRouting,
         FuseNavigationModule,
+        EmpleadoGuardModule,
+        PerfilModule,
     ],
 })
 export class EmpleadoModule

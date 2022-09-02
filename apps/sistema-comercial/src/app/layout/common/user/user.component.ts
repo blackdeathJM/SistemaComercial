@@ -39,7 +39,6 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
     {
         this.subscripciones.add(this.rolCambiado.subscribe({_id: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
         {
-            console.log('Subscripcion', res.data);
             if (res.data)
             {
                 localStorage.setItem(TOKEN, res.data.rolCambiado.token);

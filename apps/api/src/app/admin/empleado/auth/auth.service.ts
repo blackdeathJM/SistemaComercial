@@ -5,8 +5,8 @@ import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
 import {ROLES_POR_DEFECTO} from './rol.model';
-import {EmpleadoDto, EmpleadoType} from '@sistema-comercial/modelos/empleado.dto';
-import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
+import {EmpleadoDto, EmpleadoType, ModificadoDto} from '@sistema-comercial/modelos/empleado.dto';
+import {IEmpleado, IModificado} from '@sistema-comercial/modelos/empleado.interface';
 import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
 import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
 import {ILoginRespuesta} from '@sistema-comercial/modelos/login.dto';
@@ -70,9 +70,9 @@ export class AuthService
         return null;
     }
 
-    async actualizarRol(_id: string, rol: RolDto): Promise<IEmpleado | NotFoundException>
+    async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
     {
-        const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id),
+        const empleado = await this.empleado.findByIdAndUpdate(_id,
             {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
                 arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
             });
@@ -81,7 +81,13 @@ export class AuthService
         {
             throw new NotFoundException({message: 'El usuario no fue encontrado'});
         }
+        await this.modificadoPor(_id, modificadoPor);
         return empleado;
+    }
+
+    async modificadoPor(_id: string, modificadoPor: IModificado): Promise<void>
+    {
+        await this.empleado.findByIdAndUpdate(_id, {$push: {modificadoPor}}).exec();
     }
 
     login(empleado: any): ILoginRespuesta
