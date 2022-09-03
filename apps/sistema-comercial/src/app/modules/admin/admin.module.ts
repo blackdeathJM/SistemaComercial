@@ -5,6 +5,7 @@ import {SharedModule} from '@s-shared/shared.module';
 import {DeptosModule} from '@s-app/deptos/deptos.module';
 import {NgSwitch} from '@angular/common';
 import {EmpleadoModule} from './empleado/empleado.module';
+import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
 
 @NgModule({
     declarations:
@@ -16,9 +17,11 @@ import {EmpleadoModule} from './empleado/empleado.module';
             AdminRouting,
             SharedModule,
             NgSwitch,
+            PlantillasModule,
             DeptosModule,
             EmpleadoModule
-        ]
+        ],
+    // providers: [ListaDetalleComponent]
 })
 export class AdminModule
 {

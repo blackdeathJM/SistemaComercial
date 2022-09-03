@@ -3,8 +3,6 @@ import {NgMaterialMaterialModule} from '@s-shared/ng-material/ng-material-materi
 import {TarjetaContenidoScrollComponent} from '@s-shared/plantillas/tarjeta-contenido-scroll/tarjeta-contenido-scroll.component';
 import {TarjetaScrollPagComponent} from '@s-shared/plantillas/tarjeta-scroll-pag/tarjeta-scroll-pag.component';
 import {ListaDetalleComponent} from './lista-detalle/lista-detalle.component';
-import {SharedModule} from '@s-shared/shared.module';
-import {RouterOutlet} from '@angular/router';
 
 
 @NgModule({
@@ -23,8 +21,6 @@ import {RouterOutlet} from '@angular/router';
     imports:
         [
             NgMaterialMaterialModule,
-            SharedModule,
-            RouterOutlet
         ]
 })
 export class PlantillasModule

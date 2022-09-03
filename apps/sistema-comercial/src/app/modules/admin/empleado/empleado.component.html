@@ -1,10 +1,10 @@
 <!--<app-lista-empleado></app-lista-empleado>-->
-<app-lista-detalle>
+<app-lista-detalle [abriP]="abrirP">
     <ng-container outlet>
-        <app-detalle-empleado (abrirPanel)="abrirPanel($event)"></app-detalle-empleado>
+        <app-detalle-empleado (abrirPanel)="abrirPanel($event)" [empleado]="empleadoSeleccionado"></app-detalle-empleado>
     </ng-container>
     <ng-container titulo>
-        <div>Asignacion de sesion y permisos</div>
+        <div>Sesion y permisos</div>
     </ng-container>
     <ng-container buscar>
             <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">

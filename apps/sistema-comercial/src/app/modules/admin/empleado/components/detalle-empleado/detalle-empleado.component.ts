@@ -59,11 +59,6 @@ export class DetalleEmpleadoComponent implements OnDestroy
         return item.id || index;
     }
 
-    ngOnDestroy(): void
-    {
-        this.subscripcion.unsubscribe();
-    }
-
     permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: IRol, empleado: IEmpleado): void
     {
         const rol = {...permiso};
@@ -88,18 +83,8 @@ export class DetalleEmpleadoComponent implements OnDestroy
         })).subscribe();
     }
 
-    // ngOnInit(): void
-    // {
-    //     setTimeout(() =>
-    //     {
-    //         this._empleado?.auth?.rol.filter(value => this.controlRoles.setValue(value));
-    //     }, 200);
-    //
-    // }
-
-    // compareFunction(o1: string, o2: string): boolean
-    // {
-    //     console.log(o1, o2);
-    //     return true;
-    // }
+    ngOnDestroy(): void
+    {
+        this.subscripcion.unsubscribe();
+    }
 }

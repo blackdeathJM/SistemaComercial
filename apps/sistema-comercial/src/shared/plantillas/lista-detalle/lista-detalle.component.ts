@@ -9,13 +9,15 @@ import {MatDrawer} from '@angular/material/sidenav';
 @Component({
     selector: 'app-lista-detalle',
     templateUrl: './lista-detalle.component.html',
-    styleUrls: ['./lista-detalle.component.scss']
+    styleUrls: ['./lista-detalle.component.scss'],
+    exportAs: 'app-lista-detalle'
 })
 export class ListaDetalleComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     drawerMode: 'side' | 'over';
     elementoSeleccionado: any;
+    _abriP: boolean = false;
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
@@ -23,14 +25,20 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
     {
     }
 
+    @Input() set abriP(value: boolean)
+    {
+        this._abriP = value;
+    }
+
     ngOnInit(): void
     {
         this.matDrawer.openedChange.subscribe((opened) =>
         {
+            console.log('opened', opened);
             if (!opened)
             {
                 this.elementoSeleccionado = null;
-                this.cdr.markForCheck();
+                this.cdr.reattach();
             }
         });
 
@@ -56,10 +64,7 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
     {
         return item.id || index;
     }
-    abrirPanel(evento: boolean): void
-    {
-        this.matDrawer.opened = evento;
-    }
+
     ngOnDestroy(): void
     {
         this.eliminarSubscripcion.next(null);
