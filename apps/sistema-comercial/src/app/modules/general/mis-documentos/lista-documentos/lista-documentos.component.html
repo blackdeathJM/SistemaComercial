@@ -1,2 +1,25 @@
-<h1>Estoy en el componente de lista</h1>
-<router-outlet></router-outlet>
+<app-lista-detalle>
+    <ng-container titulo>
+        <div>Mis documentos</div>
+    </ng-container>
+    <ng-container acciones>
+        <div>
+            <button mat-flat-button [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Upload file</span>
+            </button>
+        </div>
+    </ng-container>
+    <ng-container outlet>
+        <router-outlet></router-outlet>
+    </ng-container>
+    <ng-container lista>
+        <div>Aqui va la lista haber que pedo</div>
+    </ng-container>
+</app-lista-detalle>
+
+
+
+
+
+
