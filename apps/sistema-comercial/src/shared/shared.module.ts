@@ -6,24 +6,27 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgMaterialMaterialModule
-    ],
-    declarations: [
-        TailwindLoadingComponent,
-        RegistrosComponent
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgMaterialMaterialModule,
-        TailwindLoadingComponent,
-        RegistrosComponent
-    ]
+    imports:
+        [
+            CommonModule,
+            FormsModule,
+            ReactiveFormsModule,
+            NgMaterialMaterialModule
+        ],
+    declarations:
+        [
+            TailwindLoadingComponent,
+            RegistrosComponent
+        ],
+    exports:
+        [
+            CommonModule,
+            FormsModule,
+            ReactiveFormsModule,
+            NgMaterialMaterialModule,
+            TailwindLoadingComponent,
+            RegistrosComponent
+        ]
 })
 export class SharedModule
 {

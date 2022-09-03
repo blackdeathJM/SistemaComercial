@@ -8,6 +8,7 @@ import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
 
 @Component({
     selector: 'app-empleado',
@@ -25,7 +26,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy, AfterContentInit
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService, private empleadosGQL: EmpleadosGQL)
+                private fuseMediaWatcherService: FuseMediaWatcherService, private empleadosGQL: EmpleadosGQL, private listaDetalleComponent: ListaDetalleComponent)
     {
     }
 
@@ -72,12 +73,12 @@ export class EmpleadoComponent implements OnInit, OnDestroy, AfterContentInit
     seleccionarEmpleado(empleado: IEmpleado): void
     {
         this.empleadoSeleccionado = empleado;
-        this.matDrawer.opened = true;
+        this.listaDetalleComponent.abrirPanel(true);
     }
 
     abrirPanel(evento: boolean): void
     {
-        this.matDrawer.opened = evento;
+        this.listaDetalleComponent.abrirPanel(evento);
     }
 
     ngOnDestroy(): void
