@@ -8,12 +8,10 @@
             <!-- Main -->
             <div class="flex flex-col flex-auto">
                 <!-- Header -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-6 sm:py-12 md:px-8 border-b bg-card dark:bg-transparent">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-6 sm:py-8 md:px-8 border-b bg-card dark:bg-transparent">
                     <!-- Title -->
                     <div class="text-4xl font-extrabold tracking-tight leading-none">
-                        <ng-content select="[titulo]">
-
-                        </ng-content>
+                        <ng-content select="[titulo]"></ng-content>
                     </div>
                     <!-- Main actions -->
                     <div class="mt-4 sm:mt-0">
@@ -21,8 +19,8 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-6 sm:py-12 md:px-8 border-b bg-card dark:bg-transparent">
-                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-2 sm:py-4 md:px-8 border-b bg-card dark:bg-transparent">
+                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4 w-full">
                         <!-- Search -->
                         <div class="flex-auto">
                             <ng-content select="[buscar]"></ng-content>
@@ -32,15 +30,9 @@
 
                 <!-- Contacts list -->
                 <div class="relative">
-                    <ng-container *ngIf="true">
-                        <ng-content select="[lista]"></ng-content>
-                    </ng-container>
+                    <ng-content select="[lista]"></ng-content>
                 </div>
             </div>
         </mat-drawer-content>
     </mat-drawer-container>
 </div>
-
-<ng-template #cargando>
-    <app-tailwind-loading></app-tailwind-loading>
-</ng-template>

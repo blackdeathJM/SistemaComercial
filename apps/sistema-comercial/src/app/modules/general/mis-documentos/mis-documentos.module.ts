@@ -6,6 +6,7 @@ import { DetalleDocumentosComponent } from './detalle-documentos/detalle-documen
 import {SharedModule} from "@s-shared/shared.module";
 import {RouterLinkWithHref, RouterOutlet} from "@angular/router";
 import {PlantillasModule} from "@s-shared/plantillas/plantillas.module";
+import {FuseCardModule} from "@s-fuse/card";
 
 @NgModule({
     declarations:
@@ -20,7 +21,8 @@ import {PlantillasModule} from "@s-shared/plantillas/plantillas.module";
             SharedModule,
             RouterOutlet,
             RouterLinkWithHref,
-            PlantillasModule
+            PlantillasModule,
+            FuseCardModule
         ]
 })
 export class MisDocumentosModule
