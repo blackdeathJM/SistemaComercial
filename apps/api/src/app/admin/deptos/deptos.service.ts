@@ -4,6 +4,7 @@ import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
 import {IDepto} from '@sistema-comercial/modelos/depto.interface';
 import {DeptoDto, DeptoType} from '@sistema-comercial/modelos/depto.dto';
+import {ExceptionHandler} from "@nestjs/core/errors/exception-handler";
 
 
 @Injectable()
@@ -18,10 +19,9 @@ export class DeptosService
         return this.depto.find().exec();
     }
 
-    async crearDepto(input: DeptoDto): Promise<IDepto>
+    async crearDepto(input: DeptoDto): Promise<IDepto | ExceptionHandler>
     {
         await this.buscarDepto(input.nombre, input.centroGestor);
-
         const depto = new this.depto(input);
         return depto.save();
     }
@@ -41,11 +41,12 @@ export class DeptosService
         return await this.depto.findByIdAndDelete(new ObjectId(_id)).exec();
     }
 
-    async buscarDepto(nombre: string, centroGestor: string): Promise<void>
+    async buscarDepto(nombre: string, centroGestor: string): Promise<void | NotAcceptableException>
     {
         const buscarDepto = await this.depto.findOne({nombre, centroGestor}).exec();
         if (buscarDepto)
         {
+            console.log('buscar depto', buscarDepto);
             throw new NotAcceptableException('El documento tiene campos duplicados', 'Departamentos');
         }
     }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Portal, PortalService} from '#/libs/services/src/lib/portal.service';
+import {Portal, PortalService} from '#/libs/services/src/lib/services/portal.service';
 
 @Component({
     selector: 'app-portal',

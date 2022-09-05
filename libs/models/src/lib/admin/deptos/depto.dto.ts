@@ -16,12 +16,12 @@ export class DeptoDto implements IDepto
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre del departamento es requerido'})
-    @Transform(({value}) =>
-    {
-        const resp = value + ' Que pedo';
-        console.log('input', resp);
-        return resp;
-    })
+        // @Transform(({value}) =>
+        // {
+        //     const resp = value + ' Que pedo';
+        //     console.log('input', resp);
+        //     return resp;
+        // })
     nombre: string;
     @Field({nullable: true})
     @Prop({unique: true})
