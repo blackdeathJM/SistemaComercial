@@ -39,7 +39,7 @@ export class DeptosService
 
         const buscarDepto = await this.depto.findByIdAndUpdate(new ObjectId(input._id));
         Object.assign(buscarDepto, {...input});
-        return buscarDepto.save();
+        return await buscarDepto.save();
     }
 
     async eliminarDepto(_id: string): Promise<IDepto>
@@ -52,7 +52,6 @@ export class DeptosService
         const buscarDepto = await this.depto.findOne({nombre, centroGestor}).exec();
         if (buscarDepto)
         {
-            console.log('buscar depto', buscarDepto);
             throw new NotAcceptableException('El documento tiene campos duplicados', 'Departamentos');
         }
     }
