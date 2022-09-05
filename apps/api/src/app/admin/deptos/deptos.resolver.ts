@@ -22,7 +22,7 @@ export class DeptosResolver
     // async crearDepto(@Args('input', new PruebaPipe()) input: DeptoDto): Promise<IDepto>
     // @UsePipes(new PruebaPipe())
     @Mutation(() => DeptoDto)
-    async crearDepto(@Args('input') input: DeptoDto): Promise<IDepto | ExceptionHandler>
+    async crearDepto(@Args('input') input: DeptoDto): Promise<IDepto>
     {
         return await this.deptosService.crearDepto(input);
     }

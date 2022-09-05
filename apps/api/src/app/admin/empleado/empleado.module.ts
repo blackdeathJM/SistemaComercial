@@ -6,13 +6,14 @@ import {AuthModule} from './auth/auth.module';
 import {DeptosService} from '../deptos/deptos.service';
 import {DEPTO_SCHEMA, DeptoDto} from '@sistema-comercial/modelos/depto.dto';
 import {EMPLEADO_SCHEMA, EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
+import {AppService} from '../../app.service';
 
 @Module({
     imports: [MongooseModule.forFeature([
         {name: EmpleadoDto.name, schema: EMPLEADO_SCHEMA},
         {name: DeptoDto.name, schema: DEPTO_SCHEMA}
     ]), AuthModule],
-    providers: [EmpleadoService, EmpleadoResolver, DeptosService]
+    providers: [EmpleadoService, EmpleadoResolver, DeptosService, AppService]
 })
 export class EmpleadoModule
 {

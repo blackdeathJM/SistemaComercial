@@ -4,13 +4,13 @@ import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
 import {IDepto} from '@sistema-comercial/modelos/depto.interface';
 import {DeptoDto, DeptoType} from '@sistema-comercial/modelos/depto.dto';
-import {ExceptionHandler} from "@nestjs/core/errors/exception-handler";
+import {AppService} from '../../app.service';
 
 
 @Injectable()
 export class DeptosService
 {
-    constructor(@InjectModel(DeptoDto.name) private depto: Model<DeptoType>)
+    constructor(@InjectModel(DeptoDto.name) private depto: Model<DeptoType>, private mongoErrorService: AppService)
     {
     }
 
@@ -19,11 +19,17 @@ export class DeptosService
         return this.depto.find().exec();
     }
 
-    async crearDepto(input: DeptoDto): Promise<IDepto | ExceptionHandler>
+    async crearDepto(input: DeptoDto): Promise<IDepto>
     {
         await this.buscarDepto(input.nombre, input.centroGestor);
         const depto = new this.depto(input);
-        return depto.save();
+        try
+        {
+            return await depto.save();
+        } catch (e)
+        {
+            this.mongoErrorService.duplicadoMongo(e);
+        }
     }
 
     async actualizarDepto(input: DeptoDto): Promise<IDepto>

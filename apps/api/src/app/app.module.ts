@@ -6,14 +6,12 @@ import {PubSub} from 'graphql-subscriptions';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import config from '../config/config';
 import {AdminModule} from './admin/admin.module';
+import {AppService} from "./app.service";
 
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: ['.env', '.env.dev'],
-            load: [config],
-            expandVariables: true,
-            isGlobal: true,
+            envFilePath: ['.env', '.env.dev'], load: [config], expandVariables: true, isGlobal: true,
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
@@ -40,7 +38,7 @@ import {AdminModule} from './admin/admin.module';
         }),
         AdminModule
     ],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}],
+    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}]
 })
 export class AppModule
 {

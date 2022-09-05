@@ -24,7 +24,7 @@ export class DeptoDto implements IDepto
         // })
     nombre: string;
     @Field({nullable: true})
-    @Prop({unique: true})
+    @Prop()
     @IsNotEmpty({message: 'Es necesario asignar un centro gestor'})
     @Length(3, 3, {message: 'El centro gestor tiene que tener como minimo y maximo 3 caracteres'})
     @IsUppercase({message: 'El centro gestor debe estar en mayusculas'})
@@ -32,4 +32,4 @@ export class DeptoDto implements IDepto
 }
 
 export type DeptoType = DeptoDto & Document;
-export const DEPTO_SCHEMA = SchemaFactory.createForClass(DeptoDto);
+export const DEPTO_SCHEMA = SchemaFactory.createForClass(DeptoDto).index({centroGestor: 1}, {unique: true});

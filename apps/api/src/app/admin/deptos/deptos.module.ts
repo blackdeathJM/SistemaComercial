@@ -3,10 +3,11 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {DeptosResolver} from './deptos.resolver';
 import {DeptosService} from './deptos.service';
 import {DEPTO_SCHEMA, DeptoDto} from '@sistema-comercial/modelos/depto.dto';
+import {AppService} from '../../app.service';
 
 @Module({
     imports: [MongooseModule.forFeature([{name: DeptoDto.name, schema: DEPTO_SCHEMA}])],
-    providers: [DeptosResolver, DeptosService]
+    providers: [DeptosResolver, DeptosService, AppService]
 })
 export class DeptosModule
 {
