@@ -2,7 +2,7 @@ import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
-import { IDepto } from '@sistema-comercial/modelos/depto.interface';
+import {IDepto} from '@sistema-comercial/modelos/depto.interface';
 import {DeptoDto, DeptoType} from '@sistema-comercial/modelos/depto.dto';
 
 
@@ -28,6 +28,7 @@ export class DeptosService
 
     async actualizarDepto(input: DeptoDto): Promise<IDepto>
     {
+
         await this.buscarDepto(input.nombre, input.centroGestor);
 
         const buscarDepto = await this.depto.findByIdAndUpdate(new ObjectId(input._id));

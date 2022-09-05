@@ -13,7 +13,7 @@ export class DeptosResolver
     }
 
     @Query(() => [DeptoDto])
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     async deptos(): Promise<IDepto[]>
     {
         return this.deptosService.deptos();
