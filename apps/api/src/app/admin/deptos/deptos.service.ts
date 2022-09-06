@@ -1,4 +1,4 @@
-import {Injectable, NotAcceptableException} from '@nestjs/common';
+import {ConflictException, Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
@@ -34,12 +34,14 @@ export class DeptosService
 
     async actualizarDepto(input: DeptoDto): Promise<IDepto>
     {
+        try
+        {
+            return await this.depto.findByIdAndUpdate(new ObjectId(input._id), {...input}, {returnOriginal: false}).exec();
+        } catch (e)
+        {
+            throw new ConflictException({message: e.codeName});
+        }
 
-        await this.buscarDepto(input.nombre, input.centroGestor);
-
-        const buscarDepto = await this.depto.findByIdAndUpdate(new ObjectId(input._id));
-        Object.assign(buscarDepto, {...input});
-        return await buscarDepto.save();
     }
 
     async eliminarDepto(_id: string): Promise<IDepto>

@@ -8,9 +8,9 @@ import {DepartamentosGQL, EliminarDeptoGQL} from '#/libs/datos/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
 import {FormControl} from '@angular/forms';
-import {NgxToastService} from '#/libs/services/src';
 import {cloneDeep} from 'lodash-es';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
 @Component({
     selector: 'app-deptos-principal',

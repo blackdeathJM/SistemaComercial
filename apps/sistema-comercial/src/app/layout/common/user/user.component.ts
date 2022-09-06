@@ -6,7 +6,7 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 import {AuthService} from '@s-app/auth/auth.service';
 import {RolCambiadoGQL} from '#/libs/datos/src';
 import {TOKEN} from '@s-app/auth/const';
-import {NgxToastService} from '#/libs/services/src';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
 @Component({
     selector: 'user',

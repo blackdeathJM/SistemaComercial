@@ -6,12 +6,12 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {unionBy} from 'lodash-es';
-import {NgxToastService} from '#/libs/services/src';
 import {IEmpleado, IModificado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {IRol} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import moment from 'moment';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {ActualizarRolGQL} from '#/libs/datos/src';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
 @Component({
     selector: 'app-detalle-empleado',
