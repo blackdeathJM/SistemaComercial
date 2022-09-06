@@ -21,14 +21,12 @@ export class DeptosService
 
     async crearDepto(input: DeptoDto): Promise<IDepto>
     {
-        await this.buscarDepto(input.nombre, input.centroGestor);
-        const depto = new this.depto(input);
         try
         {
-            return await depto.save();
+            return await this.depto.create(input);
         } catch (e)
         {
-            this.mongoErrorService.duplicadoMongo(e);
+            throw new ConflictException({message: e});
         }
     }
 
