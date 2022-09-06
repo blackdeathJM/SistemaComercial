@@ -2,7 +2,7 @@ import {Field, Float, InputType, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {ICorreo, IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
-import {AuthDto} from './auth.dto';
+import {AuthDto} from './auth/auth.dto';
 
 @ObjectType('ModificadoType')
 @InputType('ModificadoInput')
@@ -127,5 +127,4 @@ export class EmpleadoDto implements IEmpleado
 }
 
 export type EmpleadoType = EmpleadoDto & Document;
-export const EMPLEADO_SCHEMA = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1},
-    {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});
+export const EMPLEADO_SCHEMA = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});

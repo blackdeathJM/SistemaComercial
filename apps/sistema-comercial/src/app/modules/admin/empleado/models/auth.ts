@@ -1,7 +1,7 @@
 
 import {compare, required} from '@rxweb/reactive-form-validators';
 import {sanitize, trim} from '@rxweb/sanitizers';
-import {IAuth, IRol} from '#/libs/models/src/lib/admin/empleado/auth.interface';
+import {IAuth, IRol} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 @sanitize
 export class Auth implements IAuth

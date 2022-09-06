@@ -2,10 +2,10 @@ import {Args, Context, Mutation, Resolver, Subscription} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
 import {HttpException, NotFoundException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
-import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
+import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth/auth.dto';
 import {EmpleadoDto, ModificadoDto} from '@sistema-comercial/modelos/empleado.dto';
-import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '@sistema-comercial/modelos/login.dto';
-import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
+import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '@sistema-comercial/modelos/auth/login.dto';
+import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth/auth.input.dto';
 import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
 import {PubSub} from 'graphql-subscriptions';
 

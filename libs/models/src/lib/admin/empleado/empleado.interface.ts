@@ -1,4 +1,4 @@
-import {IAuth} from './auth.interface';
+import {IAuth} from './auth/auth.interface';
 import {IDepto} from '../deptos/depto.interface';
 
 export interface IEmpleado

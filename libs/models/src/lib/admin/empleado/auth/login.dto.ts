@@ -1,7 +1,7 @@
 import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
-import {IDatosSesion} from '../empleado/auth.interface';
-import {AuthDto} from '../empleado/auth.dto';
+import {IDatosSesion} from './auth.interface';
+import {AuthDto} from './auth.dto';
 
 
 @ObjectType('DatosSesionType')

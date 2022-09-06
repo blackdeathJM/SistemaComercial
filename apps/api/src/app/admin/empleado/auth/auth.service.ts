@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
@@ -7,10 +7,10 @@ import {ObjectId} from 'bson';
 import {ROLES_POR_DEFECTO} from './rol.model';
 import {EmpleadoDto, EmpleadoType, ModificadoDto} from '@sistema-comercial/modelos/empleado.dto';
 import {IEmpleado, IModificado} from '@sistema-comercial/modelos/empleado.interface';
-import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth.dto';
-import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth.input.dto';
-import {ILoginRespuesta} from '@sistema-comercial/modelos/login.dto';
-import {IDatosSesion} from '@sistema-comercial/modelos/auth.interface';
+import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth/auth.dto';
+import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth/auth.input.dto';
+import {ILoginRespuesta} from '@sistema-comercial/modelos/auth/login.dto';
+import {IDatosSesion} from '@sistema-comercial/modelos/auth/auth.interface';
 
 @Injectable()
 export class AuthService
@@ -23,8 +23,6 @@ export class AuthService
 
     async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado | NotFoundException>
     {
-        // await this.buscarEmpleadoPorUsuario(auth.usuario);
-
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
         auth.rol = ROLES_POR_DEFECTO;
@@ -71,10 +69,9 @@ export class AuthService
 
     async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
     {
-        const empleado = await this.empleado.findByIdAndUpdate(_id,
-            {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
-                arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
-            });
+        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
+            arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
+        });
 
         if (!empleado)
         {
@@ -103,15 +100,5 @@ export class AuthService
             token: this.jwtService.sign(datosSesion),
             datosSesion
         };
-    }
-
-    async buscarEmpleadoPorUsuario(usuario: string): Promise<void>
-    {
-        const buscarEmpleado = await this.empleado.findOne({'auth.usuario': usuario}).exec();
-
-        if (buscarEmpleado)
-        {
-            throw new ConflictException({message: 'Mensaje de error'}, 'Conflicto con el usuario, ya existe');
-        }
     }
 }

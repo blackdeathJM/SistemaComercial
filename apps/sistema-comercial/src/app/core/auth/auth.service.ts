@@ -7,7 +7,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
 import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {Router} from '@angular/router';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
+import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 @Injectable({providedIn: 'root'})
 export class AuthService

@@ -6,7 +6,7 @@ import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/co
 import {Navigation} from '@s-app/core/navigation/navigation.types';
 import {NavigationService} from '@s-app/core/navigation/navigation.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth.interface';
+import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 @Component({
     selector: 'futuristic-layout',
