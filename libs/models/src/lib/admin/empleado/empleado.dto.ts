@@ -118,7 +118,7 @@ export class EmpleadoDto implements IEmpleado
     // @IsNotEmpty({message: 'Son necesarios los datos del IMSS'})
     // seguroSocial: SeguroSocialDto;
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
-    @Prop({type: Object})
+    @Prop({type: AuthDto})
     auth?: AuthDto;
     @Field({nullable: true})
     @Prop()
@@ -127,4 +127,5 @@ export class EmpleadoDto implements IEmpleado
 }
 
 export type EmpleadoType = EmpleadoDto & Document;
-export const EMPLEADO_SCHEMA = SchemaFactory.createForClass(EmpleadoDto);
+export const EMPLEADO_SCHEMA = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1},
+    {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});

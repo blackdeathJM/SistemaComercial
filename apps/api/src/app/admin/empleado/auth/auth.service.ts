@@ -23,8 +23,7 @@ export class AuthService
 
     async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado | NotFoundException>
     {
-        // Realizamos una busqueda para asegurarnos que no exista
-        await this.buscarEmpleadoPorUsuario(auth.usuario);
+        // await this.buscarEmpleadoPorUsuario(auth.usuario);
 
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);

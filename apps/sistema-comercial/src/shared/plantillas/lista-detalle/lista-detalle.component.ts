@@ -16,7 +16,6 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     drawerMode: 'side' | 'over';
-    elementoSeleccionado: any;
     _abriP: boolean = false;
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
 
@@ -37,7 +36,6 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
             console.log('opened', opened);
             if (!opened)
             {
-                this.elementoSeleccionado = null;
                 this.cdr.reattach();
             }
         });
