@@ -44,15 +44,12 @@ export class DeptosService
 
     async eliminarDepto(_id: string): Promise<IDepto>
     {
-        return await this.depto.findByIdAndDelete(new ObjectId(_id)).exec();
-    }
-
-    async buscarDepto(nombre: string, centroGestor: string): Promise<void | NotAcceptableException>
-    {
-        const buscarDepto = await this.depto.findOne({nombre, centroGestor}).exec();
-        if (buscarDepto)
+        try
         {
-            throw new NotAcceptableException('El documento tiene campos duplicados', 'Departamentos');
+            return await this.depto.findByIdAndDelete(new ObjectId(_id)).exec();
+        } catch (e)
+        {
+            throw new ConflictException({message: e.codeName})
         }
     }
 

@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
@@ -38,6 +38,7 @@ export class AuthService
     async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
+
         const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(datos._id),
             {$set: {'auth.contrasena': nvaContrasena}}, {returnOriginal: false}).exec();
         if (!empleado)
@@ -83,7 +84,13 @@ export class AuthService
 
     async modificadoPor(_id: string, modificadoPor: IModificado): Promise<void>
     {
-        await this.empleado.findByIdAndUpdate(_id, {$push: {modificadoPor}}).exec();
+        try
+        {
+            await this.empleado.findByIdAndUpdate(_id, {$push: {modificadoPor}}).exec();
+        } catch (e)
+        {
+            throw new ConflictException({message: e.codeName});
+        }
     }
 
     login(empleado: any): ILoginRespuesta

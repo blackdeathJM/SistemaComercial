@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
@@ -19,7 +19,13 @@ export class EmpleadoService
 
     async crearEmpleado(datosEmpleado: IEmpleado): Promise<IEmpleado>
     {
-        return this.empleado.create(datosEmpleado);
+        try
+        {
+            return await this.empleado.create(datosEmpleado);
+        } catch (e)
+        {
+            throw new ConflictException({message: e});
+        }
     }
 
     async buscarEmpleadoPorId(_id: string): Promise<IEmpleado | NotFoundException>
