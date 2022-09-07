@@ -1,26 +1,35 @@
 import {ConflictException, Injectable} from '@nestjs/common';
-import {IDocumentos} from '@sistema-comercial/modelos/documentos.interface';
 import {InjectModel} from '@nestjs/mongoose';
-import {DocumentosDto, DocumentoType} from '@sistema-comercial/modelos/documentos.dto';
+import {DocumentoDto, DocumentoType} from '@sistema-comercial/modelos/documento.Dto';
 import {Model} from 'mongoose';
 import {DocAnoDto} from '@sistema-comercial/modelos/documentos.types';
 
 @Injectable()
 export class DocumentosService
 {
-    constructor(@InjectModel(DocumentosDto.name) private documento: Model<DocumentoType>)
+    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>)
     {
     }
 
-    async documentosPorAno(ano: DocAnoDto): Promise<IDocumentos[]>
+    async documentosPorAno(datos: DocAnoDto): Promise<DocumentoDto[]>
     {
         try
         {
-            console.log('recibiendo dato del ano', ano.ano);
-            return await this.documento.find({...ano}).exec();
+            return await this.documento.find({...datos}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e});
+        }
+    }
+
+    async regDoc(datos: DocumentoDto): Promise<DocumentoDto>
+    {
+        try
+        {
+            return await this.documento.create(datos);
+        } catch (e)
+        {
+            throw new ConflictException({message: e.codeName});
         }
     }
 }

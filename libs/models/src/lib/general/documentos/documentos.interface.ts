@@ -1,4 +1,4 @@
-export interface IDocumentos
+export interface IDocumento
 {
     _id: string;
     identificadorDoc: string;

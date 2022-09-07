@@ -24,7 +24,7 @@ export class EmpleadoService
             return await this.empleado.create(datosEmpleado);
         } catch (e)
         {
-            throw new ConflictException({message: e});
+            throw new ConflictException({message: e.codeName});
         }
     }
 

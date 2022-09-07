@@ -1,13 +1,13 @@
-import {IDocumentos} from './documentos.interface';
+import {IDocumento} from './documentos.interface';
 import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, Length} from 'class-validator';
 import {Document} from 'mongoose';
 
-@ObjectType('DocumentosType')
-@InputType('DocumentosInput')
+@ObjectType('DocumentoType')
+@InputType('DocumentoInput')
 @Schema({collection: 'Documentos'})
-export class DocumentosDto implements IDocumentos
+export class DocumentoDto implements IDocumento
 {
     @Field(() => ID, {nullable: true})
     @Prop()
@@ -18,7 +18,6 @@ export class DocumentosDto implements IDocumentos
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El año no puede estar vacio'})
-    // @Length(2021, 2050, {message: 'El valor establecido no es valido debe estar entre el 2021 y 2050'})
     ano: number;
     @Field({nullable: true})
     @Prop()
@@ -76,5 +75,5 @@ export class DocumentosDto implements IDocumentos
     usuarioFolio: string;
 }
 
-export type DocumentoType = DocumentosDto & Document;
-export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentosDto);
+export type DocumentoType = DocumentoDto & Document;
+export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentoDto);

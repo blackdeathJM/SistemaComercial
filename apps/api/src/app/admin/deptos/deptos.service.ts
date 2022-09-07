@@ -19,14 +19,14 @@ export class DeptosService
         return this.depto.find().exec();
     }
 
-    async crearDepto(input: DeptoDto): Promise<IDepto>
+    async crearDepto(input: DeptoDto): Promise<DeptoDto>
     {
         try
         {
             return await this.depto.create(input);
         } catch (e)
         {
-            throw new ConflictException({message: e});
+            throw new ConflictException({message: e.codeName});
         }
     }
 

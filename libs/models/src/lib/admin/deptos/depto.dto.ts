@@ -3,7 +3,6 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Document} from 'mongoose';
 import {IsNotEmpty, IsUppercase, Length} from 'class-validator';
 import {IDepto} from './depto.interface';
-import {Transform} from 'class-transformer';
 
 // definimos el esquema para la base de datos y el tipo para la generacion del dsl de graphql en una sola clase
 @ObjectType('DeptoType')
@@ -16,12 +15,6 @@ export class DeptoDto implements IDepto
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre del departamento es requerido'})
-        // @Transform(({value}) =>
-        // {
-        //     const resp = value + ' Que pedo';
-        //     console.log('input', resp);
-        //     return resp;
-        // })
     nombre: string;
     @Field({nullable: true})
     @Prop()
@@ -33,3 +26,9 @@ export class DeptoDto implements IDepto
 
 export type DeptoType = DeptoDto & Document;
 export const SCHEMA_DEPTO = SchemaFactory.createForClass(DeptoDto).index({centroGestor: 1}, {unique: true});
+// @Transform(({value}) =>
+// {
+//     const resp = value + ' Que pedo';
+//     console.log('input', resp);
+//     return resp;
+// })

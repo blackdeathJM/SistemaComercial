@@ -62,7 +62,7 @@ type LoginRespuestaType {
   datosSesion: DatosSesionType!
 }
 
-type DocumentosType {
+type DocumentoType {
   _id: ID
   acuseUrl: String
   ano: Int
@@ -125,7 +125,7 @@ input DeptoInput {
   centroGestor: String
 }
 
-input DocumentosInput {
+input DocumentoInput {
   _id: ID
   acuseUrl: String = null
   ano: Int
@@ -149,7 +149,7 @@ input DocumentosInput {
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
-  documentosPorAno(ano: DocAnoInput!): [DocumentosType!]!
+  documentosPorAno(ano: DocAnoInput!): [DocumentoType!]!
 }
 
 input DocAnoInput {
