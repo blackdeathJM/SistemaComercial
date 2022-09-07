@@ -7,7 +7,6 @@ import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
-import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
 
 @Component({
     selector: 'app-empleado',
@@ -23,7 +22,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy
     subscripciones: Subscription = new Subscription();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService, private empleadosGQL: EmpleadosGQL, private listaDetalleComponent: ListaDetalleComponent)
+                private fuseMediaWatcherService: FuseMediaWatcherService, private empleadosGQL: EmpleadosGQL)
     {
     }
 
