@@ -22,7 +22,7 @@ import {GeneralModule} from './general/general.module';
             },
             autoSchemaFile: 'apps/api/schema.graphql',
             cors: {origin: '*', credentials: false},
-            buildSchemaOptions: {dateScalarMode: 'isoDate'},
+            buildSchemaOptions: {dateScalarMode: 'timestamp'},
             introspection: true,
             context: ({req}) => ({req}),
         }),

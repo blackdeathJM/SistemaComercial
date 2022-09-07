@@ -1,7 +1,6 @@
 import {AfterContentChecked, Component, EventEmitter, Output} from '@angular/core';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {DeptoDto, DeptoType} from '#/libs/models/src/lib/admin/deptos/depto.dto';
 
 @Component({
     selector: 'app-lista-deptos',
@@ -12,7 +11,7 @@ export class ListaDeptosComponent implements AfterContentChecked
 {
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
     @Output() eventoEliminar: EventEmitter<any> = new EventEmitter<any>();
-    deptos: DeptoDto[];
+    deptos: IDepto[];
 
     ngAfterContentChecked(): void
     {

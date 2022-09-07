@@ -210,10 +210,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/cdk@^14.2.0":
-  version "14.2.0"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-14.2.0.tgz#27d0b307b1e9361fff21199001ac19f9b107767c"
-  integrity sha512-rAeQXUSbOJSKLVizueRKoZmRb0An5qJUMigsF8wJwJjySUIcJ8uSIOMV+G1rxkvxVVY0HRAVi2rIkJbeq3+WKQ==
+"@angular/cdk@^14.2.1":
+  version "14.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-14.2.1.tgz#3035bb8481ff75b41a4a1e54fb5d882ef98c0b1b"
+  integrity sha512-saLFOZeyYQ6ELvPYqePsC8yXzDYjrCXGKGLtwAG/1mUlXcVTC0V1c3SabU4JR7Z+Zo1tOmzkWxuUkrw7uvaJHA==
   dependencies:
     tslib "^2.3.0"
   optionalDependencies:
@@ -294,17 +294,17 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-14.2.0.tgz#bbbdadd10a6e662c5b2221e293ac59481de9d5a3"
   integrity sha512-8CdmymRVMEkMa1VhQc7gfUWFMzKEIuLEreGlhMewQoL8y6bB2dYHVfnju/dAA4PooVLZcVuZDeHy+CGzK9snmA==
 
-"@angular/material-moment-adapter@14.2.0":
-  version "14.2.0"
-  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-14.2.0.tgz#ea55d596106c5f72573ef4ec1754fa93b5d6df80"
-  integrity sha512-kVihyL5CClA3wrNbvOLtonRf3GuyxzPZ9XAuhJj1EdQ1KZPjB1EBj45VJqX/2+QMk1NiNA4ipEMDuyK6oI1pDA==
+"@angular/material-moment-adapter@14.2.1":
+  version "14.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-14.2.1.tgz#a5defe20430a30ba122df6b0e874ae4a9081e7ab"
+  integrity sha512-jw18/0pae7xvVRT8FNzrKhTUjIwqS0IeTu9XZ4+gnUrp5ckSgEPs6CwayEVXin7+d2E56Ek95Zg3dVxoLf7Dvg==
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material@^14.2.0":
-  version "14.2.0"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-14.2.0.tgz#915a39bd7c6434ac2465964abb93cecd6034e5d7"
-  integrity sha512-Lh7Ccc6zi5ClFnr5w1ZFVHb5QnOye1si0xWvS5nMQG3e0OPFAt0oOhjILFIBMK7n2jq4kv6erqNX2fLkyRvTQw==
+"@angular/material@^14.2.1":
+  version "14.2.1"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-14.2.1.tgz#841d1100a1a64ae258c76d206ba9417f041a74a2"
+  integrity sha512-e7DkKJTuqrSpKPhxahrqkZt6AeU5ld5/aSeCamq2dcdqfZ8otmgiajzN0cXZGwSCT2Lth6c+QV3yn8ufTJQpTw==
   dependencies:
     tslib "^2.3.0"
 
@@ -14800,10 +14800,10 @@ swap-case@^2.0.2:
   dependencies:
     tslib "^2.0.3"
 
-sweetalert2@^11.4.31:
-  version "11.4.31"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.31.tgz#12b2655e195d51e8a199e3236ef9d9e5e4f71b22"
-  integrity sha512-h5nEP8+q9qBx0O0c6Py3Lpgkq3j+AjJ/YUdQmuZwf+pR9L1TJxz9BU23j6GO9Jfr8hnTIuMJWFbUK302fc8IBQ==
+sweetalert2@^11.4.32:
+  version "11.4.32"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.32.tgz#c5dd0db7e567d56f25a7d9776653ad3b13164258"
+  integrity sha512-fcXWPzWjqYoLqlfPLL4GHpZDZr4Lm7opkaADKAD1LDM4KHJ5ZHN/8/Les5HWP7+yl+0mrqHHkbsSxjXdvDHHlg==
 
 symbol-observable@4.0.0, symbol-observable@^4.0.0:
   version "4.0.0"

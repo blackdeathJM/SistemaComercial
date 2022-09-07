@@ -28,8 +28,8 @@ type EmpleadoType {
   activo: Boolean!
   calle: String
   colonia: String
-  fechaBaja: DateTime
-  fechaIngreso: DateTime
+  fechaBaja: Timestamp
+  fechaIngreso: Timestamp
   modificadoPor: [ModificadoType!]
   nombreCompleto: String
   auth: AuthType
@@ -39,9 +39,9 @@ type EmpleadoType {
 }
 
 """
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
-scalar DateTime
+scalar Timestamp
 
 type DeptoType {
   _id: ID
@@ -73,7 +73,7 @@ type DocumentoType {
   enviadoPor: String
   esInterno: Boolean
   fechaLimiteEntrega: String
-  fechaRecepcion: String
+  fechaRecepcion: Int
   fechaTerminado: String
   folio: String
   identificadorDoc: String
@@ -81,6 +81,7 @@ type DocumentoType {
   ref: [String!]
   tipoDoc: String
   usuarioFolio: String
+  usuarios: [String!]
 }
 
 input AuthInput {
@@ -109,8 +110,8 @@ input EmpleadoInput {
   activo: Boolean = false
   calle: String
   colonia: String
-  fechaBaja: DateTime
-  fechaIngreso: DateTime
+  fechaBaja: Timestamp
+  fechaIngreso: Timestamp
   modificadoPor: [ModificadoInput!] = []
   nombreCompleto: String
   auth: AuthInput = null
@@ -136,14 +137,15 @@ input DocumentoInput {
   enviadoPor: String
   esInterno: Boolean = false
   fechaLimiteEntrega: String
-  fechaRecepcion: String
+  fechaRecepcion: Int
   fechaTerminado: String
   folio: String = null
   identificadorDoc: String
   proceso: String
-  ref: [String!]
+  ref: [String!] = null
   tipoDoc: String
   usuarioFolio: String = null
+  usuarios: [String!]
 }
 
 type Query {
@@ -165,6 +167,7 @@ type Mutation {
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
   actualizarRol(_id: String!, rol: RolInput!, modificadoPor: ModificadoInput!): EmpleadoType!
+  regDoc(datos: DocumentoInput!): DocumentoType!
 }
 
 input CambioContrasenaInput {

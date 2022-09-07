@@ -10,7 +10,7 @@ export interface IDocumento
     asunto: string;
     docUrl: string;
     acuseUrl: string;
-    fechaRecepcion: string;
+    fechaRecepcion: number;
     fechaLimiteEntrega: string;
     fechaTerminado: string;
     proceso: 'pendiente' | 'terminado';
@@ -18,5 +18,6 @@ export interface IDocumento
     enviadoPor: string;
     ano: number;
     ref: string[];
+    usuarios: string[];
 }
 
