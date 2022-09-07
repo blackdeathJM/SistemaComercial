@@ -127,4 +127,4 @@ export class EmpleadoDto implements IEmpleado
 }
 
 export type EmpleadoType = EmpleadoDto & Document;
-export const EMPLEADO_SCHEMA = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});
+export const SCHEMA_EMPLEADO = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});

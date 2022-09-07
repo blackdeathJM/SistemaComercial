@@ -32,4 +32,4 @@ export class DeptoDto implements IDepto
 }
 
 export type DeptoType = DeptoDto & Document;
-export const DEPTO_SCHEMA = SchemaFactory.createForClass(DeptoDto).index({centroGestor: 1}, {unique: true});
+export const SCHEMA_DEPTO = SchemaFactory.createForClass(DeptoDto).index({centroGestor: 1}, {unique: true});

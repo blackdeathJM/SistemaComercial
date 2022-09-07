@@ -1,11 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import {FuseConfirmationModule} from './services/confirmation';
-import {FuseLoadingModule} from './services/loading';
-import {FuseMediaWatcherModule} from './services/media-watcher';
-import {FuseSplashScreenModule} from './services/splash-screen';
-import {FuseUtilsModule} from './services/utils';
+import {FuseConfirmationModule} from '@s-fuse/confirmation';
+import {FuseLoadingModule} from '@s-fuse/loading';
+import {FuseMediaWatcherModule} from '@s-fuse/media-watcher';
+import {FuseSplashScreenModule} from '@s-fuse/splash-screen';
+import {FuseUtilsModule} from '@s-fuse/utils';
 
 @NgModule({
     imports  : [

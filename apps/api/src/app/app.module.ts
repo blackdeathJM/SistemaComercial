@@ -6,7 +6,7 @@ import {PubSub} from 'graphql-subscriptions';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import config from '../config/config';
 import {AdminModule} from './admin/admin.module';
-import {AppService} from "./app.service";
+import {GeneralModule} from './general/general.module';
 
 @Module({
     imports: [
@@ -36,7 +36,8 @@ import {AppService} from "./app.service";
                 }
             )
         }),
-        AdminModule
+        AdminModule,
+        GeneralModule
     ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}]
 })

@@ -1,7 +1,8 @@
 import {IDocumentos} from './documentos.interface';
 import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
-import {Prop, Schema} from '@nestjs/mongoose';
-import {IsNotEmpty} from 'class-validator';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import {IsNotEmpty, Length} from 'class-validator';
+import {Document} from 'mongoose';
 
 @ObjectType('DocumentosType')
 @InputType('DocumentosInput')
@@ -10,13 +11,14 @@ export class DocumentosDto implements IDocumentos
 {
     @Field(() => ID, {nullable: true})
     @Prop()
-    @IsNotEmpty({message: 'El id es necesario'})
     _id: string;
     @Field({nullable: true, defaultValue: null})
     @Prop()
     acuseUrl: string;
     @Field(() => Int, {nullable: true})
     @Prop()
+    @IsNotEmpty({message: 'El año no puede estar vacio'})
+    @Length(2021, 2050, {message: 'El valor establecido no es valido debe estar entre el 2021 y 2050'})
     ano: number;
     @Field({nullable: true})
     @Prop()
@@ -50,7 +52,6 @@ export class DocumentosDto implements IDocumentos
     fechaRecepcion: string;
     @Field({nullable: true})
     @Prop()
-    @IsNotEmpty({message: 'El asunto la fecha de terminado'})
     fechaTerminado: string;
     @Field({nullable: true, defaultValue: true})
     @Prop()
@@ -73,5 +74,7 @@ export class DocumentosDto implements IDocumentos
     @Field({nullable: true, defaultValue: null})
     @Prop()
     usuarioFolio: string;
-
 }
+
+export type DocumentoType = DocumentosDto & Document;
+export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentosDto);

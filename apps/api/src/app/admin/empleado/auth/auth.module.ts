@@ -6,12 +6,12 @@ import {AuthResolver} from './auth.resolver';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {LocalStrategy} from './strategy/local.strategy';
 import {JwtStrategy} from './strategy/jwt.strategy';
-import {EMPLEADO_SCHEMA, EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
+import {SCHEMA_EMPLEADO, EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
 
 @Module({
     imports:
         [
-            MongooseModule.forFeature([{name: EmpleadoDto.name, schema: EMPLEADO_SCHEMA}]),
+            MongooseModule.forFeature([{name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}]),
             JwtModule.registerAsync({
                 imports: [ConfigModule],
                 inject:[ConfigService],
