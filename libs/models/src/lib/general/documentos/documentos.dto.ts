@@ -18,7 +18,7 @@ export class DocumentosDto implements IDocumentos
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El año no puede estar vacio'})
-    @Length(2021, 2050, {message: 'El valor establecido no es valido debe estar entre el 2021 y 2050'})
+    // @Length(2021, 2050, {message: 'El valor establecido no es valido debe estar entre el 2021 y 2050'})
     ano: number;
     @Field({nullable: true})
     @Prop()
@@ -53,7 +53,7 @@ export class DocumentosDto implements IDocumentos
     @Field({nullable: true})
     @Prop()
     fechaTerminado: string;
-    @Field({nullable: true, defaultValue: true})
+    @Field({nullable: true, defaultValue: null})
     @Prop()
     folio: string;
     @Field({nullable: true})

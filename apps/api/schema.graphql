@@ -62,6 +62,27 @@ type LoginRespuestaType {
   datosSesion: DatosSesionType!
 }
 
+type DocumentosType {
+  _id: ID
+  acuseUrl: String
+  ano: Int
+  asunto: String
+  comentario: String
+  dependencia: String
+  docUrl: String
+  enviadoPor: String
+  esInterno: Boolean
+  fechaLimiteEntrega: String
+  fechaRecepcion: String
+  fechaTerminado: String
+  folio: String
+  identificadorDoc: String
+  proceso: String
+  ref: [String!]
+  tipoDoc: String
+  usuarioFolio: String
+}
+
 input AuthInput {
   contrasena: String
   usuario: String
@@ -104,9 +125,35 @@ input DeptoInput {
   centroGestor: String
 }
 
+input DocumentosInput {
+  _id: ID
+  acuseUrl: String = null
+  ano: Int
+  asunto: String
+  comentario: String
+  dependencia: String
+  docUrl: String
+  enviadoPor: String
+  esInterno: Boolean = false
+  fechaLimiteEntrega: String
+  fechaRecepcion: String
+  fechaTerminado: String
+  folio: String = null
+  identificadorDoc: String
+  proceso: String
+  ref: [String!]
+  tipoDoc: String
+  usuarioFolio: String = null
+}
+
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
+  documentosPorAno(ano: DocAnoInput!): [DocumentosType!]!
+}
+
+input DocAnoInput {
+  ano: Int
 }
 
 type Mutation {

@@ -3,7 +3,7 @@ import {IDocumentos} from '@sistema-comercial/modelos/documentos.interface';
 import {InjectModel} from '@nestjs/mongoose';
 import {DocumentosDto, DocumentoType} from '@sistema-comercial/modelos/documentos.dto';
 import {Model} from 'mongoose';
-import {DocAnoInput} from '@sistema-comercial/modelos/documentos.types';
+import {DocAnoDto} from '@sistema-comercial/modelos/documentos.types';
 
 @Injectable()
 export class DocumentosService
@@ -12,11 +12,12 @@ export class DocumentosService
     {
     }
 
-    async documentosPorAno(ano: DocAnoInput): Promise<IDocumentos[]>
+    async documentosPorAno(ano: DocAnoDto): Promise<IDocumentos[]>
     {
         try
         {
-            return await this.documento.find({ano}).exec();
+            console.log('recibiendo dato del ano', ano.ano);
+            return await this.documento.find({...ano}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e});
