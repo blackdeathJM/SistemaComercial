@@ -1,0 +1,18 @@
+fragment fragEmpleado on EmpleadoType
+{
+    _id
+    nombreCompleto
+    avatar
+    activo
+    calle
+    colonia
+    fechaBaja
+    fechaIngreso
+    deptoId
+}
+
+fragment fragModificadoPor on ModificadoType
+{
+    usuario
+    fecha
+}

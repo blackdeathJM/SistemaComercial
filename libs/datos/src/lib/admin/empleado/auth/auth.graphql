@@ -1,0 +1,63 @@
+mutation asignarAuth($_id: String!, $auth: AuthInput!)
+{
+    asignarAuth(_id: $_id, auth: $auth)
+    {
+        ...fragEmpleado
+        auth
+        {
+            ...fragAuth
+        }
+        deptoEmpleado
+        {
+            ...fragDeptos
+        }
+    }
+}
+mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!)
+{
+    actualizarContrasenaAdmin(datos: $datos)
+    {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}
+
+mutation actualizarRol($_id: String!, $rol: RolInput!, $modificadoPor: ModificadoInput!)
+{
+    actualizarRol(_id: $_id, rol: $rol, modificadoPor: $modificadoPor)
+    {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}
+subscription rolCambiado($_id: String!)
+{
+    rolCambiado(_id: $_id)
+    {
+        token
+        datosSesion {
+            ...fragDatosSesion
+        }
+    }
+}
+
+mutation login($login: LoginInput!)
+{
+    login(login: $login)
+    {
+        token
+        datosSesion {
+            ...fragDatosSesion
+        }
+    }
+}

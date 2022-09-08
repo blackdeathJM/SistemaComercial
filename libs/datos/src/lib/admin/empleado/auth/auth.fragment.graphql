@@ -1,0 +1,26 @@
+fragment fragAuth on AuthType
+{
+    usuario
+    activo
+    rol {
+        ...fragRol
+    }
+}
+
+fragment fragRol on RolType
+{
+    id
+    tipoAcceso
+    oculto
+}
+
+fragment fragDatosSesion on DatosSesionType
+{
+    _id
+    nombreCompleto
+    avatar
+    activo
+    auth {
+        ...fragAuth
+    }
+}

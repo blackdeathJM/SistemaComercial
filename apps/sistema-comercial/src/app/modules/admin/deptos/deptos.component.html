@@ -1,0 +1,28 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <div class="flex flex-col">
+        <div class="flex-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+                <!-- Title -->
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Departamentos</div>
+                <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+                    <!-- Search -->
+                    <div class="flex-auto">
+                        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                            <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar departamento'">
+                        </mat-form-field>
+                    </div>
+                    <!-- Add contact button -->
+                    <button class="ml-4" mat-flat-button [color]="'primary'" (click)="registro()">
+                        <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                        <span class="ml-2 mr-1">Agregar</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Contacts list -->
+            <app-lista-deptos (eventoEditar)="editar($event)" (eventoEliminar)="eliminar($event)"></app-lista-deptos>
+        </div>
+    </div>
+</div>
+

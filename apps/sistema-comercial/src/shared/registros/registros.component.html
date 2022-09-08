@@ -1,0 +1,19 @@
+<mat-action-row class="flex flex-row gap-3">
+    <button mat-flat-button color="warn" type="button" class="grow" (click)="cancelar()">
+        <mat-icon class="icon-size-5 mr-2">cancel</mat-icon>
+        Cancelar
+    </button>
+    <button mat-flat-button color="primary" type="button" class="grow" (click)="aceptar()" [disabled]="_deshabilitar">
+        <ng-container *ngIf="!_cargando; else cargando">
+            <mat-icon class="icon-size-5 mr-2">save</mat-icon>
+            Aceptar
+        </ng-container>
+    </button>
+</mat-action-row>
+
+<ng-template #cargando>
+    <mat-icon class="mr-2">
+        <mat-progress-spinner mode="indeterminate" diameter="20" color="accent"></mat-progress-spinner>
+    </mat-icon>
+    Procesando...
+</ng-template>

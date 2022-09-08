@@ -1,0 +1,39 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2017",
+        "module": "es2020",
+        "lib": ["es2020", "dom", "esnext.asynciterable"],
+        "removeComments": true,
+        "paths": {
+            "@sistema-comercial/apollo-config": [
+                "libs/apollo-config/src/index.ts"
+            ],
+            "@sistema-comercial/datos": ["libs/datos/src/index.ts"],
+            "@sistema-comercial/modelos/*": [
+                "libs/models/src/lib/admin/deptos/*",
+                "libs/models/src/lib/admin/empleado/*",
+                "libs/models/src/lib/general/documentos/*"
+            ],
+            "@sistema-comercial/services/*": [
+                "libs/services/src/lib/pipes/*",
+                "libs/services/src/lib/services/*"
+            ]
+        },
+        "rootDir": "."
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false
+    },
+    "exclude": ["node_modules", "tmp"]
+}

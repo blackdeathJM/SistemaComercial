@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json.schemastore.org/nest-cli",
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "apps",
+    "compilerOptions": {
+        "plugins": [
+            {
+                "name": "@nestjs/graphql",
+                "options": {
+                    "typeFileNameSuffix": [
+                        ".input.ts",
+                        ".model.ts",
+                        ".dto.ts"
+                    ],
+                    "introspectComments": true
+                }
+            }
+        ]
+    }
+}

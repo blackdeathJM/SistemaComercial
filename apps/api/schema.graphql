@@ -1,0 +1,185 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthType {
+  contrasena: String
+  usuario: String
+  rol: [RolType!]!
+  activo: Boolean
+  estatus: String
+}
+
+type RolType {
+  id: String
+  tipoAcceso: String
+  oculto: Boolean
+}
+
+type ModificadoType {
+  accion: String
+  fecha: String
+  usuario: String
+}
+
+type EmpleadoType {
+  _id: String
+  avatar: String
+  activo: Boolean!
+  calle: String
+  colonia: String
+  fechaBaja: Timestamp
+  fechaIngreso: Timestamp
+  modificadoPor: [ModificadoType!]
+  nombreCompleto: String
+  auth: AuthType
+  deptoId: String
+  deptoEmpleado: DeptoType
+  buscarEmpleadoPorId(_id: String!): EmpleadoType
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type DeptoType {
+  _id: ID
+  nombre: String
+  centroGestor: String
+}
+
+type DatosSesionType {
+  _id: ID!
+  activo: Boolean!
+  auth: AuthType!
+  avatar: String
+  nombreCompleto: String!
+}
+
+type LoginRespuestaType {
+  token: String!
+  datosSesion: DatosSesionType!
+}
+
+type DocumentoType {
+  _id: ID
+  acuseUrl: String
+  ano: Int
+  asunto: String
+  comentario: String
+  dependencia: String
+  docUrl: String
+  enviadoPor: String
+  esInterno: Boolean
+  fechaLimiteEntrega: String
+  fechaRecepcion: Int
+  fechaTerminado: String
+  folio: String
+  identificadorDoc: String
+  proceso: String
+  ref: [String!]
+  tipoDoc: String
+  usuarioFolio: String
+  usuarios: [String!]
+}
+
+input AuthInput {
+  contrasena: String
+  usuario: String
+  rol: [RolInput!] = null
+  activo: Boolean = true
+  estatus: String = "en-linea"
+}
+
+input RolInput {
+  id: String
+  tipoAcceso: String
+  oculto: Boolean = true
+}
+
+input ModificadoInput {
+  accion: String
+  fecha: String
+  usuario: String
+}
+
+input EmpleadoInput {
+  _id: String
+  avatar: String = null
+  activo: Boolean = false
+  calle: String
+  colonia: String
+  fechaBaja: Timestamp
+  fechaIngreso: Timestamp
+  modificadoPor: [ModificadoInput!] = []
+  nombreCompleto: String
+  auth: AuthInput = null
+  deptoId: String
+  deptoEmpleado: DeptoInput
+  buscarEmpleadoPorId: EmpleadoInput
+}
+
+input DeptoInput {
+  _id: ID
+  nombre: String
+  centroGestor: String
+}
+
+input DocumentoInput {
+  _id: ID
+  acuseUrl: String = null
+  ano: Int
+  asunto: String
+  comentario: String
+  dependencia: String
+  docUrl: String
+  enviadoPor: String
+  esInterno: Boolean = false
+  fechaLimiteEntrega: String
+  fechaRecepcion: Int
+  fechaTerminado: String
+  folio: String = null
+  identificadorDoc: String
+  proceso: String
+  ref: [String!] = null
+  tipoDoc: String
+  usuarioFolio: String = null
+  usuarios: [String!]
+}
+
+type Query {
+  deptos: [DeptoType!]!
+  empleados: [EmpleadoType!]!
+  documentosPorAno(ano: DocAnoInput!): [DocumentoType!]!
+}
+
+input DocAnoInput {
+  ano: Int
+}
+
+type Mutation {
+  crearDepto(input: DeptoInput!): DeptoType!
+  actualizarDepto(input: DeptoInput!): DeptoType!
+  eliminarDepto(_id: String!): DeptoType!
+  crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
+  asignarAuth(_id: String!, auth: AuthInput!): EmpleadoType!
+  actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
+  login(login: LoginInput!): LoginRespuestaType
+  actualizarRol(_id: String!, rol: RolInput!, modificadoPor: ModificadoInput!): EmpleadoType!
+  regDoc(datos: DocumentoInput!): DocumentoType!
+}
+
+input CambioContrasenaInput {
+  _id: ID
+  contrasena: String
+}
+
+input LoginInput {
+  usuario: String
+  contrasena: String
+}
+
+type Subscription {
+  rolCambiado(_id: String!): LoginRespuestaType!
+}

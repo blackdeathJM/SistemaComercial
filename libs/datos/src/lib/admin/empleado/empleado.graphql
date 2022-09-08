@@ -1,0 +1,15 @@
+query empleados
+{
+    empleados
+    {
+        ...fragEmpleado
+        auth
+        {
+            ...fragAuth
+        }
+        deptoEmpleado
+        {
+            ...fragDeptos
+        }
+    }
+}

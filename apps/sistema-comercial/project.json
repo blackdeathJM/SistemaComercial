@@ -1,0 +1,132 @@
+{
+    "projectType": "application",
+    "sourceRoot": "apps/sistema-comercial/src",
+    "prefix": "app",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/sistema-comercial",
+                "index": "apps/sistema-comercial/src/index.html",
+                "main": "apps/sistema-comercial/src/main.ts",
+                "polyfills": "apps/sistema-comercial/src/polyfills.ts",
+                "tsConfig": "apps/sistema-comercial/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "allowedCommonJsDependencies": [
+                    "apexcharts",
+                    "highlight.js",
+                    "crypto-js/enc-utf8",
+                    "crypto-js/hmac-sha256",
+                    "crypto-js/enc-base64",
+                    "subscriptions-transport-ws",
+                    "flat",
+                    "moment",
+                    "sweetalert2"
+                ],
+                "assets": [
+                    "apps/sistema-comercial/src/favicon-16x16.png",
+                    "apps/sistema-comercial/src/favicon-32x32.png",
+                    "apps/sistema-comercial/src/assets",
+                    {
+                        "glob": "_redirects",
+                        "input": "apps/sistema-comercial/src",
+                        "output": "/"
+                    }
+                ],
+                "stylePreprocessorOptions": {
+                    "includePaths": ["apps/sistema-comercial/src/@fuse/styles"]
+                },
+                "styles": [
+                    "apps/sistema-comercial/src/@fuse/styles/tailwind.scss",
+                    "apps/sistema-comercial/src/@fuse/styles/themes.scss",
+                    "apps/sistema-comercial/src/styles/vendors.scss",
+                    "apps/sistema-comercial/src/@fuse/styles/main.scss",
+                    "node_modules/ngx-toastr/toastr.css",
+                    "apps/sistema-comercial/src/styles/styles.scss",
+                    "apps/sistema-comercial/src/styles/tailwind.scss"
+                ],
+                "scripts": []
+            },
+            "configurations": {
+                "production": {
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "3mb",
+                            "maximumError": "5mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "75kb",
+                            "maximumError": "90kb"
+                        }
+                    ],
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/sistema-comercial/src/environments/environment.ts",
+                            "with": "apps/sistema-comercial/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "outputHashing": "all"
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+                "production": {
+                    "browserTarget": "sistema-comercial:build:production"
+                },
+                "development": {
+                    "browserTarget": "sistema-comercial:build:development"
+                }
+            },
+            "defaultConfiguration": "development",
+            "options": {
+                "proxyConfig": "apps/sistema-comercial/proxy.conf.json"
+            }
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "sistema-comercial:build"
+            }
+        },
+        "test": {
+            "executor": "@angular-devkit/build-angular:karma",
+            "options": {
+                "main": "apps/sistema-comercial/src/test.ts",
+                "polyfills": "apps/sistema-comercial/src/polyfills.ts",
+                "tsConfig": "apps/sistema-comercial/tsconfig.spec.json",
+                "karmaConfig": "apps/sistema-comercial/karma.conf.js",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                    "apps/sistema-comercial/src/favicon-16x16.png",
+                    "apps/sistema-comercial/src/favicon-32x32.png",
+                    "apps/sistema-comercial/src/assets"
+                ],
+                "styles": ["apps/sistema-comercial/src/styles/styles.scss"],
+                "scripts": []
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "apps/sistema-comercial/**/*.ts",
+                    "apps/sistema-comercial/**/*.html"
+                ]
+            }
+        }
+    }
+}
