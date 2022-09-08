@@ -1,0 +1,22 @@
+fragment fragDoc on DocumentoType
+{
+    _id
+    identificadorDoc
+    folio
+    tipoDoc
+    esInterno
+    dependencia
+    comentario
+    asunto
+    docUrl
+    acuseUrl
+    fechaRecepcion
+    fechaLimiteEntrega
+    fechaTerminado
+    proceso
+    usuarioFolio
+    enviadoPor
+    ano
+    ref
+    usuarios
+}

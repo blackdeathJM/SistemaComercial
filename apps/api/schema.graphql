@@ -151,11 +151,13 @@ input DocumentoInput {
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
-  documentosPorAno(ano: DocAnoInput!): [DocumentoType!]!
+  docsUsuarioPendiente(datos: DocAnoInput!): [DocumentoType!]!
 }
 
 input DocAnoInput {
   ano: Int
+  proceso: String
+  usuarios: [String!]
 }
 
 type Mutation {

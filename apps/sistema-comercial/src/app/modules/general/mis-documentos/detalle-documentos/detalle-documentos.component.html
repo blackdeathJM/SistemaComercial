@@ -1,1 +1,88 @@
-<p>detalle-documentos works!</p>
+<div class="flex flex-col flex-auto p-6 md:p-8">
+    <!-- Close button -->
+    <div class="flex items-center justify-end">
+        <button mat-icon-button (click)="cerrarP()">
+            <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        </button>
+    </div>
+
+    <!-- Preview -->
+
+    <!-- Name & Type -->
+    <div class="flex flex-col items-start mt-8">
+        <div class="text-xl font-medium truncate">Asunto del documento</div>
+        <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
+            Dependencia del documento
+        </div>
+    </div>
+    <!-- Information -->
+    <div class="text-lg font-medium mt-8">Informacion</div>
+    <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Enviado por</div>
+            <div class="text-green-800 text-xl font-semibold leading-tight">Nombre quien envio</div>
+        </div>
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Fecha de recepcion</div>
+            <div>13/06/2022</div>
+        </div>
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Fecha limite de entrega</div>
+            <div>16/06/2022</div>
+        </div>
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Fecha de termino</div>
+            <div>16/06/2022</div>
+        </div>
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Contenido</div>
+            <div>Contenido-----</div>
+        </div>
+    </div>
+    <div class="flex items-center justify-between py-3">
+        <ng-container *ngIf="true">
+            <div class="w-12 h-1 mt-6 border-t-2"></div>
+            <div class="flex items-center mt-6 -space-x-1.5">
+<!--                <ng-container *ngFor="let member of board.members.slice(0, 5); trackBy: trackByFn">-->
+<!--                    <img class="flex-0 w-8 h-8 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent object-cover" />-->
+<!--                    &lt;!&ndash;                         [src]="member.avatar"&ndash;&gt;-->
+<!--                    alt="Member avatar">-->
+<!--                </ng-container>-->
+                <ng-container *ngIf="true">
+                    <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+<!--                        {{empleado.nombreCompleto.charAt(0)}}-->
+                        M
+                    </div>
+                </ng-container>
+<!--                <ng-container *ngIf="board.members.length > 5">-->
+<!--                    <div class="flex flex-0 items-center justify-center w-8 h-8 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent bg-gray-200 text-gray-500">-->
+<!--                        <div class="text-md font-semibold">-->
+<!--                            +{{ board.members.slice(5).length }}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+            </div>
+        </ng-container>
+    </div>
+    <!-- Description -->
+    <div class="flex mt-2 border-t">
+        <div class="py-3">
+            <ng-container *ngIf="true">
+                <div>Observaciones</div>
+            </ng-container>
+            <ng-container *ngIf="true">
+                <div class="italic text-secondary">aqui van a ir todas las observaciones asdfas adf asd fa sdf asd fa sdf as d fas df asd fa e a sf asd faser ase ra</div>
+            </ng-container>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col gap-4 w-full mt-8">
+        <button class="flex-auto" mat-button [color]="'primary'">
+            Descargar
+        </button>
+        <button class="flex-auto" mat-stroked-button>
+            Finalizar
+        </button>
+    </div>
+</div>

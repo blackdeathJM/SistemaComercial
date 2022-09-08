@@ -1,4 +1,4 @@
-<app-lista-detalle>
+<app-lista-detalle [abriP]="abrirP">
     <ng-container titulo>
         <div>Mis documentos</div>
     </ng-container>
@@ -14,23 +14,26 @@
         <div>Aqui va ir el formulario de busqueda</div>
     </ng-container>
     <ng-container outlet>
-        <app-detalle-documentos></app-detalle-documentos>
+        <app-detalle-documentos [documento]="docSeleccionado" (cerrarPanel)="cerrarP($event)"></app-detalle-documentos>
     </ng-container>
     <ng-container lista>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap" *ngIf="true">
+            <!--            <fuse-card class="flex items-center p-4 filter-info m-4 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">-->
             <fuse-card class="flex items-center p-4 filter-info m-4 w-90">
-                <!--TODO: compara si el avatar del empleado que manda el documento esta disponible se muestre y si no mostrar img por defecto-->
-                <img class="w-16 h-16 mr-6 rounded-full" src="assets/images/avatars/male-04.jpg" alt="Card cover image" *ngIf="false">
-                <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none
-                bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200" *ngIf="true">
-                    <!--                    {{_empleado?.nombreCompleto?.charAt(0)}}-->
-                    B
-                </div>
-                <div class="flex flex-col">
-                    <div class="text-xl font-semibold leading-tight truncate">Jose Omar Carrillo Lopez</div>
-                    <div class="text-md leading-tight text-primary">Departamento de envio</div>
-                    <div class="text-sm text-secondary mt-1">19/06/2022</div>
-                </div>
+                <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
+                <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc()">
+                    <!--TODO: compara si el avatar del empleado que manda el documento esta disponible se muestre y si no mostrar img por defecto-->
+                    <img class="w-16 h-16 mr-6 rounded-full" src="assets/images/avatars/male-04.jpg" alt="Card cover image" *ngIf="false">
+                    <div class="w-16 h-16 mr-6 flex items-center justify-center rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                        <!--                    {{contact.name.charAt(0)}}-->
+                        M
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="text-xl font-semibold leading-tight truncate">Jose Omar Carrillo Lopez</div>
+                        <div class="text-md leading-tight text-primary">Departamento de envio</div>
+                        <div class="text-sm text-secondary mt-1">19/06/2022</div>
+                    </div>
+                </a>
             </fuse-card>
         </div>
 

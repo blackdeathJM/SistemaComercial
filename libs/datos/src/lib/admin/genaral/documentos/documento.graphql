@@ -1,0 +1,7 @@
+mutation regDoc($datos: DocumentoInput!)
+{
+    regDoc(datos: $datos)
+    {
+        ...fragDoc
+    }
+}

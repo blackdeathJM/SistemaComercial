@@ -2,7 +2,7 @@ import {ConflictException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {DocumentoDto, DocumentoType} from '@sistema-comercial/modelos/documento.Dto';
 import {Model} from 'mongoose';
-import {DocAnoDto} from '@sistema-comercial/modelos/documentos.types';
+import {DocsUsuarioPendientes} from '@sistema-comercial/modelos/documentos.types';
 
 @Injectable()
 export class DocumentosService
@@ -11,11 +11,12 @@ export class DocumentosService
     {
     }
 
-    async documentosPorAno(datos: DocAnoDto): Promise<DocumentoDto[]>
+// Filtrar los documentos por usuario y por ano
+    async docsUsuarioPendiente(datos: DocsUsuarioPendientes): Promise<DocumentoDto[]>
     {
         try
         {
-            return await this.documento.find({...datos}).exec();
+            return await this.documento.find({usuarios: datos.usuarios}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e});

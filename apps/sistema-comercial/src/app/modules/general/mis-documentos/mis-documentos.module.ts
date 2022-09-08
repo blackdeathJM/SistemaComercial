@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MisDocumentosComponent} from './mis-documentos.component';
 import {DetalleDocumentosComponent} from './detalle-documentos/detalle-documentos.component';
 import {SharedModule} from '@s-shared/shared.module';
-import {RouterLinkWithHref, RouterOutlet} from '@angular/router';
+import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {FuseCardModule} from '@s-fuse/card';
 
 @NgModule({
@@ -19,6 +19,7 @@ import {FuseCardModule} from '@s-fuse/card';
             RouterOutlet,
             RouterLinkWithHref,
             FuseCardModule,
+            RouterLink,
         ],
     exports: [DetalleDocumentosComponent]
 })

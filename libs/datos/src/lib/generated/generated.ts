@@ -13,8 +13,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: any;
+  /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
+  Timestamp: any;
 };
 
 export type AuthInput = {
@@ -61,6 +61,55 @@ export type DeptoType = {
   nombre?: Maybe<Scalars['String']>;
 };
 
+export type DocAnoInput = {
+  ano?: InputMaybe<Scalars['Int']>;
+};
+
+export type DocumentoInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  acuseUrl?: InputMaybe<Scalars['String']>;
+  ano?: InputMaybe<Scalars['Int']>;
+  asunto?: InputMaybe<Scalars['String']>;
+  comentario?: InputMaybe<Scalars['String']>;
+  dependencia?: InputMaybe<Scalars['String']>;
+  docUrl?: InputMaybe<Scalars['String']>;
+  enviadoPor?: InputMaybe<Scalars['String']>;
+  esInterno?: InputMaybe<Scalars['Boolean']>;
+  fechaLimiteEntrega?: InputMaybe<Scalars['String']>;
+  fechaRecepcion?: InputMaybe<Scalars['Int']>;
+  fechaTerminado?: InputMaybe<Scalars['String']>;
+  folio?: InputMaybe<Scalars['String']>;
+  identificadorDoc?: InputMaybe<Scalars['String']>;
+  proceso?: InputMaybe<Scalars['String']>;
+  ref?: InputMaybe<Array<Scalars['String']>>;
+  tipoDoc?: InputMaybe<Scalars['String']>;
+  usuarioFolio?: InputMaybe<Scalars['String']>;
+  usuarios?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type DocumentoType = {
+  __typename?: 'DocumentoType';
+  _id?: Maybe<Scalars['ID']>;
+  acuseUrl?: Maybe<Scalars['String']>;
+  ano?: Maybe<Scalars['Int']>;
+  asunto?: Maybe<Scalars['String']>;
+  comentario?: Maybe<Scalars['String']>;
+  dependencia?: Maybe<Scalars['String']>;
+  docUrl?: Maybe<Scalars['String']>;
+  enviadoPor?: Maybe<Scalars['String']>;
+  esInterno?: Maybe<Scalars['Boolean']>;
+  fechaLimiteEntrega?: Maybe<Scalars['String']>;
+  fechaRecepcion?: Maybe<Scalars['Int']>;
+  fechaTerminado?: Maybe<Scalars['String']>;
+  folio?: Maybe<Scalars['String']>;
+  identificadorDoc?: Maybe<Scalars['String']>;
+  proceso?: Maybe<Scalars['String']>;
+  ref?: Maybe<Array<Scalars['String']>>;
+  tipoDoc?: Maybe<Scalars['String']>;
+  usuarioFolio?: Maybe<Scalars['String']>;
+  usuarios?: Maybe<Array<Scalars['String']>>;
+};
+
 export type EmpleadoInput = {
   _id?: InputMaybe<Scalars['String']>;
   activo?: InputMaybe<Scalars['Boolean']>;
@@ -71,8 +120,8 @@ export type EmpleadoInput = {
   colonia?: InputMaybe<Scalars['String']>;
   deptoEmpleado?: InputMaybe<DeptoInput>;
   deptoId?: InputMaybe<Scalars['String']>;
-  fechaBaja?: InputMaybe<Scalars['DateTime']>;
-  fechaIngreso?: InputMaybe<Scalars['DateTime']>;
+  fechaBaja?: InputMaybe<Scalars['Timestamp']>;
+  fechaIngreso?: InputMaybe<Scalars['Timestamp']>;
   modificadoPor?: InputMaybe<Array<ModificadoInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
 };
@@ -88,8 +137,8 @@ export type EmpleadoType = {
   colonia?: Maybe<Scalars['String']>;
   deptoEmpleado?: Maybe<DeptoType>;
   deptoId?: Maybe<Scalars['String']>;
-  fechaBaja?: Maybe<Scalars['DateTime']>;
-  fechaIngreso?: Maybe<Scalars['DateTime']>;
+  fechaBaja?: Maybe<Scalars['Timestamp']>;
+  fechaIngreso?: Maybe<Scalars['Timestamp']>;
   modificadoPor?: Maybe<Array<ModificadoType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
 };
@@ -133,6 +182,7 @@ export type Mutation = {
   crearEmpleado: EmpleadoType;
   eliminarDepto: DeptoType;
   login?: Maybe<LoginRespuestaType>;
+  regDoc: DocumentoType;
 };
 
 
@@ -178,10 +228,21 @@ export type MutationLoginArgs = {
   login: LoginInput;
 };
 
+
+export type MutationRegDocArgs = {
+  datos: DocumentoInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   deptos: Array<DeptoType>;
+  documentosPorAno: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
+};
+
+
+export type QueryDocumentosPorAnoArgs = {
+  ano: DocAnoInput;
 };
 
 export type RolInput = {
@@ -288,6 +349,15 @@ export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
 
+export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null };
+
+export type RegDocMutationVariables = Exact<{
+  datos: DocumentoInput;
+}>;
+
+
+export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null } };
+
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
   _id
@@ -339,6 +409,29 @@ export const FragModificadoPorFragmentDoc = gql`
     fragment fragModificadoPor on ModificadoType {
   usuario
   fecha
+}
+    `;
+export const FragDocFragmentDoc = gql`
+    fragment fragDoc on DocumentoType {
+  _id
+  identificadorDoc
+  folio
+  tipoDoc
+  esInterno
+  dependencia
+  comentario
+  asunto
+  docUrl
+  acuseUrl
+  fechaRecepcion
+  fechaLimiteEntrega
+  fechaTerminado
+  proceso
+  usuarioFolio
+  enviadoPor
+  ano
+  ref
+  usuarios
 }
     `;
 export const DepartamentosDocument = gql`
@@ -554,6 +647,24 @@ ${FragDeptosFragmentDoc}`;
   })
   export class EmpleadosGQL extends Apollo.Query<EmpleadosQuery, EmpleadosQueryVariables> {
     document = EmpleadosDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegDocDocument = gql`
+    mutation regDoc($datos: DocumentoInput!) {
+  regDoc(datos: $datos) {
+    ...fragDoc
+  }
+}
+    ${FragDocFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RegDocGQL extends Apollo.Mutation<RegDocMutation, RegDocMutationVariables> {
+    document = RegDocDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

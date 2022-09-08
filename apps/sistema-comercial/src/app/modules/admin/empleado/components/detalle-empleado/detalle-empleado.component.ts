@@ -20,7 +20,7 @@ import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.servic
 })
 export class DetalleEmpleadoComponent implements OnDestroy
 {
-    @Output() abrirPanel = new EventEmitter<boolean>();
+    @Output() cerrarPanel = new EventEmitter<boolean>();
     _empleado: IEmpleado;
     subscripcion: Subscription = new Subscription();
     roles = ['ninguno', 'lectura', 'completo'];
@@ -38,9 +38,9 @@ export class DetalleEmpleadoComponent implements OnDestroy
         this._empleado = valor;
     }
 
-    abrir(): void
+    cerrarP(): void
     {
-        this.abrirPanel.emit(false);
+        this.cerrarPanel.emit(false);
     }
 
     asignarSesion(data: IEmpleado): void

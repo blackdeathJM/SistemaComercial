@@ -1,7 +1,7 @@
 <!--<app-lista-empleado></app-lista-empleado>-->
 <app-lista-detalle [abriP]="abrirP">
     <ng-container outlet>
-        <app-detalle-empleado (abrirPanel)="abrirPanel($event)" [empleado]="empleadoSeleccionado"></app-detalle-empleado>
+        <app-detalle-empleado (cerrarPanel)="cerrarP($event)" [empleado]="empleadoSeleccionado"></app-detalle-empleado>
     </ng-container>
     <ng-container titulo>
         <div>Sesion y permisos</div>

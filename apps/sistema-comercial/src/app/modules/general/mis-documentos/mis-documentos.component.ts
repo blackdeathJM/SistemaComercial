@@ -1,23 +1,31 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {Component} from '@angular/core';
+import {IDocumento} from '#/libs/models/src/lib/general/documentos/documentos.interface';
 
 @Component({
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
     styleUrls: ['./mis-documentos.component.scss']
 })
-export class MisDocumentosComponent implements OnInit
+export class MisDocumentosComponent
 {
-    _empleado: IEmpleado;
-    constructor()
+    docs: IDocumento[];
+    docSeleccionado: IDocumento;
+    abrirP: boolean = false;
+
+    seleccionarDoc(): void
     {
-    }
-    @Input() set empleado(value: IEmpleado)
-    {
-        this._empleado = value;
+        // TODO: Asignar el documento seleccionando al input de los detalles
+        // this.docSeleccionado = doc;
+        this.abrirP = true;
     }
 
-    ngOnInit(): void
+    trackByFn(index: number, item: any): any
     {
+        return item.id || index;
+    }
+
+    cerrarP(evento: boolean): void
+    {
+        this.abrirP = evento;
     }
 }

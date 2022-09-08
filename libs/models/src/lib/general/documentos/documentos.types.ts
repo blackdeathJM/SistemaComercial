@@ -1,7 +1,7 @@
-import {Field, InputType, Int, ObjectType, PickType} from '@nestjs/graphql';
+import {InputType, PickType} from '@nestjs/graphql';
 import {DocumentoDto} from './documento.Dto';
 
 @InputType('DocAnoInput')
-export class DocAnoDto extends PickType(DocumentoDto, ['ano'], InputType)
+export class DocsUsuarioPendientes extends PickType(DocumentoDto, ['ano', 'usuarios', 'proceso'], InputType)
 {
 }

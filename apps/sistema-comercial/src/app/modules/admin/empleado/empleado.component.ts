@@ -49,7 +49,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy
         this.abrirP = true;
     }
 
-    abrirPanel(evento: boolean): void
+    cerrarP(evento: boolean): void
     {
         this.abrirP = evento;
     }
