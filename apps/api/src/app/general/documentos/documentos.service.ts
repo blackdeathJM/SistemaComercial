@@ -29,7 +29,6 @@ export class DocumentosService
             return await this.documento.create(datos);
         } catch (e)
         {
-            console.log('registro de doc', e);
             throw new ConflictException({message: e.codeName});
         }
     }

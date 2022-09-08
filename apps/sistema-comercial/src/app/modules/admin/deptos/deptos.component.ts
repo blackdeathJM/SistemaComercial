@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
-import {debounceTime, map, Subscription, tap} from 'rxjs';
+import {debounceTime, map, mergeMap, Subscription, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
@@ -8,9 +8,9 @@ import {DepartamentosGQL, EliminarDeptoGQL} from '#/libs/datos/src';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
 import {FormControl} from '@angular/forms';
-import {cloneDeep} from 'lodash-es';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {cloneDeep} from 'lodash-es';
 
 @Component({
     selector: 'app-deptos-principal',
@@ -18,7 +18,7 @@ import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.servic
     styleUrls: ['./deptos.component.scss'],
     animations: [fuseAnimations]
 })
-export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
+export class DeptosComponent implements OnInit, OnDestroy
 {
     datosCargados = true;
     subscripciones: Subscription = new Subscription();
@@ -31,38 +31,25 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
     }
 
+    ngOnInit(): void
+    {
+        this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(mergeMap((res) =>
+        {
+            this.datosCargados = false;
+            if (res.data)
+            {
+                STATE_DEPTOS(cloneDeep(res.data.deptos) as IDepto[]);
+            }
+            return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.deptos.filter(v => v.nombre.toLowerCase().includes(value.toLowerCase()))));
+        })).subscribe((res) =>
+        {
+            STATE_DEPTOS(res as IDepto[]);
+        }));
+    }
+
     registro(): void
     {
         this.dRef.open(ModDeptoComponent, {width: '40%', data: null});
-    }
-
-    ngOnInit(): void
-    {
-        this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
-        {
-            this.datosCargados = false;
-            if (res.data.deptos)
-            {
-                STATE_DEPTOS(res.data.deptos as IDepto[]);
-            }
-        })).subscribe());
-    }
-
-    ngAfterViewInit(): void
-    {
-        // Hacemos una pequena demora para que pueda cargar el estado y lo asignamos a una variable para tener una copia y poder realizar el filtrado siempre desde una
-        // copia para tener los valores disponibles y de esa manera asignar el nuevo estado dependiendo de la busqueda
-        setTimeout(() =>
-        {
-            const stadoActual = cloneDeep(STATE_DEPTOS());
-            this.controlBuscar.valueChanges.pipe(debounceTime(200),
-                map(value =>
-                    this.filtro(stadoActual, value)
-                )).subscribe((res) =>
-            {
-                STATE_DEPTOS(res);
-            });
-        }, 100);
     }
 
     editar(data: IDepto): void
@@ -100,10 +87,5 @@ export class DeptosComponent implements OnInit, OnDestroy, AfterViewInit
     ngOnDestroy(): void
     {
         this.subscripciones.unsubscribe();
-    }
-
-    private filtro(edoFiltrar: IDepto[], depto: string): IDepto[]
-    {
-        return edoFiltrar.filter(value => value.nombre.toLowerCase().includes(depto.toLowerCase()));
     }
 }

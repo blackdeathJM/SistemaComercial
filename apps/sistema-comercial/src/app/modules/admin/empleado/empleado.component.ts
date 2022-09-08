@@ -1,12 +1,13 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Subscription, tap} from 'rxjs';
+import {debounceTime, map, mergeMap, Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {cloneDeep} from 'lodash-es';
 
 @Component({
     selector: 'app-empleado',
@@ -28,10 +29,18 @@ export class EmpleadoComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.subscripciones.add(this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
+        this.subscripciones.add(this.empleadosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(mergeMap((res) =>
         {
-            this.stateEmpleados = STATE_EMPLEADOS(res.data.empleados as IEmpleado[]);
-        })).subscribe());
+            if (res.data)
+            {
+                this.stateEmpleados = STATE_EMPLEADOS(cloneDeep(res.data.empleados) as IEmpleado[]);
+            }
+            return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.empleados
+                .filter(v => v.nombreCompleto.toLowerCase().includes(value.toLowerCase()))));
+        })).subscribe((datosFiltrados) =>
+        {
+            this.stateEmpleados = STATE_EMPLEADOS(datosFiltrados as IEmpleado[]);
+        }));
     }
 
     seleccionarEmpleado(empleado: IEmpleado): void
