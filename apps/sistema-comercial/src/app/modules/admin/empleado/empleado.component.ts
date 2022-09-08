@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {debounceTime, map, mergeMap, Subscription} from 'rxjs';
+import {debounceTime, map, Subscription, switchMap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
@@ -29,7 +29,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.subscripciones.add(this.empleadosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(mergeMap((res) =>
+        this.subscripciones.add(this.empleadosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(switchMap((res) =>
         {
             if (res.data)
             {

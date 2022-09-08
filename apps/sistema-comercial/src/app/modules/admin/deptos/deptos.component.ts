@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
-import {debounceTime, map, mergeMap, Subscription, tap} from 'rxjs';
+import {debounceTime, map, Subscription, switchMap, tap} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
@@ -33,7 +33,7 @@ export class DeptosComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(mergeMap((res) =>
+        this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(switchMap((res) =>
         {
             this.datosCargados = false;
             if (res.data)
