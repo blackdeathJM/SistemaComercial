@@ -1,10 +1,11 @@
 import {Field, InputType} from '@nestjs/graphql';
-import {ISubirArchivo} from './upload.interface';
 import {GraphQLUpload} from 'graphql-upload';
+import {UploadScalar} from './upload.scalar';
 
 @InputType('ArchivoInput')
 export class UploadDto
 {
     @Field(() => GraphQLUpload, {nullable: true})
-    archivo: Promise<ISubirArchivo>;
+        // archivo: Promise<ISubirArchivo>;
+    archivo: UploadScalar;
 }

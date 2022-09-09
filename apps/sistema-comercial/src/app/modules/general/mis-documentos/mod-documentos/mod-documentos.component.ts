@@ -42,8 +42,10 @@ export class ModDocumentosComponent implements OnInit
 
     reg(): void
     {
-        console.log('formulario', this.formDocs.get('file').value);
-        this.subirArchivoGQL.mutate({archivo: this.formDocs.get('file').value[0]}).subscribe((res) =>
+        const formData = new FormData();
+        formData.append('operations', 'operations');
+        console.log('formData', this.formDocs.get('file').value);
+        this.subirArchivoGQL.mutate({archivo: this.formDocs.get('file').value}).subscribe((res) =>
         {
             console.log('respuesta', res);
         });
