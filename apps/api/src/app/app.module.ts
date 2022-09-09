@@ -21,6 +21,7 @@ import {GeneralModule} from './general/general.module';
                 'subscriptions-transport-ws': true,
             },
             autoSchemaFile: 'apps/api/schema.graphql',
+            // resolvers: {Upload: GraphQLUpload},
             cors: {origin: '*', credentials: false},
             buildSchemaOptions: {dateScalarMode: 'timestamp'},
             introspection: true,
