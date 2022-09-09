@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documentos.interface';
+import {MatDialog} from '@angular/material/dialog';
+import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
 
 @Component({
     selector: 'app-mis-documentos',
@@ -11,6 +13,10 @@ export class MisDocumentosComponent
     docs: IDocumento[];
     docSeleccionado: IDocumento;
     abrirP: boolean = false;
+
+    constructor(private dRef: MatDialog)
+    {
+    }
 
     seleccionarDoc(): void
     {
@@ -27,5 +33,10 @@ export class MisDocumentosComponent
     cerrarP(evento: boolean): void
     {
         this.abrirP = evento;
+    }
+
+    nuevosDocs(): void
+    {
+        this.dRef.open(ModDocumentosComponent, {width: '40%', data: null});
     }
 }

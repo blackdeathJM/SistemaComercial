@@ -13,3 +13,16 @@ query empleados
         }
     }
 }
+
+query empleadosSesion
+{
+    empleadosSesion {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}

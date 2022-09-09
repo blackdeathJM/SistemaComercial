@@ -12,7 +12,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -31,7 +35,11 @@ import {MatSelectModule} from "@angular/material/select";
             PortalModule,
             MatTooltipModule,
             MatButtonToggleModule,
-            MatSelectModule
+            MatSelectModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            MatMomentDateModule,
+            MatCheckboxModule,
         ],
     exports:
         [
@@ -48,7 +56,11 @@ import {MatSelectModule} from "@angular/material/select";
             PortalModule,
             MatTooltipModule,
             MatButtonToggleModule,
-            MatSelectModule
+            MatSelectModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            MatMomentDateModule,
+            MatCheckboxModule
         ]
 })
 export class NgMaterialMaterialModule

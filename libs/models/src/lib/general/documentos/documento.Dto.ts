@@ -61,7 +61,7 @@ export class DocumentoDto implements IDocumento
     @Field({nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El proceso es necesario'})
-    proceso: 'pendiente' | 'terminado';
+    proceso: 'Pendiente' | 'Terminado';
     @Field(() => [String], {nullable: true, defaultValue: null})
     @Prop()
     ref: string[];

@@ -13,7 +13,7 @@ export interface IDocumento
     fechaRecepcion: number;
     fechaLimiteEntrega: string;
     fechaTerminado: string;
-    proceso: 'pendiente' | 'terminado';
+    proceso: 'Pendiente' | 'Terminado';
     usuarioFolio: string;
     enviadoPor: string;
     ano: number;

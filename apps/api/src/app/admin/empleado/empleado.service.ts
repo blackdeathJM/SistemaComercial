@@ -14,7 +14,18 @@ export class EmpleadoService
 
     async empleados(): Promise<IEmpleado[]>
     {
-        return this.empleado.find().exec();
+        return await this.empleado.find().exec();
+    }
+
+    async empleadosSesion(): Promise<IEmpleado[]>
+    {
+        try
+        {
+            return await this.empleado.find({auth: {$ne: null}}).exec();
+        } catch (e)
+        {
+            throw new ConflictException({message: e.codeName});
+        }
     }
 
     async crearEmpleado(datosEmpleado: IEmpleado): Promise<IEmpleado>

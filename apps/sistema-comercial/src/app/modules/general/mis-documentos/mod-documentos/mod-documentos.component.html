@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>Dar de alta documentos</h2>
+<mat-dialog-content>
+    <form>
+        <div class="flex flex-col">
+            <div class="flex gap-3">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Identificador del documento</mat-label>
+                    <input matInput type="text"/>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Dependencia</mat-label>
+                    <input matInput type="text"/>
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <mat-label>Asunto</mat-label>
+                <input matInput type="text"/>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
+                <mat-select multiple>
+                    <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="fuse-mat-textarea flex-auto">
+                <mat-label>Observaciones</mat-label>
+                <textarea matInput></textarea>
+            </mat-form-field>
+
+            <div class="flex gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Fecha recepcion</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Formato DD/MM/YYY">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Fecha entrega</mat-label>
+                    <input matInput [matDatepicker]="fechaE" placeholder="Formato DD/MM/YYY">
+                    <mat-datepicker-toggle matSuffix [for]="fechaE"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaE></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <input class="block mb-4 w-full text-2xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size"
+                   type="file">
+            <mat-checkbox class="mb-4" color="primary">Es interno?</mat-checkbox>
+        </div>
+    </form>
+</mat-dialog-content>
+<app-registros></app-registros>

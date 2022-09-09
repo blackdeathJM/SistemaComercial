@@ -5,12 +5,14 @@ import {DetalleDocumentosComponent} from './detalle-documentos/detalle-documento
 import {SharedModule} from '@s-shared/shared.module';
 import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {FuseCardModule} from '@s-fuse/card';
+import { ModDocumentosComponent } from './mod-documentos/mod-documentos.component';
 
 @NgModule({
     declarations:
         [
             MisDocumentosComponent,
-            DetalleDocumentosComponent
+            DetalleDocumentosComponent,
+            ModDocumentosComponent
         ],
     imports:
         [

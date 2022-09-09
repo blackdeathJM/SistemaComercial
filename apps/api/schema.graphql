@@ -151,6 +151,7 @@ input DocumentoInput {
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
+  empleadosSesion: [EmpleadoType!]!
   docsUsuarioPendiente(datos: DocAnoInput!): [DocumentoType!]!
 }
 

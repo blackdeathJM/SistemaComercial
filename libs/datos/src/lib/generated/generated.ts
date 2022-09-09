@@ -63,6 +63,8 @@ export type DeptoType = {
 
 export type DocAnoInput = {
   ano?: InputMaybe<Scalars['Int']>;
+  proceso?: InputMaybe<Scalars['String']>;
+  usuarios?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type DocumentoInput = {
@@ -236,13 +238,14 @@ export type MutationRegDocArgs = {
 export type Query = {
   __typename?: 'Query';
   deptos: Array<DeptoType>;
-  documentosPorAno: Array<DocumentoType>;
+  docsUsuarioPendiente: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
+  empleadosSesion: Array<EmpleadoType>;
 };
 
 
-export type QueryDocumentosPorAnoArgs = {
-  ano: DocAnoInput;
+export type QueryDocsUsuarioPendienteArgs = {
+  datos: DocAnoInput;
 };
 
 export type RolInput = {
@@ -348,6 +351,11 @@ export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
+
+export type EmpleadosSesionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EmpleadosSesionQuery = { __typename?: 'Query', empleadosSesion: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null };
 
@@ -647,6 +655,32 @@ ${FragDeptosFragmentDoc}`;
   })
   export class EmpleadosGQL extends Apollo.Query<EmpleadosQuery, EmpleadosQueryVariables> {
     document = EmpleadosDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EmpleadosSesionDocument = gql`
+    query empleadosSesion {
+  empleadosSesion {
+    ...fragEmpleado
+    auth {
+      ...fragAuth
+    }
+    deptoEmpleado {
+      ...fragDeptos
+    }
+  }
+}
+    ${FragEmpleadoFragmentDoc}
+${FragAuthFragmentDoc}
+${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EmpleadosSesionGQL extends Apollo.Query<EmpleadosSesionQuery, EmpleadosSesionQueryVariables> {
+    document = EmpleadosSesionDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

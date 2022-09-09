@@ -20,6 +20,12 @@ export class EmpleadoResolver
         return await this.empleadoService.empleados();
     }
 
+    @Query(() => [EmpleadoDto])
+    async empleadosSesion(): Promise<IEmpleado[]>
+    {
+        return await this.empleadoService.empleadosSesion();
+    }
+
     @Mutation(() => EmpleadoDto)
     async crearEmpleado(@Args('empleadoDatos') empleadoDatos: EmpleadoDto): Promise<IEmpleado>
     {
