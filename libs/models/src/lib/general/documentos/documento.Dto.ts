@@ -3,6 +3,8 @@ import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty} from 'class-validator';
 import {Document} from 'mongoose';
+import {GraphQLUpload} from 'graphql-upload';
+import {ISubirArchivo} from '../../upload/upload.interface';
 
 @ObjectType('DocumentoType')
 @InputType('DocumentoInput')
@@ -75,6 +77,8 @@ export class DocumentoDto implements IDocumento
     @Field(() => [String], {nullable: true})
     @Prop()
     usuarios: string[];
+    // @Field(() => GraphQLUpload)
+    // archivo?: Promise<ISubirArchivo>;
 }
 
 export type DocumentoType = DocumentoDto & Document;
