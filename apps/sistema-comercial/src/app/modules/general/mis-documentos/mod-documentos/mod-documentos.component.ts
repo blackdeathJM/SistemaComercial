@@ -17,9 +17,9 @@ export class ModDocumentosComponent implements OnInit
     fechaMax: Date;
     subscripcion: Subscription = new Subscription();
     empleadosSesion: IEmpleado[];
-
+    file = new FormData();
     formDocs: FormGroup = this.fb.group({
-        archivo: [null]
+        file: [null]
     });
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder)
@@ -42,8 +42,8 @@ export class ModDocumentosComponent implements OnInit
 
     reg(): void
     {
-        console.log('formulario', this.formDocs.get('archivo').value[0]);
-        this.subirArchivoGQL.mutate({archivo: this.formDocs.get('archivo').value[0]}).subscribe((res) =>
+        console.log('formulario', this.formDocs.get('file').value);
+        this.subirArchivoGQL.mutate({archivo: this.formDocs.get('file').value[0]}).subscribe((res) =>
         {
             console.log('respuesta', res);
         });
