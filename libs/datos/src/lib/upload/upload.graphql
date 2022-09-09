@@ -1,0 +1,4 @@
+mutation subirArchivo($archivo: ArchivoInput!)
+{
+    subirArchivo(archivo: $archivo)
+}

@@ -1,10 +1,11 @@
 import {Scalar} from '@nestjs/graphql';
 import {GraphQLUpload} from 'graphql-upload';
 
+
 @Scalar('Upload')
 export class UploadScalar
 {
-    description = 'File upload scalar type';
+    description = 'Tipo escalar subir archivos';
 
     parseValue(value: any): any
     {

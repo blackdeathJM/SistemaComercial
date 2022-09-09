@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {EmpleadosSesionGQL} from '#/libs/datos/src';
+import {EmpleadosSesionGQL, SubirArchivoGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 
 @Component({
     selector: 'app-mod-documentos',
@@ -16,7 +18,11 @@ export class ModDocumentosComponent implements OnInit
     subscripcion: Subscription = new Subscription();
     empleadosSesion: IEmpleado[];
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL)
+    formDocs: FormGroup = this.fb.group({
+        archivo: [null]
+    });
+
+    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder)
     {
         const fechaActual = new Date().getFullYear();
         this.fechaMin = new Date(fechaActual - 20, 0, 1);
@@ -32,5 +38,14 @@ export class ModDocumentosComponent implements OnInit
                 this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IEmpleado[]);
             }
         })).subscribe());
+    }
+
+    reg(): void
+    {
+        console.log('formulario', this.formDocs.get('archivo').value[0]);
+        this.subirArchivoGQL.mutate({archivo: this.formDocs.get('archivo').value[0]}).subscribe((res) =>
+        {
+            console.log('respuesta', res);
+        });
     }
 }

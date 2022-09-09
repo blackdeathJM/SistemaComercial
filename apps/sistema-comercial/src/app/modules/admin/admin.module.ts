@@ -6,6 +6,7 @@ import {DeptosModule} from '@s-app/deptos/deptos.module';
 import {NgSwitch} from '@angular/common';
 import {EmpleadoModule} from './empleado/empleado.module';
 import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
+import {FileUploadModule} from '@iplab/ngx-file-upload';
 
 @NgModule({
     declarations:
@@ -16,12 +17,12 @@ import {PlantillasModule} from '@s-shared/plantillas/plantillas.module';
         [
             AdminRouting,
             SharedModule,
+            FileUploadModule,
             NgSwitch,
             PlantillasModule,
             DeptosModule,
             EmpleadoModule
         ],
-    // providers: [ListaDetalleComponent]
 })
 export class AdminModule
 {

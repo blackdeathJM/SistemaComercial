@@ -15,6 +15,12 @@ export type Scalars = {
   Float: number;
   /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
+};
+
+export type ArchivoInput = {
+  archivo?: InputMaybe<Scalars['Upload']>;
 };
 
 export type AuthInput = {
@@ -185,6 +191,7 @@ export type Mutation = {
   eliminarDepto: DeptoType;
   login?: Maybe<LoginRespuestaType>;
   regDoc: DocumentoType;
+  subirArchivo: Scalars['Boolean'];
 };
 
 
@@ -233,6 +240,11 @@ export type MutationLoginArgs = {
 
 export type MutationRegDocArgs = {
   datos: DocumentoInput;
+};
+
+
+export type MutationSubirArchivoArgs = {
+  archivo: ArchivoInput;
 };
 
 export type Query = {
@@ -365,6 +377,13 @@ export type RegDocMutationVariables = Exact<{
 
 
 export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null } };
+
+export type SubirArchivoMutationVariables = Exact<{
+  archivo: ArchivoInput;
+}>;
+
+
+export type SubirArchivoMutation = { __typename?: 'Mutation', subirArchivo: boolean };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -699,6 +718,22 @@ export const RegDocDocument = gql`
   })
   export class RegDocGQL extends Apollo.Mutation<RegDocMutation, RegDocMutationVariables> {
     document = RegDocDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SubirArchivoDocument = gql`
+    mutation subirArchivo($archivo: ArchivoInput!) {
+  subirArchivo(archivo: $archivo)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SubirArchivoGQL extends Apollo.Mutation<SubirArchivoMutation, SubirArchivoMutationVariables> {
+    document = SubirArchivoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

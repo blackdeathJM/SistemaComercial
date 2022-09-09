@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
 import {GraphQLModule} from '@nestjs/graphql';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {MongooseModule} from '@nestjs/mongoose';
@@ -8,7 +8,9 @@ import config from '../config/config';
 import {AdminModule} from './admin/admin.module';
 import {GeneralModule} from './general/general.module';
 // import GraphQLUpload from 'apollo-server-express';
-// import {SubidaModule} from "./upload/subida.module";
+import {SubidaModule} from './upload/subida.module';
+import {GraphQLUpload} from 'graphql-upload';
+import {UploadScalar} from '@sistema-comercial/modelos/upload.scalar';
 
 // import {join} from 'path';
 
@@ -19,7 +21,6 @@ import {GeneralModule} from './general/general.module';
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            // resolvers: {Upload: GraphQLUpload},
             // definitions: {
             //     path: join(process.cwd(), './src/graphql.classes.ts'),
             //     outputAs: 'class'
@@ -45,10 +46,11 @@ import {GeneralModule} from './general/general.module';
                 }
             )
         }),
+        SubidaModule,
         AdminModule,
         GeneralModule
     ],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}]
+    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, UploadScalar]
 })
 export class AppModule
 {
