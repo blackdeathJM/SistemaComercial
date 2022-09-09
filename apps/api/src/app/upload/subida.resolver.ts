@@ -1,16 +1,16 @@
 import {Args, Mutation, Resolver} from '@nestjs/graphql';
-import {FileUpload, GraphQLUpload} from 'graphql-upload';
+import GraphQLUpload from 'apollo-server-express';
 import {createWriteStream} from 'fs';
 
 @Resolver()
-export class AppResolver
+export class SubidaResolver
 {
     @Mutation(() => Boolean)
     async uploadFile(@Args({name: 'file', type: () => GraphQLUpload})
                          {
                              createReadStream,
                              filename
-                         }: FileUpload): Promise<boolean>
+                         }): Promise<boolean>
     {
         return new Promise(async (resolve, reject) =>
             createReadStream()

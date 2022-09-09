@@ -3,8 +3,9 @@ import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty} from 'class-validator';
 import {Document} from 'mongoose';
-import {GraphQLUpload} from 'graphql-upload';
 import {ISubirArchivo} from '../../upload/upload.interface';
+// import GraphQLUpload from 'apollo-server-express';
+
 
 @ObjectType('DocumentoType')
 @InputType('DocumentoInput')
