@@ -20,7 +20,7 @@ export type Scalars = {
 };
 
 export type ArchivoInput = {
-  archivo?: InputMaybe<Scalars['Upload']>;
+  file?: InputMaybe<Array<Scalars['Upload']>>;
 };
 
 export type AuthInput = {
@@ -244,7 +244,7 @@ export type MutationRegDocArgs = {
 
 
 export type MutationSubirArchivoArgs = {
-  archivo: ArchivoInput;
+  file: ArchivoInput;
 };
 
 export type Query = {
@@ -379,7 +379,7 @@ export type RegDocMutationVariables = Exact<{
 export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null } };
 
 export type SubirArchivoMutationVariables = Exact<{
-  archivo: ArchivoInput;
+  file: ArchivoInput;
 }>;
 
 
@@ -724,8 +724,8 @@ export const RegDocDocument = gql`
     }
   }
 export const SubirArchivoDocument = gql`
-    mutation subirArchivo($archivo: ArchivoInput!) {
-  subirArchivo(archivo: $archivo)
+    mutation subirArchivo($file: ArchivoInput!) {
+  subirArchivo(file: $file)
 }
     `;
 

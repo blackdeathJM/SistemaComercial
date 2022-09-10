@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Dar de alta documentos</h2>
 <mat-dialog-content>
-    <form [formGroup]="formDocs">
+    <form [formGroup]="formDocs" enctype="multipart/form-data">
         <div class="flex flex-col">
             <div class="flex gap-3">
                 <mat-form-field class="flex-auto">
@@ -44,7 +44,7 @@
             <!--            <file-upload simple formControlName="file">-->
             <!--                <ng-template let-file #placeholder>-->
             <!--                    <ng-container *ngIf="file; else emptyList">-->
-            <!--                        nombre-->
+            <!--                        archivo-->
             <!--                    </ng-container>-->
 
             <!--                    <ng-template #emptyList>-->
@@ -55,11 +55,13 @@
             <!--                    Examinar-->
             <!--                </ng-template>-->
             <!--            </file-upload>-->
-            <input formControlName="file" type="file" formenctype="application/x-www-form-urlencoded"
-                   class="block mb-4 w-full text-2xl text-gray-900 bg-gray-50 rounded-lg
+
+            <input type="file" formControlName="file" (change)="cambiar($event)"
+                   class="block mb-4 w-full text-1xl text-gray-900 bg-gray-50 rounded-lg
                                border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700
                                dark:border-gray-600 dark:placeholder-gray-400" id="large_size">
-            <mat-checkbox class="mb-4" color="primary">Es interno?</mat-checkbox>
+
+            <mat-checkbox class="my-4" color="primary">Es interno?</mat-checkbox>
         </div>
     </form>
 </mat-dialog-content>

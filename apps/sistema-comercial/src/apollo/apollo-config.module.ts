@@ -51,7 +51,7 @@ export class ApolloConfigModule
             return {
                 headers: {
                     ...headers,
-                    authorization: token ? `Bearer ${token}` : '',
+                    authorization: token ? `Bearer ${token}` : ''
                 }
             };
         });

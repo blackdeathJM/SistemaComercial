@@ -1,12 +1,11 @@
 import {Args, Mutation, Resolver} from '@nestjs/graphql';
-import {createWriteStream} from 'fs';
 import {UploadDto} from '@sistema-comercial/modelos/upload.dto';
 
 @Resolver()
 export class SubidaResolver
 {
     // @Mutation(() => Boolean, {nullable: true})
-    // async uploadFile(@Args({name: 'file', type: () => GraphQLUpload}) {createReadStream, filename}): Promise<boolean>
+    // async uploadArchivo(@Args({name: 'file', type: () => GraphQLUpload}) {createReadStream, filename}): Promise<boolean>
     // {
     //     return new Promise(async (resolve, reject) =>
     //         createReadStream()
@@ -16,9 +15,9 @@ export class SubidaResolver
     // }
 
     @Mutation(() => Boolean)
-    async subirArchivo(@Args('archivo') archivo: UploadDto): Promise<boolean>
+    async subirArchivo(@Args('file') file: UploadDto): Promise<boolean>
     {
-        const respuesta = await archivo.archivo;
+        const respuesta = await file;
         console.log('archivo recibido', respuesta);
         return true;
     }

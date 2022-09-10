@@ -3,8 +3,9 @@ import {EmpleadosSesionGQL, SubirArchivoGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
+import {ISubirArchivo} from '#/libs/models/src/lib/upload/upload.interface';
+import {FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-mod-documentos',
@@ -13,14 +14,16 @@ import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 })
 export class ModDocumentosComponent implements OnInit
 {
+    archivos: File[];
     fechaMin: Date;
     fechaMax: Date;
     subscripcion: Subscription = new Subscription();
     empleadosSesion: IEmpleado[];
-    file = new FormData();
+
     formDocs: FormGroup = this.fb.group({
         file: [null]
     });
+    file: ISubirArchivo;
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder)
     {
@@ -42,12 +45,13 @@ export class ModDocumentosComponent implements OnInit
 
     reg(): void
     {
-        const formData = new FormData();
-        formData.append('operations', 'operations');
-        console.log('formData', this.formDocs.get('file').value);
-        this.subirArchivoGQL.mutate({archivo: this.formDocs.get('file').value}).subscribe((res) =>
-        {
-            console.log('respuesta', res);
-        });
+        const archivo = this.archivos;
+        this.subirArchivoGQL.mutate({file: {file: archivo}}, {context: {useMultipart: true}}).subscribe();
+    }
+
+    cambiar(event: Event): void
+    {
+        this.archivos = event.target['files'];
     }
 }
+

@@ -1,4 +1,9 @@
-mutation subirArchivo($archivo: ArchivoInput!)
+#mutation subirArchivo($archivo: ArchivoInput!)
+#{
+#    subirArchivo(archivo: $archivo)
+#}
+
+mutation subirArchivo($file: ArchivoInput!)
 {
-    subirArchivo(archivo: $archivo)
+    subirArchivo(file: $file)
 }
