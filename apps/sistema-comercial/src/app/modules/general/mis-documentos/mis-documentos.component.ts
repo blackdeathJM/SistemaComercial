@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IDocumento} from '#/libs/models/src/lib/general/documentos/documentos.interface';
+import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
 

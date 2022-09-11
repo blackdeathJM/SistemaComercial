@@ -12,6 +12,5 @@ export interface IArchivo
 export interface IDatosArchivo
 {
     carpeta: string;
-    guardarLocal: boolean;
     file: Promise<IArchivo[]>;
 }

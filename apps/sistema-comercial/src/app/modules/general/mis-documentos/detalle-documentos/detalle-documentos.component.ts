@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IDocumento} from '#/libs/models/src/lib/general/documentos/documentos.interface';
+import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 
 @Component({
     selector: 'app-detalle-documentos',

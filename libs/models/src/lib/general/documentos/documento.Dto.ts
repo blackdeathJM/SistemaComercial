@@ -1,11 +1,8 @@
-import {IDocumento} from './documentos.interface';
-import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
+import {IDocumento} from './documento.interface';
+import {Field, ID, InputType, Int, ObjectType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty} from 'class-validator';
 import {Document} from 'mongoose';
-import {IArchivo} from '../../upload/upload.interface';
-// import GraphQLUpload from 'apollo-server-express';
-
 
 @ObjectType('DocumentoType')
 @InputType('DocumentoInput')
@@ -44,16 +41,16 @@ export class DocumentoDto implements IDocumento
     @Prop()
     @IsNotEmpty({message: 'Es necesario si es requerido'})
     esInterno: boolean;
-    @Field({nullable: true})
+    @Field(() => Int, {nullable: true})
     @Prop()
-    fechaLimiteEntrega: string;
+    fechaLimiteEntrega: number;
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesaria la fecha de recepcion'})
     fechaRecepcion: number;
-    @Field({nullable: true})
+    @Field(() => Int, {nullable: true})
     @Prop()
-    fechaTerminado: string;
+    fechaTerminado: number;
     @Field({nullable: true, defaultValue: null})
     @Prop()
     folio: string;
@@ -78,9 +75,12 @@ export class DocumentoDto implements IDocumento
     @Field(() => [String], {nullable: true})
     @Prop()
     usuarios: string[];
-    // @Field(() => GraphQLUpload)
-    // archivo?: Promise<ISubirArchivo>;
 }
 
 export type DocumentoType = DocumentoDto & Document;
 export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentoDto);
+
+@InputType('DocAnoInput')
+export class DocsUsuarioPendientes extends PickType(DocumentoDto, ['ano', 'usuarios', 'proceso'], InputType)
+{
+}

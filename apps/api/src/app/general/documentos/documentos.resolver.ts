@@ -1,7 +1,7 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {DocumentoDto} from '@sistema-comercial/modelos/documento.Dto';
 import {DocumentosService} from './documentos.service';
-import {DocsUsuarioPendientes} from '@sistema-comercial/modelos/documentos.types';
+import {DocsUsuarioPendientes} from '@sistema-comercial/modelos/documento.types';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver

@@ -10,10 +10,13 @@ export class SubirArchivosService
     async subirArchivos(files: UploadDto): Promise<string[]>
     {
         const ano = new Date().getFullYear();
+        const mes = new Date().toLocaleString('es-mx', {month: 'long'});
         const rutas: string[] = [];
         try
         {
-            const rutaDeGuardado = join(process.cwd(), `/apps/api/src/public/${files.carpeta}`);
+            const rutaDeGuardado = files.carpeta === 'perfil' ? join(process.cwd(), `/apps/api/src/public/${files.carpeta}`) :
+                join(process.cwd(), `/apps/api/src/public/${files.carpeta}/${ano}/${mes}`);
+
             if (files.guardarLocal)
             {
                 for (const file of await files.file)
@@ -36,7 +39,6 @@ export class SubirArchivosService
             }
         } catch (e)
         {
-            console.log('error al cargar archivo', e);
             return [];
         }
     }

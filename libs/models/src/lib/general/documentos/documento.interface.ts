@@ -1,3 +1,5 @@
+import {IDatosArchivo} from '@sistema-comercial/modelos/upload.interface';
+
 export interface IDocumento
 {
     _id: string;
@@ -11,8 +13,8 @@ export interface IDocumento
     docUrl: string;
     acuseUrl: string;
     fechaRecepcion: number;
-    fechaLimiteEntrega: string;
-    fechaTerminado: string;
+    fechaLimiteEntrega: number;
+    fechaTerminado: number;
     proceso: 'Pendiente' | 'Terminado';
     usuarioFolio: string;
     enviadoPor: string;
@@ -21,3 +23,8 @@ export interface IDocumento
     usuarios: string[];
 }
 
+// export type IRegistroDoc = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaLimiteEntrega' | 'fechaTerminado' | 'ref'>;
+export interface IRegistroDoc extends Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaLimiteEntrega' | 'fechaTerminado' | 'ref'>
+{
+    file: IDatosArchivo;
+}

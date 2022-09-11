@@ -72,9 +72,9 @@ type DocumentoType {
   docUrl: String
   enviadoPor: String
   esInterno: Boolean
-  fechaLimiteEntrega: String
+  fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: String
+  fechaTerminado: Int
   folio: String
   identificadorDoc: String
   proceso: String
@@ -136,9 +136,9 @@ input DocumentoInput {
   docUrl: String
   enviadoPor: String
   esInterno: Boolean = false
-  fechaLimiteEntrega: String
+  fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: String
+  fechaTerminado: Int
   folio: String = null
   identificadorDoc: String
   proceso: String
