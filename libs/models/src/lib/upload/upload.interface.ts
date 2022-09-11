@@ -1,19 +1,17 @@
 import {Stream} from 'stream';
 
-export interface ISubirArchivo
+export interface IArchivo
 {
     filename: string;
     mimetype: string;
     encoding: string;
-    // createReadStream: () => Stream;
-    createReadStream: any;
+    createReadStream: () => Stream;
+    // createReadStream: any;
 }
 
-export interface IFile
+export interface IDatosArchivo
 {
-    id: string;
-    filepath: string;
-    mimetype: string;
-    encoding: string;
-    filename: string;
+    carpeta: string;
+    guardarLocal: boolean;
+    file: Promise<IArchivo[]>;
 }

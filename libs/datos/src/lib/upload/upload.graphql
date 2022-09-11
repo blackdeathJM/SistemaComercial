@@ -3,7 +3,7 @@
 #    subirArchivo(archivo: $archivo)
 #}
 
-mutation subirArchivo($file: ArchivoInput!)
+mutation subirArchivo($files: ArchivoInput!)
 {
-    subirArchivo(file: $file)
+    subirArchivo(files: $files)
 }

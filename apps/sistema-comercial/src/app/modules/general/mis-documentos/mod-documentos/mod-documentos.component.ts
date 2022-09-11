@@ -4,7 +4,6 @@ import {Subscription, tap} from 'rxjs';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {ISubirArchivo} from '#/libs/models/src/lib/upload/upload.interface';
 import {FormGroup} from '@angular/forms';
 
 @Component({
@@ -23,7 +22,6 @@ export class ModDocumentosComponent implements OnInit
     formDocs: FormGroup = this.fb.group({
         file: [null]
     });
-    file: ISubirArchivo;
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder)
     {
@@ -45,8 +43,7 @@ export class ModDocumentosComponent implements OnInit
 
     reg(): void
     {
-        const archivo = this.archivos;
-        this.subirArchivoGQL.mutate({file: {file: archivo}}, {context: {useMultipart: true}}).subscribe();
+        this.subirArchivoGQL.mutate({files: {file: this.archivos, guardarLocal: true, carpeta: 'Perfil'}}).subscribe();
     }
 
     cambiar(event: Event): void

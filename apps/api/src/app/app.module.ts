@@ -7,9 +7,10 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
 import config from '../config/config';
 import {AdminModule} from './admin/admin.module';
 import {GeneralModule} from './general/general.module';
-import {SubidaModule} from './upload/subida.module';
+import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {UploadScalar} from '@sistema-comercial/modelos/upload.scalar';
 import {GraphQLUpload} from 'graphql-upload';
+import {EventEmitterModule} from "@nestjs/event-emitter";
 
 
 @Module({
@@ -49,8 +50,9 @@ import {GraphQLUpload} from 'graphql-upload';
                     }
                 )
             }),
+            EventEmitterModule.forRoot({maxListeners: 20}),
             UploadScalar,
-            SubidaModule,
+            SubirArchivoModule,
             AdminModule,
             GeneralModule
         ],

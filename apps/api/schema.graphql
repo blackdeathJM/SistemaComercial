@@ -162,7 +162,7 @@ input DocAnoInput {
 }
 
 type Mutation {
-  subirArchivo(file: ArchivoInput!): Boolean!
+  subirArchivo(files: ArchivoInput!): [String!]!
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
@@ -175,6 +175,8 @@ type Mutation {
 }
 
 input ArchivoInput {
+  carpeta: String
+  guardarLocal: Boolean
   file: [Upload!]
 }
 
