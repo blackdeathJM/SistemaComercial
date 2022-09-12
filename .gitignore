@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 
 .angular
+/apps/api/src/public

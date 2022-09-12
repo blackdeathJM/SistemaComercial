@@ -12,31 +12,29 @@ export class SubirArchivosService
         const ano = new Date().getFullYear();
         const mes = new Date().toLocaleString('es-mx', {month: 'long'});
         const rutas: string[] = [];
+        const rutaBase = 'http://localhost:3333/graphql';
         try
         {
-            const rutaDeGuardado = files.carpeta === 'perfil' ? join(process.cwd(), `/apps/api/src/public/${files.carpeta}`) :
+            const rutaDeGuardado = files.carpeta === 'Perfil' ? join(process.cwd(), `/apps/api/src/public/${files.carpeta}`) :
                 join(process.cwd(), `/apps/api/src/public/${files.carpeta}/${ano}/${mes}`);
 
-            if (files.guardarLocal)
+            for (const file of await files.file)
             {
-                for (const file of await files.file)
+                const {createReadStream, filename} = await file;
+                const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
+                const rutaGuardar = join(rutaDeGuardado + `/${nvoNombre}`);
+
+                if (!fs.existsSync(rutaDeGuardado))
                 {
-                    const {createReadStream, filename} = await file;
-                    const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
-                    const rutaGuardar = join(rutaDeGuardado + `/${nvoNombre}`);
-
-                    if (!fs.existsSync(rutaDeGuardado))
-                    {
-                        fs.mkdirSync(rutaDeGuardado);
-                    }
-
-                    const stream = createReadStream();
-                    const salida = fs.createWriteStream(rutaGuardar);
-                    stream.pipe(salida);
-                    rutas.push(rutaGuardar);
+                    fs.mkdirSync(rutaDeGuardado);
                 }
-                return rutas;
+
+                const stream = createReadStream();
+                const salida = fs.createWriteStream(rutaGuardar);
+                stream.pipe(salida);
+                rutas.push(rutaGuardar);
             }
+            return rutas;
         } catch (e)
         {
             return [];

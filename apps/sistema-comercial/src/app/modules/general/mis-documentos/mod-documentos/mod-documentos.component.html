@@ -47,7 +47,7 @@
                 </mat-form-field>
             </div>
 
-            <file-upload simple class="bg-gray-600 border-gray-800 text-yellow-50">
+            <file-upload [formControl]="controlSubir" simple class="bg-gray-600 border-gray-800 text-yellow-50">
                 <ng-template let-file #placeholder>
                     <ng-container *ngIf="file; else emptyList">
                         {{file.name}}

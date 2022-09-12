@@ -1,7 +1,6 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {DocumentoDto} from '@sistema-comercial/modelos/documento.Dto';
+import {DocsUsuarioProcesoDto, DocumentoDto} from '@sistema-comercial/modelos/documento.Dto';
 import {DocumentosService} from './documentos.service';
-import {DocsUsuarioPendientes} from '@sistema-comercial/modelos/documento.types';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver
@@ -11,9 +10,9 @@ export class DocumentosResolver
     }
 
     @Query(() => [DocumentoDto], {defaultValue: []})
-    async docsUsuarioPendiente(@Args('datos') datos: DocsUsuarioPendientes): Promise<DocumentoDto[]>
+    async docsUsuarioProceso(@Args('datos') datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
-        return await this.documentosService.docsUsuarioPendiente(datos);
+        return await this.documentosService.docsUsuarioProceso(datos);
     }
 
     @Mutation(() => DocumentoDto, {nullable: false})

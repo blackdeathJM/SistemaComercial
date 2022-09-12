@@ -22,8 +22,6 @@ export type Scalars = {
 export type ArchivoInput = {
   carpeta?: InputMaybe<Scalars['String']>;
   file?: InputMaybe<Array<Scalars['Upload']>>;
-  guardarLocal?: InputMaybe<Scalars['Boolean']>;
-  ruta?: InputMaybe<Scalars['String']>;
 };
 
 export type AuthInput = {
@@ -70,7 +68,7 @@ export type DeptoType = {
   nombre?: Maybe<Scalars['String']>;
 };
 
-export type DocAnoInput = {
+export type DocsUsuarioProceso = {
   ano?: InputMaybe<Scalars['Int']>;
   proceso?: InputMaybe<Scalars['String']>;
   usuarios?: InputMaybe<Array<Scalars['String']>>;
@@ -86,9 +84,9 @@ export type DocumentoInput = {
   docUrl?: InputMaybe<Scalars['String']>;
   enviadoPor?: InputMaybe<Scalars['String']>;
   esInterno?: InputMaybe<Scalars['Boolean']>;
-  fechaLimiteEntrega?: InputMaybe<Scalars['String']>;
+  fechaLimiteEntrega?: InputMaybe<Scalars['Int']>;
   fechaRecepcion?: InputMaybe<Scalars['Int']>;
-  fechaTerminado?: InputMaybe<Scalars['String']>;
+  fechaTerminado?: InputMaybe<Scalars['Int']>;
   folio?: InputMaybe<Scalars['String']>;
   identificadorDoc?: InputMaybe<Scalars['String']>;
   proceso?: InputMaybe<Scalars['String']>;
@@ -109,9 +107,9 @@ export type DocumentoType = {
   docUrl?: Maybe<Scalars['String']>;
   enviadoPor?: Maybe<Scalars['String']>;
   esInterno?: Maybe<Scalars['Boolean']>;
-  fechaLimiteEntrega?: Maybe<Scalars['String']>;
+  fechaLimiteEntrega?: Maybe<Scalars['Int']>;
   fechaRecepcion?: Maybe<Scalars['Int']>;
-  fechaTerminado?: Maybe<Scalars['String']>;
+  fechaTerminado?: Maybe<Scalars['Int']>;
   folio?: Maybe<Scalars['String']>;
   identificadorDoc?: Maybe<Scalars['String']>;
   proceso?: Maybe<Scalars['String']>;
@@ -253,14 +251,14 @@ export type MutationSubirArchivoArgs = {
 export type Query = {
   __typename?: 'Query';
   deptos: Array<DeptoType>;
-  docsUsuarioPendiente: Array<DocumentoType>;
+  docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
 };
 
 
-export type QueryDocsUsuarioPendienteArgs = {
-  datos: DocAnoInput;
+export type QueryDocsUsuarioProcesoArgs = {
+  datos: DocsUsuarioProceso;
 };
 
 export type RolInput = {
@@ -372,14 +370,14 @@ export type EmpleadosSesionQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type EmpleadosSesionQuery = { __typename?: 'Query', empleadosSesion: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo: boolean, calle?: string | null, colonia?: string | null, fechaBaja?: any | null, fechaIngreso?: any | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, rol: Array<{ __typename?: 'RolType', id?: string | null, tipoAcceso?: string | null, oculto?: boolean | null }> } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
 
-export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null };
+export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null };
 
 export type RegDocMutationVariables = Exact<{
   datos: DocumentoInput;
 }>;
 
 
-export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: string | null, fechaTerminado?: string | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null } };
+export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null } };
 
 export type SubirArchivoMutationVariables = Exact<{
   files: ArchivoInput;

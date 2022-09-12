@@ -4,7 +4,7 @@ import {Subscription, tap} from 'rxjs';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
 
 @Component({
@@ -21,6 +21,7 @@ export class ModDocumentosComponent implements OnInit
     empleadosSesion: IEmpleado[];
 
     formDocs: FormGroup;
+    controlSubir = new FormControl();
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder)
     {
@@ -45,13 +46,12 @@ export class ModDocumentosComponent implements OnInit
 
     reg(): void
     {
-        console.log('datos del formulario', this.formDocs.value);
-        // this.subirArchivoGQL.mutate({files: {file: this.archivos, guardarLocal: true, carpeta: 'Perfil'}}).subscribe();
+        this.subirArchivoGQL.mutate({files: {file: this.controlSubir.value, carpeta: 'Perfil'}}).subscribe();
     }
 
-    cambiar(event: Event): void
-    {
-        this.archivos = event.target['files'];
-    }
+    // cambiar(event: Event): void
+    // {
+    //     this.archivos = event.target['files'];
+    // }
 }
 

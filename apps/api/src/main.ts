@@ -8,15 +8,16 @@ import {graphqlUploadExpress} from 'graphql-upload';
 async function bootstrap(): Promise<void>
 {
     const app = await NestFactory.create(AppModule);
-    const globalPrefix = 'graphql';
+    // const globalPrefix = 'api';
     app.useGlobalPipes(new ValidationPipe());
     app.use(graphqlUploadExpress());
     app.enableCors();
-    app.setGlobalPrefix(globalPrefix);
+    // app.setGlobalPrefix('/api');
     const configService = app.get(ConfigService);
     const port = configService.get('port') || 3000;
     await app.listen(port);
-    Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+    console.log('url' + await app.getUrl());
+    Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 }
 
 bootstrap().then();

@@ -152,10 +152,10 @@ type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
-  docsUsuarioPendiente(datos: DocAnoInput!): [DocumentoType!]!
+  docsUsuarioProceso(datos: DocsUsuarioProceso!): [DocumentoType!]!
 }
 
-input DocAnoInput {
+input DocsUsuarioProceso {
   ano: Int
   proceso: String
   usuarios: [String!]
@@ -176,7 +176,6 @@ type Mutation {
 
 input ArchivoInput {
   carpeta: String
-  guardarLocal: Boolean
   file: [Upload!]
 }
 

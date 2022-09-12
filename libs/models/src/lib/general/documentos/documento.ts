@@ -3,10 +3,10 @@ import {required} from '@rxweb/reactive-form-validators';
 
 export class Documento implements IDocumento
 {
-    acuseUrl: string;
     ano: number;
     @required({message: 'El asunto es requerido'})
     asunto: string;
+    acuseUrl: string;
     comentario: string;
     @required({message: 'La dependencia es requerida'})
     dependencia: string;

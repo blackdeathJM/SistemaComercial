@@ -1,8 +1,7 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {DocumentoDto, DocumentoType} from '@sistema-comercial/modelos/documento.Dto';
+import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '@sistema-comercial/modelos/documento.Dto';
 import {Model} from 'mongoose';
-import {DocsUsuarioPendientes} from '@sistema-comercial/modelos/documento.types';
 
 @Injectable()
 export class DocumentosService
@@ -12,7 +11,7 @@ export class DocumentosService
     }
 
 // Filtrar los documentos por usuario y por ano
-    async docsUsuarioPendiente(datos: DocsUsuarioPendientes): Promise<DocumentoDto[]>
+    async docsUsuarioProceso(datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
         try
         {

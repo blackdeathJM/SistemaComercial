@@ -1,5 +1,5 @@
 import {IDocumento} from './documento.interface';
-import {Field, ID, InputType, Int, ObjectType, PickType} from '@nestjs/graphql';
+import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty} from 'class-validator';
 import {Document} from 'mongoose';
@@ -80,7 +80,12 @@ export class DocumentoDto implements IDocumento
 export type DocumentoType = DocumentoDto & Document;
 export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentoDto);
 
-@InputType('DocAnoInput')
-export class DocsUsuarioPendientes extends PickType(DocumentoDto, ['ano', 'usuarios', 'proceso'], InputType)
+@InputType('DocsUsuarioProceso')
+export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'usuarios', 'proceso'], InputType)
+{
+}
+
+@InputType('RegistroDocsInput')
+export class RegistroDocsDto extends OmitType(DocumentoDto, ['_id', 'acuseUrl', 'fechaLimiteEntrega', 'fechaTerminado', 'ref', 'folio', 'usuarioFolio'], InputType)
 {
 }

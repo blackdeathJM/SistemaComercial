@@ -7,8 +7,6 @@ export class UploadDto implements IDatosArchivo
 {
     @Field({nullable: true})
     carpeta: string;
-    @Field(() => Boolean, {nullable: true})
-    guardarLocal: boolean;
     @Field(() => [GraphQLUpload], {nullable: true})
     file: Promise<IArchivo[]>;
 }
