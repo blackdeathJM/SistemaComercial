@@ -2,7 +2,7 @@
     "name": "sistema-comercial",
     "version": "14.2.0",
     "engines": {
-        "node": "16.15.0"
+        "node": "16.17.0"
     },
     "description": "Sistema comercial para sistemas de agua potable",
     "author": "BLACKDEATH",

@@ -14,10 +14,10 @@ async function bootstrap(): Promise<void>
     app.enableCors();
     // app.setGlobalPrefix('/api');
     const configService = app.get(ConfigService);
-    const port = configService.get('port') || 3000;
-    await app.listen(port);
+    const PORT = configService.get('port') || 3000;
+    await app.listen(PORT);
     console.log('url' + await app.getUrl());
-    Logger.log(`🚀 Application is running on: http://localhost:${port}`);
+    Logger.log(`🚀 Application is running on: http://localhost:${PORT}`);
 }
 
 bootstrap().then();

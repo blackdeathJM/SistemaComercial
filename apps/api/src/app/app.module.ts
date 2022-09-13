@@ -10,8 +10,8 @@ import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {UploadScalar} from '@sistema-comercial/modelos/upload.scalar';
 import {GraphQLUpload} from 'graphql-upload';
-import {EventEmitterModule} from "@nestjs/event-emitter";
-
+import {ServeStaticModule} from '@nestjs/serve-static';
+import {join} from 'path';
 
 @Module({
     imports:
@@ -29,12 +29,6 @@ import {EventEmitterModule} from "@nestjs/event-emitter";
                     'subscriptions-transport-ws': true,
                 },
                 autoSchemaFile: 'apps/api/schema.graphql',
-                // cors: {
-                //     origin: 'http://localhost:4200',
-                //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-                //     preflightContinue: true,
-                //     optionsSuccessStatus: 204,
-                // },
                 cors: {origin: '*'},
                 buildSchemaOptions: {dateScalarMode: 'timestamp'},
                 introspection: true,
@@ -50,11 +44,11 @@ import {EventEmitterModule} from "@nestjs/event-emitter";
                     }
                 )
             }),
-            EventEmitterModule.forRoot({maxListeners: 20}),
             UploadScalar,
             SubirArchivoModule,
             AdminModule,
-            GeneralModule
+            GeneralModule,
+            ServeStaticModule.forRoot({rootPath: join(__dirname, '..', 'sistema-comercial'), exclude: ['/api*']})
         ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}]
 })
