@@ -24,7 +24,9 @@ import {CommonModule} from '@angular/common';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
-import {GeneralModule} from '@s-app/general/general.module';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 
 const routerConfig: ExtraOptions =
     {
@@ -74,6 +76,8 @@ const routerConfig: ExtraOptions =
             NgxTrimDirectiveModule,
             // modulos
             DeptosModule,
+            provideFirebaseApp(() => initializeApp(environment.firebase)),
+            provideStorage(() => getStorage()),
         ],
     bootstrap:
         [

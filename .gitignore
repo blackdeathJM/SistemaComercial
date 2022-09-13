@@ -47,3 +47,8 @@ Thumbs.db
 
 .angular
 /apps/api/src/public
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
