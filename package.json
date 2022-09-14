@@ -13,7 +13,7 @@
         "api:dev": "nx serve api",
         "generar": "npx graphql-codegen --config libs/datos/codegen.yml",
         "build": "nx build",
-        "start": "node dist/apps/api/main",
+        "start": "ng serve",
         "start:prod-api": "node dist/apps/api/main",
         "update": "ng update @nrwl/workspace",
         "watch": "nx build --watch --configuration development",
