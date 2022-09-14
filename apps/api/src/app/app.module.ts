@@ -10,8 +10,6 @@ import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {UploadScalar} from '@sistema-comercial/modelos/upload.scalar';
 import {GraphQLUpload} from 'graphql-upload';
-import {ServeStaticModule} from '@nestjs/serve-static';
-import {join} from 'path';
 
 @Module({
     imports:
@@ -47,8 +45,7 @@ import {join} from 'path';
             UploadScalar,
             SubirArchivoModule,
             AdminModule,
-            GeneralModule,
-            ServeStaticModule.forRoot({rootPath: join(__dirname, '..', 'sistema-comercial'), exclude: ['/api*']})
+            GeneralModule
         ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}]
 })
