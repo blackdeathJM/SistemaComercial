@@ -1,16 +1,17 @@
-/* eslint-disable */
 export default {
-    displayName: 'apollo-config',
+    displayName: 'sistema-comercial',
     preset: '../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     globals: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         'ts-jest': {
             tsconfig: '<rootDir>/tsconfig.spec.json',
             stringifyContentPathRegex: '\\.(html|svg)$',
         },
     },
-    coverageDirectory: '../../coverage/libs/apollo-config',
+    coverageDirectory: '../../coverage/apps/prueba',
     transform: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
     },
     transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],

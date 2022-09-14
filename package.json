@@ -1,9 +1,6 @@
 {
     "name": "sistema-comercial",
     "version": "14.2.0",
-    "engines": {
-        "node": "16.17.0"
-    },
     "description": "Sistema comercial para sistemas de agua potable",
     "author": "BLACKDEATH",
     "private": true,
@@ -67,6 +64,7 @@
         "dotenv": "^16.0.2",
         "express": "^4.18.1",
         "fs-extra": "^10.1.0",
+        "lodash": "4.17.21",
         "graphql": "^16.6.0",
         "graphql-subscriptions": "^2.0.0",
         "graphql-tools": "^8.3.6",
@@ -94,6 +92,7 @@
         "react": "^18.2.0",
         "reflect-metadata": "^0.1.13",
         "rxjs": "7.5.6",
+        "autoprefixer": "10.4.9",
         "subscriptions-transport-ws": "^0.11.0",
         "sweetalert2": "^11.4.32",
         "tslib": "2.4.0",
@@ -146,7 +145,6 @@
         "@types/react": "^18.0.19",
         "@typescript-eslint/eslint-plugin": "5.37.0",
         "@typescript-eslint/parser": "5.37.0",
-        "autoprefixer": "10.4.9",
         "chroma-js": "2.4.2",
         "cypress": "^10.7.0",
         "eslint": "8.22.0",
@@ -157,7 +155,6 @@
         "jasmine-core": "4.4.0",
         "jest": "29.0.3",
         "jest-preset-angular": "~12.2.2",
-        "lodash": "4.17.21",
         "nx": "14.7.5",
         "postcss": "8.4.16",
         "prettier": "^2.7.1",

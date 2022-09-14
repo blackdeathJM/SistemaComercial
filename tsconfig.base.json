@@ -12,13 +12,10 @@
         "moduleResolution": "node",
         "importHelpers": true,
         "target": "es2017",
-        "module": "es2020",
+        "module": "esnext",
         "lib": [ "es2020", "dom", "esnext.asynciterable" ],
         "removeComments": true,
         "paths": {
-            "@sistema-comercial/apollo-config": [
-                "libs/apollo-config/src/index.ts"
-            ],
             "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
             "@sistema-comercial/modelos/*": [
                 "libs/models/src/lib/upload/*",
