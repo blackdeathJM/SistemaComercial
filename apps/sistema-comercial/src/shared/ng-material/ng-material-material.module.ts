@@ -15,7 +15,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
@@ -61,7 +61,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
             MatNativeDateModule,
             MatMomentDateModule,
             MatCheckboxModule
-        ]
+        ],
+    providers: [{provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}]
 })
 export class NgMaterialMaterialModule
 {

@@ -13,6 +13,5 @@ export class Depto implements IDepto
     @maxLength({value: 3, message: 'La longitud maxima es de 3 caracteres'})
     @upperCase()
     centroGestor: string;
-
     _id?: string;
 }

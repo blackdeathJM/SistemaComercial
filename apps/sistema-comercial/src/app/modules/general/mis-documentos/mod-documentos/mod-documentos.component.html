@@ -19,18 +19,29 @@
                 <input matInput type="text" formControlName="asunto"/>
                 <mat-error>{{formDocs.controls.asunto['errorMessage']}}</mat-error>
             </mat-form-field>
-            <mat-form-field>
-                <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
-                <mat-select multiple formControlName="usuarios">
-                    <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
-                </mat-select>
-                <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="fuse-mat-textarea flex-auto">
-                <mat-label>Observaciones</mat-label>
-                <textarea matInput></textarea>
-            </mat-form-field>
+            <div class="flex gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
+                    <mat-select multiple formControlName="usuarios">
+                        <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                    </mat-select>
+                    <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Selecciona el tipo de documento</mat-label>
+                    <mat-select formControlName="tipoDoc">
+                        <mat-option [value]="'Oficio'">Oficio</mat-option>
+                        <mat-option [value]="'Memorandum'">Memorandum</mat-option>
+                        <mat-option [value]="'Circular'">Circular</mat-option>
+                        <mat-option [value]="'Otro'">Otro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
+            <mat-form-field class="fuse-mat-textarea flex-auto">
+                <mat-label>Comentario</mat-label>
+                <textarea matInput formControlName="comentario"></textarea>
+            </mat-form-field>
             <div class="flex gap-4">
                 <mat-form-field class="flex-auto">
                     <mat-label>Fecha recepcion</mat-label>
@@ -41,33 +52,32 @@
                 </mat-form-field>
                 <mat-form-field class="flex-auto">
                     <mat-label>Fecha entrega</mat-label>
-                    <input matInput [matDatepicker]="fechaE" placeholder="Formato DD/MM/YYY">
+                    <input matInput [matDatepicker]="fechaE" placeholder="Formato DD/MM/YYY" formControlName="fechaLimiteEntrega">
                     <mat-datepicker-toggle matSuffix [for]="fechaE"></mat-datepicker-toggle>
                     <mat-datepicker #fechaE></mat-datepicker>
                 </mat-form-field>
             </div>
+            <file-upload simple class="bg-gray-600 border-gray-800 text-yellow-50" formControlName="file">
+                <ng-template let-file #placeholder>
+                    <ng-container *ngIf="file; else emptyList">
+                        {{file.name}}
+                    </ng-container>
+                    <ng-template #emptyList>
+                        Selecciona un solo archivo en formato pdf
+                    </ng-template>
+                </ng-template>
+                <ng-template let-control="control" #button>
+                    Examinar
+                </ng-template>
+            </file-upload>
 
-<!--            <file-upload simple class="bg-gray-600 border-gray-800 text-yellow-50">-->
-<!--                <ng-template let-file #placeholder>-->
-<!--                    <ng-container *ngIf="file; else emptyList">-->
-<!--                        {{file.name}}-->
-<!--                    </ng-container>-->
-<!--                    <ng-template #emptyList>-->
-<!--                        Selecciona un solo archivo en formato pdf-->
-<!--                    </ng-template>-->
-<!--                </ng-template>-->
-<!--                <ng-template let-control="control" #button>-->
-<!--                    Examinar-->
-<!--                </ng-template>-->
-<!--            </file-upload>-->
-
-                        <input type="file" formControlName="file" (change)="cambiar($event)" multiple
-                               class="block mb-4 w-full text-1xl text-gray-900 bg-gray-50 rounded-lg
-                                           border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700
-                                           dark:border-gray-600 dark:placeholder-gray-400" id="large_size">
-
+            <!--            <input type="file" formControlName="file" (change)="cambiar($event)" accept="application/pdf"-->
+            <!--                   class="block mb-4 w-full text-1xl text-gray-900 bg-gray-50 rounded-lg-->
+            <!--                                           border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700-->
+            <!--                                           dark:border-gray-600 dark:placeholder-gray-400" id="large_size">-->
             <mat-checkbox class="my-4" color="primary" [checked]="false" formControlName="esInterno">Es interno?</mat-checkbox>
         </div>
     </form>
 </mat-dialog-content>
+<div>{{fechaHoraActual | date: 'short'}}</div>
 <app-registros (reg)="reg()"></app-registros>

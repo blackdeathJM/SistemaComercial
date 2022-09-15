@@ -1,3 +1,5 @@
+import {IDatosArchivo} from '../../upload/upload.interface';
+
 export interface IDocumento
 {
     _id?: string;
@@ -21,8 +23,8 @@ export interface IDocumento
     usuarios: string[];
 }
 
-export type IRegistroDoc = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaLimiteEntrega' | 'fechaTerminado' | 'ref' | 'usuarioFolio'>;
-// export interface IRegistroDoc extends Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaLimiteEntrega' | 'fechaTerminado' | 'ref'>
-// {
-//     file: IDatosArchivo;
-// }
+// export type IRegistroDoc = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaLimiteEntrega' | 'fechaTerminado' | 'ref' | 'usuarioFolio'>;
+export interface IDocumentoReg extends Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref'>
+{
+    file: IDatosArchivo;
+}

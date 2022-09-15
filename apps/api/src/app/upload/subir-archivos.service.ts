@@ -12,7 +12,6 @@ export class SubirArchivosService
         const ano = new Date().getFullYear();
         const mes = new Date().toLocaleString('es-mx', {month: 'long'});
         const rutas: string[] = [];
-        const rutaBase = 'http://localhost:3333/graphql';
         try
         {
             const rutaDeGuardado = files.carpeta === 'Perfil' ? join(process.cwd(), `/apps/api/src/public/${files.carpeta}`) :
