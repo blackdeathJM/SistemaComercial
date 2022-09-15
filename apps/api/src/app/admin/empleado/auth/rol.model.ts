@@ -1,4 +1,4 @@
-import {IRol} from '@sistema-comercial/modelos/auth/auth.interface';
+import {IRol} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 export const ROLES_POR_DEFECTO: IRol[] =
     [

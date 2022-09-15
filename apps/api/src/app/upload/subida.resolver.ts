@@ -1,6 +1,6 @@
 import {Args, Mutation, Resolver} from '@nestjs/graphql';
-import {UploadDto} from '@sistema-comercial/modelos/upload.dto';
 import {SubirArchivosService} from './subir-archivos.service';
+import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 
 @Resolver()
 export class SubidaResolver

@@ -1,11 +1,11 @@
 import {Args, Mutation, Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
 import {EmpleadoService} from './empleado.service';
 import {DeptosService} from '../deptos/deptos.service';
-import {DeptoDto} from '@sistema-comercial/modelos/depto.dto';
-import {IDepto} from '@sistema-comercial/modelos/depto.interface';
-import {EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
-import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
 import {NotFoundException} from '@nestjs/common';
+import { EmpleadoDto } from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
+import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
 
 @Resolver(() => EmpleadoDto)
 export class EmpleadoResolver

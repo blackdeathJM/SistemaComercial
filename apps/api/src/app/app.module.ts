@@ -3,13 +3,13 @@ import {GraphQLModule} from '@nestjs/graphql';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
-import {ConfigModule, ConfigService} from '@nestjs/config';
+import {ConfigModule} from '@nestjs/config';
 import config from '../config/config';
 import {AdminModule} from './admin/admin.module';
 import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
-import {UploadScalar} from '@sistema-comercial/modelos/upload.scalar';
 import {GraphQLUpload} from 'graphql-upload';
+import {environment} from '../environments/environment';
 
 @Module({
     imports:
@@ -32,17 +32,17 @@ import {GraphQLUpload} from 'graphql-upload';
                 introspection: true,
                 context: ({req}) => ({req}),
             }),
-            MongooseModule.forRootAsync({
-                imports: [ConfigModule],
-                inject: [ConfigService],
-                useFactory: async (configService: ConfigService) => (
-                    {
-                        uri: configService.get('database.uriMongo'),
-                        useNewUrlParser: true
-                    }
-                )
-            }),
-            UploadScalar,
+            MongooseModule.forRoot(environment.uriMongo),
+            // MongooseModule.forRootAsync({
+            //     imports: [ConfigModule],
+            //     inject: [ConfigService],
+            //     useFactory: async (configService: ConfigService) => (
+            //         {
+            //             uri: configService.get('database.uriMongo'),
+            //             useNewUrlParser: true
+            //         }
+            //     )
+            // }),
             SubirArchivoModule,
             AdminModule,
             GeneralModule

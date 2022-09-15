@@ -1,6 +1,6 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {DocsUsuarioProcesoDto, DocumentoDto} from '@sistema-comercial/modelos/documento.Dto';
 import {DocumentosService} from './documentos.service';
+import {DocsUsuarioProcesoDto, DocumentoDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver

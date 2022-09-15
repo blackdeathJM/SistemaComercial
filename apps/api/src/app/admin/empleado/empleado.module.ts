@@ -4,8 +4,8 @@ import {EmpleadoResolver} from './empleado.resolver';
 import {MongooseModule} from '@nestjs/mongoose';
 import {AuthModule} from './auth/auth.module';
 import {DeptosService} from '../deptos/deptos.service';
-import {SCHEMA_DEPTO, DeptoDto} from '@sistema-comercial/modelos/depto.dto';
-import {SCHEMA_EMPLEADO, EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
+import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
 
 @Module({
     imports: [MongooseModule.forFeature([

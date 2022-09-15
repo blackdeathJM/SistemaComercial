@@ -2,6 +2,15 @@
     "extends": "../../tsconfig.base.json",
     "files": [],
     "include": [],
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "paths": {
+            "#api/*": ["./*"],
+            "@api-environments:/*": ["apps/api/src/environments/*"],
+            "@api-admin/*": ["apps/api/src/app/admin/deptos/*", "apps/api/src/app/admin/empleado/auth/*", "apps/api/src/app/admin/empleado/*"],
+            "@api-general/*": ["apps/api/src/app/general/*"]
+        }
+    },
     "references": [
         {
             "path": "./tsconfig.app.json"

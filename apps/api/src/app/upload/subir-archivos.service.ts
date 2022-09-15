@@ -1,8 +1,8 @@
 import {Injectable} from '@nestjs/common';
-import {UploadDto} from '@sistema-comercial/modelos/upload.dto';
 import {randomUUID} from 'crypto';
 import {join} from 'path';
 import * as fs from 'fs';
+import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 
 @Injectable()
 export class SubirArchivosService

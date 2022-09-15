@@ -1,7 +1,7 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {DeptosService} from './deptos.service';
-import {DeptoDto} from '@sistema-comercial/modelos/depto.dto';
-import {IDepto} from '@sistema-comercial/modelos/depto.interface';
+import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
+import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
 
 @Resolver(() => DeptoDto)
 export class DeptosResolver

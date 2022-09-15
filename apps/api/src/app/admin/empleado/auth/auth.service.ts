@@ -5,12 +5,12 @@ import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
 import {ROLES_POR_DEFECTO} from './rol.model';
-import {EmpleadoDto, EmpleadoType, ModificadoDto} from '@sistema-comercial/modelos/empleado.dto';
-import {IEmpleado, IModificado} from '@sistema-comercial/modelos/empleado.interface';
-import {AuthDto, RolDto} from '@sistema-comercial/modelos/auth/auth.dto';
-import {CambioContrsenaDto} from '@sistema-comercial/modelos/auth/auth.input.dto';
-import {ILoginRespuesta} from '@sistema-comercial/modelos/auth/login.dto';
-import {IDatosSesion} from '@sistema-comercial/modelos/auth/auth.interface';
+import {EmpleadoDto, EmpleadoType, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {AuthDto, RolDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {IEmpleado, IModificado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
+import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 @Injectable()
 export class AuthService

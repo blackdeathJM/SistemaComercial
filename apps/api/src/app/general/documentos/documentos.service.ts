@@ -1,7 +1,7 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '@sistema-comercial/modelos/documento.Dto';
 import {Model} from 'mongoose';
+import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 
 @Injectable()
 export class DocumentosService
