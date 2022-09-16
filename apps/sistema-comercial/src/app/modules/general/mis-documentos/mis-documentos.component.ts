@@ -1,21 +1,36 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
+import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {tap} from 'rxjs';
+import {STATE_DOCS} from '@s-app/general/general.state';
 
 @Component({
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
     styleUrls: ['./mis-documentos.component.scss']
 })
-export class MisDocumentosComponent
+export class MisDocumentosComponent implements OnInit
 {
     docs: IDocumento[];
     docSeleccionado: IDocumento;
     abrirP: boolean = false;
+    cargandoDatos = true;
 
-    constructor(private dRef: MatDialog)
+    constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL)
     {
+    }
+
+    ngOnInit(): void
+    {
+        this.docsUsuarioProcesoGQL.watch({datos: {ano: new Date().getFullYear(), enviadoPor: STATE_DATOS_SESION()._id}}).valueChanges
+            .pipe(tap((res) =>
+            {
+                this.cargandoDatos = false;
+                this.docs = STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
+            })).subscribe();
     }
 
     seleccionarDoc(): void

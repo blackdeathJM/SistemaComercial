@@ -38,9 +38,9 @@ export class EmpleadoResolver
         return this.deptosService.deptoPorId(parent.deptoId);
     }
 
-    @ResolveField(() => EmpleadoDto, {nullable: true})
-    async buscarEmpleadoPorId(@Args('_id') _id: string): Promise<IEmpleado | NotFoundException>
-    {
-        return await this.empleadoService.buscarEmpleadoPorId(_id);
-    }
+    // @ResolveField(() => EmpleadoDto, {nullable: true})
+    // async buscarEmpleadoPorId(@Args('_id') _id: string): Promise<IEmpleado | NotFoundException>
+    // {
+    //     return await this.empleadoService.buscarEmpleadoPorId(_id);
+    // }
 }

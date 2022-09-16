@@ -33,7 +33,6 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
     {
         this.matDrawer.openedChange.subscribe((opened) =>
         {
-            console.log('opened', opened);
             if (!opened)
             {
                 this.cdr.reattach();

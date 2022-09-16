@@ -48,7 +48,7 @@ export class DocumentoDto implements IDocumento
     @Prop()
     @IsNotEmpty({message: 'Es necesaria la fecha de recepcion'})
     fechaRecepcion: number;
-    @Field(() => Int, {nullable: true})
+    @Field(() => Int, {nullable: true, defaultValue: null})
     @Prop()
     fechaTerminado: number;
     @Field({nullable: true, defaultValue: null})
@@ -80,12 +80,12 @@ export class DocumentoDto implements IDocumento
 export type DocumentoType = DocumentoDto & Document;
 export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentoDto);
 
-@InputType('DocsUsuarioProceso')
-export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'usuarios', 'proceso'], InputType)
+@InputType('DocsUsuarioProcesoInput')
+export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'enviadoPor'], InputType)
 {
 }
 
-@InputType('RegistroDocsInput')
-export class RegistroDocsDto extends OmitType(DocumentoDto, ['_id', 'acuseUrl', 'fechaLimiteEntrega', 'fechaTerminado', 'ref', 'folio', 'usuarioFolio'], InputType)
+@InputType('DocumentoRegInput')
+export class DocumentoRegDto extends OmitType(DocumentoDto, ['_id', 'acuseUrl', 'fechaTerminado', 'ref', 'folio'], InputType)
 {
 }

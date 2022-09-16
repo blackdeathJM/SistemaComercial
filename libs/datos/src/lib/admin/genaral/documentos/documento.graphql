@@ -1,7 +1,19 @@
-mutation regDoc($datos: DocumentoInput!)
+mutation regDoc($datos: DocumentoRegInput!)
 {
     regDoc(datos: $datos)
     {
         ...fragDoc
+    }
+}
+
+query docsUsuarioProceso($datos: DocsUsuarioProcesoInput!)
+{
+    docsUsuarioProceso(datos: $datos)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
     }
 }

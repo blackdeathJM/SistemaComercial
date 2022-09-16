@@ -1,13 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {EmpleadosSesionGQL, SubirArchivoGQL} from '#/libs/datos/src';
+import {EmpleadosSesionGQL, RegDocGQL, SubirArchivoGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
-import {Storage, ref, uploadBytes, listAll, getDownloadURL} from '@angular/fire/storage';
-import moment from "moment";
+import {Storage, ref, uploadBytes, getDownloadURL,} from '@angular/fire/storage';
+import {IDocumento, IDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {GeneralService} from '@s-app/services/general.service';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {v4 as uuidv4} from 'uuid';
+import {MatDialog} from '@angular/material/dialog';
+import {STATE_DOCS} from '@s-app/general/general.state';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-documentos',
@@ -22,9 +28,11 @@ export class ModDocumentosComponent implements OnInit
     subscripcion: Subscription = new Subscription();
     empleadosSesion: IEmpleado[];
     formDocs: FormGroup;
-    fechaHoraActual;
+    cargando = false;
+    tiposDoc = TIPOS_DOCUMENTO;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder, private storage: Storage)
+    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private subirArchivoGQL: SubirArchivoGQL, private fb: RxFormBuilder, private storage: Storage,
+                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService)
     {
     }
 
@@ -45,52 +53,85 @@ export class ModDocumentosComponent implements OnInit
                 this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IEmpleado[]);
             }
         })).subscribe());
-
-        this.obtenerDocCloudStoreFireBase();
     }
 
     reg(): void
     {
-        const {file, fechaRecepcion, fechaLimiteEntrega} = this.formDocs.value;
-        const fechaHora =
-            {
-                ...fechaRecepcion._i,
-                hour: new Date().getHours(),
-                minutes: new Date().getMinutes()
-            };
-        const fechaRecepcionConv = moment(fechaHora).unix();
-        console.log('datos estraidos', fechaRecepcionConv, new Date().getHours());
-
-        this.fechaHoraActual = moment.unix(fechaRecepcionConv);
-        // const docRef = ref(this.storage, `SIMAPAS/${this.controlSubir.value[0]}`);
-        // uploadBytes(docRef, this.controlSubir.value[0]).then((res) =>
-        // {
-        //     const url = getDownloadURL(res.ref);
-        // }).catch(err => console.log('error', err))
-        //     .finally(() => console.log('final'));
-
-        // this.subirArchivoGQL.mutate({files: {file: this.controlSubir.value, carpeta: 'Perfil'}}).subscribe();
-    }
-
-    obtenerDocCloudStoreFireBase(): void
-    {
-
-        const docsRef = ref(this.storage, 'SIMAPAS');
-        listAll(docsRef).then(async (res) =>
+        // this.fechaHoraActual = moment.unix(fechaRecepcionConv);
+        this.cargando = true;
+        try
         {
-            for (const elemento of res.items)
+            const ano = new Date().getFullYear();
+            const mes = new Date().toLocaleString('es-mx', {month: 'long'});
+            const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
+
+            const nombreArchivo = ano + '-' + uuidv4() + '.' + file[0].name.split('.').pop();
+
+            const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
+
+            uploadBytes(docRef, file[0]).then(async (res) =>
             {
-                console.log('item', elemento);
-                const url = await getDownloadURL(elemento);
-                console.log('url', url);
-            }
-        }).catch(err => console.log('error obtener', err));
-        // list(docsRef).then(res => console.log('-----', res)).catch(err => console.log('errro', err));
+                const url = await getDownloadURL(res.ref);
+                if (url)
+                {
+                    const regDocumento: IDocumentoReg =
+                        {
+                            ano,
+                            usuarioFolio: null,
+                            fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
+                            fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : null,
+                            enviadoPor: STATE_DATOS_SESION()._id,
+                            proceso: 'Pendiente',
+                            tipoDoc,
+                            docUrl: url,
+                            ...resto,
+                        };
+                    this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento}).pipe(tap((respDoc) =>
+                    {
+                        if (respDoc.data)
+                        {
+                            this.cargando = false;
+                            const elementos = STATE_DOCS();
+                            STATE_DOCS([...elementos, respDoc.data.regDoc as IDocumento]);
+                        }
+                    })).subscribe());
+                }
+
+            }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
+                .finally(() => this.cerrar());
+
+            // this.subirArchivoGQL.mutate({files: {file: this.controlSubir.value, carpeta: 'Perfil'}}).subscribe();
+        } catch (e)
+        {
+            this.ngxToastService.alertaToast('Ocurrio un error', e);
+            this.cerrar();
+        }
     }
 
-    cambiar(event: Event): void
+    cerrar(): void
     {
-        this.archivos = event.target['files'];
+        this.mdr.closeAll();
     }
+
+    // obtenerDocCloudStoreFireBase(): void
+    // {
+    //
+    //     const docsRef = ref(this.storage, 'SIMAPAS');
+    //     listAll(docsRef).then(async (res) =>
+    //     {
+    //         for (const elemento of res.items)
+    //         {
+    //             console.log('item', elemento);
+    //             const url = await getDownloadURL(elemento);
+    //             console.log('url', url);
+    //         }
+    //     }).catch(err => console.log('error obtener', err));
+    //     //list(docsRef).then(res => console.log('-----', res)).catch(err => console.log('errro', err));
+    // }
+
+    // cambiar(event: Event): void
+    // {
+    //     this.archivos = event.target['files'];
+    // }
 }
 

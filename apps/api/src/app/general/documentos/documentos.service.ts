@@ -1,7 +1,8 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoRegDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
 
 @Injectable()
 export class DocumentosService
@@ -15,14 +16,14 @@ export class DocumentosService
     {
         try
         {
-            return await this.documento.find({usuarios: datos.usuarios}).exec();
+            return await this.documento.find().exec();
         } catch (e)
         {
             throw new ConflictException({message: e});
         }
     }
 
-    async regDoc(datos: DocumentoDto): Promise<DocumentoDto>
+    async regDoc(datos: DocumentoRegDto): Promise<IDocumento>
     {
         try
         {

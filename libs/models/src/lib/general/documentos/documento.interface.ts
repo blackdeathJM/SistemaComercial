@@ -1,4 +1,4 @@
-import {IDatosArchivo} from '../../upload/upload.interface';
+import {IEmpleado} from '../../admin/empleado/empleado.interface';
 
 export interface IDocumento
 {
@@ -21,10 +21,9 @@ export interface IDocumento
     ano: number;
     ref: string[];
     usuarios: string[];
+    //Resolve
+    resolveEmpleado?: IEmpleado;
 }
 
-// export type IRegistroDoc = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaLimiteEntrega' | 'fechaTerminado' | 'ref' | 'usuarioFolio'>;
-export interface IDocumentoReg extends Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref'>
-{
-    file: IDatosArchivo;
-}
+export const TIPOS_DOCUMENTO = ['Oficio', 'Memorandum', 'Circular', 'Otro'];
+export type IDocumentoReg = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref'>;

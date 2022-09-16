@@ -35,7 +35,6 @@ type EmpleadoType {
   auth: AuthType
   deptoId: String
   deptoEmpleado: DeptoType
-  buscarEmpleadoPorId(_id: String!): EmpleadoType
 }
 
 """
@@ -82,6 +81,7 @@ type DocumentoType {
   tipoDoc: String
   usuarioFolio: String
   usuarios: [String!]
+  resolveEmpleado: EmpleadoType!
 }
 
 input AuthInput {
@@ -117,7 +117,6 @@ input EmpleadoInput {
   auth: AuthInput = null
   deptoId: String
   deptoEmpleado: DeptoInput
-  buscarEmpleadoPorId: EmpleadoInput
 }
 
 input DeptoInput {
@@ -138,7 +137,7 @@ input DocumentoInput {
   esInterno: Boolean = false
   fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: Int
+  fechaTerminado: Int = null
   folio: String = null
   identificadorDoc: String
   proceso: String
@@ -146,19 +145,19 @@ input DocumentoInput {
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
+  resolveEmpleado: EmpleadoInput!
 }
 
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
-  docsUsuarioProceso(datos: DocsUsuarioProceso!): [DocumentoType!]!
+  docsUsuarioProceso(datos: DocsUsuarioProcesoInput!): [DocumentoType!]!
 }
 
-input DocsUsuarioProceso {
+input DocsUsuarioProcesoInput {
   ano: Int
-  proceso: String
-  usuarios: [String!]
+  enviadoPor: String
 }
 
 type Mutation {
@@ -171,7 +170,7 @@ type Mutation {
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
   actualizarRol(_id: String!, rol: RolInput!, modificadoPor: ModificadoInput!): EmpleadoType!
-  regDoc(datos: DocumentoInput!): DocumentoType!
+  regDoc(datos: DocumentoRegInput!): DocumentoType!
 }
 
 input ArchivoInput {
@@ -190,6 +189,23 @@ input CambioContrasenaInput {
 input LoginInput {
   usuario: String
   contrasena: String
+}
+
+input DocumentoRegInput {
+  ano: Int
+  asunto: String
+  comentario: String
+  dependencia: String
+  docUrl: String
+  enviadoPor: String
+  esInterno: Boolean = false
+  fechaLimiteEntrega: Int
+  fechaRecepcion: Int
+  identificadorDoc: String
+  proceso: String
+  tipoDoc: String
+  usuarioFolio: String = null
+  usuarios: [String!]
 }
 
 type Subscription {
