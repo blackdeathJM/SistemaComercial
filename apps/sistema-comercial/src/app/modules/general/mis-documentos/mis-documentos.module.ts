@@ -7,6 +7,7 @@ import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {FuseCardModule} from '@s-fuse/card';
 import { ModDocumentosComponent } from './mod-documentos/mod-documentos.component';
 import {FileUploadModule} from "@iplab/ngx-file-upload";
+import {PipesModule} from "@s-app/pipes/pipes.module";
 
 @NgModule({
     declarations:
@@ -24,6 +25,7 @@ import {FileUploadModule} from "@iplab/ngx-file-upload";
             FuseCardModule,
             RouterLink,
             FileUploadModule,
+            PipesModule,
         ],
     exports: [DetalleDocumentosComponent]
 })

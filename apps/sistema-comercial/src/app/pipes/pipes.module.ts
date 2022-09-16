@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import {NgModule} from '@angular/core';
+import {ConvertirTimestamUnixPipe} from './convertir-timestam-unix.pipe';
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+    declarations:
+        [
+            ConvertirTimestamUnixPipe
+        ],
+    exports: [ConvertirTimestamUnixPipe]
 })
-export class PipesModule { }
+export class PipesModule
+{
+}

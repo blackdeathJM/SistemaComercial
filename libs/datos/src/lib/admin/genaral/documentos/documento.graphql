@@ -3,6 +3,10 @@ mutation regDoc($datos: DocumentoRegInput!)
     regDoc(datos: $datos)
     {
         ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
     }
 }
 

@@ -93,6 +93,7 @@ export class ModDocumentosComponent implements OnInit
                             this.cargando = false;
                             const elementos = STATE_DOCS();
                             STATE_DOCS([...elementos, respDoc.data.regDoc as IDocumento]);
+                            this.ngxToastService.satisfactorioToast('El documento se agrego correctamente', 'Alta documentos');
                         }
                     })).subscribe());
                 }

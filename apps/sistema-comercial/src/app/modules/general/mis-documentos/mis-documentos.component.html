@@ -19,18 +19,18 @@
     <ng-container lista>
         <div class="flex flex-wrap" *ngIf="true">
             <ng-container *ngIf="!cargandoDatos; else cargando">
-                <fuse-card class="flex items-center p-4 filter-info m-4 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
+                <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
                     <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
-                    <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc()">
+                    <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc()" [matTooltip]="doc.resolveEmpleado.nombreCompleto">
                         <!--TODO: compara si el avatar del empleado que manda el documento esta disponible se muestre y si no mostrar img por defecto-->
                         <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Card cover image" *ngIf="doc.resolveEmpleado.avatar">
                         <div class="w-16 h-16 mr-6 flex items-center justify-center rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200" *ngIf="!doc.resolveEmpleado.avatar">
                             {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}
                         </div>
                         <div class="flex flex-col">
-                            <div class="text-xl font-semibold leading-tight truncate">{{doc.resolveEmpleado.nombreCompleto}}</div>
-                            <div class="text-md leading-tight text-primary">{{doc.dependencia}}</div>
-                            <div class="text-sm text-secondary mt-1">{{doc.fechaRecepcion | date: 'short'}}</div>
+                            <div class="text-xl font-semibold leading-tight truncate">{{doc.asunto}}</div>
+                            <div class="text-md leading-tight text-primary truncate">{{doc.dependencia}}</div>
+                            <div class="text-sm text-secondary mt-1">{{doc.fechaRecepcion | convertirTimestamUnix | date: 'short'}}</div>
                         </div>
                     </a>
                 </fuse-card>

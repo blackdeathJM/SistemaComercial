@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
 import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {tap} from 'rxjs';
+import {Subscription, tap} from 'rxjs';
 import {STATE_DOCS} from '@s-app/general/general.state';
 
 @Component({
@@ -12,12 +12,13 @@ import {STATE_DOCS} from '@s-app/general/general.state';
     templateUrl: './mis-documentos.component.html',
     styleUrls: ['./mis-documentos.component.scss']
 })
-export class MisDocumentosComponent implements OnInit
+export class MisDocumentosComponent implements OnInit, OnDestroy
 {
     docs: IDocumento[];
     docSeleccionado: IDocumento;
     abrirP: boolean = false;
-    cargandoDatos = true;
+    cargandoDatos = false;
+    subscripciones: Subscription = new Subscription();
 
     constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL)
     {
@@ -25,12 +26,14 @@ export class MisDocumentosComponent implements OnInit
 
     ngOnInit(): void
     {
-        this.docsUsuarioProcesoGQL.watch({datos: {ano: new Date().getFullYear(), enviadoPor: STATE_DATOS_SESION()._id}}).valueChanges
-            .pipe(tap((res) =>
-            {
-                this.cargandoDatos = false;
-                this.docs = STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
-            })).subscribe();
+        this.docs = STATE_DOCS();
+        console.log('EStado init', STATE_DOCS());
+        // this.docsUsuarioProcesoGQL.watch({datos: {ano: new Date().getFullYear(), enviadoPor: STATE_DATOS_SESION()._id}}).valueChanges
+        //     .pipe(tap((res) =>
+        //     {
+        //         this.cargandoDatos = false;
+        //         this.docs = STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
+        //     })).subscribe();
     }
 
     seleccionarDoc(): void
@@ -53,5 +56,10 @@ export class MisDocumentosComponent implements OnInit
     nuevosDocs(): void
     {
         this.dRef.open(ModDocumentosComponent, {width: '40%', data: null});
+    }
+
+    ngOnDestroy(): void
+    {
+        this.subscripciones.unsubscribe();
     }
 }
