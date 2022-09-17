@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentChecked, AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
@@ -12,28 +12,31 @@ import {STATE_DOCS} from '@s-app/general/general.state';
     templateUrl: './mis-documentos.component.html',
     styleUrls: ['./mis-documentos.component.scss']
 })
-export class MisDocumentosComponent implements OnInit, OnDestroy
+export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentChecked
 {
     docs: IDocumento[];
     docSeleccionado: IDocumento;
     abrirP: boolean = false;
-    cargandoDatos = false;
+    cargandoDatos = true;
     subscripciones: Subscription = new Subscription();
 
     constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL)
     {
     }
 
-    ngOnInit(): void
+    ngAfterContentChecked(): void
     {
         this.docs = STATE_DOCS();
-        console.log('EStado init', STATE_DOCS());
-        // this.docsUsuarioProcesoGQL.watch({datos: {ano: new Date().getFullYear(), enviadoPor: STATE_DATOS_SESION()._id}}).valueChanges
-        //     .pipe(tap((res) =>
-        //     {
-        //         this.cargandoDatos = false;
-        //         this.docs = STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
-        //     })).subscribe();
+    }
+
+    ngOnInit(): void
+    {
+        this.docsUsuarioProcesoGQL.watch({datos: {ano: new Date().getFullYear(), enviadoPor: STATE_DATOS_SESION()._id}}).valueChanges
+            .pipe(tap((res) =>
+            {
+                this.cargandoDatos = false;
+                STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
+            })).subscribe();
     }
 
     seleccionarDoc(): void
