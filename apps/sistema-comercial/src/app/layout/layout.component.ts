@@ -2,11 +2,12 @@ import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } fr
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
-import { FuseConfigService } from '@s-fuse/services/config';
-import { FuseMediaWatcherService } from '@s-fuse/services/media-watcher';
-import { FUSE_VERSION } from '@s-fuse/version';
-import { Layout } from '@s-app/layout/layout.types';
-import { AppConfig } from '@s-app/core/config/app.config';
+import { AppConfig } from '@s-app/config/app.config';
+import { Layout } from './layout.types';
+import { FuseConfigService } from '@s-fuse/config';
+import { FuseMediaWatcherService } from '@s-fuse/media-watcher';
+import { FusePlatformService } from '@s-fuse/platform/platform.service';
+import { FUSE_VERSION } from '../../@fuse/version';
 
 @Component({
     selector     : 'layout',
@@ -31,7 +32,8 @@ export class LayoutComponent implements OnInit, OnDestroy
         private _renderer2: Renderer2,
         private _router: Router,
         private _fuseConfigService: FuseConfigService,
-        private _fuseMediaWatcherService: FuseMediaWatcherService
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _fusePlatformService: FusePlatformService
     )
     {
     }
@@ -102,6 +104,9 @@ export class LayoutComponent implements OnInit, OnDestroy
 
         // Set the app version
         this._renderer2.setAttribute(this._document.querySelector('[ng-version]'), 'fuse-version', FUSE_VERSION);
+
+        // Set the OS name
+        this._renderer2.addClass(this._document.body, this._fusePlatformService.osName);
     }
 
     /**
