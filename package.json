@@ -31,11 +31,8 @@
         "@angular/material-moment-adapter": "14.2.4",
         "@angular/platform-browser": "14.2.5",
         "@angular/platform-browser-dynamic": "14.2.5",
-
         "@angular/router": "14.2.5",
         "@apollo/client": "^3.6.9",
-
-
         "@auth0/angular-jwt": "^5.1.0",
         "@iplab/ngx-file-upload": "^14.0.0",
         "@nestjs/apollo": "^10.1.3",
@@ -56,13 +53,10 @@
         "@sweetalert2/ngx-sweetalert2": "^12.0.1",
         "@sweetalert2/themes": "^5.0.12",
         "apexcharts": "3.35.5",
-
         "apollo-angular": "4.0.1",
         "apollo-server-express": "^3.10.3",
-
         "apollo-upload-client": "^17.0.0",
         "autoprefixer": "10.4.12",
-
         "bcrypt": "^5.1.0",
         "body-parser": "^1.20.1",
         "class-transformer": "^0.5.1",
@@ -76,14 +70,14 @@
         "graphql-tools": "^8.3.6",
         "graphql-type-json": "^0.3.2",
         "graphql-upload": "^13.0.0",
-
         "graphql-ws": "^5.11.2",
         "highlight.js": "11.6.0",
         "js-yaml": "^4.1.0",
         "jsonwebtoken": "^8.5.1",
-
         "lodash": "4.17.21",
         "lodash-es": "4.17.21",
+        "luxon": "^3.0.4",
+        "luxon-angular": "^5.1.0",
         "moment": "2.29.4",
         "mongoose": "^6.6.5",
         "nest-access-control": "^2.2.0",
