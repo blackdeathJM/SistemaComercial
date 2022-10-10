@@ -19,5 +19,8 @@ query docsUsuarioProceso($datos: DocsUsuarioProcesoInput!)
             nombreCompleto
             avatar
         }
+        ResolverEmpleadoFolio {
+            nombreCompleto
+        }
     }
 }

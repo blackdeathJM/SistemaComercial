@@ -5,7 +5,7 @@ import {ConvertirTimestamUnixPipe} from './convertir-timestam-unix.pipe';
 @NgModule({
     declarations:
         [
-            ConvertirTimestamUnixPipe
+            ConvertirTimestamUnixPipe,
         ],
     exports: [ConvertirTimestamUnixPipe]
 })

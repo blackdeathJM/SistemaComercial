@@ -1,4 +1,4 @@
-import {AfterContentChecked, AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
@@ -35,14 +35,14 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
             .pipe(tap((res) =>
             {
                 this.cargandoDatos = false;
+                console.log(res);
                 STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
             })).subscribe();
     }
 
-    seleccionarDoc(): void
+    seleccionarDoc(doc: IDocumento): void
     {
-        // TODO: Asignar el documento seleccionando al input de los detalles
-        // this.docSeleccionado = doc;
+        this.docSeleccionado = doc;
         this.abrirP = true;
     }
 

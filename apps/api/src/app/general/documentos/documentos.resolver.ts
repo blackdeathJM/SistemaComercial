@@ -20,15 +20,21 @@ export class DocumentosResolver
         return await this.documentosService.docsUsuarioProceso(datos);
     }
 
-    @Mutation(() => DocumentoDto, {nullable: false})
-    async regDoc(@Args('datos') datos: DocumentoRegDto): Promise<IDocumento>
-    {
-        return this.documentosService.regDoc(datos);
-    }
-
     @ResolveField(() => EmpleadoDto)
     async resolveEmpleado(@Parent() parent: DocumentoDto): Promise<IEmpleado | NotFoundException>
     {
         return await this.empleadoService.buscarEmpleadoPorId(parent.enviadoPor);
+    }
+
+    @ResolveField(() => EmpleadoDto)
+    async ResolverEmpleadoFolio(@Parent() parent: DocumentoDto): Promise<IEmpleado | NotFoundException>
+    {
+        return await this.empleadoService.buscarEmpleadoPorId(parent.usuarioFolio);
+    }
+
+    @Mutation(() => DocumentoDto, {nullable: false})
+    async regDoc(@Args('datos') datos: DocumentoRegDto): Promise<IDocumento>
+    {
+        return this.documentosService.regDoc(datos);
     }
 }

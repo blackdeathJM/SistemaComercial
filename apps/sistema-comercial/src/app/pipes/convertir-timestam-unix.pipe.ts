@@ -7,8 +7,8 @@ import moment from 'moment';
 export class ConvertirTimestamUnixPipe implements PipeTransform
 {
 
-    transform(value: number): any
+    transform(value: number): string
     {
-        return moment.unix(value);
+        return moment.unix(value).format('DD/MM/YYYY');
     }
 }

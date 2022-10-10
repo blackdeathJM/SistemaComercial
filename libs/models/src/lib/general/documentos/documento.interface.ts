@@ -23,6 +23,7 @@ export interface IDocumento
     usuarios: string[];
     //Resolve
     resolveEmpleado?: IEmpleado;
+    ResolverEmpleadoFolio?: IEmpleado;
 }
 
 export const TIPOS_DOCUMENTO = ['Oficio', 'Memorandum', 'Circular', 'Otro'];

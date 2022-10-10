@@ -74,6 +74,7 @@ export type DocsUsuarioProcesoInput = {
 };
 
 export type DocumentoInput = {
+  ResolverEmpleadoFolio: EmpleadoInput;
   _id?: InputMaybe<Scalars['ID']>;
   acuseUrl?: InputMaybe<Scalars['String']>;
   ano?: InputMaybe<Scalars['Int']>;
@@ -115,6 +116,7 @@ export type DocumentoRegInput = {
 
 export type DocumentoType = {
   __typename?: 'DocumentoType';
+  ResolverEmpleadoFolio: EmpleadoType;
   _id?: Maybe<Scalars['ID']>;
   acuseUrl?: Maybe<Scalars['String']>;
   ano?: Maybe<Scalars['Int']>;
