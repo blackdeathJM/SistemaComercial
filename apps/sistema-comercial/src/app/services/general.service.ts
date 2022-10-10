@@ -1,24 +1,14 @@
 import {Injectable} from '@angular/core';
-import moment from 'moment';
+import {DateTime} from 'luxon';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GeneralService
 {
-
-    constructor()
-    {
-    }
-
     static convertirUnix(fecha: any): number
     {
-        const fechaHora =
-            {
-                ...fecha,
-                hour: new Date().getHours(),
-                minutes: new Date().getMinutes()
-            };
-        return moment(fechaHora).unix();
+        // return moment(fechaHora).unix();
+        return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
 }

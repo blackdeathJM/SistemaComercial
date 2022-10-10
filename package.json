@@ -142,6 +142,7 @@
         "@types/jsonwebtoken": "^8.5.9",
         "@types/lodash": "4.14.186",
         "@types/lodash-es": "4.17.6",
+        "@types/luxon": "^3.0.1",
         "@types/node": "18.8.3",
         "@types/passport-jwt": "^3.0.7",
         "@types/passport-local": "^1.0.34",

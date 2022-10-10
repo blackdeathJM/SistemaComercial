@@ -6,7 +6,7 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
-import {Storage, ref, uploadBytes, getDownloadURL,} from '@angular/fire/storage';
+import {Storage, ref, uploadBytes, getDownloadURL, deleteObject} from '@angular/fire/storage';
 import {IDocumento, IDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {GeneralService} from '@s-app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
@@ -15,6 +15,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
+
 @Component({
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
@@ -22,7 +23,6 @@ import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.servic
 })
 export class ModDocumentosComponent implements OnInit
 {
-    archivos: File[];
     fechaMin: Date;
     fechaMax: Date;
     subscripcion: Subscription = new Subscription();
@@ -94,10 +94,16 @@ export class ModDocumentosComponent implements OnInit
                             const elementos = STATE_DOCS();
                             STATE_DOCS([...elementos, respDoc.data.regDoc as IDocumento]);
                             this.ngxToastService.satisfactorioToast('El documento se agrego correctamente', 'Alta documentos');
+                        } else
+                        {
+                            const eleminarDocRef = ref(this.storage, url);
+                            deleteObject(eleminarDocRef).then(() =>
+                            {
+                                this.ngxToastService.infoToast('Se elimino el archivo por que no se realizo el registro correctamente', 'Documentos');
+                            }).catch(e => this.ngxToastService.errorToast(e, 'Error en la nube'));
                         }
                     })).subscribe());
                 }
-
             }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
                 .finally(() => this.cerrar());
 

@@ -27,6 +27,7 @@ import {TOKEN} from '@s-app/auth/const';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import {LuxonModule} from 'luxon-angular';
 
 const routerConfig: ExtraOptions =
     {
@@ -51,6 +52,7 @@ const routerConfig: ExtraOptions =
             }),
             CommonModule,
             FormsModule,
+            LuxonModule,
             ReactiveFormsModule,
             RxReactiveFormsModule,
             BrowserAnimationsModule,
