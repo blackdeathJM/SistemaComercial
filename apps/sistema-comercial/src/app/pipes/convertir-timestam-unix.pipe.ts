@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import moment from 'moment';
+import {DateTime, DateTimeFormatOptions} from 'luxon';
 
 @Pipe({
     name: 'convertirTimestamUnix'
@@ -7,8 +7,22 @@ import moment from 'moment';
 export class ConvertirTimestamUnixPipe implements PipeTransform
 {
 
-    transform(value: number): string
+    transform(value: number, args: boolean = true): string
     {
-        return moment.unix(value).format('DD/MM/YYYY');
+        if (value > 0)
+        {
+            const fechaCompleta: DateTimeFormatOptions =
+                {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                };
+            if (args)
+            {
+                Object.assign(fechaCompleta, {hour: '2-digit', minute: '2-digit'});
+            }
+            return DateTime.fromSeconds(value, {zone: 'America/Mexico_City'})
+                .toLocaleString(fechaCompleta);
+        }
     }
 }

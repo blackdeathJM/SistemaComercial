@@ -59,6 +59,7 @@ export class ModDocumentosComponent implements OnInit
     {
         // this.fechaHoraActual = moment.unix(fechaRecepcionConv);
         this.cargando = true;
+        this.formDocs.disable();
         try
         {
             const ano = new Date().getFullYear();

@@ -22,7 +22,6 @@
                 <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
                     <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
                     <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)" [matTooltip]="doc.resolveEmpleado.nombreCompleto">
-                        <!--TODO: compara si el avatar del empleado que manda el documento esta disponible se muestre y si no mostrar img por defecto-->
                         <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Card cover image" *ngIf="doc.resolveEmpleado.avatar">
                         <div class="w-16 h-16 mr-6 flex items-center justify-center rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200" *ngIf="!doc.resolveEmpleado.avatar">
                             {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}

@@ -28,7 +28,7 @@
         </div>
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Fecha limite de entrega</div>
-            <div>{{_documento?.fechaLimiteEntrega | convertirTimestamUnix}}</div>
+            <div>{{_documento?.fechaLimiteEntrega | convertirTimestamUnix: false}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Fecha de termino</div>
@@ -40,13 +40,13 @@
         </div>
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Usuario que folio el documento</div>
-            <div>{{_documento?.resolverEmpleadoFolio.nombreCompleto}}</div>
+            <div>{{_documento?.resolverEmpleadoFolio?.nombreCompleto}}</div>
         </div>
         <div class="flex flex-row-reverse">
-            <button mat-icon-button matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)" >
+            <button mat-icon-button matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">
                 <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)" >
+            <button mat-icon-button matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
                 <mat-icon svgIcon="heroicons_outline:paper-clip"></mat-icon>
             </button>
             <button mat-icon-button matTooltip="Subir documento de respuesta" *ngIf="_documento?.folio">
