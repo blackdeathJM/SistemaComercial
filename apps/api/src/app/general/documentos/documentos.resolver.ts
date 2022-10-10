@@ -20,14 +20,14 @@ export class DocumentosResolver
         return await this.documentosService.docsUsuarioProceso(datos);
     }
 
-    @ResolveField(() => EmpleadoDto)
+    @ResolveField(() => EmpleadoDto, {nullable: true})
     async resolveEmpleado(@Parent() parent: DocumentoDto): Promise<IEmpleado | NotFoundException>
     {
         return await this.empleadoService.buscarEmpleadoPorId(parent.enviadoPor);
     }
 
-    @ResolveField(() => EmpleadoDto)
-    async ResolverEmpleadoFolio(@Parent() parent: DocumentoDto): Promise<IEmpleado | NotFoundException>
+    @ResolveField(() => EmpleadoDto, {nullable: true})
+    async resolverEmpleadoFolio(@Parent() parent: DocumentoDto): Promise<IEmpleado | NotFoundException>
     {
         return await this.empleadoService.buscarEmpleadoPorId(parent.usuarioFolio);
     }

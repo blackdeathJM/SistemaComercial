@@ -19,7 +19,7 @@ query docsUsuarioProceso($datos: DocsUsuarioProcesoInput!)
             nombreCompleto
             avatar
         }
-        ResolverEmpleadoFolio {
+        resolverEmpleadoFolio {
             nombreCompleto
         }
     }

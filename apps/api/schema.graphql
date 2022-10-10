@@ -81,8 +81,8 @@ type DocumentoType {
   tipoDoc: String
   usuarioFolio: String
   usuarios: [String!]
-  resolveEmpleado: EmpleadoType!
-  ResolverEmpleadoFolio: EmpleadoType!
+  resolveEmpleado: EmpleadoType
+  resolverEmpleadoFolio: EmpleadoType
 }
 
 input AuthInput {
@@ -146,8 +146,8 @@ input DocumentoInput {
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
-  resolveEmpleado: EmpleadoInput!
-  ResolverEmpleadoFolio: EmpleadoInput!
+  resolveEmpleado: EmpleadoInput
+  resolverEmpleadoFolio: EmpleadoInput
 }
 
 type Query {

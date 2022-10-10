@@ -40,16 +40,16 @@
         </div>
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Usuario que folio el documento</div>
-            <div>{{_documento?.usuarioFolio}}</div>
+            <div>{{_documento?.resolverEmpleadoFolio.nombreCompleto}}</div>
         </div>
         <div class="flex flex-row-reverse">
-            <button mat-icon-button matTooltip="Abrir documento recibido">
+            <button mat-icon-button matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)" >
                 <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Abrir documento respuesta">
+            <button mat-icon-button matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)" >
                 <mat-icon svgIcon="heroicons_outline:paper-clip"></mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Subir documento de respuesta">
+            <button mat-icon-button matTooltip="Subir documento de respuesta" *ngIf="_documento?.folio">
                 <mat-icon svgIcon="heroicons_outline:upload" class="text-green-800 dark:text-green-600"></mat-icon>
             </button>
         </div>

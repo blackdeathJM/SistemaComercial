@@ -41,11 +41,14 @@ export class EmpleadoService
 
     async buscarEmpleadoPorId(_id: string): Promise<IEmpleado | NotFoundException>
     {
-        const empleado = await this.empleado.findById(new ObjectId(_id)).exec();
-        if (!empleado)
+        // if (!empleado)
+        // {
+        //     throw new NotFoundException('No se encontro usuario');
+        // }
+        if (_id)
         {
-            throw new NotFoundException('No se encontro usuario');
+            return await this.empleado.findById(new ObjectId(_id)).exec();
         }
-        return empleado;
+        return null;
     }
 }

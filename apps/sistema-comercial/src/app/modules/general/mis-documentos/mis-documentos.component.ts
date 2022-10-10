@@ -35,7 +35,6 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
             .pipe(tap((res) =>
             {
                 this.cargandoDatos = false;
-                console.log(res);
                 STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
             })).subscribe();
     }

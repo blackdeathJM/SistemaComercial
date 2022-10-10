@@ -8,13 +8,15 @@ import {FuseCardModule} from '@s-fuse/card';
 import { ModDocumentosComponent } from './mod-documentos/mod-documentos.component';
 import {FileUploadModule} from "@iplab/ngx-file-upload";
 import {PipesModule} from "@s-app/pipes/pipes.module";
+import { ModFoliosComponent } from './mod-folios/mod-folios.component';
 
 @NgModule({
     declarations:
         [
             MisDocumentosComponent,
             DetalleDocumentosComponent,
-            ModDocumentosComponent
+            ModDocumentosComponent,
+            ModFoliosComponent
         ],
     imports:
         [

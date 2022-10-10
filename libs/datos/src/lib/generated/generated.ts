@@ -74,7 +74,6 @@ export type DocsUsuarioProcesoInput = {
 };
 
 export type DocumentoInput = {
-  ResolverEmpleadoFolio: EmpleadoInput;
   _id?: InputMaybe<Scalars['ID']>;
   acuseUrl?: InputMaybe<Scalars['String']>;
   ano?: InputMaybe<Scalars['Int']>;
@@ -91,7 +90,8 @@ export type DocumentoInput = {
   identificadorDoc?: InputMaybe<Scalars['String']>;
   proceso?: InputMaybe<Scalars['String']>;
   ref?: InputMaybe<Array<Scalars['String']>>;
-  resolveEmpleado: EmpleadoInput;
+  resolveEmpleado?: InputMaybe<EmpleadoInput>;
+  resolverEmpleadoFolio?: InputMaybe<EmpleadoInput>;
   tipoDoc?: InputMaybe<Scalars['String']>;
   usuarioFolio?: InputMaybe<Scalars['String']>;
   usuarios?: InputMaybe<Array<Scalars['String']>>;
@@ -116,7 +116,6 @@ export type DocumentoRegInput = {
 
 export type DocumentoType = {
   __typename?: 'DocumentoType';
-  ResolverEmpleadoFolio: EmpleadoType;
   _id?: Maybe<Scalars['ID']>;
   acuseUrl?: Maybe<Scalars['String']>;
   ano?: Maybe<Scalars['Int']>;
@@ -133,7 +132,8 @@ export type DocumentoType = {
   identificadorDoc?: Maybe<Scalars['String']>;
   proceso?: Maybe<Scalars['String']>;
   ref?: Maybe<Array<Scalars['String']>>;
-  resolveEmpleado: EmpleadoType;
+  resolveEmpleado?: Maybe<EmpleadoType>;
+  resolverEmpleadoFolio?: Maybe<EmpleadoType>;
   tipoDoc?: Maybe<Scalars['String']>;
   usuarioFolio?: Maybe<Scalars['String']>;
   usuarios?: Maybe<Array<Scalars['String']>>;
@@ -390,14 +390,14 @@ export type RegDocMutationVariables = Exact<{
 }>;
 
 
-export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } } };
+export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null } };
 
 export type DocsUsuarioProcesoQueryVariables = Exact<{
   datos: DocsUsuarioProcesoInput;
 }>;
 
 
-export type DocsUsuarioProcesoQuery = { __typename?: 'Query', docsUsuarioProceso: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } }> };
+export type DocsUsuarioProcesoQuery = { __typename?: 'Query', docsUsuarioProceso: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null }> };
 
 export type SubirArchivoMutationVariables = Exact<{
   files: ArchivoInput;
@@ -755,6 +755,9 @@ export const DocsUsuarioProcesoDocument = gql`
     resolveEmpleado {
       nombreCompleto
       avatar
+    }
+    resolverEmpleadoFolio {
+      nombreCompleto
     }
   }
 }

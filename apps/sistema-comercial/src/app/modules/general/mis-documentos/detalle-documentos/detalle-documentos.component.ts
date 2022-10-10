@@ -33,4 +33,12 @@ export class DetalleDocumentosComponent implements OnInit
     {
         return item.id || index;
     }
+
+    abrirLink(url: string): void
+    {
+        if (url)
+        {
+            window.open(url, '_blank');
+        }
+    }
 }
