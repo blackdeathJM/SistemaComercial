@@ -11,6 +11,9 @@ export class DocumentoDto implements IDocumento
 {
     @Field(() => ID, {nullable: true})
     _id: string;
+    @Field(() => Int)
+    @Prop()
+    noSeguimiento: number;
     @Field({nullable: true, defaultValue: null})
     @Prop()
     acuseUrl: string;

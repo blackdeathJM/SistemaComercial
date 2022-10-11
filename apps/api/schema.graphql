@@ -63,6 +63,7 @@ type LoginRespuestaType {
 
 type DocumentoType {
   _id: ID
+  noSeguimiento: Int!
   acuseUrl: String
   ano: Int
   asunto: String
@@ -128,6 +129,7 @@ input DeptoInput {
 
 input DocumentoInput {
   _id: ID
+  noSeguimiento: Int!
   acuseUrl: String = null
   ano: Int
   asunto: String
@@ -194,6 +196,7 @@ input LoginInput {
 }
 
 input DocumentoRegInput {
+  noSeguimiento: Int!
   ano: Int
   asunto: String
   comentario: String

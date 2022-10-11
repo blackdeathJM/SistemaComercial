@@ -2,5 +2,7 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+@import '@sweetalert2/themes/wordpress-admin/wordpress-admin';
 
+@import 'ngx-toastr/toastr';
 

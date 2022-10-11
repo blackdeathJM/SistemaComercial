@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
+import {confirmarFinalizarDoc, confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-detalle-documentos',
@@ -10,8 +13,10 @@ export class DetalleDocumentosComponent implements OnInit
 {
     @Output() cerrarPanel = new EventEmitter<boolean>();
     _documento: IDocumento;
+    confFolio: FuseConfirmationConfig = confirmarFolio;
+    confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
 
-    constructor()
+    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService)
     {
     }
 
@@ -40,5 +45,27 @@ export class DetalleDocumentosComponent implements OnInit
         {
             window.open(url, '_blank');
         }
+    }
+
+    generarFolio(_documento: IDocumento): void
+    {
+        this.confirmacionService.open(this.confFolio).afterClosed().subscribe((res) =>
+        {
+            if (res === 'confirmed')
+            {
+
+            }
+        });
+    }
+
+    finalizarDoc(_documento: IDocumento): void
+    {
+        this.confirmacionService.open(this.confFinalizarDoc).afterClosed().subscribe((res) =>
+        {
+            if (res === 'confirmed')
+            {
+
+            }
+        });
     }
 }

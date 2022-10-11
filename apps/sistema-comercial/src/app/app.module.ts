@@ -24,9 +24,9 @@ import {CommonModule} from '@angular/common';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {environment} from '../environments/environment';
+import {provideStorage, getStorage} from '@angular/fire/storage';
 import {LuxonModule} from 'luxon-angular';
 
 const routerConfig: ExtraOptions =

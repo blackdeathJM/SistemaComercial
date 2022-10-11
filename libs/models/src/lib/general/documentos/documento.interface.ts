@@ -3,6 +3,7 @@ import {IEmpleado} from '../../admin/empleado/empleado.interface';
 export interface IDocumento
 {
     _id?: string;
+    noSeguimiento: number;
     identificadorDoc: string;
     folio: string;
     tipoDoc: string;
@@ -27,4 +28,4 @@ export interface IDocumento
 }
 
 export const TIPOS_DOCUMENTO = ['Oficio', 'Memorandum', 'Circular', 'Otro'];
-export type IDocumentoReg = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref'>;
+export type IDocumentoReg = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref' | 'noSeguimiento' >;
