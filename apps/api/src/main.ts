@@ -9,7 +9,7 @@ import {environment} from '@api-environments:/environment';
 async function bootstrap(): Promise<void>
 {
     const app = await NestFactory.create(AppModule);
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe({whitelist: true, forbidNonWhitelisted: true}));
     app.use(graphqlUploadExpress());
     app.enableCors();
     app.setGlobalPrefix('/graphql');
