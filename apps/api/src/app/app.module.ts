@@ -10,6 +10,7 @@ import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {GraphQLUpload} from 'graphql-upload';
 import {environment} from '../environments/environment';
+import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 
 @Module({
     imports:
@@ -29,8 +30,9 @@ import {environment} from '../environments/environment';
                 autoSchemaFile: 'apps/api/schema.graphql',
                 cors: {origin: '*'},
                 buildSchemaOptions: {dateScalarMode: 'timestamp'},
-                introspection: true,
+                playground: false,
                 context: ({req}) => ({req}),
+                plugins: [ApolloServerPluginLandingPageLocalDefault]
             }),
             MongooseModule.forRoot(environment.uriMongo),
             // MongooseModule.forRootAsync({

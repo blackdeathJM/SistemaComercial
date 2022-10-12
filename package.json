@@ -54,6 +54,7 @@
         "@sweetalert2/themes": "^5.0.12",
         "apexcharts": "3.35.5",
         "apollo-angular": "4.0.1",
+        "apollo-server-core": "^3.10.3",
         "apollo-server-express": "^3.10.3",
         "apollo-upload-client": "^17.0.0",
         "autoprefixer": "10.4.12",
