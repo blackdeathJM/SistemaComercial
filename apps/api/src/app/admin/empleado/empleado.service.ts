@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
@@ -41,14 +41,18 @@ export class EmpleadoService
 
     async buscarEmpleadoPorId(_id: string): Promise<IEmpleado | NotFoundException>
     {
-        // if (!empleado)
-        // {
-        //     throw new NotFoundException('No se encontro usuario');
-        // }
         if (_id)
         {
             return await this.empleado.findById(new ObjectId(_id)).exec();
         }
         return null;
+    }
+
+    async validarUsuarioActivo(_id: string): Promise<IEmpleado>
+    {
+        const empleado = await this.empleado.findById(_id).exec();
+        if (!empleado.activo) throw new UnauthorizedException('El empleado no esta activo');
+        delete empleado.auth.contrasena;
+        return empleado;
     }
 }

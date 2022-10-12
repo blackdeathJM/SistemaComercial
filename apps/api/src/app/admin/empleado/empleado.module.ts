@@ -12,7 +12,8 @@ import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/admin/deptos/dept
         {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO},
         {name: DeptoDto.name, schema: SCHEMA_DEPTO}
     ]), AuthModule],
-    providers: [EmpleadoService, EmpleadoResolver, DeptosService]
+    exports: [EmpleadoService],
+    providers: [EmpleadoService, EmpleadoResolver, DeptosService],
 })
 export class EmpleadoModule
 {
