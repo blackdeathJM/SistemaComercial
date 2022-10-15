@@ -77,9 +77,9 @@ const routerConfig: ExtraOptions =
             ToastrModule.forRoot(),
             NgxTrimDirectiveModule,
             // modulos
-            DeptosModule,
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
+            DeptosModule,
         ],
     bootstrap:
         [

@@ -45,6 +45,9 @@ export const appRoutes: Route[] = [
                 {
                     path: 'general',
                     loadChildren: () => import('@s-app/modules/general/general.module').then(g => g.GeneralModule)
+                },
+                {
+                    path: 'dir-admon-finanzas',
                 }
             ]
     },
