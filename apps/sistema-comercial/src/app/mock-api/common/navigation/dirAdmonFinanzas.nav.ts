@@ -1,4 +1,5 @@
 import {FuseNavigationItem} from "@s-fuse/navigation";
+import {dirAdmonFinanzas} from "@s-app/common/navigation/constantes/rutas";
 
 export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
     [
@@ -13,31 +14,36 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         id: 'rhh',
                         title: 'Recursos humanos',
                         type: 'basic',
-                        icon: 'people'
+                        icon: 'people',
+                        link: dirAdmonFinanzas + 'recursos-humanos'
                     },
                     {
                         id: 'contabilidad',
                         title: 'Contabilidad',
                         type: 'basic',
-                        icon: 'account_balance_wallet'
+                        icon: 'account_balance_wallet',
+                        link: dirAdmonFinanzas + 'contabilidad'
                     },
                     {
                         id: 'comprasServicios',
                         title: 'Compras y servicios',
                         type: 'basic',
-                        icon: 'double_arrow'
+                        icon: 'double_arrow',
+                        link: dirAdmonFinanzas + 'compras-servicios'
                     },
                     {
                         id: 'egresos',
                         title: 'Egresos',
                         type: 'basic',
-                        icon: 'price_change'
+                        icon: 'price_change',
+                        link: dirAdmonFinanzas + 'egresos'
                     },
                     {
                         id: 'almacen',
                         title: 'Almacen',
                         type: 'basic',
-                        icon: 'margin'
+                        icon: 'margin',
+                        link: dirAdmonFinanzas + 'almacen'
                     }
                 ]
         }

@@ -36,7 +36,7 @@ export const appRoutes: Route[] = [
         children:
             [
                 {
-                    path: 'inicio', loadChildren: () => import('@s-app/modules/inicio/inicio.module').then(i => i.InicioModule)
+                    path: 'inicio', loadComponent: () => import('@s-app/modules/inicio/inicio.component').then(i => i.InicioComponent)
                 },
                 {
                     path: 'admin',
@@ -48,6 +48,8 @@ export const appRoutes: Route[] = [
                 },
                 {
                     path: 'dir-admon-finanzas',
+                    // loadComponent: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.component').then(a => a.DirAdmonFinanzasComponent)
+                    loadChildren: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
                 }
             ]
     },
