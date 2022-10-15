@@ -4,6 +4,7 @@ import {IsNotEmpty, IsOptional} from 'class-validator';
 import {ICorreo, IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 
+// TODO: Cambiar la fecha de los empleados por number
 @ObjectType('ModificadoType')
 @InputType('ModificadoInput')
 export class ModificadoDto implements IModificado

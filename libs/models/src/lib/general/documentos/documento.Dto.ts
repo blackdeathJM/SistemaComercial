@@ -1,7 +1,7 @@
 import {IDocumento} from './documento.interface';
 import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsNotEmpty} from 'class-validator';
+import {IsNotEmpty, IsOptional} from 'class-validator';
 import {Document} from 'mongoose';
 
 @ObjectType('DocumentoType')
@@ -10,12 +10,15 @@ import {Document} from 'mongoose';
 export class DocumentoDto implements IDocumento
 {
     @Field(() => ID, {nullable: true})
+    @IsOptional()
     _id: string;
     @Field(() => Int)
     @Prop()
+    @IsOptional()
     noSeguimiento: number;
     @Field({nullable: true, defaultValue: null})
     @Prop()
+    @IsOptional()
     acuseUrl: string;
     @Field(() => Int, {nullable: true})
     @Prop()
@@ -27,6 +30,7 @@ export class DocumentoDto implements IDocumento
     asunto: string;
     @Field({nullable: true})
     @Prop()
+    @IsOptional()
     comentario: string;
     @Field({nullable: true})
     @Prop()
@@ -56,6 +60,7 @@ export class DocumentoDto implements IDocumento
     fechaTerminado: number;
     @Field({nullable: true, defaultValue: null})
     @Prop()
+    @IsOptional()
     folio: string;
     @Field({nullable: true})
     @Prop()
@@ -67,6 +72,7 @@ export class DocumentoDto implements IDocumento
     proceso: 'Pendiente' | 'Terminado';
     @Field(() => [String], {nullable: true, defaultValue: null})
     @Prop()
+    @IsOptional()
     ref: string[];
     @Field({nullable: true})
     @Prop()
@@ -74,9 +80,11 @@ export class DocumentoDto implements IDocumento
     tipoDoc: string;
     @Field({nullable: true, defaultValue: null})
     @Prop()
+    @IsOptional()
     usuarioFolio: string;
     @Field(() => [String], {nullable: true})
     @Prop()
+    @IsNotEmpty({message: 'Es necesario colocar por lo menos un usuario'})
     usuarios: string[];
 }
 
