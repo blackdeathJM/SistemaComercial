@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit, OnDestroy
                     id: 'empleado',
                     icon: 'heroicons_outline:user-circle',
                     title: 'Empleados',
-                    description: 'Adminitra los empleado, crea cuentas, reasigna contrasenas perdidas, asigna roles'
+                    description: 'Adminitra los permisos de los empleados y asigna permisos para cada uno de los departamentos'
                 }
             ];
         this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.eliminarSubscripcion)).subscribe(({matchingAliases}) =>

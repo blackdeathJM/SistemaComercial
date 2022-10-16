@@ -13,9 +13,18 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                     {
                         id: 'rhh',
                         title: 'Recursos humanos',
-                        type: 'basic',
+                        type: 'collapsable',
                         icon: 'people',
-                        link: dirAdmonFinanzas + 'recursos-humanos'
+                        children:
+                            [
+                                {
+                                    id: 'empleados',
+                                    title: 'Empleados',
+                                    type: 'basic',
+                                    icon: 'people',
+                                    link: dirAdmonFinanzas + 'recursos-humanos/' + 'empleados'
+                                }
+                            ]
                     },
                     {
                         id: 'contabilidad',

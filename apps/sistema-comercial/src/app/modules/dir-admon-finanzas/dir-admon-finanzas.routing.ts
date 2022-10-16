@@ -10,7 +10,7 @@ export const dirAdmonFinanzasRouting: Routes =
                 [
                     {
                         path: 'recursos-humanos',
-                        loadComponent: () => import('@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.component').then(r => r.RecursosHumanosComponent)
+                        loadChildren: () => import('@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.routing').then(r => r.recursosHumanosRouting)
                         // loadChildren: () => import('@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.component').then(r => r.RecursosHumanosComponent)
                     },
                     {
