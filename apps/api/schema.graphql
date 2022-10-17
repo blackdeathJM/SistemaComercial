@@ -11,9 +11,11 @@ type AuthType {
 }
 
 type RolType {
-  id: String
-  tipoAcceso: String
-  oculto: Boolean
+  centroGestor: String!
+  id: String!
+  oculto: Boolean!
+  tipoAcceso: String!
+  title: String!
 }
 
 type ModificadoType {
@@ -95,9 +97,11 @@ input AuthInput {
 }
 
 input RolInput {
-  id: String
-  tipoAcceso: String
-  oculto: Boolean = true
+  centroGestor: String!
+  id: String!
+  oculto: Boolean!
+  tipoAcceso: String!
+  title: String!
 }
 
 input ModificadoInput {

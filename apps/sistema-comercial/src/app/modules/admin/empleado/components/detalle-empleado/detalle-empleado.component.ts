@@ -7,11 +7,11 @@ import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {unionBy} from 'lodash-es';
 import {IEmpleado, IModificado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {IRol} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import moment from 'moment';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {ActualizarRolGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {IRoles} from "#/libs/models/src/lib/admin/empleado/auth/auth.interface";
 
 @Component({
     selector: 'app-detalle-empleado',
@@ -59,8 +59,9 @@ export class DetalleEmpleadoComponent implements OnDestroy
         return item.id || index;
     }
 
-    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: IRol, empleado: IEmpleado): void
+    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: IRoles, empleado: IEmpleado): void
     {
+        // TODO: Cambiar a la nueva estructura de roles
         const rol = {...permiso};
         rol.tipoAcceso = evento['value'];
         rol.oculto = evento['value'] === 'ninguno';

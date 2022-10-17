@@ -5,7 +5,7 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
     [
         {
             id: 'dirAdmonFinanzas',
-            title: 'DIR ADMON FINANZAS',
+            title: 'DIR. ADMON FINANZAS',
             type: 'group',
             icon: 'work',
             children:

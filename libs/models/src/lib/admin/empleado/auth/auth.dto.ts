@@ -1,6 +1,6 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
-import {IAuth, IRol} from './auth.interface';
+import {IAuth, IHijosRol, IRoles} from './auth.interface';
 
 @ObjectType('AuthType')
 @InputType('AuthInput')
@@ -24,14 +24,22 @@ export class AuthDto implements IAuth
 
 @ObjectType('RolType')
 @InputType('RolInput')
-export class RolDto implements IRol
+export class RolDto implements IRoles
 {
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'El id del departamento es necesario'})
+    @Field(() => String)
+    centroGestor: string;
+    @Field(() => String)
     id: string;
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'Es necesario asignar un rol'})
-    tipoAcceso: 'ninguno' | 'lectura' | 'completo';
-    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    @Field(() => Boolean)
     oculto: boolean;
+    @Field(() => String)
+    tipoAcceso: string;
+    @Field(() => String)
+    titulo: string;
+    @Field(() => [HijosRolDto])
+    hijos: IHijosRol[]
+}
+
+export class HijosRolDto extends RolDto
+{
 }

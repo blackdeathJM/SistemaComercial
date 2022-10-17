@@ -1,7 +1,6 @@
-
 import {compare, required} from '@rxweb/reactive-form-validators';
 import {sanitize, trim} from '@rxweb/sanitizers';
-import {IAuth, IRol} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {IAuth, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 @sanitize
 export class Auth implements IAuth
@@ -15,7 +14,7 @@ export class Auth implements IAuth
     @required({message: 'Es necesario que asignes un usuario'})
     @trim()
     usuario: string;
-    rol: IRol[];
-    activo: boolean = true;
+    rol: IRoles[];
+    activo: boolean = false;
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }

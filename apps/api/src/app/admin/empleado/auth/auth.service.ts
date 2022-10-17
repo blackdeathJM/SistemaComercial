@@ -4,13 +4,13 @@ import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
-import {ROLES_POR_DEFECTO} from './rol.model';
 import {EmpleadoDto, EmpleadoType, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto, RolDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {IEmpleado, IModificado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {ROLES} from "#api/libs/models/src/lib/admin/empleado/auth/roles.model";
 
 @Injectable()
 export class AuthService
@@ -23,9 +23,10 @@ export class AuthService
 
     async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado | NotFoundException>
     {
+        // TODO: Cambiar el rol asignado al auth en el servicio
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        auth.rol = ROLES_POR_DEFECTO;
+        // auth.rol = ROLES;
 
         const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)

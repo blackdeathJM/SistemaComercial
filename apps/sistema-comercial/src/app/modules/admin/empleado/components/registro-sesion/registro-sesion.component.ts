@@ -40,7 +40,7 @@ export class RegistroSesionComponent implements OnInit
     registrar(): void
     {
         this.cargandoDatos = true;
-
+        this.formAuth.disable();
         const {confirmContrasena, ...resto} = this.formAuth.value;
             // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
         if (this.data.auth)

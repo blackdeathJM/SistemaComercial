@@ -69,7 +69,7 @@
                                 </ng-container>
                             </div>
                             <div class="ml-4">
-                                <div class="font-medium">{{permiso?.id}}</div>
+                                <div class="font-medium">{{permiso?.id}</div>
                             </div>
                         </div>
 
@@ -78,7 +78,6 @@
                                 <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">
                                     <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>
                                 </mat-button-toggle-group>
-
                             </div>
                         </div>
                     </div>
