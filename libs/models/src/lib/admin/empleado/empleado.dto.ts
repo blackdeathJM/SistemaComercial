@@ -1,21 +1,20 @@
-import {Field, Float, InputType, ObjectType} from '@nestjs/graphql';
+import {Field, Float, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
-import {ICorreo, IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
+import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 
-// TODO: Cambiar la fecha de los empleados por number
 @ObjectType('ModificadoType')
 @InputType('ModificadoInput')
 export class ModificadoDto implements IModificado
 {
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Se requiere una accion'})
     accion: string;
-    @Field({nullable: true})
+    @Field(() => Int, {nullable: true})
     @IsNotEmpty({message: 'Es necesaria la fecha'})
-    fecha: string;
-    @Field({nullable: true})
+    fecha: number;
+    @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario'})
     usuario: string;
 }
@@ -32,27 +31,15 @@ export class TelefonoDto implements ITelefono
     telefono: string;
 }
 
-@ObjectType('CorreoType')
-@InputType('CorreoInput')
-export class CorreoDto implements ICorreo
-{
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'Es necesario un correo electronico'})
-    correo: string;
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'Es necesario una etiqueta'})
-    etiqueta: string;
-}
-
 export class PuestoDto implements IPuesto
 {
-    @Field(() => Date, {nullable: true})
+    @Field(() => Int, {nullable: true})
     @IsNotEmpty({message: 'Es necesaria una fecha'})
-    fecha: Date;
+    fecha: number;
     @Field(() => Float, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el ISR'})
     isr: number;
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el puesto'})
     puesto: string;
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
@@ -70,58 +57,46 @@ export class SeguroSocialDto implements ISeguroSocial
 @Schema({collection: 'Empleados'})
 export class EmpleadoDto implements IEmpleado
 {
-    @Field({nullable: true})
+    @Field(() => ID, {nullable: true})
     @IsOptional()
     _id?: string;
-    @Field({nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
-    avatar: string;
-    @Field({defaultValue: false})
+    @IsOptional()
+    avatar?: string;
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
     @Prop()
     @IsNotEmpty({message: 'Se necesita especificar si esta activo'})
-    activo: boolean = false;
-    @Field({nullable: true})
+    activo: boolean = true;
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La calle es necesaria'})
     calle: string;
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La colonia es necesaria'})
     colonia: string;
-    // @Field(() => [CorreoDto], {nullable: true})
-    // @Prop()
-    // correo: CorreoDto[];
-    @Field(() => Date, {nullable: true})
+    @Field(() => String, {nullable: true, defaultValue: ''})
     @Prop()
-    fechaBaja: Date;
-    @Field(() => Date, {nullable: true})
+    @IsOptional()
+    correo?: string;
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Prop()
+    @IsOptional()
+    fechaBaja?: number = 0;
+    @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
-    fechaIngreso: Date;
-    @Field(() => [ModificadoDto], {nullable: true, defaultValue: []})
-    @Prop()
-    @IsNotEmpty({message: 'El campo modificado por es necesario'})
-    modificadoPor: ModificadoDto[];
-    @Field({nullable: true})
+    fechaIngreso: number;
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre completo es requerido'})
     nombreCompleto: string;
-    // @Field(() => [PuestoDto], {nullable: true})
-    // @Prop()
-    // @IsNotEmpty({message: 'Debers asignar un puesto para el empleado'})
-    // puesto: PuestoDto[];
-    // @Field(() => [TelefonoDto], {nullable: true})
-    // @Prop()
-    // @IsNotEmpty({message: 'Es requerido al menos un numero de telefono'})
-    // telefono: TelefonoDto[];
-    // @Field(() => SeguroSocialDto, {nullable: true})
-    // @Prop()
-    // @IsNotEmpty({message: 'Son necesarios los datos del IMSS'})
-    // seguroSocial: SeguroSocialDto;
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
-    @Prop({type: AuthDto})
+    @Prop()
+    @IsOptional()
     auth?: AuthDto;
-    @Field({nullable: true})
+    @Field(() => ID, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es nesario el id del departamento al que sera asignado el empleado'})
     deptoId: string;

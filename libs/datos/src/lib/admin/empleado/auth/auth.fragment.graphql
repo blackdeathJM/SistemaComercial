@@ -2,7 +2,7 @@ fragment fragAuth on AuthType
 {
     usuario
     activo
-    rol {
+    role {
         ...fragRol
     }
 }
@@ -12,6 +12,13 @@ fragment fragRol on RolType
     id
     tipoAcceso
     oculto
+    titulo
+    hijos {
+        titulo
+        oculto
+        tipoAcceso
+        id
+    }
 }
 
 fragment fragDatosSesion on DatosSesionType

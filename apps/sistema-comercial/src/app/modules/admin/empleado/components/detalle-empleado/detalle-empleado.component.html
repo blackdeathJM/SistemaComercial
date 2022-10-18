@@ -55,7 +55,6 @@
                 </div>
             </ng-container>
 
-
             <div class="flex flex-col mt-8 divide-y border-t border-b">
                 <ng-container *ngFor="let permiso of _empleado?.auth?.rol; trackBy: trackByFn;">
                     <div class="flex flex-col sm:flex-row sm:items-center py-6">
@@ -69,17 +68,17 @@
                                 </ng-container>
                             </div>
                             <div class="ml-4">
-                                <div class="font-medium">{{permiso?.id}</div>
+                                <div class="font-medium">titulo</div>
                             </div>
                         </div>
 
-                        <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">
-                            <div class="order-2 sm:order-1 ml-4 sm:ml-0">
-                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">
-                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>
-                                </mat-button-toggle-group>
-                            </div>
-                        </div>
+                        <!--                        <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">-->
+                        <!--                            <div class="order-2 sm:order-1 ml-4 sm:ml-0">-->
+                        <!--                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">-->
+                        <!--                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>-->
+                        <!--                                </mat-button-toggle-group>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </div>
                 </ng-container>
             </div>

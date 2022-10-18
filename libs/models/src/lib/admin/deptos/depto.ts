@@ -10,7 +10,7 @@ export class Depto implements IDepto
 
     @required({message: 'El centro gestor es requerido'})
     @minLength({value: 3, message: 'La longitud minima es de 3 caracteres'})
-    @maxLength({value: 3, message: 'La longitud maxima es de 3 caracteres'})
+    @maxLength({value: 4, message: 'La longitud maxima es de 4 caracteres'})
     @upperCase()
     centroGestor: string;
     _id?: string;

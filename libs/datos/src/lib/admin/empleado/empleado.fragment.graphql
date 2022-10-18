@@ -10,9 +10,3 @@ fragment fragEmpleado on EmpleadoType
     fechaIngreso
     deptoId
 }
-
-fragment fragModificadoPor on ModificadoType
-{
-    usuario
-    fecha
-}

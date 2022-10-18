@@ -5,7 +5,6 @@ export const ROLES: IRoles[] =
         {
             id: 'presidencia',
             titulo: 'Presidencia',
-            centroGestor: 'PRE',
             tipoAcceso: 'ninguno',
             oculto: false,
 
@@ -14,7 +13,6 @@ export const ROLES: IRoles[] =
         {
             id: 'dirAdmonFinanzas',
             titulo: 'DIR. ADMON Y FINANZAS',
-            centroGestor: 'DAF',
             tipoAcceso: 'ninguno',
             oculto: false,
             hijos:
@@ -22,14 +20,12 @@ export const ROLES: IRoles[] =
                     {
                         id: 'rhh',
                         titulo: 'Recursos humanos',
-                        centroGestor: 'RHH',
                         tipoAcceso: 'ninguno',
                         oculto: false,
                     },
                     {
                         id: 'contabilidad',
                         titulo: 'Contabilidad',
-                        centroGestor: 'CON',
                         tipoAcceso: 'ninguno',
                         oculto: false
                     }
@@ -38,7 +34,6 @@ export const ROLES: IRoles[] =
         {
             id: 'dirComercial',
             titulo: 'DIR. COMERCIAL',
-            centroGestor: 'DIC',
             tipoAcceso: 'ninguno',
             oculto: false,
             hijos:
@@ -46,7 +41,6 @@ export const ROLES: IRoles[] =
                     {
                         id: 'informaticaFacturacion',
                         titulo: 'Informatica y facturacion',
-                        centroGestor: 'INF',
                         tipoAcceso: 'ninguno',
                         oculto: false
                     }
@@ -55,7 +49,6 @@ export const ROLES: IRoles[] =
         {
             id: 'dirTecnicaOperativa',
             titulo: 'DIR. TECNICA OPERATIVA',
-            centroGestor: 'DTO',
             tipoAcceso: 'ninguno',
             oculto: false,
             hijos:
@@ -63,7 +56,6 @@ export const ROLES: IRoles[] =
                     {
                         id: 'saneamiento',
                         titulo: 'Saneamiento',
-                        centroGestor: 'SAN',
                         tipoAcceso: 'ninguno',
                         oculto: false
                     }
@@ -72,7 +64,6 @@ export const ROLES: IRoles[] =
         {
             id: 'dirAtencionComunidades',
             titulo: 'DIR. ATENCION A COMUNIDADES',
-            centroGestor: 'DAC',
             tipoAcceso: 'ninguno',
             oculto: false,
             hijos:
@@ -80,7 +71,6 @@ export const ROLES: IRoles[] =
                     {
                         id: 'operativaRural',
                         titulo: 'Operativo rural',
-                        centroGestor: 'OPR',
                         tipoAcceso: 'ninguno',
                         oculto: false
                     }
@@ -89,7 +79,6 @@ export const ROLES: IRoles[] =
         {
             id: 'dirArchivoGralRegulacion',
             titulo: 'DIR. ARCHIVO GRAL Y REG',
-            centroGestor: 'DAGR',
             tipoAcceso: 'ninguno',
             oculto: false
         }

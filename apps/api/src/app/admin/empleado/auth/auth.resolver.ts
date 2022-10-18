@@ -22,6 +22,7 @@ export class AuthResolver
     @Mutation(() => EmpleadoDto)
     async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto): Promise<IEmpleado | HttpException>
     {
+        console.log('Resolver', auth);
         return await this.authService.asignarAuth(_id, auth);
     }
 

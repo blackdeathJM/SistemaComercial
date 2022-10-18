@@ -21,13 +21,11 @@ export class AuthService
     {
     }
 
-    async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado | NotFoundException>
+    async asignarAuth(_id: string, auth: AuthDto): Promise<IEmpleado>
     {
-        // TODO: Cambiar el rol asignado al auth en el servicio
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        // auth.rol = ROLES;
-
+        auth.role = ROLES;
         const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)
         {
@@ -36,7 +34,7 @@ export class AuthService
         return empleado;
     }
 
-    async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
+    async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
 

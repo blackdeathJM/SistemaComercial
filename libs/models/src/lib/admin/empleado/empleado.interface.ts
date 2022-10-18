@@ -4,14 +4,13 @@ import {IDepto} from '../deptos/depto.interface';
 export interface IEmpleado
 {
     _id?: string;
-    avatar: string;
+    avatar?: string;
     nombreCompleto: string;
     calle: string;
     colonia: string;
-    fechaIngreso: Date;
-    fechaBaja?: Date;
+    fechaIngreso: number;
+    fechaBaja?: number;
     activo: boolean;
-    modificadoPor: IModificado[];
     auth?: IAuth;
     //Relacion
     deptoId: string;
@@ -22,7 +21,7 @@ export interface IEmpleado
 export interface IModificado
 {
     usuario: string;
-    fecha: string;
+    fecha: number;
     accion: string;
 }
 
@@ -32,18 +31,12 @@ export interface ITelefono
     etiqueta: string;
 }
 
-export interface ICorreo
-{
-    correo: string;
-    etiqueta: string;
-}
-
 export interface IPuesto
 {
     puesto: string;
     sueldo: number;
     isr: number;
-    fecha: Date;
+    fecha: number;
 }
 
 export interface ISeguroSocial

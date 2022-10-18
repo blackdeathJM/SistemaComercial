@@ -5,44 +5,41 @@
 type AuthType {
   contrasena: String
   usuario: String
-  rol: [RolType!]!
+  role: [RolType!]
   activo: Boolean
   estatus: String
 }
 
 type RolType {
-  centroGestor: String!
-  id: String!
-  oculto: Boolean!
-  tipoAcceso: String!
-  title: String!
+  id: String
+  oculto: Boolean
+  tipoAcceso: String
+  titulo: String
+  hijos: [HijosType!]
 }
 
-type ModificadoType {
-  accion: String
-  fecha: String
-  usuario: String
+type HijosType {
+  id: String
+  oculto: Boolean
+  tipoAcceso: String
+  titulo: String
+  hijos: [HijosType!]
 }
 
 type EmpleadoType {
-  _id: String
+  _id: ID
   avatar: String
-  activo: Boolean!
+  activo: Boolean
   calle: String
   colonia: String
-  fechaBaja: Timestamp
-  fechaIngreso: Timestamp
-  modificadoPor: [ModificadoType!]
+  correo: String
+  fechaBaja: Int
+  fechaIngreso: Int
   nombreCompleto: String
   auth: AuthType
-  deptoId: String
+  deptoId: ID
   deptoEmpleado: DeptoType
 }
-
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
 
 type DeptoType {
   _id: ID
@@ -91,37 +88,39 @@ type DocumentoType {
 input AuthInput {
   contrasena: String
   usuario: String
-  rol: [RolInput!] = null
+  role: [RolInput!] = null
   activo: Boolean = true
-  estatus: String = "en-linea"
+  estatus: String = "En-linea"
 }
 
 input RolInput {
-  centroGestor: String!
-  id: String!
-  oculto: Boolean!
-  tipoAcceso: String!
-  title: String!
+  id: String
+  oculto: Boolean
+  tipoAcceso: String
+  titulo: String
+  hijos: [HijosInput!]
 }
 
-input ModificadoInput {
-  accion: String
-  fecha: String
-  usuario: String
+input HijosInput {
+  id: String
+  oculto: Boolean
+  tipoAcceso: String
+  titulo: String
+  hijos: [HijosInput!]
 }
 
 input EmpleadoInput {
-  _id: String
+  _id: ID
   avatar: String = null
-  activo: Boolean = false
+  activo: Boolean = true
   calle: String
   colonia: String
-  fechaBaja: Timestamp
-  fechaIngreso: Timestamp
-  modificadoPor: [ModificadoInput!] = []
+  correo: String = ""
+  fechaBaja: Int = 0
+  fechaIngreso: Int
   nombreCompleto: String
   auth: AuthInput = null
-  deptoId: String
+  deptoId: ID
   deptoEmpleado: DeptoInput
 }
 
@@ -197,6 +196,12 @@ input CambioContrasenaInput {
 input LoginInput {
   usuario: String
   contrasena: String
+}
+
+input ModificadoInput {
+  accion: String
+  fecha: Int
+  usuario: String
 }
 
 input DocumentoRegInput {
