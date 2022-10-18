@@ -67,7 +67,7 @@ export class AuthService
         return null;
     }
 
-    async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
+    async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
     {
         const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
             arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false

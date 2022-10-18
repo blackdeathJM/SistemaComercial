@@ -1,6 +1,6 @@
 import {Args, Context, Mutation, Resolver, Subscription} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
-import {HttpException, NotFoundException, UseGuards} from '@nestjs/common';
+import {NotFoundException, UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {PubSub} from 'graphql-subscriptions';
 import {EmpleadoDto, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
@@ -20,14 +20,13 @@ export class AuthResolver
     }
 
     @Mutation(() => EmpleadoDto)
-    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto): Promise<IEmpleado | HttpException>
+    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto): Promise<IEmpleado>
     {
-        console.log('Resolver', auth);
         return await this.authService.asignarAuth(_id, auth);
     }
 
     @Mutation(() => EmpleadoDto)
-    async actualizarContrasenaAdmin(@Args('datos') datos: CambioContrsenaDto): Promise<IEmpleado | NotFoundException>
+    async actualizarContrasenaAdmin(@Args('datos') datos: CambioContrsenaDto): Promise<IEmpleado>
     {
         return await this.authService.actualizarContrasenaAdmin(datos);
     }
