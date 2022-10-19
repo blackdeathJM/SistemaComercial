@@ -48,7 +48,6 @@ export const appRoutes: Route[] = [
                 },
                 {
                     path: 'dir-admon-finanzas',
-                    // loadComponent: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.component').then(a => a.DirAdmonFinanzasComponent)
                     loadChildren: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
                 }
             ]

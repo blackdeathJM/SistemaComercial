@@ -13,7 +13,7 @@ export interface IRoles
     titulo: string;
     tipoAcceso: string;
     oculto: boolean;
-    hijos: IHijosRol[]
+    hijos?: IHijosRol[]
 }
 
 export interface IHijosRol extends IRoles

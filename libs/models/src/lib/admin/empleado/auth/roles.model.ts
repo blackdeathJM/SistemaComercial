@@ -3,12 +3,19 @@ import {IRoles} from "../auth/auth.interface";
 export const ROLES: IRoles[] =
     [
         {
-            id: 'presidencia',
-            titulo: 'Presidencia',
+            id: 'administrador',
+            titulo: 'ADMINISTRADOR',
             tipoAcceso: 'ninguno',
             oculto: false,
-
-
+            hijos:
+            [
+                {
+                    id: 'adminGral',
+                    titulo: 'Admin Gral',
+                    tipoAcceso: 'ninguno',
+                    oculto: false,
+                }
+            ]
         },
         {
             id: 'dirAdmonFinanzas',

@@ -18,7 +18,7 @@ export class AuthDto implements IAuth
     @Field(() => [RolDto], {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
-    role: RolDto[];
+    role: IRoles[];
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsNotEmpty({message: 'El activo es necesario'})
     @IsBoolean({message: 'Activo debe ser booleano'})

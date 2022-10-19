@@ -8,8 +8,8 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             type: 'divider'
         },
         {
-            id: 'administrador',
-            title: 'Administrador',
+            id: 'adminitrador',
+            title: 'ADMINISTRADOR',
             type: 'group',
             icon: 'feather:settings',
             tooltip: 'Modulo para las establecer configuraciones para el funcionamiento del sistema comercial',

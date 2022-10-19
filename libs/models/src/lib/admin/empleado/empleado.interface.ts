@@ -14,8 +14,6 @@ export interface IEmpleado
     auth?: IAuth;
     //Relacion
     deptoId: string;
-    //Resolve
-    deptoEmpleado?: IDepto;
 }
 
 export interface IResolveEmpleado extends IEmpleado

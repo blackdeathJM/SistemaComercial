@@ -6,7 +6,7 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {unionBy} from 'lodash-es';
-import {IEmpleado, IModificado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado, IModificado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {ActualizarRolGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
@@ -17,6 +17,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {CommonModule} from "@angular/common";
 import {CambioIconoRolPipe} from "@s-app/empleado/pipes/cambio-icono-rol.pipe";
+import {ROLES} from "#/libs/models/src/lib/admin/empleado/auth/roles.model";
 
 @Component({
     standalone: true,
@@ -36,7 +37,7 @@ import {CambioIconoRolPipe} from "@s-app/empleado/pipes/cambio-icono-rol.pipe";
 export class DetalleEmpleadoComponent implements OnDestroy
 {
     @Output() cerrarPanel = new EventEmitter<boolean>();
-    _empleado: IEmpleado;
+    _empleado: IResolveEmpleado;
     subscripcion: Subscription = new Subscription();
     roles = ['ninguno', 'lectura', 'completo'];
 
@@ -45,9 +46,10 @@ export class DetalleEmpleadoComponent implements OnDestroy
 
     constructor(private dialogRef: MatDialog, private actualizarRolGQL: ActualizarRolGQL, private ngxToast: NgxToastService)
     {
+
     }
 
-    @Input() set empleado(valor: IEmpleado)
+    @Input() set empleado(valor: IResolveEmpleado)
     {
         this._empleado = valor;
     }
@@ -57,7 +59,7 @@ export class DetalleEmpleadoComponent implements OnDestroy
         this.cerrarPanel.emit(false);
     }
 
-    asignarSesion(data: IEmpleado): void
+    asignarSesion(data: IResolveEmpleado): void
     {
         this.subscripcion.add(this.dialogRef.open(RegistroSesionComponent, {data, width: '40%'}).afterClosed().subscribe(() =>
         {
@@ -76,26 +78,26 @@ export class DetalleEmpleadoComponent implements OnDestroy
     permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: IRoles, empleado: IEmpleado): void
     {
         // TODO: Cambiar a la nueva estructura de roles
-        const rol = {...permiso};
-        rol.tipoAcceso = evento['value'];
-        rol.oculto = evento['value'] === 'ninguno';
+        const role = {...permiso};
+        role.tipoAcceso = evento['value'];
+        role.oculto = evento['value'] === 'ninguno';
 
-        delete rol['__typename'];
+        delete role['__typename'];
 
         const modificadoPor: IModificado =
             {
-                accion: `Se cambio el rol a: ${rol.id} - ${rol.tipoAcceso}`,
+                accion: `Se cambio el rol a: ${role.id} - ${role.tipoAcceso}`,
                 fecha: GeneralService.fechaHoraActual(),
                 usuario: STATE_DATOS_SESION().nombreCompleto
             };
-        this.actualizarRolGQL.mutate({_id: empleado._id, rol, modificadoPor}).pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                unionBy(STATE_EMPLEADOS(), res.data.actualizarRol);
-                this.ngxToast.satisfactorioToast('El permiso se ha cambiado con exito', 'Cambio de rol');
-            }
-        })).subscribe();
+        // this.actualizarRolGQL.mutate({_id: empleado._id, role, modificadoPor}).pipe(tap((res) =>
+        // {
+        //     if (res.data)
+        //     {
+        //         unionBy(STATE_EMPLEADOS(), res.data.actualizarRol);
+        //         this.ngxToast.satisfactorioToast('El permiso se ha cambiado con exito', 'Cambio de rol');
+        //     }
+        // })).subscribe();
     }
 
     ngOnDestroy(): void

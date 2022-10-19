@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {debounceTime, map, Subscription, switchMap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonModule, DOCUMENT} from '@angular/common';
@@ -14,6 +14,7 @@ import {ListaDetalleComponent} from "@s-shared/plantillas/lista-detalle/lista-de
 import {MatInputModule} from "@angular/material/input";
 import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
 import {DetalleEmpleadoComponent} from "@s-app/empleado/components/detalle-empleado/detalle-empleado.component";
+import {TailwindLoadingComponent} from "@s-shared/tailwind-loading/tailwind-loading.component";
 
 @Component({
     standalone: true,
@@ -25,7 +26,8 @@ import {DetalleEmpleadoComponent} from "@s-app/empleado/components/detalle-emple
             ListaDetalleComponent,
             MatInputModule,
             RxReactiveFormsModule,
-            DetalleEmpleadoComponent
+            DetalleEmpleadoComponent,
+            TailwindLoadingComponent
         ],
     selector: 'app-empleado',
     templateUrl: './empleado.component.html',
@@ -35,8 +37,8 @@ export class EmpleadoComponent implements OnInit, OnDestroy
 {
     abrirP: boolean = false;
     controlBuscar: FormControl = new FormControl();
-    empleadoSeleccionado: IEmpleado;
-    stateEmpleados: IEmpleado[];
+    empleadoSeleccionado: IResolveEmpleado;
+    stateEmpleados: IResolveEmpleado[];
     subscripciones: Subscription = new Subscription();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
@@ -50,17 +52,17 @@ export class EmpleadoComponent implements OnInit, OnDestroy
         {
             if (res.data)
             {
-                this.stateEmpleados = STATE_EMPLEADOS(cloneDeep(res.data.empleados) as IEmpleado[]);
+                this.stateEmpleados = STATE_EMPLEADOS(cloneDeep(res.data.empleados) as IResolveEmpleado[]);
             }
             return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.empleados
                 .filter(v => v.nombreCompleto.toLowerCase().includes(value.toLowerCase()))));
         })).subscribe((datosFiltrados) =>
         {
-            this.stateEmpleados = STATE_EMPLEADOS(datosFiltrados as IEmpleado[]);
+            this.stateEmpleados = STATE_EMPLEADOS(datosFiltrados as IResolveEmpleado[]);
         }));
     }
 
-    seleccionarEmpleado(empleado: IEmpleado): void
+    seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
         this.empleadoSeleccionado = empleado;
         this.abrirP = true;

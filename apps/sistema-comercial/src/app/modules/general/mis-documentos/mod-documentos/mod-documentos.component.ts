@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EmpleadosSesionGQL, RegDocGQL, SubirArchivoGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
-import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
@@ -45,7 +45,7 @@ export class ModDocumentosComponent implements OnInit
     fechaMin: Date;
     fechaMax: Date;
     subscripcion: Subscription = new Subscription();
-    empleadosSesion: IEmpleado[];
+    empleadosSesion: IResolveEmpleado[];
     formDocs: FormGroup;
     cargando = false;
     tiposDoc = TIPOS_DOCUMENTO;
@@ -69,7 +69,7 @@ export class ModDocumentosComponent implements OnInit
         {
             if (res.data)
             {
-                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IEmpleado[]);
+                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
             }
         })).subscribe());
     }
