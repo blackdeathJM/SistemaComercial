@@ -14,7 +14,7 @@ export class Auth implements IAuth
     @required({message: 'Es necesario que asignes un usuario'})
     @trim()
     usuario: string;
-    rol: IRoles[];
+    role: IRoles[];
     activo: boolean = false;
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }

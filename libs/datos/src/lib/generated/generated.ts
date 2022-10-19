@@ -107,7 +107,6 @@ export type DocumentoRegInput = {
   fechaLimiteEntrega?: InputMaybe<Scalars['Int']>;
   fechaRecepcion?: InputMaybe<Scalars['Int']>;
   identificadorDoc?: InputMaybe<Scalars['String']>;
-  noSeguimiento: Scalars['Int'];
   proceso?: InputMaybe<Scalars['String']>;
   tipoDoc?: InputMaybe<Scalars['String']>;
   usuarioFolio?: InputMaybe<Scalars['String']>;

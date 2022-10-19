@@ -7,11 +7,11 @@ import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {unionBy} from 'lodash-es';
 import {IEmpleado, IModificado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import moment from 'moment';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {ActualizarRolGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {IRoles} from "#/libs/models/src/lib/admin/empleado/auth/auth.interface";
+import {GeneralService} from "@s-app/services/general.service";
 
 @Component({
     selector: 'app-detalle-empleado',
@@ -31,7 +31,6 @@ export class DetalleEmpleadoComponent implements OnDestroy
     constructor(private dialogRef: MatDialog, private actualizarRolGQL: ActualizarRolGQL, private ngxToast: NgxToastService)
     {
     }
-
 
     @Input() set empleado(valor: IEmpleado)
     {
@@ -71,7 +70,7 @@ export class DetalleEmpleadoComponent implements OnDestroy
         const modificadoPor: IModificado =
             {
                 accion: `Se cambio el rol a: ${rol.id} - ${rol.tipoAcceso}`,
-                fecha: moment().format('MM-DD-YYYY HH:mm'),
+                fecha: GeneralService.fechaHoraActual(),
                 usuario: STATE_DATOS_SESION().nombreCompleto
             };
         this.actualizarRolGQL.mutate({_id: empleado._id, rol, modificadoPor}).pipe(tap((res) =>

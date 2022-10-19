@@ -19,9 +19,10 @@ import {EmpleadoModule} from "@s-app/empleado/empleado.module";
             ModDeptoComponent,
             ListaDeptosComponent
         ],
-    exports: [
-        DeptosComponent
-    ],
+    exports:
+        [
+            DeptosComponent
+        ],
     imports:
         [
             NgMaterialMaterialModule,

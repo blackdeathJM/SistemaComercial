@@ -205,7 +205,6 @@ input ModificadoInput {
 }
 
 input DocumentoRegInput {
-  noSeguimiento: Int!
   ano: Int
   asunto: String
   comentario: String

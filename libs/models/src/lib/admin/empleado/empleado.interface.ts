@@ -18,6 +18,11 @@ export interface IEmpleado
     deptoEmpleado?: IDepto;
 }
 
+export interface IResolveEmpleado extends IEmpleado
+{
+    deptoEmpleado: IDepto
+}
+
 export interface IModificado
 {
     usuario: string;

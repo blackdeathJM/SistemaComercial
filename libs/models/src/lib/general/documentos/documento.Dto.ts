@@ -97,6 +97,6 @@ export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'envia
 }
 
 @InputType('DocumentoRegInput')
-export class DocumentoRegDto extends OmitType(DocumentoDto, ['_id', 'acuseUrl', 'fechaTerminado', 'ref', 'folio'], InputType)
+export class DocumentoRegDto extends OmitType(DocumentoDto, ['_id', 'acuseUrl', 'fechaTerminado', 'ref', 'folio', 'noSeguimiento'], InputType)
 {
 }

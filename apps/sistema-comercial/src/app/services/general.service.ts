@@ -11,4 +11,11 @@ export class GeneralService
         // return moment(fechaHora).unix();
         return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
+
+    static fechaHoraActual(): number
+    {
+        // console.log(DateTime.local({zone: 'America/Mexico_City'}).toUnixInteger());
+        // console.log(DateTime.utc({locale: 'es-MX'}).toUnixInteger())
+        return DateTime.utc({locale: 'es-MX'}).toUnixInteger();
+    }
 }

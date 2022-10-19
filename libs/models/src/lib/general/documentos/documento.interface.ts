@@ -28,4 +28,9 @@ export interface IDocumento
 }
 
 export const TIPOS_DOCUMENTO = ['Oficio', 'Memorandum', 'Circular', 'Otro'];
-export type IDocumentoReg = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref' | 'noSeguimiento' >;
+export type IDocumentoReg = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref' | 'noSeguimiento'>;
+export interface IResolveDocumento extends IDocumento
+{
+    resolveEmpleado: IEmpleado;
+    resolverEmpleadoFolio: IEmpleado
+}
