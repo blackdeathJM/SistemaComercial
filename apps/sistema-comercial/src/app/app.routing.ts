@@ -40,11 +40,11 @@ export const appRoutes: Route[] = [
                 },
                 {
                     path: 'admin',
-                    loadChildren: () => import('@s-app/modules/admin/admin.module').then(a => a.AdminModule)
+                    loadChildren: () => import('@s-app/modules/admin/admin.routing').then(a => a.adminRouting)
                 },
                 {
                     path: 'general',
-                    loadChildren: () => import('@s-app/modules/general/general.module').then(g => g.GeneralModule)
+                    loadChildren: () => import('@s-app/modules/general/general.routing').then(g => g.generalRouting)
                 },
                 {
                     path: 'dir-admon-finanzas',

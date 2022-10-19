@@ -2,6 +2,8 @@ import {Directive, HostListener, Input} from '@angular/core';
 import {NgControl} from '@angular/forms';
 
 @Directive({
+    standalone: true,
+    exportAs: 'CapitalizarDirective',
     selector: '[appCapitalizar]'
 })
 export class CapitalizarDirective

@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 
 @Pipe({
+    standalone: true,
     name: 'cambioIconoRol'
 })
 export class CambioIconoRolPipe implements PipeTransform

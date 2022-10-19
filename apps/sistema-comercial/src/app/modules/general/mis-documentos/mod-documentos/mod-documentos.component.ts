@@ -3,7 +3,7 @@ import {EmpleadosSesionGQL, RegDocGQL, SubirArchivoGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
-import {ReactiveFormConfig, RxFormBuilder} from '@rxweb/reactive-form-validators';
+import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
 import {Storage, ref, uploadBytes, getDownloadURL, deleteObject} from '@angular/fire/storage';
@@ -11,12 +11,31 @@ import {IDocumento, IDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/
 import {GeneralService} from '@s-app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {v4 as uuidv4} from 'uuid';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {FileUploadModule} from "@iplab/ngx-file-upload";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {RegistrosComponent} from "@s-shared/registros/registros.component";
 
 
 @Component({
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        RxReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        FileUploadModule,
+        MatCheckboxModule,
+        RegistrosComponent
+    ],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
     styleUrls: ['./mod-documentos.component.scss']

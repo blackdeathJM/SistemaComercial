@@ -14,7 +14,6 @@ import {appRoutes} from '@s-app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {DeptosModule} from '@s-app/modules/admin/deptos/deptos.module';
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
@@ -79,7 +78,6 @@ const routerConfig: ExtraOptions =
             // modulos
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
-            DeptosModule,
         ],
     bootstrap:
         [

@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {CdkScrollableModule} from "@angular/cdk/scrolling";
 
 @Component({
-  selector: 'app-tarjeta-contenido-scroll',
-  templateUrl: './tarjeta-contenido-scroll.component.html',
-  styleUrls: ['./tarjeta-contenido-scroll.component.scss']
+    standalone: true,
+    imports:
+        [
+            CdkScrollableModule
+        ],
+    exportAs: 'app-tarjeta-contenido-scroll',
+    selector: 'app-tarjeta-contenido-scroll',
+    templateUrl: './tarjeta-contenido-scroll.component.html',
+    styleUrls: ['./tarjeta-contenido-scroll.component.scss']
 })
-export class TarjetaContenidoScrollComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class TarjetaContenidoScrollComponent
+{
 
 }

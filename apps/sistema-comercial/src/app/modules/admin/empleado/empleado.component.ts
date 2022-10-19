@@ -3,13 +3,30 @@ import {FormControl} from '@angular/forms';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {debounceTime, map, Subscription, switchMap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DOCUMENT} from '@angular/common';
+import {CommonModule, DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {cloneDeep} from 'lodash-es';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {ListaDetalleComponent} from "@s-shared/plantillas/lista-detalle/lista-detalle.component";
+import {MatInputModule} from "@angular/material/input";
+import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
+import {DetalleEmpleadoComponent} from "@s-app/empleado/components/detalle-empleado/detalle-empleado.component";
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            MatFormFieldModule,
+            MatIconModule,
+            ListaDetalleComponent,
+            MatInputModule,
+            RxReactiveFormsModule,
+            DetalleEmpleadoComponent
+        ],
     selector: 'app-empleado',
     templateUrl: './empleado.component.html',
     styleUrls: ['./empleado.component.scss']

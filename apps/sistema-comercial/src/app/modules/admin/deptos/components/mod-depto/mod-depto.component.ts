@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {RxFormBuilder} from '@rxweb/reactive-form-validators';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
@@ -9,8 +9,26 @@ import {unionBy} from 'lodash-es';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {CapitalizarDirective} from "@s-directives/capitalizar.directive";
+import {RegistrosComponent} from "@s-shared/registros/registros.component";
+import {TrimDirective} from "@s-directives/trim.directive";
+import {NgxTrimDirectiveModule} from "ngx-trim-directive";
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            MatDialogModule,
+            MatFormFieldModule,
+            MatInputModule,
+            RxReactiveFormsModule,
+            CapitalizarDirective,
+            TrimDirective,
+            RegistrosComponent,
+            NgxTrimDirectiveModule
+        ],
     selector: 'app-mod-depto',
     templateUrl: './mod-depto.component.html',
     styleUrls: ['./mod-depto.component.scss'],

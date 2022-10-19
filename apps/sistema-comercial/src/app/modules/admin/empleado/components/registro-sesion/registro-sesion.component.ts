@@ -1,16 +1,31 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
-import {RxFormBuilder} from '@rxweb/reactive-form-validators';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {RegistrosComponent} from "@s-shared/registros/registros.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            MatDialogModule,
+            RxReactiveFormsModule,
+            MatFormFieldModule,
+            MatInputModule,
+            RegistrosComponent
+
+        ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',
     styleUrls: ['./registro-sesion.component.scss'],
@@ -42,7 +57,7 @@ export class RegistroSesionComponent implements OnInit
         this.cargandoDatos = true;
         this.formAuth.disable();
         const {confirmContrasena, ...resto} = this.formAuth.value;
-            // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
+        // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
         if (this.data.auth)
         {
             const datos =

@@ -12,8 +12,23 @@ import {ActualizarRolGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {IRoles} from "#/libs/models/src/lib/admin/empleado/auth/auth.interface";
 import {GeneralService} from "@s-app/services/general.service";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {CommonModule} from "@angular/common";
+import {CambioIconoRolPipe} from "@s-app/empleado/pipes/cambio-icono-rol.pipe";
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            MatButtonModule,
+            MatIconModule,
+            MatTooltipModule,
+            CambioIconoRolPipe
+        ],
+    exportAs: 'app-detalle-empleado',
     selector: 'app-detalle-empleado',
     templateUrl: './detalle-empleado.component.html',
     styleUrls: ['./detalle-empleado.component.scss']

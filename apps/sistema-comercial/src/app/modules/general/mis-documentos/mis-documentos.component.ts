@@ -6,8 +6,30 @@ import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {Subscription, tap} from 'rxjs';
 import {STATE_DOCS} from '@s-app/general/general.state';
+import {ListaDetalleComponent} from "@s-shared/plantillas/lista-detalle/lista-detalle.component";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {FuseCardModule} from "@s-fuse/card";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {TailwindLoadingComponent} from "@s-shared/tailwind-loading/tailwind-loading.component";
+import {ConvertirTimestamUnixPipe} from "@s-app/pipes/convertir-timestam-unix.pipe";
+import {CommonModule} from "@angular/common";
+import {DetalleDocumentosComponent} from "@s-app/general/mis-documentos/detalle-documentos/detalle-documentos.component";
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            ListaDetalleComponent,
+            MatButtonModule,
+            MatIconModule,
+            FuseCardModule,
+            MatTooltipModule,
+            TailwindLoadingComponent,
+            ConvertirTimestamUnixPipe,
+            DetalleDocumentosComponent,
+        ],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
     styleUrls: ['./mis-documentos.component.scss']

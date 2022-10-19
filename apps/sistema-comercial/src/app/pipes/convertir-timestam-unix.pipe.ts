@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {DateTime, DateTimeFormatOptions} from 'luxon';
 
 @Pipe({
+    standalone: true,
     name: 'convertirTimestamUnix'
 })
 export class ConvertirTimestamUnixPipe implements PipeTransform

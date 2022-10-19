@@ -11,8 +11,24 @@ import {FormControl} from '@angular/forms';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {cloneDeep} from 'lodash-es';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {ListaDeptosComponent} from "@s-app/deptos/components/lista-deptos/lista-deptos.component";
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            MatFormFieldModule,
+            MatIconModule,
+            RxReactiveFormsModule,
+            MatButtonModule,
+            MatInputModule,
+            ListaDeptosComponent
+        ],
     selector: 'app-deptos-principal',
     templateUrl: './deptos.component.html',
     styleUrls: ['./deptos.component.scss'],
