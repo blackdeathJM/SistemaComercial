@@ -19,7 +19,7 @@
         "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main"
     },
     "dependencies": {
-        "@angular-ru/cdk": "^13.2.6",
+        "@angular-ru/cdk": "^14.0.0",
         "@angular/animations": "^14.2.7",
         "@angular/cdk": "^14.2.5",
         "@angular/common": "14.2.7",
@@ -82,7 +82,7 @@
         "moment": "2.29.4",
         "mongoose": "^6.6.7",
         "nest-access-control": "^2.2.0",
-        "ng-apexcharts": "1.7.1",
+        "ng-apexcharts": "1.7.4",
         "ngx-markdown": "14.0.1",
         "ngx-quill": "19.0.1",
         "ngx-skeleton-loader": "^6.0.0",
@@ -155,7 +155,7 @@
         "eslint": "8.26.0",
         "eslint-config-prettier": "8.5.0",
         "eslint-plugin-import": "2.26.0",
-        "eslint-plugin-jsdoc": "39.3.18",
+        "eslint-plugin-jsdoc": "39.3.21",
         "eslint-plugin-prefer-arrow": "1.2.3",
         "jasmine-core": "4.4.0",
         "jest": "29.2.1",

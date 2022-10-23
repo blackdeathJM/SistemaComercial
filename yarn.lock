@@ -241,10 +241,10 @@
     "@angular-eslint/bundled-angular-compiler" "14.1.2"
     "@typescript-eslint/utils" "5.37.0"
 
-"@angular-ru/cdk@^13.2.6":
-  version "13.2.6"
-  resolved "https://registry.yarnpkg.com/@angular-ru/cdk/-/cdk-13.2.6.tgz#ee9f05e681b57be9fe90e7e7f81629f446d0bd05"
-  integrity sha512-j0Z5wdVjd07asrzyUgc/eueCvVbUZ4QQfx3A3QcW1JeILrWyf2mXUmRX+Iq/Zyh15JXRS93aeWPyEXTTssJ7hQ==
+"@angular-ru/cdk@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@angular-ru/cdk/-/cdk-14.0.0.tgz#b06896ef59521be68913e4a52347fa86d920fc85"
+  integrity sha512-8wTgQvZ74IxFDfTFLREU2jTZLJuGkhwcUzDdH0Km7DM1SWEegzSlAgCN4bboTEWzXXtK4gkyWTOfTNRo0r/j8Q==
   dependencies:
     tslib "^2.3.0"
 
@@ -8412,10 +8412,10 @@ eslint-plugin-import@2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-jsdoc@39.3.18:
-  version "39.3.18"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-39.3.18.tgz#440e4e566fd156c77f183f00f9b355d657b1d254"
-  integrity sha512-LR1eQAWv5T/GZROXnP/h/JGkO115QqVNDufVU09srwfME8ZIFIVakEAYZ0L4Cl1ibcN7kGR4PH0OPuVax+nkFw==
+eslint-plugin-jsdoc@39.3.21:
+  version "39.3.21"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-39.3.21.tgz#3dc9ccbee175d8ab29be209baae5c27e718069e3"
+  integrity sha512-y10zOn+lxYPZCy3WyQeD1bp25Wtz40VcZ3tSlLJs4iWM8r9l1qh6cAe9OjXD25CxMLnfbqLst3UoEvI5o7E5nA==
   dependencies:
     "@es-joy/jsdoccomment" "~0.33.0"
     comment-parser "1.3.1"
@@ -12270,10 +12270,10 @@ nest-access-control@^2.2.0:
   dependencies:
     accesscontrol "^2.2.1"
 
-ng-apexcharts@1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/ng-apexcharts/-/ng-apexcharts-1.7.1.tgz#37f85fd2e4cd74b50220927940255461b77d3ba6"
-  integrity sha512-GTRhF70G0leGVGjx4cbLKGusZxF7FogFgJ59q3Ntk0MIEvJqfpSYywmocselh3cGR0S/Zt/d7JEgt/f2HOzpTA==
+ng-apexcharts@1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/ng-apexcharts/-/ng-apexcharts-1.7.4.tgz#714e4a74abf1bcc7225fb2ae8e9403049b172cd1"
+  integrity sha512-XpykR8qos14i2ly/QrmGkQIUQfqaZAe2+7tDg5An1akws3VwYg6O643g9LwdTIG3YeWlkKtt4zxYJpEJF3uLUg==
   dependencies:
     tslib "^2.0.0"
 
