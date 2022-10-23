@@ -5,12 +5,11 @@ import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
 import {EmpleadoDto, EmpleadoType, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
-import {AuthDto, RolDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {IEmpleado, IModificado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {ROLES} from "#api/libs/models/src/lib/admin/empleado/auth/roles.model";
 
 @Injectable()
 export class AuthService
@@ -25,7 +24,7 @@ export class AuthService
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        auth.role = ROLES;
+        auth.role = '';
         const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)
         {
@@ -67,19 +66,19 @@ export class AuthService
         return null;
     }
 
-    async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
-    {
-        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
-            arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
-        });
-
-        if (!empleado)
-        {
-            throw new NotFoundException({message: 'El usuario no fue encontrado'});
-        }
-        await this.modificadoPor(_id, modificadoPor);
-        return empleado;
-    }
+    // async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
+    // {
+    //     const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
+    //         arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
+    //     });
+    //
+    //     if (!empleado)
+    //     {
+    //         throw new NotFoundException({message: 'El usuario no fue encontrado'});
+    //     }
+    //     await this.modificadoPor(_id, modificadoPor);
+    //     return empleado;
+    // }
 
     async modificadoPor(_id: string, modificadoPor: IModificado): Promise<void>
     {

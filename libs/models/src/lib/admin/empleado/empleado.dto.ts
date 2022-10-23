@@ -1,7 +1,7 @@
-import {Field, Float, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
+import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
-import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
+import {IEmpleado, IModificado, IPuesto, ISeguroSocial, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 
 @ObjectType('ModificadoType')
@@ -17,18 +17,6 @@ export class ModificadoDto implements IModificado
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario'})
     usuario: string;
-}
-
-@ObjectType('TelefonoType')
-@InputType('TelefonoInput')
-export class TelefonoDto implements ITelefono
-{
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'La etiqueta es requerida'})
-    etiqueta: string;
-    @Field({nullable: true})
-    @IsNotEmpty({message: 'El telefono es requerido'})
-    telefono: string;
 }
 
 export class PuestoDto implements IPuesto
@@ -59,11 +47,11 @@ export class EmpleadoDto implements IEmpleado
 {
     @Field(() => ID, {nullable: true})
     @IsOptional()
-    _id?: string;
+    _id: string;
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
-    avatar?: string;
+    avatar: string;
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @Prop()
     @IsNotEmpty({message: 'Se necesita especificar si esta activo'})
@@ -79,11 +67,11 @@ export class EmpleadoDto implements IEmpleado
     @Field(() => String, {nullable: true, defaultValue: ''})
     @Prop()
     @IsOptional()
-    correo?: string;
+    correo: string;
     @Field(() => Int, {nullable: true, defaultValue: 0})
     @Prop()
     @IsOptional()
-    fechaBaja?: number = 0;
+    fechaBaja: number = 0;
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
@@ -92,14 +80,27 @@ export class EmpleadoDto implements IEmpleado
     @Prop()
     @IsNotEmpty({message: 'El nombre completo es requerido'})
     nombreCompleto: string;
+    @Field(() => [ModificadoDto], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    modificadoPor: IModificado[];
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    telefono: string[];
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
-    auth?: AuthDto;
+    auth: AuthDto;
     @Field(() => ID, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es nesario el id del departamento al que sera asignado el empleado'})
     deptoId: string;
+}
+
+@InputType('RegEmpleadoInput')
+export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'avatar', 'fechaBaja', 'activo', 'auth'], InputType) implements TRegEmpleado
+{
 }
 
 export type EmpleadoType = EmpleadoDto & Document;

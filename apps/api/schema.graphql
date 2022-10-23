@@ -5,25 +5,15 @@
 type AuthType {
   contrasena: String
   usuario: String
-  role: [RolType!]
+  role: String
   activo: Boolean
   estatus: String
 }
 
-type RolType {
-  id: String
-  oculto: Boolean
-  tipoAcceso: String
-  titulo: String
-  hijos: [HijosType!]
-}
-
-type HijosType {
-  id: String
-  oculto: Boolean
-  tipoAcceso: String
-  titulo: String
-  hijos: [HijosType!]
+type ModificadoType {
+  accion: String
+  fecha: Int
+  usuario: String
 }
 
 type EmpleadoType {
@@ -36,6 +26,8 @@ type EmpleadoType {
   fechaBaja: Int
   fechaIngreso: Int
   nombreCompleto: String
+  modificadoPor: [ModificadoType!]
+  telefono: [String!]
   auth: AuthType
   deptoId: ID
   deptoEmpleado: DeptoType
@@ -88,25 +80,15 @@ type DocumentoType {
 input AuthInput {
   contrasena: String
   usuario: String
-  role: [RolInput!] = null
+  role: String = null
   activo: Boolean = true
   estatus: String = "En-linea"
 }
 
-input RolInput {
-  id: String
-  oculto: Boolean
-  tipoAcceso: String
-  titulo: String
-  hijos: [HijosInput!]
-}
-
-input HijosInput {
-  id: String
-  oculto: Boolean
-  tipoAcceso: String
-  titulo: String
-  hijos: [HijosInput!]
+input ModificadoInput {
+  accion: String
+  fecha: Int
+  usuario: String
 }
 
 input EmpleadoInput {
@@ -119,6 +101,8 @@ input EmpleadoInput {
   fechaBaja: Int = 0
   fechaIngreso: Int
   nombreCompleto: String
+  modificadoPor: [ModificadoInput!] = []
+  telefono: [String!] = []
   auth: AuthInput = null
   deptoId: ID
   deptoEmpleado: DeptoInput
@@ -172,11 +156,10 @@ type Mutation {
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
-  crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
+  crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
   asignarAuth(_id: String!, auth: AuthInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
-  actualizarRol(_id: String!, rol: RolInput!, modificadoPor: ModificadoInput!): EmpleadoType!
   regDoc(datos: DocumentoRegInput!): DocumentoType!
 }
 
@@ -188,6 +171,17 @@ input ArchivoInput {
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
+input RegEmpleadoInput {
+  calle: String
+  colonia: String
+  correo: String = ""
+  fechaIngreso: Int
+  nombreCompleto: String
+  modificadoPor: [ModificadoInput!] = []
+  telefono: [String!] = []
+  deptoId: ID
+}
+
 input CambioContrasenaInput {
   _id: ID
   contrasena: String
@@ -196,12 +190,6 @@ input CambioContrasenaInput {
 input LoginInput {
   usuario: String
   contrasena: String
-}
-
-input ModificadoInput {
-  accion: String
-  fecha: Int
-  usuario: String
 }
 
 input DocumentoRegInput {

@@ -3,22 +3,25 @@ import {IDepto} from '../deptos/depto.interface';
 
 export interface IEmpleado
 {
-    _id?: string;
-    avatar?: string;
+    _id: string;
+    avatar: string;
     nombreCompleto: string;
     calle: string;
     colonia: string;
     fechaIngreso: number;
-    fechaBaja?: number;
+    fechaBaja: number;
     activo: boolean;
-    auth?: IAuth;
+    auth: IAuth;
+    telefono: string[];
+    correo: string;
+    modificadoPor: IModificado[];
     //Relacion
     deptoId: string;
 }
 
 export interface IResolveEmpleado extends IEmpleado
 {
-    deptoEmpleado: IDepto
+    deptoEmpleado: IDepto;
 }
 
 export interface IModificado
@@ -26,12 +29,6 @@ export interface IModificado
     usuario: string;
     fecha: number;
     accion: string;
-}
-
-export interface ITelefono
-{
-    telefono: string;
-    etiqueta: string;
 }
 
 export interface IPuesto
@@ -46,3 +43,5 @@ export interface ISeguroSocial
 {
     nss: string;
 }
+
+export type TRegEmpleado = Omit<IEmpleado, '_id' | 'avatar' | 'fechaBaja' | 'activo' | 'auth'>;

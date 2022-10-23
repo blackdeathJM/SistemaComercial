@@ -2,7 +2,7 @@ import {ConflictException, Injectable, NotFoundException, UnauthorizedException}
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
-import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class EmpleadoService
         }
     }
 
-    async crearEmpleado(datosEmpleado: IEmpleado): Promise<IEmpleado>
+    async crearEmpleado(datosEmpleado: RegEmpleadoDto): Promise<EmpleadoDto>
     {
         try
         {
@@ -51,7 +51,7 @@ export class EmpleadoService
     async validarUsuarioActivo(_id: string): Promise<IEmpleado>
     {
         const empleado = await this.empleado.findById(_id).exec();
-        if (!empleado.activo) throw new UnauthorizedException('El empleado no esta activo');
+        if (!empleado.activo) {throw new UnauthorizedException('El empleado no esta activo');}
         delete empleado.auth.contrasena;
         return empleado;
     }

@@ -1,7 +1,7 @@
 import {Args, Mutation, Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
 import {EmpleadoService} from './empleado.service';
 import {DeptosService} from '../deptos/deptos.service';
-import { EmpleadoDto } from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
 import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
@@ -26,7 +26,7 @@ export class EmpleadoResolver
     }
 
     @Mutation(() => EmpleadoDto)
-    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: EmpleadoDto): Promise<IEmpleado>
+    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: RegEmpleadoDto): Promise<RegEmpleadoDto>
     {
         return await this.empleadoService.crearEmpleado(empleadoDatos);
     }

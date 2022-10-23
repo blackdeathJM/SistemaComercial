@@ -4,20 +4,7 @@ export interface IAuth
     usuario: string;
     contrasena: string;
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
-    role: IRoles[];
-}
-
-export interface IRoles
-{
-    id: string;
-    titulo: string;
-    tipoAcceso: string;
-    oculto: boolean;
-    hijos?: IHijosRol[]
-}
-
-export interface IHijosRol extends IRoles
-{
+    role: string;
 }
 
 export interface IDatosSesion
