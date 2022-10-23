@@ -27,19 +27,6 @@ mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!)
     }
 }
 
-mutation actualizarRol($_id: String!, $rol: RolInput!, $modificadoPor: ModificadoInput!)
-{
-    actualizarRol(_id: $_id, rol: $rol, modificadoPor: $modificadoPor)
-    {
-        ...fragEmpleado
-        auth {
-            ...fragAuth
-        }
-        deptoEmpleado {
-            ...fragDeptos
-        }
-    }
-}
 subscription rolCambiado($_id: String!)
 {
     rolCambiado(_id: $_id)

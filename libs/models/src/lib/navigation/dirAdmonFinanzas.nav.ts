@@ -1,5 +1,5 @@
-import {FuseNavigationItem} from "@s-fuse/navigation";
-import {dirAdmonFinanzas} from "@s-app/common/navigation/constantes/rutas";
+import {FuseNavigationItem} from 'apps/sistema-comercial/src/@fuse/components/navigation';
+import {dirAdmonFinanzas} from 'libs/models/src/lib/navigation/rutas';
 
 export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
     [

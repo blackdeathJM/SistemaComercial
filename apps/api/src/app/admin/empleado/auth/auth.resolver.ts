@@ -20,7 +20,7 @@ export class AuthResolver
     }
 
     @Mutation(() => EmpleadoDto)
-    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto): Promise<IEmpleado>
+    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto): Promise<EmpleadoDto>
     {
         return await this.authService.asignarAuth(_id, auth);
     }

@@ -97,8 +97,8 @@ input EmpleadoInput {
   activo: Boolean = true
   calle: String
   colonia: String
-  correo: String = ""
-  fechaBaja: Int = 0
+  correo: String = null
+  fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
   modificadoPor: [ModificadoInput!] = []
@@ -172,9 +172,12 @@ input ArchivoInput {
 scalar Upload
 
 input RegEmpleadoInput {
+  avatar: String = null
+  activo: Boolean = true
   calle: String
   colonia: String
-  correo: String = ""
+  correo: String = null
+  fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
   modificadoPor: [ModificadoInput!] = []

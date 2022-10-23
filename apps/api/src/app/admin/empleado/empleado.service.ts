@@ -51,7 +51,10 @@ export class EmpleadoService
     async validarUsuarioActivo(_id: string): Promise<IEmpleado>
     {
         const empleado = await this.empleado.findById(_id).exec();
-        if (!empleado.activo) {throw new UnauthorizedException('El empleado no esta activo');}
+        if (!empleado.activo)
+        {
+            throw new UnauthorizedException('El empleado no esta activo');
+        }
         delete empleado.auth.contrasena;
         return empleado;
     }

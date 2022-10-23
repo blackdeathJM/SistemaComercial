@@ -1,23 +1,17 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
-import {Subscription, tap} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
-import {unionBy} from 'lodash-es';
-import {IEmpleado, IModificado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {ActualizarRolGQL} from '#/libs/datos/src';
+import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
-import {IRoles} from "#/libs/models/src/lib/admin/empleado/auth/auth.interface";
-import {GeneralService} from "@s-app/services/general.service";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {CommonModule} from "@angular/common";
-import {CambioIconoRolPipe} from "@s-app/empleado/pipes/cambio-icono-rol.pipe";
-import {ROLES} from "#/libs/models/src/lib/admin/empleado/auth/roles.model";
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {CommonModule} from '@angular/common';
+import {CambioIconoRolPipe} from '@s-app/empleado/pipes/cambio-icono-rol.pipe';
 
 @Component({
     standalone: true,
@@ -44,7 +38,7 @@ export class DetalleEmpleadoComponent implements OnDestroy
     controlRoles: FormControl = new FormControl();
 
 
-    constructor(private dialogRef: MatDialog, private actualizarRolGQL: ActualizarRolGQL, private ngxToast: NgxToastService)
+    constructor(private dialogRef: MatDialog, private ngxToast: NgxToastService)
     {
 
     }
@@ -75,21 +69,21 @@ export class DetalleEmpleadoComponent implements OnDestroy
         return item.id || index;
     }
 
-    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: IRoles, empleado: IEmpleado): void
+    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: string, empleado: IEmpleado): void
     {
         // TODO: Cambiar a la nueva estructura de roles
-        const role = {...permiso};
-        role.tipoAcceso = evento['value'];
-        role.oculto = evento['value'] === 'ninguno';
-
-        delete role['__typename'];
-
-        const modificadoPor: IModificado =
-            {
-                accion: `Se cambio el rol a: ${role.id} - ${role.tipoAcceso}`,
-                fecha: GeneralService.fechaHoraActual(),
-                usuario: STATE_DATOS_SESION().nombreCompleto
-            };
+        // const role = {...permiso};
+        // role.tipoAcceso = evento['value'];
+        // role.oculto = evento['value'] === 'ninguno';
+        //
+        // delete role['__typename'];
+        //
+        // const modificadoPor: IModificado =
+        //     {
+        //         accion: `Se cambio el rol a: ${role.id} - ${role.tipoAcceso}`,
+        //         fecha: GeneralService.fechaHoraActual(),
+        //         usuario: STATE_DATOS_SESION().nombreCompleto
+        //     };
         // this.actualizarRolGQL.mutate({_id: empleado._id, role, modificadoPor}).pipe(tap((res) =>
         // {
         //     if (res.data)

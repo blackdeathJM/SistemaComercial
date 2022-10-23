@@ -1,7 +1,7 @@
-import {FuseNavigationItem} from '@s-fuse/navigation';
-import {rutaBaseAdministrador} from '@s-app/mock-api/common/navigation/constantes/rutas';
+import {rutaBaseAdministrador} from './rutas';
+import {INavegacion} from './navigation.interface';
 
-export const ADMINISTRADOR: FuseNavigationItem[] =
+export const ADMINISTRADOR: INavegacion[] =
     [
         {
             id: 'separador',
@@ -12,7 +12,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             title: 'ADMINISTRADOR',
             type: 'group',
             icon: 'feather:settings',
-            tooltip: 'Modulo para las establecer configuraciones para el funcionamiento del sistema comercial',
+            tooltip: 'Modulo para establecer configuraciones para el funcionamiento del sistema comercial',
             children:
                 [
                     {
@@ -26,7 +26,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
         }
     ];
 
-export const ADMINISTRADOR_C: FuseNavigationItem[] = [];
-export const ADMINISTRADOR_F: FuseNavigationItem[] = [];
-export const ADMINISTRADOR_H: FuseNavigationItem[] = [];
+export const ADMINISTRADOR_C: INavegacion[] = [];
+export const ADMINISTRADOR_F: INavegacion[] = [];
+export const ADMINISTRADOR_H: INavegacion[] = [];
 

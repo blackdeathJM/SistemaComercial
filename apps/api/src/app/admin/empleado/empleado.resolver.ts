@@ -4,7 +4,6 @@ import {DeptosService} from '../deptos/deptos.service';
 import {EmpleadoDto, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
-import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
 
 @Resolver(() => EmpleadoDto)
 export class EmpleadoResolver
@@ -20,19 +19,19 @@ export class EmpleadoResolver
     }
 
     @Query(() => [EmpleadoDto])
-    async empleadosSesion(): Promise<IEmpleado[]>
+    async empleadosSesion(): Promise<EmpleadoDto[]>
     {
         return await this.empleadoService.empleadosSesion();
     }
 
     @Mutation(() => EmpleadoDto)
-    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: RegEmpleadoDto): Promise<RegEmpleadoDto>
+    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: RegEmpleadoDto): Promise<EmpleadoDto>
     {
         return await this.empleadoService.crearEmpleado(empleadoDatos);
     }
 
     @ResolveField(() => DeptoDto, {nullable: true})
-    async deptoEmpleado(@Parent() parent: EmpleadoDto): Promise<IDepto>
+    async deptoEmpleado(@Parent() parent: EmpleadoDto): Promise<DeptoDto>
     {
         return this.deptosService.deptoPorId(parent.deptoId);
     }

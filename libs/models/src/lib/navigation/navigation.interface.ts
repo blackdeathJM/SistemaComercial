@@ -1,5 +1,3 @@
-import {IsActiveMatchOptions, Params, QueryParamsHandling} from "@angular/router";
-
 export interface INavegacion
 {
     id?: string;
@@ -19,8 +17,8 @@ export interface INavegacion
     link?: string;
     fragment?: string;
     preserveFragment?: boolean;
-    queryParams?: Params | null;
-    queryParamsHandling?: QueryParamsHandling | null;
+    queryParams?: [key: string] | null;
+    queryParamsHandling?: 'merge' | 'preserve' | '' | null;
     externalLink?: boolean;
     target?:
         | '_blank'
@@ -29,7 +27,12 @@ export interface INavegacion
         | '_top'
         | string;
     exactMatch?: boolean;
-    isActiveMatchOptions?: IsActiveMatchOptions;
+    isActiveMatchOptions?: {
+        matrixParams: 'exact' | 'subset' | 'ignored';
+        queryParams: 'exact' | 'subset' | 'ignored';
+        paths: 'exact' | 'subset';
+        fragment: 'exact' | 'ignored';
+    };
     function?: (item: INavegacion) => void;
     classes?: {
         title?: string;

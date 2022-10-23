@@ -5,6 +5,8 @@ fragment fragEmpleado on EmpleadoType
     avatar
     activo
     calle
+    correo
+    telefono
     colonia
     fechaBaja
     fechaIngreso

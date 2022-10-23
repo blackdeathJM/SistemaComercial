@@ -4,7 +4,7 @@ import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
-import {EmpleadoDto, EmpleadoType, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {IEmpleado, IModificado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
@@ -24,8 +24,8 @@ export class AuthService
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        auth.role = '';
-        const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(_id), {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
+        auth.role = null;
+        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)
         {
             throw new NotFoundException('El usuario no se encontro');
@@ -47,7 +47,7 @@ export class AuthService
         return empleado;
     }
 
-    async validarUsuario(username: string, password: string): Promise<IEmpleado>
+    async validarUsuario(username: string, password: string): Promise<EmpleadoDto>
     {
         const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
         if (empleado)
@@ -58,7 +58,6 @@ export class AuthService
                 delete empleado.auth.contrasena;
                 return empleado;
             }
-
         } else
         {
             throw new NotFoundException({message: 'Usuario o contrasena no correctas'});

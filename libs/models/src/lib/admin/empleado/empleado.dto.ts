@@ -1,6 +1,6 @@
 import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 import {IEmpleado, IModificado, IPuesto, ISeguroSocial, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 
@@ -54,8 +54,8 @@ export class EmpleadoDto implements IEmpleado
     avatar: string;
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @Prop()
-    @IsNotEmpty({message: 'Se necesita especificar si esta activo'})
-    activo: boolean = true;
+    @IsBoolean({message: 'Activo debe ser un boleano'})
+    activo: boolean;
     @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La calle es necesaria'})
@@ -64,14 +64,14 @@ export class EmpleadoDto implements IEmpleado
     @Prop()
     @IsNotEmpty({message: 'La colonia es necesaria'})
     colonia: string;
-    @Field(() => String, {nullable: true, defaultValue: ''})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     correo: string;
-    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Field(() => Int, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
-    fechaBaja: number = 0;
+    fechaBaja: number;
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
@@ -99,7 +99,7 @@ export class EmpleadoDto implements IEmpleado
 }
 
 @InputType('RegEmpleadoInput')
-export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'avatar', 'fechaBaja', 'activo', 'auth'], InputType) implements TRegEmpleado
+export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'auth'], InputType) implements TRegEmpleado
 {
 }
 

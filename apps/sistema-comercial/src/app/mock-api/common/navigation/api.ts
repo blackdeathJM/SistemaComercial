@@ -9,8 +9,8 @@ import {compactNavigation, defaultNavigation, futuristicNavigation, horizontalNa
 })
 export class NavigationMockApi
 {
-    private readonly _compactNavigation: FuseNavigationItem[] = compactNavigation;
     private readonly _defaultNavigation: FuseNavigationItem[] = defaultNavigation;
+    private readonly _compactNavigation: FuseNavigationItem[] = compactNavigation;
     private readonly _futuristicNavigation: FuseNavigationItem[] = futuristicNavigation;
     private readonly _horizontalNavigation: FuseNavigationItem[] = horizontalNavigation;
 
@@ -19,9 +19,9 @@ export class NavigationMockApi
      */
     constructor(private _fuseMockApiService: FuseMockApiService)
     {
-        // Register Mock API handlers
         this.registerHandlers();
     }
+
     registerHandlers(): void
     {
         this._fuseMockApiService

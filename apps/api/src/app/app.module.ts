@@ -20,7 +20,10 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
                 installSubscriptionHandlers: true,
-                resolvers: {Upload: GraphQLUpload},
+                resolvers:
+                    {
+                        Upload: GraphQLUpload
+                    },
                 // eslint-disable-next-line @typescript-eslint/naming-convention
                 subscriptions: {
                     'graphql-ws': true,
@@ -28,7 +31,10 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
                 },
                 autoSchemaFile: 'apps/api/schema.graphql',
                 cors: {origin: '*'},
-                buildSchemaOptions: {dateScalarMode: 'timestamp'},
+                buildSchemaOptions:
+                    {
+                        dateScalarMode: 'timestamp',
+                    },
                 playground: false,
                 context: ({req}) => ({req}),
                 plugins: [ApolloServerPluginLandingPageLocalDefault]

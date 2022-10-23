@@ -1,11 +1,11 @@
-import {FuseNavigationItem} from "@s-fuse/navigation";
-import {dirArchivoRegulacion} from "@s-app/common/navigation/constantes/rutas";
+import {FuseNavigationItem} from 'apps/sistema-comercial/src/@fuse/components/navigation';
+import {dirArchivoRegulacion} from 'libs/models/src/lib/navigation/rutas';
 
 export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
     [
         {
             id: 'dirArchivoReg',
-            title: "DIR. ARCHIVO GRAL REG",
+            title: 'DIR. ARCHIVO GRAL REG',
             tooltip: 'Direccion de archivo general y regulacion',
             type: 'group',
             icon: 'heroicons_outline:office-building',
