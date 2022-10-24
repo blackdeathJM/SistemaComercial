@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {debounceTime, map, Subscription, switchMap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,13 +8,13 @@ import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {EmpleadosGQL} from '#/libs/datos/src';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {cloneDeep} from 'lodash-es';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {ListaDetalleComponent} from "@s-shared/plantillas/lista-detalle/lista-detalle.component";
-import {MatInputModule} from "@angular/material/input";
-import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
-import {DetalleEmpleadoComponent} from "@s-app/empleado/components/detalle-empleado/detalle-empleado.component";
-import {TailwindLoadingComponent} from "@s-shared/tailwind-loading/tailwind-loading.component";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
+import {MatInputModule} from '@angular/material/input';
+import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {DetalleEmpleadoComponent} from '@s-app/empleado/components/detalle-empleado/detalle-empleado.component';
+import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 
 @Component({
     standalone: true,
@@ -25,6 +25,7 @@ import {TailwindLoadingComponent} from "@s-shared/tailwind-loading/tailwind-load
             MatIconModule,
             ListaDetalleComponent,
             MatInputModule,
+            ReactiveFormsModule,
             RxReactiveFormsModule,
             DetalleEmpleadoComponent,
             TailwindLoadingComponent

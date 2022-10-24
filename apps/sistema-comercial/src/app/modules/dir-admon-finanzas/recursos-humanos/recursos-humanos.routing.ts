@@ -1,5 +1,5 @@
-import {Routes} from "@angular/router";
-import {RecursosHumanosComponent} from "@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.component";
+import {Routes} from '@angular/router';
+import {RecursosHumanosComponent} from '@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.component';
 
 export const recursosHumanosRouting: Routes =
     [

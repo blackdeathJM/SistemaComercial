@@ -5,7 +5,11 @@ import {RouterOutlet} from '@angular/router';
 @Component({
     selector: 'app-dir-admon-finanzas',
     standalone: true,
-    imports: [CommonModule, RouterOutlet],
+    imports:
+        [
+            CommonModule,
+            RouterOutlet
+        ],
     templateUrl: './dir-admon-finanzas.component.html',
     styleUrls: ['./dir-admon-finanzas.component.scss']
 })

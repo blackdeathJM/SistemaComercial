@@ -3,11 +3,11 @@ import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.int
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {confirmarFinalizarDoc, confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {MatDialog} from '@angular/material/dialog';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {ConvertirTimestamUnixPipe} from "@s-app/pipes/convertir-timestam-unix.pipe";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {CommonModule} from "@angular/common";
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {ConvertirTimestamUnixPipe} from '@s-app/pipes/convertir-timestam-unix.pipe';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {CommonModule} from '@angular/common';
 
 @Component({
     standalone: true,

@@ -4,7 +4,7 @@ import {Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
 import {Storage, ref, uploadBytes, getDownloadURL, deleteObject} from '@angular/fire/storage';
 import {IDocumento, IDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
@@ -14,19 +14,20 @@ import {v4 as uuidv4} from 'uuid';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {MatSelectModule} from "@angular/material/select";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {FileUploadModule} from "@iplab/ngx-file-upload";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {RegistrosComponent} from "@s-shared/registros/registros.component";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {FileUploadModule} from '@iplab/ngx-file-upload';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
 
 
 @Component({
     standalone: true,
     imports: [
         MatDialogModule,
+        ReactiveFormsModule,
         RxReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
