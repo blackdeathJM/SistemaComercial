@@ -4,7 +4,7 @@ export interface IAuth
     usuario: string;
     contrasena: string;
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
-    role: string;
+    role: object[];
 }
 
 export interface IDatosSesion

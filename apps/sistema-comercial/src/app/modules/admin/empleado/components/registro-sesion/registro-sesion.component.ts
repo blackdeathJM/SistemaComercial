@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
@@ -9,10 +9,10 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {RegistrosComponent} from "@s-shared/registros/registros.component";
-import {CommonModule} from "@angular/common";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {CommonModule} from '@angular/common';
 
 @Component({
     standalone: true,
@@ -20,11 +20,11 @@ import {CommonModule} from "@angular/common";
         [
             CommonModule,
             MatDialogModule,
+            ReactiveFormsModule,
             RxReactiveFormsModule,
             MatFormFieldModule,
             MatInputModule,
             RegistrosComponent
-
         ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',
@@ -44,7 +44,6 @@ export class RegistroSesionComponent implements OnInit
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
-
         if (this.data.auth)
         {
             this.soloLectura = true;
@@ -63,7 +62,7 @@ export class RegistroSesionComponent implements OnInit
             const datos =
                 {
                     _id: this.data._id,
-                    contrasena: this.formAuth.get('contrasena').value
+                    contrasena: this.formAuth.get('contrasena').value,
                 };
 
             this.actualizarContrasenaAdminGQL.mutate({datos}).pipe(finalize(() =>

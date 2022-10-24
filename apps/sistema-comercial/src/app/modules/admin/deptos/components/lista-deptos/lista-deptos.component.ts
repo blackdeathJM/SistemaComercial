@@ -1,10 +1,10 @@
 import {AfterContentChecked, Component, EventEmitter, Output} from '@angular/core';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {CommonModule} from "@angular/common";
-import {TailwindLoadingComponent} from "@s-shared/tailwind-loading/tailwind-loading.component";
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
+import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 
 @Component({
     standalone: true,
@@ -23,7 +23,6 @@ import {TailwindLoadingComponent} from "@s-shared/tailwind-loading/tailwind-load
 export class ListaDeptosComponent implements AfterContentChecked
 {
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
-    @Output() eventoEliminar: EventEmitter<any> = new EventEmitter<any>();
     deptos: IDepto[];
 
     ngAfterContentChecked(): void
@@ -39,10 +38,5 @@ export class ListaDeptosComponent implements AfterContentChecked
     editar(valor: any): void
     {
         this.eventoEditar.emit(valor);
-    }
-
-    eliminar(valor: any): void
-    {
-        this.eventoEliminar.emit(valor);
     }
 }

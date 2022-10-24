@@ -1,5 +1,5 @@
-import {FuseNavigationItem} from 'apps/sistema-comercial/src/@fuse/components/navigation';
-import {dirArchivoRegulacion} from 'libs/models/src/lib/navigation/rutas';
+import {FuseNavigationItem} from '@s-fuse/navigation';
+import {dirArchivoRegulacion} from '@s-app/common/navigation/constantes/rutas';
 
 export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
     [

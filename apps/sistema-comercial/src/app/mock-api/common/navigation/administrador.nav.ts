@@ -1,7 +1,7 @@
-import {rutaBaseAdministrador} from './rutas';
-import {INavegacion} from './navigation.interface';
+import {rutaBaseAdministrador} from './constantes/rutas';
+import {FuseNavigationItem} from '@s-fuse/navigation';
 
-export const ADMINISTRADOR: INavegacion[] =
+export const ADMINISTRADOR: FuseNavigationItem[] =
     [
         {
             id: 'separador',
@@ -26,7 +26,7 @@ export const ADMINISTRADOR: INavegacion[] =
         }
     ];
 
-export const ADMINISTRADOR_C: INavegacion[] = [];
-export const ADMINISTRADOR_F: INavegacion[] = [];
-export const ADMINISTRADOR_H: INavegacion[] = [];
+export const ADMINISTRADOR_C: FuseNavigationItem[] = [];
+export const ADMINISTRADOR_F: FuseNavigationItem[] = [];
+export const ADMINISTRADOR_H: FuseNavigationItem[] = [];
 

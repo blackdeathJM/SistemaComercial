@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
@@ -9,20 +8,24 @@ import {unionBy} from 'lodash-es';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {CapitalizarDirective} from "@s-directives/capitalizar.directive";
-import {RegistrosComponent} from "@s-shared/registros/registros.component";
-import {TrimDirective} from "@s-directives/trim.directive";
-import {NgxTrimDirectiveModule} from "ngx-trim-directive";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {TrimDirective} from '@s-directives/trim.directive';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 @Component({
     standalone: true,
     imports:
         [
+            CommonModule,
             MatDialogModule,
             MatFormFieldModule,
             MatInputModule,
+            ReactiveFormsModule,
             RxReactiveFormsModule,
             CapitalizarDirective,
             TrimDirective,
@@ -46,8 +49,7 @@ export class ModDeptoComponent implements OnInit
 
     ngOnInit(): void
     {
-        const depto = new Depto();
-        this.formDepto = this.fb.formGroup(depto);
+        this.formDepto = this.fb.formGroup(new Depto());
 
         if (this.data)
         {

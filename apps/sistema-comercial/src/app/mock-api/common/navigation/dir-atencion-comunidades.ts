@@ -1,4 +1,4 @@
-import {FuseNavigationItem} from 'apps/sistema-comercial/src/@fuse/components/navigation';
+import {FuseNavigationItem} from '@s-fuse/navigation';
 
 export const DIR_ATENCION_COMUNIDADES: FuseNavigationItem[] =
     [

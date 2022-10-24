@@ -24,7 +24,6 @@ export class AuthService
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        auth.role = null;
         const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)
         {

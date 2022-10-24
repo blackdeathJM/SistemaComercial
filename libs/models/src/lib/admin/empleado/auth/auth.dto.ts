@@ -1,6 +1,7 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 import {IAuth} from './auth.interface';
+import {GraphQLJSON} from 'graphql-scalars';
 
 @ObjectType('AuthType')
 @InputType('AuthInput')
@@ -12,9 +13,9 @@ export class AuthDto implements IAuth
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'El usuario es necesario'})
     usuario: string;
-    @Field(() => String, {nullable: true, defaultValue: null})
+    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
     @IsOptional()
-    role: string;
+    role: object[];
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsBoolean({message: 'Activo debe ser booleano'})
     @IsOptional()
