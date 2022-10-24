@@ -44,4 +44,4 @@ export interface ISeguroSocial
     nss: string;
 }
 
-export type TRegEmpleado = Omit<IEmpleado, '_id' | 'avatar' | 'fechaBaja' | 'activo' | 'auth'>;
+export type TRegEmpleado = Omit<IEmpleado, '_id' | 'auth'>;

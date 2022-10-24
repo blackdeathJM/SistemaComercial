@@ -21,22 +21,25 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FileUploadModule} from '@iplab/ngx-file-upload';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {CommonModule} from '@angular/common';
 
 
 @Component({
     standalone: true,
-    imports: [
-        MatDialogModule,
-        ReactiveFormsModule,
-        RxReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        FileUploadModule,
-        MatCheckboxModule,
-        RegistrosComponent
-    ],
+    imports:
+        [
+            CommonModule,
+            MatDialogModule,
+            ReactiveFormsModule,
+            RxReactiveFormsModule,
+            MatFormFieldModule,
+            MatInputModule,
+            MatSelectModule,
+            MatDatepickerModule,
+            FileUploadModule,
+            MatCheckboxModule,
+            RegistrosComponent
+        ],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
     styleUrls: ['./mod-documentos.component.scss']

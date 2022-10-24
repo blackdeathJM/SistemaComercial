@@ -82,7 +82,6 @@ export class EmpleadoDto implements IEmpleado
     nombreCompleto: string;
     @Field(() => [ModificadoDto], {nullable: true, defaultValue: []})
     @Prop()
-    @IsOptional()
     modificadoPor: IModificado[];
     @Field(() => [String], {nullable: true, defaultValue: []})
     @Prop()
