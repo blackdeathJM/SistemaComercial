@@ -26,7 +26,6 @@ export class InitialDataResolver implements Resolve<any>
             this._notificationsService.getAll(),
             this._quickChatService.getChats(),
             this._shortcutsService.getAll(),
-            // todo: aqui va el servicio de obtener la sesion del usuario como quien dice sus datos ya decodificados
         ]);
     }
 }

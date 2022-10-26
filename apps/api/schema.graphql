@@ -114,7 +114,7 @@ input EmpleadoInput {
   fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
-  modificadoPor: [ModificadoInput!] = []
+  modificadoPor: [ModificadoInput!]
   telefono: [TelefonoInput!] = null
   auth: AuthInput = null
   deptoId: ID
@@ -190,10 +190,9 @@ input RegEmpleadoInput {
   calle: String
   colonia: String
   correo: String = null
-  fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
-  modificadoPor: [ModificadoInput!] = []
+  modificadoPor: [ModificadoInput!]
   telefono: [TelefonoInput!] = null
   deptoId: ID
 }
