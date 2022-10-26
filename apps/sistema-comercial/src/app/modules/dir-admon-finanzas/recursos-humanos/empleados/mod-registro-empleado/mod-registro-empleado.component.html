@@ -5,42 +5,41 @@
             <mat-form-field>
                 <mat-label>Nombre completo</mat-label>
                 <input type="text" matInput formControlName="nombreCompleto">
-                <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>
             </mat-form-field>
             <div class="flex flex-space-between gap-2">
                 <mat-form-field class="flex-auto">
                     <mat-label>Calle</mat-label>
-                    <input type="text" matInput>
-                    <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+                    <input type="text" matInput formControlName="calle">
+                    <mat-error>{{formEmpleado.controls.calle['errorMessage']}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="flex-1">
                     <mat-label>Colonia</mat-label>
-                    <input type="text" matInput>
-                    <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+                    <input type="text" matInput formControlName="colonia">
+                    <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>
                 </mat-form-field>
             </div>
             <mat-form-field>
                 <mat-label>Correo</mat-label>
-                <input type="text" matInput>
-                <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+                <input type="text" matInput formControlName="correo">
+                <mat-error>{{formEmpleado.controls.correo['errorMessage']}}</mat-error>
             </mat-form-field>
 
-
-            <button mat-icon-button color="primary" (click)="agregarTel('telefono')">
-                <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
-            </button>
-            <div class="flex">
-                <div [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
+            <section class="flex items-center flex-row-reverse">
+                <div class="flex items-center flex-vertical" [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
                     <mat-form-field class="flex-auto ml-2">
                         <mat-label>Telefono</mat-label>
                         <input type="text" matInput formControlName="numero">
-                        <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+                        <mat-error>{{formEmpleado.controls.telefono['errorMessage']}}</mat-error>
                     </mat-form-field>
-                    <button mat-icon-button color="primary" (click)="eliminarTel(1)">
-                        <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+                    <button mat-icon-button color="warn" (click)="eliminarTel(i)" matTooltip="Elimina este telefono del formulario">
+                        <mat-icon svgIcon="heroicons_outline:minus-circle"></mat-icon>
                     </button>
                 </div>
-            </div>
+                <button class="flex-none" mat-icon-button color="primary" (click)="agregarTel()" matTooltip="Agrega un nuevo campo para telefono">
+                    <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+                </button>
+            </section>
 
             <mat-form-field class="flex-auto">
                 <mat-label>Fecha de ingreso</mat-label>

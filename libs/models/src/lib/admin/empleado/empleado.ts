@@ -15,7 +15,7 @@ export class Empleado implements TRegEmpleado
     fechaIngreso: number;
     @required()
     nombreCompleto: string;
-    @propArray()
+    @propArray(undefined, {allowMaxIndex: 3, createBlank: true})
     telefono: ITelefono[];
 
     modificadoPor: IModificado[];
