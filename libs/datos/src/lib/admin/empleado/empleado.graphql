@@ -11,6 +11,12 @@ query empleados
         {
             ...fragDeptos
         }
+        telefono {
+            ...fragTelefono
+        }
+        modificadoPor {
+            ...fragModificadoPor
+        }
     }
 }
 
