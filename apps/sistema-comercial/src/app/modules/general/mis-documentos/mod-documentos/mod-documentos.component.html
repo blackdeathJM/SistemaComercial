@@ -43,14 +43,14 @@
             <div class="flex gap-4">
                 <mat-form-field class="flex-auto">
                     <mat-label>Fecha recepcion</mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="Formato DD/MM/YYY" formControlName="fechaRecepcion">
+                    <input matInput [matDatepicker]="picker" formControlName="fechaRecepcion" [min]="minDate" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="flex-auto">
                     <mat-label>Fecha entrega</mat-label>
-                    <input matInput [matDatepicker]="fechaE" placeholder="Formato DD/MM/YYY" formControlName="fechaLimiteEntrega">
+                    <input matInput [matDatepicker]="fechaE" formControlName="fechaLimiteEntrega">
                     <mat-datepicker-toggle matSuffix [for]="fechaE"></mat-datepicker-toggle>
                     <mat-datepicker #fechaE></mat-datepicker>
                 </mat-form-field>

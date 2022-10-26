@@ -46,8 +46,13 @@ import {CommonModule} from '@angular/common';
 })
 export class ModDocumentosComponent implements OnInit
 {
-    fechaMin: Date;
-    fechaMax: Date;
+    anoActual = new Date().getFullYear();
+    mesActual = new Date().getMonth();
+    diaActual = new Date().getDate();
+
+    minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 3);
+    maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
+
     subscripcion: Subscription = new Subscription();
     empleadosSesion: IResolveEmpleado[];
     formDocs: FormGroup;
@@ -62,18 +67,14 @@ export class ModDocumentosComponent implements OnInit
     ngOnInit(): void
     {
         ReactiveFormConfig.set({validationMessage: {required: 'Este campo es requerido'}});
-        const doc = new Documento();
-        this.formDocs = this.fb.formGroup(doc);
-
-        const fechaActual = new Date().getFullYear();
-        this.fechaMin = new Date(fechaActual - 20, 0, 1);
-        this.fechaMax = new Date(fechaActual + 1, 11, 31);
+        this.formDocs = this.fb.formGroup(new Documento());
 
         this.subscripcion.add(this.empleadosSesionGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
-                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
+                // TODO: Corregir empleados documentos
+                // this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
             }
         })).subscribe());
     }

@@ -21,6 +21,10 @@ type ModificadoType {
   usuario: String
 }
 
+type TelefonoType {
+  numero: String
+}
+
 type EmpleadoType {
   _id: ID
   avatar: String
@@ -32,7 +36,7 @@ type EmpleadoType {
   fechaIngreso: Int
   nombreCompleto: String
   modificadoPor: [ModificadoType!]
-  telefono: [String!]
+  telefono: [TelefonoType!]
   auth: AuthType
   deptoId: ID
   deptoEmpleado: DeptoType
@@ -96,6 +100,10 @@ input ModificadoInput {
   usuario: String
 }
 
+input TelefonoInput {
+  numero: String
+}
+
 input EmpleadoInput {
   _id: ID
   avatar: String = null
@@ -107,7 +115,7 @@ input EmpleadoInput {
   fechaIngreso: Int
   nombreCompleto: String
   modificadoPor: [ModificadoInput!] = []
-  telefono: [String!] = []
+  telefono: [TelefonoInput!] = null
   auth: AuthInput = null
   deptoId: ID
   deptoEmpleado: DeptoInput
@@ -186,7 +194,7 @@ input RegEmpleadoInput {
   fechaIngreso: Int
   nombreCompleto: String
   modificadoPor: [ModificadoInput!] = []
-  telefono: [String!] = []
+  telefono: [TelefonoInput!] = null
   deptoId: ID
 }
 

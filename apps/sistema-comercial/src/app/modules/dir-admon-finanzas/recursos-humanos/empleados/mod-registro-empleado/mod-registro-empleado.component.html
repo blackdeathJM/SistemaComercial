@@ -1,13 +1,13 @@
 <h2 mat-dialog-title>Dar de alta nuevos empleados</h2>
 <mat-dialog-content>
     <form [formGroup]="formEmpleado">
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
             <mat-form-field>
                 <mat-label>Nombre completo</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput formControlName="nombreCompleto">
                 <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
             </mat-form-field>
-            <div class="flex flex-space-between gap-3">
+            <div class="flex flex-space-between gap-2">
                 <mat-form-field class="flex-auto">
                     <mat-label>Calle</mat-label>
                     <input type="text" matInput>
@@ -19,9 +19,32 @@
                     <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
                 </mat-form-field>
             </div>
+            <mat-form-field>
+                <mat-label>Correo</mat-label>
+                <input type="text" matInput>
+                <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+            </mat-form-field>
+
+
+            <button mat-icon-button color="primary" (click)="agregarTel('telefono')">
+                <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+            </button>
+            <div class="flex">
+                <div [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
+                    <mat-form-field class="flex-auto ml-2">
+                        <mat-label>Telefono</mat-label>
+                        <input type="text" matInput formControlName="numero">
+                        <!--                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>-->
+                    </mat-form-field>
+                    <button mat-icon-button color="primary" (click)="eliminarTel(1)">
+                        <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+                    </button>
+                </div>
+            </div>
+
             <mat-form-field class="flex-auto">
-                <mat-label>Fecha recepcion</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <mat-label>Fecha de ingreso</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <!--                <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>-->
@@ -29,4 +52,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros></app-registros>
+<app-registros (reg)="regEmpleado()"></app-registros>

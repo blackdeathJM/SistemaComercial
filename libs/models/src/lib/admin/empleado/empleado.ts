@@ -1,25 +1,31 @@
-import {IModificado, TRegEmpleado} from './empleado.interface';
-import {prop, required} from '@rxweb/reactive-form-validators';
+import {IModificado, ITelefono, TRegEmpleado} from './empleado.interface';
+import {email, prop, propArray, required} from '@rxweb/reactive-form-validators';
 
 export class Empleado implements TRegEmpleado
 {
-    activo: boolean;
-    avatar: string;
     @required()
     calle: string;
     @required()
     colonia: string;
-    @prop()
+    @email({message: 'Debe ser un correo valido'})
     correo: string;
     @required()
     deptoId: string;
-    fechaBaja: number;
     @required()
     fechaIngreso: number;
-    modificadoPor: IModificado[];
     @required()
     nombreCompleto: string;
-    @prop()
-    telefono: string[];
+    @propArray()
+    telefono: ITelefono[];
+
+    modificadoPor: IModificado[];
+    fechaBaja: number;
+    activo: boolean;
+    avatar: string;
 }
 
+export class Telefono implements ITelefono
+{
+    @prop()
+    numero: string;
+}

@@ -1,12 +1,15 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
-import {RxFormBuilder, RxFormGroup, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {RegistrosComponent} from "@s-shared/registros/registros.component";
-import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {Empleado, Telefono} from '#/libs/models/src/lib/admin/empleado/empleado';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -20,7 +23,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
             MatFormFieldModule,
             MatInputModule,
             RegistrosComponent,
-            MatDatepickerModule
+            MatDatepickerModule,
+            MatButtonModule,
+            MatIconModule
         ],
     templateUrl: './mod-registro-empleado.component.html',
     styleUrls: ['./mod-registro-empleado.component.scss'],
@@ -28,13 +33,55 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 })
 export class ModRegistroEmpleadoComponent implements OnInit
 {
-    formEmpleado: RxFormGroup;
+    formEmpleado: FormGroup;
+    anoActual = new Date().getFullYear();
+    mesActual = new Date().getMonth();
+    diaActual = new Date().getDate();
+
+    minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 3);
+    maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
 
     constructor(private fb: RxFormBuilder)
     {
     }
 
+    get telefonos(): any
+    {
+        // return this.formEmpleado.controls.telefono as FormArray;
+        return (this.formEmpleado.get('telefono') as FormArray).controls;
+    }
+
+    filtro = (d: Date | null): boolean =>
+    {
+        const day = (d || new Date()).getDay();
+        return day !== 0 && day !== 6;
+    };
+
     ngOnInit(): void
     {
+        const empleado = new Empleado();
+        empleado.telefono = new Array<Telefono>();
+        this.formEmpleado = this.fb.formGroup(empleado);
+
+        this.agregarTel('primerControl');
+    }
+
+
+    agregarTel(data: string): any
+    {
+        // this.telefonos.push(new FormControl(data));
+        const telefono = this.formEmpleado.controls.telefono as FormArray;
+        telefono.push(this.fb.formGroup(Telefono));
+    }
+
+    eliminarTel(index: number): void
+    {
+        const telefono = this.formEmpleado.controls.telefono as FormArray;
+        telefono.removeAt(index);
+    }
+
+    regEmpleado(): void
+    {
+        console.log(this.formEmpleado.value);
     }
 }

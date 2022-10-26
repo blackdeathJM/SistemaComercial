@@ -1,7 +1,7 @@
 import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IEmpleado, IModificado, IPuesto, ISeguroSocial, TRegEmpleado} from './empleado.interface';
+import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 
 @ObjectType('ModificadoType')
@@ -17,6 +17,15 @@ export class ModificadoDto implements IModificado
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario'})
     usuario: string;
+}
+
+@ObjectType('TelefonoType')
+@InputType('TelefonoInput')
+export class TelefonoDto implements ITelefono
+{
+    @Field(() => String, {nullable: true})
+    numero: string;
+
 }
 
 export class PuestoDto implements IPuesto
@@ -83,13 +92,12 @@ export class EmpleadoDto implements IEmpleado
     @Field(() => [ModificadoDto], {nullable: true, defaultValue: []})
     @Prop()
     modificadoPor: IModificado[];
-    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Field(() => [TelefonoDto], {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
-    telefono: string[];
+    telefono: TelefonoDto[];
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop()
-    @IsOptional()
     auth: AuthDto;
     @Field(() => ID, {nullable: true})
     @Prop()
