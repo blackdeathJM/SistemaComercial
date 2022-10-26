@@ -7,17 +7,19 @@ fragment fragModificadoPor on ModificadoType
     fecha
     usuario
     accion
+    valorAnterior
+    valorActual
 }
 fragment fragEmpleado on EmpleadoType
 {
     _id
-    nombreCompleto
     avatar
-    activo
+    nombreCompleto
     calle
-    correo
     colonia
-    fechaBaja
     fechaIngreso
+    fechaBaja
+    activo
+    correo
     deptoId
 }

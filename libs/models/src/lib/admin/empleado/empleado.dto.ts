@@ -1,8 +1,9 @@
 import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TEmpleadoRhh, TRegEmpleado} from './empleado.interface';
+import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
+import {GraphQLJSON} from 'graphql-scalars';
 
 @ObjectType('ModificadoType')
 @InputType('ModificadoInput')
@@ -17,6 +18,10 @@ export class ModificadoDto implements IModificado
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario'})
     usuario: string;
+    @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
+    valorAnterior: object;
+    @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
+    valorActual: object;
 }
 
 @ObjectType('TelefonoType')
@@ -90,7 +95,8 @@ export class EmpleadoDto implements IEmpleado
     nombreCompleto: string;
     @Field(() => [ModificadoDto], {nullable: true})
     @Prop()
-    modificadoPor: IModificado[];
+    @IsNotEmpty({message: 'Modificado por es necesario'})
+    modificadoPor: ModificadoDto[];
     @Field(() => [TelefonoDto], {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
@@ -109,9 +115,9 @@ export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'auth', 'fecha
 {
 }
 
-@ObjectType('EmpleadoRhhType')
-export class EmpleadoRhhDto extends OmitType(EmpleadoDto, ['auth', 'modificadoPor'], ObjectType) implements TEmpleadoRhh
-{}
+// @ObjectType('EmpleadoRhhType')
+// export class EmpleadoRhhDto extends OmitType(EmpleadoDto, ['auth', 'modificadoPor'], ObjectType) implements TEmpleadoRhh
+// {}
 
 export type EmpleadoType = EmpleadoDto & Document;
 export const SCHEMA_EMPLEADO = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});

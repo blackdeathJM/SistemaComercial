@@ -32,3 +32,13 @@ query empleadosSesion
         }
     }
 }
+mutation crearEmpleado($empleadoDatos: RegEmpleadoInput!)
+{
+    crearEmpleado(empleadoDatos: $empleadoDatos)
+    {
+        ...fragEmpleado
+        telefono {
+            ...fragTelefono
+        }
+    }
+}

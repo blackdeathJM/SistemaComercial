@@ -155,7 +155,7 @@ export type EmpleadoInput = {
   fechaIngreso?: InputMaybe<Scalars['Int']>;
   modificadoPor?: InputMaybe<Array<ModificadoInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
-  telefono?: InputMaybe<Array<Scalars['String']>>;
+  telefono?: InputMaybe<Array<TelefonoInput>>;
 };
 
 export type EmpleadoType = {
@@ -173,7 +173,7 @@ export type EmpleadoType = {
   fechaIngreso?: Maybe<Scalars['Int']>;
   modificadoPor?: Maybe<Array<ModificadoType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
-  telefono?: Maybe<Array<Scalars['String']>>;
+  telefono?: Maybe<Array<TelefonoType>>;
 };
 
 export type LoginInput = {
@@ -191,6 +191,8 @@ export type ModificadoInput = {
   accion?: InputMaybe<Scalars['String']>;
   fecha?: InputMaybe<Scalars['Int']>;
   usuario?: InputMaybe<Scalars['String']>;
+  valorActual?: InputMaybe<Scalars['JSON']>;
+  valorAnterior?: InputMaybe<Scalars['JSON']>;
 };
 
 export type ModificadoType = {
@@ -198,6 +200,8 @@ export type ModificadoType = {
   accion?: Maybe<Scalars['String']>;
   fecha?: Maybe<Scalars['Int']>;
   usuario?: Maybe<Scalars['String']>;
+  valorActual?: Maybe<Scalars['JSON']>;
+  valorAnterior?: Maybe<Scalars['JSON']>;
 };
 
 export type Mutation = {
@@ -279,11 +283,10 @@ export type RegEmpleadoInput = {
   colonia?: InputMaybe<Scalars['String']>;
   correo?: InputMaybe<Scalars['String']>;
   deptoId?: InputMaybe<Scalars['ID']>;
-  fechaBaja?: InputMaybe<Scalars['Int']>;
   fechaIngreso?: InputMaybe<Scalars['Int']>;
   modificadoPor?: InputMaybe<Array<ModificadoInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
-  telefono?: InputMaybe<Array<Scalars['String']>>;
+  telefono?: InputMaybe<Array<TelefonoInput>>;
 };
 
 export type Subscription = {
@@ -294,6 +297,15 @@ export type Subscription = {
 
 export type SubscriptionRolCambiadoArgs = {
   _id: Scalars['String'];
+};
+
+export type TelefonoInput = {
+  numero?: InputMaybe<Scalars['String']>;
+};
+
+export type TelefonoType = {
+  __typename?: 'TelefonoType';
+  numero?: Maybe<Scalars['String']>;
 };
 
 export type FragDeptosFragment = { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null };
@@ -334,14 +346,14 @@ export type AsignarAuthMutationVariables = Exact<{
 }>;
 
 
-export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo?: boolean | null, calle?: string | null, correo?: string | null, telefono?: Array<string> | null, colonia?: string | null, fechaBaja?: number | null, fechaIngreso?: number | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null } };
+export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null } };
 
 export type ActualizarContrasenaAdminMutationVariables = Exact<{
   datos: CambioContrasenaInput;
 }>;
 
 
-export type ActualizarContrasenaAdminMutation = { __typename?: 'Mutation', actualizarContrasenaAdmin: { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo?: boolean | null, calle?: string | null, correo?: string | null, telefono?: Array<string> | null, colonia?: string | null, fechaBaja?: number | null, fechaIngreso?: number | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null } };
+export type ActualizarContrasenaAdminMutation = { __typename?: 'Mutation', actualizarContrasenaAdmin: { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null } };
 
 export type RolCambiadoSubscriptionVariables = Exact<{
   _id: Scalars['String'];
@@ -357,17 +369,28 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } } } | null };
 
-export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo?: boolean | null, calle?: string | null, correo?: string | null, telefono?: Array<string> | null, colonia?: string | null, fechaBaja?: number | null, fechaIngreso?: number | null, deptoId?: string | null };
+export type FragTelefonoFragment = { __typename?: 'TelefonoType', numero?: string | null };
+
+export type FragModificadoPorFragment = { __typename?: 'ModificadoType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: any | null, valorActual?: any | null };
+
+export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null };
 
 export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo?: boolean | null, calle?: string | null, correo?: string | null, telefono?: Array<string> | null, colonia?: string | null, fechaBaja?: number | null, fechaIngreso?: number | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
+export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null, telefono?: Array<{ __typename?: 'TelefonoType', numero?: string | null }> | null, modificadoPor?: Array<{ __typename?: 'ModificadoType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: any | null, valorActual?: any | null }> | null }> };
 
 export type EmpleadosSesionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmpleadosSesionQuery = { __typename?: 'Query', empleadosSesion: Array<{ __typename?: 'EmpleadoType', _id?: string | null, nombreCompleto?: string | null, avatar?: string | null, activo?: boolean | null, calle?: string | null, correo?: string | null, telefono?: Array<string> | null, colonia?: string | null, fechaBaja?: number | null, fechaIngreso?: number | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
+export type EmpleadosSesionQuery = { __typename?: 'Query', empleadosSesion: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null }> };
+
+export type CrearEmpleadoMutationVariables = Exact<{
+  empleadoDatos: RegEmpleadoInput;
+}>;
+
+
+export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, telefono?: Array<{ __typename?: 'TelefonoType', numero?: string | null }> | null } };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null };
 
@@ -417,18 +440,31 @@ export const FragDatosSesionFragmentDoc = gql`
   }
 }
     ${FragAuthFragmentDoc}`;
+export const FragTelefonoFragmentDoc = gql`
+    fragment fragTelefono on TelefonoType {
+  numero
+}
+    `;
+export const FragModificadoPorFragmentDoc = gql`
+    fragment fragModificadoPor on ModificadoType {
+  fecha
+  usuario
+  accion
+  valorAnterior
+  valorActual
+}
+    `;
 export const FragEmpleadoFragmentDoc = gql`
     fragment fragEmpleado on EmpleadoType {
   _id
-  nombreCompleto
   avatar
-  activo
+  nombreCompleto
   calle
-  correo
-  telefono
   colonia
-  fechaBaja
   fechaIngreso
+  fechaBaja
+  activo
+  correo
   deptoId
 }
     `;
@@ -631,11 +667,19 @@ export const EmpleadosDocument = gql`
     deptoEmpleado {
       ...fragDeptos
     }
+    telefono {
+      ...fragTelefono
+    }
+    modificadoPor {
+      ...fragModificadoPor
+    }
   }
 }
     ${FragEmpleadoFragmentDoc}
 ${FragAuthFragmentDoc}
-${FragDeptosFragmentDoc}`;
+${FragDeptosFragmentDoc}
+${FragTelefonoFragmentDoc}
+${FragModificadoPorFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -668,6 +712,28 @@ ${FragDeptosFragmentDoc}`;
   })
   export class EmpleadosSesionGQL extends Apollo.Query<EmpleadosSesionQuery, EmpleadosSesionQueryVariables> {
     document = EmpleadosSesionDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CrearEmpleadoDocument = gql`
+    mutation crearEmpleado($empleadoDatos: RegEmpleadoInput!) {
+  crearEmpleado(empleadoDatos: $empleadoDatos) {
+    ...fragEmpleado
+    telefono {
+      ...fragTelefono
+    }
+  }
+}
+    ${FragEmpleadoFragmentDoc}
+${FragTelefonoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CrearEmpleadoGQL extends Apollo.Mutation<CrearEmpleadoMutation, CrearEmpleadoMutationVariables> {
+    document = CrearEmpleadoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

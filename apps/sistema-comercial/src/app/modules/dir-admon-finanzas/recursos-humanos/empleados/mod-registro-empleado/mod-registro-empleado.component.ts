@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
@@ -11,6 +11,10 @@ import {Empleado, Telefono} from '#/libs/models/src/lib/admin/empleado/empleado'
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {CrearEmpleadoGQL} from '#/libs/datos/src';
+import {finalize} from 'rxjs';
+import {GeneralService} from '@s-app/services/general.service';
+import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -36,6 +40,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 export class ModRegistroEmpleadoComponent implements OnInit
 {
     formEmpleado: FormGroup;
+    cargando = false;
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();
     diaActual = new Date().getDate();
@@ -43,7 +48,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 3);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
 
-    constructor(private fb: RxFormBuilder)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog)
     {
     }
 
@@ -90,6 +95,36 @@ export class ModRegistroEmpleadoComponent implements OnInit
 
     regEmpleado(): void
     {
-        console.log(this.formEmpleado.value);
+        this.cargando = true;
+        this.formEmpleado.disable();
+        const {fechaIngreso, deptoId, ...resto} = this.formEmpleado.value;
+
+        const empleadoDatos: TRegEmpleado =
+            {
+                fechaIngreso: GeneralService.convertirUnix(fechaIngreso._i),
+                deptoId: '634ebf7ae5cb67b14bd5326f',
+                modificadoPor:
+                    [
+                        {
+                            usuario: 'Administrador',
+                            accion: 'Registro de nuevo empleado',
+                            fecha: GeneralService.fechaHoraActual(),
+                            valorActual: {},
+                            valorAnterior: {}
+                        }
+                    ],
+                ...resto
+            };
+        console.log(empleadoDatos);
+        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() => this.cerrar())).subscribe((res) =>
+        {
+            this.cargando = false;
+            console.log(res);
+        });
+    }
+
+    cerrar(): void
+    {
+        this.mdr.closeAll();
     }
 }

@@ -6,6 +6,8 @@ export interface IModificado
     usuario: string;
     fecha: number;
     accion: string;
+    valorAnterior: object;
+    valorActual: object;
 }
 
 export interface ITelefono
@@ -50,5 +52,4 @@ export interface IResolveEmpleado extends IEmpleado
 }
 
 export type TRegEmpleado = Omit<IEmpleado, '_id' | 'auth' | 'fechaBaja'>;
-export type TEmpleadoRhh = Omit<IEmpleado, 'auth' | 'modificadoPor'>;
 
