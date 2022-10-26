@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -10,7 +10,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {Empleado, Telefono} from '#/libs/models/src/lib/admin/empleado/empleado';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -47,17 +47,17 @@ export class ModRegistroEmpleadoComponent implements OnInit
     {
     }
 
-    get telefonos(): any
-    {
-        // return this.formEmpleado.controls.telefono as FormArray;
-        return (this.formEmpleado.get('telefono') as FormArray).controls;
-    }
+    // get telefonos(): any
+    // {
+    //     // return this.formEmpleado.controls.telefono as FormArray;
+    //     return (this.formEmpleado.get('telefono') as FormArray).controls;
+    // }
 
-    filtro = (d: Date | null): boolean =>
-    {
-        const day = (d || new Date()).getDay();
-        return day !== 0 && day !== 6;
-    };
+    // filtro = (d: Date | null): boolean =>
+    // {
+    //     const day = (d || new Date()).getDay();
+    //     return day !== 0 && day !== 6;
+    // };
 
     ngOnInit(): void
     {

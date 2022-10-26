@@ -26,7 +26,7 @@
             </mat-form-field>
 
             <section class="flex items-center flex-row-reverse">
-                <div class="flex items-center flex-vertical" [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
+                <div class="flex items-center" [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
                     <mat-form-field class="flex-auto ml-2">
                         <mat-label>Telefono</mat-label>
                         <input type="text" matInput formControlName="numero">
@@ -43,10 +43,10 @@
 
             <mat-form-field class="flex-auto">
                 <mat-label>Fecha de ingreso</mat-label>
-                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" readonly>
+                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="fechaIngreso" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <!--                <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>-->
+                                <mat-error>{{formEmpleado.controls.fechaIngreso['errorMessage']}}</mat-error>
             </mat-form-field>
         </div>
     </form>

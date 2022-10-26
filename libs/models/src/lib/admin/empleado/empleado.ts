@@ -24,6 +24,7 @@ export class Empleado implements TRegEmpleado
     avatar: string;
 }
 
+
 export class Telefono implements ITelefono
 {
     @prop()

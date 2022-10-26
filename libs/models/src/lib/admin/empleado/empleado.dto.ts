@@ -1,7 +1,7 @@
 import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
+import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TEmpleadoRhh, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 
 @ObjectType('ModificadoType')
@@ -79,7 +79,6 @@ export class EmpleadoDto implements IEmpleado
     correo: string;
     @Field(() => Int, {nullable: true, defaultValue: null})
     @Prop()
-    @IsOptional()
     fechaBaja: number;
     @Field(() => Int, {nullable: true})
     @Prop()
@@ -89,7 +88,7 @@ export class EmpleadoDto implements IEmpleado
     @Prop()
     @IsNotEmpty({message: 'El nombre completo es requerido'})
     nombreCompleto: string;
-    @Field(() => [ModificadoDto], {nullable: true, defaultValue: []})
+    @Field(() => [ModificadoDto], {nullable: true})
     @Prop()
     modificadoPor: IModificado[];
     @Field(() => [TelefonoDto], {nullable: true, defaultValue: null})
@@ -106,9 +105,13 @@ export class EmpleadoDto implements IEmpleado
 }
 
 @InputType('RegEmpleadoInput')
-export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'auth'], InputType) implements TRegEmpleado
+export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'auth', 'fechaBaja'], InputType) implements TRegEmpleado
 {
 }
+
+@ObjectType('EmpleadoRhhType')
+export class EmpleadoRhhDto extends OmitType(EmpleadoDto, ['auth', 'modificadoPor'], ObjectType) implements TEmpleadoRhh
+{}
 
 export type EmpleadoType = EmpleadoDto & Document;
 export const SCHEMA_EMPLEADO = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});
