@@ -15,6 +15,7 @@ import {CrearEmpleadoGQL} from '#/libs/datos/src';
 import {finalize} from 'rxjs';
 import {GeneralService} from '@s-app/services/general.service';
 import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.component';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -31,7 +32,8 @@ import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interf
             MatDatepickerModule,
             MatButtonModule,
             MatIconModule,
-            MatTooltipModule
+            MatTooltipModule,
+            DeptosTodosComponent
         ],
     templateUrl: './mod-registro-empleado.component.html',
     styleUrls: ['./mod-registro-empleado.component.scss'],

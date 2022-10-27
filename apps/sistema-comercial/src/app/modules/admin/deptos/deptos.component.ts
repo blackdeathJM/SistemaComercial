@@ -11,12 +11,12 @@ import {FormControl} from '@angular/forms';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {cloneDeep} from 'lodash-es';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from "@angular/material/input";
-import {ListaDeptosComponent} from "@s-app/deptos/components/lista-deptos/lista-deptos.component";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-deptos.component';
 
 @Component({
     standalone: true,
@@ -39,7 +39,6 @@ export class DeptosComponent implements OnInit, OnDestroy
     datosCargados = true;
     subscripciones: Subscription = new Subscription();
     controlBuscar: FormControl = new FormControl();
-    confirmacionDialogo: FuseConfirmationConfig = modalConfirmacionEliminar;
 
     constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL, private confirmacionService: FuseConfirmationService,
                 private eliminarGQL: EliminarDeptoGQL, private ngxToastService: NgxToastService)
@@ -49,18 +48,19 @@ export class DeptosComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.subscripciones.add(this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(switchMap((res) =>
+        this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(switchMap((res) =>
         {
             this.datosCargados = false;
             if (res.data)
             {
-                STATE_DEPTOS(cloneDeep(res.data.deptos) as IDepto[]);
+                STATE_DEPTOS(cloneDeep(res.data.deptos as IDepto[]));
             }
             return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.deptos.filter(v => v.nombre.toLowerCase().includes(value.toLowerCase()))));
         })).subscribe((res) =>
         {
             STATE_DEPTOS(res as IDepto[]);
         }));
+
     }
 
     registro(): void
@@ -71,28 +71,6 @@ export class DeptosComponent implements OnInit, OnDestroy
     editar(data: IDepto): void
     {
         this.dRef.open(ModDeptoComponent, {width: '40%', data});
-    }
-
-    eliminar(data: IDepto): void
-    {
-        // para eliminar el registro del estado podemos utilizar pull de lodas checar sus variaciones del pull
-        const dialogRef = this.confirmacionService.open(this.confirmacionDialogo);
-
-        dialogRef.afterClosed().subscribe((res) =>
-        {
-            if (res === 'confirmed')
-            {
-                this.subscripciones.add(this.eliminarGQL.mutate({_id: data._id}).pipe(tap((respuesta) =>
-                {
-                    if (respuesta.data)
-                    {
-                        const nvoState = STATE_DEPTOS().filter(value => value._id !== respuesta.data.eliminarDepto._id);
-                        STATE_DEPTOS(nvoState);
-                        this.ngxToastService.satisfactorioToast('El departamento fue eliminado con exito', 'Eliminar registro');
-                    }
-                })).subscribe());
-            }
-        });
     }
 
     trackByFn(index: number, item: any): any

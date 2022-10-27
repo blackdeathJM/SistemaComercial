@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dia
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
-import {unionBy} from 'lodash-es';
+import {concat, unionBy} from 'lodash-es';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
@@ -89,6 +89,7 @@ export class ModDeptoComponent implements OnInit
             {
                 if (res.data)
                 {
+                    // TODO: Corregir el state en el modDepto
                     const elementos = STATE_DEPTOS();
                     STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');

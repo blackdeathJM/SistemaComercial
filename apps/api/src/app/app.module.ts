@@ -27,7 +27,7 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
                 // eslint-disable-next-line @typescript-eslint/naming-convention
                 subscriptions: {
                     'graphql-ws': true,
-                    'subscriptions-transport-ws': true,
+                    'subscriptions-transport-ws': true
                 },
                 autoSchemaFile: 'apps/api/schema.graphql',
                 cors: {origin: '*'},
