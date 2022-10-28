@@ -3,8 +3,8 @@ fragment fragAuth on AuthType
     usuario
     activo
     role
+    estatus
 }
-
 
 fragment fragDatosSesion on DatosSesionType
 {

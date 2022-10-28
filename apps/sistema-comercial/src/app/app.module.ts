@@ -13,7 +13,6 @@ import {AppComponent} from '@s-app/app.component';
 import {appRoutes} from '@s-app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
@@ -53,7 +52,6 @@ const routerConfig: ExtraOptions =
             FormsModule,
             LuxonModule,
             ReactiveFormsModule,
-            RxReactiveFormsModule,
             BrowserAnimationsModule,
             RouterModule.forRoot(appRoutes, routerConfig),
 
