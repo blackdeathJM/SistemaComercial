@@ -17,6 +17,7 @@ export class DeptosService
     {
         this.departamentosGQL.watch().valueChanges.pipe(tap((res) =>
         {
+            console.log('departamentos service', res.data.deptos);
             if (res.data !== undefined)
             {
                 if (res.data.deptos)

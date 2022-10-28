@@ -32,13 +32,12 @@
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error>{{formEmpleado.controls.fechaIngreso['errorMessage']}}</mat-error>
                 </mat-form-field>
-                <!--                <mat-form-field class="flex-auto">-->
-                <!--                    <mat-label>Selecciona un departamento</mat-label>-->
-                <!--                    <mat-select formControlName="deptoId">-->
-                <!--                        <mat-option *ngFor="let depto of stateDeptos" [value]="depto._id">{{depto.nombre}}</mat-option>-->
-                <!--                    </mat-select>-->
-                <!--                </mat-form-field>-->
-                <app-deptos-todos formControlName="deptoId"></app-deptos-todos>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Selecciona un departamento</mat-label>
+                    <mat-select formControlName="deptoId">
+                        <mat-option *ngFor="let depto of stateDeptos" [value]="depto._id">{{depto.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
             <section class="flex items-center flex-row-reverse">
                 <div class="flex items-center" [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">

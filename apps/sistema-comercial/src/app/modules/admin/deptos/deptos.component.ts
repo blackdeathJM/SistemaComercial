@@ -16,6 +16,7 @@ import {ReactiveFormConfig, RxReactiveFormsModule} from '@rxweb/reactive-form-va
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-deptos.component';
+import {DeptosService} from "@s-app/deptos/deptos.service";
 
 @Component({
     standalone: true,
@@ -40,8 +41,7 @@ export class DeptosComponent implements OnInit, OnDestroy
     subscripciones: Subscription = new Subscription();
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL,
-                private ngxToastService: NgxToastService)
+    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL, private ngxToastService: NgxToastService)
     {
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
     }

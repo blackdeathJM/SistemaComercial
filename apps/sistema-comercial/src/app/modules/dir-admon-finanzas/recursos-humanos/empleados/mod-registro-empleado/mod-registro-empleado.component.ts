@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterContentChecked, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -12,13 +12,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
-import {finalize, tap} from 'rxjs';
 import {GeneralService} from '@s-app/services/general.service';
 import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
-import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
+import {DeptosService} from '@s-app/deptos/deptos.service';
+import {STATE_DEPTOS} from "@s-app/deptos/deptos.state";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -43,7 +43,7 @@ import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
     styleUrls: ['./mod-registro-empleado.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModRegistroEmpleadoComponent implements OnInit
+export class ModRegistroEmpleadoComponent implements OnInit, AfterContentChecked
 {
     formEmpleado: FormGroup;
     cargando = false;
@@ -55,7 +55,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
     stateDeptos: IDepto[];
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private departamentosGQL: DepartamentosGQL)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosService: DeptosService)
     {
     }
 
@@ -78,10 +78,12 @@ export class ModRegistroEmpleadoComponent implements OnInit
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
 
-        this.departamentosGQL.watch().valueChanges.pipe(tap((res) =>
-        {
-            this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
-        })).subscribe();
+        this.deptosService.obtenerDeptos();
+    }
+
+    ngAfterContentChecked(): void
+    {
+        this.stateDeptos = STATE_DEPTOS();
     }
 
     agregarTel(): any
