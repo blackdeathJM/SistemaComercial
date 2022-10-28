@@ -8,8 +8,8 @@ import {LoginGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {TOKEN} from '@s-app/auth/const';
-import {STATE_NAVEGACION} from "@s-app/common/navigation/navegacion.state";
-import {defaultNavigation} from "@s-app/common/navigation/data";
+import {STATE_NAVEGACION} from '@s-app/common/navigation/navegacion.state';
+import {defaultNavigation} from '@s-app/common/navigation/data';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -74,12 +74,6 @@ export class AuthSignInComponent implements OnInit
                 if (res.data.login.token)
                 {
                     STATE_DATOS_SESION(res.data.login.datosSesion);
-                    localStorage.setItem(TOKEN, res.data.login.token);
-                    if (res.data.login.datosSesion.auth.usuario === 'administrador')
-                    {
-                        console.log('navegacion', defaultNavigation);
-                        STATE_NAVEGACION(defaultNavigation);
-                    }
                     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
                     this._router.navigateByUrl(redirectURL).then();
                 }

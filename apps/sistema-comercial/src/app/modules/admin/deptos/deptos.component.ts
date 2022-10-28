@@ -1,13 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {fuseAnimations} from '@s-fuse/animations';
-import {debounceTime, map, Subscription, switchMap, tap} from 'rxjs';
+import {debounceTime, map, Subscription, switchMap} from 'rxjs';
 import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
-import {DepartamentosGQL, EliminarDeptoGQL} from '#/libs/datos/src';
-import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
-import {modalConfirmacionEliminar} from '@s-shared/modalConfirmacion';
-import {FormControl} from '@angular/forms';
+import {DepartamentosGQL} from '#/libs/datos/src';
+import {FuseConfirmationService} from '@s-fuse/confirmation';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {cloneDeep} from 'lodash-es';
@@ -25,6 +24,7 @@ import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-
             MatFormFieldModule,
             MatIconModule,
             RxReactiveFormsModule,
+            ReactiveFormsModule,
             MatButtonModule,
             MatInputModule,
             ListaDeptosComponent
@@ -41,7 +41,7 @@ export class DeptosComponent implements OnInit, OnDestroy
     controlBuscar: FormControl = new FormControl();
 
     constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL, private confirmacionService: FuseConfirmationService,
-                private eliminarGQL: EliminarDeptoGQL, private ngxToastService: NgxToastService)
+                private ngxToastService: NgxToastService)
     {
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
     }
@@ -53,14 +53,13 @@ export class DeptosComponent implements OnInit, OnDestroy
             this.datosCargados = false;
             if (res.data)
             {
-                STATE_DEPTOS(cloneDeep(res.data.deptos as IDepto[]));
+                STATE_DEPTOS(cloneDeep(res.data.deptos) as IDepto[]);
             }
             return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.deptos.filter(v => v.nombre.toLowerCase().includes(value.toLowerCase()))));
         })).subscribe((res) =>
         {
             STATE_DEPTOS(res as IDepto[]);
         }));
-
     }
 
     registro(): void
