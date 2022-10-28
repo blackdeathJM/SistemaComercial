@@ -17,8 +17,8 @@ import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interf
 import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
-import {DeptosService} from '@s-app/deptos/deptos.service';
-import {STATE_DEPTOS} from "@s-app/deptos/deptos.state";
+import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
+import {finalize, tap} from 'rxjs';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -43,7 +43,7 @@ import {STATE_DEPTOS} from "@s-app/deptos/deptos.state";
     styleUrls: ['./mod-registro-empleado.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModRegistroEmpleadoComponent implements OnInit, AfterContentChecked
+export class ModRegistroEmpleadoComponent implements OnInit
 {
     formEmpleado: FormGroup;
     cargando = false;
@@ -55,7 +55,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentChecked
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
     stateDeptos: IDepto[];
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosService: DeptosService)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL)
     {
     }
 
@@ -77,13 +77,16 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentChecked
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
-
-        this.deptosService.obtenerDeptos();
-    }
-
-    ngAfterContentChecked(): void
-    {
-        this.stateDeptos = STATE_DEPTOS();
+        this.deptosGQL.watch().valueChanges.pipe(tap((res) =>
+        {
+            if (res.data !== undefined)
+            {
+                if (res.data.deptos)
+                {
+                    this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
+                }
+            }
+        })).subscribe();
     }
 
     agregarTel(): any
@@ -110,7 +113,6 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentChecked
     {
         this.cargando = true;
         this.formEmpleado.disable();
-        console.log('datos del formulario', this.formEmpleado.value);
         const {fechaIngreso, ...resto} = this.formEmpleado.value;
 
         const empleadoDatos: TRegEmpleado =
@@ -128,12 +130,11 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentChecked
                     ],
                 ...resto
             };
-        console.log(empleadoDatos);
-        // this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() => this.cerrar())).subscribe((res) =>
-        // {
-        //     this.cargando = false;
-        //     console.log(res);
-        // });
+        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() => this.cerrar())).subscribe((res) =>
+        {
+            this.cargando = false;
+            console.log(res);
+        });
     }
 
     cerrar(): void
