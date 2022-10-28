@@ -11,11 +11,14 @@ import {Empleado, Telefono} from '#/libs/models/src/lib/admin/empleado/empleado'
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {CrearEmpleadoGQL} from '#/libs/datos/src';
-import {finalize} from 'rxjs';
+import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
+import {finalize, tap} from 'rxjs';
 import {GeneralService} from '@s-app/services/general.service';
 import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.component';
+import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {MatSelectModule} from '@angular/material/select';
+import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -33,7 +36,8 @@ import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.componen
             MatButtonModule,
             MatIconModule,
             MatTooltipModule,
-            DeptosTodosComponent
+            DeptosTodosComponent,
+            MatSelectModule
         ],
     templateUrl: './mod-registro-empleado.component.html',
     styleUrls: ['./mod-registro-empleado.component.scss'],
@@ -49,8 +53,9 @@ export class ModRegistroEmpleadoComponent implements OnInit
 
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 3);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
+    stateDeptos: IDepto[];
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private departamentosGQL: DepartamentosGQL)
     {
     }
 
@@ -72,8 +77,12 @@ export class ModRegistroEmpleadoComponent implements OnInit
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
-    }
 
+        this.departamentosGQL.watch().valueChanges.pipe(tap((res) =>
+        {
+            this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
+        })).subscribe();
+    }
 
     agregarTel(): any
     {
@@ -99,12 +108,12 @@ export class ModRegistroEmpleadoComponent implements OnInit
     {
         this.cargando = true;
         this.formEmpleado.disable();
-        const {fechaIngreso, deptoId, ...resto} = this.formEmpleado.value;
+        console.log('datos del formulario', this.formEmpleado.value);
+        const {fechaIngreso, ...resto} = this.formEmpleado.value;
 
         const empleadoDatos: TRegEmpleado =
             {
                 fechaIngreso: GeneralService.convertirUnix(fechaIngreso._i),
-                deptoId: '634ebf7ae5cb67b14bd5326f',
                 modificadoPor:
                     [
                         {
@@ -118,11 +127,11 @@ export class ModRegistroEmpleadoComponent implements OnInit
                 ...resto
             };
         console.log(empleadoDatos);
-        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() => this.cerrar())).subscribe((res) =>
-        {
-            this.cargando = false;
-            console.log(res);
-        });
+        // this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() => this.cerrar())).subscribe((res) =>
+        // {
+        //     this.cargando = false;
+        //     console.log(res);
+        // });
     }
 
     cerrar(): void

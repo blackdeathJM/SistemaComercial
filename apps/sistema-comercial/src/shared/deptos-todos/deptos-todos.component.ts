@@ -1,12 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {AbstractControl, ControlValueAccessor, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator} from '@angular/forms';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {tap} from 'rxjs';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {Empleado} from '#/libs/models/src/lib/admin/empleado/empleado';
 
 @Component({
     selector: 'app-deptos-todos',
@@ -15,42 +17,64 @@ import {tap} from 'rxjs';
         [
             CommonModule,
             MatFormFieldModule,
+            ReactiveFormsModule,
+            RxReactiveFormsModule,
             MatSelectModule
         ],
     providers:
         [
             {
                 provide: NG_VALUE_ACCESSOR,
-                useExisting: DeptosTodosComponent,
+                useExisting: forwardRef(() => DeptosTodosComponent),
+                multi: true
+            },
+            {
+                provide: NG_VALIDATORS,
+                useExisting: forwardRef(() => DeptosTodosComponent),
                 multi: true
             }
         ],
     templateUrl: './deptos-todos.component.html',
     styleUrls: ['./deptos-todos.component.scss']
 })
-export class DeptosTodosComponent implements ControlValueAccessor
+export class DeptosTodosComponent implements OnInit, ControlValueAccessor, Validator
 {
     @Input() multiple = false;
     stateDeptos: IDepto[];
     depto: IDepto;
+    deshabilitar = false;
+    formDepto: FormGroup;
     private onTouched: () => void;
 
-    constructor(private departamentosGQL: DepartamentosGQL)
+    constructor(private departamentosGQL: DepartamentosGQL, private fb: RxFormBuilder)
     {
+    }
+
+    ngOnInit(): void
+    {
+        const empleado = new Empleado();
+        this.formDepto = this.fb.group({deptoId: empleado.deptoId});
+
+        this.departamentosGQL.watch().valueChanges.pipe(tap((res) =>
+        {
+            this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
+        })).subscribe();
     }
 
     onChange: (value: boolean) => void = () =>
     {
     };
 
-    writeValue(value: IDepto): void
+    writeValue(obj: { deptoId: string }): void
     {
-        this.depto = value;
+        if (obj)
+        {
+            this.formDepto.setValue(obj);
+        }
     }
 
     registerOnChange(fn: any): void
     {
-        console.log(typeof fn);
         this.onChange(fn);
     }
 
@@ -61,15 +85,16 @@ export class DeptosTodosComponent implements ControlValueAccessor
 
     setDisabledState?(isDisabled: boolean): void
     {
+        this.deshabilitar = isDisabled;
+    }
+
+    validate(control: AbstractControl<any, any>): ValidationErrors
+    {
         throw new Error('Method not implemented.');
     }
 
-    cargarDeptos(): void
+    registerOnValidatorChange?(fn: () => void): void
     {
-        this.departamentosGQL.watch().valueChanges.pipe(tap((res) =>
-        {
-            console.log('cargando deptos', typeof res.data.deptos);
-            this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
-        })).subscribe();
+        throw new Error('Method not implemented.');
     }
 }

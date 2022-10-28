@@ -53,15 +53,13 @@ export class EmpleadoComponent implements OnInit, OnDestroy
         {
             if (res.data)
             {
-                // TODO: Corregir datos
-                // this.stateEmpleados = STATE_EMPLEADOS(cloneDeep(res.data.empleados) as unknown as IResolveEmpleado[]);
+                this.stateEmpleados = STATE_EMPLEADOS(cloneDeep(res.data.empleados) as IResolveEmpleado[]);
             }
             return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.empleados
                 .filter(v => v.nombreCompleto.toLowerCase().includes(value.toLowerCase()))));
         })).subscribe((datosFiltrados) =>
         {
-            // TODO: Corregir empleados
-            this.stateEmpleados = STATE_EMPLEADOS(datosFiltrados as unknown as IResolveEmpleado[]);
+            this.stateEmpleados = STATE_EMPLEADOS(datosFiltrados as IResolveEmpleado[]);
         }));
     }
 
@@ -85,5 +83,4 @@ export class EmpleadoComponent implements OnInit, OnDestroy
     {
         this.subscripciones.unsubscribe();
     }
-
 }

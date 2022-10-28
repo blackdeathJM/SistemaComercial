@@ -1,6 +1,9 @@
-<mat-form-field>
-    <mat-label>Selecciona un departamento</mat-label>
-    <mat-select (opened)="cargarDeptos()">
-        <mat-option *ngFor="let depto of stateDeptos" [value]="depto._id">{{depto.nombre}}</mat-option>
-    </mat-select>
-</mat-form-field>
+<form [formGroup]="formDepto">
+    <mat-form-field class="w-96" formControlName="deptoId">
+        <mat-label>Selecciona un departamento</mat-label>
+        <mat-select [disabled]="deshabilitar" formControlName="deptoId">
+            <mat-option *ngFor="let depto of stateDeptos" [value]="depto._id">{{depto.nombre}}</mat-option>
+        </mat-select>
+        <mat-error>{{formDepto.controls.deptoId['errorMessage']}}</mat-error>
+    </mat-form-field>
+</form>

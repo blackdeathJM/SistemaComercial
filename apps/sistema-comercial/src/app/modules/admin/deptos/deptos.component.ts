@@ -12,7 +12,7 @@ import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.servic
 import {cloneDeep} from 'lodash-es';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {ReactiveFormConfig, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-deptos.component';
@@ -40,7 +40,7 @@ export class DeptosComponent implements OnInit, OnDestroy
     subscripciones: Subscription = new Subscription();
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL, private confirmacionService: FuseConfirmationService,
+    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL,
                 private ngxToastService: NgxToastService)
     {
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
