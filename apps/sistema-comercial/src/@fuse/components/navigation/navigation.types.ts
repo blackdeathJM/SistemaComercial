@@ -13,6 +13,8 @@ export interface FuseNavigationItem
         | 'group'
         | 'spacer';
     hidden?: (item: FuseNavigationItem) => boolean;
+    oculto?: boolean;
+    acceso?: 'completo' | 'lectura' | 'bloqueado';
     active?: boolean;
     disabled?: boolean;
     tooltip?: string;

@@ -48,7 +48,6 @@ export class AuthSignInComponent implements OnInit, OnDestroy
         {
             return;
         }
-
         // Disable the form
         this.signInForm.disable();
 

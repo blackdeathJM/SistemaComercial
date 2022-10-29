@@ -28,10 +28,8 @@ export class AuthService
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
-    iniciarSesionConToken(): Observable<any>
+    iniciarSesionConToken(): Observable<boolean>
     {
-        // Renew token
-
         if (this.jwtHelperService.tokenGetter() && !this.jwtHelperService.isTokenExpired())
         {
             const datosSesion: IDatosSesion = this.jwtHelperService.decodeToken();
@@ -73,7 +71,6 @@ export class AuthService
 
     check(): Observable<boolean>
     {
-        // Check if the user is logged in
         if (STATE_AUTENTICADO())
         {
             return of(true);
@@ -89,8 +86,6 @@ export class AuthService
         {
             return of(false);
         }
-
-        // If the access token exists and it didn't expire, sign in using it
 
         return this.iniciarSesionConToken();
     }

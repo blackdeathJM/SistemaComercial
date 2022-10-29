@@ -19,6 +19,7 @@ export class InitialDataResolver implements Resolve<any>
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any>
     {
+        console.log('Resolve en appResolve');
         return forkJoin([
             // this.deptosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap(res => STATE_DEPTOS(res.data.deptos as IDepto[]))),
             this._navigationService.get(),

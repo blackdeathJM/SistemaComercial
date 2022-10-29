@@ -7,12 +7,14 @@ import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
-import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado, IModificado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {CommonModule} from '@angular/common';
+import {STATE_DATOS_SESION} from "@s-app/auth/auth.state";
+import {GeneralService} from "@s-app/services/general.service";
 
 @Component({
     standalone: true,
@@ -79,14 +81,29 @@ export class RegistroSesionComponent implements OnInit
             })).subscribe();
         } else
         {
-            this.asignarAuthGQL.mutate({_id: this.data._id, auth: resto}, {fetchPolicy: 'network-only'}).pipe(finalize(() => this.cancelar()), tap((res) =>
+            const modificadoPor: IModificado =
+                {
+                    usuario: STATE_DATOS_SESION().auth.usuario,
+                    fecha: GeneralService.fechaHoraActual(),
+                    accion: 'Cambio de contrasena',
+                    valorAnterior: {},
+                    valorActual: {}
+                };
+
+            this.asignarAuthGQL.mutate({_id: this.data._id, auth: resto, modificadoPor}, {fetchPolicy: 'network-only'}).pipe(finalize(() =>
+            {
+                this.cancelar();
+                this.cargandoDatos = false;
+            }), tap((res) =>
             {
                 if (res.data)
                 {
                     unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
                     this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
+                } else
+                {
+                    this.ngxToastService.errorToast('Asignacion de sesion', 'Ocurrio un error al tratar de asignar la sesion para este usuario');
                 }
-                this.cargandoDatos = false;
             })).subscribe();
         }
 

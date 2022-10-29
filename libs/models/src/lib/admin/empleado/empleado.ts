@@ -1,7 +1,7 @@
 import {IModificado, ITelefono, TRegEmpleado} from './empleado.interface';
 import {email, prop, propArray, required} from '@rxweb/reactive-form-validators';
 
-export const campoRequerido = 'Este campo es requerido'
+export const campoRequerido = 'Este campo es requerido';
 
 export class Empleado implements TRegEmpleado
 {
@@ -18,6 +18,7 @@ export class Empleado implements TRegEmpleado
     @required({message: campoRequerido})
     nombreCompleto: string;
     @propArray(undefined, {allowMaxIndex: 3, createBlank: true})
+    @required({message: 'Es necesario por lo menos un telefono de contacto'})
     telefono: ITelefono[];
 
     modificadoPor: IModificado[];

@@ -13,12 +13,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
 import {GeneralService} from '@s-app/services/general.service';
-import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -47,6 +49,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
 {
     formEmpleado: FormGroup;
     cargando = false;
+
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();
     diaActual = new Date().getDate();
@@ -81,10 +84,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
         {
             if (res.data !== undefined)
             {
-                if (res.data.deptos)
-                {
-                    this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
-                }
+                this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
             }
         })).subscribe();
     }
@@ -121,7 +121,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
                 modificadoPor:
                     [
                         {
-                            usuario: 'Administrador',
+                            usuario: STATE_DATOS_SESION().auth.usuario,
                             accion: 'Registro de nuevo empleado',
                             fecha: GeneralService.fechaHoraActual(),
                             valorActual: {},
@@ -130,10 +130,18 @@ export class ModRegistroEmpleadoComponent implements OnInit
                     ],
                 ...resto
             };
-        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() => this.cerrar())).subscribe((res) =>
+        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() =>
         {
             this.cargando = false;
-            console.log(res);
+            this.formEmpleado.enable();
+            this.cerrar();
+        })).subscribe((res) =>
+        {
+            if (res.data)
+            {
+                const elementos = STATE_EMPLEADOS();
+                STATE_EMPLEADOS([...elementos, res.data.crearEmpleado as IResolveEmpleado]);
+            }
         });
     }
 

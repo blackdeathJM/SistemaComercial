@@ -231,6 +231,7 @@ export type MutationActualizarDeptoArgs = {
 export type MutationAsignarAuthArgs = {
   _id: Scalars['String'];
   auth: AuthInput;
+  modificadoPor: ModificadoInput;
 };
 
 
@@ -343,6 +344,7 @@ export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: str
 export type AsignarAuthMutationVariables = Exact<{
   _id: Scalars['String'];
   auth: AuthInput;
+  modificadoPor: ModificadoInput;
 }>;
 
 
@@ -565,8 +567,8 @@ export const EliminarDeptoDocument = gql`
     }
   }
 export const AsignarAuthDocument = gql`
-    mutation asignarAuth($_id: String!, $auth: AuthInput!) {
-  asignarAuth(_id: $_id, auth: $auth) {
+    mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoInput!) {
+  asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor) {
     ...fragEmpleado
     auth {
       ...fragAuth

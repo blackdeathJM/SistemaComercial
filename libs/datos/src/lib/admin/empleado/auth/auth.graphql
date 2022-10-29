@@ -1,6 +1,6 @@
-mutation asignarAuth($_id: String!, $auth: AuthInput!)
+mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoInput!)
 {
-    asignarAuth(_id: $_id, auth: $auth)
+    asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor)
     {
         ...fragEmpleado
         auth

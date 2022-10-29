@@ -19,8 +19,10 @@ export class ModificadoDto implements IModificado
     @IsNotEmpty({message: 'Es necesario el usuario'})
     usuario: string;
     @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
+    @IsOptional()
     valorAnterior: object;
     @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
+    @IsOptional()
     valorActual: object;
 }
 

@@ -43,14 +43,13 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
 
     constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
-                @Inject(MAT_DIALOG_DATA) private data: IDepto, private actualizarDeptoGQL: ActualizarDeptoGQL)
+                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto)
     {
     }
 
     ngOnInit(): void
     {
         this.formDepto = this.fb.formGroup(new Depto());
-
         if (this.data)
         {
             this.formDepto.patchValue(this.data);

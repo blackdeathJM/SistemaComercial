@@ -174,7 +174,7 @@ type Mutation {
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
-  asignarAuth(_id: String!, auth: AuthInput!): EmpleadoType!
+  asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
   regDoc(datos: DocumentoRegInput!): DocumentoType!
