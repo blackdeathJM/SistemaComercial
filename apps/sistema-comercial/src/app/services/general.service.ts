@@ -16,7 +16,7 @@ export class GeneralService
     static convertirUnix(fecha: IObjFecha): number
     {
         // return moment(fechaHora).unix();
-        console.log('Datos obtenidos por el fomulario');
+        console.log('Datos obtenidos por el fomulario', fecha);
         return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
 

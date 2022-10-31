@@ -116,6 +116,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
         const {fechaIngreso, ...resto} = this.formEmpleado.value;
 
         console.log('fecha ingreso', GeneralService.convertirUnix(fechaIngreso._i));
+        console.log('fehca hora', fechaIngreso);
         const empleadoDatos: TRegEmpleado =
             {
                 fechaIngreso: GeneralService.convertirUnix(fechaIngreso._i),
@@ -131,7 +132,6 @@ export class ModRegistroEmpleadoComponent implements OnInit
                     ],
                 ...resto
             };
-        console.log('registro empleados', empleadoDatos);
         this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() =>
         {
             this.cargando = false;
