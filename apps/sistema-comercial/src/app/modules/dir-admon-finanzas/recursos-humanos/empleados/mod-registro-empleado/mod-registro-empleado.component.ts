@@ -115,8 +115,6 @@ export class ModRegistroEmpleadoComponent implements OnInit
         this.formEmpleado.disable();
         const {fechaIngreso, ...resto} = this.formEmpleado.value;
 
-        console.log('fecha ingreso', GeneralService.convertirUnix(fechaIngreso._i));
-        console.log('fehca hora', fechaIngreso);
         const empleadoDatos: TRegEmpleado =
             {
                 fechaIngreso: GeneralService.convertirUnix(fechaIngreso._i),
