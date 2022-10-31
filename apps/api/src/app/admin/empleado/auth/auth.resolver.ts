@@ -3,7 +3,7 @@ import {AuthService} from './auth.service';
 import {UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {PubSub} from 'graphql-subscriptions';
-import {EmpleadoDto, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, ModificadoPorDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
@@ -20,7 +20,7 @@ export class AuthResolver
     }
 
     @Mutation(() => EmpleadoDto)
-    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto, @Args('modificadoPor') modificadoPor: ModificadoDto): Promise<EmpleadoDto>
+    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto, @Args('modificadoPor') modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
     {
         return await this.authService.asignarAuth(_id, auth, modificadoPor);
     }

@@ -30,7 +30,6 @@ export class EmpleadoService
 
     async crearEmpleado(datosEmpleado: RegEmpleadoDto): Promise<EmpleadoDto>
     {
-        console.log(RegEmpleadoDto);
         try
         {
             return await this.empleado.create(datosEmpleado);

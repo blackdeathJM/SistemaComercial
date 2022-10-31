@@ -1,13 +1,14 @@
 import {IAuth} from './auth/auth.interface';
 import {IDepto} from '../deptos/depto.interface';
 
+
 export interface IModificado
 {
     usuario: string;
     fecha: number;
     accion: string;
-    valorAnterior: object;
-    valorActual: object;
+    valorAnterior: object[];
+    valorActual: object[];
 }
 
 export interface ITelefono

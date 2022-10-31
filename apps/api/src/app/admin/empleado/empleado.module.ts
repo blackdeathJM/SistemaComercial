@@ -10,7 +10,7 @@ import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/admin/deptos/dept
 @Module({
     imports: [MongooseModule.forFeature([
         {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO},
-        {name: DeptoDto.name, schema: SCHEMA_DEPTO}
+        {name: DeptoDto.name, schema: SCHEMA_DEPTO},
     ]), AuthModule],
     exports: [EmpleadoService],
     providers: [EmpleadoService, EmpleadoResolver, DeptosService],

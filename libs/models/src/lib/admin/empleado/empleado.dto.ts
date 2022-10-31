@@ -1,29 +1,30 @@
 import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
 import {GraphQLJSON} from 'graphql-scalars';
 
-@ObjectType('ModificadoType')
-@InputType('ModificadoInput')
-export class ModificadoDto implements IModificado
+@ObjectType('ModificadoPorType')
+@InputType('ModificadoPorInput')
+export class ModificadoPorDto implements IModificado
 {
     @Field(() => String, {nullable: true})
-    @IsNotEmpty({message: 'Se requiere una accion'})
+    @IsNotEmpty({message: 'Es requerida una accion'})
     accion: string;
-    @Field(() => Int, {nullable: true})
-    @IsNotEmpty({message: 'Es necesaria la fecha'})
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @IsNotEmpty({message: 'Es necesaria una fecha'})
+    @IsNumber({}, {message: 'La fecha debe estar en formato unix'})
     fecha: number;
     @Field(() => String, {nullable: true})
-    @IsNotEmpty({message: 'Es necesario el usuario'})
+    @IsNotEmpty({message: 'Es necesario colocar el usuario que estar realizando el cambio'})
     usuario: string;
-    @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
+    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
     @IsOptional()
-    valorAnterior: object;
-    @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
+    valorActual: object[];
+    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
     @IsOptional()
-    valorActual: object;
+    valorAnterior: object[];
 }
 
 @ObjectType('TelefonoType')
@@ -95,10 +96,6 @@ export class EmpleadoDto implements IEmpleado
     @Prop()
     @IsNotEmpty({message: 'El nombre completo es requerido'})
     nombreCompleto: string;
-    @Field(() => [ModificadoDto], {nullable: true})
-    @Prop()
-    @IsNotEmpty({message: 'Modificado por es necesario'})
-    modificadoPor: ModificadoDto[];
     @Field(() => [TelefonoDto], {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
@@ -106,6 +103,10 @@ export class EmpleadoDto implements IEmpleado
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop()
     auth: AuthDto;
+    @Field(() => [ModificadoPorDto], {nullable: true})
+    @Prop()
+    @IsNotEmpty({message: 'Este campo es requerido'})
+    modificadoPor: ModificadoPorDto[];
     @Field(() => ID, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es nesario el id del departamento al que sera asignado el empleado'})
@@ -116,10 +117,6 @@ export class EmpleadoDto implements IEmpleado
 export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'auth', 'fechaBaja'], InputType) implements TRegEmpleado
 {
 }
-
-// @ObjectType('EmpleadoRhhType')
-// export class EmpleadoRhhDto extends OmitType(EmpleadoDto, ['auth', 'modificadoPor'], ObjectType) implements TEmpleadoRhh
-// {}
 
 export type EmpleadoType = EmpleadoDto & Document;
 export const SCHEMA_EMPLEADO = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});

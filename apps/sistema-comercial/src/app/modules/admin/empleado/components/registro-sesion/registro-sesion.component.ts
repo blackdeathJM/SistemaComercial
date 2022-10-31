@@ -13,8 +13,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {CommonModule} from '@angular/common';
-import {STATE_DATOS_SESION} from "@s-app/auth/auth.state";
-import {GeneralService} from "@s-app/services/general.service";
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {GeneralService} from '@s-app/services/general.service';
 
 @Component({
     standalone: true,
@@ -85,9 +85,9 @@ export class RegistroSesionComponent implements OnInit
                 {
                     usuario: STATE_DATOS_SESION().auth.usuario,
                     fecha: GeneralService.fechaHoraActual(),
-                    accion: 'Cambio de contrasena',
-                    valorAnterior: {},
-                    valorActual: {}
+                    accion: 'Asignacion de usuario para el inicio de sesion en el portal',
+                    valorAnterior: [{}],
+                    valorActual: [{}]
                 };
 
             this.asignarAuthGQL.mutate({_id: this.data._id, auth: resto, modificadoPor}, {fetchPolicy: 'network-only'}).pipe(finalize(() =>

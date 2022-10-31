@@ -15,12 +15,12 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
-type ModificadoType {
+type ModificadoPorType {
   accion: String
   fecha: Int
   usuario: String
-  valorAnterior: JSON
-  valorActual: JSON
+  valorActual: [JSON!]
+  valorAnterior: [JSON!]
 }
 
 type TelefonoType {
@@ -37,9 +37,9 @@ type EmpleadoType {
   fechaBaja: Int
   fechaIngreso: Int
   nombreCompleto: String
-  modificadoPor: [ModificadoType!]
   telefono: [TelefonoType!]
   auth: AuthType
+  modificadoPor: [ModificadoPorType!]
   deptoId: ID
   deptoEmpleado: DeptoType
 }
@@ -96,12 +96,12 @@ input AuthInput {
   estatus: String = "En-linea"
 }
 
-input ModificadoInput {
+input ModificadoPorInput {
   accion: String
-  fecha: Int
+  fecha: Int = 0
   usuario: String
-  valorAnterior: JSON = null
-  valorActual: JSON = null
+  valorActual: [JSON!] = null
+  valorAnterior: [JSON!] = null
 }
 
 input TelefonoInput {
@@ -118,9 +118,9 @@ input EmpleadoInput {
   fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
-  modificadoPor: [ModificadoInput!]
   telefono: [TelefonoInput!] = null
   auth: AuthInput = null
+  modificadoPor: [ModificadoPorInput!]
   deptoId: ID
   deptoEmpleado: DeptoInput
 }
@@ -174,7 +174,7 @@ type Mutation {
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
-  asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoInput!): EmpleadoType!
+  asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
   regDoc(datos: DocumentoRegInput!): DocumentoType!
@@ -196,8 +196,8 @@ input RegEmpleadoInput {
   correo: String = null
   fechaIngreso: Int
   nombreCompleto: String
-  modificadoPor: [ModificadoInput!]
   telefono: [TelefonoInput!] = null
+  modificadoPor: [ModificadoPorInput!]
   deptoId: ID
 }
 

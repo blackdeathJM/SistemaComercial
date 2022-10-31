@@ -1,12 +1,12 @@
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
-import {EmpleadoDto, EmpleadoType, ModificadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType, ModificadoPorDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
-import {IEmpleado, IModificado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
@@ -20,11 +20,11 @@ export class AuthService
     {
     }
 
-    async asignarAuth(_id: string, auth: AuthDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
+    async asignarAuth(_id: string, auth: AuthDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}, $push: {modificadoPor}}, {returnOriginal: false, runValidators: true}).exec();
+        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)
         {
             throw new NotFoundException('No se pudo asignar una sesion por que el usuario no fue encontrado');
@@ -77,17 +77,6 @@ export class AuthService
     //     await this.modificadoPor(_id, modificadoPor);
     //     return empleado;
     // }
-
-    async modificadoPor(_id: string, modificadoPor: IModificado): Promise<void>
-    {
-        try
-        {
-            await this.empleado.findByIdAndUpdate(_id, {$push: {modificadoPor}}).exec();
-        } catch (e)
-        {
-            throw new ConflictException({message: e.codeName});
-        }
-    }
 
     login(empleado: any): ILoginRespuesta
     {
