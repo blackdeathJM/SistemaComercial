@@ -26,9 +26,9 @@ export class AuthResolver
     }
 
     @Mutation(() => EmpleadoDto)
-    async actualizarContrasenaAdmin(@Args('datos') datos: CambioContrsenaDto): Promise<IEmpleado>
+    async actualizarContrasenaAdmin(@Args('datos') datos: CambioContrsenaDto, @Args('modificadoPor') modificadoPor: ModificadoPorDto): Promise<IEmpleado>
     {
-        return await this.authService.actualizarContrasenaAdmin(datos);
+        return await this.authService.actualizarContrasenaAdmin(datos, modificadoPor);
     }
 
     @Mutation(() => LoginRespuestaDto, {nullable: true})

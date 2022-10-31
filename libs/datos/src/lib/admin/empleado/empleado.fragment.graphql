@@ -2,7 +2,7 @@ fragment fragTelefono on TelefonoType
 {
     numero
 }
-fragment fragModificadoPor on ModificadoType
+fragment fragModificadoPor on ModificadoPorType
 {
     fecha
     usuario

@@ -66,8 +66,16 @@ export class RegistroSesionComponent implements OnInit
                     _id: this.data._id,
                     contrasena: this.formAuth.get('contrasena').value,
                 };
+            const modificadoPor: IModificado =
+                {
+                    usuario: STATE_DATOS_SESION().auth.usuario,
+                    accion: 'Modificacion de contrasena',
+                    fecha: GeneralService.fechaHoraActual(),
+                    valorActual: [{}],
+                    valorAnterior: [{}]
+                };
 
-            this.actualizarContrasenaAdminGQL.mutate({datos}).pipe(finalize(() =>
+            this.actualizarContrasenaAdminGQL.mutate({datos, modificadoPor}).pipe(finalize(() =>
             {
                 this.cargandoDatos = false;
                 this.cancelar();

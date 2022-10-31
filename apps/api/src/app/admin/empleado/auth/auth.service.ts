@@ -24,7 +24,7 @@ export class AuthService
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}}, {returnOriginal: false, runValidators: true}).exec();
+        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}, $push: {modificadoPor}}, {returnOriginal: false, runValidators: true}).exec();
         if (!empleado)
         {
             throw new NotFoundException('No se pudo asignar una sesion por que el usuario no fue encontrado');
@@ -32,12 +32,12 @@ export class AuthService
         return empleado;
     }
 
-    async actualizarContrasenaAdmin(datos: CambioContrsenaDto): Promise<IEmpleado>
+    async actualizarContrasenaAdmin(datos: CambioContrsenaDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
 
         const empleado = await this.empleado.findByIdAndUpdate(new ObjectId(datos._id),
-            {$set: {'auth.contrasena': nvaContrasena}}, {returnOriginal: false}).exec();
+            {$set: {'auth.contrasena': nvaContrasena}, $push: {modificadoPor}}, {returnOriginal: false}).exec();
         if (!empleado)
         {
             throw new NotFoundException('No se encontro registro para actualizar la contrasena');

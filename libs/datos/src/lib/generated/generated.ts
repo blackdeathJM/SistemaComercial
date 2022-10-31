@@ -153,7 +153,7 @@ export type EmpleadoInput = {
   deptoId?: InputMaybe<Scalars['ID']>;
   fechaBaja?: InputMaybe<Scalars['Int']>;
   fechaIngreso?: InputMaybe<Scalars['Int']>;
-  modificadoPor?: InputMaybe<Array<ModificadoInput>>;
+  modificadoPor?: InputMaybe<Array<ModificadoPorInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
@@ -171,7 +171,7 @@ export type EmpleadoType = {
   deptoId?: Maybe<Scalars['ID']>;
   fechaBaja?: Maybe<Scalars['Int']>;
   fechaIngreso?: Maybe<Scalars['Int']>;
-  modificadoPor?: Maybe<Array<ModificadoType>>;
+  modificadoPor?: Maybe<Array<ModificadoPorType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
   telefono?: Maybe<Array<TelefonoType>>;
 };
@@ -187,21 +187,21 @@ export type LoginRespuestaType = {
   token: Scalars['String'];
 };
 
-export type ModificadoInput = {
+export type ModificadoPorInput = {
   accion?: InputMaybe<Scalars['String']>;
   fecha?: InputMaybe<Scalars['Int']>;
   usuario?: InputMaybe<Scalars['String']>;
-  valorActual?: InputMaybe<Scalars['JSON']>;
-  valorAnterior?: InputMaybe<Scalars['JSON']>;
+  valorActual?: InputMaybe<Array<Scalars['JSON']>>;
+  valorAnterior?: InputMaybe<Array<Scalars['JSON']>>;
 };
 
-export type ModificadoType = {
-  __typename?: 'ModificadoType';
+export type ModificadoPorType = {
+  __typename?: 'ModificadoPorType';
   accion?: Maybe<Scalars['String']>;
   fecha?: Maybe<Scalars['Int']>;
   usuario?: Maybe<Scalars['String']>;
-  valorActual?: Maybe<Scalars['JSON']>;
-  valorAnterior?: Maybe<Scalars['JSON']>;
+  valorActual?: Maybe<Array<Scalars['JSON']>>;
+  valorAnterior?: Maybe<Array<Scalars['JSON']>>;
 };
 
 export type Mutation = {
@@ -220,6 +220,7 @@ export type Mutation = {
 
 export type MutationActualizarContrasenaAdminArgs = {
   datos: CambioContrasenaInput;
+  modificadoPor: ModificadoPorInput;
 };
 
 
@@ -231,7 +232,7 @@ export type MutationActualizarDeptoArgs = {
 export type MutationAsignarAuthArgs = {
   _id: Scalars['String'];
   auth: AuthInput;
-  modificadoPor: ModificadoInput;
+  modificadoPor: ModificadoPorInput;
 };
 
 
@@ -285,7 +286,7 @@ export type RegEmpleadoInput = {
   correo?: InputMaybe<Scalars['String']>;
   deptoId?: InputMaybe<Scalars['ID']>;
   fechaIngreso?: InputMaybe<Scalars['Int']>;
-  modificadoPor?: InputMaybe<Array<ModificadoInput>>;
+  modificadoPor?: InputMaybe<Array<ModificadoPorInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
@@ -344,7 +345,7 @@ export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: str
 export type AsignarAuthMutationVariables = Exact<{
   _id: Scalars['String'];
   auth: AuthInput;
-  modificadoPor: ModificadoInput;
+  modificadoPor: ModificadoPorInput;
 }>;
 
 
@@ -352,6 +353,7 @@ export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __ty
 
 export type ActualizarContrasenaAdminMutationVariables = Exact<{
   datos: CambioContrasenaInput;
+  modificadoPor: ModificadoPorInput;
 }>;
 
 
@@ -373,14 +375,14 @@ export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'L
 
 export type FragTelefonoFragment = { __typename?: 'TelefonoType', numero?: string | null };
 
-export type FragModificadoPorFragment = { __typename?: 'ModificadoType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: any | null, valorActual?: any | null };
+export type FragModificadoPorFragment = { __typename?: 'ModificadoPorType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: Array<any> | null, valorActual?: Array<any> | null };
 
 export type FragEmpleadoFragment = { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null };
 
 export type EmpleadosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null, telefono?: Array<{ __typename?: 'TelefonoType', numero?: string | null }> | null, modificadoPor?: Array<{ __typename?: 'ModificadoType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: any | null, valorActual?: any | null }> | null }> };
+export type EmpleadosQuery = { __typename?: 'Query', empleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } | null, telefono?: Array<{ __typename?: 'TelefonoType', numero?: string | null }> | null, modificadoPor?: Array<{ __typename?: 'ModificadoPorType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: Array<any> | null, valorActual?: Array<any> | null }> | null }> };
 
 export type EmpleadosSesionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -449,7 +451,7 @@ export const FragTelefonoFragmentDoc = gql`
 }
     `;
 export const FragModificadoPorFragmentDoc = gql`
-    fragment fragModificadoPor on ModificadoType {
+    fragment fragModificadoPor on ModificadoPorType {
   fecha
   usuario
   accion
@@ -567,7 +569,7 @@ export const EliminarDeptoDocument = gql`
     }
   }
 export const AsignarAuthDocument = gql`
-    mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoInput!) {
+    mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!) {
   asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor) {
     ...fragEmpleado
     auth {
@@ -593,8 +595,8 @@ ${FragDeptosFragmentDoc}`;
     }
   }
 export const ActualizarContrasenaAdminDocument = gql`
-    mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!) {
-  actualizarContrasenaAdmin(datos: $datos) {
+    mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!, $modificadoPor: ModificadoPorInput!) {
+  actualizarContrasenaAdmin(datos: $datos, modificadoPor: $modificadoPor) {
     ...fragEmpleado
     auth {
       ...fragAuth

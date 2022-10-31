@@ -1,14 +1,22 @@
 import {Injectable} from '@angular/core';
 import {DateTime} from 'luxon';
 
+export interface IObjFecha
+{
+    year: number;
+    month: number;
+    date: number;
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class GeneralService
 {
-    static convertirUnix(fecha: any): number
+    static convertirUnix(fecha: IObjFecha): number
     {
         // return moment(fechaHora).unix();
+        console.log('Datos obtenidos por el fomulario');
         return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
 

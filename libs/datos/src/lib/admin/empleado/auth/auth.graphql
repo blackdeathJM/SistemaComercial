@@ -1,4 +1,4 @@
-mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoInput!)
+mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!)
 {
     asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor)
     {
@@ -13,9 +13,9 @@ mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: Modificad
         }
     }
 }
-mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!)
+mutation actualizarContrasenaAdmin($datos: CambioContrasenaInput!, $modificadoPor: ModificadoPorInput!)
 {
-    actualizarContrasenaAdmin(datos: $datos)
+    actualizarContrasenaAdmin(datos: $datos, modificadoPor: $modificadoPor)
     {
         ...fragEmpleado
         auth {

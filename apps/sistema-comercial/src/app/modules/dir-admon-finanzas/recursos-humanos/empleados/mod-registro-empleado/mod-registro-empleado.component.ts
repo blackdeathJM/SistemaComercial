@@ -1,4 +1,4 @@
-import {AfterContentChecked, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -89,7 +89,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
         })).subscribe();
     }
 
-    agregarTel(): any
+    agregarTel(): void
     {
         const telefono = this.formEmpleado.controls.telefono as FormArray;
         if (telefono.length === 3)
@@ -115,6 +115,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
         this.formEmpleado.disable();
         const {fechaIngreso, ...resto} = this.formEmpleado.value;
 
+        console.log('fecha ingreso', GeneralService.convertirUnix(fechaIngreso._i));
         const empleadoDatos: TRegEmpleado =
             {
                 fechaIngreso: GeneralService.convertirUnix(fechaIngreso._i),
@@ -130,6 +131,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
                     ],
                 ...resto
             };
+        console.log('registro empleados', empleadoDatos);
         this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() =>
         {
             this.cargando = false;

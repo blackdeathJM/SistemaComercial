@@ -1,5 +1,5 @@
 import {IModificado, ITelefono, TRegEmpleado} from './empleado.interface';
-import {email, prop, propArray, required} from '@rxweb/reactive-form-validators';
+import {email, maxLength, minLength, propArray, required} from '@rxweb/reactive-form-validators';
 
 export const campoRequerido = 'Este campo es requerido';
 
@@ -18,8 +18,7 @@ export class Empleado implements TRegEmpleado
     @required({message: campoRequerido})
     nombreCompleto: string;
     @propArray(undefined, {allowMaxIndex: 3, createBlank: true})
-    @required({message: 'Es necesario por lo menos un telefono de contacto'})
-    telefono: ITelefono[];
+    telefono: Telefono[];
 
     modificadoPor: IModificado[];
     fechaBaja: number;
@@ -30,6 +29,8 @@ export class Empleado implements TRegEmpleado
 
 export class Telefono implements ITelefono
 {
-    @prop()
+    @required({message: campoRequerido})
+    @maxLength({value: 10, message: 'La longitud maxima es de 10 numeros'})
+    @minLength({value: 10, message: 'La longitud minima es de 10 numeros'})
     numero: string;
 }
