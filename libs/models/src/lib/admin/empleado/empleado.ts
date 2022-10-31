@@ -1,8 +1,10 @@
 import {IModificado, ITelefono, TRegEmpleado} from './empleado.interface';
 import {email, maxLength, minLength, propArray, required} from '@rxweb/reactive-form-validators';
+import {lowerCase, sanitize} from '@rxweb/sanitizers';
 
 export const campoRequerido = 'Este campo es requerido';
 
+@sanitize
 export class Empleado implements TRegEmpleado
 {
     @required({message: campoRequerido})
@@ -10,6 +12,7 @@ export class Empleado implements TRegEmpleado
     @required({message: campoRequerido})
     colonia: string;
     @email({message: 'Debe ser un correo valido'})
+    @lowerCase()
     correo: string;
     @required({message: campoRequerido})
     deptoId: string;
@@ -20,7 +23,7 @@ export class Empleado implements TRegEmpleado
     @propArray(undefined, {allowMaxIndex: 3, createBlank: true})
     telefono: Telefono[];
 
-    modificadoPor: IModificado[];
+    modificadoPor: Modificado[];
     fechaBaja: number;
     activo: boolean;
     avatar: string;
@@ -33,4 +36,13 @@ export class Telefono implements ITelefono
     @maxLength({value: 10, message: 'La longitud maxima es de 10 numeros'})
     @minLength({value: 10, message: 'La longitud minima es de 10 numeros'})
     numero: string;
+}
+
+export class Modificado implements IModificado
+{
+    accion: string;
+    fecha: number;
+    usuario: string;
+    valorActual: object[];
+    valorAnterior: object[];
 }

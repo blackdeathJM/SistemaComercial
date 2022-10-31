@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {CambioIconoRolPipe} from '@s-app/empleado/pipes/cambio-icono-rol.pipe';
+import {NgxJsonViewerModule} from 'ngx-json-viewer';
 
 @Component({
     standalone: true,
@@ -21,6 +22,7 @@ import {CambioIconoRolPipe} from '@s-app/empleado/pipes/cambio-icono-rol.pipe';
             MatButtonModule,
             MatIconModule,
             MatTooltipModule,
+            NgxJsonViewerModule,
             CambioIconoRolPipe
         ],
     exportAs: 'app-detalle-empleado',

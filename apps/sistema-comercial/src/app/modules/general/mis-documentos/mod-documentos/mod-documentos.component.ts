@@ -73,8 +73,7 @@ export class ModDocumentosComponent implements OnInit
         {
             if (res.data)
             {
-                // TODO: Corregir empleados documentos
-                // this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
+                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
             }
         })).subscribe());
     }
@@ -88,6 +87,7 @@ export class ModDocumentosComponent implements OnInit
         {
             const ano = new Date().getFullYear();
             const mes = new Date().toLocaleString('es-mx', {month: 'long'});
+
             const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
 
             const nombreArchivo = ano + '-' + uuidv4() + '.' + file[0].name.split('.').pop();

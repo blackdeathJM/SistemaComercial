@@ -1,7 +1,6 @@
 import {IAuth} from './auth/auth.interface';
 import {IDepto} from '../deptos/depto.interface';
 
-
 export interface IModificado
 {
     usuario: string;

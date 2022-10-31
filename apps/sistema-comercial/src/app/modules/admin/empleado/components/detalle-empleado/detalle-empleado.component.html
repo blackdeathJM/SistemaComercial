@@ -51,31 +51,37 @@
                 </div>
             </ng-container>
 
-<!--            <div class="flex flex-col mt-8 divide-y">-->
-<!--                <ng-container *ngFor="let permiso of _empleado?.auth?.role; trackBy: trackByFn;">-->
-<!--                    <div class="flex flex-col sm:flex-row sm:items-center py-6">-->
-<!--                        <div class="flex items-center">-->
-<!--                            &lt;!&ndash;                            <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                <ng-container>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                    <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                        &lt;!&ndash;                                        <mat-icon [svgIcon]="permiso.tipoAcceso === 'Ninguno' ? 'lock' : permiso.tipoAcceso === 'Lectura' ? 'heroicons_outline:eye': 'lock_open'"></mat-icon>&ndash;&gt;&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                        <mat-icon [svgIcon]="permiso?.tipoAcceso | cambioIconoRol"></mat-icon>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                </ng-container>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--                            <div class="font-bold text-2xl leading-6 text-amber-600">{{permiso.titulo}}</div>-->
-<!--                        </div>-->
 
-<!--                        &lt;!&ndash;                        <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            <div class="order-2 sm:order-1 ml-4 sm:ml-0">&ndash;&gt;-->
-<!--                        &lt;!&ndash;                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">&ndash;&gt;-->
-<!--                        &lt;!&ndash;                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                                </mat-button-toggle-group>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--                        &lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--                    </div>-->
-<!--                </ng-container>-->
-<!--            </div>-->
+            <div class="flex flex-col mt-8 divide-y">
+                <ng-container *ngFor="let permiso of _empleado?.auth?.role; trackBy: trackByFn;">
+                    <ngx-json-viewer  [json]="permiso"></ngx-json-viewer>
+                </ng-container>
+            </div>
+            <!--            <div class="flex flex-col mt-8 divide-y">-->
+            <!--                <ng-container *ngFor="let permiso of _empleado?.auth?.role; trackBy: trackByFn;">-->
+            <!--                    <div class="flex flex-col sm:flex-row sm:items-center py-6">-->
+            <!--                        <div class="flex items-center">-->
+            <!--                            &lt;!&ndash;                            <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                                <ng-container>&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                                    <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                                        &lt;!&ndash;                                        <mat-icon [svgIcon]="permiso.tipoAcceso === 'Ninguno' ? 'lock' : permiso.tipoAcceso === 'Lectura' ? 'heroicons_outline:eye': 'lock_open'"></mat-icon>&ndash;&gt;&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                                        <mat-icon [svgIcon]="permiso?.tipoAcceso | cambioIconoRol"></mat-icon>&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                                    </div>&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                                </ng-container>&ndash;&gt;-->
+            <!--                            &lt;!&ndash;                            </div>&ndash;&gt;-->
+            <!--                            <div class="font-bold text-2xl leading-6 text-amber-600">{{permiso.titulo}}</div>-->
+            <!--                        </div>-->
+
+            <!--                        &lt;!&ndash;                        <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            <div class="order-2 sm:order-1 ml-4 sm:ml-0">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </mat-button-toggle-group>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                        </div>&ndash;&gt;-->
+            <!--                    </div>-->
+            <!--                </ng-container>-->
+            <!--            </div>-->
         </div>
     </div>
 </div>

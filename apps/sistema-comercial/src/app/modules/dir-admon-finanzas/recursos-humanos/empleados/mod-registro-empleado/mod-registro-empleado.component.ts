@@ -21,6 +21,9 @@ import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -39,7 +42,9 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
             MatIconModule,
             MatTooltipModule,
             DeptosTodosComponent,
-            MatSelectModule
+            MatSelectModule,
+            CapitalizarDirective,
+            NgxTrimDirectiveModule
         ],
     templateUrl: './mod-registro-empleado.component.html',
     styleUrls: ['./mod-registro-empleado.component.scss'],
@@ -54,11 +59,12 @@ export class ModRegistroEmpleadoComponent implements OnInit
     mesActual = new Date().getMonth();
     diaActual = new Date().getDate();
 
-    minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 3);
-    maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
+    minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 5);
+    maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
     stateDeptos: IDepto[];
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL,
+                private ngxToastService: NgxToastService)
     {
     }
 
@@ -141,6 +147,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
             {
                 const elementos = STATE_EMPLEADOS();
                 STATE_EMPLEADOS([...elementos, res.data.crearEmpleado as IResolveEmpleado]);
+                this.ngxToastService.satisfactorioToast('El empleado fue creado con exito', 'Registro de nuevos empleados');
             }
         });
     }
