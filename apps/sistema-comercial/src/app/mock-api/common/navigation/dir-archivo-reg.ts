@@ -9,6 +9,8 @@ export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
             tooltip: 'Direccion de archivo general y regulacion',
             type: 'group',
             icon: 'heroicons_outline:office-building',
+            activo: false,
+            disabled: false,
             children:
                 [
                     {
@@ -16,6 +18,8 @@ export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
                         title: 'Transparencia',
                         type: 'basic',
                         icon: 'heroicons_outline:document-report',
+                        activo: false,
+                        disabled: false,
                         link: dirArchivoRegulacion
                     },
                     {
@@ -23,12 +27,16 @@ export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
                         title: 'Juridico',
                         type: 'basic',
                         icon: 'heroicons_outline:newspaper',
+                        activo: false,
+                        disabled: false,
                         link: dirArchivoRegulacion
                     },
                     {
                         id: 'regulacion',
                         title: 'Regulacion',
                         type: 'basic',
+                        activo: false,
+                        disabled: false,
                         icon: 'heroicons_outline:collection'
                     }
                 ]

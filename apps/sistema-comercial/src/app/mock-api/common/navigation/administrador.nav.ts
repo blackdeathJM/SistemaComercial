@@ -8,9 +8,8 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             title: 'ADMINISTRADOR',
             type: 'group',
             icon: 'feather:settings',
-            active: false,
+            activo: false,
             disabled: false,
-            acceso: 'completo',
             tooltip: 'Modulo para establecer configuraciones para el funcionamiento del sistema comercial',
             children:
                 [
@@ -20,7 +19,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
                         type: 'basic',
                         icon: 'feather:settings',
                         disabled: false,
-                        acceso: 'completo',
+                        activo: false,
                         link: rutaBaseAdministrador
                     }
                 ]

@@ -15,6 +15,7 @@ import {CambioIconoRolPipe} from '@s-app/empleado/pipes/cambio-icono-rol.pipe';
 import {NgxJsonViewerModule} from 'ngx-json-viewer';
 import {FuseNavigationItem} from '@s-fuse/navigation';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
     standalone: true,
@@ -28,7 +29,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
             CambioIconoRolPipe,
             MatButtonToggleModule,
             ReactiveFormsModule,
-            MatSlideToggleModule
+            MatSlideToggleModule,
+            MatListModule
         ],
     exportAs: 'app-detalle-empleado',
     selector: 'app-detalle-empleado',

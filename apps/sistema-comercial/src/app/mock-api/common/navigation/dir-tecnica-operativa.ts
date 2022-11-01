@@ -7,32 +7,42 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
             title: 'DIR. TECNICA OPERATIVA',
             type: 'group',
             icon: 'heroicons_outline:cube-transparent',
+            activo: false,
+            disabled: false,
             children:
                 [
                     {
                         id: 'saneamiento',
                         title: 'Saneamiento',
                         type: 'basic',
-                        icon: 'adjust'
+                        icon: 'adjust',
+                        activo: false,
+                        disabled: false,
                     },
                     {
                         id: 'ampleacionesConstrucciones',
                         title: 'Amp y construccion',
                         tooltip: 'Ampleaciones y construccion',
                         type: 'basic',
-                        icon: 'add_road'
+                        icon: 'add_road',
+                        activo: false,
+                        disabled: false,
                     },
                     {
                         id: 'operaciones',
                         title: 'Operaciones',
                         type: 'basic',
-                        icon: 'blur_linear'
+                        icon: 'blur_linear',
+                        activo: false,
+                        disabled: false,
                     },
                     {
                         id: 'telemetria',
                         title: 'Telemetria',
                         type: 'basic',
-                        icon: 'feather:cpu'
+                        icon: 'feather:cpu',
+                        activo: false,
+                        disabled: false,
                     }
                 ]
         }

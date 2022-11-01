@@ -8,6 +8,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
             title: 'DIR. ADMON FINANZAS',
             type: 'group',
             icon: 'work',
+            activo: false,
+            disabled: false,
             children:
                 [
                     {
@@ -15,6 +17,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         title: 'Recursos humanos',
                         type: 'collapsable',
                         icon: 'people',
+                        activo: false,
+                        disabled: false,
                         children:
                             [
                                 {
@@ -22,6 +26,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                                     title: 'Empleados',
                                     type: 'basic',
                                     icon: 'people',
+                                    activo: false,
+                                    disabled: false,
                                     link: dirAdmonFinanzas + 'recursos-humanos/' + 'empleados'
                                 }
                             ]
@@ -31,6 +37,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         title: 'Contabilidad',
                         type: 'basic',
                         icon: 'account_balance_wallet',
+                        activo: false,
+                        disabled: false,
                         link: dirAdmonFinanzas + 'contabilidad'
                     },
                     {
@@ -38,6 +46,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         title: 'Compras y servicios',
                         type: 'basic',
                         icon: 'double_arrow',
+                        activo: false,
+                        disabled: false,
                         link: dirAdmonFinanzas + 'compras-servicios'
                     },
                     {
@@ -45,6 +55,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         title: 'Egresos',
                         type: 'basic',
                         icon: 'price_change',
+                        activo: false,
+                        disabled: false,
                         link: dirAdmonFinanzas + 'egresos'
                     },
                     {
@@ -52,6 +64,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         title: 'Almacen',
                         type: 'basic',
                         icon: 'margin',
+                        activo: false,
+                        disabled: false,
                         link: dirAdmonFinanzas + 'almacen'
                     }
                 ]

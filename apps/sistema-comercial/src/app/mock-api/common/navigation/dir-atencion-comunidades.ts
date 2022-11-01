@@ -7,25 +7,33 @@ export const DIR_ATENCION_COMUNIDADES: FuseNavigationItem[] =
             title: 'DIR. ATENCION COMUNIDADES',
             type: 'group',
             icon: 'attractions',
+            activo: false,
+            disabled: false,
             children:
                 [
                     {
                         id: 'operativoRural',
                         title: 'Operativo rural',
                         type: 'basic',
-                        icon: 'agriculture'
+                        icon: 'agriculture',
+                        activo: false,
+                        disabled: false,
                     },
                     {
                         id: 'financieroRural',
                         title: 'Financiero Rural',
                         type: 'basic',
-                        icon: 'heroicons_outline:cash'
+                        icon: 'heroicons_outline:cash',
+                        activo: false,
+                        disabled: false,
                     },
                     {
                         id: 'legalRural',
                         title: 'Legal Rural',
                         type: 'basic',
-                        icon: 'assignment_late'
+                        icon: 'assignment_late',
+                        activo: false,
+                        disabled: false,
                     }
                 ]
         }

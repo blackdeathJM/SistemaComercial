@@ -14,8 +14,7 @@ export interface FuseNavigationItem
         | 'spacer';
     hidden?: (item: FuseNavigationItem) => boolean;
     oculto?: boolean;
-    acceso?: 'completo' | 'lectura' | 'bloqueado';
-    activo?: boolean;
+    activo: boolean;
     active?: boolean;
     disabled?: boolean;
     tooltip?: string;

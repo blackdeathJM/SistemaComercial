@@ -52,9 +52,9 @@
             </ng-container>
 
 
-            <div class="flex flex-col mt-8 divide-y">
+            <div class="flex flex-col mt-4 divide-y">
                 <ng-container *ngFor="let permiso of _empleado?.auth?.role; trackBy: trackByFn;">
-                    <div class="flex flex-col sm:flex-row sm:items-center py-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center py-3">
                         <div class="flex items-center">
                             <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                                 <ng-container>
@@ -66,14 +66,16 @@
                             </div>
                             <div class="font-bold text-lg leading-6 text-amber-600 ml-3">{{permiso.title}}</div>
                         </div>
+                    </div>
+                    <mat-selection-list>
+                        <div class="flex flex-column w-full" *ngFor="let hijo of permiso?.children">
+                            <mat-slide-toggle>{{hijo?.title}}</mat-slide-toggle>
 
-                        <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">
-                            <div class="order-2 sm:order-1 ml-4 sm:ml-0">
-                                <!--                                implemetar cheched-->
-                                <mat-slide-toggle color="primary" matTooltip="Activar o desactivar el permiso a la ruta principal"></mat-slide-toggle>
+                            <div class="flex flex-column w-full m-2 mt-4" *ngFor="let hijo2 of hijo?.children">
+                                <mat-slide-toggle>{{hijo2?.title}}</mat-slide-toggle>
                             </div>
                         </div>
-                    </div>
+                    </mat-selection-list>
                 </ng-container>
             </div>
         </div>
@@ -83,3 +85,17 @@
 <!--                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">-->
 <!--                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>-->
 <!--                                </mat-button-toggle-group>-->
+
+
+<!--<mat-nav-list>-->
+<!--    <h3 matSubheader>This is the listview</h3>-->
+<!--    <a mat-list-item [routerLink]="['/detail']">-->
+<!--        <span matLine>Title</span>-->
+<!--        <button mat-icon-button (click)="onAdd($event)">-->
+<!--            <mat-icon>add</mat-icon>-->
+<!--        </button>-->
+<!--        <button mat-icon-button (click)="onRemove($event)">-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--        </button>-->
+<!--    </a>-->
+<!--</mat-nav-list>-->
