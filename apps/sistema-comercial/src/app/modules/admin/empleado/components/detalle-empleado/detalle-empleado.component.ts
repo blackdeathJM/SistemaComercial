@@ -3,8 +3,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
 import {Subscription} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
-import {FormControl} from '@angular/forms';
-import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {MatButtonModule} from '@angular/material/button';
@@ -13,6 +13,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {CambioIconoRolPipe} from '@s-app/empleado/pipes/cambio-icono-rol.pipe';
 import {NgxJsonViewerModule} from 'ngx-json-viewer';
+import {FuseNavigationItem} from '@s-fuse/navigation';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
     standalone: true,
@@ -23,7 +25,10 @@ import {NgxJsonViewerModule} from 'ngx-json-viewer';
             MatIconModule,
             MatTooltipModule,
             NgxJsonViewerModule,
-            CambioIconoRolPipe
+            CambioIconoRolPipe,
+            MatButtonToggleModule,
+            ReactiveFormsModule,
+            MatSlideToggleModule
         ],
     exportAs: 'app-detalle-empleado',
     selector: 'app-detalle-empleado',
@@ -35,6 +40,7 @@ export class DetalleEmpleadoComponent implements OnDestroy
     @Output() cerrarPanel = new EventEmitter<boolean>();
     _empleado: IResolveEmpleado;
     subscripcion: Subscription = new Subscription();
+    role: FuseNavigationItem[];
     roles = ['ninguno', 'lectura', 'completo'];
 
     controlRoles: FormControl = new FormControl();

@@ -4,7 +4,7 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
     [
         {
             id: 'dirTecnicaOperativa',
-            title: 'Dir. Tecnica operativa',
+            title: 'DIR. TECNICA OPERATIVA',
             type: 'group',
             icon: 'heroicons_outline:cube-transparent',
             children:
