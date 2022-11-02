@@ -1,6 +1,7 @@
-import {IModificado, ITelefono, TRegEmpleado} from './empleado.interface';
+import { ITelefono, TRegEmpleado} from './empleado.interface';
 import {email, maxLength, minLength, propArray, required} from '@rxweb/reactive-form-validators';
 import {lowerCase, sanitize} from '@rxweb/sanitizers';
+import {Modificado} from '../../common/common';
 
 export const campoRequerido = 'Este campo es requerido';
 
@@ -38,11 +39,3 @@ export class Telefono implements ITelefono
     numero: string;
 }
 
-export class Modificado implements IModificado
-{
-    accion: string;
-    fecha: number;
-    usuario: string;
-    valorActual: object[];
-    valorAnterior: object[];
-}

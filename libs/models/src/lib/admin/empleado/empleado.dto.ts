@@ -1,31 +1,9 @@
 import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
-import {IEmpleado, IModificado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
+import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
+import {IEmpleado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
 import {AuthDto} from './auth/auth.dto';
-import {GraphQLJSON} from 'graphql-scalars';
-
-@ObjectType('ModificadoPorType')
-@InputType('ModificadoPorInput')
-export class ModificadoPorDto implements IModificado
-{
-    @Field(() => String, {nullable: true})
-    @IsNotEmpty({message: 'Es requerida una accion'})
-    accion: string;
-    @Field(() => Int, {nullable: true, defaultValue: 0})
-    @IsNotEmpty({message: 'Es necesaria una fecha'})
-    @IsNumber({}, {message: 'La fecha debe estar en formato unix'})
-    fecha: number;
-    @Field(() => String, {nullable: true})
-    @IsNotEmpty({message: 'Es necesario colocar el usuario que estar realizando el cambio'})
-    usuario: string;
-    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
-    @IsOptional()
-    valorActual: object[];
-    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
-    @IsOptional()
-    valorAnterior: object[];
-}
+import {ModificadoPorDto} from '../../common/common.dto';
 
 @ObjectType('TelefonoType')
 @InputType('TelefonoInput')

@@ -1,10 +1,9 @@
-import {IDocumentoReg} from './documento.interface';
 import {IDatosArchivo} from '../../upload/upload.interface';
 import {file, prop, required} from '@rxweb/reactive-form-validators';
+import {TDocumentoReg} from './documento.interface';
 
-export class Documento implements IDocumentoReg
+export class Documento implements TDocumentoReg
 {
-    ano: number;
     @required()
     asunto: string;
     @prop()
@@ -30,4 +29,9 @@ export class Documento implements IDocumentoReg
     usuarioFolio: string;
     @required({message: 'Es necesario colocar al menos un usuario si el documento es para ti mismo seleccionalo de la lista'})
     usuarios: string[];
+    seguimiento: string;
+    acuseUrl: string;
+    fechaTerminado: number;
+    folio: string;
+    ano: number;
 }

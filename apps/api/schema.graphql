@@ -65,7 +65,7 @@ type LoginRespuestaType {
 
 type DocumentoType {
   _id: ID
-  noSeguimiento: Int!
+  seguimiento: Int!
   acuseUrl: String
   ano: Int
   asunto: String
@@ -133,7 +133,7 @@ input DeptoInput {
 
 input DocumentoInput {
   _id: ID
-  noSeguimiento: Int!
+  seguimiento: Int = 0
   acuseUrl: String = null
   ano: Int
   asunto: String
@@ -147,7 +147,7 @@ input DocumentoInput {
   fechaTerminado: Int = null
   folio: String = null
   identificadorDoc: String
-  proceso: String
+  proceso: String = "Pendiente"
   ref: [String!] = null
   tipoDoc: String
   usuarioFolio: String = null
@@ -169,7 +169,6 @@ input DocsUsuarioProcesoInput {
 }
 
 type Mutation {
-  subirArchivo(files: ArchivoInput!): [String!]!
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
@@ -177,16 +176,8 @@ type Mutation {
   asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
-  regDoc(datos: DocumentoRegInput!): DocumentoType!
+  regDoc(datos: DocumentoRegInput!, files: ArchivoInput = null): DocumentoType!
 }
-
-input ArchivoInput {
-  carpeta: String
-  file: [Upload!]
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input RegEmpleadoInput {
   avatar: String = null
@@ -212,6 +203,8 @@ input LoginInput {
 }
 
 input DocumentoRegInput {
+  seguimiento: Int = 0
+  acuseUrl: String = null
   ano: Int
   asunto: String
   comentario: String
@@ -221,12 +214,22 @@ input DocumentoRegInput {
   esInterno: Boolean = false
   fechaLimiteEntrega: Int
   fechaRecepcion: Int
+  fechaTerminado: Int = null
+  folio: String = null
   identificadorDoc: String
-  proceso: String
+  proceso: String = "Pendiente"
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
 }
+
+input ArchivoInput {
+  carpeta: String
+  file: [Upload!]
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type Subscription {
   rolCambiado(_id: String!): LoginRespuestaType!

@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import {ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
@@ -39,7 +39,7 @@ export class EmpleadoService
         }
     }
 
-    async buscarEmpleadoPorId(_id: string): Promise<IEmpleado | NotFoundException>
+    async buscarEmpleadoPorId(_id: string): Promise<EmpleadoDto>
     {
         if (_id)
         {

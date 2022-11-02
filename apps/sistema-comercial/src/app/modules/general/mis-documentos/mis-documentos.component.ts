@@ -1,5 +1,5 @@
 import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
-import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
 import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
@@ -36,7 +36,7 @@ import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-
 })
 export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentChecked
 {
-    docs: IDocumento[];
+    docs: IResolveDocumento[];
     docSeleccionado: IDocumento;
     abrirP: boolean = false;
     cargandoDatos = true;
@@ -57,7 +57,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
             .pipe(tap((res) =>
             {
                 this.cargandoDatos = false;
-                STATE_DOCS(res.data.docsUsuarioProceso as IDocumento[]);
+                STATE_DOCS(res.data.docsUsuarioProceso as IResolveDocumento[]);
             })).subscribe();
     }
 

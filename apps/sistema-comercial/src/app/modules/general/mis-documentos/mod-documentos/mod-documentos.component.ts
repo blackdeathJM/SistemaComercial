@@ -7,7 +7,7 @@ import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/r
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
 import {Storage, ref, uploadBytes, getDownloadURL, deleteObject} from '@angular/fire/storage';
-import {IDocumento, IDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {GeneralService} from '@s-app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {v4 as uuidv4} from 'uuid';
@@ -80,18 +80,17 @@ export class ModDocumentosComponent implements OnInit
 
     reg(): void
     {
-        // this.fechaHoraActual = moment.unix(fechaRecepcionConv);
         this.cargando = true;
         this.formDocs.disable();
+
         try
         {
+            // valores que forman la ruta para guardar el documento en cloud de firesotre
             const ano = new Date().getFullYear();
             const mes = new Date().toLocaleString('es-mx', {month: 'long'});
 
             const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
-
             const nombreArchivo = ano + '-' + uuidv4() + '.' + file[0].name.split('.').pop();
-
             const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
 
             uploadBytes(docRef, file[0]).then(async (res) =>
@@ -99,7 +98,7 @@ export class ModDocumentosComponent implements OnInit
                 const url = await getDownloadURL(res.ref);
                 if (url)
                 {
-                    const regDocumento: IDocumentoReg =
+                    const regDocumento: TDocumentoReg =
                         {
                             ano,
                             usuarioFolio: null,
@@ -107,17 +106,17 @@ export class ModDocumentosComponent implements OnInit
                             fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : null,
                             enviadoPor: STATE_DATOS_SESION()._id,
                             proceso: 'Pendiente',
-                            tipoDoc,
                             docUrl: url,
                             ...resto,
                         };
                     this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento}).pipe(tap((respDoc) =>
                     {
+                        // Verificamos que la respuesta tenga documentos si la respuesta fuera indefinida o nulla eliminamos el documento de la nube
                         if (respDoc.data)
                         {
                             this.cargando = false;
                             const elementos = STATE_DOCS();
-                            STATE_DOCS([...elementos, respDoc.data.regDoc as IDocumento]);
+                            STATE_DOCS([...elementos, respDoc.data.regDoc as IResolveDocumento]);
                             this.ngxToastService.satisfactorioToast('El documento se agrego correctamente', 'Alta documentos');
                         } else
                         {
@@ -128,6 +127,9 @@ export class ModDocumentosComponent implements OnInit
                             }).catch(e => this.ngxToastService.errorToast(e, 'Error en la nube'));
                         }
                     })).subscribe());
+                } else
+                {
+                    this.ngxToastService.alertaToast('Ocurrio un error al tratar de guardar el documento', 'Subir documento');
                 }
             }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
                 .finally(() => this.cerrar());

@@ -2,8 +2,8 @@ import {IEmpleado} from '../../admin/empleado/empleado.interface';
 
 export interface IDocumento
 {
-    _id?: string;
-    noSeguimiento: number;
+    _id: string;
+    seguimiento: string;
     identificadorDoc: string;
     folio: string;
     tipoDoc: string;
@@ -22,15 +22,13 @@ export interface IDocumento
     ano: number;
     ref: string[];
     usuarios: string[];
-    //Resolve
-    resolveEmpleado?: IEmpleado;
-    resolverEmpleadoFolio?: IEmpleado;
 }
 
 export const TIPOS_DOCUMENTO = ['Oficio', 'Memorandum', 'Circular', 'Otro'];
-export type IDocumentoReg = Omit<IDocumento, '_id' | 'folio' | 'acuseUrl' | 'fechaTerminado' | 'ref' | 'noSeguimiento'>;
+export type TDocumentoReg = Omit<IDocumento, '_id' | 'ref'>;
+
 export interface IResolveDocumento extends IDocumento
 {
     resolveEmpleado: IEmpleado;
-    resolverEmpleadoFolio: IEmpleado
+    resolverEmpleadoFolio: IEmpleado;
 }

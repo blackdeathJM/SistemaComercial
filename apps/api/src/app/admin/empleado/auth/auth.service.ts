@@ -4,12 +4,13 @@ import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {ObjectId} from 'bson';
-import {EmpleadoDto, EmpleadoType, ModificadoPorDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
 
 @Injectable()
 export class AuthService
