@@ -4,7 +4,7 @@ import {DocumentosModule} from './documentos/documentos.module';
 @Module({
     imports:
         [
-            DocumentosModule,
+            DocumentosModule
         ],
 })
 export class GeneralModule

@@ -2,7 +2,8 @@ import {Module} from '@nestjs/common';
 import {SubirArchivosService} from './subir-archivos.service';
 
 @Module({
-    providers: [SubirArchivosService]
+    providers: [SubirArchivosService],
+    exports: [SubirArchivosService]
 })
 export class SubirArchivoModule
 {

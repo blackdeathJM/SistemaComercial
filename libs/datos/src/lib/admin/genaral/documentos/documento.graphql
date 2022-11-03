@@ -1,6 +1,6 @@
-mutation regDoc($datos: DocumentoRegInput!)
+mutation regDoc($datos: DocumentoRegInput!, $files: ArchivoInput)
 {
-    regDoc(datos: $datos)
+    regDoc(datos: $datos, files: $files)
     {
         ...fragDoc
         resolveEmpleado {

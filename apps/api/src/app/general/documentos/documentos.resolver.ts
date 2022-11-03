@@ -33,6 +33,6 @@ export class DocumentosResolver
     @Mutation(() => DocumentoDto, {nullable: false})
     async regDoc(@Args('datos') datos: DocumentoRegDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
     {
-        return this.documentosService.regDoc(datos);
+        return this.documentosService.regDoc(datos, files);
     }
 }

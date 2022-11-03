@@ -1,9 +1,0 @@
-#mutation subirArchivo($archivo: ArchivoInput!)
-#{
-#    subirArchivo(archivo: $archivo)
-#}
-
-mutation subirArchivo($files: ArchivoInput!)
-{
-    subirArchivo(files: $files)
-}

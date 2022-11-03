@@ -12,7 +12,7 @@ export class DocumentoDto implements IDocumento
     @Field(() => ID, {nullable: true})
     @IsOptional()
     _id: string;
-    @Field(() => Int, {defaultValue: 0})
+    @Field(() => String, {defaultValue: null})
     @Prop()
     @IsOptional()
     seguimiento: string;
