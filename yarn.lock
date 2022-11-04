@@ -12621,6 +12621,13 @@ ngx-markdown@14.0.1:
     prismjs "^1.28.0"
     tslib "^2.3.0"
 
+ngx-material-file-input@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-material-file-input/-/ngx-material-file-input-4.0.0.tgz#0cf1faf5cf6c75c78077ce3905b9b8a4f98b07e6"
+  integrity sha512-N0lpuwO1Td3VUR/KnylVi0EObJ2f9s/3jvOUyIGWvy25l4fQOs8zl6cf+OqXIoYLsOHBnC2vVRNugbEuT9CaDQ==
+  dependencies:
+    tslib "^2.3.0"
+
 ngx-quill@19.0.1:
   version "19.0.1"
   resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-19.0.1.tgz#96624e4dc58b61bd592bf7332df269be33b0d51f"

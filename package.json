@@ -88,6 +88,7 @@
         "ng-apexcharts": "1.7.4",
         "ngx-json-viewer": "^3.2.1-alpha.0",
         "ngx-markdown": "14.0.1",
+        "ngx-material-file-input": "^4.0.0",
         "ngx-quill": "19.0.1",
         "ngx-skeleton-loader": "^6.0.0",
         "ngx-toastr": "^15.2.1",

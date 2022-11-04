@@ -4,24 +4,24 @@ import {TDocumentoReg} from './documento.interface';
 
 export class Documento implements TDocumentoReg
 {
-    @required()
+    @required({message: 'Es necesario que coloques el asunto que trata el documento'})
     asunto: string;
     @prop()
     comentario: string;
-    @required()
+    @required({message: 'Es necesario que coloques la dependencia de donde proviene el documento'})
     dependencia: string;
     docUrl: string;
     enviadoPor: string;
     @prop({defaultValue: false})
     esInterno: boolean;
-    @required()
+    @required({message: 'Selecciona la fecha en que recibiste el documento'})
     fechaRecepcion: number;
-    @prop()
+    @required({message: 'Selecciona una fecha de entrega'})
     fechaLimiteEntrega: number;
     @required()
-    @file({maxFiles: 1, minFiles: 1, message: 'El documento no es un archivo valido'})
+    @file({maxFiles: 1, minFiles: 1, message: 'Debes tener un documento seleccionado'})
     file: IDatosArchivo;
-    @required()
+    @required({message: 'Es necesario colocar un identificador del documento'})
     identificadorDoc: string;
     proceso: 'Pendiente' | 'Terminado';
     @required({message: 'Selecciona el tipo de documento'})

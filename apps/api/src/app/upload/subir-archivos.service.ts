@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {randomUUID} from 'crypto';
 import {join} from 'path';
-import * as fs from 'fs';
+import fs from 'fs-extra';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 
 @Injectable()
@@ -22,20 +22,22 @@ export class SubirArchivosService
                 const {createReadStream, filename} = await file;
                 const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
                 const rutaGuardar = join(rutaDeGuardado + `/${nvoNombre}`);
-
-                if (!fs.existsSync(rutaGuardar))
+                console.log('ruta guardado', process.cwd());
+                if (!fs.existsSync(rutaDeGuardado))
                 {
-                    fs.mkdirSync(rutaGuardar);
+                    fs.mkdirSync(rutaDeGuardado);
                 }
 
-                const stream = await createReadStream();
                 const salida = fs.createWriteStream(rutaGuardar);
+                const stream = await createReadStream();
                 stream.pipe(salida);
+                console.log('rutaGuardar', rutaGuardar);
                 rutas.push(rutaGuardar);
             }
             return rutas;
         } catch (e)
         {
+            console.log('entro en el catch', e);
             return [];
         }
     }

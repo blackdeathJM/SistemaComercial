@@ -22,6 +22,8 @@ import {FileUploadModule} from '@iplab/ngx-file-upload';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {CommonModule} from '@angular/common';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @Component({
@@ -38,7 +40,9 @@ import {CommonModule} from '@angular/common';
             MatDatepickerModule,
             FileUploadModule,
             MatCheckboxModule,
-            RegistrosComponent
+            RegistrosComponent,
+            MaterialFileInputModule,
+            MatIconModule
         ],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
@@ -79,7 +83,7 @@ export class ModDocumentosComponent implements OnInit
         })).subscribe());
     }
 
-    reg(local: boolean): void
+    reg(esRemoto: boolean): void
     {
         this.cargando = true;
         this.formDocs.disable();
@@ -90,12 +94,12 @@ export class ModDocumentosComponent implements OnInit
             const mes = new Date().toLocaleString('es-mx', {month: 'long'});
 
             const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
-            const nombreArchivo = ano + '-' + uuidv4() + '.' + file[0].name.split('.').pop();
+            const nombreArchivo = ano + '-' + uuidv4() + '.' + file._files[0].name.split('.').pop();
 
-            if (local)
+            if (esRemoto)
             {
                 const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
-                uploadBytes(docRef, file[0]).then(async (res) =>
+                uploadBytes(docRef, file._files[0]).then(async (res) =>
                 {
                     const url = await getDownloadURL(res.ref);
                     if (url)
@@ -128,8 +132,8 @@ export class ModDocumentosComponent implements OnInit
             } else
             {
                 const regDoc = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, 'local', resto);
-                console.log('file el que uso', file);
-                this.subscripcion.add(this.regDocGQL.mutate({datos: regDoc, files: {file, carpeta: 'documentos'}}).pipe(tap((res) =>
+                console.log('archivo local', file);
+                this.subscripcion.add(this.regDocGQL.mutate({datos: regDoc, files: {file: file._files, carpeta: 'documentos'}}).pipe(tap((res) =>
                 {
                     if (res.data)
                     {
