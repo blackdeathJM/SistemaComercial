@@ -1,7 +1,7 @@
 import {IDocumento, TDocumentoReg} from './documento.interface';
 import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {Document} from 'mongoose';
 
 @ObjectType('DocumentoType')
@@ -52,16 +52,16 @@ export class DocumentoDto implements IDocumento
     esInterno: boolean;
     @Field(() => Int, {nullable: true})
     @Prop()
-    @IsNumber({allowNaN: false}, {message: 'La fecha debe estar en formato unix'})
+    @IsInt( {message: 'La fecha debe estar en formato unix'})
     fechaLimiteEntrega: number;
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesaria la fecha de recepcion'})
-    @IsNumber({allowNaN: false}, {message: 'La fecha debe estar en formato unix'})
+    @IsInt( {message: 'La fecha debe estar en formato unix'})
     fechaRecepcion: number;
-    @Field(() => Int, {nullable: true, defaultValue: null})
+    @Field(() => Int, {nullable: true, defaultValue: 0})
     @Prop()
-    @IsNumber({allowNaN: false}, {message: 'La fecha debe estar en formato unix'})
+    @IsInt( {message: 'La fecha debe estar en formato unix'})
     fechaTerminado: number;
     @Field(()=> String,{nullable: true, defaultValue: null})
     @Prop()

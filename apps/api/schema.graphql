@@ -144,7 +144,7 @@ input DocumentoInput {
   esInterno: Boolean = false
   fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: Int = null
+  fechaTerminado: Int = 0
   folio: String = null
   identificadorDoc: String
   proceso: String = "Pendiente"
@@ -214,7 +214,7 @@ input DocumentoRegInput {
   esInterno: Boolean = false
   fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: Int = null
+  fechaTerminado: Int = 0
   folio: String = null
   identificadorDoc: String
   proceso: String = "Pendiente"

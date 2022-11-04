@@ -23,12 +23,12 @@ export class SubirArchivosService
                 const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
                 const rutaGuardar = join(rutaDeGuardado + `/${nvoNombre}`);
 
-                if (!fs.existsSync(rutaDeGuardado))
+                if (!fs.existsSync(rutaGuardar))
                 {
-                    fs.mkdirSync(rutaDeGuardado);
+                    fs.mkdirSync(rutaGuardar);
                 }
 
-                const stream = createReadStream();
+                const stream = await createReadStream();
                 const salida = fs.createWriteStream(rutaGuardar);
                 stream.pipe(salida);
                 rutas.push(rutaGuardar);

@@ -4,6 +4,7 @@ import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoRegDto} from '#api/libs/mo
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
+import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver
@@ -31,7 +32,8 @@ export class DocumentosResolver
     }
 
     @Mutation(() => DocumentoDto, {nullable: false})
-    async regDoc(@Args('datos') datos: DocumentoRegDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
+    // @UsePipes(new DocsSeguimientoPipe())
+    async regDoc(@Args('datos', DocsSeguimientoPipe) datos: DocumentoRegDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
     {
         return this.documentosService.regDoc(datos, files);
     }

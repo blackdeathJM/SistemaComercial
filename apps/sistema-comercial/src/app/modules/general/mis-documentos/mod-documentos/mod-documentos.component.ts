@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
-import {Subscription, tap} from 'rxjs';
+import {finalize, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -50,14 +50,15 @@ export class ModDocumentosComponent implements OnInit
     mesActual = new Date().getMonth();
     diaActual = new Date().getDate();
 
-    minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 3);
-    maxDate = new Date(this.anoActual, this.mesActual, this.diaActual + 3);
+    minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 20);
+    maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
     subscripcion: Subscription = new Subscription();
     empleadosSesion: IResolveEmpleado[];
     formDocs: FormGroup;
     cargando = false;
     tiposDoc = TIPOS_DOCUMENTO;
+    archivos;
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage,
                 private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService)
@@ -126,8 +127,21 @@ export class ModDocumentosComponent implements OnInit
                     .finally(() => this.cerrar());
             } else
             {
-                const regDoc = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, '', resto);
-                // this.subscripcion.add(this.regDocGQL.mutate().pipe().subscribe());
+                const regDoc = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, 'local', resto);
+                console.log('file el que uso', file);
+                this.subscripcion.add(this.regDocGQL.mutate({datos: regDoc, files: {file, carpeta: 'documentos'}}).pipe(tap((res) =>
+                {
+                    if (res.data)
+                    {
+                        const elementos = STATE_DOCS();
+                        STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
+                        this.ngxToastService.satisfactorioToast('El documento se agrego correctamente en servidor local', 'Alta documentos');
+                    }
+                }), finalize(() =>
+                {
+                    this.cargando = false;
+                    this.cerrar();
+                })).subscribe());
             }
         } catch (e)
         {
@@ -178,5 +192,10 @@ export class ModDocumentosComponent implements OnInit
     // {
     //     this.archivos = event.target['files'];
     // }
+    cambiar(eventoFile: Event): void
+    {
+        console.log('archivo', eventoFile.target['files']);
+        this.archivos = eventoFile.target['files'];
+    }
 }
 

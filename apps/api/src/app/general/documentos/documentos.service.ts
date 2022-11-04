@@ -28,13 +28,20 @@ export class DocumentosService
     {
         if (files)
         {
+            // Si el param files no viene nulo el registro se hara de manera local y si viene null es porque el registro se realizo en la nube
             const rutasArchivos = await this.subirArchivoService.subirArchivos(files);
+            console.log('rutas archivo', rutasArchivos);
             if (rutasArchivos.length === 0)
             {
                 return null;
             }
             datos.docUrl = rutasArchivos[0];
-            return await this.documento.create(datos);
+            const doc = await this.documento.create(datos);
+            if (!doc)
+            {
+                //TODO: Eliminar el archivo localmente ya que no se pudo realizar el registro en la base de datos
+                throw new ConflictException({message: 'Ocurrio un error al registrar el documento'});
+            }
         } else
         {
             try
