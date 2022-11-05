@@ -30,7 +30,6 @@ export class DocumentosService
         {
             // Si el param files no viene nulo el registro se hara de manera local y si viene null es porque el registro se realizo en la nube
             const rutasArchivos = await this.subirArchivoService.subirArchivos(files);
-            console.log('rutas archivo', rutasArchivos);
             if (rutasArchivos.length === 0)
             {
                 return null;

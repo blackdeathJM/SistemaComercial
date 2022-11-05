@@ -21,11 +21,20 @@ export class SubirArchivosService
         {
             rutaDeGuardado = join(__dirname, `public/${files.carpeta}/${ano}/${mes}`);
         }
-
         try
         {
-            await fs.ensureDir('D:/Public');
-
+            await fs.ensureDir(rutaDeGuardado);
+            if (files.eliminar)
+            {
+                const archivoExiste = await fs.pathExists(files.url);
+                if (archivoExiste)
+                {
+                    await fs.remove(files.url, err =>
+                    {
+                        // accion si el archivo no se puede eliminar
+                    });
+                }
+            }
             for (const archivo of await files.file)
             {
             }
