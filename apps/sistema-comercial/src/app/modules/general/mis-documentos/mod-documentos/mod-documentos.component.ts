@@ -106,22 +106,26 @@ export class ModDocumentosComponent implements OnInit
                     if (url)
                     {
                         const regDocumento: TDocumentoReg = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, url, resto);
-                        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento}).pipe(tap((respDoc) =>
+                        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento}).pipe(finalize(() => this.cerrar()), tap((respDoc) =>
                         {
                             // Verificamos que la respuesta tenga documentos si la respuesta fuera indefinida o nulla eliminamos el documento de la nube
                             if (respDoc.data)
                             {
-                                this.cargando = false;
                                 const elementos = STATE_DOCS();
                                 STATE_DOCS([...elementos, respDoc.data.regDoc as IResolveDocumento]);
+                                this.cargando = false;
                                 this.ngxToastService.satisfactorioToast('El documento se agrego correctamente', 'Alta documentos');
                             } else
                             {
+                                // si la data no viene eliminamos el documento de la nube ya que el registro no se realizo correctamente
                                 const eleminarDocRef = ref(this.storage, url);
                                 deleteObject(eleminarDocRef).then(() =>
                                 {
                                     this.ngxToastService.infoToast('Se elimino el archivo por que no se realizo el registro correctamente', 'Documentos');
-                                }).catch(e => this.ngxToastService.errorToast(e, 'Error en la nube'));
+                                }).catch((e) =>
+                                {
+                                    this.ngxToastService.errorToast(e, 'Error en la nube');
+                                });
                             }
                         })).subscribe());
                     } else
@@ -131,6 +135,7 @@ export class ModDocumentosComponent implements OnInit
                 } catch (e)
                 {
                     this.ngxToastService.errorToast(e, 'Error al subir documento');
+                    this.cerrar();
                 }
             }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
                 .finally(() => this.cerrar());
@@ -169,7 +174,10 @@ export class ModDocumentosComponent implements OnInit
 
     cerrar(): void
     {
-        this.mdr.closeAll();
+        if (!this.cargando)
+        {
+            this.mdr.closeAll();
+        }
     }
 
     // obtenerDocCloudStoreFireBase(): void

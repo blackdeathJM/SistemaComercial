@@ -1,15 +1,16 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {CommonModule} from "@angular/common";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
     standalone: true,
     exportAs: 'app-registros',
     selector: 'app-registros',
     templateUrl: './registros.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports:
         [
             CommonModule,
@@ -22,11 +23,12 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 })
 export class RegistrosComponent
 {
-    @Output() reg = new EventEmitter<void>();
-    @Output() can = new EventEmitter<void>();
+    @Output() registro = new EventEmitter<void>();
+    @Output() cancelar = new EventEmitter<void>();
 
-    _cargando: boolean;
-    _deshabilitar: boolean;
+    _cargando: boolean = false;
+    _deshabilitar: boolean = false;
+    _deshabilitarCerrar: boolean = false;
 
     @Input() set cargando(v: boolean)
     {
@@ -38,15 +40,18 @@ export class RegistrosComponent
         this._deshabilitar = v;
     }
 
-
-    cancelar(): void
+    @Input() set deshabilitarCerrar(v: boolean)
     {
-        this.can.emit();
+        this._deshabilitarCerrar = v;
     }
 
-    aceptar(): void
+    reg(): void
     {
-        this.reg.emit();
+        this.registro.emit();
     }
 
+    cerrar(): void
+    {
+        this.cancelar.emit();
+    }
 }

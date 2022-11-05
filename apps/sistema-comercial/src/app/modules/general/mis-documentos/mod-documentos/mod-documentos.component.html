@@ -64,4 +64,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (reg)="reg(true)" (can)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>
+<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando" ></app-registros>

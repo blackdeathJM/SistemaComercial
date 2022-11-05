@@ -83,4 +83,14 @@ export class DetalleDocumentosComponent implements OnInit
             }
         });
     }
+
+    reasignacion(): void
+    {
+
+    }
+
+    modDocs(_documento: IResolveDocumento): void
+    {
+
+    }
 }

@@ -9,7 +9,7 @@
                 <span class="ml-2 mr-1">Dar de alta nuevo documento</span>
             </button>
             <button mat-flat-button [color]="'accent'">
-                <mat-icon svgIcon="heroicons_outline:dots-horizontal" class="icon-size-5 mr-2"></mat-icon>
+                <mat-icon svgIcon="subtitles" class="icon-size-5 mr-2"></mat-icon>
                 <span class="ml-2 mr-1">Generar folio independiente</span>
             </button>
         </div>
@@ -27,7 +27,7 @@
                 <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
                     <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
                     <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
-                        <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Card cover image" *ngIf="doc.resolveEmpleado.avatar">
+                        <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">
                         <div class="w-16 h-16 mr-6 flex items-center justify-center rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200" *ngIf="!doc.resolveEmpleado.avatar">
                             {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}
                         </div>
@@ -47,5 +47,7 @@
 </app-lista-detalle>
 
 <ng-template #cargando>
-    <app-tailwind-loading></app-tailwind-loading>
+    <div class="flex justify-center w-full">
+        <app-tailwind-loading></app-tailwind-loading>
+    </div>
 </ng-template>
