@@ -87,19 +87,20 @@ export class ModDocumentosComponent implements OnInit
     {
         this.cargando = true;
         this.formDocs.disable();
-        try
+
+        // valores que forman la ruta para guardar el documento en cloud de firesotre
+        const ano = new Date().getFullYear();
+        const mes = new Date().toLocaleString('es-mx', {month: 'long'});
+
+        const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
+        const nombreArchivo = ano + '-' + uuidv4() + '.' + file._files[0].name.split('.').pop();
+
+        if (esRemoto)
         {
-            // valores que forman la ruta para guardar el documento en cloud de firesotre
-            const ano = new Date().getFullYear();
-            const mes = new Date().toLocaleString('es-mx', {month: 'long'});
-
-            const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
-            const nombreArchivo = ano + '-' + uuidv4() + '.' + file._files[0].name.split('.').pop();
-
-            if (esRemoto)
+            const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
+            uploadBytes(docRef, file._files[0]).then(async (res) =>
             {
-                const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
-                uploadBytes(docRef, file._files[0]).then(async (res) =>
+                try
                 {
                     const url = await getDownloadURL(res.ref);
                     if (url)
@@ -127,33 +128,29 @@ export class ModDocumentosComponent implements OnInit
                     {
                         this.ngxToastService.alertaToast('Ocurrio un error al tratar de guardar el documento', 'Subir documento');
                     }
-                }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
-                    .finally(() => this.cerrar());
-            } else
-            {
-                const regDoc = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, 'local', resto);
-                console.log('archivo local', file);
-                this.subscripcion.add(this.regDocGQL.mutate({datos: regDoc, files: {file: file._files, carpeta: 'documentos'}}).pipe(tap((res) =>
+                } catch (e)
                 {
-                    if (res.data)
-                    {
-                        const elementos = STATE_DOCS();
-                        STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
-                        this.ngxToastService.satisfactorioToast('El documento se agrego correctamente en servidor local', 'Alta documentos');
-                    }
-                }), finalize(() =>
-                {
-                    this.cargando = false;
-                    this.cerrar();
-                })).subscribe());
-            }
-        } catch (e)
+                    this.ngxToastService.errorToast(e, 'Error al subir documento');
+                }
+            }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
+                .finally(() => this.cerrar());
+        } else
         {
-            this.ngxToastService.alertaToast('Ocurrio un error', e);
-            this.cerrar();
+            const regDoc = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, 'local', resto);
+            this.subscripcion.add(this.regDocGQL.mutate({datos: regDoc, files: {file: file._files, carpeta: 'documentos'}}).pipe(tap((res) =>
+            {
+                if (res.data)
+                {
+                    const elementos = STATE_DOCS();
+                    STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
+                    this.ngxToastService.satisfactorioToast('El documento se agrego correctamente en servidor local', 'Alta documentos');
+                }
+            }), finalize(() =>
+            {
+                this.cargando = false;
+                this.cerrar();
+            })).subscribe());
         }
-
-
     }
 
     valoresRegDoc(ano: number, tipoDoc: string, fechaRecepcion: any, fechaLimiteEntrega: any, url: string, resto: any): TDocumentoReg
@@ -162,9 +159,8 @@ export class ModDocumentosComponent implements OnInit
             ano,
             tipoDoc,
             fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
-            fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : null,
+            fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : 0,
             enviadoPor: STATE_DATOS_SESION()._id,
-            proceso: 'Pendiente',
             docUrl: url,
             ...resto
         };
@@ -196,10 +192,5 @@ export class ModDocumentosComponent implements OnInit
     // {
     //     this.archivos = event.target['files'];
     // }
-    cambiar(eventoFile: Event): void
-    {
-        console.log('archivo', eventoFile.target['files']);
-        this.archivos = eventoFile.target['files'];
-    }
 }
 

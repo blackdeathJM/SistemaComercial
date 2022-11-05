@@ -22,8 +22,7 @@ export class ConvertirTimestamUnixPipe implements PipeTransform
             {
                 Object.assign(fechaCompleta, {hour: '2-digit', minute: '2-digit'});
             }
-            return DateTime.fromSeconds(value, {zone: 'America/Mexico_City'})
-                .toLocaleString(fechaCompleta);
+            return DateTime.fromSeconds(value, {zone: 'America/Mexico_City'}).toLocaleString(fechaCompleta);
         }
     }
 }

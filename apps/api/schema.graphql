@@ -147,7 +147,7 @@ input DocumentoInput {
   fechaTerminado: Int = 0
   folio: String = null
   identificadorDoc: String
-  proceso: String = "Pendiente"
+  proceso: String = "pendiente"
   ref: [String!] = null
   tipoDoc: String
   usuarioFolio: String = null
@@ -217,7 +217,7 @@ input DocumentoRegInput {
   fechaTerminado: Int = 0
   folio: String = null
   identificadorDoc: String
-  proceso: String = "Pendiente"
+  proceso: String = "pendiente"
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]

@@ -71,10 +71,10 @@ export class DocumentoDto implements IDocumento
     @Prop()
     @IsNotEmpty({message: 'El identificador es necesario'})
     identificadorDoc: string;
-    @Field(() => String, {nullable: true, defaultValue: 'Pendiente'})
+    @Field(() => String, {nullable: true, defaultValue: 'pendiente'})
     @Prop()
-    @IsNotEmpty({message: 'El proceso es necesario'})
-    proceso: 'Pendiente' | 'Terminado';
+    @IsOptional()
+    proceso: 'pendiente' | 'terminado';
     @Field(() => [String], {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()

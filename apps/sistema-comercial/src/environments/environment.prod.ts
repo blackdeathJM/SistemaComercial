@@ -1,12 +1,11 @@
 export const environment = {
   firebase: {
-    projectId: 'siadorg',
-    appId: '1:1062285849940:web:2800aa4b78720165b944c1',
-    storageBucket: 'siadorg.appspot.com',
-    locationId: 'us-west2',
-    apiKey: 'AIzaSyDdTNg32B7Uo4rtfZTYwBrCDTiDYMrZ3dE',
-    authDomain: 'siadorg.firebaseapp.com',
-    messagingSenderId: '1062285849940',
+      apiKey: 'AIzaSyCw4UXBEJUZzs__Lk9NlJWNvKpLvnJN4s0',
+      authDomain: 'siscomapx.firebaseapp.com',
+      projectId: 'siscomapx',
+      storageBucket: 'siscomapx.appspot.com',
+      messagingSenderId: '1030208961728',
+      appId: '1:1030208961728:web:3de8997a5f17605cba0125'
   },
     production: true,
     apiUrl: 'https://192.168.1.189:3000/file',

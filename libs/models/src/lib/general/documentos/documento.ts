@@ -23,7 +23,7 @@ export class Documento implements TDocumentoReg
     file: IDatosArchivo;
     @required({message: 'Es necesario colocar un identificador del documento'})
     identificadorDoc: string;
-    proceso: 'Pendiente' | 'Terminado';
+    proceso: 'pendiente' | 'terminado';
     @required({message: 'Selecciona el tipo de documento'})
     tipoDoc: string;
     usuarioFolio: string;

@@ -16,7 +16,7 @@ export interface IDocumento
     fechaRecepcion: number;
     fechaLimiteEntrega: number;
     fechaTerminado: number;
-    proceso: 'Pendiente' | 'Terminado';
+    proceso: 'pendiente' | 'terminado';
     usuarioFolio: string;
     enviadoPor: string;
     ano: number;

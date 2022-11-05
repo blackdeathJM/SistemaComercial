@@ -2,6 +2,7 @@ fragment fragDoc on DocumentoType
 {
     _id
     identificadorDoc
+    seguimiento
     folio
     tipoDoc
     esInterno

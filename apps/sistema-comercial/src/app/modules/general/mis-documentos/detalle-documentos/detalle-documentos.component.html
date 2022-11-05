@@ -6,56 +6,64 @@
         </button>
     </div>
 
-    <!-- Preview -->
-
     <!-- Name & Type -->
-    <div class="flex flex-col items-start mt-8">
-        <div class="text-xl font-medium truncate">{{_documento?.asunto}}</div>
-        <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600">
-            {{_documento?.dependencia}}
+    <div class="flex flex-col mt-8">
+        <div class="text-xl font-medium truncate" matTooltip="Asunto">{{_documento?.asunto}}</div>
+        <div class="flex justify-between">
+            <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-800" matTooltip="Dependencia">{{_documento?.dependencia}}</div>
+            <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-500" matTooltip="Seguimiento">{{_documento?.seguimiento}}</div>
         </div>
+
     </div>
     <!-- Information -->
-    <div class="text-lg font-medium mt-8">Informacion</div>
+    <div class="text-lg font-medium mt-8">Informacion:</div>
     <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Enviado por</div>
+            <div class="text-secondary">Folio:</div>
+            <div class="text-green-300 rounded px-2 text-xl font-semibold leading-tight bg-green-800">{{_documento?.folio}}</div>
+        </div>
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Enviado por:</div>
             <div class="text-green-800 text-xl font-semibold leading-tight">{{_documento?.resolveEmpleado?.nombreCompleto}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Fecha de recepcion</div>
+            <div class="text-secondary">Fecha de recepcion:</div>
             <div>{{_documento?.fechaRecepcion | convertirTimestamUnix}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Fecha limite de entrega</div>
+            <div class="text-secondary">Fecha limite para entregar respuesta:</div>
             <div>{{_documento?.fechaLimiteEntrega | convertirTimestamUnix: false}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Fecha de termino</div>
+            <div class="text-secondary">Fecha que se dio por finalizado el documento:</div>
             <div>{{_documento?.fechaTerminado | convertirTimestamUnix}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Tipo de documento</div>
+            <div class="text-secondary">Tipo de documento:</div>
             <div>{{_documento?.tipoDoc}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Usuario que folio el documento</div>
+            <div class="text-secondary">Usuario que genero el folio de respuesta:</div>
             <div>{{_documento?.resolverEmpleadoFolio?.nombreCompleto}}</div>
         </div>
-        <div class="flex flex-row-reverse">
-            <button mat-icon-button matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">
+        <div class="flex items-center justify-between py-3">
+            <div class="text-secondary">Folio referenciado:</div>
+            <div>{{_documento?.ref}}</div>
+        </div>
+        <div class="flex flex-row-reverse py-3">
+            <button mat-mini-fab color="primary" matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">
                 <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
+            <button mat-mini-fab color="primary" matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
                 <mat-icon svgIcon="heroicons_outline:paper-clip"></mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Subir documento de respuesta" *ngIf="_documento?.folio">
+            <button mat-mini-fab color="primary" matTooltip="Subir documento de respuesta" *ngIf="_documento?.folio">
                 <mat-icon svgIcon="heroicons_outline:upload" class="text-green-800 dark:text-green-600"></mat-icon>
             </button>
         </div>
     </div>
     <!-- Description -->
-    <div class="flex mt-2 border-t">
+    <div class="flex mt-2">
         <div class="py-3">
             <ng-container *ngIf="true">
                 <div>Observaciones</div>
@@ -68,12 +76,12 @@
 
     <!-- Actions -->
     <div class="flex flex-col gap-4 w-full mt-8">
-        <button class="flex-auto" mat-stroked-button [color]="'primary'" (click)="generarFolio(_documento)">
-            <mat-icon svgIcon="edit_attributes" class="icon-size-5 mr-2"></mat-icon>
+        <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)">
+            <mat-icon svgIcon="heroicons_outline:dots-horizontal" class="icon-size-5 mr-2"></mat-icon>
             Generar folio
         </button>
-        <button class="flex-auto" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)">
-            <mat-icon svgIcon="done_outline" class="icon-size-5 mr-2 text-green-800 dark:text-green-600"></mat-icon>
+        <button class="flex-auto bg-sky-500/50" mat-raised-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)">
+            <mat-icon svgIcon="mat_outline:checklist" class="icon-size-5 mr-2"></mat-icon>
             Finalizar documento
         </button>
     </div>
