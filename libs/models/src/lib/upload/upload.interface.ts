@@ -12,7 +12,6 @@ export interface IArchivo
 export interface IDatosArchivo
 {
     carpeta: string;
-    reemplazar: boolean;
     eliminar: boolean;
     url: string;
     file: Promise<IArchivo[]>;

@@ -24,20 +24,21 @@ export class SubirArchivosService
         try
         {
             await fs.ensureDir(rutaDeGuardado);
-            if (files.eliminar)
-            {
-                const archivoExiste = await fs.pathExists(files.url);
-                if (archivoExiste)
-                {
-                    await fs.remove(files.url, err =>
-                    {
-                        // accion si el archivo no se puede eliminar
-                    });
-                }
-            }
-            for (const archivo of await files.file)
-            {
-            }
+            // if (files.eliminar)
+            // {
+            //     const archivoExiste = await fs?.pathExists(files.url);
+            //     if (archivoExiste)
+            //     {
+            //         await fs?.remove(files.url, (err) =>
+            //         {
+            //             console.log('remover', err);
+            //             // accion si el archivo no se puede eliminar
+            //         });
+            //     }
+            // }
+            // for (const archivo of await files.file)
+            // {
+            // }
         } catch (e)
         {
             console.log('error', e);

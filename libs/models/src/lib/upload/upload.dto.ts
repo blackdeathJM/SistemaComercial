@@ -12,9 +12,6 @@ export class UploadDto implements IDatosArchivo
     @Field(() => Boolean, {nullable: true, defaultValue: false})
     @IsOptional()
     eliminar: boolean;
-    @Field(() => Boolean, {nullable: true, defaultValue: false})
-    @IsOptional()
-    reemplazar: boolean;
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     url: string;

@@ -225,6 +225,8 @@ input DocumentoRegInput {
 
 input ArchivoInput {
   carpeta: String
+  eliminar: Boolean = false
+  url: String = null
   file: [Upload!]
 }
 
