@@ -5,6 +5,7 @@ import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto'
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
+import {GraphQLUpload} from 'graphql-upload';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver

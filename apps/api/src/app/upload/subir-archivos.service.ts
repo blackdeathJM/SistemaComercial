@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {randomUUID} from 'crypto';
-import {join} from 'path';
+import path, {join} from 'path';
 import fs from 'fs-extra';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 
@@ -12,34 +12,65 @@ export class SubirArchivosService
         const ano = new Date().getFullYear();
         const mes = new Date().toLocaleString('es-mx', {month: 'long'});
         const rutas: string[] = [];
+        let rutaDeGuardado: string;
+
+        if (files.carpeta === 'perfil')
+        {
+            rutaDeGuardado = join(__dirname, 'public/perfil');
+        } else
+        {
+            rutaDeGuardado = join(__dirname, `public/${files.carpeta}/${ano}/${mes}`);
+        }
+
         try
         {
-            const rutaDeGuardado = files.carpeta === 'Perfil' ? join(process.cwd(), `/apps/api/src/public/${files.carpeta}`) :
-                join(process.cwd(), `/apps/api/src/public/${files.carpeta}/${ano}/${mes}`);
+            await fs.ensureDir('D:/Public');
 
-            for (const file of await files.file)
+            for (const archivo of await files.file)
             {
-                const {createReadStream, filename} = await file;
-                const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
-                const rutaGuardar = join(rutaDeGuardado + `/${nvoNombre}`);
-                console.log('ruta guardado', process.cwd());
-                if (!fs.existsSync(rutaDeGuardado))
-                {
-                    fs.mkdirSync(rutaDeGuardado);
-                }
-
-                const salida = fs.createWriteStream(rutaGuardar);
-                const stream = await createReadStream();
-                stream.pipe(salida);
-                console.log('rutaGuardar', rutaGuardar);
-                rutas.push(rutaGuardar);
             }
-            return rutas;
         } catch (e)
         {
-            console.log('entro en el catch', e);
+            console.log('error', e);
             return [];
         }
     }
 }
 
+// try
+// {
+//     if (files.carpeta === 'Perfil')
+//     {
+//         // path.join()
+//         rutaDeGuardado = 'perfil';
+//     }
+//     rutaDeGuardado = join(__dirname, `assets/public/${files.carpeta}/${ano}/${mes}`);
+//     console.log('rutaGuar', rutaDeGuardado);
+//     for (const file of await files.file)
+//     {
+//         Promise.resolve(file).then((archivos) =>
+//         {
+//             const {createReadStream, filename} = archivos;
+//             console.log('filename', createReadStream());
+//             const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
+//             const rutaGuardar = join(rutaDeGuardado + `/${nvoNombre}`);
+//             // if (!fs.existsSync(rutaDeGuardado))
+//             // {
+//             //     fs.mkdirSync(rutaDeGuardado);
+//             // }
+//
+//             const salida = fs.createWriteStream(rutaGuardar);
+//             const stream = createReadStream();
+//             stream.pipe(salida);
+//             rutas.push(rutaGuardar);
+//         }).catch(err => console.log('error al resolver', err));
+//
+//
+//         // fs.ensureDir(rutaDeGuardado).then(() => console.log('creado el dir')).catch(err => console.log(err));
+//     }
+//     return rutas;
+// } catch (e)
+// {
+//     console.log('en el catch', e);
+//     return [];
+// }
