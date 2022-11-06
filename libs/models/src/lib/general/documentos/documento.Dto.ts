@@ -105,3 +105,4 @@ export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'envia
 export class DocumentoRegDto extends OmitType(DocumentoDto, ['_id', 'ref'], InputType) implements TDocumentoReg
 {
 }
+

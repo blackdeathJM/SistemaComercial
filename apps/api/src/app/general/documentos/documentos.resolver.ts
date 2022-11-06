@@ -1,11 +1,11 @@
-import {Args, Mutation, Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
+import {Args, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver} from '@nestjs/graphql';
 import {DocumentosService} from './documentos.service';
 import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoRegDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
-import {GraphQLUpload} from 'graphql-upload';
+import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver
@@ -30,6 +30,18 @@ export class DocumentosResolver
     async resolverEmpleadoFolio(@Parent() parent: DocumentoDto): Promise<EmpleadoDto>
     {
         return await this.empleadoService.buscarEmpleadoPorId(parent.usuarioFolio);
+    }
+
+    @ResolveProperty(() => [EmpleadoDto], {nullable: true})
+    async resolveEmpleadoEnviado(@Parent() parent: DocumentoDto): Promise<EmpleadoDto[]>
+    {
+        const usuarios: IEmpleado[] = [];
+        for (const usuario of parent.usuarios)
+        {
+            const usuarioEncontrado = await this.empleadoService.buscarEmpleadoPorId(usuario);
+            usuarios.push(usuarioEncontrado);
+        }
+        return usuarios;
     }
 
     @Mutation(() => DocumentoDto, {nullable: false})

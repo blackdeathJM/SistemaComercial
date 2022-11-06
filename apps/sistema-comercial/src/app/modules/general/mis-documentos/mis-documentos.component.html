@@ -15,7 +15,29 @@
         </div>
     </ng-container>
     <ng-container buscar>
-        <div>Aqui va ir el formulario de busqueda</div>
+        <div class="flex gap-4 items-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Busqueda general</mat-label>
+                <input matInput id="busquedaGralDoc" placeholder="puedes buscar por asunto, dependencia, año, proceso, seguimiento">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Selecciona un rango de fechas</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Fecha de inicio">
+                    <input matEndDate placeholder="Fecha fin">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            <button class="flex-auto" id="btnPendientesDoc" mat-stroked-button>
+                <mat-icon svgIcon="pending_actions"></mat-icon>
+                <span class="ml-2 mr-1">Pendientes</span>
+            </button>
+            <button class="flex-auto" id="btnTerminadosDoc" mat-stroked-button>
+                <mat-icon svgIcon="fact_check"></mat-icon>
+                <span class="ml-2 mr-1">Terminados</span>
+            </button>
+        </div>
     </ng-container>
     <ng-container outlet>
         <app-detalle-documentos [documento]="docSeleccionado" (cerrarPanel)="cerrarP($event)"></app-detalle-documentos>
@@ -28,15 +50,15 @@
                     <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
                     <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
                         <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">
-                        <div class="w-16 h-16 mr-6 flex items-center justify-center rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200" *ngIf="!doc.resolveEmpleado.avatar">
+                        <div class="avatar-letra" *ngIf="!doc.resolveEmpleado.avatar">
                             {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}
                         </div>
                         <div class="flex flex-col">
-                            <div class="text-xl font-semibold leading-tight truncate">{{doc.asunto}}</div>
-                            <div class="text-md leading-tight text-primary truncate">{{doc.dependencia}}</div>
+                            <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc.asunto}}</p>
+                            <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc.dependencia">{{doc.dependencia}}</div>
                             <div class="flex gap-4">
                                 <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc.fechaRecepcion | convertirTimestamUnix}}</span>
-                                <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">seg: {{doc.seguimiento}}</span>
+                                <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc.seguimiento}}</span>
                             </div>
                         </div>
                     </a>

@@ -15,6 +15,11 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {ConvertirTimestamUnixPipe} from '@s-app/pipes/convertir-timestam-unix.pipe';
 import {CommonModule} from '@angular/common';
 import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-documentos/detalle-documentos.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ReactiveFormsModule} from '@angular/forms';
+import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 
 @Component({
     standalone: true,
@@ -29,6 +34,11 @@ import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-
             TailwindLoadingComponent,
             ConvertirTimestamUnixPipe,
             DetalleDocumentosComponent,
+            MatFormFieldModule,
+            MatInputModule,
+            MatDatepickerModule,
+            RxReactiveFormsModule,
+            ReactiveFormsModule,
         ],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',

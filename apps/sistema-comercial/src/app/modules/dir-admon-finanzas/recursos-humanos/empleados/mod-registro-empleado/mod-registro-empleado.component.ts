@@ -88,7 +88,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
         this.agregarTel();
         this.deptosGQL.watch().valueChanges.pipe(tap((res) =>
         {
-            if (res.data !== undefined)
+            if (res.data)
             {
                 this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
             }

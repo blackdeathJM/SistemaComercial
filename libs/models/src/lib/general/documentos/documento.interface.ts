@@ -31,4 +31,5 @@ export interface IResolveDocumento extends IDocumento
 {
     resolveEmpleado: IEmpleado;
     resolverEmpleadoFolio: IEmpleado;
+    resolveEmpleadoEnviado: IEmpleado[];
 }

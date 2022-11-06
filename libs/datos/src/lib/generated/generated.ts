@@ -93,6 +93,7 @@ export type DocumentoInput = {
   proceso?: InputMaybe<Scalars['String']>;
   ref?: InputMaybe<Array<Scalars['String']>>;
   resolveEmpleado?: InputMaybe<EmpleadoInput>;
+  resolveEmpleadoEnviado?: InputMaybe<Array<EmpleadoInput>>;
   resolverEmpleadoFolio?: InputMaybe<EmpleadoInput>;
   seguimiento?: InputMaybe<Scalars['String']>;
   tipoDoc?: InputMaybe<Scalars['String']>;
@@ -140,6 +141,7 @@ export type DocumentoType = {
   proceso?: Maybe<Scalars['String']>;
   ref?: Maybe<Array<Scalars['String']>>;
   resolveEmpleado?: Maybe<EmpleadoType>;
+  resolveEmpleadoEnviado?: Maybe<Array<EmpleadoType>>;
   resolverEmpleadoFolio?: Maybe<EmpleadoType>;
   seguimiento: Scalars['String'];
   tipoDoc?: Maybe<Scalars['String']>;
@@ -332,13 +334,6 @@ export type ActualizarDeptoMutationVariables = Exact<{
 
 export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
-export type EliminarDeptoMutationVariables = Exact<{
-  _id: Scalars['String'];
-}>;
-
-
-export type EliminarDeptoMutation = { __typename?: 'Mutation', eliminarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
-
 export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null };
 
 export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } };
@@ -412,7 +407,7 @@ export type DocsUsuarioProcesoQueryVariables = Exact<{
 }>;
 
 
-export type DocsUsuarioProcesoQuery = { __typename?: 'Query', docsUsuarioProceso: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null }> };
+export type DocsUsuarioProcesoQuery = { __typename?: 'Query', docsUsuarioProceso: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -541,24 +536,6 @@ export const ActualizarDeptoDocument = gql`
   })
   export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
     document = ActualizarDeptoDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const EliminarDeptoDocument = gql`
-    mutation eliminarDepto($_id: String!) {
-  eliminarDepto(_id: $_id) {
-    ...fragDeptos
-  }
-}
-    ${FragDeptosFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class EliminarDeptoGQL extends Apollo.Mutation<EliminarDeptoMutation, EliminarDeptoMutationVariables> {
-    document = EliminarDeptoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -772,6 +749,10 @@ export const DocsUsuarioProcesoDocument = gql`
     }
     resolverEmpleadoFolio {
       nombreCompleto
+    }
+    resolveEmpleadoEnviado {
+      nombreCompleto
+      avatar
     }
   }
 }

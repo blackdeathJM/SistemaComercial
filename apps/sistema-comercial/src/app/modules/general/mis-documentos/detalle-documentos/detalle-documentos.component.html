@@ -41,6 +41,7 @@
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Tipo de documento:</div>
             <div>{{_documento?.tipoDoc}}</div>
+            <div class="px-1.5 rounded text-secondary font-semibold leading-5 text-white bg-blue-800" *ngIf="_documento?.esInterno">Documento interno</div>
         </div>
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Usuario que genero el folio de respuesta:</div>
@@ -49,6 +50,16 @@
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary">Folio referenciado:</div>
             <div>{{_documento?.ref}}</div>
+        </div>
+        <div class="flex items-center py-3 justify-end">
+            <div class="flex flex-0 items-center -space-x-1.5">
+                <ng-container *ngFor="let usuarioEnviado of _documento?.resolveEmpleadoEnviado">
+                    <img class="grupo-avatar-img" [src]="usuarioEnviado?.avatar" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="usuarioEnviado?.avatar" alt="avatar">
+                    <div class="avatar-letra-grupo" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="!usuarioEnviado?.avatar">
+                        {{usuarioEnviado?.nombreCompleto?.charAt(0)}}
+                    </div>
+                </ng-container>
+            </div>
         </div>
         <div class="flex flex-row-reverse py-3">
             <button mat-mini-fab color="primary" matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">

@@ -56,7 +56,7 @@
                 </mat-form-field>
             </div>
             <mat-form-field>
-                <ngx-mat-file-input formControlName="file" ></ngx-mat-file-input>
+                <ngx-mat-file-input formControlName="file"></ngx-mat-file-input>
                 <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
                 <mat-error>{{formDocs.controls.file['errorMessage']}}</mat-error>
             </mat-form-field>
@@ -64,4 +64,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando" ></app-registros>
+<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [deshabilitarCerrar]="cargando" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>

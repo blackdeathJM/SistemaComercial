@@ -6,10 +6,10 @@
         <div>Sesion y permisos</div>
     </ng-container>
     <ng-container buscar>
-            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
-                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar empleado'">
-            </mat-form-field>
+        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+            <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar empleado'">
+        </mat-form-field>
     </ng-container>
     <ng-container lista>
         <ng-container *ngIf="stateEmpleados; else cargando">
@@ -45,5 +45,7 @@
 </app-lista-detalle>
 
 <ng-template #cargando>
-    <app-tailwind-loading></app-tailwind-loading>
+    <div class="flex items-center justify-center w-full">
+        <app-tailwind-loading></app-tailwind-loading>
+    </div>
 </ng-template>

@@ -24,7 +24,7 @@ import {CommonModule} from '@angular/common';
     templateUrl: './detalle-documentos.component.html',
     styleUrls: ['./detalle-documentos.component.scss']
 })
-export class DetalleDocumentosComponent implements OnInit
+export class DetalleDocumentosComponent
 {
     @Output() cerrarPanel = new EventEmitter<boolean>();
     _documento: IResolveDocumento;
@@ -38,10 +38,6 @@ export class DetalleDocumentosComponent implements OnInit
     @Input() set documento(v: IResolveDocumento)
     {
         this._documento = v;
-    }
-
-    ngOnInit(): void
-    {
     }
 
     cerrarP(): void
