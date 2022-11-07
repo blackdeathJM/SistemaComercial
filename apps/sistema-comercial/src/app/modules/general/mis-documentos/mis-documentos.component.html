@@ -8,10 +8,6 @@
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="ml-2 mr-1">Dar de alta nuevo documento</span>
             </button>
-            <button mat-flat-button [color]="'accent'">
-                <mat-icon svgIcon="subtitles" class="icon-size-5 mr-2"></mat-icon>
-                <span class="ml-2 mr-1">Generar folio independiente</span>
-            </button>
         </div>
     </ng-container>
     <ng-container buscar>
@@ -50,15 +46,13 @@
                     <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
                     <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
                         <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">
-                        <div class="avatar-letra" *ngIf="!doc.resolveEmpleado.avatar">
-                            {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}
-                        </div>
+                        <div class="avatar-letra" *ngIf="!doc.resolveEmpleado.avatar">{{doc.resolveEmpleado.nombreCompleto.charAt(0)}}</div>
                         <div class="flex flex-col">
                             <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc.asunto}}</p>
                             <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc.dependencia">{{doc.dependencia}}</div>
                             <div class="flex gap-4">
-                                <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc.fechaRecepcion | convertirTimestamUnix}}</span>
                                 <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc.seguimiento}}</span>
+                                <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc.fechaRecepcion | convertirTimestamUnix}}</span>
                             </div>
                         </div>
                     </a>

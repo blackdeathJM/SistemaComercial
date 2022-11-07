@@ -7,6 +7,8 @@ export class Documento implements TDocumentoReg
     @required({message: 'Es necesario que coloques el asunto que trata el documento'})
     asunto: string;
     @prop()
+    folio: string;
+    @prop()
     comentario: string;
     @required({message: 'Es necesario que coloques la dependencia de donde proviene el documento'})
     dependencia: string;
@@ -18,7 +20,6 @@ export class Documento implements TDocumentoReg
     fechaRecepcion: number;
     @required({message: 'Selecciona una fecha de entrega'})
     fechaLimiteEntrega: number;
-    @required()
     @file({maxFiles: 1, minFiles: 1, message: 'Debes tener un documento seleccionado'})
     file: IDatosArchivo;
     @required({message: 'Es necesario colocar un identificador del documento'})
@@ -32,6 +33,5 @@ export class Documento implements TDocumentoReg
     seguimiento: string;
     acuseUrl: string;
     fechaTerminado: number;
-    folio: string;
     ano: number;
 }

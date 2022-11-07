@@ -24,6 +24,7 @@ import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {CommonModule} from '@angular/common';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @Component({
@@ -42,7 +43,8 @@ import {MatIconModule} from '@angular/material/icon';
             MatCheckboxModule,
             RegistrosComponent,
             MaterialFileInputModule,
-            MatIconModule
+            MatIconModule,
+            MatButtonModule
         ],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
@@ -91,76 +93,43 @@ export class ModDocumentosComponent implements OnInit
         // valores que forman la ruta para guardar el documento en cloud de firesotre
         const ano = new Date().getFullYear();
         const mes = new Date().toLocaleString('es-mx', {month: 'long'});
+        const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
 
-        const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, ...resto} = this.formDocs.value;
-        const nombreArchivo = ano + '-' + uuidv4() + '.' + file._files[0].name.split('.').pop();
-
-        if (esRemoto)
+        if (file)
         {
-            const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
-            uploadBytes(docRef, file._files[0]).then(async (res) =>
+            if (esRemoto)
             {
-                try
+                const nombreArchivo = ano + '-' + uuidv4() + '.' + file._files[0].name.split('.').pop();
+                const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
+                uploadBytes(docRef, file._files[0]).then(async (res) =>
                 {
-                    const url = await getDownloadURL(res.ref);
-                    if (url)
+                    try
                     {
-                        const regDocumento: TDocumentoReg = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, url, resto);
-                        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento}).pipe(finalize(() => this.cerrar()), tap((respDoc) =>
+                        const url = await getDownloadURL(res.ref);
+                        if (url)
                         {
-                            // Verificamos que la respuesta tenga documentos si la respuesta fuera indefinida o nulla eliminamos el documento de la nube
-                            if (respDoc.data)
-                            {
-                                const elementos = STATE_DOCS();
-                                STATE_DOCS([...elementos, respDoc.data.regDoc as IResolveDocumento]);
-                                this.cargando = false;
-                                this.ngxToastService.satisfactorioToast('El documento se agrego correctamente', 'Alta documentos');
-                            } else
-                            {
-                                // si la data no viene eliminamos el documento de la nube ya que el registro no se realizo correctamente
-                                const eleminarDocRef = ref(this.storage, url);
-                                deleteObject(eleminarDocRef).then(() =>
-                                {
-                                    this.ngxToastService.infoToast('Se elimino el archivo por que no se realizo el registro correctamente', 'Documentos');
-                                }).catch((e) =>
-                                {
-                                    this.ngxToastService.errorToast(e, 'Error en la nube');
-                                });
-                            }
-                        })).subscribe());
-                    } else
+                            const regDocumento: TDocumentoReg = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, url, folio, resto);
+                        }
+                    } catch (e)
                     {
-                        this.ngxToastService.alertaToast('Ocurrio un error al tratar de guardar el documento', 'Subir documento');
+
                     }
-                } catch (e)
-                {
-                    this.ngxToastService.errorToast(e, 'Error al subir documento');
-                    this.cerrar();
-                }
-            }).catch(err => this.ngxToastService.errorToast('Ocurrio un error al cargar el documento', err))
-                .finally(() => this.cerrar());
+                }).catch();
+
+            } else
+            {
+
+            }
         } else
         {
-            const regDoc = this.valoresRegDoc(ano, tipoDoc, fechaRecepcion, fechaLimiteEntrega, 'local', resto);
-            this.subscripcion.add(this.regDocGQL.mutate({datos: regDoc, files: {file: file._files, carpeta: 'documentos'}}).pipe(tap((res) =>
-            {
-                if (res.data)
-                {
-                    const elementos = STATE_DOCS();
-                    STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
-                    this.ngxToastService.satisfactorioToast('El documento se agrego correctamente en servidor local', 'Alta documentos');
-                }
-            }), finalize(() =>
-            {
-                this.cargando = false;
-                this.cerrar();
-            })).subscribe());
+
         }
     }
 
-    valoresRegDoc(ano: number, tipoDoc: string, fechaRecepcion: any, fechaLimiteEntrega: any, url: string, resto: any): TDocumentoReg
+    valoresRegDoc(ano: number, tipoDoc: string, fechaRecepcion: any, fechaLimiteEntrega: any, url: string, folio: string, resto: any): TDocumentoReg
     {
         return {
+            folio,
             ano,
             tipoDoc,
             fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
