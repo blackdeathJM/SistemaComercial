@@ -37,9 +37,9 @@ export class DocumentoDto implements IDocumento
     @Prop()
     @IsNotEmpty({message: 'La dependencia es necesaria'})
     dependencia: string;
-    @Field(() => String,{nullable: true})
+    @Field(() => String,{nullable: true, defaultValue: null})
     @Prop()
-    @IsNotEmpty({message: 'Es necesario subir el documentos'})
+    @IsOptional()
     docUrl: string;
     @Field(() => String,{nullable: true})
     @Prop()

@@ -140,7 +140,7 @@ input DocumentoInput {
   asunto: String
   comentario: String
   dependencia: String
-  docUrl: String
+  docUrl: String = null
   enviadoPor: String
   esInterno: Boolean = false
   fechaLimiteEntrega: Int
@@ -211,7 +211,7 @@ input DocumentoRegInput {
   asunto: String
   comentario: String
   dependencia: String
-  docUrl: String
+  docUrl: String = null
   enviadoPor: String
   esInterno: Boolean = false
   fechaLimiteEntrega: Int
@@ -229,7 +229,7 @@ input ArchivoInput {
   carpeta: String
   eliminar: Boolean = false
   url: String = null
-  file: [Upload!]
+  file: [Upload!] = null
 }
 
 """The `Upload` scalar type represents a file upload."""

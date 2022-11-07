@@ -15,7 +15,7 @@ export class UploadDto implements IDatosArchivo
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     url: string;
-    @Field(() => [GraphQLUpload], {nullable: true})
+    @Field(() => [GraphQLUpload], {nullable: true, defaultValue: null})
     @IsOptional()
     file: Promise<IArchivo[]>;
 }

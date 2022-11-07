@@ -1,11 +1,14 @@
 import {IDatosArchivo} from '../../upload/upload.interface';
 import {file, prop, required} from '@rxweb/reactive-form-validators';
 import {TDocumentoReg} from './documento.interface';
+import {sanitize, upperCase} from '@rxweb/sanitizers';
 
+@sanitize
 export class Documento implements TDocumentoReg
 {
     @required({message: 'Es necesario que coloques el asunto que trata el documento'})
     asunto: string;
+    @upperCase()
     @prop()
     folio: string;
     @prop()

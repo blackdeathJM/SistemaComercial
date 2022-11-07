@@ -61,15 +61,18 @@
                 </ng-container>
             </div>
         </div>
-        <div class="flex flex-row-reverse py-3">
+        <div class="flex flex-row-reverse py-3 gap-4">
             <button mat-mini-fab color="primary" matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">
                 <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
             </button>
             <button mat-mini-fab color="primary" matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
                 <mat-icon svgIcon="heroicons_outline:paper-clip"></mat-icon>
             </button>
-            <button mat-mini-fab color="primary" matTooltip="Subir documento de respuesta" *ngIf="_documento?.folio">
-                <mat-icon svgIcon="heroicons_outline:upload" class="text-green-800 dark:text-green-600"></mat-icon>
+            <button mat-mini-fab color="accent" matTooltip="Subir documento" *ngIf="!_documento?.docUrl">
+                <mat-icon svgIcon="heroicons_outline:upload"></mat-icon>
+            </button>
+            <button mat-mini-fab color="accent" matTooltip="Subir documento de respuesta" *ngIf="_documento?.folio">
+                <mat-icon svgIcon="heroicons_outline:upload"></mat-icon>
             </button>
         </div>
     </div>
