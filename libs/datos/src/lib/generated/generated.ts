@@ -54,6 +54,7 @@ export type DatosSesionType = {
   activo: Scalars['Boolean'];
   auth: AuthType;
   avatar?: Maybe<Scalars['String']>;
+  deptoId?: Maybe<Scalars['ID']>;
   nombreCompleto: Scalars['String'];
 };
 
@@ -349,7 +350,7 @@ export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto
 
 export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null };
 
-export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } };
+export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } };
 
 export type AsignarAuthMutationVariables = Exact<{
   _id: Scalars['String'];
@@ -373,14 +374,14 @@ export type RolCambiadoSubscriptionVariables = Exact<{
 }>;
 
 
-export type RolCambiadoSubscription = { __typename?: 'Subscription', rolCambiado: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } };
+export type RolCambiadoSubscription = { __typename?: 'Subscription', rolCambiado: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } };
 
 export type LoginMutationVariables = Exact<{
   login: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } | null };
 
 export type FragTelefonoFragment = { __typename?: 'TelefonoType', numero?: string | null };
 
@@ -451,6 +452,7 @@ export const FragDatosSesionFragmentDoc = gql`
   nombreCompleto
   avatar
   activo
+  deptoId
   auth {
     ...fragAuth
   }

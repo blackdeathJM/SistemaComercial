@@ -12,6 +12,7 @@ fragment fragDatosSesion on DatosSesionType
     nombreCompleto
     avatar
     activo
+    deptoId
     auth {
         ...fragAuth
     }

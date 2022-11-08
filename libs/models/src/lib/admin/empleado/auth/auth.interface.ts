@@ -13,5 +13,6 @@ export interface IDatosSesion
     avatar: string;
     nombreCompleto: string;
     activo: boolean;
+    deptoId: string;
     auth: IAuth;
 }

@@ -166,5 +166,10 @@ export class ModDocumentosComponent implements OnInit
             this.mdr.closeAll();
         }
     }
+
+    genFolio(): void
+    {
+
+    }
 }
 

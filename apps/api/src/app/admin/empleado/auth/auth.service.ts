@@ -81,13 +81,15 @@ export class AuthService
 
     login(empleado: any): ILoginRespuesta
     {
+        console.log('datos del empleado en el login', empleado);
         const datosSesion: IDatosSesion =
             {
                 _id: empleado._id,
                 avatar: empleado.avatar,
                 nombreCompleto: empleado.nombreCompleto,
                 activo: empleado.activo,
-                auth: empleado.auth
+                auth: empleado.auth,
+                deptoId: empleado.deptoId
             };
         return {
             token: this.jwtService.sign(datosSesion),

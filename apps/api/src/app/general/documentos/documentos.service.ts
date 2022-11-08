@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocumentoType, DocsSubirDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
@@ -78,6 +78,23 @@ export class DocumentosService
                 }
                 return acuse;
             }
+        }
+    }
+
+    async genFolioSinReg(): Promise<string>
+    {
+        return '';
+    }
+
+    async ultimoRegistro(tipoDoc: string): Promise<number>
+    {
+        const ano = new Date().getFullYear();
+        try
+        {
+            return await this.documento.countDocuments({ano, tipoDoc}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: 'Ocurrio un error interno no se puede continuar'});
         }
     }
 }
