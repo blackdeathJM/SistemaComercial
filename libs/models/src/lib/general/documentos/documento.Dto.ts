@@ -1,4 +1,4 @@
-import {IDocumento, TDocumentoReg} from './documento.interface';
+import {IDocumento, TDocSubir, TDocumentoReg} from './documento.interface';
 import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
@@ -16,7 +16,7 @@ export class DocumentoDto implements IDocumento
     @Prop()
     @IsOptional()
     seguimiento: string;
-    @Field(()=> String,{nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     acuseUrl: string;
@@ -25,49 +25,49 @@ export class DocumentoDto implements IDocumento
     @IsNumber({allowNaN: false}, {message: 'El ano debe ser numerico'})
     @IsNotEmpty({message: 'El año no puede estar vacio'})
     ano: number;
-    @Field(() => String,{nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El asunto es necesario'})
     asunto: string;
-    @Field(() => String,{nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsOptional()
     comentario: string;
-    @Field(() => String,{nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La dependencia es necesaria'})
     dependencia: string;
-    @Field(() => String,{nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     docUrl: string;
-    @Field(() => String,{nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario el usuario que envia el documento'})
     enviadoPor: string;
-    @Field(() => Boolean,{nullable: true, defaultValue: false})
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
     @Prop()
     @IsBoolean({message: 'Solo se admite un valor booleano'})
     @IsNotEmpty({message: 'Es necesario si es requerido'})
     esInterno: boolean;
     @Field(() => Int, {nullable: true})
     @Prop()
-    @IsInt( {message: 'La fecha debe estar en formato unix'})
+    @IsInt({message: 'La fecha debe estar en formato unix'})
     fechaLimiteEntrega: number;
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesaria la fecha de recepcion'})
-    @IsInt( {message: 'La fecha debe estar en formato unix'})
+    @IsInt({message: 'La fecha debe estar en formato unix'})
     fechaRecepcion: number;
     @Field(() => Int, {nullable: true, defaultValue: 0})
     @Prop()
-    @IsInt( {message: 'La fecha debe estar en formato unix'})
+    @IsInt({message: 'La fecha debe estar en formato unix'})
     fechaTerminado: number;
-    @Field(()=> String,{nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     folio: string;
-    @Field(() => String,{nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El identificador es necesario'})
     identificadorDoc: string;
@@ -75,15 +75,15 @@ export class DocumentoDto implements IDocumento
     @Prop()
     @IsOptional()
     proceso: 'pendiente' | 'terminado';
-    @Field(() => [String], {nullable: true, defaultValue: null})
+    @Field(() => [String], {nullable: true, defaultValue: []})
     @Prop()
     @IsOptional()
     ref: string[];
-    @Field(()=> String, {nullable: true})
+    @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario el tipo del documento'})
     tipoDoc: string;
-    @Field(()=> String,{nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     usuarioFolio: string;
@@ -101,8 +101,12 @@ export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'envia
 {
 }
 
-@InputType('DocumentoRegInput')
-export class DocumentoRegDto extends OmitType(DocumentoDto, ['_id', 'ref'], InputType) implements TDocumentoReg
+@InputType('DocRegInput')
+export class DocRegDto extends OmitType(DocumentoDto, ['_id', 'ref'], InputType) implements TDocumentoReg
 {
 }
 
+@InputType('DocsSubirInput')
+export class DocsSubirDto extends PickType(DocumentoDto, ['_id', 'docUrl', 'acuseUrl'], InputType) implements TDocSubir
+{
+}

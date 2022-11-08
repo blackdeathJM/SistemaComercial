@@ -1,9 +1,27 @@
-mutation regDoc($datos: DocumentoRegInput!, $files: ArchivoInput)
+mutation regDoc($datos: DocRegInput!, $files: ArchivoInput)
 {
     regDoc(datos: $datos, files: $files)
     {
         ...fragDoc
         resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+mutation subirDocs($args: DocsSubirInput!, $files: ArchivoInput)
+{
+    subirDocs(args: $args, files: $files)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
             nombreCompleto
             avatar
         }

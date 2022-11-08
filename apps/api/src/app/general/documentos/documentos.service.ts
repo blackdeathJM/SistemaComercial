@@ -1,7 +1,7 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoRegDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocumentoType, DocsSubirDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 
@@ -24,7 +24,7 @@ export class DocumentosService
         }
     }
 
-    async regDoc(datos: DocumentoRegDto, files: UploadDto): Promise<DocumentoDto>
+    async regDoc(datos: DocRegDto, files: UploadDto): Promise<DocumentoDto>
     {
         if (files)
         {
@@ -49,6 +49,34 @@ export class DocumentosService
             } catch (e)
             {
                 throw new ConflictException({message: e.codeName});
+            }
+        }
+    }
+
+    async subirDocs(args: DocsSubirDto, files: UploadDto): Promise<DocumentoDto>
+    {
+        if (files)
+        {
+            // codigo por si el documento se va a subir de manera local
+        } else
+        {
+            if (args.docUrl)
+            {
+                const doc = await this.documento.findByIdAndUpdate(args._id, {$set: {docUrl: args.docUrl}}).exec();
+                if (!doc)
+                {
+                    throw new NotFoundException('No se encontro documento para poder asignar el archivo');
+                }
+                return doc;
+            }
+            if (args.acuseUrl)
+            {
+                const acuse = await this.documento.findByIdAndUpdate(args._id, {$set: {acuseUrl: args.acuseUrl}}).exec();
+                if (!acuse)
+                {
+                    throw new NotFoundException('No se encontro el documento para poder asignar el archivo');
+                }
+                return acuse;
             }
         }
     }

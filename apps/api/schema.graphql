@@ -149,7 +149,7 @@ input DocumentoInput {
   folio: String = null
   identificadorDoc: String
   proceso: String = "pendiente"
-  ref: [String!] = null
+  ref: [String!] = []
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
@@ -178,7 +178,8 @@ type Mutation {
   asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
-  regDoc(datos: DocumentoRegInput!, files: ArchivoInput = null): DocumentoType!
+  regDoc(datos: DocRegInput!, files: ArchivoInput = null): DocumentoType!
+  subirDocs(args: DocsSubirInput!, files: ArchivoInput = null): DocumentoType!
 }
 
 input RegEmpleadoInput {
@@ -204,7 +205,7 @@ input LoginInput {
   contrasena: String
 }
 
-input DocumentoRegInput {
+input DocRegInput {
   seguimiento: String = null
   acuseUrl: String = null
   ano: Int
@@ -234,6 +235,12 @@ input ArchivoInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input DocsSubirInput {
+  _id: ID
+  acuseUrl: String = null
+  docUrl: String = null
+}
 
 type Subscription {
   rolCambiado(_id: String!): LoginRespuestaType!

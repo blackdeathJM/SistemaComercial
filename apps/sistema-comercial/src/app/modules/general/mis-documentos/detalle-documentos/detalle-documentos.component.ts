@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {confirmarFinalizarDoc, confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {ConvertirTimestamUnixPipe} from '@s-app/pipes/convertir-timestam-unix.pipe';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-docs/mod-subir-docs.component';
 
 @Component({
     standalone: true,
@@ -17,7 +19,8 @@ import {CommonModule} from '@angular/common';
             MatButtonModule,
             MatIconModule,
             ConvertirTimestamUnixPipe,
-            MatTooltipModule
+            MatTooltipModule,
+            ReactiveFormsModule
 
         ],
     selector: 'app-detalle-documentos',
@@ -31,7 +34,7 @@ export class DetalleDocumentosComponent
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
 
-    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService)
+    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog)
     {
     }
 
@@ -85,8 +88,8 @@ export class DetalleDocumentosComponent
 
     }
 
-    modDocs(_documento: IResolveDocumento): void
+    modDocs(data: IResolveDocumento): void
     {
-
+        this.mdr.open(ModSubirDocsComponent, {width: '40%', data});
     }
 }

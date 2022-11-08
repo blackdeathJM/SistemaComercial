@@ -1,6 +1,6 @@
 import {Args, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver} from '@nestjs/graphql';
 import {DocumentosService} from './documentos.service';
-import {DocsUsuarioProcesoDto, DocumentoDto, DocumentoRegDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocRegDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
@@ -46,8 +46,14 @@ export class DocumentosResolver
 
     @Mutation(() => DocumentoDto, {nullable: false})
     // @UsePipes(new DocsSeguimientoPipe())
-    async regDoc(@Args('datos', DocsSeguimientoPipe) datos: DocumentoRegDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
+    async regDoc(@Args('datos', DocsSeguimientoPipe) datos: DocRegDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
     {
-        return this.documentosService.regDoc(datos, files);
+        return await this.documentosService.regDoc(datos, files);
+    }
+
+    @Mutation(() => DocumentoDto)
+    async subirDocs(@Args('args') args: DocsSubirDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
+    {
+        return await this.documentosService.subirDocs(args, files);
     }
 }
