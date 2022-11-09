@@ -181,6 +181,7 @@ type Mutation {
   login(login: LoginInput!): LoginRespuestaType
   regDoc(datos: DocRegInput!, files: ArchivoInput = null): DocumentoType!
   subirDocs(args: DocsSubirInput!, files: ArchivoInput = null): DocumentoType!
+  genFolioSinReg(args: DocFolioInput!): String!
 }
 
 input RegEmpleadoInput {
@@ -241,6 +242,11 @@ input DocsSubirInput {
   _id: ID
   acuseUrl: String = null
   docUrl: String = null
+}
+
+input DocFolioInput {
+  tipoDoc: String
+  deptoId: ID
 }
 
 type Subscription {

@@ -1,14 +1,18 @@
 import {ConflictException, Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocumentoType, DocsSubirDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocumentoType, DocsSubirDto, DocFolioDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
+import {DeptosService} from "@api-admin/deptos.service";
 
 @Injectable()
 export class DocumentosService
 {
-    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService)
+    #ano = new Date().getFullYear();
+    #mes = new Date().getMonth() + 1;
+
+    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService)
     {
     }
 
@@ -81,17 +85,24 @@ export class DocumentosService
         }
     }
 
-    async genFolioSinReg(): Promise<string>
+    async genFolioSinReg(args: DocFolioDto): Promise<string>
     {
-        return '';
+        try
+        {
+            const ultimoDocumento = await this.ultimoRegistro(args.tipoDoc);
+            const {centroGestor} = await this.deptoService.deptoPorId(args.deptoId);
+            return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${this.#mes}-${this.#ano}`;
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: 'Ocurrio un error interno, no se puede continuar'});
+        }
     }
 
     async ultimoRegistro(tipoDoc: string): Promise<number>
     {
-        const ano = new Date().getFullYear();
         try
         {
-            return await this.documento.countDocuments({ano, tipoDoc}).exec();
+            return await this.documento.countDocuments({ano: this.#ano, tipoDoc}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: 'Ocurrio un error interno no se puede continuar'});

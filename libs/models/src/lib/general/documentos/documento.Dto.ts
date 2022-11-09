@@ -1,4 +1,4 @@
-import {IDocumento, TDocSubir, TDocumentoReg} from './documento.interface';
+import {IDocFolio, IDocumento, TDocSubir, TDocumentoReg} from './documento.interface';
 import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
@@ -109,4 +109,12 @@ export class DocRegDto extends OmitType(DocumentoDto, ['_id', 'ref'], InputType)
 @InputType('DocsSubirInput')
 export class DocsSubirDto extends PickType(DocumentoDto, ['_id', 'docUrl', 'acuseUrl'], InputType) implements TDocSubir
 {
+}
+
+@InputType('DocFolioInput')
+export class DocFolioDto extends PickType(DocumentoDto, ['tipoDoc'], InputType) implements IDocFolio
+{
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'el id del departamento es necesario'})
+    deptoId: string;
 }

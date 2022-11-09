@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
+import {EmpleadosSesionGQL, GenFolioSinRegGQL, RegDocGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
@@ -26,6 +26,8 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {IDatosArchivo} from '#/libs/models/src/lib/upload/upload.interface';
+import {FuseConfirmationConfig, FuseConfirmationService} from "@s-fuse/confirmation";
+import {confirmarFolio} from "@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion";
 
 
 @Component({
@@ -66,9 +68,9 @@ export class ModDocumentosComponent implements OnInit
     cargando = false;
     tiposDoc = TIPOS_DOCUMENTO;
     archivos;
-
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage,
-                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService)
+    confFolio: FuseConfirmationConfig = confirmarFolio;
+    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage, private configService: FuseConfirmationService,
+                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private genFolioSinRegGQL: GenFolioSinRegGQL)
     {
     }
 
@@ -133,7 +135,6 @@ export class ModDocumentosComponent implements OnInit
                     };
             }
         }
-        console.log('no trae archivo', file);
         const regDocumento: TDocumentoReg =
             {
                 folio,
@@ -169,7 +170,16 @@ export class ModDocumentosComponent implements OnInit
 
     genFolio(): void
     {
-
+        this.configService.open(this.confFolio).afterClosed().subscribe((res) =>
+        {
+        if (res === 'confirmed')
+        {
+            if (this.formDocs.get('tipoDoc').value)
+            {
+                // this.genFolioSinRegGQL.watch({})
+            }
+        }
+        });
     }
 }
 

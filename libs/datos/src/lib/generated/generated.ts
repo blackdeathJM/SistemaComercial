@@ -71,6 +71,11 @@ export type DeptoType = {
   nombre?: Maybe<Scalars['String']>;
 };
 
+export type DocFolioInput = {
+  deptoId?: InputMaybe<Scalars['ID']>;
+  tipoDoc?: InputMaybe<Scalars['String']>;
+};
+
 export type DocRegInput = {
   acuseUrl?: InputMaybe<Scalars['String']>;
   ano?: InputMaybe<Scalars['Int']>;
@@ -227,6 +232,7 @@ export type Mutation = {
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
   eliminarDepto: DeptoType;
+  genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
   regDoc: DocumentoType;
   subirDocs: DocumentoType;
@@ -263,6 +269,11 @@ export type MutationCrearEmpleadoArgs = {
 
 export type MutationEliminarDeptoArgs = {
   _id: Scalars['String'];
+};
+
+
+export type MutationGenFolioSinRegArgs = {
+  args: DocFolioInput;
 };
 
 
@@ -430,6 +441,13 @@ export type DocsUsuarioProcesoQueryVariables = Exact<{
 
 
 export type DocsUsuarioProcesoQuery = { __typename?: 'Query', docsUsuarioProceso: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
+
+export type GenFolioSinRegMutationVariables = Exact<{
+  args: DocFolioInput;
+}>;
+
+
+export type GenFolioSinRegMutation = { __typename?: 'Mutation', genFolioSinReg: string };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -815,6 +833,22 @@ export const DocsUsuarioProcesoDocument = gql`
   })
   export class DocsUsuarioProcesoGQL extends Apollo.Query<DocsUsuarioProcesoQuery, DocsUsuarioProcesoQueryVariables> {
     document = DocsUsuarioProcesoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GenFolioSinRegDocument = gql`
+    mutation genFolioSinReg($args: DocFolioInput!) {
+  genFolioSinReg(args: $args)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GenFolioSinRegGQL extends Apollo.Mutation<GenFolioSinRegMutation, GenFolioSinRegMutationVariables> {
+    document = GenFolioSinRegDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

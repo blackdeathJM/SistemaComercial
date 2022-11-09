@@ -3,7 +3,7 @@ import {FuseConfirmationConfig} from '@s-fuse/confirmation';
 export const confirmarFolio: FuseConfirmationConfig =
     {
         title: 'Generar folio',
-        message: 'Confirma que deseas generar un nuevo folio? <span class="font-medium">Esta accion no puede revertirse!</span>',
+        message: 'Confirma que deseas generar un nuevo folio? <span class="font-medium">Este folio se registrar para este documento!</span>',
         icon: {
             show: true,
             name: 'heroicons_outline:exclamation',

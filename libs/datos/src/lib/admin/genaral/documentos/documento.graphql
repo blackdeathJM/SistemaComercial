@@ -46,3 +46,7 @@ query docsUsuarioProceso($datos: DocsUsuarioProcesoInput!)
         }
     }
 }
+mutation genFolioSinReg($args: DocFolioInput!)
+{
+    genFolioSinReg(args: $args)
+}

@@ -7,7 +7,7 @@
                     <mat-label>Generar folio</mat-label>
                     <input matInput type="text" formControlName="folio" class="font-bold text-green-800" readonly>
                 </mat-form-field>
-                <button mat-stroked-button class="flex-2" (click)="genFolio()">
+                <button mat-stroked-button class="flex-2" (click)="genFolio()" [disabled]="cargando">
                     <mat-icon svgIcon="subtitles" class="icon-size-5 mr-2"></mat-icon>
                     Generar folio
                 </button>

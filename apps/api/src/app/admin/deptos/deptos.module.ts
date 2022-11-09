@@ -6,7 +6,8 @@ import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/admin/deptos/dept
 
 @Module({
     imports: [MongooseModule.forFeature([{name: DeptoDto.name, schema: SCHEMA_DEPTO}])],
-    providers: [DeptosResolver, DeptosService]
+    providers: [DeptosResolver, DeptosService],
+    exports: [DeptosService]
 })
 export class DeptosModule
 {

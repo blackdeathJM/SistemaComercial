@@ -1,6 +1,6 @@
 import {Args, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver} from '@nestjs/graphql';
 import {DocumentosService} from './documentos.service';
-import {DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocRegDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocFolioDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
@@ -55,5 +55,11 @@ export class DocumentosResolver
     async subirDocs(@Args('args') args: DocsSubirDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
     {
         return await this.documentosService.subirDocs(args, files);
+    }
+
+    @Mutation(() => String)
+    async genFolioSinReg(@Args('args') args: DocFolioDto): Promise<string>
+    {
+        return await this.documentosService.genFolioSinReg(args);
     }
 }
