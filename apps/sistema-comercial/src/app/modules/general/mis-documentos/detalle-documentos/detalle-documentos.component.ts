@@ -10,6 +10,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-docs/mod-subir-docs.component';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
 @Component({
     standalone: true,
@@ -34,7 +36,7 @@ export class DetalleDocumentosComponent
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
 
-    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog)
+    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog, private ngxToastService: NgxToastService)
     {
     }
 
@@ -83,8 +85,13 @@ export class DetalleDocumentosComponent
         });
     }
 
-    reasignacion(): void
+    reasignacion(documento: IResolveDocumento): void
     {
+        if (documento.enviadoPor !== STATE_DATOS_SESION()._id)
+        {
+            this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
+            return;
+        }
 
     }
 

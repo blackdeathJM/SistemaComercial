@@ -9,8 +9,8 @@
     <!-- Name & Type -->
     <div class="flex flex-col mt-8">
         <div class="text-xl font-medium truncate" matTooltip="Asunto">{{_documento?.asunto}}</div>
-        <div class="flex justify-between">
-            <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-800" matTooltip="Dependencia">{{_documento?.dependencia}}</div>
+        <div class="flex justify-between gap-2">
+            <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-800 truncate" matTooltip="Dependencia: {{_documento?.dependencia}}">{{_documento?.dependencia}}</div>
             <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-500" matTooltip="Seguimiento">{{_documento?.seguimiento}}</div>
         </div>
 
@@ -53,7 +53,7 @@
         <div class="flex items-center justify-between py-3">
             <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
             <div class="flex items-center gap-3">
-                <div>{{_documento?.ref}}documento, otro docu</div>
+                <div>{{_documento?.ref}}</div>
                 <button mat-mini-fab color="accent" *ngIf="_documento?.folio">
                     <mat-icon svgIcon="subtitles"></mat-icon>
                 </button>
@@ -103,7 +103,7 @@
         </button>
     </div>
     <div class="flex gap-4 mt-4">
-        <button class="flex-auto" mat-stroked-button (click)="reasignacion()" matTooltip="Reasignacion de usuarios para el documento seleccionado">
+        <button class="flex-auto" mat-stroked-button (click)="reasignacion(_documento)" matTooltip="Reasignacion de usuarios para el documento seleccionado">
             <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
             Reasignacion
         </button>

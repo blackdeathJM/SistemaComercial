@@ -7,6 +7,10 @@ mutation regDoc($datos: DocRegInput!, $files: ArchivoInput)
             nombreCompleto
             avatar
         }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
     }
 }
 mutation subirDocs($args: DocsSubirInput!, $files: ArchivoInput)
