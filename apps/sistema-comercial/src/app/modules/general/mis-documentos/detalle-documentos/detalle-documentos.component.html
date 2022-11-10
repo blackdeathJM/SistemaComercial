@@ -51,8 +51,13 @@
             <div>{{_documento?.resolverEmpleadoFolio?.nombreCompleto}}</div>
         </div>
         <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Folio referenciado:</div>
-            <div>{{_documento?.ref}}</div>
+            <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
+            <div class="flex items-center gap-3">
+                <div>{{_documento?.ref}}documento, otro docu</div>
+                <button mat-mini-fab color="accent" *ngIf="_documento?.folio">
+                    <mat-icon svgIcon="subtitles"></mat-icon>
+                </button>
+            </div>
         </div>
         <div class="flex items-center py-3 justify-end">
             <div class="flex flex-0 items-center -space-x-1.5">

@@ -26,8 +26,8 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {IDatosArchivo} from '#/libs/models/src/lib/upload/upload.interface';
-import {FuseConfirmationConfig, FuseConfirmationService} from "@s-fuse/confirmation";
-import {confirmarFolio} from "@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion";
+import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
+import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 
 
 @Component({
@@ -69,6 +69,7 @@ export class ModDocumentosComponent implements OnInit
     tiposDoc = TIPOS_DOCUMENTO;
     archivos;
     confFolio: FuseConfirmationConfig = confirmarFolio;
+
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage, private configService: FuseConfirmationService,
                 private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private genFolioSinRegGQL: GenFolioSinRegGQL)
     {
@@ -172,13 +173,22 @@ export class ModDocumentosComponent implements OnInit
     {
         this.configService.open(this.confFolio).afterClosed().subscribe((res) =>
         {
-        if (res === 'confirmed')
-        {
-            if (this.formDocs.get('tipoDoc').value)
+            if (res === 'confirmed')
             {
-                // this.genFolioSinRegGQL.watch({})
+                const {tipoDoc} = this.formDocs.value;
+                if (!tipoDoc)
+                {
+                    this.ngxToastService.alertaToast('Antes de generar el folio selecciona que tipo de documento es', 'Generar folio');
+                    return;
+                }
+                this.genFolioSinRegGQL.mutate({args: {tipoDoc, deptoId: STATE_DATOS_SESION().deptoId}}).pipe(tap((folioGenerado) =>
+                {
+                    if (folioGenerado.data.genFolioSinReg)
+                    {
+                        this.formDocs.get('folio').setValue(folioGenerado.data.genFolioSinReg);
+                    }
+                })).subscribe();
             }
-        }
         });
     }
 }
