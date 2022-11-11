@@ -64,6 +64,12 @@ export class DocumentosResolver
     }
 
     @Mutation(() => DocumentoDto)
+    async docFinalizar(@Args('_id') _id: string): Promise<DocumentoDto>
+    {
+        return await this.documentosService.docFinalizar(_id);
+    }
+
+    @Mutation(() => DocumentoDto)
     async docActFolio(@Args('args') args: DocActFolioDto): Promise<DocumentoDto>
     {
         return await this.documentosService.docActFolio(args);

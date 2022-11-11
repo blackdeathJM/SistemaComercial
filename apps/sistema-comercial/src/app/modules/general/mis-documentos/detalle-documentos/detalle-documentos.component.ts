@@ -12,7 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-docs/mod-subir-docs.component';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
-import {DocActFolioGQL} from '#/libs/datos/src';
+import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {STATE_DOCS} from '@s-app/general/general.state';
@@ -45,7 +45,7 @@ export class DetalleDocumentosComponent
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog, private ngxToastService: NgxToastService,
-                private docActFolioGQL: DocActFolioGQL)
+                private docActFolioGQL: DocActFolioGQL, private docFinalizarGQL: DocFinalizarGQL)
     {
     }
 
@@ -95,6 +95,7 @@ export class DetalleDocumentosComponent
                     if (docFoliado.data)
                     {
                         unionBy(STATE_DOCS(), docFoliado.data.docActFolio as IResolveDocumento);
+                        this._documento = docFoliado.data.docActFolio as IResolveDocumento;
                         this.ngxToastService.satisfactorioToast('Haz registrado un nuevo folio con exito', 'Alta de folios');
                     }
                 })).subscribe();
@@ -114,7 +115,15 @@ export class DetalleDocumentosComponent
         {
             if (res === 'confirmed')
             {
-
+                this.docFinalizarGQL.mutate({_id: _documento._id}).pipe(tap((docFinalizado) =>
+                {
+                    if (docFinalizado.data)
+                    {
+                        unionBy(STATE_DOCS(), docFinalizado.data.docFinalizar as IResolveDocumento);
+                        this._documento = docFinalizado.data.docFinalizar as IResolveDocumento;
+                        this.ngxToastService.satisfactorioToast('El documento ha finalizado con exito', 'Finalizar documentos');
+                    }
+                })).subscribe();
             }
         });
     }

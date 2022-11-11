@@ -76,3 +76,22 @@ mutation docActFolio($args: DocActFolioInput!)
         }
     }
 }
+
+mutation docFinalizar($_id: String!)
+{
+    docFinalizar(_id: $_id)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}

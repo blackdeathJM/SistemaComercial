@@ -1,8 +1,9 @@
-import {IDatosArchivo} from '../../upload/upload.interface';
 import {file, prop, required} from '@rxweb/reactive-form-validators';
 import {TDocumentoReg} from './documento.interface';
 import {sanitize, upperCase} from '@rxweb/sanitizers';
+
 export const requerido = 'Este campo es requerido';
+
 @sanitize
 export class Documento implements TDocumentoReg
 {
@@ -24,11 +25,15 @@ export class Documento implements TDocumentoReg
     @required({message: 'Selecciona una fecha de entrega'})
     fechaLimiteEntrega: number;
     @file({maxFiles: 1, minFiles: 1, message: 'Debes tener un documento seleccionado'})
-    file: IDatosArchivo;
+    file: FileList;
     @required({message: 'Es necesario colocar un identificador'})
     identificadorDoc: string;
     proceso: 'pendiente' | 'terminado';
-    @required({message: 'Selecciona el tipo de documento'})
+    // @disable({
+    //     conditionalExpression: (control: AbstractControl) => false
+    // })
+    // @required({conditionalExpression: (x: { folio: null; }) => x.folio === null, message: 'El tipo de documento es requerido'})
+    @required({message: 'El tipo de documento es requerido'})
     tipoDoc: string;
     usuarioFolio: string;
     @required({message: 'Coloca al menos un usuario destino'})
@@ -37,4 +42,12 @@ export class Documento implements TDocumentoReg
     acuseUrl: string;
     fechaTerminado: number;
     ano: number;
+}
+
+export class Archivos
+{
+    @file({maxFiles: 1, minFiles: 1})
+    docArchivo: FileList;
+    @file({maxFiles: 1, minFiles: 1})
+    acuseArchivo: FileList;
 }

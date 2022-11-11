@@ -99,7 +99,7 @@
                 Generar folio
             </button>
             <button class="flex-auto" color="warn" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)"
-                    [disabled]="_documento?.docUrl === null && _documento?.acuseUrl === null">
+                    [disabled]="(_documento?.docUrl === null && _documento?.acuseUrl === null) || _documento.proceso === 'terminado'">
                 <mat-icon svgIcon="mat_outline:checklist" class=" mr-2"></mat-icon>
                 Finalizar doc
             </button>

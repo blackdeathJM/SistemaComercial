@@ -6,6 +6,7 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -25,7 +26,7 @@ import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.int
 })
 export class ModSubirDocsComponent implements OnInit
 {
-
+    formDocsArchivo: FormGroup;
     constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento)
     {
     }

@@ -238,6 +238,7 @@ export type Mutation = {
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
   docActFolio: DocumentoType;
+  docFinalizar: DocumentoType;
   eliminarDepto: DeptoType;
   genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
@@ -276,6 +277,11 @@ export type MutationCrearEmpleadoArgs = {
 
 export type MutationDocActFolioArgs = {
   args: DocActFolioInput;
+};
+
+
+export type MutationDocFinalizarArgs = {
+  _id: Scalars['String'];
 };
 
 
@@ -467,6 +473,13 @@ export type DocActFolioMutationVariables = Exact<{
 
 
 export type DocActFolioMutation = { __typename?: 'Mutation', docActFolio: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
+
+export type DocFinalizarMutationVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type DocFinalizarMutation = { __typename?: 'Mutation', docFinalizar: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -904,6 +917,35 @@ export const DocActFolioDocument = gql`
   })
   export class DocActFolioGQL extends Apollo.Mutation<DocActFolioMutation, DocActFolioMutationVariables> {
     document = DocActFolioDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DocFinalizarDocument = gql`
+    mutation docFinalizar($_id: String!) {
+  docFinalizar(_id: $_id) {
+    ...fragDoc
+    resolveEmpleado {
+      nombreCompleto
+      avatar
+    }
+    resolverEmpleadoFolio {
+      nombreCompleto
+    }
+    resolveEmpleadoEnviado {
+      nombreCompleto
+      avatar
+    }
+  }
+}
+    ${FragDocFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DocFinalizarGQL extends Apollo.Mutation<DocFinalizarMutation, DocFinalizarMutationVariables> {
+    document = DocFinalizarDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

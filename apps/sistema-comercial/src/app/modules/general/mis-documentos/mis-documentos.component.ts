@@ -96,4 +96,19 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     {
         this.subscripciones.unsubscribe();
     }
+
+    pendientes(): void
+    {
+
+    }
+
+    terminados(): void
+    {
+
+    }
+
+    enviadosPorMi(): void
+    {
+
+    }
 }

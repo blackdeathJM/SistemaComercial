@@ -25,13 +25,17 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </mat-form-field>
-            <button class="flex-auto" id="btnPendientesDoc" mat-stroked-button>
+            <button class="flex-auto" id="btnPendientesDoc" mat-stroked-button color="primary" (click)="pendientes()">
                 <mat-icon svgIcon="pending_actions"></mat-icon>
                 <span class="ml-2 mr-1">Pendientes</span>
             </button>
-            <button class="flex-auto" id="btnTerminadosDoc" mat-stroked-button>
+            <button class="flex-auto" id="btnTerminadosDoc" mat-stroked-button color="primary" (click)="terminados()">
                 <mat-icon svgIcon="fact_check"></mat-icon>
                 <span class="ml-2 mr-1">Terminados</span>
+            </button>
+            <button class="flex-auto" id="btnInviadosPorMi" mat-stroked-button color="primary" (click)="enviadosPorMi()">
+                <mat-icon svgIcon="manage_search"></mat-icon>
+                <span class="ml-2 mr-1">Enviados por mi</span>
             </button>
         </div>
     </ng-container>

@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {DocActFolioDto, DocFolioDto, DocRegDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
@@ -30,7 +30,6 @@ export class DocumentosService
 
     async regDoc(datos: DocRegDto, files: UploadDto): Promise<DocumentoDto>
     {
-        console.log('archivos', files);
         if (files)
         {
             // Si el param files no viene nulo el registro se hara de manera local y si viene null es porque el registro se realizo en la nube
@@ -72,6 +71,17 @@ export class DocumentosService
         }
     }
 
+    async docFinalizar(_id: string): Promise<DocumentoDto>
+    {
+        try
+        {
+            return await this.documento.findByIdAndUpdate(_id, {$set: {proceso: 'terminado'}}, {returnOriginal: false}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: 'Ocurrio un error inesperado', e});
+        }
+    }
+
     async subirDocs(args: DocsSubirDto, files: UploadDto): Promise<DocumentoDto>
     {
         if (files)
@@ -79,23 +89,17 @@ export class DocumentosService
             // codigo por si el documento se va a subir de manera local
         } else
         {
-            if (args.docUrl)
+            try
             {
-                const doc = await this.documento.findByIdAndUpdate(args._id, {$set: {docUrl: args.docUrl}}).exec();
-                if (!doc)
+                const docActu = await this.documento.findByIdAndUpdate(args._id, {$set: {docUrl: args.docUrl, acuseUrl: args.acuseUrl}}).exec();
+                if (!docActu)
                 {
-                    throw new NotFoundException('No se encontro documento para poder asignar el archivo');
+                    this.enviarError();
                 }
-                return doc;
-            }
-            if (args.acuseUrl)
+                return docActu;
+            } catch (e)
             {
-                const acuse = await this.documento.findByIdAndUpdate(args._id, {$set: {acuseUrl: args.acuseUrl}}).exec();
-                if (!acuse)
-                {
-                    throw new NotFoundException('No se encontro el documento para poder asignar el archivo');
-                }
-                return acuse;
+                throw new InternalServerErrorException({message: 'Ocurrio un error interno', e});
             }
         }
     }
@@ -109,7 +113,7 @@ export class DocumentosService
             return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${this.#mes}-${this.#ano}`;
         } catch (e)
         {
-            throw new InternalServerErrorException({message: 'Ocurrio un error interno, no se puede continuar'});
+            throw new InternalServerErrorException({message: 'Ocurrio un error interno, no se puede continuar', e});
         }
     }
 
@@ -123,4 +127,10 @@ export class DocumentosService
             throw new InternalServerErrorException({message: 'Ocurrio un error interno no se puede continuar'});
         }
     }
+
+    enviarError(): InternalServerErrorException
+    {
+        throw new InternalServerErrorException({message: 'Ocurrio un error interno'});
+    }
+
 }
