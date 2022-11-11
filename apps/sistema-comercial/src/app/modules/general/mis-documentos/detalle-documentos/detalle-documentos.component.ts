@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IDocActFolio, IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {confirmarFinalizarDoc, confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {MatDialog} from '@angular/material/dialog';
@@ -12,6 +12,12 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-docs/mod-subir-docs.component';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {DocActFolioGQL} from '#/libs/datos/src';
+import {Subscription, tap} from 'rxjs';
+import {unionBy} from 'lodash-es';
+import {STATE_DOCS} from '@s-app/general/general.state';
+import {ModDocRefComponent} from '@s-app/general/mis-documentos/mod-doc-ref/mod-doc-ref.component';
+import {ModReasignacionComponent} from '@s-app/general/mis-documentos/mod-reasignacion/mod-reasignacion.component';
 
 @Component({
     standalone: true,
@@ -35,8 +41,11 @@ export class DetalleDocumentosComponent
     _documento: IResolveDocumento;
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
+    subscripcion: Subscription = new Subscription();
+    cargando = false;
 
-    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog, private ngxToastService: NgxToastService)
+    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog, private ngxToastService: NgxToastService,
+                private docActFolioGQL: DocActFolioGQL)
     {
     }
 
@@ -65,17 +74,42 @@ export class DetalleDocumentosComponent
 
     generarFolio(_documento: IDocumento): void
     {
+        if (_documento.folio)
+        {
+            this.ngxToastService.alertaToast('El documento ya cuenta con un folio y no puedes volverlo asignar', 'Asignacion de folio');
+            return;
+        }
         this.confirmacionService.open(this.confFolio).afterClosed().subscribe((res) =>
         {
             if (res === 'confirmed')
             {
-
+                this.cargando = true;
+                const args: IDocActFolio =
+                    {
+                        _id: _documento._id,
+                        deptoId: STATE_DATOS_SESION().deptoId,
+                        usuarioFolio: STATE_DATOS_SESION()._id
+                    };
+                this.docActFolioGQL.mutate({args}).pipe(tap((docFoliado) =>
+                {
+                    if (docFoliado.data)
+                    {
+                        unionBy(STATE_DOCS(), docFoliado.data.docActFolio as IResolveDocumento);
+                        this.ngxToastService.satisfactorioToast('Haz registrado un nuevo folio con exito', 'Alta de folios');
+                    }
+                })).subscribe();
             }
         });
     }
 
     finalizarDoc(_documento: IResolveDocumento): void
     {
+        if (_documento.docUrl === null && _documento.acuseUrl === null)
+        {
+            this.ngxToastService.errorToast('No puedes dar por finalizado el documento por que no tienes ningun documento subido', 'Finalizar documentos');
+            return;
+        }
+
         this.confirmacionService.open(this.confFinalizarDoc).afterClosed().subscribe((res) =>
         {
             if (res === 'confirmed')
@@ -92,11 +126,17 @@ export class DetalleDocumentosComponent
             this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
             return;
         }
+        this.mdr.open(ModReasignacionComponent, {width: '40%', data: null});
 
     }
 
     modDocs(data: IResolveDocumento): void
     {
         this.mdr.open(ModSubirDocsComponent, {width: '40%', data});
+    }
+
+    docRef(_documento: IResolveDocumento): void
+    {
+        this.mdr.open(ModDocRefComponent, {width: '40%', data: null});
     }
 }

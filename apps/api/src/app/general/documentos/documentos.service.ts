@@ -1,10 +1,10 @@
 import {ConflictException, Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocumentoType, DocsSubirDto, DocFolioDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocActFolioDto, DocFolioDto, DocRegDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
-import {DeptosService} from "@api-admin/deptos.service";
+import {DeptosService} from '@api-admin/deptos.service';
 
 @Injectable()
 export class DocumentosService
@@ -30,20 +30,22 @@ export class DocumentosService
 
     async regDoc(datos: DocRegDto, files: UploadDto): Promise<DocumentoDto>
     {
+        console.log('archivos', files);
         if (files)
         {
             // Si el param files no viene nulo el registro se hara de manera local y si viene null es porque el registro se realizo en la nube
-            const rutasArchivos = await this.subirArchivoService.subirArchivos(files);
-            if (rutasArchivos.length === 0)
+            try
             {
-                return null;
-            }
-            datos.docUrl = rutasArchivos[0];
-            const doc = await this.documento.create(datos);
-            if (!doc)
+                const rutasArchivos = await this.subirArchivoService.subirArchivos(files);
+                if (rutasArchivos.length === 0)
+                {
+                    return null;
+                }
+                datos.docUrl = rutasArchivos[0];
+                return await this.documento.create(datos);
+            } catch (e)
             {
-                //TODO: Eliminar el archivo localmente ya que no se pudo realizar el registro en la base de datos
-                throw new ConflictException({message: 'Ocurrio un error al registrar el documento'});
+                console.log('reg doc', e);
             }
         } else
         {
@@ -54,6 +56,19 @@ export class DocumentosService
             {
                 throw new ConflictException({message: e.codeName});
             }
+        }
+    }
+
+    async docActFolio(args: DocActFolioDto): Promise<DocumentoDto>
+    {
+        try
+        {
+            const folioGenerado = await this.genFolioSinReg({deptoId: args.deptoId, tipoDoc: 'Oficio'});
+            return await this.documento.findByIdAndUpdate(args._id, {$set: {folio: folioGenerado, usuarioFolio: args.usuarioFolio}},
+                {returnOriginal: false}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: `Ocurrio un error interno en el servidor${e}`});
         }
     }
 

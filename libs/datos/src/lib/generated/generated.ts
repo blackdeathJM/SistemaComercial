@@ -71,6 +71,12 @@ export type DeptoType = {
   nombre?: Maybe<Scalars['String']>;
 };
 
+export type DocActFolioInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  deptoId?: InputMaybe<Scalars['String']>;
+  usuarioFolio?: InputMaybe<Scalars['String']>;
+};
+
 export type DocFolioInput = {
   deptoId?: InputMaybe<Scalars['ID']>;
   tipoDoc?: InputMaybe<Scalars['String']>;
@@ -231,6 +237,7 @@ export type Mutation = {
   asignarAuth: EmpleadoType;
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
+  docActFolio: DocumentoType;
   eliminarDepto: DeptoType;
   genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
@@ -264,6 +271,11 @@ export type MutationCrearDeptoArgs = {
 
 export type MutationCrearEmpleadoArgs = {
   empleadoDatos: RegEmpleadoInput;
+};
+
+
+export type MutationDocActFolioArgs = {
+  args: DocActFolioInput;
 };
 
 
@@ -425,7 +437,7 @@ export type RegDocMutationVariables = Exact<{
 }>;
 
 
-export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
+export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null } };
 
 export type SubirDocsMutationVariables = Exact<{
   args: DocsSubirInput;
@@ -448,6 +460,13 @@ export type GenFolioSinRegMutationVariables = Exact<{
 
 
 export type GenFolioSinRegMutation = { __typename?: 'Mutation', genFolioSinReg: string };
+
+export type DocActFolioMutationVariables = Exact<{
+  args: DocActFolioInput;
+}>;
+
+
+export type DocActFolioMutation = { __typename?: 'Mutation', docActFolio: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -770,6 +789,9 @@ export const RegDocDocument = gql`
       nombreCompleto
       avatar
     }
+    resolverEmpleadoFolio {
+      nombreCompleto
+    }
   }
 }
     ${FragDocFragmentDoc}`;
@@ -853,6 +875,35 @@ export const GenFolioSinRegDocument = gql`
   })
   export class GenFolioSinRegGQL extends Apollo.Mutation<GenFolioSinRegMutation, GenFolioSinRegMutationVariables> {
     document = GenFolioSinRegDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DocActFolioDocument = gql`
+    mutation docActFolio($args: DocActFolioInput!) {
+  docActFolio(args: $args) {
+    ...fragDoc
+    resolveEmpleado {
+      nombreCompleto
+      avatar
+    }
+    resolverEmpleadoFolio {
+      nombreCompleto
+    }
+    resolveEmpleadoEnviado {
+      nombreCompleto
+      avatar
+    }
+  }
+}
+    ${FragDocFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DocActFolioGQL extends Apollo.Mutation<DocActFolioMutation, DocActFolioMutationVariables> {
+    document = DocActFolioDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

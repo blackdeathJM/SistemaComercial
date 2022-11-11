@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EmpleadosSesionGQL, GenFolioSinRegGQL, RegDocGQL} from '#/libs/datos/src';
-import {Subscription, tap} from 'rxjs';
+import {finalize, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -25,7 +25,6 @@ import {CommonModule} from '@angular/common';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {IDatosArchivo} from '#/libs/models/src/lib/upload/upload.interface';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 
@@ -69,6 +68,7 @@ export class ModDocumentosComponent implements OnInit
     tiposDoc = TIPOS_DOCUMENTO;
     archivos;
     confFolio: FuseConfirmationConfig = confirmarFolio;
+    #usuarioFolio = null;
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage, private configService: FuseConfirmationService,
                 private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private genFolioSinRegGQL: GenFolioSinRegGQL)
@@ -100,7 +100,7 @@ export class ModDocumentosComponent implements OnInit
         const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
 
         let docUrl: string = null;
-        let files: IDatosArchivo = null;
+        let files = null;
 
         if (file)
         {
@@ -142,21 +142,23 @@ export class ModDocumentosComponent implements OnInit
                 ano,
                 tipoDoc,
                 docUrl,
+                usuarioFolio: this.#usuarioFolio,
                 fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
                 fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : 0,
                 enviadoPor: STATE_DATOS_SESION()._id,
                 ...resto
             };
-
-        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, ...files}).pipe(tap((res) =>
+        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.cerrar();
+        }), tap((res) =>
         {
             if (res.data)
             {
                 const elementos = STATE_DOCS();
                 STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
                 this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
-                this.cargando = false;
-                this.cerrar();
             }
         })).subscribe());
     }
@@ -175,17 +177,12 @@ export class ModDocumentosComponent implements OnInit
         {
             if (res === 'confirmed')
             {
-                const {tipoDoc} = this.formDocs.value;
-                if (!tipoDoc)
-                {
-                    this.ngxToastService.alertaToast('Antes de generar el folio selecciona que tipo de documento es', 'Generar folio');
-                    return;
-                }
-                this.genFolioSinRegGQL.mutate({args: {tipoDoc, deptoId: STATE_DATOS_SESION().deptoId}}).pipe(tap((folioGenerado) =>
+                this.genFolioSinRegGQL.mutate({args: {tipoDoc: 'Oficio', deptoId: STATE_DATOS_SESION().deptoId}}).pipe(tap((folioGenerado) =>
                 {
                     if (folioGenerado.data.genFolioSinReg)
                     {
                         this.formDocs.get('folio').setValue(folioGenerado.data.genFolioSinReg);
+                        this.#usuarioFolio = STATE_DATOS_SESION()._id;
                     }
                 })).subscribe();
             }

@@ -54,7 +54,7 @@
             <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
             <div class="flex items-center gap-3">
                 <div>{{_documento?.ref}}</div>
-                <button mat-mini-fab color="accent" *ngIf="_documento?.folio">
+                <button mat-mini-fab color="accent" *ngIf="_documento?.folio" (click)="docRef(_documento)">
                     <mat-icon svgIcon="subtitles"></mat-icon>
                 </button>
             </div>
@@ -92,24 +92,27 @@
     </div>
 
     <!-- Actions -->
-    <div class="flex gap-4 mt-8">
-        <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)">
-            <mat-icon svgIcon="subtitles" class="mr-2"></mat-icon>
-            Generar folio
-        </button>
-        <button class="flex-auto bg-sky-500/50" mat-raised-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)">
-            <mat-icon svgIcon="mat_outline:checklist" class=" mr-2"></mat-icon>
-            Finalizar doc
-        </button>
-    </div>
-    <div class="flex gap-4 mt-4">
-        <button class="flex-auto" mat-stroked-button (click)="reasignacion(_documento)" matTooltip="Reasignacion de usuarios para el documento seleccionado">
-            <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
-            Reasignacion
-        </button>
-        <button class="flex-auto" mat-stroked-button matTooltip="Modifica los documentos que haz subido a la nube" (click)="modDocs(_documento)">
-            <mat-icon svgIcon="feather:refresh-cw" class="mr-2"></mat-icon>
-            Mod. Docs
-        </button>
-    </div>
+    <ng-container *ngIf="_documento?.proceso !== 'terminado' ">
+        <div class="flex gap-4 mt-8">
+            <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)" [disabled]="_documento?.folio !== null || cargando">
+                <mat-icon svgIcon="subtitles" class="mr-2"></mat-icon>
+                Generar folio
+            </button>
+            <button class="flex-auto" color="warn" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)"
+                    [disabled]="_documento?.docUrl === null && _documento?.acuseUrl === null">
+                <mat-icon svgIcon="mat_outline:checklist" class=" mr-2"></mat-icon>
+                Finalizar doc
+            </button>
+        </div>
+        <div class="flex gap-4 mt-4">
+            <button class="flex-auto" mat-stroked-button (click)="reasignacion(_documento)" matTooltip="Reasignacion de usuarios para el documento seleccionado">
+                <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
+                Reasignacion
+            </button>
+            <button class="flex-auto" mat-stroked-button matTooltip="Modifica los documentos que haz subido a la nube" (click)="modDocs(_documento)">
+                <mat-icon svgIcon="feather:refresh-cw" class="mr-2"></mat-icon>
+                Mod. Docs
+            </button>
+        </div>
+    </ng-container>
 </div>

@@ -11,6 +11,9 @@ mutation regDoc($datos: DocRegInput!, $files: ArchivoInput)
             nombreCompleto
             avatar
         }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
     }
 }
 mutation subirDocs($args: DocsSubirInput!, $files: ArchivoInput)
@@ -53,4 +56,23 @@ query docsUsuarioProceso($datos: DocsUsuarioProcesoInput!)
 mutation genFolioSinReg($args: DocFolioInput!)
 {
     genFolioSinReg(args: $args)
+}
+
+mutation docActFolio($args: DocActFolioInput!)
+{
+    docActFolio(args: $args)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
 }
