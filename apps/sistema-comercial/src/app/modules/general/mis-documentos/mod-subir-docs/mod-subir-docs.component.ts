@@ -6,7 +6,9 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {IDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -18,7 +20,9 @@ import {FormGroup} from '@angular/forms';
             MatFormFieldModule,
             MaterialFileInputModule,
             MatIconModule,
-            RegistrosComponent
+            RegistrosComponent,
+            ReactiveFormsModule,
+            RxReactiveFormsModule
         ],
     templateUrl: './mod-subir-docs.component.html',
     styleUrls: ['./mod-subir-docs.component.scss'],
@@ -27,11 +31,17 @@ import {FormGroup} from '@angular/forms';
 export class ModSubirDocsComponent implements OnInit
 {
     formDocsArchivo: FormGroup;
-    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento)
+
+    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder)
     {
     }
 
     ngOnInit(): void
     {
+        this.formDocsArchivo = this.fb.formGroup(new Archivos());
+        if (this.data)
+        {
+
+        }
     }
 }
