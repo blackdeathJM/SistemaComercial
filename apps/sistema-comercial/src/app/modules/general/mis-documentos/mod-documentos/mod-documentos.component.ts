@@ -10,7 +10,6 @@ import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
 import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {GeneralService} from '@s-app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {v4 as uuidv4} from 'uuid';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
@@ -106,10 +105,9 @@ export class ModDocumentosComponent implements OnInit
         {
             if (esRemoto)
             {
-                const nombreArchivo = ano + '-' + uuidv4() + '.' + file._files[0].name.split('.').pop();
-                const docRef = ref(this.storage, `SIMAPAS/${tipoDoc}/${ano}/${mes}/${nombreArchivo}`);
                 try
                 {
+                    const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
                     const resUpload = await uploadBytes(docRef, file._files[0]);
                     docUrl = await getDownloadURL(resUpload.ref);
                 } catch (e)
