@@ -27,8 +27,8 @@ import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmat
 import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MAT_LUXON_DATE_ADAPTER_OPTIONS, MatLuxonDateModule} from '@angular/material-luxon-adapter';
 
 
 @Component({
@@ -43,8 +43,6 @@ import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
             MatInputModule,
             MatSelectModule,
             MatDatepickerModule,
-            MatNativeDateModule,
-            MatLuxonDateModule,
             FileUploadModule,
             MatCheckboxModule,
             RegistrosComponent,
@@ -54,9 +52,7 @@ import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
             SeleccionarEmpleadoComponent
         ],
     providers:
-        [
-            MatDatepickerModule
-        ],
+        [],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
     styleUrls: ['./mod-documentos.component.scss']

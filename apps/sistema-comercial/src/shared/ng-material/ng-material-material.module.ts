@@ -17,6 +17,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
             MatDatepickerModule,
             MatNativeDateModule,
             MatMomentDateModule,
+            MatLuxonDateModule,
             MatCheckboxModule,
         ],
     exports:
@@ -60,6 +62,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
             MatDatepickerModule,
             MatNativeDateModule,
             MatMomentDateModule,
+            MatLuxonDateModule,
             MatCheckboxModule
         ],
     providers: [{provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}]

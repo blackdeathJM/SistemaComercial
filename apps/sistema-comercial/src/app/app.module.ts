@@ -26,6 +26,8 @@ import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';
 import {provideStorage, getStorage} from '@angular/fire/storage';
 import {LuxonModule} from 'luxon-angular';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 
 const routerConfig: ExtraOptions =
     {
@@ -73,11 +75,12 @@ const routerConfig: ExtraOptions =
             SweetAlert2Module.forRoot(),
             ToastrModule.forRoot(),
             NgxTrimDirectiveModule,
+            MatLuxonDateModule,
             // modulos
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
         ],
-    providers: [],
+    providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-MX'}],
     bootstrap:
         [
             AppComponent
