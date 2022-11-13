@@ -4,6 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     standalone: true,
@@ -17,7 +18,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
             MatExpansionModule,
             MatButtonModule,
             MatIconModule,
-            MatProgressSpinnerModule
+            MatProgressSpinnerModule,
+            MatDialogModule
         ],
     styleUrls: ['./registros.component.scss']
 })

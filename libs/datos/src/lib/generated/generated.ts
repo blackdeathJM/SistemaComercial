@@ -19,13 +19,6 @@ export type Scalars = {
   Upload: any;
 };
 
-export type ArchivoInput = {
-  carpeta?: InputMaybe<Scalars['String']>;
-  eliminar?: InputMaybe<Scalars['Boolean']>;
-  file?: InputMaybe<Array<Scalars['Upload']>>;
-  url?: InputMaybe<Scalars['String']>;
-};
-
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   contrasena?: InputMaybe<Scalars['String']>;
@@ -302,13 +295,14 @@ export type MutationLoginArgs = {
 
 export type MutationRegDocArgs = {
   datos: DocRegInput;
-  files?: InputMaybe<ArchivoInput>;
+  files?: InputMaybe<UploadInput>;
 };
 
 
 export type MutationSubirDocsArgs = {
-  args: DocsSubirInput;
-  files?: InputMaybe<ArchivoInput>;
+  args?: InputMaybe<DocsSubirInput>;
+  files?: InputMaybe<UploadInput>;
+  filesAcuse?: InputMaybe<UploadInput>;
 };
 
 export type Query = {
@@ -354,6 +348,14 @@ export type TelefonoInput = {
 export type TelefonoType = {
   __typename?: 'TelefonoType';
   numero?: Maybe<Scalars['String']>;
+};
+
+export type UploadInput = {
+  carpeta?: InputMaybe<Scalars['String']>;
+  eliminar?: InputMaybe<Scalars['Boolean']>;
+  file?: InputMaybe<Array<Scalars['Upload']>>;
+  /** Es la url A eliminar en caso de que sea remplazar o eliminar el archivo */
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type FragDeptosFragment = { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null };
@@ -439,7 +441,7 @@ export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | nul
 
 export type RegDocMutationVariables = Exact<{
   datos: DocRegInput;
-  files?: InputMaybe<ArchivoInput>;
+  files?: InputMaybe<UploadInput>;
 }>;
 
 
@@ -447,7 +449,8 @@ export type RegDocMutation = { __typename?: 'Mutation', regDoc: { __typename?: '
 
 export type SubirDocsMutationVariables = Exact<{
   args: DocsSubirInput;
-  files?: InputMaybe<ArchivoInput>;
+  files?: InputMaybe<UploadInput>;
+  filesAcuse?: InputMaybe<UploadInput>;
 }>;
 
 
@@ -791,7 +794,7 @@ ${FragTelefonoFragmentDoc}`;
     }
   }
 export const RegDocDocument = gql`
-    mutation regDoc($datos: DocRegInput!, $files: ArchivoInput) {
+    mutation regDoc($datos: DocRegInput!, $files: UploadInput) {
   regDoc(datos: $datos, files: $files) {
     ...fragDoc
     resolveEmpleado {
@@ -820,8 +823,8 @@ export const RegDocDocument = gql`
     }
   }
 export const SubirDocsDocument = gql`
-    mutation subirDocs($args: DocsSubirInput!, $files: ArchivoInput) {
-  subirDocs(args: $args, files: $files) {
+    mutation subirDocs($args: DocsSubirInput!, $files: UploadInput, $filesAcuse: UploadInput) {
+  subirDocs(args: $args, files: $files, filesAcuse: $filesAcuse) {
     ...fragDoc
     resolveEmpleado {
       nombreCompleto

@@ -52,9 +52,11 @@ export class DocumentosResolver
     }
 
     @Mutation(() => DocumentoDto)
-    async subirDocs(@Args('args') args: DocsSubirDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
+    async subirDocs(@Args('args', {nullable: true, defaultValue: null}) args: DocsSubirDto,
+                    @Args('files', {nullable: true, defaultValue: null}) files: UploadDto,
+                    @Args('filesAcuse', {nullable: true, defaultValue: null}) filesAcuse: UploadDto): Promise<DocumentoDto>
     {
-        return await this.documentosService.subirDocs(args, files);
+        return await this.documentosService.subirDocs(args, files, filesAcuse);
     }
 
     @Mutation(() => String)

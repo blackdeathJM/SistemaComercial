@@ -5,6 +5,7 @@ import {DocActFolioDto, DocFolioDto, DocRegDto, DocsSubirDto, DocsUsuarioProceso
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
+import {AppService} from '#api/apps/api/src/app/app.service';
 
 @Injectable()
 export class DocumentosService
@@ -73,34 +74,41 @@ export class DocumentosService
 
     async docFinalizar(_id: string): Promise<DocumentoDto>
     {
+        const fechaActual = AppService.fechaHoraActual();
         try
         {
-            return await this.documento.findByIdAndUpdate(_id, {$set: {proceso: 'terminado'}}, {returnOriginal: false}).exec();
+            return await this.documento.findByIdAndUpdate(_id, {$set: {proceso: 'terminado', fechaTerminado: fechaActual}}, {returnOriginal: false}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: 'Ocurrio un error inesperado', e});
         }
     }
 
-    async subirDocs(args: DocsSubirDto, files: UploadDto): Promise<DocumentoDto>
+    async subirDocs(args: DocsSubirDto, filesDocs: UploadDto, filesAcuse: UploadDto): Promise<DocumentoDto>
     {
-        if (files)
+        const urlAchivos: Record<string, string> = {};
+        if (filesDocs)
         {
             // codigo por si el documento se va a subir de manera local
-        } else
+        }
+        if (filesAcuse)
         {
-            try
-            {
-                const docActu = await this.documento.findByIdAndUpdate(args._id, {$set: {docUrl: args.docUrl, acuseUrl: args.acuseUrl}}).exec();
-                if (!docActu)
-                {
-                    this.enviarError();
-                }
-                return docActu;
-            } catch (e)
-            {
-                throw new InternalServerErrorException({message: 'Ocurrio un error interno', e});
-            }
+
+        }
+        if (args.docUrl)
+        {
+            urlAchivos['docUrl'] = args.docUrl;
+        }
+        if (args.acuseUrl)
+        {
+            urlAchivos['acuseUrl'] = args.acuseUrl;
+        }
+        try
+        {
+            return await this.documento.findByIdAndUpdate(args._id, {$set: {...urlAchivos}}, {returnOriginal: false, timestamps: {updatedAt: true}}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: `Ocurrio un error interno :${e}`});
         }
     }
 

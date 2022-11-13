@@ -1,4 +1,4 @@
-mutation regDoc($datos: DocRegInput!, $files: ArchivoInput)
+mutation regDoc($datos: DocRegInput!, $files: UploadInput)
 {
     regDoc(datos: $datos, files: $files)
     {
@@ -16,9 +16,9 @@ mutation regDoc($datos: DocRegInput!, $files: ArchivoInput)
         }
     }
 }
-mutation subirDocs($args: DocsSubirInput!, $files: ArchivoInput)
+mutation subirDocs($args: DocsSubirInput!, $files: UploadInput, $filesAcuse: UploadInput)
 {
-    subirDocs(args: $args, files: $files)
+    subirDocs(args: $args, files: $files, filesAcuse: $filesAcuse)
     {
         ...fragDoc
         resolveEmpleado {

@@ -15,5 +15,6 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (reg)="registrar()" (can)="cancelar()" [cargando]="cargandoDatos" [deshabilitar]="formDepto.invalid || cargandoDatos"></app-registros>
+<app-registros (registro)="registrar()" (cancelar)="cancelar()" [cargando]="cargandoDatos" [deshabilitar]="formDepto.invalid || cargandoDatos" [deshabilitarCerrar]="cargandoDatos"></app-registros>
+
 

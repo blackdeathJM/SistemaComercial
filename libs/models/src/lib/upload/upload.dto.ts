@@ -3,7 +3,7 @@ import {GraphQLUpload} from 'graphql-upload';
 import {IArchivo, IDatosArchivo} from './upload.interface';
 import {IsOptional} from 'class-validator';
 
-@InputType('ArchivoInput')
+@InputType('UploadInput')
 export class UploadDto implements IDatosArchivo
 {
     @Field({nullable: true})
@@ -12,7 +12,7 @@ export class UploadDto implements IDatosArchivo
     @Field(() => Boolean, {nullable: true, defaultValue: false})
     @IsOptional()
     eliminar: boolean;
-    @Field(() => String, {nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null, description: 'Es la url A eliminar en caso de que sea remplazar o eliminar el archivo'})
     @IsOptional()
     url: string;
     @Field(() => [GraphQLUpload], {nullable: true, defaultValue: null})

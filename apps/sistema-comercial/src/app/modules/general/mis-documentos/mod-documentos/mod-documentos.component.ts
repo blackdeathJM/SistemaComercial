@@ -95,7 +95,6 @@ export class ModDocumentosComponent implements OnInit
 
         // valores que forman la ruta para guardar el documento en cloud de firesotre
         const ano = new Date().getFullYear();
-        const mes = new Date().toLocaleString('es-mx', {month: 'long'});
         const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
 
         let docUrl: string = null;
@@ -113,14 +112,6 @@ export class ModDocumentosComponent implements OnInit
                 } catch (e)
                 {
                     this.ngxToastService.errorToast(e, 'Ocurrio un errro al tratar de subir el documento');
-                    // const eleminarDocRef = ref(this.storage, docUrl);
-                    // deleteObject(eleminarDocRef).then(() =>
-                    // {
-                    //     this.ngxToastService.infoToast('Se elimino el archivo por que no se realizo el registro correctamente', 'Documentos');
-                    // }).catch((err) =>
-                    // {
-                    //     this.ngxToastService.errorToast(err, 'Error en la nube');
-                    // });
                     return;
                 }
             } else
@@ -129,11 +120,12 @@ export class ModDocumentosComponent implements OnInit
                     {
                         file: file._files,
                         url: '',
-                        carpeta: tipoDoc,
+                        carpeta: 'documentos',
                         eliminar: false
                     };
             }
         }
+
         const regDocumento: TDocumentoReg =
             {
                 folio,
@@ -161,14 +153,6 @@ export class ModDocumentosComponent implements OnInit
         })).subscribe());
     }
 
-    cerrar(): void
-    {
-        if (!this.cargando)
-        {
-            this.mdr.closeAll();
-        }
-    }
-
     genFolio(): void
     {
         this.configService.open(this.confFolio).afterClosed().subscribe((res) =>
@@ -185,6 +169,13 @@ export class ModDocumentosComponent implements OnInit
                 })).subscribe();
             }
         });
+    }
+    cerrar(): void
+    {
+        if (!this.cargando)
+        {
+            this.mdr.closeAll();
+        }
     }
 }
 

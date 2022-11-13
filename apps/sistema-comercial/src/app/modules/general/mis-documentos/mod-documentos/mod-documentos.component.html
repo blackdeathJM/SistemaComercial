@@ -41,9 +41,9 @@
                 <mat-form-field class="flex-auto">
                     <mat-label>Selecciona el tipo de documento</mat-label>
                     <mat-select formControlName="tipoDoc">
-                        <div *ngIf="formDocs.controls.folio.value  === null">
+                        <ng-container *ngIf="formDocs.controls.folio.value  === null">
                             <mat-option [value]="tipo" *ngFor="let tipo of tiposDoc">{{tipo}}</mat-option>
-                        </div>
+                        </ng-container>
                         <mat-option [value]="'Oficio'" *ngIf="formDocs.controls.folio.value !== null">Oficio</mat-option>
                     </mat-select>
                     <mat-error>{{formDocs.controls.tipoDoc['errorMessage']}}</mat-error>

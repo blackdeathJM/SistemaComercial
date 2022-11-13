@@ -54,7 +54,7 @@
             <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
             <div class="flex items-center gap-3">
                 <div>{{_documento?.ref}}</div>
-                <button mat-mini-fab color="accent" *ngIf="_documento?.folio" (click)="docRef(_documento)">
+                <button mat-mini-fab color="accent" *ngIf="_documento?.folio" (click)="docRef(_documento)" [disabled]="_documento?.proceso === 'terminado'">
                     <mat-icon svgIcon="subtitles"></mat-icon>
                 </button>
             </div>
@@ -73,8 +73,8 @@
             <button mat-mini-fab color="primary" matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">
                 <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
             </button>
-            <button mat-mini-fab color="primary" matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
-                <mat-icon svgIcon="heroicons_outline:paper-clip"></mat-icon>
+            <button mat-mini-fab color="accent" matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
+                <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
             </button>
         </div>
     </div>

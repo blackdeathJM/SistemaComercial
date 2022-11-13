@@ -57,4 +57,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (registro)="regEmpleado()" (cancelar)="cerrar()" [deshabilitar]="formEmpleado.invalid || cargando" [cargando]="cargando"></app-registros>
+<app-registros (registro)="regEmpleado()" (cancelar)="cerrar()" [deshabilitar]="formEmpleado.invalid || cargando" [cargando]="cargando" [deshabilitarCerrar]="cargando"></app-registros>

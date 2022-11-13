@@ -44,8 +44,8 @@ export class DetalleDocumentosComponent
     subscripcion: Subscription = new Subscription();
     cargando = false;
 
-    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private mdr: MatDialog, private ngxToastService: NgxToastService,
-                private docActFolioGQL: DocActFolioGQL, private docFinalizarGQL: DocFinalizarGQL)
+    constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
+                private docFinalizarGQL: DocFinalizarGQL)
     {
     }
 
@@ -135,17 +135,23 @@ export class DetalleDocumentosComponent
             this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
             return;
         }
-        this.mdr.open(ModReasignacionComponent, {width: '40%', data: null});
+        this.dRef.open(ModReasignacionComponent, {width: '40%', data: null});
 
     }
 
     modDocs(data: IResolveDocumento): void
     {
-        this.mdr.open(ModSubirDocsComponent, {width: '40%', data});
+        this.dRef.open(ModSubirDocsComponent, {width: '40%', data}).afterClosed().subscribe((res: IResolveDocumento) =>
+        {
+            if (res)
+            {
+                this._documento = res;
+            }
+        });
     }
 
     docRef(_documento: IResolveDocumento): void
     {
-        this.mdr.open(ModDocRefComponent, {width: '40%', data: null});
+        this.dRef.open(ModDocRefComponent, {width: '40%', data: null});
     }
 }

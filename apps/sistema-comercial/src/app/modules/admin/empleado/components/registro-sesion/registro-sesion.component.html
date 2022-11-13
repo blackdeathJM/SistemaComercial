@@ -20,4 +20,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (registro)="registrar()" (cancelar)="cancelar()" [cargando]="cargandoDatos" [deshabilitar]="formAuth.invalid || cargandoDatos"></app-registros>
+<app-registros (registro)="registrar()" (cancelar)="cancelar()" [cargando]="cargandoDatos" [deshabilitar]="formAuth.invalid || cargandoDatos" [deshabilitarCerrar]="cargandoDatos"></app-registros>

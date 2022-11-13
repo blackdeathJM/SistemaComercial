@@ -10,6 +10,7 @@ import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {GraphQLUpload} from 'graphql-upload';
 import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
+import {AppService} from '#api/apps/api/src/app/app.service';
 
 @Module({
     imports:
@@ -54,7 +55,8 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
             AdminModule,
             GeneralModule
         ],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}]
+    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService],
+    exports: [AppService]
 })
 export class AppModule
 {
