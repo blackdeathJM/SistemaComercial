@@ -11,7 +11,6 @@ import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/s
 import {GeneralService} from '@s-app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {STATE_DOCS} from '@s-app/general/general.state';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -26,6 +25,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
+import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
+import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 
 
 @Component({
@@ -40,12 +43,19 @@ import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/d
             MatInputModule,
             MatSelectModule,
             MatDatepickerModule,
+            MatNativeDateModule,
+            MatLuxonDateModule,
             FileUploadModule,
             MatCheckboxModule,
             RegistrosComponent,
             MaterialFileInputModule,
             MatIconModule,
-            MatButtonModule
+            MatButtonModule,
+            SeleccionarEmpleadoComponent
+        ],
+    providers:
+        [
+            MatDatepickerModule
         ],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
@@ -90,67 +100,67 @@ export class ModDocumentosComponent implements OnInit
 
     async reg(esRemoto: boolean): Promise<void>
     {
-        this.cargando = true;
-        this.formDocs.disable();
-
+        // this.cargando = true;
+        // this.formDocs.disable();
+        console.log('datos del formulario', this.formDocs.value);
         // valores que forman la ruta para guardar el documento en cloud de firesotre
-        const ano = new Date().getFullYear();
-        const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
+        // const ano = new Date().getFullYear();
+        // const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
 
-        let docUrl: string = null;
-        let files = null;
-
-        if (file)
-        {
-            if (esRemoto)
-            {
-                try
-                {
-                    const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
-                    const resUpload = await uploadBytes(docRef, file._files[0]);
-                    docUrl = await getDownloadURL(resUpload.ref);
-                } catch (e)
-                {
-                    this.ngxToastService.errorToast(e, 'Ocurrio un errro al tratar de subir el documento');
-                    return;
-                }
-            } else
-            {
-                files =
-                    {
-                        file: file._files,
-                        url: '',
-                        carpeta: 'documentos',
-                        eliminar: false
-                    };
-            }
-        }
-
-        const regDocumento: TDocumentoReg =
-            {
-                folio,
-                ano,
-                tipoDoc,
-                docUrl,
-                usuarioFolio: this.#usuarioFolio,
-                fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
-                fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : 0,
-                enviadoPor: STATE_DATOS_SESION()._id,
-                ...resto
-            };
-        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
-        {
-            this.cargando = false;
-            this.cerrar();
-        }), tap((res) =>
-        {
-            if (res.data)
-            {
-                const elementos = STATE_DOCS();
-                STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
-                this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
-            }
-        })).subscribe());
+        // let docUrl: string = null;
+        // let files = null;
+        //
+        // if (file)
+        // {
+        //     if (esRemoto)
+        //     {
+        //         try
+        //         {
+        //             const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
+        //             const resUpload = await uploadBytes(docRef, file._files[0]);
+        //             docUrl = await getDownloadURL(resUpload.ref);
+        //         } catch (e)
+        //         {
+        //             this.ngxToastService.errorToast(e, 'Ocurrio un errro al tratar de subir el documento');
+        //             return;
+        //         }
+        //     } else
+        //     {
+        //         files =
+        //             {
+        //                 file: file._files,
+        //                 url: '',
+        //                 carpeta: 'documentos',
+        //                 eliminar: false
+        //             };
+        //     }
+        // }
+        //
+        // const regDocumento: TDocumentoReg =
+        //     {
+        //         folio,
+        //         ano,
+        //         tipoDoc,
+        //         docUrl,
+        //         usuarioFolio: this.#usuarioFolio,
+        //         fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
+        //         fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : 0,
+        //         enviadoPor: STATE_DATOS_SESION()._id,
+        //         ...resto
+        //     };
+        // this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
+        // {
+        //     this.cargando = false;
+        //     this.cerrar();
+        // }), tap((res) =>
+        // {
+        //     if (res.data)
+        //     {
+        //         const elementos = STATE_DOCS();
+        //         STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
+        //         this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
+        //     }
+        // })).subscribe());
     }
 
     genFolio(): void
@@ -170,6 +180,7 @@ export class ModDocumentosComponent implements OnInit
             }
         });
     }
+
     cerrar(): void
     {
         if (!this.cargando)

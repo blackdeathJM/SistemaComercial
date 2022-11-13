@@ -30,13 +30,14 @@
                 <mat-error>{{formDocs.controls.asunto['errorMessage']}}</mat-error>
             </mat-form-field>
             <div class="flex gap-4">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
-                    <mat-select multiple formControlName="usuarios">
-                        <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
-                    </mat-select>
-                    <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
-                </mat-form-field>
+<!--                <app-seleccionar-empleado class="flex-auto" multiple="true" formControlName="usuarios"></app-seleccionar-empleado>-->
+                <!--                <mat-form-field class="flex-auto">-->
+                <!--                    <mat-label>Selecciona los usuarios a enviar el documento</mat-label>-->
+                <!--                    <mat-select multiple formControlName="usuarios">-->
+                <!--                        <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>-->
+                <!--                    </mat-select>-->
+                <!--                    <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>-->
+                <!--                </mat-form-field>-->
 
                 <mat-form-field class="flex-auto">
                     <mat-label>Selecciona el tipo de documento</mat-label>

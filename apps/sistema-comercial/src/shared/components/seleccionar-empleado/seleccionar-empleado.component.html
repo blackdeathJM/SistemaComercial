@@ -1,0 +1,6 @@
+<mat-form-field class="w-full">
+    <mat-label>Selecciona usuario(s)</mat-label>
+    <mat-select [multiple]="multiple">
+        <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+    </mat-select>
+</mat-form-field>

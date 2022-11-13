@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Portal, PortalService} from '#/libs/services/src/lib/services/portal.service';
-import {PortalModule} from "@angular/cdk/portal";
+import {PortalModule} from '@angular/cdk/portal';
+import {CommonModule} from '@angular/common';
 
 @Component({
     standalone: true,
@@ -9,7 +10,7 @@ import {PortalModule} from "@angular/cdk/portal";
     templateUrl: './portal.component.html',
     imports:
         [
-            PortalModule
+            CommonModule, PortalModule
         ],
     styleUrls: ['./portal.component.scss']
 })

@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {CdkScrollableModule} from "@angular/cdk/scrolling";
+import {CdkScrollableModule} from '@angular/cdk/scrolling';
+import {CommonModule} from '@angular/common';
 
 @Component({
     standalone: true,
     imports:
         [
-            CdkScrollableModule
+            CommonModule, CdkScrollableModule
         ],
     exportAs: 'app-tarjeta-contenido-scroll',
     selector: 'app-tarjeta-contenido-scroll',

@@ -16,7 +16,7 @@ import {NgMaterialMaterialModule} from '@s-shared/ng-material/ng-material-materi
             CommonModule,
             FormsModule,
             ReactiveFormsModule,
-            NgMaterialMaterialModule,
+            NgMaterialMaterialModule
         ]
 })
 export class SharedModule

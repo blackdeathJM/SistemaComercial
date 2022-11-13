@@ -135,7 +135,7 @@ export class DetalleDocumentosComponent
             this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
             return;
         }
-        this.dRef.open(ModReasignacionComponent, {width: '40%', data: null});
+        this.dRef.open(ModReasignacionComponent, {width: '40%', data: null}).afterClosed().pipe().subscribe();
 
     }
 

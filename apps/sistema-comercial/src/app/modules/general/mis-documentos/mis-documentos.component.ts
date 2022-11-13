@@ -17,9 +17,10 @@ import {CommonModule} from '@angular/common';
 import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-documentos/detalle-documentos.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @Component({
     standalone: true,
@@ -36,9 +37,10 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
             DetalleDocumentosComponent,
             MatFormFieldModule,
             MatInputModule,
-            MatDatepickerModule,
             RxReactiveFormsModule,
             ReactiveFormsModule,
+            MatDatepickerModule,
+            MatNativeDateModule
         ],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',

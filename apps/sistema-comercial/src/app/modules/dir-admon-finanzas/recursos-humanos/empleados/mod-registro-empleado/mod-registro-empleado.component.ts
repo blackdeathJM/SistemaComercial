@@ -14,7 +14,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
 import {GeneralService} from '@s-app/services/general.service';
 import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {DeptosTodosComponent} from '@s-shared/deptos-todos/deptos-todos.component';
+import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';

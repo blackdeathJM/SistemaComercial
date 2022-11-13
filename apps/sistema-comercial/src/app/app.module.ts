@@ -77,6 +77,7 @@ const routerConfig: ExtraOptions =
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
         ],
+    providers: [],
     bootstrap:
         [
             AppComponent
