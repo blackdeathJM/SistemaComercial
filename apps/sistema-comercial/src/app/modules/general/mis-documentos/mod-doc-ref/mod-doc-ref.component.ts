@@ -64,7 +64,7 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
     {
         if (!this.matAutocomplete.isOpen)
         {
-            const input = event.input;
+            const input = event;
             const value = event.value;
 
             // Add our fruit

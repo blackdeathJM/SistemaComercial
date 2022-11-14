@@ -100,4 +100,9 @@ export class DocumentosResolver
     {
         return await this.documentosService.reasignarUsuario(usuarios);
     }
+    @Mutation(() => [DocumentoDto])
+    docRefFolio(): Promise<DocumentoDto>
+    {
+
+    }
 }

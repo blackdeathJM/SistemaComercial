@@ -9,6 +9,7 @@ import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
 import {AppService} from '#api/apps/api/src/app/app.service';
+import {IDocumento} from "#api/libs/models/src/lib/general/documentos/documento.interface";
 
 @Injectable()
 export class DocumentosService
@@ -118,8 +119,9 @@ export class DocumentosService
         }
     }
 
-    async docRefFolio(entradas: DocRefFolioDto): Promise<DocumentoDto>
+    async docRefFolio(entradas: DocRefFolioDto): Promise<DocumentoDto[]>
     {
+        const docsAsig: IDocumento[] = [];
         try
         {
             const {_id, folio, ref} = entradas;
@@ -127,12 +129,18 @@ export class DocumentosService
             {
                 try
                 {
-                    await this.documento.findOneAndUpdate({seguimiento: valor}, {$set: {folio, ref}}).exec();
+                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento: valor}, {$set: {folio, ref}}, {returnOriginal: false}).exec();
+                    if (docsAsignados)
+                    {
+                        docsAsig.push(docsAsignados);
+                    }
                 } catch (e)
                 {
                     throw new ConflictException({message: e});
                 }
             });
+            const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {returnOriginal: false}).exec();
+            return docsAsig.push(docFolioPrincipal);
         } catch (e)
         {
 
