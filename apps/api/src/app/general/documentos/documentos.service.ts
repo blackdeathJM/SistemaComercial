@@ -33,11 +33,23 @@ export class DocumentosService
         }
     }
 
+    async docEnviadoPorMi(): Promise<DocumentoDto[]>
+    {
+        try
+        {
+            // crear objecto de consulta
+            return await this.documento.find({enviadoPor: ''}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: `Ocurrio un error inesperado: ${e}`});
+        }
+    }
+
     async docsEntreFechas(args: DocsEntreFechasDto): Promise<DocumentoDto[]>
     {
         try
         {
-        return await this.documento.find({fechaRecepcion: {$gte: args.fechaRecepcion, $lte: args.fechaFinal}})
+            return await this.documento.find({usuarios: args.usuario, fechaRecepcion: {$gte: args.fechaRecepcion, $lte: args.fechaFinal}}).exec();
         } catch (e)
         {
 

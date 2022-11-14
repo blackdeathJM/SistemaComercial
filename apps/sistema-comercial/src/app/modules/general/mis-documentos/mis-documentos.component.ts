@@ -51,7 +51,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     docs: IResolveDocumento[];
     docSeleccionado: IResolveDocumento;
     abrirP: boolean = false;
-    cargandoDatos = true;
+    cargandoDatos = false;
     subscripciones: Subscription = new Subscription();
 
     constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL)
@@ -65,7 +65,13 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
 
     ngOnInit(): void
     {
-        this.docsUsuarioProcesoGQL.watch({datos: {proceso: 'pendiente', usuario: STATE_DATOS_SESION()._id}}).valueChanges
+        this.docUsuarioProceso('pendiente');
+    }
+
+    docUsuarioProceso(proceso: string): void
+    {
+        this.cargandoDatos = true;
+        this.docsUsuarioProcesoGQL.watch({datos: {proceso, usuario: STATE_DATOS_SESION()._id}}).valueChanges
             .pipe(tap((res) =>
             {
                 this.cargandoDatos = false;
@@ -101,12 +107,12 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
 
     pendientes(): void
     {
-
+        this.docUsuarioProceso('pendiente');
     }
 
     terminados(): void
     {
-
+        this.docUsuarioProceso('terminado');
     }
 
     enviadosPorMi(): void
