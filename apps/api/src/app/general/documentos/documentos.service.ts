@@ -2,7 +2,7 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsFechasUsuarioEnviadoPorDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
     DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
@@ -36,25 +36,44 @@ export class DocumentosService
     async docsFechasUsuarioEnviadoPor(args: DocsFechasUsuarioEnviadoPorDto): Promise<DocumentoDto[]>
     {
         let fechas = null;
-        if (args.fechaInicial !== 0)
+        if (args.fechaInicial !== null && args.fechaFinal !== null)
         {
             fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
         }
         const usuarioEnviadoPor: Record<string, string> = {};
         if (args.esEnviadoPor)
         {
-            usuarioEnviadoPor['usuarios'] = args.usuario;
+            usuarioEnviadoPor['enviadoPor'] = args.enviadoPor;
         } else
         {
-            usuarioEnviadoPor['enviadoPor'] = args.enviadoPor;
+            usuarioEnviadoPor['usuarios'] = args.usuario;
         }
-        const valor = args.fechaInicial !== 0 ? Object.assign(usuarioEnviadoPor, fechas) : usuarioEnviadoPor;
+        const valor = args.fechaInicial !== null ? Object.assign(usuarioEnviadoPor, fechas) : usuarioEnviadoPor;
         try
         {
             return await this.documento.find({...valor}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: `Ocurrio un error inesperado: ${e}`});
+            throw new InternalServerErrorException({message: e});
+        }
+    }
+
+    async docsBusquedaGral(args: DocsBusquedaGralDto): Promise<DocumentoDto[]>
+    {
+        try
+        {
+            return await this.documento.find({
+                usuarios: args.usuario, $or:
+                    [
+                        {identificadorDoc: {$regex: args.consulta, $options: 'i'}},
+                        {asunto: {$regex: args.consulta, $options: 'i'}},
+                        {dependencia: {$regex: args.consulta, $options: 'i'}},
+                        {tipoDoc: {$regex: args.consulta, $options: 'i'}}
+                    ]
+            }).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
         }
     }
 
@@ -74,7 +93,7 @@ export class DocumentosService
                 return await this.documento.create(datos);
             } catch (e)
             {
-                throw new InternalServerErrorException({message: `Ocurrio un error interno: ${e}`});
+                throw new InternalServerErrorException({message: e});
             }
         } else
         {
@@ -88,6 +107,28 @@ export class DocumentosService
         }
     }
 
+    async docRef(usuario: string): Promise<DocumentoDto[]>
+    {
+        try
+        {
+            return await this.documento.find({proceso: 'pendiente', usuarios: usuario, ano: this.#ano, tipoDoc: 'oficio'}).exec();
+        } catch (e)
+        {
+
+        }
+    }
+
+    async docRefFolio(): Promise<DocumentoDto>
+    {
+        try
+        {
+            return null;
+        } catch (e)
+        {
+
+        }
+    }
+
     async docActFolio(args: DocActFolioDto): Promise<DocumentoDto>
     {
         try
@@ -97,7 +138,7 @@ export class DocumentosService
                 {returnOriginal: false}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: `Ocurrio un error interno en el servidor${e}`});
+            throw new InternalServerErrorException({message: e});
         }
     }
 
@@ -166,7 +207,7 @@ export class DocumentosService
             return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${this.#mes}-${this.#ano}`;
         } catch (e)
         {
-            throw new InternalServerErrorException({message: 'Ocurrio un error interno, no se puede continuar', e});
+            throw new InternalServerErrorException({message: e});
         }
     }
 
@@ -177,7 +218,7 @@ export class DocumentosService
             return await this.documento.countDocuments({ano: this.#ano, tipoDoc}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: 'Ocurrio un error interno no se puede continuar'});
+            throw new InternalServerErrorException({message: e});
         }
     }
 

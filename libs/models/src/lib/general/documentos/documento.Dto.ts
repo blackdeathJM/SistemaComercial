@@ -114,15 +114,26 @@ export class DocsFechasUsuarioEnviadoPorDto implements IDocsFechasUsuarioEnviado
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'Es necesario enviado por'})
     enviadoPor: string;
-    @Field(() => Int, {nullable: true, defaultValue: 0})
-    @IsNotEmpty({message: 'La fecha final no puede estar vacia'})
+    @Field(() => Int, {nullable: true, defaultValue: null})
+    @IsOptional()
     fechaInicial: number;
-    @Field(() => Int, {nullable: true, defaultValue: 0})
-    @IsNotEmpty({message: 'La fecha final no puede estar vacia'})
+    @Field(() => Int, {nullable: true, defaultValue: null})
+    @IsOptional()
     fechaFinal: number;
     @Field(() => Boolean, {nullable: true, defaultValue: false})
     @IsBoolean({message: 'El Valor debe ser booleano'})
     esEnviadoPor: boolean;
+}
+
+@ArgsType()
+export class DocsBusquedaGralDto
+{
+    @Field(() => String)
+    @IsOptional()
+    consulta: string;
+    @Field(() => ID)
+    @IsNotEmpty({message: 'Es necesario el usuario'})
+    usuario: string;
 }
 
 @InputType('DocRegInput')
@@ -141,6 +152,12 @@ export class DocFolioDto extends PickType(DocumentoDto, ['tipoDoc'], InputType) 
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'el id del departamento es necesario'})
     deptoId: string;
+}
+
+@InputType('DocRefFolioInput')
+export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio'])
+{
+
 }
 
 @InputType('DocFinalizarInput')

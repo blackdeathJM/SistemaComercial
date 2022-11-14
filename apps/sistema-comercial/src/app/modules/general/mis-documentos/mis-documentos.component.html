@@ -14,7 +14,7 @@
         <div class="flex gap-4 items-center">
             <mat-form-field class="flex-auto">
                 <mat-label>Busqueda general</mat-label>
-                <input matInput id="busquedaGralDoc" placeholder="puedes buscar por asunto, dependencia, año, proceso, seguimiento">
+                <input matInput id="busquedaGralDoc" placeholder="puedes buscar por asunto, dependencia, año, proceso, seguimiento" [formControl]="txtBuscar">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Selecciona un rango de fechas</mat-label>

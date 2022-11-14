@@ -1,6 +1,6 @@
 import {Args, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver} from '@nestjs/graphql';
 import {DocumentosService} from './documentos.service';
-import {DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocFolioDto, DocActFolioDto, DocReasignarUsuarioDto, DocsFechasUsuarioEnviadoPorDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocFolioDto, DocActFolioDto, DocReasignarUsuarioDto, DocsFechasUsuarioEnviadoPorDto, DocsBusquedaGralDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
@@ -24,6 +24,18 @@ export class DocumentosResolver
     async docsFechasUsuarioEnviadoPor(@Args() args: DocsFechasUsuarioEnviadoPorDto): Promise<DocumentoDto[]>
     {
         return await this.documentosService.docsFechasUsuarioEnviadoPor(args);
+    }
+
+    @Query(() => [DocumentoDto])
+    async docsBusquedaGral(@Args() args: DocsBusquedaGralDto): Promise<DocumentoDto[]>
+    {
+        return await this.documentosService.docsBusquedaGral(args);
+    }
+
+    @Query(() => [DocumentoDto])
+    async docsRef(@Args('usuario') usuario: string): Promise<DocumentoDto[]>
+    {
+        return await this.documentosService.docRef(usuario);
     }
 
     @ResolveField(() => EmpleadoDto, {nullable: true})

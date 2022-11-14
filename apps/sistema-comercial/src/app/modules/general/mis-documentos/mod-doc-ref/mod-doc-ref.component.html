@@ -1,8 +1,32 @@
 <h2 mat-dialog-title>Referenciar documentos a folio</h2>
 <mat-dialog-content>
-    <mat-form-field>
-<!--    <mat-chip *ngFor="let ref of ">-->
-
-<!--    </mat-chip>-->
-    </mat-form-field>
+    <div class="flex">
+        <mat-form-field class="flex-auto">
+            <mat-chip-list #chipList>
+                <mat-chip
+                    *ngFor="let fruit of ref"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(fruit)">
+                    {{fruit}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                    placeholder="Referencia"
+                    #entradaRef
+                    [formControl]="refCtrl"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let fruit of refFiltrados | async" [value]="fruit">
+                    {{fruit}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
 </mat-dialog-content>
+<app-registros (registro)="asignar()" (cancelar)="cerrar()"></app-registros>

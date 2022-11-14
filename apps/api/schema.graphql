@@ -164,7 +164,9 @@ type Query {
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
   docsUsuarioProceso(datos: DocsUsuarioProcesoInput!): [DocumentoType!]!
-  docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = 0, fechaFinal: Int = 0, esEnviadoPor: Boolean = false): [DocumentoType!]!
+  docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
+  docsBusquedaGral(consulta: String!, usuario: ID!): [DocumentoType!]!
+  docsRef(usuario: String!): [DocumentoType!]!
 }
 
 input DocsUsuarioProcesoInput {
