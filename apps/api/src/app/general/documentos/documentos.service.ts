@@ -2,7 +2,7 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
     DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
@@ -118,11 +118,21 @@ export class DocumentosService
         }
     }
 
-    async docRefFolio(): Promise<DocumentoDto>
+    async docRefFolio(entradas: DocRefFolioDto): Promise<DocumentoDto>
     {
         try
         {
-            return null;
+            const {_id, folio, ref} = entradas;
+            ref.map(async (valor) =>
+            {
+                try
+                {
+                    await this.documento.findOneAndUpdate({seguimiento: valor}, {$set: {folio, ref}}).exec();
+                } catch (e)
+                {
+                    throw new ConflictException({message: e});
+                }
+            });
         } catch (e)
         {
 

@@ -1,4 +1,4 @@
-import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocumento, TDocReasignarUsuarios, TDocSubir, TDocumentoReg} from './documento.interface';
+import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocumento, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
 import {ArgsType, Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
@@ -155,7 +155,7 @@ export class DocFolioDto extends PickType(DocumentoDto, ['tipoDoc'], InputType) 
 }
 
 @InputType('DocRefFolioInput')
-export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio'])
+export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio']) implements TDocRefFolio
 {
 
 }

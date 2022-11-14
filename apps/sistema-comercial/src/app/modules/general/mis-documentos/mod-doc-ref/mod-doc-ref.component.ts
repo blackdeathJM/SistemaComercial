@@ -1,6 +1,6 @@
 import {AfterContentChecked, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
@@ -36,7 +36,7 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
     referencias: string[] = [];
     todasRef: string[] = [];
 
-    constructor(private docsRef: DocsRefGQL)
+    constructor(private docsRef: DocsRefGQL, private dRef: MatDialogRef<ModDocRefComponent>)
     {
 
     }
@@ -47,7 +47,6 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
         {
             if (res.data)
             {
-                console.log('res', res);
                 const respuesta = res.data.docsRef as IResolveDocumento[];
                 respuesta.map(r => this.todasRef.push(r.seguimiento));
             }
@@ -107,12 +106,12 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
 
     cerrar(): void
     {
+        this.dRef.close();
     }
 
     private _filter(value: string): string[]
     {
         const filterValue = value.toLowerCase();
-
         return this.todasRef.filter(filtroRef => filtroRef.toLowerCase().indexOf(filterValue) === 0);
     }
 }
