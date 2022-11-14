@@ -1,7 +1,7 @@
 import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DocActFolioDto, DocFolioDto, DocRegDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
@@ -81,6 +81,22 @@ export class DocumentosService
         } catch (e)
         {
             throw new InternalServerErrorException({message: 'Ocurrio un error inesperado', e});
+        }
+    }
+
+    async reasignarUsuario(usuarios: DocReasignarUsuarioDto): Promise<DocumentoDto>
+    {
+        try
+        {
+            const reasignacionUsuarios = await this.documento.findByIdAndUpdate(usuarios._id, {$set: {usuarios: usuarios.usuarios}}, {returnOriginal: false}).exec();
+            if (!reasignacionUsuarios)
+            {
+                this.enviarError();
+            }
+            return reasignacionUsuarios;
+        } catch (e)
+        {
+
         }
     }
 

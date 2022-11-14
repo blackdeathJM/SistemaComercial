@@ -1,7 +1,7 @@
-import {IDocActFolio, IDocFolio, IDocumento, TDocSubir, TDocumentoReg} from './documento.interface';
+import {IDocActFolio, IDocFolio, IDocumento, TDocReasignarUsuarios, TDocSubir, TDocumentoReg} from './documento.interface';
 import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {Document} from 'mongoose';
 
 @ObjectType('DocumentoType')
@@ -90,6 +90,7 @@ export class DocumentoDto implements IDocumento
     @Field(() => [String], {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar por lo menos un usuario'})
+    @IsArray({message: 'Los usuarios deben estar en un arreglo'})
     usuarios: string[];
 }
 
@@ -131,4 +132,10 @@ export class DocActFolioDto extends PickType(DocumentoDto, ['_id', 'usuarioFolio
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es requerido el id del departamento'})
     deptoId: string;
+}
+
+@InputType('DocReasignarUsuarioInput')
+export class DocReasignarUsuarioDto extends PickType(DocumentoDto, ['_id', 'usuarios'], InputType) implements TDocReasignarUsuarios
+{
+
 }

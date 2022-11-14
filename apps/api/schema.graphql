@@ -184,6 +184,7 @@ type Mutation {
   genFolioSinReg(args: DocFolioInput!): String!
   docFinalizar(_id: String!): DocumentoType!
   docActFolio(args: DocActFolioInput!): DocumentoType!
+  reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
 }
 
 input RegEmpleadoInput {
@@ -259,6 +260,11 @@ input DocActFolioInput {
   _id: ID
   usuarioFolio: String = null
   deptoId: String
+}
+
+input DocReasignarUsuarioInput {
+  _id: ID
+  usuarios: [String!]
 }
 
 type Subscription {

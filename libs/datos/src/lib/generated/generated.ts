@@ -75,6 +75,11 @@ export type DocFolioInput = {
   tipoDoc?: InputMaybe<Scalars['String']>;
 };
 
+export type DocReasignarUsuarioInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  usuarios?: InputMaybe<Array<Scalars['String']>>;
+};
+
 export type DocRegInput = {
   acuseUrl?: InputMaybe<Scalars['String']>;
   ano?: InputMaybe<Scalars['Int']>;
@@ -235,6 +240,7 @@ export type Mutation = {
   eliminarDepto: DeptoType;
   genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
+  reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
   subirDocs: DocumentoType;
 };
@@ -290,6 +296,11 @@ export type MutationGenFolioSinRegArgs = {
 
 export type MutationLoginArgs = {
   login: LoginInput;
+};
+
+
+export type MutationReasignarUsuarioArgs = {
+  usuarios: DocReasignarUsuarioInput;
 };
 
 
@@ -483,6 +494,13 @@ export type DocFinalizarMutationVariables = Exact<{
 
 
 export type DocFinalizarMutation = { __typename?: 'Mutation', docFinalizar: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
+
+export type ReasignarUsuarioMutationVariables = Exact<{
+  usuarios: DocReasignarUsuarioInput;
+}>;
+
+
+export type ReasignarUsuarioMutation = { __typename?: 'Mutation', reasignarUsuario: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -949,6 +967,35 @@ export const DocFinalizarDocument = gql`
   })
   export class DocFinalizarGQL extends Apollo.Mutation<DocFinalizarMutation, DocFinalizarMutationVariables> {
     document = DocFinalizarDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ReasignarUsuarioDocument = gql`
+    mutation reasignarUsuario($usuarios: DocReasignarUsuarioInput!) {
+  reasignarUsuario(usuarios: $usuarios) {
+    ...fragDoc
+    resolveEmpleado {
+      nombreCompleto
+      avatar
+    }
+    resolverEmpleadoFolio {
+      nombreCompleto
+    }
+    resolveEmpleadoEnviado {
+      nombreCompleto
+      avatar
+    }
+  }
+}
+    ${FragDocFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ReasignarUsuarioGQL extends Apollo.Mutation<ReasignarUsuarioMutation, ReasignarUsuarioMutationVariables> {
+    document = ReasignarUsuarioDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

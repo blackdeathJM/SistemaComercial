@@ -128,14 +128,21 @@ export class DetalleDocumentosComponent
         });
     }
 
-    reasignacion(documento: IResolveDocumento): void
+    reasignacion(data: IResolveDocumento): void
     {
-        if (documento.enviadoPor !== STATE_DATOS_SESION()._id)
+        if (data.enviadoPor !== STATE_DATOS_SESION()._id)
         {
             this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
             return;
         }
-        this.dRef.open(ModReasignacionComponent, {width: '40%', data: null}).afterClosed().pipe().subscribe();
+        this.dRef.open(ModReasignacionComponent, {width: '40%', data}).afterClosed().pipe(tap((res) =>
+        {
+            console.log('despues de cerrar', res);
+            if (res)
+            {
+                this._documento = res;
+            }
+        })).subscribe();
 
     }
 

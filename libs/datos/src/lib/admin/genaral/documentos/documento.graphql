@@ -95,3 +95,21 @@ mutation docFinalizar($_id: String!)
         }
     }
 }
+mutation reasignarUsuario($usuarios: DocReasignarUsuarioInput!)
+{
+    reasignarUsuario(usuarios: $usuarios)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}

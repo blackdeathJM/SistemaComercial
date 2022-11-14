@@ -1,12 +1,14 @@
 <h2 mat-dialog-title>Reaccignacion de usuarios</h2>
 <mat-dialog-content>
-    <div>
+    <div class="flex flex-col">
         <mat-form-field>
-            <mat-label> Fecha</mat-label>
-            <input matInput [matDatepicker]="picker" readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-label>Selecciona de nuevo a los usuarios</mat-label>
+            <mat-select multiple [formControl]="selecEmpleado">
+                <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                <mat-error>{{selecEmpleado.errors}}</mat-error>
+            </mat-select>
         </mat-form-field>
     </div>
 </mat-dialog-content>
-<app-registros></app-registros>
+<app-registros (registro)="cambiarUsuarios()" (cancelar)="cerrar()" [deshabilitar]="selecEmpleado.invalid || cargando" [deshabilitarCerrar]="cargando"
+               [cargando]="cargando"></app-registros>

@@ -33,6 +33,8 @@ export interface IDocActFolio extends Pick<IDocumento, '_id' | 'usuarioFolio'>
     deptoId: string;
 }
 
+export type TDocReasignarUsuarios = Pick<IDocumento, '_id' | 'usuarios'>;
+
 export interface IDocFolio
 {
     tipoDoc: string;

@@ -16,6 +16,8 @@ import {SubirDocsGQL} from '#/libs/datos/src';
 import {tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {STATE_DOCS} from '@s-app/general/general.state';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {DisableControlModule} from '@angular-ru/cdk/directives';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -29,7 +31,8 @@ import {STATE_DOCS} from '@s-app/general/general.state';
             MatIconModule,
             RegistrosComponent,
             ReactiveFormsModule,
-            RxReactiveFormsModule
+            RxReactiveFormsModule,
+            DisableControlModule
         ],
     templateUrl: './mod-subir-docs.component.html',
     styleUrls: ['./mod-subir-docs.component.scss'],
@@ -39,6 +42,7 @@ export class ModSubirDocsComponent implements OnInit
 {
     formDocsArchivo: FormGroup;
     cargando = false;
+    usuarioQueReg: string;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService,
                 private storage: Storage, private subirDocsGQL: SubirDocsGQL)
@@ -48,6 +52,7 @@ export class ModSubirDocsComponent implements OnInit
     ngOnInit(): void
     {
         this.formDocsArchivo = this.fb.formGroup(new Archivos());
+        this.usuarioQueReg = STATE_DATOS_SESION()._id;
     }
 
     async reemplazar(esRemoto: boolean): Promise<void>
