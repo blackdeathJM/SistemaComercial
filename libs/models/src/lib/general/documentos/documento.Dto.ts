@@ -98,8 +98,22 @@ export type DocumentoType = DocumentoDto & Document;
 export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentoDto);
 
 @InputType('DocsUsuarioProcesoInput')
-export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['ano', 'enviadoPor'], InputType)
+export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['proceso'], InputType)
 {
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el usuario que recibe el documento'})
+    usuario: string;
+}
+
+@InputType('DocEntreFechasInput')
+export class DocsEntreFechasDto extends PickType(DocumentoDto, ['fechaRecepcion'], InputType)
+{
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el usuario que recibe el documento'})
+    usuario: string;
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @IsNotEmpty({message: 'La fecha final no puede estar vacia'})
+    fechaFinal: number;
 }
 
 @InputType('DocRegInput')

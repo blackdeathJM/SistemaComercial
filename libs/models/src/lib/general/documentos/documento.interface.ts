@@ -27,6 +27,7 @@ export interface IDocumento
 export const TIPOS_DOCUMENTO = ['Oficio', 'Memorandum', 'Circular', 'Otro'];
 export type TDocumentoReg = Omit<IDocumento, '_id' | 'ref'>;
 export type TDocSubir = Pick<IDocumento, '_id' | 'docUrl' | 'acuseUrl'>;
+export type TDocUsuarioProceso = Pick<IDocumento, '_id' | 'proceso' | 'usuarios'>;
 
 export interface IDocActFolio extends Pick<IDocumento, '_id' | 'usuarioFolio'>
 {

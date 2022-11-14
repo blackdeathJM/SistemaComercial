@@ -65,7 +65,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
 
     ngOnInit(): void
     {
-        this.docsUsuarioProcesoGQL.watch({datos: {ano: new Date().getFullYear(), enviadoPor: STATE_DATOS_SESION()._id}}).valueChanges
+        this.docsUsuarioProcesoGQL.watch({datos: {proceso: 'pendiente', usuario: STATE_DATOS_SESION()._id}}).valueChanges
             .pipe(tap((res) =>
             {
                 this.cargandoDatos = false;

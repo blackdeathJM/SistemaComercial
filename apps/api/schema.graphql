@@ -167,8 +167,8 @@ type Query {
 }
 
 input DocsUsuarioProcesoInput {
-  ano: Int
-  enviadoPor: String
+  proceso: String = "pendiente"
+  usuario: ID
 }
 
 type Mutation {

@@ -1,7 +1,10 @@
 import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsEntreFechasDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
+    DocumentoType
+} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
@@ -22,10 +25,22 @@ export class DocumentosService
     {
         try
         {
-            return await this.documento.find().exec();
+            // Buscar documentos por usuarios, ano, proceso,
+            return await this.documento.find({proceso: datos.proceso, ano: this.#ano, usuarios: datos.usuario}, {}, {sort: {fechaRecepcion: -1}}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e});
+        }
+    }
+
+    async docsEntreFechas(args: DocsEntreFechasDto): Promise<DocumentoDto[]>
+    {
+        try
+        {
+        return await this.documento.find({fechaRecepcion: {$gte: args.fechaRecepcion, $lte: args.fechaFinal}})
+        } catch (e)
+        {
+
         }
     }
 
@@ -45,7 +60,7 @@ export class DocumentosService
                 return await this.documento.create(datos);
             } catch (e)
             {
-                console.log('reg doc', e);
+                throw new InternalServerErrorException({message: `Ocurrio un error interno: ${e}`});
             }
         } else
         {

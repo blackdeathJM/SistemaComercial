@@ -108,8 +108,8 @@ export type DocsSubirInput = {
 };
 
 export type DocsUsuarioProcesoInput = {
-  ano?: InputMaybe<Scalars['Int']>;
-  enviadoPor?: InputMaybe<Scalars['String']>;
+  proceso?: InputMaybe<Scalars['String']>;
+  usuario?: InputMaybe<Scalars['ID']>;
 };
 
 export type DocumentoInput = {
