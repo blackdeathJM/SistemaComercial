@@ -111,10 +111,10 @@ export class DocumentosService
     {
         try
         {
-            return await this.documento.find({proceso: 'pendiente', usuarios: usuario, ano: this.#ano, tipoDoc: 'oficio'}).exec();
+            return await this.documento.find({usuarios: usuario, proceso: 'pendiente', ano: this.#ano, tipoDoc: 'Oficio'}).exec();
         } catch (e)
         {
-
+            throw new ConflictException({message: e});
         }
     }
 

@@ -6,9 +6,12 @@ import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocomplete, MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {map, Observable, startWith} from 'rxjs';
+import {map, Observable, startWith, tap} from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {DocsRefGQL} from '#/libs/datos/src';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 
 @Component({
     selector: 'app-mod-doc-ref',
@@ -20,7 +23,7 @@ import {RegistrosComponent} from '@s-shared/registros/registros.component';
 })
 export class ModDocRefComponent implements OnInit, AfterContentChecked
 {
-    @ViewChild('entradaRef') fruitInput: ElementRef<HTMLInputElement>;
+    @ViewChild('entradaRef') refInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
     visible = true;
@@ -30,24 +33,32 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
     separatorKeysCodes: number[] = [ENTER, COMMA];
     refCtrl = new FormControl();
     refFiltrados: Observable<string[]>;
-    ref: string[] = [];
-    todasRef: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+    referencias: string[] = [];
+    todasRef: string[] = [];
 
-    constructor()
+    constructor(private docsRef: DocsRefGQL)
     {
 
     }
 
     ngOnInit(): void
     {
-
+        this.docsRef.watch({usuario: STATE_DATOS_SESION()._id}).valueChanges.pipe(tap((res) =>
+        {
+            if (res.data)
+            {
+                console.log('res', res);
+                const respuesta = res.data.docsRef as IResolveDocumento[];
+                respuesta.map(r => this.todasRef.push(r.seguimiento));
+            }
+        })).subscribe();
     }
 
     ngAfterContentChecked(): void
     {
         this.refFiltrados = this.refCtrl.valueChanges.pipe(
             startWith(null),
-            map((fruit: string | null) => fruit ? this._filter(fruit) : this.todasRef.slice()));
+            map((referencia: string | null) => referencia ? this._filter(referencia) : this.todasRef.slice()));
     }
 
     add(event: MatChipInputEvent): void
@@ -60,7 +71,7 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
             // Add our fruit
             if ((value || '').trim())
             {
-                this.ref.push(value.trim());
+                this.referencias.push(value.trim());
             }
 
             // Reset the input value
@@ -75,23 +86,23 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
 
     remove(fruit: string): void
     {
-        const index = this.ref.indexOf(fruit);
+        const index = this.referencias.indexOf(fruit);
         if (index >= 0)
         {
-            this.ref.splice(index, 1);
+            this.referencias.splice(index, 1);
         }
     }
 
     selected(event: MatAutocompleteSelectedEvent): void
     {
-        this.ref.push(event.option.viewValue);
-        this.fruitInput.nativeElement.value = '';
+        this.referencias.push(event.option.viewValue);
+        this.refInput.nativeElement.value = '';
         this.refCtrl.setValue(null);
     }
 
     asignar(): void
     {
-        console.log(this.ref);
+        console.log(this.referencias);
     }
 
     cerrar(): void
@@ -102,6 +113,6 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
     {
         const filterValue = value.toLowerCase();
 
-        return this.todasRef.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+        return this.todasRef.filter(filtroRef => filtroRef.toLowerCase().indexOf(filterValue) === 0);
     }
 }
