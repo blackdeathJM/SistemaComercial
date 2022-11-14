@@ -18,12 +18,12 @@
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Selecciona un rango de fechas</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate placeholder="Fecha de inicio">
-                    <input matEndDate placeholder="Fecha fin">
+                <mat-date-range-input [rangePicker]="picker" [formGroup]="formBuscarFechas">
+                    <input matStartDate placeholder="Fecha de inicio" formControlName="fechaInicio">
+                    <input matEndDate placeholder="Fecha fin" formControlName="fechaFin">
                 </mat-date-range-input>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-date-range-picker #picker (closed)="consultaFechasUsuario()"></mat-date-range-picker>
             </mat-form-field>
             <button class="flex-auto" id="btnPendientesDoc" mat-stroked-button color="primary" (click)="pendientes()">
                 <mat-icon svgIcon="pending_actions"></mat-icon>

@@ -29,9 +29,24 @@ export type TDocumentoReg = Omit<IDocumento, '_id' | 'ref'>;
 export type TDocSubir = Pick<IDocumento, '_id' | 'docUrl' | 'acuseUrl'>;
 export type TDocUsuarioProceso = Pick<IDocumento, '_id' | 'proceso' | 'usuarios'>;
 
+export interface IDocsFechasUsuarioEnviadoPor
+{
+    usuario: string;
+    enviadoPor: string;
+    fechaInicial: number;
+    fechaFinal: number;
+    esEnviadoPor: boolean;
+}
+
 export interface IDocActFolio extends Pick<IDocumento, '_id' | 'usuarioFolio'>
 {
     deptoId: string;
+}
+
+export interface IDocEnviadoPorMi extends Pick<IDocumento, 'enviadoPor'>
+{
+    fechaInicio: number;
+    fechaFin: number;
 }
 
 export type TDocReasignarUsuarios = Pick<IDocumento, '_id' | 'usuarios'>;

@@ -17,10 +17,10 @@ import {CommonModule} from '@angular/common';
 import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-documentos/detalle-documentos.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 
 @Component({
     standalone: true,
@@ -40,7 +40,7 @@ import {MatNativeDateModule} from '@angular/material/core';
             RxReactiveFormsModule,
             ReactiveFormsModule,
             MatDatepickerModule,
-            MatNativeDateModule
+            MatLuxonDateModule
         ],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
@@ -53,8 +53,12 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     abrirP: boolean = false;
     cargandoDatos = false;
     subscripciones: Subscription = new Subscription();
+    formBuscarFechas = this.fb.group({
+        fechaInicio: [],
+        fechaFin: []
+    });
 
-    constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL)
+    constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private fb: FormBuilder)
     {
     }
 
@@ -118,5 +122,10 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     enviadosPorMi(): void
     {
 
+    }
+
+    consultaFechasUsuario(): void
+    {
+        console.log('busqueda entre fechas', this.formBuscarFechas.value);
     }
 }

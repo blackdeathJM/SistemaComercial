@@ -319,9 +319,19 @@ export type MutationSubirDocsArgs = {
 export type Query = {
   __typename?: 'Query';
   deptos: Array<DeptoType>;
+  docsFechasUsuarioEnviadoPor: Array<DocumentoType>;
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
+};
+
+
+export type QueryDocsFechasUsuarioEnviadoPorArgs = {
+  enviadoPor?: InputMaybe<Scalars['ID']>;
+  esEnviadoPor?: InputMaybe<Scalars['Boolean']>;
+  fechaFinal?: InputMaybe<Scalars['Int']>;
+  fechaInicial?: InputMaybe<Scalars['Int']>;
+  usuario?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -501,6 +511,16 @@ export type ReasignarUsuarioMutationVariables = Exact<{
 
 
 export type ReasignarUsuarioMutation = { __typename?: 'Mutation', reasignarUsuario: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
+
+export type DocsFechasUsuarioEnviadoPorQueryVariables = Exact<{
+  usuario: Scalars['ID'];
+  enviadoPor: Scalars['ID'];
+  fechaInicial: Scalars['Int'];
+  fechaFinal: Scalars['Int'];
+}>;
+
+
+export type DocsFechasUsuarioEnviadoPorQuery = { __typename?: 'Query', docsFechasUsuarioEnviadoPor: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -996,6 +1016,40 @@ export const ReasignarUsuarioDocument = gql`
   })
   export class ReasignarUsuarioGQL extends Apollo.Mutation<ReasignarUsuarioMutation, ReasignarUsuarioMutationVariables> {
     document = ReasignarUsuarioDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DocsFechasUsuarioEnviadoPorDocument = gql`
+    query docsFechasUsuarioEnviadoPor($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int!, $fechaFinal: Int!) {
+  docsFechasUsuarioEnviadoPor(
+    usuario: $usuario
+    enviadoPor: $enviadoPor
+    fechaInicial: $fechaInicial
+    fechaFinal: $fechaFinal
+  ) {
+    ...fragDoc
+    resolveEmpleado {
+      nombreCompleto
+      avatar
+    }
+    resolverEmpleadoFolio {
+      nombreCompleto
+    }
+    resolveEmpleadoEnviado {
+      nombreCompleto
+      avatar
+    }
+  }
+}
+    ${FragDocFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DocsFechasUsuarioEnviadoPorGQL extends Apollo.Query<DocsFechasUsuarioEnviadoPorQuery, DocsFechasUsuarioEnviadoPorQueryVariables> {
+    document = DocsFechasUsuarioEnviadoPorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

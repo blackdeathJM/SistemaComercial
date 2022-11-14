@@ -164,6 +164,7 @@ type Query {
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
   docsUsuarioProceso(datos: DocsUsuarioProcesoInput!): [DocumentoType!]!
+  docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = 0, fechaFinal: Int = 0, esEnviadoPor: Boolean = false): [DocumentoType!]!
 }
 
 input DocsUsuarioProcesoInput {

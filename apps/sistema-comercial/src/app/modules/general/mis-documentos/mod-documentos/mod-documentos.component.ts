@@ -26,9 +26,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
-import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
-import {MAT_LUXON_DATE_ADAPTER_OPTIONS, MatLuxonDateModule} from '@angular/material-luxon-adapter';
+import {STATE_DOCS} from '@s-app/general/general.state';
 
 
 @Component({
@@ -96,67 +94,65 @@ export class ModDocumentosComponent implements OnInit
 
     async reg(esRemoto: boolean): Promise<void>
     {
-        // this.cargando = true;
-        // this.formDocs.disable();
-        console.log('datos del formulario', this.formDocs.value);
-        // valores que forman la ruta para guardar el documento en cloud de firesotre
-        // const ano = new Date().getFullYear();
-        // const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
+        this.cargando = true;
+        this.formDocs.disable();
+        const ano = new Date().getFullYear();
+        const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
 
-        // let docUrl: string = null;
-        // let files = null;
-        //
-        // if (file)
-        // {
-        //     if (esRemoto)
-        //     {
-        //         try
-        //         {
-        //             const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
-        //             const resUpload = await uploadBytes(docRef, file._files[0]);
-        //             docUrl = await getDownloadURL(resUpload.ref);
-        //         } catch (e)
-        //         {
-        //             this.ngxToastService.errorToast(e, 'Ocurrio un errro al tratar de subir el documento');
-        //             return;
-        //         }
-        //     } else
-        //     {
-        //         files =
-        //             {
-        //                 file: file._files,
-        //                 url: '',
-        //                 carpeta: 'documentos',
-        //                 eliminar: false
-        //             };
-        //     }
-        // }
-        //
-        // const regDocumento: TDocumentoReg =
-        //     {
-        //         folio,
-        //         ano,
-        //         tipoDoc,
-        //         docUrl,
-        //         usuarioFolio: this.#usuarioFolio,
-        //         fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion._i),
-        //         fechaLimiteEntrega: fechaLimiteEntrega !== null ? GeneralService.convertirUnix(fechaLimiteEntrega._i) : 0,
-        //         enviadoPor: STATE_DATOS_SESION()._id,
-        //         ...resto
-        //     };
-        // this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
-        // {
-        //     this.cargando = false;
-        //     this.cerrar();
-        // }), tap((res) =>
-        // {
-        //     if (res.data)
-        //     {
-        //         const elementos = STATE_DOCS();
-        //         STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
-        //         this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
-        //     }
-        // })).subscribe());
+        let docUrl: string = null;
+        let files = null;
+
+        if (file)
+        {
+            if (esRemoto)
+            {
+                try
+                {
+                    const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
+                    const resUpload = await uploadBytes(docRef, file._files[0]);
+                    docUrl = await getDownloadURL(resUpload.ref);
+                } catch (e)
+                {
+                    this.ngxToastService.errorToast(e, 'Ocurrio un errro al tratar de subir el documento');
+                    return;
+                }
+            } else
+            {
+                files =
+                    {
+                        file: file._files,
+                        url: '',
+                        carpeta: 'documentos',
+                        eliminar: false
+                    };
+            }
+        }
+
+        const regDocumento: TDocumentoReg =
+            {
+                folio,
+                ano,
+                tipoDoc,
+                docUrl,
+                usuarioFolio: this.#usuarioFolio,
+                fechaRecepcion: fechaRecepcion['ts'] / 1000,
+                fechaLimiteEntrega: fechaLimiteEntrega !== null ? fechaLimiteEntrega['ts'] / 1000 : 0,
+                enviadoPor: STATE_DATOS_SESION()._id,
+                ...resto
+            };
+        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.cerrar();
+        }), tap((res) =>
+        {
+            if (res.data)
+            {
+                const elementos = STATE_DOCS();
+                STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
+                this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
+            }
+        })).subscribe());
     }
 
     genFolio(): void

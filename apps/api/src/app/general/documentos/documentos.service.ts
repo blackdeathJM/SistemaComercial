@@ -2,7 +2,7 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsEntreFechasDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRegDto, DocsFechasUsuarioEnviadoPorDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
     DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
@@ -33,26 +33,28 @@ export class DocumentosService
         }
     }
 
-    async docEnviadoPorMi(): Promise<DocumentoDto[]>
+    async docsFechasUsuarioEnviadoPor(args: DocsFechasUsuarioEnviadoPorDto): Promise<DocumentoDto[]>
     {
+        let fechas = null;
+        if (args.fechaInicial !== 0)
+        {
+            fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
+        }
+        const usuarioEnviadoPor: Record<string, string> = {};
+        if (args.esEnviadoPor)
+        {
+            usuarioEnviadoPor['usuarios'] = args.usuario;
+        } else
+        {
+            usuarioEnviadoPor['enviadoPor'] = args.enviadoPor;
+        }
+        const valor = args.fechaInicial !== 0 ? Object.assign(usuarioEnviadoPor, fechas) : usuarioEnviadoPor;
         try
         {
-            // crear objecto de consulta
-            return await this.documento.find({enviadoPor: ''}).exec();
+            return await this.documento.find({...valor}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: `Ocurrio un error inesperado: ${e}`});
-        }
-    }
-
-    async docsEntreFechas(args: DocsEntreFechasDto): Promise<DocumentoDto[]>
-    {
-        try
-        {
-            return await this.documento.find({usuarios: args.usuario, fechaRecepcion: {$gte: args.fechaRecepcion, $lte: args.fechaFinal}}).exec();
-        } catch (e)
-        {
-
         }
     }
 

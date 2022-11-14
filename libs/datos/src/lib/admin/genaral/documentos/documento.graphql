@@ -113,3 +113,24 @@ mutation reasignarUsuario($usuarios: DocReasignarUsuarioInput!)
         }
     }
 }
+
+query docsFechasUsuarioEnviadoPor($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int!, $fechaFinal: Int!)
+{
+    docsFechasUsuarioEnviadoPor(usuario: $usuario, enviadoPor: $enviadoPor, fechaInicial: $fechaInicial, fechaFinal: $fechaFinal)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+
+

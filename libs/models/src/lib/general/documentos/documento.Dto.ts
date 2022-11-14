@@ -1,5 +1,5 @@
-import {IDocActFolio, IDocFolio, IDocumento, TDocReasignarUsuarios, TDocSubir, TDocumentoReg} from './documento.interface';
-import {Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
+import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocumento, TDocReasignarUsuarios, TDocSubir, TDocumentoReg} from './documento.interface';
+import {ArgsType, Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {Document} from 'mongoose';
@@ -105,15 +105,24 @@ export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['proceso'], I
     usuario: string;
 }
 
-@InputType('DocEntreFechasInput')
-export class DocsEntreFechasDto extends PickType(DocumentoDto, ['fechaRecepcion'], InputType)
+@ArgsType()
+export class DocsFechasUsuarioEnviadoPorDto implements IDocsFechasUsuarioEnviadoPor
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario que recibe el documento'})
     usuario: string;
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario enviado por'})
+    enviadoPor: string;
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @IsNotEmpty({message: 'La fecha final no puede estar vacia'})
+    fechaInicial: number;
     @Field(() => Int, {nullable: true, defaultValue: 0})
     @IsNotEmpty({message: 'La fecha final no puede estar vacia'})
     fechaFinal: number;
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    @IsBoolean({message: 'El Valor debe ser booleano'})
+    esEnviadoPor: boolean;
 }
 
 @InputType('DocRegInput')
