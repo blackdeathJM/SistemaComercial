@@ -3,6 +3,7 @@ import {AuthGuard} from '@s-app/core/auth/guards/auth.guard';
 import {NoAuthGuard} from '@s-app/core/auth/guards/noAuth.guard';
 import {LayoutComponent} from '@s-app/layout/layout.component';
 import {InitialDataResolver} from '@s-app/app.resolvers';
+import {AdminGuard} from '@s-app/admin.guard';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -41,7 +42,8 @@ export const appRoutes: Route[] = [
                 },
                 {
                     path: 'admin',
-                    canActivate: [],
+                    canActivate: [AdminGuard],
+                    canActivateChild: [AdminGuard],
                     loadChildren: () => import('@s-app/modules/admin/admin.routing').then(a => a.adminRouting)
                 },
                 {

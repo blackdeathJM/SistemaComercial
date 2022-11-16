@@ -12902,6 +12902,13 @@ ngx-skeleton-loader@^6.0.0:
     perf-marks "^1.13.4"
     tslib "^2.0.0"
 
+ngx-spinner@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-spinner/-/ngx-spinner-14.0.0.tgz#395c41be9bc5415f910cbe66aaa6995f0d5ab3b2"
+  integrity sha512-rz7wRCW4L+eZStpWwKUZ8mW+1WWtVEs1DZLDT1DUx1v3k+pLh5BhoDzfF1YySxTqZX13I7pwl13urqzniQ/jXQ==
+  dependencies:
+    tslib "^2.3.0"
+
 ngx-toastr@^15.2.2:
   version "15.2.2"
   resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-15.2.2.tgz#8df1e880e6b111ede424350add200d97bb2fa524"
@@ -12913,6 +12920,13 @@ ngx-trim-directive@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ngx-trim-directive/-/ngx-trim-directive-2.0.0.tgz#58e7f87a03dc76b942a95a2bd398b0f9a251940d"
   integrity sha512-GC3Cx+VIoIq9izTKH3x0opGVsZUaKCZpDl686CI54OdZRYIZvI/hTUGASaj7A17U2jDsI3c9Q2RP9ezU1indng==
+  dependencies:
+    tslib "^2.3.0"
+
+ngx-ui-loader@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-ui-loader/-/ngx-ui-loader-13.0.0.tgz#10df77105ef8f0cd6fb869ed1de57f3cc10bce00"
+  integrity sha512-Dc/YKCc2d6v5Qsqh7toKaPUH/Ml/FjzbpGyr6kr7c0R94EaLZb+A+GYK/F5FgzHUQFZq5Usa+0HPfk3i+Dkz6w==
   dependencies:
     tslib "^2.3.0"
 

@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {cloneDeep} from 'lodash-es';
 import {FuseNavigationItem} from '@s-fuse/components/navigation';
 import {FuseMockApiService} from '@s-fuse/lib/mock-api';

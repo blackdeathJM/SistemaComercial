@@ -2,6 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
@@ -13,10 +14,10 @@
         "importHelpers": true,
         "target": "ES2020",
         "module": "esnext",
-        "lib": ["es2020", "dom", "esnext.asynciterable", "es6"],
+        "lib": [ "es2020", "dom", "esnext.asynciterable", "es6" ],
         "removeComments": true,
         "paths": {
-            "@sistema-comercial/datos": ["libs/datos/src/index.ts"],
+            "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
             "@sistema-comercial/modelos/*": [
                 "libs/models/src/lib/upload/*",
                 "libs/models/src/lib/admin/deptos/*",
@@ -34,5 +35,5 @@
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false
     },
-    "exclude": ["node_modules", "tmp"]
+    "exclude": [ "node_modules", "tmp" ]
 }

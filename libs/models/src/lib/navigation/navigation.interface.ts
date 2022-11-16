@@ -11,7 +11,7 @@ export interface INavegacion
         | 'group'
         | 'spacer';
     hidden?: (item: INavegacion) => boolean;
-    active?: boolean;
+    active: boolean;
     disabled?: boolean;
     tooltip?: string;
     link?: string;
