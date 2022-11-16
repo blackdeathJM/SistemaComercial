@@ -15,7 +15,7 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-reasignacion',

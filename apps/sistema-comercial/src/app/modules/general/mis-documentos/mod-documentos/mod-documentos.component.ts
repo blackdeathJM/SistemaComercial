@@ -11,7 +11,7 @@ import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/s
 import {GeneralService} from '@s-app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';

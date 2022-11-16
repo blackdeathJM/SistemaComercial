@@ -21,7 +21,7 @@ import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 

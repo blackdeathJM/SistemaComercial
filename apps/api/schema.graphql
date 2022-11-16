@@ -166,8 +166,8 @@ type Query {
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
   docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!
-  docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
-  docsBusquedaGral(consulta: String!, usuario: ID!): [DocumentoType!]!
+  docsFechas(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
+  docsBusquedaGral(consulta: String = "", enviadoPor: ID, esEnviadoPor: Boolean = false, usuario: ID): [DocumentoType!]!
   docsRef(
     """Es el id del documento"""
     _id: ID

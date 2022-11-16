@@ -11,7 +11,7 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-docs/mod-subir-docs.component';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
 import {Subscription, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';

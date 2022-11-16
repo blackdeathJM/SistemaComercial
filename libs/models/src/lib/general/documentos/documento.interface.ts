@@ -37,7 +37,7 @@ export interface IDocsUsuarioProceso extends Pick<IDocumento, 'proceso' | 'envia
 
 export type TDocRefFolio = Pick<IDocumento, '_id' | 'ref' | 'folio' | 'usuarioFolio'>;
 
-export interface IDocsFechasUsuarioEnviadoPor
+export interface IDocsFechas
 {
     usuario: string;
     enviadoPor: string;
@@ -51,13 +51,15 @@ export interface IDocActFolio extends Pick<IDocumento, '_id' | 'usuarioFolio'>
     deptoId: string;
 }
 
-export interface IDocEnviadoPorMi extends Pick<IDocumento, 'enviadoPor'>
-{
-    fechaInicio: number;
-    fechaFin: number;
-}
-
 export type TDocReasignarUsuarios = Pick<IDocumento, '_id' | 'usuarios'>;
+
+export interface IDocsBusquedaGral
+{
+    usuario: string;
+    enviadoPor: string;
+    esEnviadoPor: boolean;
+    consulta: string;
+}
 
 export interface IDocFolio
 {

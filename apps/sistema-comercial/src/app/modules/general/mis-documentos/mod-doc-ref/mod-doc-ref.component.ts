@@ -12,7 +12,7 @@ import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {DocRefFolioGQL, DocsRefGQL} from '#/libs/datos/src';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-doc-ref',

@@ -8,7 +8,7 @@ import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';

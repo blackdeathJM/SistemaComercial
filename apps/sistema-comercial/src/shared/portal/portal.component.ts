@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Portal, PortalService} from '#/libs/services/src/lib/services/portal.service';
+import {Portal, PortalService} from '@s-app/services/portal.service';
 import {PortalModule} from '@angular/cdk/portal';
 import {CommonModule} from '@angular/common';
 

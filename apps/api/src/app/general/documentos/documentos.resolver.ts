@@ -8,7 +8,7 @@ import {
     DocFolioDto,
     DocActFolioDto,
     DocReasignarUsuarioDto,
-    DocsFechasUsuarioEnviadoPorDto,
+    DocsFechasDto,
     DocsBusquedaGralDto,
     DocRefFolioDto, DocsRefDto
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
@@ -32,9 +32,9 @@ export class DocumentosResolver
     }
 
     @Query(() => [DocumentoDto])
-    async docsFechasUsuarioEnviadoPor(@Args() args: DocsFechasUsuarioEnviadoPorDto): Promise<DocumentoDto[]>
+    async docsFechas(@Args() args: DocsFechasDto): Promise<DocumentoDto[]>
     {
-        return await this.documentosService.docsFechasUsuarioEnviadoPor(args);
+        return await this.documentosService.docsFechas(args);
     }
 
     @Query(() => [DocumentoDto])

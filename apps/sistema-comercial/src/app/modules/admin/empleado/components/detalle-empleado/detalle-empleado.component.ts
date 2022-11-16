@@ -6,7 +6,7 @@ import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';

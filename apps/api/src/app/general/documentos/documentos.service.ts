@@ -2,7 +2,7 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsRefDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasDto, DocsRefDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
     DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
@@ -44,13 +44,9 @@ export class DocumentosService
         }
     }
 
-    async docsFechasUsuarioEnviadoPor(args: DocsFechasUsuarioEnviadoPorDto): Promise<DocumentoDto[]>
+    async docsFechas(args: DocsFechasDto): Promise<DocumentoDto[]>
     {
-        let fechas = null;
-        if (args.fechaInicial !== null && args.fechaFinal !== null)
-        {
-            fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
-        }
+        const fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
         const usuarioEnviadoPor: Record<string, string> = {};
         if (args.esEnviadoPor)
         {
@@ -59,7 +55,7 @@ export class DocumentosService
         {
             usuarioEnviadoPor['usuarios'] = args.usuario;
         }
-        const valor = args.fechaInicial !== null ? Object.assign(usuarioEnviadoPor, fechas) : usuarioEnviadoPor;
+        const valor = Object.assign(usuarioEnviadoPor, fechas);
         try
         {
             return await this.documento.find({...valor}, {}, {sort: {fechaRecepcion: -1}}).exec();
@@ -71,10 +67,19 @@ export class DocumentosService
 
     async docsBusquedaGral(args: DocsBusquedaGralDto): Promise<DocumentoDto[]>
     {
+        const consulta: Record<string, string> = {};
+        if (args.esEnviadoPor)
+        {
+            consulta['enviadoPor'] = args.enviadoPor;
+        } else
+        {
+            consulta['usuarios'] = args.usuario;
+        }
+
         try
         {
             return await this.documento.find({
-                usuarios: args.usuario, $or:
+                ...consulta, $or:
                     [
                         {identificadorDoc: {$regex: args.consulta, $options: 'i'}},
                         {asunto: {$regex: args.consulta, $options: 'i'}},
@@ -84,7 +89,7 @@ export class DocumentosService
             }).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 

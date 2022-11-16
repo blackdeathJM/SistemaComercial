@@ -6,7 +6,7 @@ import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';

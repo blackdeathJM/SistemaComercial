@@ -331,7 +331,7 @@ export type Query = {
   __typename?: 'Query';
   deptos: Array<DeptoType>;
   docsBusquedaGral: Array<DocumentoType>;
-  docsFechasUsuarioEnviadoPor: Array<DocumentoType>;
+  docsFechas: Array<DocumentoType>;
   docsRef: Array<DocumentoType>;
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
@@ -340,12 +340,14 @@ export type Query = {
 
 
 export type QueryDocsBusquedaGralArgs = {
-  consulta: Scalars['String'];
-  usuario: Scalars['ID'];
+  consulta?: InputMaybe<Scalars['String']>;
+  enviadoPor?: InputMaybe<Scalars['ID']>;
+  esEnviadoPor?: InputMaybe<Scalars['Boolean']>;
+  usuario?: InputMaybe<Scalars['ID']>;
 };
 
 
-export type QueryDocsFechasUsuarioEnviadoPorArgs = {
+export type QueryDocsFechasArgs = {
   enviadoPor?: InputMaybe<Scalars['ID']>;
   esEnviadoPor?: InputMaybe<Scalars['Boolean']>;
   fechaFinal?: InputMaybe<Scalars['Int']>;
@@ -543,7 +545,7 @@ export type ReasignarUsuarioMutationVariables = Exact<{
 
 export type ReasignarUsuarioMutation = { __typename?: 'Mutation', reasignarUsuario: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
 
-export type DocsFechasUsuarioEnviadoPorQueryVariables = Exact<{
+export type DocsFechasQueryVariables = Exact<{
   usuario: Scalars['ID'];
   enviadoPor: Scalars['ID'];
   fechaInicial?: InputMaybe<Scalars['Int']>;
@@ -552,11 +554,13 @@ export type DocsFechasUsuarioEnviadoPorQueryVariables = Exact<{
 }>;
 
 
-export type DocsFechasUsuarioEnviadoPorQuery = { __typename?: 'Query', docsFechasUsuarioEnviadoPor: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
+export type DocsFechasQuery = { __typename?: 'Query', docsFechas: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
 
 export type DocsBusquedaGralQueryVariables = Exact<{
   usuario: Scalars['ID'];
   consulta: Scalars['String'];
+  enviadoPor: Scalars['ID'];
+  esEnviadoPor: Scalars['Boolean'];
 }>;
 
 
@@ -1082,9 +1086,9 @@ export const ReasignarUsuarioDocument = gql`
       super(apollo);
     }
   }
-export const DocsFechasUsuarioEnviadoPorDocument = gql`
-    query docsFechasUsuarioEnviadoPor($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int, $fechaFinal: Int, $esEnviadoPor: Boolean!) {
-  docsFechasUsuarioEnviadoPor(
+export const DocsFechasDocument = gql`
+    query docsFechas($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int, $fechaFinal: Int, $esEnviadoPor: Boolean!) {
+  docsFechas(
     usuario: $usuario
     enviadoPor: $enviadoPor
     fechaInicial: $fechaInicial
@@ -1110,16 +1114,21 @@ export const DocsFechasUsuarioEnviadoPorDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class DocsFechasUsuarioEnviadoPorGQL extends Apollo.Query<DocsFechasUsuarioEnviadoPorQuery, DocsFechasUsuarioEnviadoPorQueryVariables> {
-    document = DocsFechasUsuarioEnviadoPorDocument;
+  export class DocsFechasGQL extends Apollo.Query<DocsFechasQuery, DocsFechasQueryVariables> {
+    document = DocsFechasDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
 export const DocsBusquedaGralDocument = gql`
-    query docsBusquedaGral($usuario: ID!, $consulta: String!) {
-  docsBusquedaGral(usuario: $usuario, consulta: $consulta) {
+    query docsBusquedaGral($usuario: ID!, $consulta: String!, $enviadoPor: ID!, $esEnviadoPor: Boolean!) {
+  docsBusquedaGral(
+    usuario: $usuario
+    consulta: $consulta
+    enviadoPor: $enviadoPor
+    esEnviadoPor: $esEnviadoPor
+  ) {
     ...fragDoc
     resolveEmpleado {
       nombreCompleto

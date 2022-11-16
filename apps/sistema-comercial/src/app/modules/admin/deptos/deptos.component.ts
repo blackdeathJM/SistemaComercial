@@ -7,7 +7,6 @@ import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.co
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {cloneDeep} from 'lodash-es';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -39,7 +38,7 @@ export class DeptosComponent implements OnInit, OnDestroy
     subscripciones: Subscription = new Subscription();
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL, private ngxToastService: NgxToastService)
+    constructor(private dRef: MatDialog, private deptosGQL: DepartamentosGQL)
     {
         // this.deptos$ = this.deptosGQL.watch().valueChanges.pipe(map(res => res.data.deptos));
     }
@@ -48,7 +47,6 @@ export class DeptosComponent implements OnInit, OnDestroy
     {
         this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(switchMap((res) =>
         {
-            this.datosCargados = false;
             if (res.data)
             {
                 STATE_DEPTOS(cloneDeep(res.data.deptos as IDepto[]));
@@ -56,6 +54,7 @@ export class DeptosComponent implements OnInit, OnDestroy
             return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.deptos.filter(v => v.nombre.toLowerCase().includes(value.toLowerCase()))));
         })).subscribe((res) =>
         {
+            this.datosCargados = false;
             STATE_DEPTOS(res as IDepto[]);
         }));
     }
