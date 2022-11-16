@@ -1,6 +1,6 @@
-import {AfterContentChecked, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterContentChecked, ChangeDetectionStrategy, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
@@ -9,9 +9,10 @@ import {MatAutocomplete, MatAutocompleteModule, MatAutocompleteSelectedEvent} fr
 import {map, Observable, startWith, tap} from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
-import {DocsRefGQL} from '#/libs/datos/src';
+import {DocRefFolioGQL, DocsRefGQL} from '#/libs/datos/src';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-doc-ref',
@@ -35,15 +36,17 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
     refFiltrados: Observable<string[]>;
     referencias: string[] = [];
     todasRef: string[] = [];
+    cargando = false;
 
-    constructor(private docsRef: DocsRefGQL, private dRef: MatDialogRef<ModDocRefComponent>)
+    constructor(private docsRef: DocsRefGQL, private dRef: MatDialogRef<ModDocRefComponent>, @Inject(MAT_DIALOG_DATA) private data: IResolveDocumento,
+                private docRefFolioGQL: DocRefFolioGQL, private ngxToastService: NgxToastService)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.docsRef.watch({usuario: STATE_DATOS_SESION()._id}).valueChanges.pipe(tap((res) =>
+        this.docsRef.watch({_id: this.data._id, usuario: STATE_DATOS_SESION()._id}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
@@ -101,7 +104,27 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
 
     asignar(): void
     {
-        console.log(this.referencias);
+        if (this.referencias.length === 0)
+        {
+            this.ngxToastService.alertaToast('Debes tener seleccionado por lo menos un seguimiento', 'Referenciar documentos');
+            return;
+        }
+        const entradas: TDocRefFolio =
+            {
+                _id: this.data._id,
+                ref: this.referencias,
+                folio: this.data.folio,
+                usuarioFolio: STATE_DATOS_SESION()._id
+            };
+        this.cargando = true;
+        this.docRefFolioGQL.mutate({entradas}).pipe(tap((res) =>
+        {
+            if (res.data)
+            {
+                this.cargando = false;
+                this.dRef.close(res.data.docRefFolio);
+            }
+        })).subscribe();
     }
 
     cerrar(): void

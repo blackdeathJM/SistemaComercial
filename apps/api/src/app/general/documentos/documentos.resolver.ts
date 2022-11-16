@@ -1,6 +1,17 @@
 import {Args, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver} from '@nestjs/graphql';
 import {DocumentosService} from './documentos.service';
-import {DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto, DocRegDto, DocFolioDto, DocActFolioDto, DocReasignarUsuarioDto, DocsFechasUsuarioEnviadoPorDto, DocsBusquedaGralDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
+import {
+    DocsSubirDto,
+    DocsUsuarioProcesoDto,
+    DocumentoDto,
+    DocRegDto,
+    DocFolioDto,
+    DocActFolioDto,
+    DocReasignarUsuarioDto,
+    DocsFechasUsuarioEnviadoPorDto,
+    DocsBusquedaGralDto,
+    DocRefFolioDto, DocsRefDto
+} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
@@ -33,9 +44,9 @@ export class DocumentosResolver
     }
 
     @Query(() => [DocumentoDto])
-    async docsRef(@Args('usuario') usuario: string): Promise<DocumentoDto[]>
+    async docsRef(@Args() args: DocsRefDto): Promise<DocumentoDto[]>
     {
-        return await this.documentosService.docRef(usuario);
+        return await this.documentosService.docRef(args);
     }
 
     @ResolveField(() => EmpleadoDto, {nullable: true})
@@ -100,9 +111,10 @@ export class DocumentosResolver
     {
         return await this.documentosService.reasignarUsuario(usuarios);
     }
-    @Mutation(() => [DocumentoDto])
-    docRefFolio(): Promise<DocumentoDto>
-    {
 
+    @Mutation(() => [DocumentoDto])
+    async docRefFolio(@Args('entradas') entradas: DocRefFolioDto): Promise<DocumentoDto[]>
+    {
+        return await this.documentosService.docRefFolio(entradas);
     }
 }

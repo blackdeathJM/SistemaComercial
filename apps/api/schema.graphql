@@ -85,6 +85,7 @@ type DocumentoType {
   tipoDoc: String
   usuarioFolio: String
   usuarios: [String!]
+  esRef: Boolean
   resolveEmpleado: EmpleadoType
   resolverEmpleadoFolio: EmpleadoType
   resolveEmpleadoEnviado: [EmpleadoType!]
@@ -154,6 +155,7 @@ input DocumentoInput {
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
+  esRef: Boolean = false
   resolveEmpleado: EmpleadoInput
   resolverEmpleadoFolio: EmpleadoInput
   resolveEmpleadoEnviado: [EmpleadoInput!]
@@ -166,7 +168,15 @@ type Query {
   docsUsuarioProceso(datos: DocsUsuarioProcesoInput!): [DocumentoType!]!
   docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
   docsBusquedaGral(consulta: String!, usuario: ID!): [DocumentoType!]!
-  docsRef(usuario: String!): [DocumentoType!]!
+  docsRef(
+    """Es el id del documento"""
+    _id: ID
+
+    """
+    Es el id del usuario donde se envia el documento pertenece al campo de usuarios[]
+    """
+    usuario: ID
+  ): [DocumentoType!]!
 }
 
 input DocsUsuarioProcesoInput {
@@ -188,6 +198,7 @@ type Mutation {
   docFinalizar(_id: String!): DocumentoType!
   docActFolio(args: DocActFolioInput!): DocumentoType!
   reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
+  docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
 }
 
 input RegEmpleadoInput {
@@ -232,6 +243,7 @@ input DocRegInput {
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
+  esRef: Boolean = false
 }
 
 input UploadInput {
@@ -268,6 +280,13 @@ input DocActFolioInput {
 input DocReasignarUsuarioInput {
   _id: ID
   usuarios: [String!]
+}
+
+input DocRefFolioInput {
+  _id: ID
+  folio: String = null
+  ref: [String!] = []
+  usuarioFolio: String = null
 }
 
 type Subscription {

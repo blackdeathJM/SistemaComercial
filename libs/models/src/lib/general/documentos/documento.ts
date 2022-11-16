@@ -41,6 +41,7 @@ export class Documento implements TDocumentoReg
     seguimiento: string;
     acuseUrl: string;
     fechaTerminado: number;
+    esRef: boolean;
     ano: number;
 }
 

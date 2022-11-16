@@ -19,4 +19,4 @@
         </mat-form-field>
     </div>
 </mat-dialog-content>
-<app-registros (registro)="asignar()" (cancelar)="cerrar()"></app-registros>
+<app-registros (registro)="asignar()" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="cargando"></app-registros>

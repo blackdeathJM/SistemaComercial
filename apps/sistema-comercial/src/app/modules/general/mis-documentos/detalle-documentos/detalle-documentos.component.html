@@ -22,7 +22,7 @@
             <div class="text-secondary">Folio:</div>
             <div class="flex flex-inline">
                 <div class="text-green-300 rounded px-2 text-xl font-semibold leading-tight bg-green-800">{{_documento?.folio}}</div>
-                <mat-icon svgIcon="autofps_select" class="text-cyan-800 dark:text-cyan-300" *ngIf="_documento?.ref.length>0"></mat-icon>
+                <mat-icon svgIcon="autofps_select" class="text-cyan-800 dark:text-cyan-300" *ngIf="_documento?.esRef"></mat-icon>
             </div>
         </div>
         <div class="flex items-center justify-between py-3">
@@ -54,7 +54,7 @@
             <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
             <div class="flex items-center gap-3">
                 <div>{{_documento?.ref}}</div>
-                <button mat-mini-fab color="accent" *ngIf="_documento?.folio" (click)="docRef(_documento)" [disabled]="_documento?.proceso === 'terminado'">
+                <button mat-mini-fab color="warn" *ngIf="_documento?.folio && !_documento?.esRef" (click)="docRef(_documento)" [disabled]="_documento?.ref.length > 0">
                     <mat-icon svgIcon="subtitles"></mat-icon>
                 </button>
             </div>
@@ -94,10 +94,12 @@
     <!-- Actions -->
     <ng-container *ngIf="_documento?.proceso !== 'terminado' ">
         <div class="flex gap-4 mt-8">
-            <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)" [disabled]="_documento?.folio !== null || cargando">
-                <mat-icon svgIcon="subtitles" class="mr-2"></mat-icon>
-                Generar folio
-            </button>
+                <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)" [disabled]="_documento?.folio !== null">
+                    <ng-container *ngIf="!cargando; else genFolio">
+                        <mat-icon svgIcon="subtitles" class="mr-2"></mat-icon>
+                        Generar folio
+                    </ng-container>
+                </button>
             <button class="flex-auto" color="warn" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)"
                     [disabled]="(_documento?.docUrl === null && _documento?.acuseUrl === null) || _documento.proceso === 'terminado'">
                 <mat-icon svgIcon="mat_outline:checklist" class=" mr-2"></mat-icon>
@@ -116,3 +118,9 @@
         </div>
     </ng-container>
 </div>
+<ng-template #genFolio>
+    <mat-icon class="mr-2">
+        <mat-progress-spinner mode="indeterminate" diameter="20" color="warn"></mat-progress-spinner>
+    </mat-icon>
+    Procesando...
+</ng-template>

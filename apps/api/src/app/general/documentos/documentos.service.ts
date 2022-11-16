@@ -2,14 +2,14 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsRefDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
     DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
 import {AppService} from '#api/apps/api/src/app/app.service';
-import {IDocumento} from "#api/libs/models/src/lib/general/documentos/documento.interface";
+import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
 
 @Injectable()
 export class DocumentosService
@@ -52,7 +52,7 @@ export class DocumentosService
         const valor = args.fechaInicial !== null ? Object.assign(usuarioEnviadoPor, fechas) : usuarioEnviadoPor;
         try
         {
-            return await this.documento.find({...valor}).exec();
+            return await this.documento.find({...valor}, {}, {sort: {fechaRecepcion: -1}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});
@@ -108,11 +108,13 @@ export class DocumentosService
         }
     }
 
-    async docRef(usuario: string): Promise<DocumentoDto[]>
+    async docRef(args: DocsRefDto): Promise<DocumentoDto[]>
     {
+        // Carga todos los documentos para agregar referencia a folios ya registrados en un documento
+        const {_id, usuario} = args;
         try
         {
-            return await this.documento.find({usuarios: usuario, proceso: 'pendiente', ano: this.#ano, tipoDoc: 'Oficio'}).exec();
+            return await this.documento.find({_id: {$ne: {_id}}, folio: {$eq: null}, usuarios: usuario, proceso: 'pendiente', ano: this.#ano, tipoDoc: 'Oficio'}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e});
@@ -124,12 +126,13 @@ export class DocumentosService
         const docsAsig: IDocumento[] = [];
         try
         {
-            const {_id, folio, ref} = entradas;
-            ref.map(async (valor) =>
+            const {_id, folio, ref, usuarioFolio} = entradas;
+            await ref.map(async (seguimiento) =>
             {
                 try
                 {
-                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento: valor}, {$set: {folio, ref}}, {returnOriginal: false}).exec();
+                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio}},
+                        {new: true}).exec();
                     if (docsAsignados)
                     {
                         docsAsig.push(docsAsignados);
@@ -139,8 +142,9 @@ export class DocumentosService
                     throw new ConflictException({message: e});
                 }
             });
-            const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {returnOriginal: false}).exec();
-            return docsAsig.push(docFolioPrincipal);
+            const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {new: true}).exec();
+            docsAsig.push(docFolioPrincipal);
+            return docsAsig;
         } catch (e)
         {
 
@@ -162,10 +166,10 @@ export class DocumentosService
 
     async docFinalizar(_id: string): Promise<DocumentoDto>
     {
-        const fechaActual = AppService.fechaHoraActual();
+        const fechaTerminado = AppService.fechaHoraActual();
         try
         {
-            return await this.documento.findByIdAndUpdate(_id, {$set: {proceso: 'terminado', fechaTerminado: fechaActual}}, {returnOriginal: false}).exec();
+            return await this.documento.findByIdAndUpdate(_id, {$set: {proceso: 'terminado', fechaTerminado}}, {returnOriginal: false}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: 'Ocurrio un error inesperado', e});
@@ -233,10 +237,21 @@ export class DocumentosService
     {
         try
         {
-            return await this.documento.countDocuments({ano: this.#ano, tipoDoc}).exec();
+            return await this.documento.countDocuments({ano: this.#ano, tipoDoc, folio: {$ne: null}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});
+        }
+    }
+
+    async aumentarSeguimiento(tipoDoc: string): Promise<number>
+    {
+        try
+        {
+            return await this.documento.countDocuments({ano: this.#ano, tipoDoc}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 

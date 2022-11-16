@@ -150,9 +150,27 @@ query docsBusquedaGral($usuario: ID!, $consulta: String!)
         }
     }
 }
-query docsRef($usuario: String!)
+query docsRef($_id: ID!, $usuario: ID!)
 {
-    docsRef(usuario: $usuario)
+    docsRef(_id: $_id, usuario: $usuario)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+mutation docRefFolio($entradas: DocRefFolioInput!)
+{
+    docRefFolio(entradas: $entradas)
     {
         ...fragDoc
         resolveEmpleado {

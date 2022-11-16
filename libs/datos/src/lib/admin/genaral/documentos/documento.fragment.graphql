@@ -20,4 +20,5 @@ fragment fragDoc on DocumentoType
     ano
     ref
     usuarios
+    esRef
 }

@@ -127,7 +127,6 @@ export class ModDocumentosComponent implements OnInit
                     };
             }
         }
-
         const regDocumento: TDocumentoReg =
             {
                 folio,
@@ -135,8 +134,8 @@ export class ModDocumentosComponent implements OnInit
                 tipoDoc,
                 docUrl,
                 usuarioFolio: this.#usuarioFolio,
-                fechaRecepcion: fechaRecepcion['ts'] / 1000,
-                fechaLimiteEntrega: fechaLimiteEntrega !== null ? fechaLimiteEntrega['ts'] / 1000 : 0,
+                fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c),
+                fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c),
                 enviadoPor: STATE_DATOS_SESION()._id,
                 ...resto
             };

@@ -1,5 +1,4 @@
 import {Injectable} from '@nestjs/common';
-import {randomUUID} from 'crypto';
 import path, {join} from 'path';
 import fs from 'fs-extra';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
@@ -23,7 +22,8 @@ export class SubirArchivosService
         }
         try
         {
-            await fs.ensureDir(rutaDeGuardado);
+            console.log('=======>', rutaDeGuardado);
+            await fs.ensureDir(path.join(__dirname, 'temporal'));
             // if (files.eliminar)
             // {
             //     const archivoExiste = await fs?.pathExists(files.url);

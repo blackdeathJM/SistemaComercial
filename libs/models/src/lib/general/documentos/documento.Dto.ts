@@ -1,7 +1,7 @@
 import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocumento, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
 import {ArgsType, Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {IsArray, IsBoolean, IsInt, IsMongoId, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {Document} from 'mongoose';
 
 @ObjectType('DocumentoType')
@@ -92,6 +92,10 @@ export class DocumentoDto implements IDocumento
     @IsNotEmpty({message: 'Es necesario colocar por lo menos un usuario'})
     @IsArray({message: 'Los usuarios deben estar en un arreglo'})
     usuarios: string[];
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    @Prop()
+    @IsOptional()
+    esRef: boolean;
 }
 
 export type DocumentoType = DocumentoDto & Document;
@@ -136,6 +140,19 @@ export class DocsBusquedaGralDto
     usuario: string;
 }
 
+@ArgsType()
+export class DocsRefDto
+{
+    @Field(() => ID, {nullable: true, description: 'Es el id del documento'})
+    @IsNotEmpty({message: 'Es necesario el id del documento'})
+    @IsMongoId({message: 'El id no corresponde a un id valido'})
+    _id: string;
+    @Field(() => ID, {nullable: true, description: 'Es el id del usuario donde se envia el documento pertenece al campo de usuarios[]'})
+    @IsNotEmpty({message: 'Es necesario el id del usuario'})
+    @IsMongoId({message: 'El id no corresponde a un id valido'})
+    usuario: string;
+}
+
 @InputType('DocRegInput')
 export class DocRegDto extends OmitType(DocumentoDto, ['_id', 'ref'], InputType) implements TDocumentoReg
 {
@@ -155,7 +172,7 @@ export class DocFolioDto extends PickType(DocumentoDto, ['tipoDoc'], InputType) 
 }
 
 @InputType('DocRefFolioInput')
-export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio']) implements TDocRefFolio
+export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio', 'usuarioFolio'], InputType) implements TDocRefFolio
 {
 
 }

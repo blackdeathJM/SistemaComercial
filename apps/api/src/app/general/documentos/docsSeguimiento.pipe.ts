@@ -15,7 +15,7 @@ export class DocsSeguimientoPipe implements PipeTransform
     {
         try
         {
-            const ultimoDocumento = await this.docService.ultimoRegistro(value.tipoDoc);
+            const ultimoDocumento = await this.docService.aumentarSeguimiento(value.tipoDoc);
             value.seguimiento = (ultimoDocumento + 1) + '-' + value.tipoDoc.substring(0, 2).toLowerCase() + '-' + new Date().getFullYear();
             return value;
         }

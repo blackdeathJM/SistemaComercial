@@ -18,6 +18,7 @@ import {unionBy} from 'lodash-es';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {ModDocRefComponent} from '@s-app/general/mis-documentos/mod-doc-ref/mod-doc-ref.component';
 import {ModReasignacionComponent} from '@s-app/general/mis-documentos/mod-reasignacion/mod-reasignacion.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
     standalone: true,
@@ -28,7 +29,8 @@ import {ModReasignacionComponent} from '@s-app/general/mis-documentos/mod-reasig
             MatIconModule,
             ConvertirTimestamUnixPipe,
             MatTooltipModule,
-            ReactiveFormsModule
+            ReactiveFormsModule,
+            MatProgressSpinnerModule
 
         ],
     selector: 'app-detalle-documentos',
@@ -97,6 +99,7 @@ export class DetalleDocumentosComponent
                         unionBy(STATE_DOCS(), docFoliado.data.docActFolio as IResolveDocumento);
                         this._documento = docFoliado.data.docActFolio as IResolveDocumento;
                         this.ngxToastService.satisfactorioToast('Haz registrado un nuevo folio con exito', 'Alta de folios');
+                        this.cargando = false;
                     }
                 })).subscribe();
             }
@@ -157,8 +160,18 @@ export class DetalleDocumentosComponent
         });
     }
 
-    docRef(_documento: IResolveDocumento): void
+    docRef(data: IResolveDocumento): void
     {
-        this.dRef.open(ModDocRefComponent, {width: '40%', data: null});
+        this.dRef.open(ModDocRefComponent, {width: '40%', data}).afterClosed().subscribe((res: IResolveDocumento[]) =>
+        {
+            res.map((value) =>
+            {
+                unionBy(STATE_DOCS(), value);
+                if (data._id === value._id)
+                {
+                    data = value;
+                }
+            });
+        });
     }
 }

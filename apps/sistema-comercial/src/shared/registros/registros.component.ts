@@ -42,11 +42,6 @@ export class RegistrosComponent
         this._deshabilitar = v;
     }
 
-    @Input() set deshabilitarCerrar(v: boolean)
-    {
-        this._deshabilitarCerrar = v;
-    }
-
     reg(): void
     {
         this.registro.emit();
