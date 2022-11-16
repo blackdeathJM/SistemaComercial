@@ -1,0 +1,82 @@
+<h2 mat-dialog-title>Dar de alta documentos</h2>
+<mat-dialog-content>
+    <form [formGroup]="formDocs" enctype="multipart/form-data">
+        <div class="flex flex-col">
+            <div class="flex items-center gap-3">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Generar folio</mat-label>
+                    <input matInput type="text" formControlName="folio" class="font-bold text-green-800 dark:text-green-300" readonly>
+                </mat-form-field>
+                <button mat-stroked-button color="warn" class="flex-2" (click)="genFolio()" [disabled]="cargando">
+                    <mat-icon svgIcon="subtitles" class="icon-size-5 mr-2"></mat-icon>
+                    Generar folio
+                </button>
+            </div>
+            <div class="flex gap-3">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Identificador del documento</mat-label>
+                    <input matInput type="text" formControlName="identificadorDoc"/>
+                    <mat-error>{{formDocs.controls.identificadorDoc['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Dependencia</mat-label>
+                    <input matInput type="text" formControlName="dependencia"/>
+                    <mat-error>{{formDocs.controls.dependencia['errorMessage']}}</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <mat-label>Asunto</mat-label>
+                <input matInput type="text" formControlName="asunto"/>
+                <mat-error>{{formDocs.controls.asunto['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <div class="flex gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
+                    <mat-select multiple formControlName="usuarios">
+                        <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                    </mat-select>
+                    <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto">
+                    <mat-label>Selecciona el tipo de documento</mat-label>
+                    <mat-select formControlName="tipoDoc">
+                        <ng-container *ngIf="formDocs.controls.folio.value  === null">
+                            <mat-option [value]="tipo" *ngFor="let tipo of tiposDoc">{{tipo}}</mat-option>
+                        </ng-container>
+                        <mat-option [value]="'Oficio'" *ngIf="formDocs.controls.folio.value !== null">Oficio</mat-option>
+                    </mat-select>
+                    <mat-error>{{formDocs.controls.tipoDoc['errorMessage']}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field class="fuse-mat-textarea flex-auto">
+                <mat-label>Comentario</mat-label>
+                <textarea matInput formControlName="comentario"></textarea>
+            </mat-form-field>
+            <div class="flex gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Fecha recepcion</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaRecepcion" [min]="minDate" [max]="maxDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>{{formDocs.controls.fechaRecepcion['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Fecha entrega</mat-label>
+                    <input matInput [matDatepicker]="fechaE" formControlName="fechaLimiteEntrega" [min]="maxDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="fechaE"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaE></mat-datepicker>
+                    <mat-error>{{formDocs.controls.fechaLimiteEntrega['errorMessage']}}</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <ngx-mat-file-input formControlName="file"></ngx-mat-file-input>
+                <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
+                <mat-error>{{formDocs.controls.file['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-checkbox class="my-4" color="primary" [checked]="false" formControlName="esInterno">Es interno?</mat-checkbox>
+        </div>
+    </form>
+</mat-dialog-content>
+<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>

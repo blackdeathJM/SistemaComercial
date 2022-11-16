@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {FormGroup} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
@@ -9,8 +8,30 @@ import {unionBy} from 'lodash-es';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {TrimDirective} from '@s-directives/trim.directive';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            MatDialogModule,
+            MatFormFieldModule,
+            MatInputModule,
+            ReactiveFormsModule,
+            RxReactiveFormsModule,
+            CapitalizarDirective,
+            TrimDirective,
+            RegistrosComponent,
+            NgxTrimDirectiveModule
+        ],
     selector: 'app-mod-depto',
     templateUrl: './mod-depto.component.html',
     styleUrls: ['./mod-depto.component.scss'],
@@ -22,15 +43,13 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
 
     constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
-                @Inject(MAT_DIALOG_DATA) private data: IDepto, private actualizarDeptoGQL: ActualizarDeptoGQL)
+                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto)
     {
     }
 
     ngOnInit(): void
     {
-        const depto = new Depto();
-        this.formDepto = this.fb.formGroup(depto);
-
+        this.formDepto = this.fb.formGroup(new Depto());
         if (this.data)
         {
             this.formDepto.patchValue(this.data);

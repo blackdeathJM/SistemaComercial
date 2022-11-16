@@ -2,16 +2,8 @@ fragment fragAuth on AuthType
 {
     usuario
     activo
-    rol {
-        ...fragRol
-    }
-}
-
-fragment fragRol on RolType
-{
-    id
-    tipoAcceso
-    oculto
+    role
+    estatus
 }
 
 fragment fragDatosSesion on DatosSesionType
@@ -20,6 +12,7 @@ fragment fragDatosSesion on DatosSesionType
     nombreCompleto
     avatar
     activo
+    deptoId
     auth {
         ...fragAuth
     }

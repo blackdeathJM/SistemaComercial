@@ -5,43 +5,44 @@
 type AuthType {
   contrasena: String
   usuario: String
-  rol: [RolType!]!
+  role: [JSON!]
   activo: Boolean
   estatus: String
 }
 
-type RolType {
-  id: String
-  tipoAcceso: String
-  oculto: Boolean
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type ModificadoPorType {
+  accion: String
+  fecha: Int
+  usuario: String
+  valorActual: [JSON!]
+  valorAnterior: [JSON!]
 }
 
-type ModificadoType {
-  accion: String
-  fecha: String
-  usuario: String
+type TelefonoType {
+  numero: String
 }
 
 type EmpleadoType {
-  _id: String
+  _id: ID
   avatar: String
-  activo: Boolean!
+  activo: Boolean
   calle: String
   colonia: String
-  fechaBaja: Timestamp
-  fechaIngreso: Timestamp
-  modificadoPor: [ModificadoType!]
+  correo: String
+  fechaBaja: Int
+  fechaIngreso: Int
   nombreCompleto: String
+  telefono: [TelefonoType!]
   auth: AuthType
-  deptoId: String
+  modificadoPor: [ModificadoPorType!]
+  deptoId: ID
   deptoEmpleado: DeptoType
-  buscarEmpleadoPorId(_id: String!): EmpleadoType
 }
-
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
 
 type DeptoType {
   _id: ID
@@ -55,6 +56,7 @@ type DatosSesionType {
   auth: AuthType!
   avatar: String
   nombreCompleto: String!
+  deptoId: ID
 }
 
 type LoginRespuestaType {
@@ -64,6 +66,7 @@ type LoginRespuestaType {
 
 type DocumentoType {
   _id: ID
+  seguimiento: String!
   acuseUrl: String
   ano: Int
   asunto: String
@@ -72,9 +75,9 @@ type DocumentoType {
   docUrl: String
   enviadoPor: String
   esInterno: Boolean
-  fechaLimiteEntrega: String
+  fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: String
+  fechaTerminado: Int
   folio: String
   identificadorDoc: String
   proceso: String
@@ -82,42 +85,47 @@ type DocumentoType {
   tipoDoc: String
   usuarioFolio: String
   usuarios: [String!]
+  esRef: Boolean
+  resolveEmpleado: EmpleadoType
+  resolverEmpleadoFolio: EmpleadoType
+  resolveEmpleadoEnviado: [EmpleadoType!]
 }
 
 input AuthInput {
   contrasena: String
   usuario: String
-  rol: [RolInput!] = null
+  role: [JSON!] = null
   activo: Boolean = true
-  estatus: String = "en-linea"
+  estatus: String = "En-linea"
 }
 
-input RolInput {
-  id: String
-  tipoAcceso: String
-  oculto: Boolean = true
-}
-
-input ModificadoInput {
+input ModificadoPorInput {
   accion: String
-  fecha: String
+  fecha: Int = 0
   usuario: String
+  valorActual: [JSON!] = null
+  valorAnterior: [JSON!] = null
+}
+
+input TelefonoInput {
+  numero: String
 }
 
 input EmpleadoInput {
-  _id: String
+  _id: ID
   avatar: String = null
-  activo: Boolean = false
+  activo: Boolean = true
   calle: String
   colonia: String
-  fechaBaja: Timestamp
-  fechaIngreso: Timestamp
-  modificadoPor: [ModificadoInput!] = []
+  correo: String = null
+  fechaBaja: Int = null
+  fechaIngreso: Int
   nombreCompleto: String
+  telefono: [TelefonoInput!] = null
   auth: AuthInput = null
-  deptoId: String
+  modificadoPor: [ModificadoPorInput!]
+  deptoId: ID
   deptoEmpleado: DeptoInput
-  buscarEmpleadoPorId: EmpleadoInput
 }
 
 input DeptoInput {
@@ -128,46 +136,77 @@ input DeptoInput {
 
 input DocumentoInput {
   _id: ID
+  seguimiento: String = null
   acuseUrl: String = null
   ano: Int
   asunto: String
   comentario: String
   dependencia: String
-  docUrl: String
+  docUrl: String = null
   enviadoPor: String
   esInterno: Boolean = false
-  fechaLimiteEntrega: String
+  fechaLimiteEntrega: Int
   fechaRecepcion: Int
-  fechaTerminado: String
+  fechaTerminado: Int = 0
   folio: String = null
   identificadorDoc: String
-  proceso: String
-  ref: [String!] = null
+  proceso: String = "pendiente"
+  ref: [String!] = []
   tipoDoc: String
   usuarioFolio: String = null
   usuarios: [String!]
+  esRef: Boolean = false
+  resolveEmpleado: EmpleadoInput
+  resolverEmpleadoFolio: EmpleadoInput
+  resolveEmpleadoEnviado: [EmpleadoInput!]
 }
 
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
-  documentosPorAno(ano: DocAnoInput!): [DocumentoType!]!
-}
+  empleadosSesion: [EmpleadoType!]!
+  docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!
+  docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
+  docsBusquedaGral(consulta: String!, usuario: ID!): [DocumentoType!]!
+  docsRef(
+    """Es el id del documento"""
+    _id: ID
 
-input DocAnoInput {
-  ano: Int
+    """
+    Es el id del usuario donde se envia el documento pertenece al campo de usuarios[]
+    """
+    usuario: ID
+  ): [DocumentoType!]!
 }
 
 type Mutation {
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
-  crearEmpleado(empleadoDatos: EmpleadoInput!): EmpleadoType!
-  asignarAuth(_id: String!, auth: AuthInput!): EmpleadoType!
-  actualizarContrasenaAdmin(datos: CambioContrasenaInput!): EmpleadoType!
+  crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
+  asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
+  actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
-  actualizarRol(_id: String!, rol: RolInput!, modificadoPor: ModificadoInput!): EmpleadoType!
-  regDoc(datos: DocumentoInput!): DocumentoType!
+  regDoc(datos: DocRegInput!, files: UploadInput = null): DocumentoType!
+  subirDocs(args: DocsSubirInput = null, files: UploadInput = null, filesAcuse: UploadInput = null): DocumentoType!
+  genFolioSinReg(args: DocFolioInput!): String!
+  docFinalizar(_id: String!): DocumentoType!
+  docActFolio(args: DocActFolioInput!): DocumentoType!
+  reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
+  docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
+}
+
+input RegEmpleadoInput {
+  avatar: String = null
+  activo: Boolean = true
+  calle: String
+  colonia: String
+  correo: String = null
+  fechaIngreso: Int
+  nombreCompleto: String
+  telefono: [TelefonoInput!] = null
+  modificadoPor: [ModificadoPorInput!]
+  deptoId: ID
 }
 
 input CambioContrasenaInput {
@@ -178,6 +217,71 @@ input CambioContrasenaInput {
 input LoginInput {
   usuario: String
   contrasena: String
+}
+
+input DocRegInput {
+  seguimiento: String = null
+  acuseUrl: String = null
+  ano: Int
+  asunto: String
+  comentario: String
+  dependencia: String
+  docUrl: String = null
+  enviadoPor: String
+  esInterno: Boolean = false
+  fechaLimiteEntrega: Int
+  fechaRecepcion: Int
+  fechaTerminado: Int = 0
+  folio: String = null
+  identificadorDoc: String
+  proceso: String = "pendiente"
+  tipoDoc: String
+  usuarioFolio: String = null
+  usuarios: [String!]
+  esRef: Boolean = false
+}
+
+input UploadInput {
+  carpeta: String
+  eliminar: Boolean = false
+
+  """
+  Es la url A eliminar en caso de que sea remplazar o eliminar el archivo
+  """
+  url: String = null
+  file: [Upload!] = null
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input DocsSubirInput {
+  _id: ID
+  acuseUrl: String = null
+  docUrl: String = null
+}
+
+input DocFolioInput {
+  tipoDoc: String
+  deptoId: ID
+}
+
+input DocActFolioInput {
+  _id: ID
+  usuarioFolio: String = null
+  deptoId: String
+}
+
+input DocReasignarUsuarioInput {
+  _id: ID
+  usuarios: [String!]
+}
+
+input DocRefFolioInput {
+  _id: ID
+  folio: String = null
+  ref: [String!] = []
+  usuarioFolio: String = null
 }
 
 type Subscription {

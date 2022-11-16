@@ -1,11 +1,9 @@
 import {Args, Mutation, Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
 import {EmpleadoService} from './empleado.service';
 import {DeptosService} from '../deptos/deptos.service';
-import {DeptoDto} from '@sistema-comercial/modelos/depto.dto';
-import {IDepto} from '@sistema-comercial/modelos/depto.interface';
-import {EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
-import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
-import {NotFoundException} from '@nestjs/common';
+import {EmpleadoDto, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
 
 @Resolver(() => EmpleadoDto)
 export class EmpleadoResolver
@@ -20,21 +18,27 @@ export class EmpleadoResolver
         return await this.empleadoService.empleados();
     }
 
+    @Query(() => [EmpleadoDto])
+    async empleadosSesion(): Promise<EmpleadoDto[]>
+    {
+        return await this.empleadoService.empleadosSesion();
+    }
+
     @Mutation(() => EmpleadoDto)
-    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: EmpleadoDto): Promise<IEmpleado>
+    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: RegEmpleadoDto): Promise<EmpleadoDto>
     {
         return await this.empleadoService.crearEmpleado(empleadoDatos);
     }
 
     @ResolveField(() => DeptoDto, {nullable: true})
-    async deptoEmpleado(@Parent() parent: EmpleadoDto): Promise<IDepto>
+    async deptoEmpleado(@Parent() parent: EmpleadoDto): Promise<DeptoDto>
     {
         return this.deptosService.deptoPorId(parent.deptoId);
     }
 
-    @ResolveField(() => EmpleadoDto, {nullable: true})
-    async buscarEmpleadoPorId(@Args('_id') _id: string): Promise<IEmpleado | NotFoundException>
-    {
-        return await this.empleadoService.buscarEmpleadoPorId(_id);
-    }
+    // @ResolveField(() => EmpleadoDto, {nullable: true})
+    // async buscarEmpleadoPorId(@Args('_id') _id: string): Promise<IEmpleado | NotFoundException>
+    // {
+    //     return await this.empleadoService.buscarEmpleadoPorId(_id);
+    // }
 }

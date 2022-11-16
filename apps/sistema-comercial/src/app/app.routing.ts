@@ -36,15 +36,23 @@ export const appRoutes: Route[] = [
         children:
             [
                 {
-                    path: 'inicio', loadChildren: () => import('@s-app/modules/inicio/inicio.module').then(i => i.InicioModule)
+                    path: 'inicio',
+                    loadComponent: () => import('@s-app/modules/inicio/inicio.component').then(i => i.InicioComponent),
                 },
                 {
                     path: 'admin',
-                    loadChildren: () => import('@s-app/modules/admin/admin.module').then(a => a.AdminModule)
+                    canActivate: [],
+                    loadChildren: () => import('@s-app/modules/admin/admin.routing').then(a => a.adminRouting)
                 },
                 {
                     path: 'general',
-                    loadChildren: () => import('@s-app/modules/general/general.module').then(g => g.GeneralModule)
+                    canActivate: [],
+                    loadChildren: () => import('@s-app/modules/general/general.routing').then(g => g.generalRouting)
+                },
+                {
+                    path: 'dir-admon-finanzas',
+                    canActivate: [],
+                    loadChildren: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
                 }
             ]
     },

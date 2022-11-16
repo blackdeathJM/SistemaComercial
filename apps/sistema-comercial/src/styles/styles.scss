@@ -2,5 +2,14 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+.grupo-avatar-img {
+    @apply flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover
+}
 
+.avatar-letra {
+    @apply w-16 h-16 mr-6 text-5xl flex items-center justify-center rounded-full uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200
+}
 
+.avatar-letra-grupo {
+    @apply w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800  flex items-center justify-center uppercase dark:bg-gray-700 dark:text-gray-200
+}

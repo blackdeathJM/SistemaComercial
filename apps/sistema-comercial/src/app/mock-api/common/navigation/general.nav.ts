@@ -8,6 +8,8 @@ export const GENERAL: FuseNavigationItem[] =
             title: 'GENERAL',
             type: 'group',
             icon: '6_ft_apart',
+            activo: false,
+            disabled: false,
             children:
                 [
                     {
@@ -15,6 +17,8 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Mis documentos',
                         type: 'basic',
                         icon: 'feather:folder',
+                        activo: false,
+                        disabled: false,
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
@@ -22,6 +26,8 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Mis resguardos',
                         type: 'basic',
                         icon: 'feather:archive',
+                        activo: false,
+                        disabled: false,
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
@@ -29,6 +35,8 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Ordenes de atencion',
                         type: 'basic',
                         icon: 'feather:file-text',
+                        activo: false,
+                        disabled: false,
                         link: rutaGeneral + 'ordenes-atencion'
                     }
                 ]

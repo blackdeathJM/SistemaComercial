@@ -1,16 +1,15 @@
-import {ConflictException, Injectable, NotAcceptableException} from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
-import {IDepto} from '@sistema-comercial/modelos/depto.interface';
-import {DeptoDto, DeptoType} from '@sistema-comercial/modelos/depto.dto';
-import {AppService} from '../../app.service';
+import {DeptoDto, DeptoType} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
+import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
 
 
 @Injectable()
 export class DeptosService
 {
-    constructor(@InjectModel(DeptoDto.name) private depto: Model<DeptoType>, private mongoErrorService: AppService)
+    constructor(@InjectModel(DeptoDto.name) private depto: Model<DeptoType>)
     {
     }
 
@@ -49,7 +48,7 @@ export class DeptosService
             return await this.depto.findByIdAndDelete(new ObjectId(_id)).exec();
         } catch (e)
         {
-            throw new ConflictException({message: e.codeName})
+            throw new ConflictException({message: e.codeName});
         }
     }
 

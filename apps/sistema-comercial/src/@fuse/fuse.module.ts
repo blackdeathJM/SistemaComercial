@@ -6,12 +6,14 @@ import {FuseLoadingModule} from '@s-fuse/loading';
 import {FuseMediaWatcherModule} from '@s-fuse/media-watcher';
 import {FuseSplashScreenModule} from '@s-fuse/splash-screen';
 import {FuseUtilsModule} from '@s-fuse/utils';
+import {FusePlatformModule} from '@s-fuse/platform/platform.module';
 
 @NgModule({
     imports  : [
         FuseConfirmationModule,
         FuseLoadingModule,
         FuseMediaWatcherModule,
+        FusePlatformModule,
         FuseSplashScreenModule,
         FuseUtilsModule
     ],

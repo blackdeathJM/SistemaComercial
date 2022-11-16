@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fuseAnimations} from '@s-fuse/animations';
 import {FuseAlertType} from '@s-fuse/components/alert';
 import {AuthService} from '@s-app/core/auth/auth.service';
 import {LoginGQL} from '#/libs/datos/src';
-import {catchError, of, tap} from 'rxjs';
+import {catchError, of, Subscription, tap} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {TOKEN} from '@s-app/auth/const';
 
@@ -15,7 +15,7 @@ import {TOKEN} from '@s-app/auth/const';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AuthSignInComponent implements OnInit
+export class AuthSignInComponent implements OnInit, OnDestroy
 {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
@@ -25,6 +25,7 @@ export class AuthSignInComponent implements OnInit
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
+    subs: Subscription = new Subscription();
 
     constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router,
                 private loginGQL: LoginGQL)
@@ -47,7 +48,6 @@ export class AuthSignInComponent implements OnInit
         {
             return;
         }
-
         // Disable the form
         this.signInForm.disable();
 
@@ -55,7 +55,7 @@ export class AuthSignInComponent implements OnInit
         this.showAlert = false;
 
         // Sign in
-        this.loginGQL.mutate({login: this.signInForm.value}).pipe(catchError((err) =>
+        this.subs.add(this.loginGQL.mutate({login: this.signInForm.value}).pipe(catchError((err) =>
         {
             this.signInForm.enable();
             this.signInNgForm.resetForm();
@@ -67,19 +67,21 @@ export class AuthSignInComponent implements OnInit
             return of(err);
         }), tap((res) =>
         {
-            try
+            if (res.data !== undefined)
             {
                 if (res.data.login.token)
                 {
                     STATE_DATOS_SESION(res.data.login.datosSesion);
                     localStorage.setItem(TOKEN, res.data.login.token);
                     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
-                    this._router.navigateByUrl(redirectURL).then();
+                    this._router.navigateByUrl(redirectURL).then().catch(err => console.log('error', err));
                 }
-            } catch (e)
-            {
-                console.log(e);
             }
-        })).subscribe();
+        })).subscribe());
+    }
+
+    ngOnDestroy(): void
+    {
+        this.subs.unsubscribe();
     }
 }

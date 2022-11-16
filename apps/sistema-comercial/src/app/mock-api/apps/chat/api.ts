@@ -8,7 +8,7 @@ import { chats as chatsData, contacts as contactsData, messages as messagesData,
 })
 export class ChatMockApi
 {
-    private _chats: any[] = chatsData;
+    private readonly _chats: any[] = chatsData;
     private _contacts: any[] = contactsData;
     private _messages: any[] = messagesData;
     private _profile: any = profileData;

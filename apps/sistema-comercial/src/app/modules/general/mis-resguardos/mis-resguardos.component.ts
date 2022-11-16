@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-mis-resguardos',
-  templateUrl: './mis-resguardos.component.html',
-  styleUrls: ['./mis-resguardos.component.scss']
+    standalone: true,
+    imports: [],
+    selector: 'app-mis-resguardos',
+    templateUrl: './mis-resguardos.component.html',
+    styleUrls: ['./mis-resguardos.component.scss']
 })
-export class MisResguardosComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class MisResguardosComponent
+{
 }

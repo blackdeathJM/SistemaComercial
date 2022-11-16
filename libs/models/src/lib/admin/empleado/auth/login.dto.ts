@@ -17,6 +17,8 @@ export class DatosSesionDto implements IDatosSesion
     avatar: string;
     @Field()
     nombreCompleto: string;
+    @Field(() => ID, {nullable: true})
+    deptoId: string;
 }
 
 @ObjectType('LoginRespuestaType')

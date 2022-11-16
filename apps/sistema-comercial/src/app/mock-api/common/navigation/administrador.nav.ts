@@ -1,18 +1,16 @@
+import {rutaBaseAdministrador} from './constantes/rutas';
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {rutaBaseAdministrador} from '@s-app/mock-api/common/navigation/constantes/rutas';
 
 export const ADMINISTRADOR: FuseNavigationItem[] =
     [
         {
-            id: 'separador',
-            type: 'divider'
-        },
-        {
-            id: 'administrador',
-            title: 'Administrador',
+            id: 'adminitrador',
+            title: 'ADMINISTRADOR',
             type: 'group',
             icon: 'feather:settings',
-            tooltip: 'Modulo para las establecer configuraciones para el funcionamiento del sistema comercial',
+            activo: false,
+            disabled: false,
+            tooltip: 'Modulo para establecer configuraciones para el funcionamiento del sistema comercial',
             children:
                 [
                     {
@@ -20,6 +18,8 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
                         title: 'Admin Gral',
                         type: 'basic',
                         icon: 'feather:settings',
+                        disabled: false,
+                        activo: false,
                         link: rutaBaseAdministrador
                     }
                 ]

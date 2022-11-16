@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Subir o reemplazar documentos</h2>
+<mat-dialog-content>
+    <form [formGroup]="formDocsArchivo" enctype="multipart/form-data">
+        <div class="flex flex-col">
+            <mat-form-field>
+                <mat-label>Documento</mat-label>
+                <ngx-mat-file-input formControlName="docArchivo" [disabled]="data.enviadoPor !== usuarioQueReg"></ngx-mat-file-input>
+                <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
+            </mat-form-field>
+            <mat-form-field *ngIf="data.folio">
+                <mat-label>Acuse</mat-label>
+                <ngx-mat-file-input formControlName="acuseArchivo"></ngx-mat-file-input>
+                <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<app-registros (registro)="reemplazar(true)" (cancelar)="cancelar()" [deshabilitar]="formDocsArchivo.invalid || cargando" [cargando]="cargando"></app-registros>
+

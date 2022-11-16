@@ -2,6 +2,8 @@ import {Directive, ElementRef, HostListener, Renderer2, Self} from '@angular/cor
 import {NgControl} from '@angular/forms';
 
 @Directive({
+    standalone: true,
+    exportAs: 'TrimDirective',
     selector: '[appTrim]'
 })
 export class TrimDirective

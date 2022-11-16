@@ -23,6 +23,8 @@
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
+                "@typescript-eslint/member-ordering": "off",
+                "@typescript-eslint/member-delimiter-style": "off",
                 "@angular-eslint/component-selector": [
                     "error",
                     {
@@ -65,7 +67,7 @@
                     "error",
                     {
                         "ignorePattern": "^import |^export | implements",
-                        "code": 180
+                        "code": 250
                     }
                 ],
                 "no-underscore-dangle": "off",

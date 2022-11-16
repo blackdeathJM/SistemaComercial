@@ -1,8 +1,23 @@
 import {AfterContentChecked, Component, EventEmitter, Output} from '@angular/core';
 import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
+import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
+import {ApolloQueryResult} from '@apollo/client';
+import {DepartamentosQuery} from '#/libs/datos/src';
 
 @Component({
+    standalone: true,
+    exportAs: 'app-lista-deptos',
+    imports:
+        [
+            CommonModule,
+            MatButtonModule,
+            MatIconModule,
+            TailwindLoadingComponent,
+        ],
     selector: 'app-lista-deptos',
     templateUrl: './lista-deptos.component.html',
     styleUrls: ['./lista-deptos.component.scss'],
@@ -10,7 +25,6 @@ import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 export class ListaDeptosComponent implements AfterContentChecked
 {
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
-    @Output() eventoEliminar: EventEmitter<any> = new EventEmitter<any>();
     deptos: IDepto[];
 
     ngAfterContentChecked(): void
@@ -26,10 +40,5 @@ export class ListaDeptosComponent implements AfterContentChecked
     editar(valor: any): void
     {
         this.eventoEditar.emit(valor);
-    }
-
-    eliminar(valor: any): void
-    {
-        this.eventoEliminar.emit(valor);
     }
 }

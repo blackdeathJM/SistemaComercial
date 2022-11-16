@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-ngx-toast',
-  templateUrl: './ngx-toast.component.html',
-  styleUrls: ['./ngx-toast.component.scss']
+    standalone: true,
+    selector: 'app-ngx-toast',
+    templateUrl: './ngx-toast.component.html',
+    styleUrls: ['./ngx-toast.component.scss']
 })
-export class NgxToastComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class NgxToastComponent
+{
 }

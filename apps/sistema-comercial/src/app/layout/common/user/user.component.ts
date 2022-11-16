@@ -23,7 +23,7 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
 
     @Input() showAvatar: boolean = true;
     user: IDatosSesion;
-    subscripciones: Subscription = new Subscription();
+    subs: Subscription = new Subscription();
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private rolCambiado: RolCambiadoGQL,
                 private ngxToatService: NgxToastService)
@@ -37,7 +37,7 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
 
     ngAfterViewInit(): void
     {
-        this.subscripciones.add(this.rolCambiado.subscribe({_id: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
+        this.subs.add(this.rolCambiado.subscribe({_id: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
         {
             if (res.data)
             {

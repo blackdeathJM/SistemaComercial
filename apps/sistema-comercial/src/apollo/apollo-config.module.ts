@@ -51,7 +51,7 @@ export class ApolloConfigModule
             return {
                 headers: {
                     ...headers,
-                    authorization: token ? `Bearer ${token}` : '',
+                    authorization: token ? `Bearer ${token}` : ''
                 }
             };
         });
@@ -63,7 +63,7 @@ export class ApolloConfigModule
                 return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
             },
             wsClient,
-            http
+            http,
         );
 
         apollo.create({
@@ -76,7 +76,7 @@ export class ApolloConfigModule
                     },
             },
             cache: new InMemoryCache(),
-            connectToDevTools: true
+            connectToDevTools: true,
         });
     }
 }

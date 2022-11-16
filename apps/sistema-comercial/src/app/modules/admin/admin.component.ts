@@ -1,9 +1,24 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDrawer} from '@angular/material/sidenav';
+import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 import {Subject, takeUntil} from 'rxjs';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
+import {DeptosComponent} from '@s-app/deptos/deptos.component';
+import {EmpleadoComponent} from '@s-app/empleado/empleado.component';
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            MatButtonModule,
+            MatIconModule,
+            MatSidenavModule,
+            DeptosComponent,
+            EmpleadoComponent,
+        ],
     selector: 'app-admin',
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.scss']
@@ -36,7 +51,7 @@ export class AdminComponent implements OnInit, OnDestroy
                     id: 'empleado',
                     icon: 'heroicons_outline:user-circle',
                     title: 'Empleados',
-                    description: 'Adminitra los empleado, crea cuentas, reasigna contrasenas perdidas, asigna roles'
+                    description: 'Adminitra los permisos de los empleados y asigna permisos para cada uno de los departamentos'
                 }
             ];
         this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.eliminarSubscripcion)).subscribe(({matchingAliases}) =>

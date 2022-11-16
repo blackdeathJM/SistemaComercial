@@ -1,0 +1,188 @@
+mutation regDoc($datos: DocRegInput!, $files: UploadInput)
+{
+    regDoc(datos: $datos, files: $files)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+    }
+}
+mutation subirDocs($args: DocsSubirInput!, $files: UploadInput, $filesAcuse: UploadInput)
+{
+    subirDocs(args: $args, files: $files, filesAcuse: $filesAcuse)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+
+query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean, $enviadoPor: ID, $proceso: String!)
+{
+    docsUsuarioProceso(usuario: $usuario, esEnviadoPor: $esEnviadoPor, enviadoPor: $enviadoPor, proceso: $proceso)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+mutation genFolioSinReg($args: DocFolioInput!)
+{
+    genFolioSinReg(args: $args)
+}
+
+mutation docActFolio($args: DocActFolioInput!)
+{
+    docActFolio(args: $args)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+
+mutation docFinalizar($_id: String!)
+{
+    docFinalizar(_id: $_id)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+mutation reasignarUsuario($usuarios: DocReasignarUsuarioInput!)
+{
+    reasignarUsuario(usuarios: $usuarios)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+
+query docsFechasUsuarioEnviadoPor($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int, $fechaFinal: Int, $esEnviadoPor: Boolean!)
+{
+    docsFechasUsuarioEnviadoPor(usuario: $usuario, enviadoPor: $enviadoPor, fechaInicial: $fechaInicial, fechaFinal: $fechaFinal, esEnviadoPor: $esEnviadoPor)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+query docsBusquedaGral($usuario: ID!, $consulta: String!)
+{
+    docsBusquedaGral(usuario: $usuario, consulta: $consulta)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+query docsRef($_id: ID!, $usuario: ID!)
+{
+    docsRef(_id: $_id, usuario: $usuario)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+mutation docRefFolio($entradas: DocRefFolioInput!)
+{
+    docRefFolio(entradas: $entradas)
+    {
+        ...fragDoc
+        resolveEmpleado {
+            nombreCompleto
+            avatar
+        }
+        resolverEmpleadoFolio {
+            nombreCompleto
+        }
+        resolveEmpleadoEnviado {
+            nombreCompleto
+            avatar
+        }
+    }
+}

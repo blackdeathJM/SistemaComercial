@@ -6,22 +6,25 @@ import {AuthResolver} from './auth.resolver';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {LocalStrategy} from './strategy/local.strategy';
 import {JwtStrategy} from './strategy/jwt.strategy';
-import {SCHEMA_EMPLEADO, EmpleadoDto} from '@sistema-comercial/modelos/empleado.dto';
+import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {PassportModule} from "@nestjs/passport";
+import {EmpleadoService} from "@api-admin/empleado.service";
 
 @Module({
     imports:
         [
             MongooseModule.forFeature([{name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}]),
+            PassportModule.register({defaultStrategy: 'jwt'}),
             JwtModule.registerAsync({
                 imports: [ConfigModule],
-                inject:[ConfigService],
+                inject: [ConfigService],
                 useFactory: async (configService: ConfigService) => ({
-                    secret: configService.get('palabraSecreta'),
+                    secret: configService.get('PALABRA_SECRETA'),
                     signOptions: {expiresIn: '8h'}
                 })
-            })
+            }),
         ],
-    providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy]
+    providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy, EmpleadoService]
 })
 export class AuthModule
 {

@@ -3,10 +3,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
-import {MatDrawer} from '@angular/material/sidenav';
+import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            MatSidenavModule
+        ],
     selector: 'app-lista-detalle',
     templateUrl: './lista-detalle.component.html',
     styleUrls: ['./lista-detalle.component.scss'],
@@ -33,7 +38,6 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
     {
         this.matDrawer.openedChange.subscribe((opened) =>
         {
-            console.log('opened', opened);
             if (!opened)
             {
                 this.cdr.reattach();

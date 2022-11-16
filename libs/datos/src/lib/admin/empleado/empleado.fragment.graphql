@@ -1,18 +1,25 @@
+fragment fragTelefono on TelefonoType
+{
+    numero
+}
+fragment fragModificadoPor on ModificadoPorType
+{
+    fecha
+    usuario
+    accion
+    valorAnterior
+    valorActual
+}
 fragment fragEmpleado on EmpleadoType
 {
     _id
-    nombreCompleto
     avatar
-    activo
+    nombreCompleto
     calle
     colonia
-    fechaBaja
     fechaIngreso
+    fechaBaja
+    activo
+    correo
     deptoId
-}
-
-fragment fragModificadoPor on ModificadoType
-{
-    usuario
-    fecha
 }

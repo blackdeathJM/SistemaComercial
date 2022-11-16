@@ -1,7 +1,7 @@
-
-import {compare, required} from '@rxweb/reactive-form-validators';
+import {compare, prop, required} from '@rxweb/reactive-form-validators';
 import {sanitize, trim} from '@rxweb/sanitizers';
-import {IAuth, IRol} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {IAuth} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {defaultNavigation} from '@s-app/common/navigation/data';
 
 @sanitize
 export class Auth implements IAuth
@@ -15,7 +15,8 @@ export class Auth implements IAuth
     @required({message: 'Es necesario que asignes un usuario'})
     @trim()
     usuario: string;
-    rol: IRol[];
-    activo: boolean = true;
-    estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
+    @prop()
+    role: object[] = defaultNavigation;
+    activo: boolean;
+    estatus: 'En-linea';
 }

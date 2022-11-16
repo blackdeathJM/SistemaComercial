@@ -8,8 +8,10 @@ import {AuthService} from '@s-app/core/auth/auth.service';
 })
 export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad
 {
-
-    constructor(private _authService: AuthService, private _router: Router)
+    constructor(
+        private _authService: AuthService,
+        private _router: Router
+    )
     {
     }
 
@@ -32,22 +34,22 @@ export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad
     {
         // Check the authentication status
         return this._authService.check()
-            .pipe(
-                switchMap((authenticated) =>
-                {
+                   .pipe(
+                       switchMap((authenticated) => {
 
-                    // If the user is authenticated...
-                    if (authenticated)
-                    {
-                        // Redirect to the root
-                        this._router.navigate(['']).then();
+                           // If the user is authenticated...
+                           if ( authenticated )
+                           {
+                               // Redirect to the root
+                               this._router.navigate(['']).then();
 
-                        return of(false);
-                        // Prevent the access
-                    }
+                               // Prevent the access
+                               return of(false);
+                           }
 
-                    // Allow the access
-                    return of(true);
-                }));
+                           // Allow the access
+                           return of(true);
+                       })
+                   );
     }
 }

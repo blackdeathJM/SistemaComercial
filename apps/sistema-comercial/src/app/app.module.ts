@@ -13,8 +13,6 @@ import {AppComponent} from '@s-app/app.component';
 import {appRoutes} from '@s-app/app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {DeptosModule} from '@s-app/modules/admin/deptos/deptos.module';
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
@@ -24,7 +22,12 @@ import {CommonModule} from '@angular/common';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {TOKEN} from '@s-app/auth/const';
-import {GeneralModule} from '@s-app/general/general.module';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {environment} from '../environments/environment';
+import {provideStorage, getStorage} from '@angular/fire/storage';
+import {LuxonModule} from 'luxon-angular';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 
 const routerConfig: ExtraOptions =
     {
@@ -49,8 +52,8 @@ const routerConfig: ExtraOptions =
             }),
             CommonModule,
             FormsModule,
+            LuxonModule,
             ReactiveFormsModule,
-            RxReactiveFormsModule,
             BrowserAnimationsModule,
             RouterModule.forRoot(appRoutes, routerConfig),
 
@@ -72,9 +75,12 @@ const routerConfig: ExtraOptions =
             SweetAlert2Module.forRoot(),
             ToastrModule.forRoot(),
             NgxTrimDirectiveModule,
+            MatLuxonDateModule,
             // modulos
-            DeptosModule,
+            provideFirebaseApp(() => initializeApp(environment.firebase)),
+            provideStorage(() => getStorage()),
         ],
+    providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-MX'}],
     bootstrap:
         [
             AppComponent

@@ -1,7 +1,6 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
 
-export const PRESIDENCIA: FuseNavigationItem[] =
-    [];
+export const PRESIDENCIA: FuseNavigationItem[] = [];
 
 export const PRESIDENCIA_C: FuseNavigationItem[] = [];
 

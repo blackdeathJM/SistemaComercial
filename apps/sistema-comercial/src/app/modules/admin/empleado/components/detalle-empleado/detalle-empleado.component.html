@@ -5,7 +5,7 @@
         <img class="absolute inset-0 object-cover w-full h-full" [src]="'assets/images/fondos/fondoPerfilEmpleado.jpg'" alt="Fondo">
         <!-- Close button -->
         <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
-            <button mat-icon-button [matTooltip]="'Cerrar panel'" (click)="abrir()">
+            <button mat-icon-button [matTooltip]="'Cerrar panel'" (click)="cerrarP()">
                 <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x'"></mat-icon>
             </button>
         </div>
@@ -48,42 +48,53 @@
                         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
                         <div class="ml-6 leading-6">{{_empleado?.auth?.usuario}}</div>
                     </div>
-                    <!-- Permisos -->
-                    <div class="flex sm:items-center">
-                        <div class="font-bold text-2xl leading-6 text-amber-600">Permisos - ({{_empleado?.deptoEmpleado?.nombre}})</div>
-                    </div>
                 </div>
             </ng-container>
 
-
-            <div class="flex flex-col mt-8 divide-y border-t border-b">
-                <ng-container *ngFor="let permiso of _empleado?.auth?.rol; trackBy: trackByFn;">
-                    <div class="flex flex-col sm:flex-row sm:items-center py-6">
+            <div class="flex flex-col mt-4 divide-y">
+                <ng-container *ngFor="let permiso of _empleado?.auth?.role; trackBy: trackByFn;">
+                    <div class="flex flex-col sm:flex-row sm:items-center py-3">
                         <div class="flex items-center">
                             <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                                 <ng-container>
                                     <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                         <!--                                        <mat-icon [svgIcon]="permiso.tipoAcceso === 'Ninguno' ? 'lock' : permiso.tipoAcceso === 'Lectura' ? 'heroicons_outline:eye': 'lock_open'"></mat-icon>-->
-                                        <mat-icon [svgIcon]="permiso?.tipoAcceso | cambioIconoRol"></mat-icon>
+                                        <mat-icon [svgIcon]="'heroicons_outline:key'"></mat-icon>
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="ml-4">
-                                <div class="font-medium">{{permiso?.id}}</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center mt-4 sm:mt-0 sm:ml-auto">
-                            <div class="order-2 sm:order-1 ml-4 sm:ml-0">
-                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">
-                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>
-                                </mat-button-toggle-group>
-
-                            </div>
+                            <div class="font-bold text-lg leading-6 text-amber-600 ml-3">{{permiso.title}}</div>
                         </div>
                     </div>
+                    <mat-selection-list>
+                        <div class="flex flex-column w-full" *ngFor="let hijo of permiso?.children">
+                            <mat-slide-toggle>{{hijo?.title}}</mat-slide-toggle>
+
+                            <div class="flex flex-column w-full m-2 mt-4" *ngFor="let hijo2 of hijo?.children">
+                                <mat-slide-toggle>{{hijo2?.title}}</mat-slide-toggle>
+                            </div>
+                        </div>
+                    </mat-selection-list>
                 </ng-container>
             </div>
         </div>
     </div>
 </div>
+
+<!--                                <mat-button-toggle-group [formControl]="controlRoles" appearance="legacy" (change)="permisoSeleccionado($event, permiso, _empleado)">-->
+<!--                                    <mat-button-toggle *ngFor="let rol of roles" appearance="legacy" [checked]="permiso.tipoAcceso === rol" [value]="rol">{{rol}}</mat-button-toggle>-->
+<!--                                </mat-button-toggle-group>-->
+
+
+<!--<mat-nav-list>-->
+<!--    <h3 matSubheader>This is the listview</h3>-->
+<!--    <a mat-list-item [routerLink]="['/detail']">-->
+<!--        <span matLine>Title</span>-->
+<!--        <button mat-icon-button (click)="onAdd($event)">-->
+<!--            <mat-icon>add</mat-icon>-->
+<!--        </button>-->
+<!--        <button mat-icon-button (click)="onRemove($event)">-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--        </button>-->
+<!--    </a>-->
+<!--</mat-nav-list>-->

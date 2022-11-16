@@ -1,16 +1,34 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {FormGroup} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Auth} from '@s-app/empleado/models/auth';
-import {RxFormBuilder} from '@rxweb/reactive-form-validators';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
 import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {CommonModule} from '@angular/common';
+import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {GeneralService} from '@s-app/services/general.service';
+import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 
 @Component({
+    standalone: true,
+    imports:
+        [
+            CommonModule,
+            MatDialogModule,
+            ReactiveFormsModule,
+            RxReactiveFormsModule,
+            MatFormFieldModule,
+            MatInputModule,
+            RegistrosComponent
+        ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',
     styleUrls: ['./registro-sesion.component.scss'],
@@ -29,7 +47,6 @@ export class RegistroSesionComponent implements OnInit
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
-
         if (this.data.auth)
         {
             this.soloLectura = true;
@@ -40,18 +57,26 @@ export class RegistroSesionComponent implements OnInit
     registrar(): void
     {
         this.cargandoDatos = true;
-
+        this.formAuth.disable();
         const {confirmContrasena, ...resto} = this.formAuth.value;
-            // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
+        // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
         if (this.data.auth)
         {
             const datos =
                 {
                     _id: this.data._id,
-                    contrasena: this.formAuth.get('contrasena').value
+                    contrasena: this.formAuth.get('contrasena').value,
+                };
+            const modificadoPor: IModificado =
+                {
+                    usuario: STATE_DATOS_SESION().auth.usuario,
+                    accion: 'Modificacion de contrasena',
+                    fecha: GeneralService.fechaHoraActual(),
+                    valorActual: [{}],
+                    valorAnterior: [{}]
                 };
 
-            this.actualizarContrasenaAdminGQL.mutate({datos}).pipe(finalize(() =>
+            this.actualizarContrasenaAdminGQL.mutate({datos, modificadoPor}).pipe(finalize(() =>
             {
                 this.cargandoDatos = false;
                 this.cancelar();
@@ -65,14 +90,29 @@ export class RegistroSesionComponent implements OnInit
             })).subscribe();
         } else
         {
-            this.asignarAuthGQL.mutate({_id: this.data._id, auth: resto}, {fetchPolicy: 'network-only'}).pipe(finalize(() => this.cancelar()), tap((res) =>
+            const modificadoPor: IModificado =
+                {
+                    usuario: STATE_DATOS_SESION().auth.usuario,
+                    fecha: GeneralService.fechaHoraActual(),
+                    accion: 'Asignacion de usuario para el inicio de sesion en el portal',
+                    valorAnterior: [{}],
+                    valorActual: [{}]
+                };
+
+            this.asignarAuthGQL.mutate({_id: this.data._id, auth: resto, modificadoPor}, {fetchPolicy: 'network-only'}).pipe(finalize(() =>
+            {
+                this.cancelar();
+                this.cargandoDatos = false;
+            }), tap((res) =>
             {
                 if (res.data)
                 {
                     unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
                     this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
+                } else
+                {
+                    this.ngxToastService.errorToast('Asignacion de sesion', 'Ocurrio un error al tratar de asignar la sesion para este usuario');
                 }
-                this.cargandoDatos = false;
             })).subscribe();
         }
 

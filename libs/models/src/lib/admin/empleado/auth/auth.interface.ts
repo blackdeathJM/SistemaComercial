@@ -3,15 +3,8 @@ export interface IAuth
     activo: boolean;
     usuario: string;
     contrasena: string;
-    estatus: 'En-linea' | 'Desconectado'| 'Ocupado'| 'No-visible';
-    rol: IRol[];
-}
-
-export interface IRol
-{
-    tipoAcceso: 'ninguno' | 'lectura' | 'completo';
-    id: string;
-    oculto: boolean;
+    estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
+    role: object[];
 }
 
 export interface IDatosSesion
@@ -20,5 +13,6 @@ export interface IDatosSesion
     avatar: string;
     nombreCompleto: string;
     activo: boolean;
+    deptoId: string;
     auth: IAuth;
 }

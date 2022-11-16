@@ -1,10 +1,14 @@
-import { Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
-  selector: 'app-tailwind-loading',
-  templateUrl: './tailwind-loading.component.html',
-  styleUrls: ['./tailwind-loading.component.scss']
+    standalone: true,
+    exportAs: 'app-tailwind-loading',
+    selector: 'app-tailwind-loading',
+    templateUrl: './tailwind-loading.component.html',
+    styleUrls: ['./tailwind-loading.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TailwindLoadingComponent {
+export class TailwindLoadingComponent
+{
 
 }

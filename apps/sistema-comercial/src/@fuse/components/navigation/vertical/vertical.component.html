@@ -22,7 +22,6 @@
 
             <!-- Skip the hidden items -->
             <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
-
                 <!-- Aside -->
                 <ng-container *ngIf="item.type === 'aside'">
                     <fuse-vertical-navigation-aside-item

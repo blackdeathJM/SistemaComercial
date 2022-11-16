@@ -1,9 +1,9 @@
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {ObjectId} from 'bson';
-import {EmpleadoDto, EmpleadoType} from '@sistema-comercial/modelos/empleado.dto';
-import {IEmpleado} from '@sistema-comercial/modelos/empleado.interface';
+import {EmpleadoDto, EmpleadoType, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Injectable()
 export class EmpleadoService
@@ -14,10 +14,21 @@ export class EmpleadoService
 
     async empleados(): Promise<IEmpleado[]>
     {
-        return this.empleado.find().exec();
+        return await this.empleado.find().exec();
     }
 
-    async crearEmpleado(datosEmpleado: IEmpleado): Promise<IEmpleado>
+    async empleadosSesion(): Promise<IEmpleado[]>
+    {
+        try
+        {
+            return await this.empleado.find({auth: {$ne: null}}).exec();
+        } catch (e)
+        {
+            throw new ConflictException({message: e.codeName});
+        }
+    }
+
+    async crearEmpleado(datosEmpleado: RegEmpleadoDto): Promise<EmpleadoDto>
     {
         try
         {
@@ -28,13 +39,23 @@ export class EmpleadoService
         }
     }
 
-    async buscarEmpleadoPorId(_id: string): Promise<IEmpleado | NotFoundException>
+    async buscarEmpleadoPorId(_id: string): Promise<EmpleadoDto>
     {
-        const empleado = await this.empleado.findById(new ObjectId(_id)).exec();
-        if (!empleado)
+        if (_id)
         {
-            throw new NotFoundException('No se encontro usuario');
+            return await this.empleado.findById(new ObjectId(_id)).exec();
         }
+        return null;
+    }
+
+    async validarUsuarioActivo(_id: string): Promise<IEmpleado>
+    {
+        const empleado = await this.empleado.findById(_id).exec();
+        if (!empleado.activo)
+        {
+            throw new UnauthorizedException('El empleado no esta activo');
+        }
+        delete empleado.auth.contrasena;
         return empleado;
     }
 }

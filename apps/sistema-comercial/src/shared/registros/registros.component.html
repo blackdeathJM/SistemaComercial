@@ -1,15 +1,15 @@
-<mat-action-row class="flex flex-row gap-3">
-    <button mat-flat-button color="warn" type="button" class="grow" (click)="cancelar()">
-        <mat-icon class="icon-size-5 mr-2">cancel</mat-icon>
+<mat-dialog-actions class="flex gap-4 items-center mt-4">
+    <button mat-flat-button color="warn" type="button" class="flex-auto" (click)="cerrar()" [disabled]="_cargando">
+        <mat-icon class="mr-2">cancel</mat-icon>
         Cancelar
     </button>
-    <button mat-flat-button color="primary" type="button" class="grow" (click)="aceptar()" [disabled]="_deshabilitar">
+    <button mat-flat-button color="primary" type="button" class="flex-auto" (click)="reg()" [disabled]="_deshabilitar">
         <ng-container *ngIf="!_cargando; else cargando">
-            <mat-icon class="icon-size-5 mr-2">save</mat-icon>
+            <mat-icon class="mr-2">save</mat-icon>
             Aceptar
         </ng-container>
     </button>
-</mat-action-row>
+</mat-dialog-actions>
 
 <ng-template #cargando>
     <mat-icon class="mr-2">

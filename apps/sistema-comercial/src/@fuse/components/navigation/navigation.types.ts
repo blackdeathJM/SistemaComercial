@@ -1,4 +1,4 @@
-import { IsActiveMatchOptions } from '@angular/router';
+import {IsActiveMatchOptions, Params, QueryParamsHandling} from '@angular/router';
 
 export interface FuseNavigationItem
 {
@@ -13,10 +13,16 @@ export interface FuseNavigationItem
         | 'group'
         | 'spacer';
     hidden?: (item: FuseNavigationItem) => boolean;
+    oculto?: boolean;
+    activo: boolean;
     active?: boolean;
     disabled?: boolean;
     tooltip?: string;
     link?: string;
+    fragment?: string;
+    preserveFragment?: boolean;
+    queryParams?: Params | null;
+    queryParamsHandling?: QueryParamsHandling | null;
     externalLink?: boolean;
     target?:
         | '_blank'

@@ -11,5 +11,34 @@ query empleados
         {
             ...fragDeptos
         }
+        telefono {
+            ...fragTelefono
+        }
+        modificadoPor {
+            ...fragModificadoPor
+        }
+    }
+}
+
+query empleadosSesion
+{
+    empleadosSesion {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}
+mutation crearEmpleado($empleadoDatos: RegEmpleadoInput!)
+{
+    crearEmpleado(empleadoDatos: $empleadoDatos)
+    {
+        ...fragEmpleado
+        telefono {
+            ...fragTelefono
+        }
     }
 }
