@@ -165,7 +165,7 @@ type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
-  docsUsuarioProceso(datos: DocsUsuarioProcesoInput!): [DocumentoType!]!
+  docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!
   docsFechasUsuarioEnviadoPor(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
   docsBusquedaGral(consulta: String!, usuario: ID!): [DocumentoType!]!
   docsRef(
@@ -177,11 +177,6 @@ type Query {
     """
     usuario: ID
   ): [DocumentoType!]!
-}
-
-input DocsUsuarioProcesoInput {
-  proceso: String = "pendiente"
-  usuario: ID
 }
 
 type Mutation {

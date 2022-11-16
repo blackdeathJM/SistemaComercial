@@ -26,9 +26,9 @@ export class DocumentosResolver
     }
 
     @Query(() => [DocumentoDto], {defaultValue: []})
-    async docsUsuarioProceso(@Args('datos') datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
+    async docsUsuarioProceso(@Args() args: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
-        return await this.documentosService.docsUsuarioProceso(datos);
+        return await this.documentosService.docsUsuarioProceso(args);
     }
 
     @Query(() => [DocumentoDto])

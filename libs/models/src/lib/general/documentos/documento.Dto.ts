@@ -1,4 +1,4 @@
-import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocumento, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
+import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocsUsuarioProceso, IDocumento, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
 import {ArgsType, Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsArray, IsBoolean, IsInt, IsMongoId, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
@@ -101,12 +101,21 @@ export class DocumentoDto implements IDocumento
 export type DocumentoType = DocumentoDto & Document;
 export const SCHEMA_DOCUMENTOS = SchemaFactory.createForClass(DocumentoDto);
 
-@InputType('DocsUsuarioProcesoInput')
-export class DocsUsuarioProcesoDto extends PickType(DocumentoDto, ['proceso'], InputType)
+@ArgsType()
+export class DocsUsuarioProcesoDto implements IDocsUsuarioProceso
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario que recibe el documento'})
     usuario: string;
+    @Field(() => ID, {nullable: true, defaultValue: null})
+    @IsOptional()
+    enviadoPor: string;
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    @IsBoolean({message: 'El valor debe ser booleano'})
+    esEnviadoPor: boolean;
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el proceso'})
+    proceso: 'pendiente' | 'terminado';
 }
 
 @ArgsType()

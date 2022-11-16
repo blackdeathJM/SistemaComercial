@@ -1,5 +1,5 @@
 import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
-import {IDocsFechasUsuarioEnviadoPor, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IDocsFechasUsuarioEnviadoPor, IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
 import {DocsBusquedaGralGQL, DocsFechasUsuarioEnviadoPorGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
@@ -21,6 +21,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
     standalone: true,
@@ -40,7 +41,8 @@ import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
             RxReactiveFormsModule,
             ReactiveFormsModule,
             MatDatepickerModule,
-            MatLuxonDateModule
+            MatLuxonDateModule,
+            MatCheckboxModule
         ],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
@@ -55,6 +57,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     sub: Subscription = new Subscription();
     formBuscarFechas = new FormGroup({fechaInicio: new FormControl(), fechaFin: new FormControl()});
     txtBuscar = new FormControl();
+    chkBuscar = new FormControl();
     // formBuscarFechas = this.fb.group({
     //     fechaInicio: [],
     //     fechaFin: []
@@ -72,7 +75,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
 
     ngOnInit(): void
     {
-        this.docUsuarioProceso('pendiente');
+        this.docUsuarioProceso('pendiente', this.chkBuscar.value);
         this.sub.add(this.txtBuscar.valueChanges.pipe(delay(300), tap((res) =>
         {
             this.docsBuscarGralGQL.watch({usuario: STATE_DATOS_SESION()._id, consulta: res}).valueChanges.pipe(tap((busqueda) =>
@@ -85,10 +88,18 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
         })).subscribe());
     }
 
-    docUsuarioProceso(proceso: string): void
+    docUsuarioProceso(proceso: 'pendiente' | 'terminado', esEnviadoPor: boolean): void
     {
         this.cargandoDatos = true;
-        this.docsUsuarioProcesoGQL.watch({datos: {proceso, usuario: STATE_DATOS_SESION()._id}}).valueChanges
+        const args: IDocsUsuarioProceso =
+            {
+                enviadoPor: STATE_DATOS_SESION()._id,
+                esEnviadoPor,
+                proceso: proceso,
+                usuario: STATE_DATOS_SESION()._id
+
+            };
+        this.docsUsuarioProcesoGQL.watch({...args}).valueChanges
             .pipe(tap((res) =>
             {
                 this.cargandoDatos = false;
@@ -117,35 +128,14 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
         this.dRef.open(ModDocumentosComponent, {width: '40%', data: null, hasBackdrop: false});
     }
 
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
-    }
-
     pendientes(): void
     {
-        this.docUsuarioProceso('pendiente');
+        this.docUsuarioProceso('pendiente', this.chkBuscar.value);
     }
 
     terminados(): void
     {
-        this.docUsuarioProceso('terminado');
-    }
-
-    enviadosPorMi(): void
-    {
-        const {fechaInicio, fechaFin} = this.formBuscarFechas.value;
-
-        const consulta: IDocsFechasUsuarioEnviadoPor =
-            {
-                enviadoPor: STATE_DATOS_SESION()._id,
-                esEnviadoPor: true,
-                fechaInicial: fechaInicio !== null ? fechaInicio['ts'] / 1000 : null,
-                fechaFinal: fechaFin !== null ? fechaFin['ts'] / 1000 : null,
-                usuario: 'no entra'
-
-            };
-        this.fechaUsuarioEnviadoPor(consulta);
+        this.docUsuarioProceso('terminado', this.chkBuscar.value);
     }
 
     consultaFechasUsuario(): void
@@ -179,5 +169,10 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
                 STATE_DOCS(res.data.docsFechasUsuarioEnviadoPor as IResolveDocumento[]);
             }
         })).subscribe();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

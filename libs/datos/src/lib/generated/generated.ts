@@ -115,11 +115,6 @@ export type DocsSubirInput = {
   docUrl?: InputMaybe<Scalars['String']>;
 };
 
-export type DocsUsuarioProcesoInput = {
-  proceso?: InputMaybe<Scalars['String']>;
-  usuario?: InputMaybe<Scalars['ID']>;
-};
-
 export type DocumentoInput = {
   _id?: InputMaybe<Scalars['ID']>;
   acuseUrl?: InputMaybe<Scalars['String']>;
@@ -366,7 +361,10 @@ export type QueryDocsRefArgs = {
 
 
 export type QueryDocsUsuarioProcesoArgs = {
-  datos: DocsUsuarioProcesoInput;
+  enviadoPor?: InputMaybe<Scalars['ID']>;
+  esEnviadoPor?: InputMaybe<Scalars['Boolean']>;
+  proceso?: InputMaybe<Scalars['String']>;
+  usuario?: InputMaybe<Scalars['ID']>;
 };
 
 export type RegEmpleadoInput = {
@@ -508,7 +506,10 @@ export type SubirDocsMutationVariables = Exact<{
 export type SubirDocsMutation = { __typename?: 'Mutation', subirDocs: { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null } };
 
 export type DocsUsuarioProcesoQueryVariables = Exact<{
-  datos: DocsUsuarioProcesoInput;
+  usuario?: InputMaybe<Scalars['ID']>;
+  esEnviadoPor: Scalars['Boolean'];
+  enviadoPor?: InputMaybe<Scalars['ID']>;
+  proceso: Scalars['String'];
 }>;
 
 
@@ -945,8 +946,13 @@ export const SubirDocsDocument = gql`
     }
   }
 export const DocsUsuarioProcesoDocument = gql`
-    query docsUsuarioProceso($datos: DocsUsuarioProcesoInput!) {
-  docsUsuarioProceso(datos: $datos) {
+    query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean!, $enviadoPor: ID, $proceso: String!) {
+  docsUsuarioProceso(
+    usuario: $usuario
+    esEnviadoPor: $esEnviadoPor
+    enviadoPor: $enviadoPor
+    proceso: $proceso
+  ) {
     ...fragDoc
     resolveEmpleado {
       nombreCompleto

@@ -24,13 +24,23 @@ export class DocumentosService
 // Filtrar los documentos por usuario y por ano
     async docsUsuarioProceso(datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
+        const tipoBusqueda: Record<string, string> = {};
+        const consulta = {proceso: datos.proceso, ano: this.#ano};
+        if (datos.esEnviadoPor)
+        {
+            tipoBusqueda['enviadoPor'] = datos.enviadoPor;
+        } else
+        {
+            tipoBusqueda['usuarios'] = datos.usuario;
+        }
+        const buscar = Object.assign(consulta, tipoBusqueda);
         try
         {
             // Buscar documentos por usuarios, ano, proceso,
-            return await this.documento.find({proceso: datos.proceso, ano: this.#ano, usuarios: datos.usuario}, {}, {sort: {fechaRecepcion: -1}}).exec();
+            return await this.documento.find({...buscar}, {}, {sort: {fechaRecepcion: -1}}).exec();
         } catch (e)
         {
-            throw new ConflictException({message: e});
+            throw new ConflictException({message: e.codeName});
         }
     }
 
