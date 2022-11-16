@@ -35,7 +35,7 @@ mutation subirDocs($args: DocsSubirInput!, $files: UploadInput, $filesAcuse: Upl
     }
 }
 
-query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean!, $enviadoPor: ID, $proceso: String!)
+query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean, $enviadoPor: ID, $proceso: String!)
 {
     docsUsuarioProceso(usuario: $usuario, esEnviadoPor: $esEnviadoPor, enviadoPor: $enviadoPor, proceso: $proceso)
     {

@@ -507,7 +507,7 @@ export type SubirDocsMutation = { __typename?: 'Mutation', subirDocs: { __typena
 
 export type DocsUsuarioProcesoQueryVariables = Exact<{
   usuario?: InputMaybe<Scalars['ID']>;
-  esEnviadoPor: Scalars['Boolean'];
+  esEnviadoPor?: InputMaybe<Scalars['Boolean']>;
   enviadoPor?: InputMaybe<Scalars['ID']>;
   proceso: Scalars['String'];
 }>;
@@ -946,7 +946,7 @@ export const SubirDocsDocument = gql`
     }
   }
 export const DocsUsuarioProcesoDocument = gql`
-    query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean!, $enviadoPor: ID, $proceso: String!) {
+    query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean, $enviadoPor: ID, $proceso: String!) {
   docsUsuarioProceso(
     usuario: $usuario
     esEnviadoPor: $esEnviadoPor

@@ -57,7 +57,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     sub: Subscription = new Subscription();
     formBuscarFechas = new FormGroup({fechaInicio: new FormControl(), fechaFin: new FormControl()});
     txtBuscar = new FormControl();
-    chkBuscar = new FormControl();
+    chkBuscar = new FormControl(false);
     // formBuscarFechas = this.fb.group({
     //     fechaInicio: [],
     //     fechaFin: []
