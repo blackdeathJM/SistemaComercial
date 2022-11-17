@@ -15,7 +15,6 @@ async function bootstrap(): Promise<void>
     app.setGlobalPrefix('/graphql');
     // const configService = app.get(ConfigService);
     const PORT = process.env.PORT;
-    console.log('haber que hay', environment.port);
     await app.listen(PORT);
     Logger.log(`🚀 Application is running on: http://localhost:${PORT}`);
 }
