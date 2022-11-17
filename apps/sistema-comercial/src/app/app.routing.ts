@@ -43,7 +43,6 @@ export const appRoutes: Route[] = [
                 {
                     path: 'admin',
                     canActivate: [AdminGuard],
-                    canActivateChild: [AdminGuard],
                     loadChildren: () => import('@s-app/modules/admin/admin.routing').then(a => a.adminRouting)
                 },
                 {
