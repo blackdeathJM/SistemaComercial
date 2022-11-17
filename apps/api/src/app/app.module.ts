@@ -9,9 +9,7 @@ import {AdminModule} from './admin/admin.module';
 import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {GraphQLUpload} from 'graphql-upload';
-import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 import {AppService} from '#api/apps/api/src/app/app.service';
-import {environment} from '../environments/environment';
 
 @Module({
     imports:
@@ -39,7 +37,6 @@ import {environment} from '../environments/environment';
                     },
                 playground: false,
                 context: ({req}) => ({req}),
-                plugins: [ApolloServerPluginLandingPageLocalDefault]
             }),
             // MongooseModule.forRoot('mongodb+srv://blackdeath:FernandaTeamo1017@simapas-api-k3zc5.mongodb.net/simapas-api?retryWrites=true&w=majority'),
             // MongooseModule.forRoot(environment.uriMongo),

@@ -26,7 +26,7 @@
     },
     "cli": {
         "defaultCollection": "@angular-eslint/schematics",
-        "packageManager": "yarn"
+        "packageManager": "pnpm"
     },
     "generators": {
         "@nrwl/angular:application": {
