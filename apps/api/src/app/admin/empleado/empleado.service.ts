@@ -1,7 +1,6 @@
 import {ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {ObjectId} from 'bson';
 import {EmpleadoDto, EmpleadoType, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 
@@ -43,7 +42,7 @@ export class EmpleadoService
     {
         if (_id)
         {
-            return await this.empleado.findById(new ObjectId(_id)).exec();
+            return await this.empleado.findById(_id).exec();
         }
         return null;
     }

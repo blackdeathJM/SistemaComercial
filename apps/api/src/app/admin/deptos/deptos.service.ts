@@ -1,7 +1,6 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {ObjectId} from 'bson';
 import {DeptoDto, DeptoType} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
 import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
 
@@ -33,7 +32,7 @@ export class DeptosService
     {
         try
         {
-            return await this.depto.findByIdAndUpdate(new ObjectId(input._id), {...input}, {returnOriginal: false}).exec();
+            return await this.depto.findByIdAndUpdate(input._id, {...input}, {returnOriginal: false}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e.codeName});
@@ -45,7 +44,7 @@ export class DeptosService
     {
         try
         {
-            return await this.depto.findByIdAndDelete(new ObjectId(_id)).exec();
+            return await this.depto.findByIdAndDelete(_id).exec();
         } catch (e)
         {
             throw new ConflictException({message: e.codeName});
@@ -54,6 +53,6 @@ export class DeptosService
 
     async deptoPorId(_id: string): Promise<IDepto>
     {
-        return this.depto.findById(new ObjectId(_id)).exec();
+        return this.depto.findById(_id).exec();
     }
 }
