@@ -125,7 +125,6 @@ specifiers:
   lodash-es: 4.17.21
   luxon: ^3.1.0
   luxon-angular: ^5.2.0
-  moment: 2.29.4
   mongoose: ^6.7.2
   nest-access-control: ^2.2.0
   ng-apexcharts: 1.7.4
@@ -172,7 +171,7 @@ dependencies:
   '@angular/forms': 14.2.11_ast4p4ycywo3bpfejuahudj7lm
   '@angular/material': 14.2.7_f6ld6sjivq4nwxqj5wv4owiiey
   '@angular/material-luxon-adapter': 14.2.7_rtmros6pyllvduer7jo53eznta
-  '@angular/material-moment-adapter': 14.2.7_6r4cvr7mnqfmndg4zvre3axsue
+  '@angular/material-moment-adapter': 14.2.7_7ksfw2sfpybs4jkloyqjzmcrh4
   '@angular/platform-browser': 14.2.11_zez6djhwlji3bikka7td3ytvty
   '@angular/platform-browser-dynamic': 14.2.11_dmksj2gyfofefsksiyocjjtnru
   '@angular/router': 14.2.11_ast4p4ycywo3bpfejuahudj7lm
@@ -227,7 +226,6 @@ dependencies:
   lodash-es: 4.17.21
   luxon: 3.1.0
   luxon-angular: 5.2.0_ls5xhdv6owqltc2nfp7ebzcd44
-  moment: 2.29.4
   mongoose: 6.7.2
   nest-access-control: 2.2.0_@nestjs+graphql@10.1.6
   ng-apexcharts: 1.7.4_cuqqvhu6cvym66nr5yhdi7i4jy
@@ -906,7 +904,7 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@angular/material-moment-adapter/14.2.7_6r4cvr7mnqfmndg4zvre3axsue:
+  /@angular/material-moment-adapter/14.2.7_7ksfw2sfpybs4jkloyqjzmcrh4:
     resolution: {integrity: sha512-uadhugTqgETxCTis4da/TpYfIUQDQSfGAxgH1n93eFNhGdW+aof3T4uKcbZ5d18RzU+lgO6RELuPnWW2PPlmCA==}
     peerDependencies:
       '@angular/core': ^14.0.0 || ^15.0.0
@@ -915,7 +913,6 @@ packages:
     dependencies:
       '@angular/core': 14.2.11_rxjs@7.5.7+zone.js@0.12.0
       '@angular/material': 14.2.7_f6ld6sjivq4nwxqj5wv4owiiey
-      moment: 2.29.4
       tslib: 2.4.1
     dev: false
 
@@ -15014,10 +15011,6 @@ packages:
 
   /moment-mini/2.29.4:
     resolution: {integrity: sha512-uhXpYwHFeiTbY9KSgPPRoo1nt8OxNVdMVoTBYHfSEKeRkIkwGpO+gERmhuhBtzfaeOyTkykSrm2+noJBgqt3Hg==}
-    dev: false
-
-  /moment/2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: false
 
   /mongodb-connection-string-url/2.5.4:

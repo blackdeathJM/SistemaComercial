@@ -86,7 +86,6 @@
         "lodash-es": "4.17.21",
         "luxon": "^3.1.0",
         "luxon-angular": "^5.2.0",
-        "moment": "2.29.4",
         "mongoose": "^6.7.2",
         "nest-access-control": "^2.2.0",
         "ng-apexcharts": "1.7.4",
