@@ -13,8 +13,7 @@ async function bootstrap(): Promise<void>
     app.enableCors();
     app.setGlobalPrefix('/graphql');
     const configService = app.get(ConfigService);
-    console.log('puerto', configService.get('PORT'));
-    const PORT = process.env.PORT;
+    const PORT = configService.get('PORT');
     await app.listen(PORT);
     Logger.log(`🚀 Application is running on: http://localhost:${PORT}`);
 }

@@ -11,6 +11,8 @@
         "experimentalDecorators": true,
         "strictPropertyInitialization": false,
         "moduleResolution": "node",
+        "esModuleInterop": true,
+        "types": [ "node" ],
         "importHelpers": true,
         "target": "ES2020",
         "module": "esnext",

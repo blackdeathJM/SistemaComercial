@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as moment from 'moment';
+import moment from 'moment';
 
 /**
  * Attachments are common and will be filled from here
