@@ -30,7 +30,7 @@ export class GeneralService
         // const timestamp = current.getTime();
         // const timestampSeg = DateTime.fromMillis(timestamp, {zone: 'America/Mexico_City'}).toUnixInteger();
 
-        return DateTime.fromObject({year: fecha.year, month: fecha.month + 1, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
+        return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
 
     static fechaHoraActual(): number
