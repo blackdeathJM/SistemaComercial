@@ -16,8 +16,9 @@
         "importHelpers": true,
         "target": "ES2022",
         "useDefineForClassFields": false,
-        "module": "esnext",
-        "lib": [ "es2020", "dom", "esnext.asynciterable", "es6" ],
+        "module": "ES2022",
+        //TODO: Tener en cuenta estas configuracion para cada vez que se actualizan las dendencias
+        "lib": [ "es2020", "dom", "esnext.asynciterable", "es6", "ES7" ],
         "paths": {
             "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
             "@sistema-comercial/modelos/*": [
