@@ -8,6 +8,6 @@ export const environment = {
       appId: '1:1030208961728:web:3de8997a5f17605cba0125'
   },
     production: true,
-    apiGraphql: 'http://3.91.144.188:3333/graphql',
-    wsGraphql: 'ws://3.91.144.188:3333/graphql',
+    apiGraphql: 'http://44.201.220.199:3333/graphql',
+    wsGraphql: 'ws://44.201.220.199:3333/graphql',
 };
