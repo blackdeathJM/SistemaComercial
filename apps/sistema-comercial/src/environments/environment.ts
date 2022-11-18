@@ -12,7 +12,6 @@ export const environment = {
       appId: '1:1030208961728:web:3de8997a5f17605cba0125'
   },
     production: false,
-    apiUrl: 'http://localhost:3333/file',
     apiGraphql: 'http://localhost:3333/graphql',
     wsGraphql: 'ws://localhost:3333/graphql',
 };
