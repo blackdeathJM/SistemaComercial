@@ -61,7 +61,7 @@ export class DocumentosResolver
         return await this.empleadoService.buscarEmpleadoPorId(parent.usuarioFolio);
     }
 
-    @ResolveProperty(() => [EmpleadoDto], {nullable: true})
+    @ResolveField(() => [EmpleadoDto], {nullable: true})
     async resolveEmpleadoEnviado(@Parent() parent: DocumentoDto): Promise<EmpleadoDto[]>
     {
         const usuarios: IEmpleado[] = [];
