@@ -43,7 +43,6 @@ export class AuthSignInComponent implements OnInit, OnDestroy
 
     signIn(): void
     {
-        this.deptosGQL.watch().valueChanges.subscribe(re => console.log('res', re.data.deptos));
         // Return if the form is invalid
         if (this.signInForm.invalid)
         {
