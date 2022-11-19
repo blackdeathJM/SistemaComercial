@@ -27,6 +27,7 @@ import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmat
 import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {STATE_DOCS} from '@s-app/general/general.state';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @Component({
@@ -47,7 +48,8 @@ import {STATE_DOCS} from '@s-app/general/general.state';
             MaterialFileInputModule,
             MatIconModule,
             MatButtonModule,
-            SeleccionarEmpleadoComponent
+            SeleccionarEmpleadoComponent,
+            MatTooltipModule
         ],
     providers:
         [],
@@ -156,11 +158,17 @@ export class ModDocumentosComponent implements OnInit
 
     genFolio(): void
     {
+        const {tipoDoc} = this.formDocs.value;
+        if (!tipoDoc)
+        {
+            this.ngxToastService.alertaToast('Selecciona el tipo de documento antes de generar el folio', 'Generar folio');
+            return;
+        }
         this.configService.open(this.confFolio).afterClosed().subscribe((res) =>
         {
             if (res === 'confirmed')
             {
-                this.genFolioSinRegGQL.mutate({args: {tipoDoc: 'Oficio', deptoId: STATE_DATOS_SESION().deptoId}}).pipe(tap((folioGenerado) =>
+                this.genFolioSinRegGQL.mutate({args: {tipoDoc, deptoId: STATE_DATOS_SESION().deptoId}}).pipe(tap((folioGenerado) =>
                 {
                     if (folioGenerado.data.genFolioSinReg)
                     {

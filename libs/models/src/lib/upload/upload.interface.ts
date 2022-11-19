@@ -5,8 +5,8 @@ export interface IArchivo
     filename: string;
     mimetype: string;
     encoding: string;
-    createReadStream: () => Stream;
-    // createReadStream: any;
+    // createReadStream: () => Stream;
+    createReadStream: any;
 }
 
 export interface IDatosArchivo
