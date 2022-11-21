@@ -2,9 +2,9 @@ lockfileVersion: 5.4
 
 specifiers:
   '@angular-devkit/build-angular': 15.0.0
-  '@angular-eslint/eslint-plugin': 14.3.0
-  '@angular-eslint/eslint-plugin-template': 14.3.0
-  '@angular-eslint/template-parser': 14.3.0
+  '@angular-eslint/eslint-plugin': 15.0.0
+  '@angular-eslint/eslint-plugin-template': 15.0.0
+  '@angular-eslint/template-parser': 15.0.0
   '@angular-material-components/datetime-picker': ^8.0.0
   '@angular-ru/cdk': ^14.1.2
   '@angular/animations': ^15.0.0
@@ -64,7 +64,7 @@ specifiers:
   '@rxweb/reactive-form-validators': ^2.1.7
   '@rxweb/sanitizers': ^0.0.1
   '@sweetalert2/ngx-sweetalert2': ^12.0.2
-  '@sweetalert2/themes': ^5.0.14
+  '@sweetalert2/themes': ^5.0.15
   '@tailwindcss/aspect-ratio': 0.4.2
   '@tailwindcss/line-clamp': 0.4.2
   '@tailwindcss/typography': 0.5.8
@@ -131,7 +131,7 @@ specifiers:
   ngx-json-viewer: ^3.2.1-alpha.0
   ngx-markdown: 14.0.1
   ngx-material-file-input: ^4.0.0
-  ngx-quill: 19.0.1
+  ngx-quill: 20.0.0
   ngx-skeleton-loader: ^6.0.0
   ngx-spinner: ^14.0.0
   ngx-toastr: ^16.0.1
@@ -148,10 +148,10 @@ specifiers:
   react: ^18.2.0
   reflect-metadata: ^0.1.13
   rxjs: 7.5.7
-  sweetalert2: ^11.6.9
+  sweetalert2: ^11.6.10
   tailwindcss: 3.2.4
   ts-jest: 29.0.3
-  ts-morph: ^16.0.0
+  ts-morph: ^17.0.0
   ts-node: 10.9.1
   tslib: 2.4.1
   typescript: 4.8.4
@@ -184,7 +184,7 @@ dependencies:
   '@nestjs/config': 2.2.0_2kbkxfsrhtatemqz6dhv2pefvq
   '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
   '@nestjs/event-emitter': 1.3.1_v5qdouhazba6t4koo63x35nolu
-  '@nestjs/graphql': 10.1.6_j2x7tzld3gt4qwtswamhkejgwe
+  '@nestjs/graphql': 10.1.6_vuknnstsomlk3vz3yeieqwelxa
   '@nestjs/jwt': 9.0.0_@nestjs+common@9.2.0
   '@nestjs/mongoose': 9.2.1_bxtgwjih7l5rujpm32v4xrnnmq
   '@nestjs/passport': 9.0.0_s6va3jdeufsye4wwu25es3p4om
@@ -197,8 +197,8 @@ dependencies:
   '@rxweb/reactive-dynamic-forms': 0.0.6
   '@rxweb/reactive-form-validators': 2.1.7
   '@rxweb/sanitizers': 0.0.1
-  '@sweetalert2/ngx-sweetalert2': 12.0.2_zy7nhq7t32fmhgttkkmecjci7a
-  '@sweetalert2/themes': 5.0.14_sweetalert2@11.6.9
+  '@sweetalert2/ngx-sweetalert2': 12.0.2_od3f7od4e24cnlkvgu5dvi36iu
+  '@sweetalert2/themes': 5.0.15_sweetalert2@11.6.10
   apexcharts: 3.36.3
   apollo-angular: 4.1.1_s3lu77rag2e3lseqxuezpnudk4
   apollo-server-core: 3.11.1_graphql@16.6.0
@@ -232,7 +232,7 @@ dependencies:
   ngx-json-viewer: 3.2.1-alpha.0
   ngx-markdown: 14.0.1_qkulp66halrykbq6c2bmjxscxm
   ngx-material-file-input: 4.0.0_cahwx7qucftbaaulzrqyzrbcle
-  ngx-quill: 19.0.1_wffo6okt3x3w44igv2jy37frcq
+  ngx-quill: 20.0.0_wffo6okt3x3w44igv2jy37frcq
   ngx-skeleton-loader: 6.0.0_7psesmusmj4excifnjgc7jfosa
   ngx-spinner: 14.0.0_7psesmusmj4excifnjgc7jfosa
   ngx-toastr: 16.0.1_dj4fwoc5x2bmtzae6khkemnbfa
@@ -246,7 +246,7 @@ dependencies:
   react: 18.2.0
   reflect-metadata: 0.1.13
   rxjs: 7.5.7
-  sweetalert2: 11.6.9
+  sweetalert2: 11.6.10
   tslib: 2.4.1
   uuid: 9.0.0
   webpack: 5.75.0
@@ -254,9 +254,9 @@ dependencies:
 
 devDependencies:
   '@angular-devkit/build-angular': 15.0.0_dm4zkmrrqobmllicor5idqjcya
-  '@angular-eslint/eslint-plugin': 14.3.0_zksrc6ykdxhogxjbhb5axiabwi
-  '@angular-eslint/eslint-plugin-template': 14.3.0_zksrc6ykdxhogxjbhb5axiabwi
-  '@angular-eslint/template-parser': 14.3.0_zksrc6ykdxhogxjbhb5axiabwi
+  '@angular-eslint/eslint-plugin': 15.0.0_zksrc6ykdxhogxjbhb5axiabwi
+  '@angular-eslint/eslint-plugin-template': 15.0.0_zksrc6ykdxhogxjbhb5axiabwi
+  '@angular-eslint/template-parser': 15.0.0_zksrc6ykdxhogxjbhb5axiabwi
   '@angular/cli': 15.0.0
   '@angular/compiler-cli': 15.0.0_wi64dnikphprnhepyj5q2xqyru
   '@angular/language-service': 15.0.0
@@ -316,7 +316,7 @@ devDependencies:
   prettier: 2.7.1
   tailwindcss: 3.2.4_v776zzvn44o7tpgzieipaairwm
   ts-jest: 29.0.3_25xopm7qx5wgmsgnog4okhpq5a
-  ts-morph: 16.0.0
+  ts-morph: 17.0.0
   ts-node: 10.9.1_cbe7ovvae6zqfnmtgctpgpys54
   typescript: 4.8.4
 
@@ -664,17 +664,18 @@ packages:
       - chokidar
     dev: false
 
-  /@angular-eslint/bundled-angular-compiler/14.3.0:
-    resolution: {integrity: sha512-Kq8EzFwiX/uH4mpPCqkXR6Vhr1uKrBuQPKh0JoY13xs1Jjmdr8cRFveTPOdyOS4pDNJLLNoo2LSTWzKhD9JBZw==}
+  /@angular-eslint/bundled-angular-compiler/15.0.0:
+    resolution: {integrity: sha512-IFJFVCc3t+ujD8J6//RzYrtp7N9wUQhZnRUkd7pI7IpUT1XrQx5uNbDca9OLXM5F+HCHOQPIoaCyg3O/XJcc8Q==}
     dev: true
 
-  /@angular-eslint/eslint-plugin-template/14.3.0_zksrc6ykdxhogxjbhb5axiabwi:
-    resolution: {integrity: sha512-HY9tPA8l9BvxP4nO5gLkm8oHeQGfSH6SysM0kCzK9gznkIQet5nNtvx4tNlP0a1QT5xpAT7QYhb83Ps8eq5oCA==}
+  /@angular-eslint/eslint-plugin-template/15.0.0_zksrc6ykdxhogxjbhb5axiabwi:
+    resolution: {integrity: sha512-9i8BFnqhN1/xR1vZaeRUf48DWxgRnJDOXfJtNONkTUUsImXzShJUgFK++/YC6BeNRsZf0wPN/qpstuScwELJKA==}
     peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0
+      eslint: ^7.20.0 || ^8.0.0
       typescript: '*'
     dependencies:
-      '@angular-eslint/bundled-angular-compiler': 14.3.0
+      '@angular-eslint/bundled-angular-compiler': 15.0.0
+      '@angular-eslint/utils': 15.0.0_zksrc6ykdxhogxjbhb5axiabwi
       '@typescript-eslint/type-utils': 5.43.0_zksrc6ykdxhogxjbhb5axiabwi
       '@typescript-eslint/utils': 5.43.0_zksrc6ykdxhogxjbhb5axiabwi
       aria-query: 5.1.3
@@ -685,13 +686,13 @@ packages:
       - supports-color
     dev: true
 
-  /@angular-eslint/eslint-plugin/14.3.0_zksrc6ykdxhogxjbhb5axiabwi:
-    resolution: {integrity: sha512-WJiCENLGl0aAA+miCUd5o1wX7AOBXAIXpwEAp5T+QJ8Fu9w+OWR3VokYDWawky5XSzzbHSMJhyF4OxY7h9wmYg==}
+  /@angular-eslint/eslint-plugin/15.0.0_zksrc6ykdxhogxjbhb5axiabwi:
+    resolution: {integrity: sha512-Yj/GeLQ+bBUgrIQDqa//nHrS9UvxZ1KQhavcK0xruuy29AYf+yolVdEGKvFNlpMoGRXkv2eMmWUkODS495DTYQ==}
     peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0
+      eslint: ^7.20.0 || ^8.0.0
       typescript: '*'
     dependencies:
-      '@angular-eslint/utils': 14.3.0_zksrc6ykdxhogxjbhb5axiabwi
+      '@angular-eslint/utils': 15.0.0_zksrc6ykdxhogxjbhb5axiabwi
       '@typescript-eslint/utils': 5.43.0_zksrc6ykdxhogxjbhb5axiabwi
       eslint: 8.28.0
       typescript: 4.8.4
@@ -699,25 +700,25 @@ packages:
       - supports-color
     dev: true
 
-  /@angular-eslint/template-parser/14.3.0_zksrc6ykdxhogxjbhb5axiabwi:
-    resolution: {integrity: sha512-CCZI1t460d8ozq2WFdVzBf9BGcP4LSPRdcpSOzRlWiYFJLCduOHSMMPJO/VEK2jIFjM04ANJNUk9Zg/9V8qNHg==}
+  /@angular-eslint/template-parser/15.0.0_zksrc6ykdxhogxjbhb5axiabwi:
+    resolution: {integrity: sha512-tidZOhQ9ygXPyUwxXzXbEVJUiHRNF0oFu1Pf+hSlOwgjvRqCqVwXfDxEe6NjFEwRXsp0CtDgyseu7E9+ml+m6A==}
     peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0
+      eslint: ^7.20.0 || ^8.0.0
       typescript: '*'
     dependencies:
-      '@angular-eslint/bundled-angular-compiler': 14.3.0
+      '@angular-eslint/bundled-angular-compiler': 15.0.0
       eslint: 8.28.0
       eslint-scope: 7.1.1
       typescript: 4.8.4
     dev: true
 
-  /@angular-eslint/utils/14.3.0_zksrc6ykdxhogxjbhb5axiabwi:
-    resolution: {integrity: sha512-qsXfC7Nq+XxJ+z6ImECjmHWpjw2z0T5ChCDrLyKu6Vn5Z/4ism44xIRch/wPwS2lEF60wTPT41tFRKDH91U0QQ==}
+  /@angular-eslint/utils/15.0.0_zksrc6ykdxhogxjbhb5axiabwi:
+    resolution: {integrity: sha512-+eI2vNixlxmwAH+vcF81DNtzZ1CJAe6e1yktT5Xmn/FUVWKe4hHQN95Km0H8G0epF8MovCJwmPdhFYwi/X8u3w==}
     peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0
+      eslint: ^7.20.0 || ^8.0.0
       typescript: '*'
     dependencies:
-      '@angular-eslint/bundled-angular-compiler': 14.3.0
+      '@angular-eslint/bundled-angular-compiler': 15.0.0
       '@typescript-eslint/utils': 5.43.0_zksrc6ykdxhogxjbhb5axiabwi
       eslint: 8.28.0
       typescript: 4.8.4
@@ -5099,7 +5100,7 @@ packages:
     dependencies:
       '@nestjs/common': 9.2.0_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/core': 9.2.0_jfowmhmgk7kwjudosrpv7e7liy
-      '@nestjs/graphql': 10.1.6_j2x7tzld3gt4qwtswamhkejgwe
+      '@nestjs/graphql': 10.1.6_vuknnstsomlk3vz3yeieqwelxa
       apollo-server-core: 3.11.1_graphql@16.6.0
       apollo-server-express: 3.11.1_5ha345eiak62qiwwva5z4dp6gu
       graphql: 16.6.0
@@ -5228,7 +5229,7 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/graphql/10.1.6_j2x7tzld3gt4qwtswamhkejgwe:
+  /@nestjs/graphql/10.1.6_vuknnstsomlk3vz3yeieqwelxa:
     resolution: {integrity: sha512-RiDTqyBqk+qolcMMKBANuG5zw0q0zbVmkwWydB2F1ObvUyl5t/GOAcR8mbq3gvpfYzylQ5t5/svWUDq/7dcpaQ==}
     peerDependencies:
       '@apollo/subgraph': ^0.1.5 || ^0.3.0 || ^0.4.0 || ^2.0.0
@@ -5258,7 +5259,7 @@ packages:
       normalize-path: 3.0.0
       reflect-metadata: 0.1.13
       subscriptions-transport-ws: 0.11.0_graphql@16.6.0
-      ts-morph: 16.0.0
+      ts-morph: 17.0.0
       tslib: 2.4.1
       uuid: 9.0.0
       ws: 8.11.0
@@ -6203,7 +6204,7 @@ packages:
     dependencies:
       '@sinonjs/commons': 1.8.5
 
-  /@sweetalert2/ngx-sweetalert2/12.0.2_zy7nhq7t32fmhgttkkmecjci7a:
+  /@sweetalert2/ngx-sweetalert2/12.0.2_od3f7od4e24cnlkvgu5dvi36iu:
     resolution: {integrity: sha512-P0duLXagSyYRWyMqMLLOZ7e8G3SpAJIcJPqmyKuajblTv0sU1C860nDh2u/wIhXpjWs92J1tYGK9IPSuQebUdw==}
     peerDependencies:
       '@angular/common': ^14.0.0
@@ -6212,16 +6213,16 @@ packages:
     dependencies:
       '@angular/common': 15.0.0_m6rr3mnel36a2k7xtcfys3zh24
       '@angular/core': 15.0.0_rxjs@7.5.7+zone.js@0.12.0
-      sweetalert2: 11.6.9
+      sweetalert2: 11.6.10
       tslib: 2.4.1
     dev: false
 
-  /@sweetalert2/themes/5.0.14_sweetalert2@11.6.9:
-    resolution: {integrity: sha512-HaZigskeUaXd6t6kVuZSNThWvE9t1oythtELzKSIFPss+JjY4YeQqZqHDKf61quVGaD1A5jWh9jbgH6lfSAsdA==}
+  /@sweetalert2/themes/5.0.15_sweetalert2@11.6.10:
+    resolution: {integrity: sha512-uGU7CynpjRc3cllTqZEvXiZTpfQ6MN4faG+Tf0VFW81bLysCQm00iHS3NJLZx5STRfxpM5SzqeVXpAzJyTG/WA==}
     peerDependencies:
       sweetalert2: ^11.0.0
     dependencies:
-      sweetalert2: 11.6.9
+      sweetalert2: 11.6.10
     dev: false
 
   /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.2.4:
@@ -6261,8 +6262,8 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
 
-  /@ts-morph/common/0.17.0:
-    resolution: {integrity: sha512-RMSSvSfs9kb0VzkvQ2NWobwnj7TxCA9vI/IjR9bDHqgAyVbu2T0DN4wiKVqomyDWqO7dPr/tErSfq7urQ1Q37g==}
+  /@ts-morph/common/0.18.0:
+    resolution: {integrity: sha512-UvWF+oQdMa4qMWhXTOd2JWtAbAJGgkPMNzGHgEcfOwQRIcViKdwsSqXXjSaQCZ4fo+bZMhdfuwQCjlW5bNcqEQ==}
     dependencies:
       fast-glob: 3.2.12
       minimatch: 5.1.0
@@ -14050,7 +14051,7 @@ packages:
       '@nestjs/graphql':
         optional: true
     dependencies:
-      '@nestjs/graphql': 10.1.6_j2x7tzld3gt4qwtswamhkejgwe
+      '@nestjs/graphql': 10.1.6_vuknnstsomlk3vz3yeieqwelxa
       accesscontrol: 2.2.1
     dev: false
 
@@ -14114,11 +14115,11 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /ngx-quill/19.0.1_wffo6okt3x3w44igv2jy37frcq:
-    resolution: {integrity: sha512-yIEaWrFS96SahmqmC/9YT1cHYmN3ajV+6JmWtmiwVY6bBZYmZQr7W34FNyHsKn1ziNUp09IWEFn2XHZZTsiCKg==}
-    engines: {node: '>= 12'}
+  /ngx-quill/20.0.0_wffo6okt3x3w44igv2jy37frcq:
+    resolution: {integrity: sha512-UuFHu72kbqMwDQHzUpDOwTwfZP7t4VTAJWjxBrPKL6agipKEl1ETm9+8GtA7C8l35u9lbGvelbBqGCggBk6pMA==}
+    engines: {node: '>= 16'}
     peerDependencies:
-      '@angular/core': ^14.0.0
+      '@angular/core': ^14.0.0 || ^15.0.0
       quill: ^1.3.7
       rxjs: ^7.0.0
     dependencies:
@@ -16668,8 +16669,8 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /sweetalert2/11.6.9:
-    resolution: {integrity: sha512-zx0vdToB2Ququk+0qbXruca5KJuScyno77cqPfuwSiRwlMS5CwwnZDWiLqcRlIAZzDEbZHz9g/T7BDqAGqsQlA==}
+  /sweetalert2/11.6.10:
+    resolution: {integrity: sha512-/tzEmEYqqHVkO6iMfvCFcmaO78un93CdZIhB+DGj9BLMkcuXS8jo2bmYoxjEAryhxsKPqXiWmZNo3gw/qw/ZwQ==}
     dev: false
 
   /symbol-observable/1.2.0:
@@ -17022,10 +17023,10 @@ packages:
     resolution: {integrity: sha512-PGcnJoTBnVGy6yYNFxWVNkdcAuAMstvutN9MgDJIV6L0oG8fB+ZNNy1T+wJzah8RPGor1mZuPQkVfXNDpy9eHA==}
     dev: true
 
-  /ts-morph/16.0.0:
-    resolution: {integrity: sha512-jGNF0GVpFj0orFw55LTsQxVYEUOCWBAbR5Ls7fTYE5pQsbW18ssTb/6UXx/GYAEjS+DQTp8VoTw0vqYMiaaQuw==}
+  /ts-morph/17.0.0:
+    resolution: {integrity: sha512-EJxyHTpBXsYnOgV6UpYs4vjhMS/8IZXg5kkGcM9+b8SygMmmOoeWOpaSG8E4puhewjkIbUObodGhfJkBoFX3og==}
     dependencies:
-      '@ts-morph/common': 0.17.0
+      '@ts-morph/common': 0.18.0
       code-block-writer: 11.0.3
 
   /ts-node/10.9.1_cbe7ovvae6zqfnmtgctpgpys54:
