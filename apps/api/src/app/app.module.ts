@@ -16,7 +16,7 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
     imports:
         [
             ConfigModule.forRoot({
-                envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true,
+                envFilePath: ['.env', '.dev.env'], load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
