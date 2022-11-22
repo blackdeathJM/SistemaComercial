@@ -11,6 +11,7 @@ import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {GraphQLUpload} from 'graphql-upload';
 import {AppService} from '#api/apps/api/src/app/app.service';
 import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
+import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
 
 @Module({
     imports:
@@ -57,7 +58,8 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
             }),
             SubirArchivoModule,
             AdminModule,
-            GeneralModule
+            GeneralModule,
+            TecnicaOperativaModule
         ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService],
     exports: [AppService]

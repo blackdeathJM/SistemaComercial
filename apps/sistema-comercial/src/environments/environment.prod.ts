@@ -10,4 +10,6 @@ export const environment = {
     production: true,
     apiGraphql: 'http://26.52.142.167:3333/graphql',
     wsGraphql: 'ws://26.52.142.167:3333/graphql',
+    // apiGraphql: 'http://localhost:3333/graphql',
+    // wsGraphql: 'ws://localhost:3333/graphql',
 };
