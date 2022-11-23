@@ -40,8 +40,8 @@
                     <mat-error>{{formDocs.controls.tipoDoc['errorMessage']}}</mat-error>
                 </mat-form-field>
 
-                <button mat-icon-button color="warn" class="flex-2" (click)="genFolio()" [disabled]="cargando">
-                    <mat-icon svgIcon="subtitles" class="icon-size-5 mr-2" matTooltip="Generar folio para el documento previo a registrar"></mat-icon>
+                <button mat-mini-fab color="warn" class="flex-2" (click)="genFolio()" [disabled]="cargando">
+                    <mat-icon svgIcon="subtitles" matTooltip="Generar folio para el documento previo a registrar"></mat-icon>
                 </button>
             </div>
 
@@ -65,13 +65,15 @@
                     <mat-error>{{formDocs.controls.fechaLimiteEntrega['errorMessage']}}</mat-error>
                 </mat-form-field>
             </div>
-            <mat-form-field>
-                <ngx-mat-file-input formControlName="file"></ngx-mat-file-input>
-                <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
-                <mat-error>{{formDocs.controls.file['errorMessage']}}</mat-error>
-            </mat-form-field>
-            <mat-checkbox class="my-4" color="primary" [checked]="false" formControlName="esInterno">Es interno?</mat-checkbox>
+            <div class="flex gap-4 items-center">
+                <mat-form-field class="flex-auto">
+                    <ngx-mat-file-input formControlName="file"></ngx-mat-file-input>
+                    <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
+                    <mat-error>{{formDocs.controls.file['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-checkbox class="flex-shrink" color="primary" [checked]="false" formControlName="esInterno">Es interno?</mat-checkbox>
+            </div>
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (registro)="reg(false)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>
+<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>

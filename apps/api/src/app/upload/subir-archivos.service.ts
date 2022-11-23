@@ -36,8 +36,15 @@ export class SubirArchivosService
                 const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
                 const guardarArchivo = join(rutaDeGuardado, `/${nvoNombre}`);
                 const salida = fs.createWriteStream(guardarArchivo);
-                createReadStream().pipe(salida);
-                rutas.push(guardarArchivo);
+
+                console.log('createReadStream', createReadStream);
+                new Promise(async (resolve) =>
+                {
+                    createReadStream().pipe(salida).on('finish', () => console.log('resolve', resolve))
+                        .on('error', () => console.log('Ocurrio un error'));
+                });
+                // await createReadStream().pipe(salida);
+                // rutas.push(guardarArchivo);
             }
             return rutas;
         } catch (e)

@@ -109,7 +109,7 @@ export class DocumentosService
                 return await this.documento.create(datos);
             } catch (e)
             {
-                throw new InternalServerErrorException({message: e});
+                throw new InternalServerErrorException({message: e.codeName});
             }
         } else
         {

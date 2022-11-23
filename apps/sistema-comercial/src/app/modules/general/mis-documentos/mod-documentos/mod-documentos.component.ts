@@ -100,7 +100,7 @@ export class ModDocumentosComponent implements OnInit
         this.formDocs.disable();
         const ano = new Date().getFullYear();
         const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
-
+        console.log('fiel', file);
         let docUrl: string = null;
         let files = null;
 
