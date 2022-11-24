@@ -1,4 +1,5 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
+import {dirTecnicaOperativa} from '@s-app/common/navigation/constantes/rutas';
 
 export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
     [
@@ -39,10 +40,22 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
                     {
                         id: 'telemetria',
                         title: 'Telemetria',
-                        type: 'basic',
+                        type: 'collapsable',
                         icon: 'feather:cpu',
                         activo: false,
                         disabled: false,
+                        children:
+                            [
+                                {
+                                    id: 'instalaciones',
+                                    title: 'Instalaciones',
+                                    type: 'basic',
+                                    icon: 'device_hub',
+                                    activo: true,
+                                    disabled: false,
+                                    link: dirTecnicaOperativa + 'telemetria/' + 'instalaciones'
+                                }
+                            ]
                     }
                 ]
         }

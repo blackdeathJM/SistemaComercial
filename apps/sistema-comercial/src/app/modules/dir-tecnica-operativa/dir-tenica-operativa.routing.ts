@@ -1,6 +1,5 @@
 import {Routes} from '@angular/router';
 import {DirTecnicaOperativaComponent} from '@s-app/dir-tecnica-operativa/dir-tecnica-operativa.component';
-import {TelemetriaComponent} from '@s-app/dir-tecnica-operativa/telemetria/telemetria.component';
 
 export const dirTenicaOperativaRouting: Routes =
     [
@@ -11,7 +10,7 @@ export const dirTenicaOperativaRouting: Routes =
                 [
                     {
                         path: 'telemetria',
-                        component: TelemetriaComponent
+                        loadChildren: () => import('@s-app/dir-tecnica-operativa/telemetria/telemetria.routing').then(t => t.telemetriaRouting)
                     }
                 ]
         }
