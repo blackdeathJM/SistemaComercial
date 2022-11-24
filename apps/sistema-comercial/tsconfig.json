@@ -25,6 +25,7 @@
                 "apps/sistema-comercial/src/app/modules/*",
                 "apps/sistema-comercial/src/app/modules/admin/*"
             ],
+            "@s-app/dir-tenica-operativa/*": [ "apps/sistema-comercial/src/app/modules/admin/dir-tecnica-operativa/*" ],
             "@s-assets/*": [
                 "apps/sistema-comercial/src/assets/fonts/*",
                 "apps/sistema-comercial/src/assets/i18n/*",

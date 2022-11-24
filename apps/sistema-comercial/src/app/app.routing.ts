@@ -54,6 +54,11 @@ export const appRoutes: Route[] = [
                     path: 'dir-admon-finanzas',
                     canActivate: [],
                     loadChildren: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
+                },
+                {
+                    path: 'dir-tecnica-operativa',
+                    canActivate: [],
+                    loadChildren: () => import('@s-app/modules/dir-tecnica-operativa/dir-tenica-operativa.routing').then(t => t.dirTenicaOperativaRouting)
                 }
             ]
     },
