@@ -11,7 +11,7 @@
         </div>
         <!-- Actions -->
         <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button mat-raised-button color="primary" class="mr-8">
+            <button mat-raised-button color="primary" class="mr-8" (click)="altaInstalacion()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 Registrar nueva instalacion
             </button>
@@ -21,25 +21,23 @@
         </div>
     </div>
 
-    <mat-drawer-container class="flex-auto -mt-16 rounded-t-2xl shadow bg-card">
+    <mat-drawer-container class="flex-auto -mt-16 rounded-t-2xl shadow">
         <!-- Drawer -->
-        <mat-drawer class="w-72 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened" #matDrawer>
+        <mat-drawer class="w-72 dark:bg-gray-900 " [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened" #matDrawer>
             <div class="flex flex-col">
-                <a class="block py-2 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none
+                <a class="block py-3 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none
                 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white
-                dark:focus:ring-gray-500 dark:focus:text-white">
+                dark:focus:ring-gray-500 dark:focus:text-white text-lg">
                     Settings
                 </a>
             </div>
         </mat-drawer>
         <!-- Drawer content -->
-        <mat-drawer-content class="flex flex-col">
-            <!-- Main -->
-            <div class="flex-auto p-6 sm:p-10">
-                <!-- CONTENT GOES HERE -->
-                <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    aqui va el contenido
-                </div>
+        <mat-drawer-content class="flex flex-col border">
+            <app-detalle-instalacion></app-detalle-instalacion>
+            <div class="flex gap-4 justify-between">
+                <app-detalle-motor class="flex-auto"></app-detalle-motor>
+                <app-detalle-bomba class="flex-auto"></app-detalle-bomba>
             </div>
         </mat-drawer-content>
     </mat-drawer-container>

@@ -6,6 +6,13 @@ import {RouterLink} from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {ModInstalacionComponent} from '@s-app/dir-tecnica-operativa/telemetria/instalaciones/mod-instalacion/mod-instalacion.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {DetalleInstalacionComponent} from '@s-app/dir-tecnica-operativa/telemetria/instalaciones/detalle-instalacion/detalle-instalacion.component';
+import {DetalleMotorComponent} from '@s-app/dir-tecnica-operativa/telemetria/motor/detalle-motor/detalle-motor.component';
+import {DetalleBombaComponent} from '@s-app/dir-tecnica-operativa/telemetria/bomba/detalle-bomba/detalle-bomba.component';
 
 @Component({
     selector: 'app-instalaciones',
@@ -16,7 +23,12 @@ import {Subject, takeUntil} from 'rxjs';
             MatButtonModule,
             MatIconModule,
             RouterLink,
-            MatSidenavModule
+            MatSidenavModule,
+            MatCardModule,
+            MatDividerModule,
+            DetalleInstalacionComponent,
+            DetalleMotorComponent,
+            DetalleBombaComponent,
         ],
     templateUrl: './instalaciones.component.html',
     styleUrls: ['./instalaciones.component.scss'],
@@ -27,7 +39,7 @@ export class InstalacionesComponent implements OnInit, OnDestroy
     drawerOpened: boolean = true;
     unsubscribeAll: Subject<any> = new Subject<any>();
 
-    constructor(private fuseMediaWatcherService: FuseMediaWatcherService)
+    constructor(private fuseMediaWatcherService: FuseMediaWatcherService, private dRef: MatDialog)
     {
     }
 
@@ -45,6 +57,11 @@ export class InstalacionesComponent implements OnInit, OnDestroy
                 this.drawerOpened = false;
             }
         });
+    }
+
+    altaInstalacion(): void
+    {
+        this.dRef.open(ModInstalacionComponent, {width: '45%', data: null});
     }
 
     ngOnDestroy(): void
