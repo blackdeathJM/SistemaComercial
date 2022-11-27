@@ -17,6 +17,8 @@ import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {UseInterceptors} from '@nestjs/common';
+import {FileInterceptor} from '@nestjs/platform-express';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver
@@ -75,7 +77,8 @@ export class DocumentosResolver
 
     @Mutation(() => DocumentoDto, {nullable: false})
     // @UsePipes(new DocsSeguimientoPipe())
-    async regDoc(@Args('datos', DocsSeguimientoPipe) datos: DocRegDto, @Args('files', {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
+    async regDoc(@Args('datos', DocsSeguimientoPipe) datos: DocRegDto, @Args('files',
+        {nullable: true, defaultValue: null}) files: UploadDto): Promise<DocumentoDto>
     {
         return await this.documentosService.regDoc(datos, files);
     }

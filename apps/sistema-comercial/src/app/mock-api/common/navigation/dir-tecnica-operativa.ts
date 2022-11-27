@@ -47,7 +47,7 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
                         children:
                             [
                                 {
-                                    id: 'instalaciones',
+                                    id: 'resumInstalacion',
                                     title: 'Instalaciones',
                                     type: 'basic',
                                     icon: 'device_hub',

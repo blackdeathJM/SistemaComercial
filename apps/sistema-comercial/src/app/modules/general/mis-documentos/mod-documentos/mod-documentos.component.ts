@@ -139,6 +139,7 @@ export class ModDocumentosComponent implements OnInit
                 enviadoPor: STATE_DATOS_SESION()._id,
                 ...resto
             };
+        console.log('archivo', files);
         this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
         {
             this.cargando = false;

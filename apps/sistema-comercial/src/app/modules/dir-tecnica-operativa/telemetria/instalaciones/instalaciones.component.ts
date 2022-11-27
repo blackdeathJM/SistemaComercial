@@ -13,6 +13,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {DetalleInstalacionComponent} from '@s-app/dir-tecnica-operativa/telemetria/instalaciones/detalle-instalacion/detalle-instalacion.component';
 import {DetalleMotorComponent} from '@s-app/dir-tecnica-operativa/telemetria/motor/detalle-motor/detalle-motor.component';
 import {DetalleBombaComponent} from '@s-app/dir-tecnica-operativa/telemetria/bomba/detalle-bomba/detalle-bomba.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-instalaciones',
@@ -29,6 +30,7 @@ import {DetalleBombaComponent} from '@s-app/dir-tecnica-operativa/telemetria/bom
             DetalleInstalacionComponent,
             DetalleMotorComponent,
             DetalleBombaComponent,
+            MatTabsModule,
         ],
     templateUrl: './instalaciones.component.html',
     styleUrls: ['./instalaciones.component.scss'],

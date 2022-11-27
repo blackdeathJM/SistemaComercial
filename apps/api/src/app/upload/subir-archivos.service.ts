@@ -37,14 +37,13 @@ export class SubirArchivosService
                 const guardarArchivo = join(rutaDeGuardado, `/${nvoNombre}`);
                 const salida = fs.createWriteStream(guardarArchivo);
 
-                console.log('createReadStream', createReadStream);
-                new Promise(async (resolve) =>
-                {
-                    createReadStream().pipe(salida).on('finish', () => console.log('resolve', resolve))
-                        .on('error', () => console.log('Ocurrio un error'));
-                });
-                // await createReadStream().pipe(salida);
-                // rutas.push(guardarArchivo);
+                // new Promise(async (resolve) =>
+                // {
+                //     createReadStream().pipe(salida).on('finish', () => console.log('resolve', resolve))
+                //         .on('error', () => console.log('Ocurrio un error'));
+                // });
+                await createReadStream().pipe(salida);
+                rutas.push(guardarArchivo);
             }
             return rutas;
         } catch (e)
