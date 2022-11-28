@@ -32,26 +32,23 @@ export class SubirArchivosService
                 await remove(url);
             }
             await fs.ensureDir(path.join(rutaDeGuardado));
-            file.then(async (res) =>
-            {
-                console.log('======', res);
-            });
 
-            // for (const i of await file)
-            // {
-            //     const {createReadStream, filename, encoding} = await i;
-            //
-            //     const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
-            //     const guardarArchivo = join(rutaDeGuardado, `/${nvoNombre}`);
-            //
-            //     // new Promise(async (resolve) =>
-            //     // {
-            //     //     i.createReadStream().pipe(createWriteStream(guardarArchivo)).on('finish', (res) =>
-            //     //     {
-            //     //         console.log('+++++++', res, resolve);
-            //     //     }).on('error', () => console.log('Ocurrio un error'));
-            //     // });
-            // }
+
+            for (const i of await file)
+            {
+                const {createReadStream, filename, encoding} = await i;
+
+                const nvoNombre = ano + '-' + randomUUID() + '.' + filename.split('.').pop();
+                const guardarArchivo = join(rutaDeGuardado, `/${nvoNombre}`);
+
+                // new Promise(async (resolve) =>
+                // {
+                //     i.createReadStream().pipe(createWriteStream(guardarArchivo)).on('finish', (res) =>
+                //     {
+                //         console.log('+++++++', res, resolve);
+                //     }).on('error', () => console.log('Ocurrio un error'));
+                // });
+            }
             return rutas;
         } catch (e)
         {
