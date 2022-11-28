@@ -187,9 +187,4 @@ export class ModDocumentosComponent implements OnInit
             this.mdr.closeAll();
         }
     }
-
-    doc(evento: Event): void
-    {
-        console.log('evento', evento);
-    }
 }
