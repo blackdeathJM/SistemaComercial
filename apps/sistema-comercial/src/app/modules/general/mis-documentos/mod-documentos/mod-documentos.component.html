@@ -40,7 +40,7 @@
                     <mat-error>{{formDocs.controls.tipoDoc['errorMessage']}}</mat-error>
                 </mat-form-field>
 
-                <button mat-mini-fab color="warn" class="flex-2" (click)="genFolio()" [disabled]="cargando">
+                <button mat-mini-fab color="warn" class="flex-2" (click)="genFolio()" [disabled]="formDocs.controls.tipoDoc.invalid || cargando">
                     <mat-icon svgIcon="subtitles" matTooltip="Generar folio para el documento previo a registrar"></mat-icon>
                 </button>
             </div>
@@ -76,4 +76,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (registro)="reg(false)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>
+<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>
