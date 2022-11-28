@@ -139,7 +139,6 @@ export class ModDocumentosComponent implements OnInit
                 enviadoPor: STATE_DATOS_SESION()._id,
                 ...resto
             };
-        console.log('archivo', files);
         this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
         {
             this.cargando = false;
@@ -185,5 +184,10 @@ export class ModDocumentosComponent implements OnInit
         {
             this.mdr.closeAll();
         }
+    }
+
+    doc(evento: Event): void
+    {
+        console.log('evento', evento);
     }
 }

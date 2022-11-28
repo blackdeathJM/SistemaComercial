@@ -1,3 +1,4 @@
+import {ReadStream} from 'fs-extra';
 import {Stream} from 'stream';
 
 export interface IArchivo
