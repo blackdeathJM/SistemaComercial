@@ -28,7 +28,6 @@ import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/d
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {DisableControlModule} from "@angular-ru/cdk/directives";
 
 
 @Component({
@@ -50,8 +49,7 @@ import {DisableControlModule} from "@angular-ru/cdk/directives";
             MatIconModule,
             MatButtonModule,
             SeleccionarEmpleadoComponent,
-            MatTooltipModule,
-            DisableControlModule
+            MatTooltipModule
         ],
     providers:
         [],
@@ -186,10 +184,5 @@ export class ModDocumentosComponent implements OnInit
         {
             this.mdr.closeAll();
         }
-    }
-
-    doc(evento: Event): void
-    {
-        console.log('evento', evento);
     }
 }

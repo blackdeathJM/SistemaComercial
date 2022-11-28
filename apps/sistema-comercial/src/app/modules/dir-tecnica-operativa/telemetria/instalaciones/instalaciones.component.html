@@ -20,7 +20,7 @@
     <mat-drawer-container class="flex-auto -mt-16 rounded-t-2xl shadow">
         <!-- Drawer -->
         <mat-drawer class="w-72 dark:bg-gray-900 " [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened" #matDrawer>
-            <div class="flex flex-col">
+            <div class="flex flex-col border-t">
                 <a class="block py-3 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none
                 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white
                 dark:focus:ring-gray-500 dark:focus:text-white text-lg">
@@ -32,18 +32,22 @@
         <mat-drawer-content class="flex flex-col border">
             <div class="m-8">
                 <mat-tab-group>
-                    <mat-tab>
+                    <mat-tab id="tabInstalacion">
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                            First
+                            Instalacion
                         </ng-template>
-                        Content 1
+                        <app-detalle-instalacion></app-detalle-instalacion>
+                        <mat-divider></mat-divider>
+                        <app-detalle-motor></app-detalle-motor>
+                        <mat-divider></mat-divider>
+                        <app-detalle-bomba></app-detalle-bomba>
                     </mat-tab>
 
                     <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                            Second
+                            Motor
                         </ng-template>
                         Content 2
                     </mat-tab>
@@ -51,7 +55,7 @@
                     <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                            Third
+                            Bomba
                         </ng-template>
 
                         Content 3

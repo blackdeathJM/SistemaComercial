@@ -53,6 +53,13 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
                                     icon: 'device_hub',
                                     activo: true,
                                     disabled: false,
+                                    controles:
+                                        [
+                                            {
+                                                id: 'agregarInstalacion',
+                                                activo: false
+                                            }
+                                        ],
                                     link: dirTecnicaOperativa + 'telemetria/' + 'instalaciones'
                                 }
                             ]
