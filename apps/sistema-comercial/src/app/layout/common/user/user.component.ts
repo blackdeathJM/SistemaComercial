@@ -7,6 +7,7 @@ import {AuthService} from '@s-app/auth/auth.service';
 import {RolCambiadoGQL} from '#/libs/datos/src';
 import {TOKEN} from '@s-app/auth/const';
 import {NgxToastService} from '@s-app/services/ngx-toast.service';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'user',
@@ -26,7 +27,7 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
     subs: Subscription = new Subscription();
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private rolCambiado: RolCambiadoGQL,
-                private ngxToatService: NgxToastService)
+                private ngxToatService: NgxToastService, private router: Router)
     {
     }
 

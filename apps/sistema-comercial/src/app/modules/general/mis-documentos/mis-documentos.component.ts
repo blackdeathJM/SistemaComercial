@@ -154,8 +154,8 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
             {
                 enviadoPor: STATE_DATOS_SESION()._id,
                 esEnviadoPor: this.chkBuscar.value,
-                fechaInicial: GeneralService.convertirUnix(fechaInicio.c),
-                fechaFinal: GeneralService.convertirUnix(fechaFin.c),
+                fechaInicial: GeneralService.convertirUnix(fechaInicio.c, fechaInicio.ts),
+                fechaFinal: GeneralService.convertirUnix(fechaFin.c, fechaFin.ts),
                 usuario: STATE_DATOS_SESION()._id
             };
         this.docsFechasGQL.watch({...consulta}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>

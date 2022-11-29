@@ -134,8 +134,8 @@ export class ModDocumentosComponent implements OnInit
                 tipoDoc,
                 docUrl,
                 usuarioFolio: this.#usuarioFolio,
-                fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c),
-                fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c),
+                fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
+                fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
                 enviadoPor: STATE_DATOS_SESION()._id,
                 ...resto
             };

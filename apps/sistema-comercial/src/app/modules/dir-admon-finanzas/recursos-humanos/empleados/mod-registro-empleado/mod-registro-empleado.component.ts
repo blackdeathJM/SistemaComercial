@@ -123,7 +123,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
 
         const empleadoDatos: TRegEmpleado =
             {
-                fechaIngreso: GeneralService.convertirUnix(fechaIngreso.c),
+                fechaIngreso: GeneralService.convertirUnix(fechaIngreso.c, fechaIngreso.ts),
                 modificadoPor:
                     [
                         {

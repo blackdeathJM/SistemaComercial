@@ -13,21 +13,10 @@
 </button>
 
 <mat-menu [xPosition]="'before'" #userActions="matMenu">
-    <button mat-menu-item>
-        <span class="flex flex-col leading-none">
-            <span>Bienvenido(a):</span>
-            <span class="mt-1.5 text-md font-medium">{{user.nombreCompleto}}</span>
-        </span>
-    </button>
-    <mat-divider class="my-2"></mat-divider>
-    <button mat-menu-item>
+    <a mat-menu-item [routerLink]="['/sistema-comercial', 'perfil']">
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
         <span>Perfil</span>
-    </button>
-    <button mat-menu-item>
-        <mat-icon [svgIcon]="'heroicons_outline:cog'"></mat-icon>
-        <span>Configuracion</span>
-    </button>
+    </a>
     <button mat-menu-item [matMenuTriggerFor]="userStatus">
         <mat-icon [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
         <span>Estatus</span>

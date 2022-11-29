@@ -41,6 +41,10 @@ export const appRoutes: Route[] = [
                     loadComponent: () => import('@s-app/modules/inicio/inicio.component').then(i => i.InicioComponent),
                 },
                 {
+                    path: 'perfil',
+                    loadComponent: () => import('@s-app/modules/admin/empleado/components/perfil/perfil.component').then(p => p.PerfilComponent)
+                },
+                {
                     path: 'admin',
                     canActivate: [AdminGuard],
                     loadChildren: () => import('@s-app/modules/admin/admin.routing').then(a => a.adminRouting)
