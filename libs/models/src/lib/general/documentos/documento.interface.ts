@@ -46,12 +46,13 @@ export interface IDocsFechas
     esEnviadoPor: boolean;
 }
 
-export interface IDocActFolio extends Pick<IDocumento, '_id' | 'usuarioFolio'>
+export interface IDocActFolio extends Pick<IDocumento, '_id' | 'usuarioFolio' | 'tipoDoc'>
 {
     deptoId: string;
 }
 
 export type TDocReasignarUsuarios = Pick<IDocumento, '_id' | 'usuarios'>;
+export type TDocFinalizar = Pick<IDocumento, '_id' | 'fechaTerminado'>;
 
 export interface IDocsBusquedaGral
 {

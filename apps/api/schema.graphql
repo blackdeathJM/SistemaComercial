@@ -268,6 +268,7 @@ input DocFolioInput {
 
 input DocActFolioInput {
   _id: ID
+  tipoDoc: String
   usuarioFolio: String = null
   deptoId: String
 }

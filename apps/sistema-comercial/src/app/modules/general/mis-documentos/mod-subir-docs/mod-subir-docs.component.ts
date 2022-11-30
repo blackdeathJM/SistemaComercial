@@ -42,7 +42,7 @@ export class ModSubirDocsComponent implements OnInit
 {
     formDocsArchivo: FormGroup;
     cargando = false;
-    usuarioQueReg: string;
+    advertencia: string = '';
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService,
                 private storage: Storage, private subirDocsGQL: SubirDocsGQL)
@@ -52,7 +52,11 @@ export class ModSubirDocsComponent implements OnInit
     ngOnInit(): void
     {
         this.formDocsArchivo = this.fb.formGroup(new Archivos());
-        this.usuarioQueReg = STATE_DATOS_SESION()._id;
+        if (this.data.enviadoPor !== STATE_DATOS_SESION()._id)
+        {
+            this.formDocsArchivo.get('docArchivo').disable();
+            this.advertencia = 'Este documento solo puede ser modificado por la persona que lo subio';
+        }
     }
 
     async reemplazar(esRemoto: boolean): Promise<void>
@@ -60,9 +64,10 @@ export class ModSubirDocsComponent implements OnInit
         const {docArchivo, acuseArchivo} = this.formDocsArchivo.value;
         if (!docArchivo && !acuseArchivo)
         {
-            this.ngxService.alertaToast('No haz seleccionado ningun archivo en ninguna de las dos opciones', 'Reemplazo de archivos');
+            this.ngxService.alertaToast('No se ha seleccionado ningun archivo', 'Reemplazo de archivos');
             return;
         }
+
         this.cargando = true;
         this.formDocsArchivo.disable();
         let docUrl: string = null;
@@ -124,6 +129,7 @@ export class ModSubirDocsComponent implements OnInit
                 docUrl,
                 acuseUrl,
             };
+
         this.subirDocsGQL.mutate({args: actDocs, files: {file: filesDocUrl, carpeta}, filesAcuse: {file: filesAcuseUrl, carpeta}}).pipe(tap((res) =>
         {
             if (res.data)

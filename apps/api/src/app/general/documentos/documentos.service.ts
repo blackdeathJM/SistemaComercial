@@ -170,7 +170,7 @@ export class DocumentosService
     {
         try
         {
-            const folioGenerado = await this.genFolioSinReg({deptoId: args.deptoId, tipoDoc: 'Oficio'});
+            const folioGenerado = await this.genFolioSinReg({deptoId: args.deptoId, tipoDoc: args.tipoDoc});
             return await this.documento.findByIdAndUpdate(args._id, {$set: {folio: folioGenerado, usuarioFolio: args.usuarioFolio}},
                 {returnOriginal: false}).exec();
         } catch (e)
@@ -209,7 +209,7 @@ export class DocumentosService
 
     async subirDocs(args: DocsSubirDto, filesDocs: UploadDto, filesAcuse: UploadDto): Promise<DocumentoDto>
     {
-        const urlAchivos: Record<string, string> = {};
+        const urlAchivos: Record<string, string | number> = {};
         if (filesDocs)
         {
             // codigo por si el documento se va a subir de manera local
@@ -225,6 +225,8 @@ export class DocumentosService
         if (args.acuseUrl)
         {
             urlAchivos['acuseUrl'] = args.acuseUrl;
+            urlAchivos['proceso'] = 'terminado';
+            urlAchivos['fechaTerminado'] = AppService.fechaHoraActual();
         }
         try
         {

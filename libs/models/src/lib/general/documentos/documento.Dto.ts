@@ -1,4 +1,4 @@
-import {IDocActFolio, IDocFolio, IDocsBusquedaGral, IDocsFechas, IDocsUsuarioProceso, IDocumento, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
+import {IDocActFolio, IDocFolio, IDocsBusquedaGral, IDocsFechas, IDocsUsuarioProceso, IDocumento, TDocFinalizar, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
 import {ArgsType, Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsArray, IsBoolean, IsInt, IsMongoId, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
@@ -198,13 +198,13 @@ export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio
 }
 
 @InputType('DocFinalizarInput')
-export class DocFinalizarDto extends PickType(DocumentoDto, ['_id', 'fechaTerminado'], InputType)
+export class DocFinalizarDto extends PickType(DocumentoDto, ['_id', 'fechaTerminado'], InputType) implements TDocFinalizar
 {
 
 }
 
 @InputType('DocActFolioInput')
-export class DocActFolioDto extends PickType(DocumentoDto, ['_id', 'usuarioFolio'], InputType) implements IDocActFolio
+export class DocActFolioDto extends PickType(DocumentoDto, ['_id', 'usuarioFolio', 'tipoDoc'], InputType) implements IDocActFolio
 {
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es requerido el id del departamento'})

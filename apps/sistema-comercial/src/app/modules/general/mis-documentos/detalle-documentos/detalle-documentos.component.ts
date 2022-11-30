@@ -13,7 +13,7 @@ import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-doc
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
-import {Subscription, tap} from 'rxjs';
+import {tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {STATE_DOCS} from '@s-app/general/general.state';
 import {ModDocRefComponent} from '@s-app/general/mis-documentos/mod-doc-ref/mod-doc-ref.component';
@@ -43,7 +43,6 @@ export class DetalleDocumentosComponent
     _documento: IResolveDocumento;
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
-    subscripcion: Subscription = new Subscription();
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
@@ -90,7 +89,8 @@ export class DetalleDocumentosComponent
                     {
                         _id: _documento._id,
                         deptoId: STATE_DATOS_SESION().deptoId,
-                        usuarioFolio: STATE_DATOS_SESION()._id
+                        usuarioFolio: STATE_DATOS_SESION()._id,
+                        tipoDoc: _documento.tipoDoc
                     };
                 this.docActFolioGQL.mutate({args}).pipe(tap((docFoliado) =>
                 {
@@ -140,10 +140,13 @@ export class DetalleDocumentosComponent
         }
         this.dRef.open(ModReasignacionComponent, {width: '40%', data}).afterClosed().pipe(tap((res) =>
         {
-            console.log('despues de cerrar', res);
             if (res)
             {
                 this._documento = res;
+                if (this._documento.acuseUrl)
+                {
+                    this.ngxToastService.infoToast('El documento se ha dado por terminado con exito', 'Termino de procesos');
+                }
             }
         })).subscribe();
 
