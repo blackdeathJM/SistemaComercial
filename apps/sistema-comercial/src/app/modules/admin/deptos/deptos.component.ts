@@ -14,6 +14,7 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-deptos.component';
+import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
 
 @Component({
     standalone: true,
@@ -25,7 +26,8 @@ import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-
             ReactiveFormsModule,
             MatButtonModule,
             MatInputModule,
-            ListaDeptosComponent
+            ListaDeptosComponent,
+            ListaDetalleComponent,
         ],
     selector: 'app-deptos-principal',
     templateUrl: './deptos.component.html',

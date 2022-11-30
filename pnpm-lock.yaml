@@ -27,7 +27,7 @@ specifiers:
   '@auth0/angular-jwt': ^5.1.0
   '@babel/cli': ^7.19.3
   '@babel/core': ^7.20.5
-  '@graphql-codegen/cli': ^2.14.1
+  '@graphql-codegen/cli': ^2.15.0
   '@graphql-codegen/fragment-matcher': ^3.3.1
   '@graphql-codegen/typescript-apollo-angular': ^3.5.6
   '@graphql-codegen/typescript-operations': ^2.5.7
@@ -129,6 +129,7 @@ specifiers:
   mongoose: ^6.7.4
   nest-access-control: ^2.2.0
   ng-apexcharts: 1.7.4
+  ngx-image-cropper: ^6.3.1
   ngx-json-viewer: ^3.2.1
   ngx-markdown: 15.0.0
   ngx-material-file-input: ^4.0.0
@@ -149,7 +150,7 @@ specifiers:
   react: ^18.2.0
   reflect-metadata: ^0.1.13
   rxjs: 7.5.7
-  sweetalert2: ^11.6.14
+  sweetalert2: ^11.6.15
   tailwindcss: 3.2.4
   ts-jest: 29.0.3
   ts-morph: ^17.0.1
@@ -197,8 +198,8 @@ dependencies:
   '@rxweb/reactive-dynamic-forms': 0.0.6
   '@rxweb/reactive-form-validators': 13.0.0
   '@rxweb/sanitizers': 0.0.1
-  '@sweetalert2/ngx-sweetalert2': 12.0.2_pnpbihecswbun32nwyykucxo4a
-  '@sweetalert2/themes': 5.0.15_sweetalert2@11.6.14
+  '@sweetalert2/ngx-sweetalert2': 12.0.2_jwujgsb6l3otpforpbev2dbgde
+  '@sweetalert2/themes': 5.0.15_sweetalert2@11.6.15
   apexcharts: 3.36.3
   apollo-angular: 4.1.1_peg5ivzsawr2gcqvmnxxty6j3m
   apollo-server-core: 3.11.1_graphql@16.6.0
@@ -230,6 +231,7 @@ dependencies:
   mongoose: 6.7.4
   nest-access-control: 2.2.0_@nestjs+graphql@10.1.6
   ng-apexcharts: 1.7.4_3aqni4qhv4r7qx4dqmqhjo5hzy
+  ngx-image-cropper: 6.3.1_talmyv5cagcxgdl3bg6g5r3mlq
   ngx-json-viewer: 3.2.1
   ngx-markdown: 15.0.0_jnly5wqwmccyxjg6g3wxwi4ceu
   ngx-material-file-input: 4.0.0_wsveig6qss4h7ftevuyjxcbjki
@@ -247,7 +249,7 @@ dependencies:
   react: 18.2.0
   reflect-metadata: 0.1.13
   rxjs: 7.5.7
-  sweetalert2: 11.6.14
+  sweetalert2: 11.6.15
   tslib: 2.4.1
   uuid: 9.0.0
   webpack: 5.75.0
@@ -263,7 +265,7 @@ devDependencies:
   '@angular/language-service': 15.0.1
   '@babel/cli': 7.19.3_@babel+core@7.20.5
   '@babel/core': 7.20.5
-  '@graphql-codegen/cli': 2.14.1_dhhhcm54wesyt2ii6sshww3yfa
+  '@graphql-codegen/cli': 2.15.0_dhhhcm54wesyt2ii6sshww3yfa
   '@graphql-codegen/fragment-matcher': 3.3.1_graphql@16.6.0
   '@graphql-codegen/typescript-apollo-angular': 3.5.6_graphql@16.6.0
   '@graphql-codegen/typescript-operations': 2.5.7_graphql@16.6.0
@@ -4242,15 +4244,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/types/7.20.2:
-    resolution: {integrity: sha512-FnnvsNWgZCr232sqtXggapvlkk/tuwR/qhGzcmxI0GXLCjmPYQPzio2FbdlWuY6y1sHFfQKk+rRbUZ9VStQMog==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.19.4
-      '@babel/helper-validator-identifier': 7.19.1
-      to-fast-properties: 2.0.0
-    dev: true
-
   /@babel/types/7.20.5:
     resolution: {integrity: sha512-c9fst/h2/dcF7H+MJKZ2T0KjEQ8hY/BNnDk/H3XY8C4Aw/eWQXWn/lWntHF9ooUBnGmEvbfGrTgLWc+um0YDUg==}
     engines: {node: '>=6.9.0'}
@@ -4875,15 +4868,15 @@ packages:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: true
 
-  /@graphql-codegen/cli/2.14.1_dhhhcm54wesyt2ii6sshww3yfa:
-    resolution: {integrity: sha512-Z9EiX8yJ5xtNdw/1ApV8uKx6UjCNl/D28zTHU8Fa7BcCdi3ilGOKSiWCNZaH1mpwKr5EfX18kme2bIqKmohv/w==}
+  /@graphql-codegen/cli/2.15.0_dhhhcm54wesyt2ii6sshww3yfa:
+    resolution: {integrity: sha512-o4Wh99VJDX/z0fG3pkdOf0t0fu7SlYn6qlLnqzNhVpZByGPe548gu11GKiOPKVaQ76kkB3dzqzfINRl+v7EA4A==}
     hasBin: true
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@babel/generator': 7.20.4
+      '@babel/generator': 7.20.5
       '@babel/template': 7.18.10
-      '@babel/types': 7.20.2
+      '@babel/types': 7.20.5
       '@graphql-codegen/core': 2.6.6_graphql@16.6.0
       '@graphql-codegen/plugin-helpers': 2.7.2_graphql@16.6.0
       '@graphql-tools/apollo-engine-loader': 7.3.19_graphql@16.6.0
@@ -7192,7 +7185,7 @@ packages:
     dependencies:
       '@sinonjs/commons': 1.8.5
 
-  /@sweetalert2/ngx-sweetalert2/12.0.2_pnpbihecswbun32nwyykucxo4a:
+  /@sweetalert2/ngx-sweetalert2/12.0.2_jwujgsb6l3otpforpbev2dbgde:
     resolution: {integrity: sha512-P0duLXagSyYRWyMqMLLOZ7e8G3SpAJIcJPqmyKuajblTv0sU1C860nDh2u/wIhXpjWs92J1tYGK9IPSuQebUdw==}
     peerDependencies:
       '@angular/common': ^14.0.0
@@ -7201,16 +7194,16 @@ packages:
     dependencies:
       '@angular/common': 15.0.1_gc4fl5hkkh62bvf2jldebe7kfi
       '@angular/core': 15.0.1_rxjs@7.5.7+zone.js@0.12.0
-      sweetalert2: 11.6.14
+      sweetalert2: 11.6.15
       tslib: 2.4.1
     dev: false
 
-  /@sweetalert2/themes/5.0.15_sweetalert2@11.6.14:
+  /@sweetalert2/themes/5.0.15_sweetalert2@11.6.15:
     resolution: {integrity: sha512-uGU7CynpjRc3cllTqZEvXiZTpfQ6MN4faG+Tf0VFW81bLysCQm00iHS3NJLZx5STRfxpM5SzqeVXpAzJyTG/WA==}
     peerDependencies:
       sweetalert2: ^11.0.0
     dependencies:
-      sweetalert2: 11.6.14
+      sweetalert2: 11.6.15
     dev: false
 
   /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.2.4:
@@ -15266,6 +15259,17 @@ packages:
       tslib: 2.4.1
     dev: false
 
+  /ngx-image-cropper/6.3.1_talmyv5cagcxgdl3bg6g5r3mlq:
+    resolution: {integrity: sha512-MouiY0E1Lgewyi4pai7pcElZ6R+5TD18cK4PzA99/YSCmyeW1nXczWXpnY9IpV46R0fG7KP4TJBd4bH4ZTlkkA==}
+    peerDependencies:
+      '@angular/common': '>=13.0.0'
+      '@angular/core': '>=13.0.0'
+    dependencies:
+      '@angular/common': 15.0.1_gc4fl5hkkh62bvf2jldebe7kfi
+      '@angular/core': 15.0.1_rxjs@7.5.7+zone.js@0.12.0
+      tslib: 2.4.1
+    dev: false
+
   /ngx-json-viewer/3.2.1:
     resolution: {integrity: sha512-TTHtXsrBX+IXPqqAIsxklHPqSNmyGeQaziFZbCDJq1PnPOQmTrEHfwNrzN3LnWGhf7UxeM1cK0njegVPChwEcg==}
     dependencies:
@@ -17870,8 +17874,8 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /sweetalert2/11.6.14:
-    resolution: {integrity: sha512-W8+vtsucIJg5BrFhHcqguNZMzmHGvVZVAYHaMGQ9dzrleOMZcHCGmnB46L9qUNdx5snr1GpMUVFjNuki7EBbuQ==}
+  /sweetalert2/11.6.15:
+    resolution: {integrity: sha512-FqMy1gRGHEI5G145NE5XSP059TziCJu9Xf9/mkki/aKu5pLNcYzjggOzKO5Ex10EBgAGDXQ99jyGfYYzGCYXRQ==}
     dev: false
 
   /symbol-observable/1.2.0:
