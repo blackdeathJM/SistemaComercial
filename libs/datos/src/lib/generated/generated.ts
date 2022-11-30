@@ -67,6 +67,7 @@ export type DeptoType = {
 export type DocActFolioInput = {
   _id?: InputMaybe<Scalars['ID']>;
   deptoId?: InputMaybe<Scalars['String']>;
+  tipoDoc?: InputMaybe<Scalars['String']>;
   usuarioFolio?: InputMaybe<Scalars['String']>;
 };
 

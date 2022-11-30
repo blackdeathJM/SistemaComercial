@@ -4,11 +4,11 @@ export class Notificacion implements INotificacion
 {
     descripcion: string;
     icono: string;
-    id: string;
+    idUsuario: string;
     imagen: string;
     leido: boolean;
     link: string;
-    tiempo: string;
+    tiempo: number;
     titulo: string;
     usarRouter: boolean;
 }
