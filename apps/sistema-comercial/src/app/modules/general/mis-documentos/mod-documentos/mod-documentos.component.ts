@@ -154,30 +154,6 @@ export class ModDocumentosComponent implements OnInit
         })).subscribe());
     }
 
-    genFolio(): void
-    {
-        const {tipoDoc} = this.formDocs.value;
-        if (!tipoDoc)
-        {
-            this.ngxToastService.alertaToast('Selecciona el tipo de documento antes de generar el folio', 'Generar folio');
-            return;
-        }
-        this.configService.open(this.confFolio).afterClosed().subscribe((res) =>
-        {
-            if (res === 'confirmed')
-            {
-                this.genFolioSinRegGQL.mutate({args: {tipoDoc, deptoId: STATE_DATOS_SESION().deptoId}}).pipe(tap((folioGenerado) =>
-                {
-                    if (folioGenerado.data.genFolioSinReg)
-                    {
-                        this.formDocs.get('folio').setValue(folioGenerado.data.genFolioSinReg);
-                        this.#usuarioFolio = STATE_DATOS_SESION()._id;
-                    }
-                })).subscribe();
-            }
-        });
-    }
-
     cerrar(): void
     {
         if (!this.cargando)

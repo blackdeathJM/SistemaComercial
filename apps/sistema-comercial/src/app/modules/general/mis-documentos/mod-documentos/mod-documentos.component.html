@@ -39,10 +39,6 @@
                     </mat-select>
                     <mat-error>{{formDocs.controls.tipoDoc['errorMessage']}}</mat-error>
                 </mat-form-field>
-
-                <button mat-mini-fab color="warn" class="flex-2" (click)="genFolio()" [disabled]="formDocs.controls.tipoDoc.invalid || cargando">
-                    <mat-icon svgIcon="subtitles" matTooltip="Generar folio para el documento previo a registrar"></mat-icon>
-                </button>
             </div>
 
             <mat-form-field class="fuse-mat-textarea flex-auto">
