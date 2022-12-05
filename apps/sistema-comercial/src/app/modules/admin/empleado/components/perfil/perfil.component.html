@@ -1,11 +1,18 @@
-<mat-card class="mx-auto my-8 w-2/4 h-fit">
-    <mat-card-title>Perfil</mat-card-title>
+<mat-card class="mx-auto my-8 w-2/4 h-fit border-solid">
     <!--    <img matCardImage src="Card wide image source" alt="">-->
     <mat-card-content class="flex flex-col">
-        <div class="w-24 h-24 mx-auto">
-            <img class="w-full h-full rounded-full" *ngIf="false" [src]="" alt="Avatar del usuario">
-            <mat-icon class="icon-size-24" *ngIf="true" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+        <div class="w-40 h-40 p-4 w-full mx-auto">
+            <img class="w-full h-full rounded-full ring object-cover" *ngIf="srcImagen" [src]="srcImagen" alt="">
+            <mat-icon class="icon-size-24" *ngIf="!srcImagen" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
         </div>
+        <mat-form-field class="flex-auto mt-4">
+            <ngx-mat-file-input (change)="cambioImagen($event)"></ngx-mat-file-input>
+            <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary">
+            <mat-icon svgIcon="save" class="mr-2"></mat-icon>
+            Cambiar imagen
+        </button>
         <mat-form-field>
             <mat-label>Contraseña</mat-label>
             <input matInput>
