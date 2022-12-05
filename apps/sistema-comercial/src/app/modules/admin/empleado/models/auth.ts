@@ -1,5 +1,5 @@
 import {compare, prop, required} from '@rxweb/reactive-form-validators';
-import {sanitize, trim} from '@rxweb/sanitizers';
+import {lowerCase, sanitize, trim} from '@rxweb/sanitizers';
 import {IAuth} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {defaultNavigation} from '@s-app/common/navigation/data';
 
@@ -13,7 +13,7 @@ export class Auth implements IAuth
     confirmContrasena: string;
 
     @required({message: 'Es necesario que asignes un usuario'})
-    @trim()
+    @lowerCase()
     usuario: string;
     @prop()
     role: object[] = defaultNavigation;

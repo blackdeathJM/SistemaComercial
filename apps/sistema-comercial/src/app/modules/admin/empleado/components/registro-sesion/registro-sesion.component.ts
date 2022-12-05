@@ -16,6 +16,8 @@ import {CommonModule} from '@angular/common';
 import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {GeneralService} from '@s-app/services/general.service';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
+import {TrimDirective} from "@s-directives/trim.directive";
+import {NgxTrimDirectiveModule} from "ngx-trim-directive";
 
 @Component({
     standalone: true,
@@ -27,7 +29,9 @@ import {IModificado} from '#/libs/models/src/lib/common/common.interface';
             RxReactiveFormsModule,
             MatFormFieldModule,
             MatInputModule,
-            RegistrosComponent
+            RegistrosComponent,
+            TrimDirective,
+            NgxTrimDirectiveModule
         ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',

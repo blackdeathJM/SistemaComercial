@@ -7,11 +7,9 @@
                           'bg-green-500': user.auth.estatus === 'En-linea',
                           'bg-amber-500': user.auth.estatus === 'Desconectado',
                           'bg-red-500': user.auth.estatus === 'Ocupado',
-                          'bg-gray-400': user.auth.estatus === 'No-visible'}"
-        ></span>
+                          'bg-gray-400': user.auth.estatus === 'No-visible'}"></span>
     </span>
 </button>
-
 <mat-menu [xPosition]="'before'" #userActions="matMenu">
     <a mat-menu-item [routerLink]="['/sistema-comercial', 'perfil']">
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
