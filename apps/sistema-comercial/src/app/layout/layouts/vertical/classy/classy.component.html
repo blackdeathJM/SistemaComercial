@@ -23,11 +23,12 @@
         </div>
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
-            <div class="relative w-24 h-24">
-                <img class="w-full h-full rounded-full" *ngIf="user.avatar" [src]="user.avatar" alt="Avatar del usuario">
-                <mat-icon class="icon-size-24" *ngIf="!user.avatar" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+            <div class="relative w-40 h-40">
+                <img class="w-full object-cover ring h-full rounded-full" *ngIf="user.avatar" [src]="user.avatar" alt="">
+                <img class="w-full object-cover ring h-full rounded-full" *ngIf="!user.avatar" [src]="imgPorDefecto" alt="">
+                <!--                <mat-icon class="icon-size-24" *ngIf="!user.avatar" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>-->
             </div>
-            <div class="flex flex-col items-center justify-center w-full mt-6">
+            <div class="flex flex-col items-center justify-center w-full mt-2">
                 <div class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
                     {{user.nombreCompleto}}
                 </div>
@@ -40,7 +41,7 @@
     <!-- Navigation footer hook -->
     <ng-container fuseVerticalNavigationContentFooter>
         <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
-            <img class="max-w-36" src="assets/images/logo/logo-text-on-dark.svg">
+            <img class="max-w-36" src="assets/images/logo/logo-text-on-dark.svg" alt="">
         </div>
     </ng-container>
 </fuse-vertical-navigation>

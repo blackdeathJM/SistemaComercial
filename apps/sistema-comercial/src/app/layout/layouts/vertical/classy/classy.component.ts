@@ -18,6 +18,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
     isScreenSmall: boolean;
     navigation: Navigation;
     user: IDatosSesion;
+    imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
