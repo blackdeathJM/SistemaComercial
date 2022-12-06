@@ -2,12 +2,7 @@
 <fuse-loading-bar></fuse-loading-bar>
 
 <!-- Navigation -->
-<fuse-vertical-navigation
-    class="dark bg-gray-900 print:hidden"
-    [mode]="isScreenSmall ? 'over' : 'side'"
-    [name]="'mainNavigation'"
-    [navigation]="navigation.default"
-    [opened]="!isScreenSmall">
+<fuse-vertical-navigation class="dark:bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
         <div class="flex items-center w-full p-4 pl-6">
@@ -23,10 +18,9 @@
         </div>
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
-            <div class="relative w-40 h-40">
-                <img class="w-full object-cover ring h-full rounded-full" *ngIf="user.avatar" [src]="user.avatar" alt="">
-                <img class="w-full object-cover ring h-full rounded-full" *ngIf="!user.avatar" [src]="imgPorDefecto" alt="">
-                <!--                <mat-icon class="icon-size-24" *ngIf="!user.avatar" [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>-->
+            <div class="relative w-36 h-36">
+                <img class="object-cover ring h-full rounded-full" *ngIf="user.avatar" [src]="user.avatar" alt="">
+                <img class="object-cover ring h-full rounded-full" *ngIf="!user.avatar" [src]="imgPorDefecto" alt="">
             </div>
             <div class="flex flex-col items-center justify-center w-full mt-2">
                 <div class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
