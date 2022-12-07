@@ -43,6 +43,7 @@ export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy
             // Set the auto mode in the service
             this._fuseLoadingService.setAutoMode(coerceBooleanProperty(changes.autoMode.currentValue));
         }
+        this.cdr.detectChanges();
     }
 
     /**

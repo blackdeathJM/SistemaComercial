@@ -124,7 +124,7 @@ specifiers:
   lodash: 4.17.21
   lodash-es: 4.17.21
   luxon: ^3.1.1
-  luxon-angular: ^5.2.0
+  luxon-angular: ^6.0.0
   marked: ^4.2.3
   mongoose: ^6.8.0
   nest-access-control: ^2.2.0
@@ -225,7 +225,7 @@ dependencies:
   jsonwebtoken: 8.5.1
   lodash-es: 4.17.21
   luxon: 3.1.1
-  luxon-angular: 5.2.0_c6hdkrxhsgmgdctkdfws2easgq
+  luxon-angular: 6.0.0_c6hdkrxhsgmgdctkdfws2easgq
   marked: 4.2.3
   mongoose: 6.8.0
   nest-access-control: 2.2.0_@nestjs+graphql@10.1.6
@@ -15797,8 +15797,8 @@ packages:
     resolution: {integrity: sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==}
     engines: {node: '>=12'}
 
-  /luxon-angular/5.2.0_c6hdkrxhsgmgdctkdfws2easgq:
-    resolution: {integrity: sha512-SoUAZqQYZGwcyyuPKEQLgB1cLha2P3uu9SijwDP9093YDy988crKzcePFtABNjfl0yVQsgi9aVm3AMbKuDYlWg==}
+  /luxon-angular/6.0.0_c6hdkrxhsgmgdctkdfws2easgq:
+    resolution: {integrity: sha512-Ib6tSV3DKaqta/GSZ4XfAwsUkxL+VavyawfvzTBiDI9FKiJuVFRoW7xZMwB9l7dkCKboomc9HDocCP8DGhS7oQ==}
     peerDependencies:
       '@angular/core': '>=12'
       luxon: '>=2.0.0 <4'
