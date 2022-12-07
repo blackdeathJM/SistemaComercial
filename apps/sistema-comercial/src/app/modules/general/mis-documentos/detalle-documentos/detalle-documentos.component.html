@@ -94,26 +94,34 @@
     <!-- Actions -->
     <ng-container *ngIf="_documento?.proceso !== 'terminado' ">
         <div class="flex gap-4 mt-8">
-                <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)" [disabled]="_documento?.folio !== null">
-                    <ng-container *ngIf="!cargando; else genFolio">
-                        <mat-icon svgIcon="subtitles" class="mr-2"></mat-icon>
-                        Generar folio
-                    </ng-container>
-                </button>
+            <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)" [disabled]="_documento?.folio !== null">
+                <ng-container *ngIf="!cargando; else genFolio">
+                    <div class="flex items-center justify-center">
+                        <mat-icon svgIcon="subtitles"></mat-icon>
+                        <span class="ml-3">Generar folio</span>
+                    </div>
+                </ng-container>
+            </button>
             <button class="flex-auto" color="warn" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)"
                     [disabled]="(_documento?.docUrl === null && _documento?.acuseUrl === null) || _documento.proceso === 'terminado'">
-                <mat-icon svgIcon="mat_outline:checklist" class=" mr-2"></mat-icon>
-                Finalizar doc
+                <div class="flex items-center justify-center">
+                    <mat-icon svgIcon="mat_outline:checklist"></mat-icon>
+                    <span class="ml-3">Finaliza doc</span>
+                </div>
             </button>
         </div>
         <div class="flex gap-4 mt-4">
             <button class="flex-auto" mat-stroked-button (click)="reasignacion(_documento)" matTooltip="Reasignacion de usuarios para el documento seleccionado">
-                <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
-                Reasignacion
+                <div class="flex items-center justify-center">
+                    <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
+                    <span class="ml-3">Reasignacion</span>
+                </div>
             </button>
             <button class="flex-auto" mat-stroked-button matTooltip="Modifica los documentos que haz subido a la nube" (click)="modDocs(_documento)">
-                <mat-icon svgIcon="feather:refresh-cw" class="mr-2"></mat-icon>
-                Mod. Docs
+                <div class="flex items-center justify-center">
+                    <mat-icon svgIcon="feather:refresh-cw" class="mr-2"></mat-icon>
+                    <span class="ml-2">Mod. Docs</span>
+                </div>
             </button>
         </div>
     </ng-container>

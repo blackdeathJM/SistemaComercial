@@ -5,8 +5,8 @@ import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
-import {DeptosComponent} from '@s-app/deptos/deptos.component';
-import {EmpleadoComponent} from '@s-app/empleado/empleado.component';
+import {DeptosComponent} from '@s-admin/deptos.component';
+import {EmpleadoComponent} from '@s-admin/empleado.component';
 
 @Component({
     standalone: true,

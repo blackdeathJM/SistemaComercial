@@ -1,12 +1,12 @@
 import {AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subject, takeUntil} from 'rxjs';
-import {FuseMediaWatcherService} from '@s-fuse/services/media-watcher';
-import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/components/navigation';
-import {Navigation} from '@s-app/core/navigation/navigation.types';
-import {NavigationService} from '@s-app/core/navigation/navigation.service';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {NavigationService} from '@s-core/navigation/navigation.service';
+import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
+import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {Navegation} from '@s-core/navigation/navigation.types';
 
 @Component({
     selector: 'classy-layout',
@@ -16,7 +16,7 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentInit
 {
     isScreenSmall: boolean;
-    navigation: Navigation;
+    navigation: Navegation;
     user: IDatosSesion;
     imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -53,7 +53,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) =>
+            .subscribe((navigation: Navegation) =>
             {
                 this.navigation = navigation;
             });

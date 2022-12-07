@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import {AuthService} from '@s-app/core/auth/auth.service';
+import {AuthService} from '#/apps/sistema-comercial/src/app/core/auth/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor

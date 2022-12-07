@@ -1,21 +1,21 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {RegistroSesionComponent} from '@s-app/empleado/components/registro-sesion/registro-sesion.component';
 import {Subscription} from 'rxjs';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
-import {CambioIconoRolPipe} from '@s-app/empleado/pipes/cambio-icono-rol.pipe';
 import {NgxJsonViewerModule} from 'ngx-json-viewer';
 import {FuseNavigationItem} from '@s-fuse/navigation';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatListModule} from '@angular/material/list';
+import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
+import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 
 @Component({
     standalone: true,

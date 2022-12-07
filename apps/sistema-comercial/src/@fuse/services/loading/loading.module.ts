@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FuseLoadingInterceptor } from '@s-fuse/services/loading/loading.interceptor';
+import {FuseLoadingInterceptor} from '@s-fuse/loading/loading.interceptor';
 
 @NgModule({
     providers: [

@@ -1,5 +1,5 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {dirTecnicaOperativa} from '@s-app/common/navigation/constantes/rutas';
+import {dirTecnicaOperativa} from './constantes/rutas';
 
 export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
     [

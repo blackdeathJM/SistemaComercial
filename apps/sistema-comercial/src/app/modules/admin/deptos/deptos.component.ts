@@ -1,9 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {fuseAnimations} from '@s-fuse/animations';
 import {debounceTime, map, Subscription, switchMap} from 'rxjs';
-import {STATE_DEPTOS} from '@s-app/modules/admin/deptos/deptos.state';
 import {MatDialog} from '@angular/material/dialog';
-import {ModDeptoComponent} from '@s-app/deptos/components/mod-depto/mod-depto.component';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
@@ -13,8 +10,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import {ListaDeptosComponent} from '@s-app/deptos/components/lista-deptos/lista-deptos.component';
 import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
+import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {STATE_DEPTOS} from '@s-admin/deptos.state';
+import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 
 @Component({
     standalone: true,

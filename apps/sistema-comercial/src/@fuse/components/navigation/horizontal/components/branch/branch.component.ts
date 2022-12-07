@@ -2,9 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { BooleanInput } from '@angular/cdk/coercion';
 import { MatMenu } from '@angular/material/menu';
 import { Subject, takeUntil } from 'rxjs';
-import { FuseHorizontalNavigationComponent } from '@s-fuse/components/navigation/horizontal/horizontal.component';
-import { FuseNavigationService } from '@s-fuse/components/navigation/navigation.service';
-import { FuseNavigationItem } from '@s-fuse/components/navigation/navigation.types';
+import {FuseHorizontalNavigationComponent, FuseNavigationItem, FuseNavigationService} from '@s-fuse/navigation';
 
 @Component({
     selector       : 'fuse-horizontal-navigation-branch-item',

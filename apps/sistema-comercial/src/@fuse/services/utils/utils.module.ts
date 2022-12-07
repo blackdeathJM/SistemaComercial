@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FuseUtilsService } from '@s-fuse/services/utils/utils.service';
+import {FuseUtilsService} from '@s-fuse/utils/utils.service';
 
 @NgModule({
     providers: [

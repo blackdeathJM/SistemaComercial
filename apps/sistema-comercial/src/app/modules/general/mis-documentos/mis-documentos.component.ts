@@ -1,20 +1,15 @@
 import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {IDocsFechas, IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
-import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
 import {DocsBusquedaGralGQL, DocsFechasGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {debounceTime, distinctUntilChanged, Subscription, switchMap, tap} from 'rxjs';
-import {STATE_DOCS} from '@s-app/general/general.state';
 import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
-import {ConvertirTimestamUnixPipe} from '@s-app/pipes/convertir-timestam-unix.pipe';
 import {CommonModule} from '@angular/common';
-import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-documentos/detalle-documentos.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -22,7 +17,12 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {GeneralService} from '@s-app/services/general.service';
+import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
+import {DetalleDocumentosComponent} from '@s-general/detalle-documentos/detalle-documentos.component';
+import {STATE_DOCS} from '@s-general/general.state';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {ModDocumentosComponent} from '@s-general/mod-documentos/mod-documentos.component';
+import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 
 @Component({
     standalone: true,

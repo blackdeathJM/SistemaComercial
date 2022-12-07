@@ -1,12 +1,10 @@
 import {AfterContentChecked, Component, EventEmitter, Output} from '@angular/core';
-import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
-import {ApolloQueryResult} from '@apollo/client';
-import {DepartamentosQuery} from '#/libs/datos/src';
+import {STATE_DEPTOS} from '@s-admin/deptos.state';
 
 @Component({
     standalone: true,

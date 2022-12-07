@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostBinding, Input,
+    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { fuseAnimations } from '@s-fuse/animations';
 import {FuseAlertService} from '@s-fuse/alert/alert.service';
 import {FuseUtilsService} from '@s-fuse/utils';
 import {FuseAlertAppearance, FuseAlertType} from '@s-fuse/alert/alert.types';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 
 @Component({

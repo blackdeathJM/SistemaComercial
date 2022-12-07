@@ -8,8 +8,8 @@ import {
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
-import {AppService} from '#api/apps/api/src/app/app.service';
 import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
+import {AppService} from '#api/apps/api/src/app/app.service';
 
 @Injectable()
 export class DocumentosService

@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
-import {RecursosHumanosComponent} from '@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.component';
-import {RecursosHumanosGuard} from '@s-app/dir-admon-finanzas/recursos-humanos/recursos-humanos.guard';
+import {RecursosHumanosComponent} from '@s-dirAdmonFinanzas/recursos-humanos.component';
+import {RecursosHumanosGuard} from '@s-dirAdmonFinanzas/recursos-humanos.guard';
 
 export const recursosHumanosRouting: Routes =
     [
@@ -12,7 +12,7 @@ export const recursosHumanosRouting: Routes =
                 [
                     {
                         path: 'empleados',
-                        loadComponent: () => import('@s-app/dir-admon-finanzas/recursos-humanos/empleados/empleados.component').then(e => e.EmpleadosComponent)
+                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/empleados.component').then(e => e.EmpleadosComponent)
                     }
                 ]
         }

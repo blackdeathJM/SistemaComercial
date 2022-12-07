@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
-import { FuseVerticalNavigationComponent } from '@s-fuse/components/navigation/vertical/vertical.component';
-import { FuseNavigationService } from '@s-fuse/components/navigation/navigation.service';
-import { FuseNavigationItem } from '@s-fuse/components/navigation/navigation.types';
+import {FuseNavigationItem, FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 
 @Component({
     selector       : 'fuse-vertical-navigation-group-item',

@@ -2,10 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inp
 import { NavigationEnd, Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { fuseAnimations } from '@s-fuse/animations';
-import { FuseVerticalNavigationComponent } from '@s-fuse/components/navigation/vertical/vertical.component';
-import { FuseNavigationService } from '@s-fuse/components/navigation/navigation.service';
-import { FuseNavigationItem } from '@s-fuse/components/navigation/navigation.types';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FuseNavigationItem, FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 
 @Component({
     selector       : 'fuse-vertical-navigation-collapsable-item',

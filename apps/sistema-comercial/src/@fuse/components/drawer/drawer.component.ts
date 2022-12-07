@@ -1,4 +1,5 @@
-import {Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, OnDestroy, OnInit, Output,
+    Renderer2, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {animate, AnimationBuilder, AnimationPlayer, style} from '@angular/animations';
 import {BooleanInput, coerceBooleanProperty} from '@angular/cdk/coercion';
 import {FuseDrawerMode, FuseDrawerPosition} from '@s-fuse/drawer/drawer.types';

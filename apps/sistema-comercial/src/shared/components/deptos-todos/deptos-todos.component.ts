@@ -2,13 +2,13 @@ import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {AbstractControl, ControlValueAccessor, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator} from '@angular/forms';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {tap} from 'rxjs';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Empleado} from '#/libs/models/src/lib/admin/empleado/empleado';
+import {STATE_DEPTOS} from '@s-admin/deptos.state';
 
 @Component({
     selector: 'app-deptos-todos',

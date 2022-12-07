@@ -1,5 +1,4 @@
-<h2 mat-dialog-title>Dar de alta documentos</h2>
-<mat-dialog-content>
+<div class="relative flex flex-col w-full">
     <form [formGroup]="formDocs" enctype="multipart/form-data" autocomplete="off">
         <div class="flex flex-col">
             <div class="flex gap-3">
@@ -67,5 +66,5 @@
             </div>
         </div>
     </form>
-</mat-dialog-content>
-<app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>
+    <app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>
+</div>

@@ -2,16 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {EmpleadosSesionGQL, GenFolioSinRegGQL, RegDocGQL} from '#/libs/datos/src';
 import {finalize, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
 import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
 import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {GeneralService} from '@s-app/services/general.service';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
@@ -24,10 +20,15 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
-import {confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
-import {STATE_DOCS} from '@s-app/general/general.state';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {confirmarFolio} from '@s-general/detalle-documentos/dialogConfirmacion';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
+import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {STATE_DOCS} from '@s-general/general.state';
+import {MatCardModule} from "@angular/material/card";
 
 
 @Component({
@@ -49,7 +50,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
             MatIconModule,
             MatButtonModule,
             SeleccionarEmpleadoComponent,
-            MatTooltipModule
+            MatTooltipModule,
+            MatCardModule
         ],
     providers:
         [],

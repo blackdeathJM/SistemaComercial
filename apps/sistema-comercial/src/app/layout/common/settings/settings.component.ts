@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { FuseConfigService } from '@s-fuse/services/config';
-import { AppConfig, Scheme, Theme, Themes } from '@s-app/core/config/app.config';
-import { Layout } from '@s-app/layout/layout.types';
+import {AppConfig, Scheme, Theme, Themes} from '@s-core/config/app.config';
+import {Layout} from '@s-layout/layout.types';
+import {FuseConfigService} from '@s-fuse/config';
 
 @Component({
     selector     : 'settings',

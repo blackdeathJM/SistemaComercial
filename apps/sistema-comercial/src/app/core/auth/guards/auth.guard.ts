@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
 import {Observable, of, switchMap} from 'rxjs';
-import {AuthService} from '@s-app/core/auth/auth.service';
-import {NavigationService} from '@s-app/navigation/navigation.service';
+import {AuthService} from '#/apps/sistema-comercial/src/app/core/auth/auth.service';
+import {NavigationService} from '#/apps/sistema-comercial/src/app/core/navigation/navigation.service';
 
 @Injectable({
     providedIn: 'root'

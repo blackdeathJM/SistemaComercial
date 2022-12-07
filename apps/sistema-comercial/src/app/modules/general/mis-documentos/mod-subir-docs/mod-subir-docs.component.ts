@@ -9,15 +9,15 @@ import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/docum
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
-import {NgxToastService} from '@s-app/services/ngx-toast.service';
 import {deleteObject, getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
-import {GeneralService} from '@s-app/services/general.service';
 import {SubirDocsGQL} from '#/libs/datos/src';
 import {tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
-import {STATE_DOCS} from '@s-app/general/general.state';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {DisableControlModule} from '@angular-ru/cdk/directives';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {STATE_DOCS} from '@s-general/general.state';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-subir-docs',

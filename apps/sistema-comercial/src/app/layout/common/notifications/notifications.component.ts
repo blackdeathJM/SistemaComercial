@@ -3,8 +3,8 @@ import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
 import {Subject, takeUntil} from 'rxjs';
-import {Notification} from '@s-app/layout/common/notifications/notifications.types';
-import {NotificationsService} from '@s-app/layout/common/notifications/notifications.service';
+import {NotificationsService} from '@s-layout/notifications/notifications.service';
+import {Notification} from '@s-layout/notifications/notifications.types';
 
 @Component({
     selector: 'notifications',

@@ -7,14 +7,13 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {ModInstalacionComponent} from '@s-app/dir-tecnica-operativa/telemetria/instalaciones/mod-instalacion/mod-instalacion.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
-import {DetalleInstalacionComponent} from '@s-app/dir-tecnica-operativa/telemetria/instalaciones/detalle-instalacion/detalle-instalacion.component';
-import {DetalleMotorComponent} from '@s-app/dir-tecnica-operativa/telemetria/motor/detalle-motor/detalle-motor.component';
-import {DetalleBombaComponent} from '@s-app/dir-tecnica-operativa/telemetria/bomba/detalle-bomba/detalle-bomba.component';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import {DetalleInstalacionComponent} from '../instalaciones/detalle-instalacion/detalle-instalacion.component';
+import {DetalleMotorComponent} from '../motor/detalle-motor/detalle-motor.component';
+import {DetalleBombaComponent} from '../bomba/detalle-bomba/detalle-bomba.component';
+import {ModInstalacionComponent} from '../instalaciones/mod-instalacion/mod-instalacion.component';
 @Component({
     selector: 'app-instalaciones',
     standalone: true,

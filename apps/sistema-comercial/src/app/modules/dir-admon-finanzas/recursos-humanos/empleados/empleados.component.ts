@@ -5,7 +5,7 @@ import {RouterLinkWithHref} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDialog} from '@angular/material/dialog';
-import {ModRegistroEmpleadoComponent} from '@s-app/dir-admon-finanzas/recursos-humanos/empleados/mod-registro-empleado/mod-registro-empleado.component';
+import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
 
 @Component({
     selector: 'app-empleados',

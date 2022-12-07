@@ -1,6 +1,6 @@
 import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FuseConfirmationConfig} from '@s-fuse/services/confirmation/confirmation.types';
+import {FuseConfirmationConfig} from '@s-fuse/confirmation';
 
 @Component({
     selector: 'fuse-confirmation-dialog',

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { FuseMediaWatcherService } from '@s-fuse/services/media-watcher';
-import { FuseNavigationService, FuseVerticalNavigationComponent } from '@s-fuse/components/navigation';
-import { Navigation } from '@s-app/core/navigation/navigation.types';
-import { NavigationService } from '@s-app/core/navigation/navigation.service';
+import {NavigationService} from '@s-core/navigation/navigation.service';
+import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
+import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
+import {Navegation} from '@s-core/navigation/navigation.types';
 
 @Component({
     selector     : 'dense-layout',
@@ -14,7 +14,7 @@ import { NavigationService } from '@s-app/core/navigation/navigation.service';
 export class DenseLayoutComponent implements OnInit, OnDestroy
 {
     isScreenSmall: boolean;
-    navigation: Navigation;
+    navigation: Navegation;
     navigationAppearance: 'default' | 'dense' = 'dense';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -55,7 +55,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) => {
+            .subscribe((navigation: Navegation) => {
                 this.navigation = navigation;
             });
 

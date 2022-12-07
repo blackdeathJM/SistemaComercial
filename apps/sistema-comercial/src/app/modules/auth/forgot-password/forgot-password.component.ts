@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
-import { fuseAnimations } from '@s-fuse/animations';
-import { FuseAlertType } from '@s-fuse/components/alert';
-import { AuthService } from '@s-app/core/auth/auth.service';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FuseAlertType} from '@s-fuse/alert';
+import {AuthService} from '@s-core/auth/auth.service';
 
 @Component({
     selector     : 'auth.ts-forgot-password',

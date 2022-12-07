@@ -24,13 +24,12 @@ import {animate, AnimationBuilder, AnimationPlayer, style} from '@angular/animat
 import {NavigationEnd, Router} from '@angular/router';
 import {ScrollStrategy, ScrollStrategyOptions} from '@angular/cdk/overlay';
 import {delay, filter, merge, ReplaySubject, Subject, Subscription, takeUntil} from 'rxjs';
-import {fuseAnimations} from '@s-fuse/animations';
-import {FuseNavigationItem, FuseVerticalNavigationAppearance, FuseVerticalNavigationMode, FuseVerticalNavigationPosition} from '@s-fuse/components/navigation/navigation.types';
-import {FuseNavigationService} from '@s-fuse/components/navigation/navigation.service';
-import {FuseScrollbarDirective} from '@s-fuse/directives/scrollbar/scrollbar.directive';
-import {FuseUtilsService} from '@s-fuse/services/utils/utils.service';
 import {BooleanInput, coerceBooleanProperty} from '@angular/cdk/coercion';
 import { DOCUMENT } from '@angular/common';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FuseNavigationItem, FuseNavigationService, FuseVerticalNavigationAppearance, FuseVerticalNavigationMode, FuseVerticalNavigationPosition} from '@s-fuse/navigation';
+import {FuseScrollbarDirective} from '@s-fuse/scrollbar';
+import {FuseUtilsService} from '@s-fuse/utils';
 
 @Component({
     selector: 'fuse-vertical-navigation',

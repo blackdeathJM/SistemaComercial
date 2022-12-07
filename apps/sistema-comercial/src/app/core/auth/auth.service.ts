@@ -3,11 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {LoginGQL} from '#/libs/datos/src';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {TOKEN} from '@s-app/auth/const';
-import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {Router} from '@angular/router';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {NgxToastService} from '@s-app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '#/apps/sistema-comercial/src/app/core/auth/auth.state';
+import {TOKEN} from '@s-auth/const';
 
 @Injectable({providedIn: 'root'})
 export class AuthService

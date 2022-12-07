@@ -17,15 +17,66 @@
         "paths": {
             "#/*": [ "./*" ],
             "@s-apollo/*": [ "apps/sistema-comercial/src/apollo/*" ],
-            "@s-app/*": [
-                "apps/sistema-comercial/src/app/*",
-                "apps/sistema-comercial/src/app/core/*",
-                "apps/sistema-comercial/src/app/layout/*",
-                "apps/sistema-comercial/src/app/mock-api/*",
-                "apps/sistema-comercial/src/app/modules/*",
-                "apps/sistema-comercial/src/app/modules/admin/*"
+            "@s-fuse/*": [
+                "apps/sistema-comercial/src/@fuse/animations/*",
+                "apps/sistema-comercial/src/@fuse/components/*",
+                "apps/sistema-comercial/src/@fuse/directives/*",
+                "apps/sistema-comercial/src/@fuse/lib/*",
+                "apps/sistema-comercial/src/@fuse/pipes/*",
+                "apps/sistema-comercial/src/@fuse/services/*",
+                "apps/sistema-comercial/src/@fuse/styles/*",
+                "apps/sistema-comercial/src/@fuse/tailwind/*",
+                "apps/sistema-comercial/src/@fuse/validators/*",
+                "apps/sistema-comercial/src/@fuse/version/*"
             ],
-            "@s-app/dir-tenica-operativa/*": [ "apps/sistema-comercial/src/app/modules/admin/dir-tecnica-operativa/*" ],
+            "@s-core/*": [
+                "apps/sistema-comercial/src/app/core/*",
+                "apps/sistema-comercial/src/app/auth/*",
+                "apps/sistema-comercial/src/app/config/*",
+                "apps/sistema-comercial/src/app/icons/*",
+                "apps/sistema-comercial/src/app/navigation/*",
+                "apps/sistema-comercial/src/app/tansloco/*"
+            ],
+            "@s-layout/*": [
+                "apps/sistema-comercial/src/app/layout/*",
+                "apps/sistema-comercial/src/app/layout/common/*",
+                "apps/sistema-comercial/src/app/layout/layouts/*",
+                "apps/sistema-comercial/src/app/layout/layouts/empty/*",
+                "apps/sistema-comercial/src/app/layout/layouts/horizontal/*",
+                "apps/sistema-comercial/src/app/layout/layouts/vertical/*"
+            ],
+            "@s-admin/*": [
+                "apps/sistema-comercial/src/app/modules/admin/*",
+                "apps/sistema-comercial/src/app/modules/admin/deptos/*",
+                "apps/sistema-comercial/src/app/modules/admin/empleado/*"
+            ],
+            "@s-auth/*": [
+                "apps/sistema-comercial/src/app/modules/auth/*"
+            ],
+            "@s-dirAdmonFinanzas/*": [
+                "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/*",
+                "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/almacen/*",
+                "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/compras-servicios/*",
+                "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/contabilidad/*",
+                "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/egresos/*",
+                "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/recursos-humanos/*"
+            ],
+            "@s-dir-tecnica-operativa/*": [
+                "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/*",
+                "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/telemetria/*"
+            ],
+            "@s-general/*": [
+                "apps/sistema-comercial/src/app/modules/general/*",
+                "apps/sistema-comercial/src/app/modules/general/mis-documentos/*",
+                "apps/sistema-comercial/src/app/modules/general/mis-resguardos/*",
+                "apps/sistema-comercial/src/app/modules/general/ordenes-atencion/*"
+            ],
+            "@s-Inicio/*": [
+                "apps/sistema-comercial/src/app/modules/inicio/*"
+            ],
+            "@s-presidencia/*": [
+                "apps/sistema-comercial/src/app/modules/presidencia/*"
+            ],
             "@s-assets/*": [
                 "apps/sistema-comercial/src/assets/fonts/*",
                 "apps/sistema-comercial/src/assets/i18n/*",
@@ -35,18 +86,6 @@
             ],
             "@s-directives/*": [ "apps/sistema-comercial/src/directives/*" ],
             "@s-environments/*": [ "apps/sistema-comercial/src/environments/*" ],
-            "@s-fuse/*": [
-                "apps/sistema-comercial/src/@fuse/*",
-                "apps/sistema-comercial/src/@fuse/animations/*",
-                "apps/sistema-comercial/src/@fuse/components/*",
-                "apps/sistema-comercial/src/@fuse/directives/*",
-                "apps/sistema-comercial/src/@fuse-lib/*",
-                "apps/sistema-comercial/src/@fuse/pipes/*",
-                "apps/sistema-comercial/src/@fuse/services/*",
-                "apps/sistema-comercial/src/@fuse/tailwind/*",
-                "apps/sistema-comercial/src/@fuse/validators/*",
-                "apps/sistema-comercial/src/@fuse/version"
-            ],
             "@s-shared/*": [ "apps/sistema-comercial/src/Shared/*" ]
         },
         "types": [ ]

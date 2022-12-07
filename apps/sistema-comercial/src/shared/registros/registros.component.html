@@ -1,12 +1,16 @@
 <mat-dialog-actions class="flex gap-4 items-center mt-4">
     <button mat-flat-button color="warn" type="button" class="flex-auto" (click)="cerrar()" [disabled]="_cargando">
-        <mat-icon class="mr-2">cancel</mat-icon>
-        Cancelar
+        <div class="flex items-center justify-center">
+            <mat-icon svgIcon="cancel"></mat-icon>
+            <span class="ml-3">Cancelar</span>
+        </div>
     </button>
     <button mat-flat-button color="primary" type="button" class="flex-auto" (click)="reg()" [disabled]="_deshabilitar">
         <ng-container *ngIf="!_cargando; else cargando">
-            <mat-icon class="mr-2">save</mat-icon>
-            Aceptar
+            <div class="flex items-center justify-center">
+                <mat-icon svgIcon="save"></mat-icon>
+                <span class="ml-3">Aceptar</span>
+            </div>
         </ng-container>
     </button>
 </mat-dialog-actions>
@@ -15,5 +19,5 @@
     <mat-icon class="mr-2">
         <mat-progress-spinner mode="indeterminate" diameter="20" color="accent"></mat-progress-spinner>
     </mat-icon>
-    Procesando...
+    <span class="ml-3">Procesando...</span>
 </ng-template>

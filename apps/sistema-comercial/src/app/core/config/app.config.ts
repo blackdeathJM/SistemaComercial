@@ -1,6 +1,7 @@
-import {Layout} from '@s-app/layout/layout.types';
-
 // Types
+
+import {Layout} from '@s-layout/layout.types';
+
 export type Scheme = 'auto' | 'dark' | 'light';
 export type Screens = { [key: string]: string };
 export type Theme = 'theme-default' | string;

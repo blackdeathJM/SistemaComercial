@@ -1,9 +1,8 @@
 import {Routes} from '@angular/router';
-import {GeneralComponent} from '@s-app/general/general.component';
-import {MisResguardosComponent} from '@s-app/general/mis-resguardos/mis-resguardos.component';
-import {OrdenesAtencionComponent} from '@s-app/general/ordenes-atencion/ordenes-atencion.component';
-import {MisDocumentosComponent} from '@s-app/general/mis-documentos/mis-documentos.component';
-
+import {GeneralComponent} from '@s-general/general.component';
+import {MisDocumentosComponent} from '@s-general/mis-documentos.component';
+import {MisResguardosComponent} from '@s-general/mis-resguardos.component';
+import {OrdenesAtencionComponent} from '@s-general/ordenes-atencion.component';
 export const generalRouting: Routes =
     [
         {

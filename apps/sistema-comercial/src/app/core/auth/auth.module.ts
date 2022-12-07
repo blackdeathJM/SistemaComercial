@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthService} from '@s-app/core/auth/auth.service';
-import {AuthInterceptor} from '@s-app/core/auth/auth.interceptor';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 @NgModule({

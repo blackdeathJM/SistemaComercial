@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FuseSplashScreenService } from '@s-fuse/services/splash-screen/splash-screen.service';
+import {FuseSplashScreenService} from '@s-fuse/splash-screen/splash-screen.service';
 
 @NgModule({
     providers: [
