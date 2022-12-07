@@ -18,7 +18,8 @@
                     "highlight.js",
                     "subscriptions-transport-ws",
                     "flat",
-                    "sweetalert2"
+                    "sweetalert2",
+                    "quill"
                 ],
                 "assets": [
                     "apps/sistema-comercial/src/favicon-16x16.png",

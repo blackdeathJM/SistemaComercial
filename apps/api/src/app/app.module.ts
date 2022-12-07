@@ -17,7 +17,7 @@ import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/te
     imports:
         [
             ConfigModule.forRoot({
-                envFilePath: ['.env', '.dev.env'], load: [config], expandVariables: true, isGlobal: true
+                envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,

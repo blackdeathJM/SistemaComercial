@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {catchError, Observable, of, throwError} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {AuthService} from '@s-app/core/auth/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
 {
-    private newReq: HttpRequest<any>;
     /**
      * Constructor
      */
@@ -23,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
         // Clone the request object
-        // let newReq = req.clone();
+        const newReq = req.clone();
 
         // Request
         //
@@ -41,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor
         // }
 
         // Response
-        return next.handle(this.newReq).pipe(
+        return next.handle(newReq).pipe(
             catchError((error) => {
 
                 // Catch "401 Unauthorized" responses

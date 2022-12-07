@@ -2,7 +2,6 @@ const path = require('path');
 const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
 const generatePalette = require(path.resolve(__dirname, ('apps/sistema-comercial/src/@fuse/tailwind/utils/generate-palette')));
-console.log('tailwind.config', generatePalette);
 /**
  * Custom palettes
  *
@@ -17,7 +16,7 @@ const customPalettes = {
  * Themes
  */
 const themes = {
-    // Default theme is required for theming system to work correctly
+    // Default theme is required for theming system to work correctly!
     'default': {
         primary: {
             ...colors.indigo,
@@ -35,8 +34,8 @@ const themes = {
             500: colors.red['50']
         }
     },
-    // Rest of the themes will use the 'default' as the base theme
-    // and extend them with their given configuration
+    // Rest of the themes will use the 'default' as the base
+    // theme and will extend it with their given configuration.
     'brand': {
         primary: customPalettes.brand
     },
@@ -294,3 +293,4 @@ const config = {
 };
 
 module.exports = config;
+

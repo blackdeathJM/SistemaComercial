@@ -17,7 +17,11 @@ import {NgxToastService} from '@s-app/services/ngx-toast.service';
 @Component({
     selector: 'app-mod-doc-ref',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, MatFormFieldModule, MatChipsModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule, RegistrosComponent],
+    imports:
+        [
+            CommonModule, MatDialogModule, MatFormFieldModule, MatChipsModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule,
+            RegistrosComponent
+        ],
     templateUrl: './mod-doc-ref.component.html',
     styleUrls: ['./mod-doc-ref.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
