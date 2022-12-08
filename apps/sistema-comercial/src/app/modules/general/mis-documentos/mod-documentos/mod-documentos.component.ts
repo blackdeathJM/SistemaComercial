@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {EmpleadosSesionGQL, GenFolioSinRegGQL, RegDocGQL} from '#/libs/datos/src';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
 import {finalize, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -19,10 +19,9 @@ import {CommonModule} from '@angular/common';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
+import {FuseConfirmationService} from '@s-fuse/confirmation';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {confirmarFolio} from '@s-general/detalle-documentos/dialogConfirmacion';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
@@ -73,11 +72,9 @@ export class ModDocumentosComponent implements OnInit
     cargando = false;
     porcentaje: number;
     tiposDoc = TIPOS_DOCUMENTO;
-    confFolio: FuseConfirmationConfig = confirmarFolio;
-    #usuarioFolio = null;
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage, private configService: FuseConfirmationService,
-                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private genFolioSinRegGQL: GenFolioSinRegGQL)
+                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef)
     {
     }
 
@@ -108,7 +105,6 @@ export class ModDocumentosComponent implements OnInit
         {
             if (esRemoto)
             {
-
                 // const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
                 // const resUpload = await uploadBytes(docRef, file._files[0]);
                 // docUrl = await getDownloadURL(resUpload.ref);
@@ -121,8 +117,7 @@ export class ModDocumentosComponent implements OnInit
                 subirArchivo.on('state_changed', (s) =>
                 {
                     this.porcentaje = (s.bytesTransferred / s.totalBytes) * 100;
-                    setProgress()
-                    console.log('porcentaje', this.porcentaje);
+                    this.cdr.detectChanges();
                 }, e => this.ngxToastService.errorToast(e.message, 'Error al subir archivo'), async () =>
                 {
                     try
@@ -158,7 +153,7 @@ export class ModDocumentosComponent implements OnInit
             ano: new Date().getFullYear(),
             tipoDoc,
             docUrl,
-            usuarioFolio: this.#usuarioFolio,
+            usuarioFolio: null,
             fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
             fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
             enviadoPor: STATE_DATOS_SESION()._id,
