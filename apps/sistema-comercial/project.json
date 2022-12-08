@@ -16,13 +16,10 @@
                 "allowedCommonJsDependencies": [
                     "apexcharts",
                     "highlight.js",
-                    "crypto-js/enc-utf8",
-                    "crypto-js/hmac-sha256",
-                    "crypto-js/enc-base64",
                     "subscriptions-transport-ws",
                     "flat",
-                    "moment",
-                    "sweetalert2"
+                    "sweetalert2",
+                    "quill"
                 ],
                 "assets": [
                     "apps/sistema-comercial/src/favicon-16x16.png",

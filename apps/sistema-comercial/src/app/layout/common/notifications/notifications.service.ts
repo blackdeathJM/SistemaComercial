@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, ReplaySubject, switchMap, take, tap } from 'rxjs';
-import { Notification } from '@s-app/layout/common/notifications/notifications.types';
+import {Notification} from '@s-layout/notifications/notifications.types';
 
 @Injectable({
     providedIn: 'root'

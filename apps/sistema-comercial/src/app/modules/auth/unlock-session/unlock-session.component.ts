@@ -1,9 +1,9 @@
 import {AfterContentInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {fuseAnimations} from '@s-fuse/animations';
-import {AuthService} from '@s-app/core/auth/auth.service';
-import {FuseAlertType} from '@s-fuse/components/alert';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FuseAlertType} from '@s-fuse/alert';
+import {AuthService} from '@s-core/auth/auth.service';
 
 @Component({
     selector: 'auth.ts-unlock-session',
@@ -76,7 +76,7 @@ export class AuthUnlockSessionComponent implements OnInit, AfterContentInit
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
 
                 // Navigate to the redirect url
-                this._router.navigateByUrl(redirectURL);
+                this._router.navigateByUrl(redirectURL).then();
 
             },
             (response) =>

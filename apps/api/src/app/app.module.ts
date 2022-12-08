@@ -9,14 +9,15 @@ import {AdminModule} from './admin/admin.module';
 import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {GraphQLUpload} from 'graphql-upload';
-import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 import {AppService} from '#api/apps/api/src/app/app.service';
+import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
+import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
 
 @Module({
     imports:
         [
             ConfigModule.forRoot({
-                envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true,
+                envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
@@ -38,8 +39,12 @@ import {AppService} from '#api/apps/api/src/app/app.service';
                     },
                 playground: false,
                 context: ({req}) => ({req}),
-                plugins: [ApolloServerPluginLandingPageLocalDefault]
+                plugins:
+                    [
+                        ApolloServerPluginLandingPageLocalDefault
+                    ]
             }),
+            // MongooseModule.forRoot('mongodb+srv://blackdeath:FernandaTeamo1017@simapas-api-k3zc5.mongodb.net/simapas-api?retryWrites=true&w=majority'),
             // MongooseModule.forRoot(environment.uriMongo),
             MongooseModule.forRootAsync({
                 imports: [ConfigModule],
@@ -53,7 +58,8 @@ import {AppService} from '#api/apps/api/src/app/app.service';
             }),
             SubirArchivoModule,
             AdminModule,
-            GeneralModule
+            GeneralModule,
+            TecnicaOperativaModule
         ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService],
     exports: [AppService]

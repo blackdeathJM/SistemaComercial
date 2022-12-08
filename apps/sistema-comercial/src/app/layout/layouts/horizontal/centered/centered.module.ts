@@ -5,23 +5,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { FuseFullscreenModule } from '@s-fuse/components/fullscreen';
-import { FuseLoadingBarModule } from '@s-fuse/components/loading-bar';
-import { FuseNavigationModule } from '@s-fuse/components/navigation';
-import { LanguagesModule } from '@s-app/layout/common/languages/languages.module';
-import { MessagesModule } from '@s-app/layout/common/messages/messages.module';
-import { NotificationsModule } from '@s-app/layout/common/notifications/notifications.module';
-import { SearchModule } from '@s-app/layout/common/search/search.module';
-import { ShortcutsModule } from '@s-app/layout/common/shortcuts/shortcuts.module';
-import { UserModule } from '@s-app/layout/common/user/user.module';
 import { SharedModule } from '@s-shared/shared.module';
-import { CenteredLayoutComponent } from '@s-app/layout/layouts/horizontal/centered/centered.component';
+import {CenteredLayoutComponent} from '@s-layout/centered/centered.component';
+import {FuseFullscreenModule} from '@s-fuse/fullscreen';
+import {FuseLoadingBarModule} from '@s-fuse/loading-bar';
+import {FuseNavigationModule} from '@s-fuse/navigation';
+import {LanguagesModule} from '@s-layout/languages/languages.module';
+import {MessagesModule} from '@s-layout/messages/messages.module';
+import {NotificationsModule} from '@s-layout/notifications/notifications.module';
+import {SearchModule} from '@s-layout/search/search.module';
+import {ShortcutsModule} from '@s-layout/shortcuts/shortcuts.module';
+import {UserModule} from '@s-layout/user/user.module';
+import {NgIf} from "@angular/common";
 
 @NgModule({
     declarations: [
         CenteredLayoutComponent
     ],
-    imports     : [
+    imports: [
         HttpClientModule,
         RouterModule,
         MatButtonModule,
@@ -37,7 +38,8 @@ import { CenteredLayoutComponent } from '@s-app/layout/layouts/horizontal/center
         SearchModule,
         ShortcutsModule,
         UserModule,
-        SharedModule
+        SharedModule,
+        NgIf
     ],
     exports     : [
         CenteredLayoutComponent

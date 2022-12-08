@@ -2,12 +2,12 @@ import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } fr
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
-import { AppConfig } from '@s-app/config/app.config';
 import { Layout } from './layout.types';
 import { FuseConfigService } from '@s-fuse/config';
 import { FuseMediaWatcherService } from '@s-fuse/media-watcher';
 import { FusePlatformService } from '@s-fuse/platform/platform.service';
 import { FUSE_VERSION } from '../../@fuse/version';
+import {AppConfig} from '@s-core/config/app.config';
 
 @Component({
     selector     : 'layout',

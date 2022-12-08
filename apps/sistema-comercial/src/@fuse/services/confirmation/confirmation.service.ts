@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { merge } from 'lodash-es';
-import { FuseConfirmationDialogComponent } from '@s-fuse/services/confirmation/dialog/dialog.component';
-import { FuseConfirmationConfig } from '@s-fuse/services/confirmation/confirmation.types';
+import {FuseConfirmationConfig} from '@s-fuse/confirmation/confirmation.types';
+import {FuseConfirmationDialogComponent} from '@s-fuse/confirmation/dialog/dialog.component';
 
 @Injectable()
 export class FuseConfirmationService

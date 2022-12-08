@@ -5,8 +5,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {EmpleadosSesionGQL} from '#/libs/datos/src';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {Subscription, tap} from 'rxjs';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 
 @Component({
     selector: 'app-seleccionar-empleado',

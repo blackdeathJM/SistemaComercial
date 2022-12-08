@@ -1,20 +1,15 @@
 import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
-import {IDocsFechasUsuarioEnviadoPor, IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IDocsFechas, IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog} from '@angular/material/dialog';
-import {ModDocumentosComponent} from '@s-app/general/mis-documentos/mod-documentos/mod-documentos.component';
-import {DocsBusquedaGralGQL, DocsFechasUsuarioEnviadoPorGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {delay, Subscription, tap} from 'rxjs';
-import {STATE_DOCS} from '@s-app/general/general.state';
+import {DocsBusquedaGralGQL, DocsFechasGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
+import {debounceTime, distinctUntilChanged, Subscription, switchMap, tap} from 'rxjs';
 import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
-import {ConvertirTimestamUnixPipe} from '@s-app/pipes/convertir-timestam-unix.pipe';
 import {CommonModule} from '@angular/common';
-import {DetalleDocumentosComponent} from '@s-app/general/mis-documentos/detalle-documentos/detalle-documentos.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -22,6 +17,12 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
+import {DetalleDocumentosComponent} from '@s-general/detalle-documentos/detalle-documentos.component';
+import {STATE_DOCS} from '@s-general/general.state';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {ModDocumentosComponent} from '@s-general/mod-documentos/mod-documentos.component';
+import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 
 @Component({
     standalone: true,
@@ -63,7 +64,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     //     fechaFin: []
     // });
 
-    constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private docsFechasUsuarioEnviadoPor: DocsFechasUsuarioEnviadoPorGQL,
+    constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private docsFechasGQL: DocsFechasGQL,
                 private docsBuscarGralGQL: DocsBusquedaGralGQL)
     {
     }
@@ -76,16 +77,19 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     ngOnInit(): void
     {
         this.docUsuarioProceso('pendiente', this.chkBuscar.value);
-        this.sub.add(this.txtBuscar.valueChanges.pipe(delay(300), tap((res) =>
+        this.txtBuscar.valueChanges.pipe(tap(() => this.cargandoDatos = true), debounceTime(1000), distinctUntilChanged(),
+            switchMap((consulta: string) =>
+                this.docsBuscarGralGQL.watch({
+                    usuario: STATE_DATOS_SESION()._id, enviadoPor: STATE_DATOS_SESION()._id,
+                    esEnviadoPor: this.chkBuscar.value, consulta
+                }).valueChanges)).subscribe((respuesta) =>
         {
-            this.docsBuscarGralGQL.watch({usuario: STATE_DATOS_SESION()._id, consulta: res}).valueChanges.pipe(tap((busqueda) =>
+            if (respuesta.data)
             {
-                if (busqueda.data)
-                {
-                    STATE_DOCS(busqueda.data.docsBusquedaGral as IResolveDocumento[]);
-                }
-            })).subscribe();
-        })).subscribe());
+                STATE_DOCS(respuesta.data.docsBusquedaGral as IResolveDocumento[]);
+                this.cargandoDatos = false;
+            }
+        });
     }
 
     docUsuarioProceso(proceso: 'pendiente' | 'terminado', esEnviadoPor: boolean): void
@@ -145,28 +149,21 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
         {
             return;
         }
-
-        const consulta: IDocsFechasUsuarioEnviadoPor =
+        this.cargandoDatos = true;
+        const consulta: IDocsFechas =
             {
-                enviadoPor: 'no entra',
-                esEnviadoPor: false,
-                fechaInicial: fechaInicio['ts'] / 1000,
-                fechaFinal: fechaFin['ts'] / 1000,
+                enviadoPor: STATE_DATOS_SESION()._id,
+                esEnviadoPor: this.chkBuscar.value,
+                fechaInicial: GeneralService.convertirUnix(fechaInicio.c, fechaInicio.ts),
+                fechaFinal: GeneralService.convertirUnix(fechaFin.c, fechaFin.ts),
                 usuario: STATE_DATOS_SESION()._id
             };
-        this.fechaUsuarioEnviadoPor(consulta);
-    }
-
-    fechaUsuarioEnviadoPor(consulta: IDocsFechasUsuarioEnviadoPor): void
-    {
-        this.cargandoDatos = true;
-
-        this.docsFechasUsuarioEnviadoPor.watch({...consulta}).valueChanges.pipe(tap((res) =>
+        this.docsFechasGQL.watch({...consulta}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
                 this.cargandoDatos = false;
-                STATE_DOCS(res.data.docsFechasUsuarioEnviadoPor as IResolveDocumento[]);
+                STATE_DOCS(res.data.docsFechas as IResolveDocumento[]);
             }
         })).subscribe();
     }

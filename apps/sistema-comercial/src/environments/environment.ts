@@ -4,15 +4,14 @@
 
 export const environment = {
   firebase: {
-      apiKey: 'AIzaSyCw4UXBEJUZzs__Lk9NlJWNvKpLvnJN4s0',
-      authDomain: 'siscomapx.firebaseapp.com',
-      projectId: 'siscomapx',
-      storageBucket: 'siscomapx.appspot.com',
-      messagingSenderId: '1030208961728',
-      appId: '1:1030208961728:web:3de8997a5f17605cba0125'
+      apiKey: 'AIzaSyC-GcLYtf9lA0ySlxYiuQUWZi782ifM2Nc',
+      authDomain: 'siscomapx-dev.firebaseapp.com',
+      projectId: 'siscomapx-dev',
+      storageBucket: 'siscomapx-dev.appspot.com',
+      messagingSenderId: '496873279991',
+      appId: '1:496873279991:web:29b95e3951321f60eadef2'
   },
     production: false,
-    apiUrl: 'http://localhost:3333/file',
     apiGraphql: 'http://localhost:3333/graphql',
     wsGraphql: 'ws://localhost:3333/graphql',
 };
@@ -21,7 +20,7 @@ export const environment = {
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *
- * This import should be commented out in production mode because it will have a negative impact
+ * This import should lbe commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

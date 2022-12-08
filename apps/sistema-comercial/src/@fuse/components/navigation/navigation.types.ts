@@ -15,6 +15,8 @@ export interface FuseNavigationItem
     hidden?: (item: FuseNavigationItem) => boolean;
     oculto?: boolean;
     activo: boolean;
+    componentes?: object[];
+    controles?: IControl[];
     active?: boolean;
     disabled?: boolean;
     tooltip?: string;
@@ -46,6 +48,12 @@ export interface FuseNavigationItem
     };
     children?: FuseNavigationItem[];
     meta?: any;
+}
+
+interface IControl
+{
+    id: string;
+    activo: boolean;
 }
 
 export type FuseVerticalNavigationAppearance =

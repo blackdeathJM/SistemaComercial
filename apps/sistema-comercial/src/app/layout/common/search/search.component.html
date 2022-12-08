@@ -68,7 +68,9 @@
 <!-- Basic search -->
 <ng-container *ngIf="appearance === 'basic'">
     <div class="w-full sm:min-w-80">
-        <mat-form-field class="fuse-mat-no-subscript w-full">
+        <mat-form-field
+            class="w-full"
+            [subscriptSizing]="'dynamic'">
             <mat-icon
                 matPrefix
                 [svgIcon]="'heroicons_outline:search'"></mat-icon>
@@ -125,7 +127,7 @@
         <div class="flex shrink-0 items-center justify-center w-8 h-8 rounded-full overflow-hidden bg-primary-100 dark:bg-primary-800">
             <img
                 *ngIf="result.avatar"
-                [src]="result.avatar">
+                [src]="result.avatar" alt="">
             <mat-icon
                 class="m-0 icon-size-5 text-primary dark:text-primary-400"
                 *ngIf="!result.avatar"

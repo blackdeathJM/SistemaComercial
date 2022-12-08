@@ -2,6 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
@@ -10,11 +11,13 @@
         "experimentalDecorators": true,
         "strictPropertyInitialization": false,
         "moduleResolution": "node",
+        "esModuleInterop": true,
+        "types": ["node"],
         "importHelpers": true,
-        "target": "ES2020",
-        "module": "esnext",
-        "lib": ["es2020", "dom", "esnext.asynciterable", "es6"],
-        "removeComments": true,
+        "target": "ES2022",
+        "useDefineForClassFields": false,
+        "module": "ES2022",
+        "lib": ["es2020", "dom", "esnext.asynciterable", "es6", "ES7"],
         "paths": {
             "@sistema-comercial/datos": ["libs/datos/src/index.ts"],
             "@sistema-comercial/modelos/*": [

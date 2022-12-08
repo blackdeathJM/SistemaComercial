@@ -114,9 +114,9 @@ mutation reasignarUsuario($usuarios: DocReasignarUsuarioInput!)
     }
 }
 
-query docsFechasUsuarioEnviadoPor($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int, $fechaFinal: Int, $esEnviadoPor: Boolean!)
+query docsFechas($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int, $fechaFinal: Int, $esEnviadoPor: Boolean!)
 {
-    docsFechasUsuarioEnviadoPor(usuario: $usuario, enviadoPor: $enviadoPor, fechaInicial: $fechaInicial, fechaFinal: $fechaFinal, esEnviadoPor: $esEnviadoPor)
+    docsFechas(usuario: $usuario, enviadoPor: $enviadoPor, fechaInicial: $fechaInicial, fechaFinal: $fechaFinal, esEnviadoPor: $esEnviadoPor)
     {
         ...fragDoc
         resolveEmpleado {
@@ -132,9 +132,9 @@ query docsFechasUsuarioEnviadoPor($usuario: ID!, $enviadoPor: ID!, $fechaInicial
         }
     }
 }
-query docsBusquedaGral($usuario: ID!, $consulta: String!)
+query docsBusquedaGral($usuario: ID!, $consulta: String!, $enviadoPor: ID!, $esEnviadoPor: Boolean!)
 {
-    docsBusquedaGral(usuario: $usuario, consulta: $consulta)
+    docsBusquedaGral(usuario: $usuario, consulta: $consulta, enviadoPor: $enviadoPor, esEnviadoPor: $esEnviadoPor)
     {
         ...fragDoc
         resolveEmpleado {

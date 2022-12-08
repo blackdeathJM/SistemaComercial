@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {fuseAnimations} from '@s-fuse/animations';
-import {FuseAlertType} from '@s-fuse/components/alert';
-import {AuthService} from '@s-app/core/auth/auth.service';
-import {LoginGQL} from '#/libs/datos/src';
+import {DepartamentosGQL, LoginGQL} from '#/libs/datos/src';
 import {catchError, of, Subscription, tap} from 'rxjs';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {TOKEN} from '@s-app/auth/const';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FuseAlertType} from '@s-fuse/alert';
+import {AuthService} from '@s-core/auth/auth.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {TOKEN} from '@s-auth/const';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -28,7 +28,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy
     subs: Subscription = new Subscription();
 
     constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router,
-                private loginGQL: LoginGQL)
+                private loginGQL: LoginGQL, private deptosGQL: DepartamentosGQL)
     {
     }
 

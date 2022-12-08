@@ -11,11 +11,11 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.in
 import {EmpleadosSesionGQL, ReasignarUsuarioGQL} from '#/libs/datos/src';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {tap} from 'rxjs';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
-import {STATE_DOCS} from '@s-app/general/general.state';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
+import {STATE_DOCS} from '@s-general/general.state';
 
 @Component({
     selector: 'app-mod-reasignacion',

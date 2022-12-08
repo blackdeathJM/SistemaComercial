@@ -1,4 +1,4 @@
-import {IDocActFolio, IDocFolio, IDocsFechasUsuarioEnviadoPor, IDocsUsuarioProceso, IDocumento, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
+import {IDocActFolio, IDocFolio, IDocsBusquedaGral, IDocsFechas, IDocsUsuarioProceso, IDocumento, TDocFinalizar, TDocReasignarUsuarios, TDocRefFolio, TDocSubir, TDocumentoReg} from './documento.interface';
 import {ArgsType, Field, ID, InputType, Int, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsArray, IsBoolean, IsInt, IsMongoId, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
@@ -119,7 +119,7 @@ export class DocsUsuarioProcesoDto implements IDocsUsuarioProceso
 }
 
 @ArgsType()
-export class DocsFechasUsuarioEnviadoPorDto implements IDocsFechasUsuarioEnviadoPor
+export class DocsFechasDto implements IDocsFechas
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el usuario que recibe el documento'})
@@ -128,10 +128,12 @@ export class DocsFechasUsuarioEnviadoPorDto implements IDocsFechasUsuarioEnviado
     @IsNotEmpty({message: 'Es necesario enviado por'})
     enviadoPor: string;
     @Field(() => Int, {nullable: true, defaultValue: null})
-    @IsOptional()
+    @IsNotEmpty({message: 'La fecha inicial no puede estar vacia'})
+    @IsInt({message: 'La fecha debe ser un entero'})
     fechaInicial: number;
     @Field(() => Int, {nullable: true, defaultValue: null})
-    @IsOptional()
+    @IsNotEmpty({message: 'La fecha incial no puede estar vacia'})
+    @IsInt({message: 'La fecha final debe ser un entero'})
     fechaFinal: number;
     @Field(() => Boolean, {nullable: true, defaultValue: false})
     @IsBoolean({message: 'El Valor debe ser booleano'})
@@ -139,13 +141,22 @@ export class DocsFechasUsuarioEnviadoPorDto implements IDocsFechasUsuarioEnviado
 }
 
 @ArgsType()
-export class DocsBusquedaGralDto
+export class DocsBusquedaGralDto implements IDocsBusquedaGral
 {
-    @Field(() => String)
+    @Field(() => String, {nullable: true, defaultValue: ''})
     @IsOptional()
     consulta: string;
-    @Field(() => ID)
-    @IsNotEmpty({message: 'Es necesario el usuario'})
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el id (enviado por)'})
+    @IsMongoId({message: 'El id debe ser valido'})
+    enviadoPor: string;
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    @IsBoolean()
+    @IsNotEmpty({message: 'Debe tener un valor verdadero o falso'})
+    esEnviadoPor: boolean;
+    @Field(() => ID, {nullable: true})
+    @IsMongoId({message: 'El id debe ser valido'})
+    @IsNotEmpty({message: 'El id del usuario no puede estar vacio'})
     usuario: string;
 }
 
@@ -187,13 +198,13 @@ export class DocRefFolioDto extends PickType(DocumentoDto, ['_id', 'ref', 'folio
 }
 
 @InputType('DocFinalizarInput')
-export class DocFinalizarDto extends PickType(DocumentoDto, ['_id', 'fechaTerminado'], InputType)
+export class DocFinalizarDto extends PickType(DocumentoDto, ['_id', 'fechaTerminado'], InputType) implements TDocFinalizar
 {
 
 }
 
 @InputType('DocActFolioInput')
-export class DocActFolioDto extends PickType(DocumentoDto, ['_id', 'usuarioFolio'], InputType) implements IDocActFolio
+export class DocActFolioDto extends PickType(DocumentoDto, ['_id', 'usuarioFolio', 'tipoDoc'], InputType) implements IDocActFolio
 {
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es requerido el id del departamento'})

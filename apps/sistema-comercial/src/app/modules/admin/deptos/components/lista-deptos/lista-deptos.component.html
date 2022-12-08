@@ -1,24 +1,14 @@
 <ng-container *ngIf="deptos.length > 0; else cargando">
     <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
-        <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b hover:bg-gray-100 dark:hover:bg-gray-700 bg-on-primary-800 dark:bg-hover my-1">
-            <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-                <ng-container>
-                    <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                        <mat-icon class="text-amber-600" [svgIcon]="'heroicons_outline:library'"></mat-icon>
-                    </div>
-                </ng-container>
+        <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">
+            <mat-icon class="text-amber-600 mr-4" [svgIcon]="'heroicons_outline:library'"></mat-icon>
+            <div class="flex-col flex-auto">
+                <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>
+                <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>
             </div>
-            <div class="flex w-full">
-                <div class="ml-4 flex-grow">
-                    <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>
-                    <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>
-                </div>
-                <div>
-                    <button mat-icon-button type="button" (click)="editar(depto)">
-                        <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
-                    </button>
-                </div>
-            </div>
+            <button mat-icon-button type="button" (click)="editar(depto)">
+                <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
+            </button>
         </div>
     </ng-container>
 </ng-container>

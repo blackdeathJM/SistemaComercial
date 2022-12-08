@@ -1,8 +1,11 @@
+import {environment} from '@api-environments:/environment';
 
-export default () => ({
-    port: parseInt(process.env.PORT, 10),
-    database: {
-        uriMongo: process.env.URI_MONGO,
-    },
-    palabraSecreta: process.env.PALABRA_SECRETA
-});
+export default (): any =>
+{
+    if (environment.production)
+    {
+    } else
+    {
+
+    }
+};

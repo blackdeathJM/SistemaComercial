@@ -1,21 +1,23 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {Auth} from '@s-app/empleado/models/auth';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
 import {unionBy} from 'lodash-es';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {CommonModule} from '@angular/common';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {GeneralService} from '@s-app/services/general.service';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
+import {TrimDirective} from '@s-directives/trim.directive';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {Auth} from '@s-admin/models/auth';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 
 @Component({
     standalone: true,
@@ -27,7 +29,9 @@ import {IModificado} from '#/libs/models/src/lib/common/common.interface';
             RxReactiveFormsModule,
             MatFormFieldModule,
             MatInputModule,
-            RegistrosComponent
+            RegistrosComponent,
+            TrimDirective,
+            NgxTrimDirectiveModule
         ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',

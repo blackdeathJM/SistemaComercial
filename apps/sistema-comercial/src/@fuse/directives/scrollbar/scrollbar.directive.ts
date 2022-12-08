@@ -5,7 +5,7 @@ import { Platform } from '@angular/cdk/platform';
 import { debounceTime, fromEvent, Subject, takeUntil } from 'rxjs';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { merge } from 'lodash-es';
-import { ScrollbarGeometry, ScrollbarPosition } from '@s-fuse/directives/scrollbar/scrollbar.types';
+import {ScrollbarGeometry, ScrollbarPosition} from '@s-fuse/scrollbar/scrollbar.types';
 
 /**
  * Wrapper directive for the Perfect Scrollbar: https://github.com/mdbootstrap/perfect-scrollbar

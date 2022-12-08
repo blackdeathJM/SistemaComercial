@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { fuseAnimations } from '@s-fuse/animations';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 @Component({
     selector     : 'auth.ts-confirmation-required',

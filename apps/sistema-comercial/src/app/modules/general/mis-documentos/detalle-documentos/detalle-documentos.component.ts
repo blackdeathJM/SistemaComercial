@@ -1,24 +1,24 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IDocActFolio, IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
-import {confirmarFinalizarDoc, confirmarFolio} from '@s-app/general/mis-documentos/detalle-documentos/dialogConfirmacion';
 import {MatDialog} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {ConvertirTimestamUnixPipe} from '@s-app/pipes/convertir-timestam-unix.pipe';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ModSubirDocsComponent} from '@s-app/general/mis-documentos/mod-subir-docs/mod-subir-docs.component';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
-import {Subscription, tap} from 'rxjs';
+import {tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
-import {STATE_DOCS} from '@s-app/general/general.state';
-import {ModDocRefComponent} from '@s-app/general/mis-documentos/mod-doc-ref/mod-doc-ref.component';
-import {ModReasignacionComponent} from '@s-app/general/mis-documentos/mod-reasignacion/mod-reasignacion.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
+import {confirmarFinalizarDoc, confirmarFolio} from '@s-general/detalle-documentos/dialogConfirmacion';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {STATE_DOCS} from '@s-general/general.state';
+import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasignacion.component';
+import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
+import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
 
 @Component({
     standalone: true,
@@ -43,7 +43,6 @@ export class DetalleDocumentosComponent
     _documento: IResolveDocumento;
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
-    subscripcion: Subscription = new Subscription();
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
@@ -90,7 +89,8 @@ export class DetalleDocumentosComponent
                     {
                         _id: _documento._id,
                         deptoId: STATE_DATOS_SESION().deptoId,
-                        usuarioFolio: STATE_DATOS_SESION()._id
+                        usuarioFolio: STATE_DATOS_SESION()._id,
+                        tipoDoc: _documento.tipoDoc
                     };
                 this.docActFolioGQL.mutate({args}).pipe(tap((docFoliado) =>
                 {
@@ -140,10 +140,13 @@ export class DetalleDocumentosComponent
         }
         this.dRef.open(ModReasignacionComponent, {width: '40%', data}).afterClosed().pipe(tap((res) =>
         {
-            console.log('despues de cerrar', res);
             if (res)
             {
                 this._documento = res;
+                if (this._documento.acuseUrl)
+                {
+                    this.ngxToastService.infoToast('El documento se ha dado por terminado con exito', 'Termino de procesos');
+                }
             }
         })).subscribe();
 

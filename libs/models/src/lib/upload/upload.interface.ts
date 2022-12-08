@@ -1,3 +1,4 @@
+import {ReadStream} from 'fs-extra';
 import {Stream} from 'stream';
 
 export interface IArchivo
@@ -6,7 +7,6 @@ export interface IArchivo
     mimetype: string;
     encoding: string;
     createReadStream: () => Stream;
-    // createReadStream: any;
 }
 
 export interface IDatosArchivo

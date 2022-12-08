@@ -1,5 +1,5 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {dirArchivoRegulacion} from '@s-app/common/navigation/constantes/rutas';
+import { dirArchivoRegulacion } from './constantes/rutas';
 
 export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
     [

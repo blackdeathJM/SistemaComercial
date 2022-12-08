@@ -10,14 +10,18 @@ import {map, Observable, startWith, tap} from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {DocRefFolioGQL, DocsRefGQL} from '#/libs/datos/src';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
 import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     selector: 'app-mod-doc-ref',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, MatFormFieldModule, MatChipsModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule, RegistrosComponent],
+    imports:
+        [
+            CommonModule, MatDialogModule, MatFormFieldModule, MatChipsModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule,
+            RegistrosComponent
+        ],
     templateUrl: './mod-doc-ref.component.html',
     styleUrls: ['./mod-doc-ref.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

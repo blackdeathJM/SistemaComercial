@@ -8,7 +8,8 @@ export const environment = {
       appId: '1:1030208961728:web:3de8997a5f17605cba0125'
   },
     production: true,
-    apiUrl: 'https://192.168.1.189:3000/file',
-    apiGraphql: 'https://192.168.1.189:3000/graphql',
-    wsGraphql: 'wss://192.168.1.189:3000/graphql',
+    apiGraphql: 'http://26.52.142.167:3333/graphql',
+    wsGraphql: 'ws://26.52.142.167:3333/graphql',
+    // apiGraphql: 'http://localhost:3333/graphql',
+    // wsGraphql: 'ws://localhost:3333/graphql',
 };

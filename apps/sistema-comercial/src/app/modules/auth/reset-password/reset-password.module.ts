@@ -5,11 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FuseCardModule } from '@s-fuse/components/card';
-import { FuseAlertModule } from '@s-fuse/components/alert';
 import { SharedModule } from '@s-shared/shared.module';
-import { AuthResetPasswordComponent } from '@s-app/modules/auth/reset-password/reset-password.component';
-import { authResetPasswordRoutes } from '@s-app/modules/auth/reset-password/reset-password.routing';
+import {AuthResetPasswordComponent} from '@s-auth/reset-password/reset-password.component';
+import {authResetPasswordRoutes} from '@s-auth/reset-password/reset-password.routing';
+import {FuseCardModule} from '@s-fuse/card';
+import {FuseAlertModule} from '@s-fuse/alert';
 
 @NgModule({
     declarations: [

@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AuthSignInComponent } from '@s-app/modules/auth/sign-in/sign-in.component';
+import {AuthSignInComponent} from '@s-auth/sign-in/sign-in.component';
 
 export const authSignInRoutes: Route[] = [
     {

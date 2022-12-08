@@ -13,9 +13,6 @@ export class EmptyLayoutComponent implements OnDestroy
     /**
      * Constructor
      */
-    constructor()
-    {
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

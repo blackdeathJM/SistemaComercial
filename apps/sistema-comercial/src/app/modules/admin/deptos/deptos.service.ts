@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {tap} from 'rxjs';
-import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {STATE_DEPTOS} from '@s-admin/deptos.state';
 
 @Injectable({
     providedIn: 'root'

@@ -1,19 +1,19 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { FuseMediaWatcherService } from '@s-fuse/services/media-watcher';
-import { FuseNavigationService, FuseVerticalNavigationComponent } from '@s-fuse/components/navigation';
-import { Navigation } from '@s-app/core/navigation/navigation.types';
-import { NavigationService } from '@s-app/core/navigation/navigation.service';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subject, takeUntil} from 'rxjs';
+import {NavigationService} from '@s-core/navigation/navigation.service';
+import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
+import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
+import {Navegation} from '@s-core/navigation/navigation.types';
 
 @Component({
-    selector     : 'centered-layout',
-    templateUrl  : './centered.component.html',
+    selector: 'centered-layout',
+    templateUrl: './centered.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class CenteredLayoutComponent implements OnInit, OnDestroy
 {
-    navigation: Navigation;
+    navigation: Navegation;
     isScreenSmall: boolean;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -54,14 +54,16 @@ export class CenteredLayoutComponent implements OnInit, OnDestroy
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) => {
+            .subscribe((navigation: Navegation) =>
+            {
                 this.navigation = navigation;
             });
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({matchingAliases}) => {
+            .subscribe(({matchingAliases}) =>
+            {
 
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
@@ -92,7 +94,7 @@ export class CenteredLayoutComponent implements OnInit, OnDestroy
         // Get the navigation
         const navigation = this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(name);
 
-        if ( navigation )
+        if (navigation)
         {
             // Toggle the opened status
             navigation.toggle();

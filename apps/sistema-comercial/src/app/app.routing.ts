@@ -1,8 +1,9 @@
 import {Route} from '@angular/router';
-import {AuthGuard} from '@s-app/core/auth/guards/auth.guard';
-import {NoAuthGuard} from '@s-app/core/auth/guards/noAuth.guard';
-import {LayoutComponent} from '@s-app/layout/layout.component';
-import {InitialDataResolver} from '@s-app/app.resolvers';
+import {NoAuthGuard} from '@s-core/auth/guards/noAuth.guard';
+import {LayoutComponent} from '@s-layout/layout.component';
+import {AuthGuard} from '@s-core/auth/guards/auth.guard';
+import {InitialDataResolver} from '#/apps/sistema-comercial/src/app/app.resolvers';
+import {AdminGuard} from '@s-admin/admin.guard';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -23,7 +24,7 @@ export const appRoutes: Route[] = [
         children:
             [
                 {
-                    path: 'sign-in', loadChildren: () => import('@s-app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)
+                    path: 'sign-in', loadChildren: () => import('@s-auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)
                 }
             ]
     },
@@ -37,22 +38,31 @@ export const appRoutes: Route[] = [
             [
                 {
                     path: 'inicio',
-                    loadComponent: () => import('@s-app/modules/inicio/inicio.component').then(i => i.InicioComponent),
+                    loadComponent: () => import('@s-Inicio/inicio.component').then(i => i.InicioComponent),
+                },
+                {
+                    path: 'perfil',
+                    loadComponent: () => import('@s-admin/components/perfil/perfil.component').then(p => p.PerfilComponent)
                 },
                 {
                     path: 'admin',
-                    canActivate: [],
-                    loadChildren: () => import('@s-app/modules/admin/admin.routing').then(a => a.adminRouting)
+                    canActivate: [AdminGuard],
+                    loadChildren: () => import('@s-admin/admin.routing').then(a => a.adminRouting)
                 },
                 {
                     path: 'general',
                     canActivate: [],
-                    loadChildren: () => import('@s-app/modules/general/general.routing').then(g => g.generalRouting)
+                    loadChildren: () => import('@s-general/general.routing').then(g => g.generalRouting)
                 },
                 {
                     path: 'dir-admon-finanzas',
                     canActivate: [],
-                    loadChildren: () => import('@s-app/modules/dir-admon-finanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
+                    loadChildren: () => import('@s-dirAdmonFinanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
+                },
+                {
+                    path: 'dir-tecnica-operativa',
+                    canActivate: [],
+                    loadChildren: () => import('@s-dir-tecnica-operativa/dir-tenica-operativa.routing').then(t => t.dirTenicaOperativaRouting)
                 }
             ]
     },

@@ -2,14 +2,14 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasUsuarioEnviadoPorDto, DocsRefDto, DocsSubirDto, DocsUsuarioProcesoDto, DocumentoDto,
-    DocumentoType
+    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasDto, DocsRefDto, DocsSubirDto,
+    DocsUsuarioProcesoDto, DocumentoDto, DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
-import {AppService} from '#api/apps/api/src/app/app.service';
 import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
+import {AppService} from '#api/apps/api/src/app/app.service';
 
 @Injectable()
 export class DocumentosService
@@ -44,13 +44,9 @@ export class DocumentosService
         }
     }
 
-    async docsFechasUsuarioEnviadoPor(args: DocsFechasUsuarioEnviadoPorDto): Promise<DocumentoDto[]>
+    async docsFechas(args: DocsFechasDto): Promise<DocumentoDto[]>
     {
-        let fechas = null;
-        if (args.fechaInicial !== null && args.fechaFinal !== null)
-        {
-            fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
-        }
+        const fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
         const usuarioEnviadoPor: Record<string, string> = {};
         if (args.esEnviadoPor)
         {
@@ -59,7 +55,7 @@ export class DocumentosService
         {
             usuarioEnviadoPor['usuarios'] = args.usuario;
         }
-        const valor = args.fechaInicial !== null ? Object.assign(usuarioEnviadoPor, fechas) : usuarioEnviadoPor;
+        const valor = Object.assign(usuarioEnviadoPor, fechas);
         try
         {
             return await this.documento.find({...valor}, {}, {sort: {fechaRecepcion: -1}}).exec();
@@ -71,10 +67,19 @@ export class DocumentosService
 
     async docsBusquedaGral(args: DocsBusquedaGralDto): Promise<DocumentoDto[]>
     {
+        const consulta: Record<string, string> = {};
+        if (args.esEnviadoPor)
+        {
+            consulta['enviadoPor'] = args.enviadoPor;
+        } else
+        {
+            consulta['usuarios'] = args.usuario;
+        }
+
         try
         {
             return await this.documento.find({
-                usuarios: args.usuario, $or:
+                ...consulta, $or:
                     [
                         {identificadorDoc: {$regex: args.consulta, $options: 'i'}},
                         {asunto: {$regex: args.consulta, $options: 'i'}},
@@ -84,7 +89,7 @@ export class DocumentosService
             }).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
@@ -104,7 +109,7 @@ export class DocumentosService
                 return await this.documento.create(datos);
             } catch (e)
             {
-                throw new InternalServerErrorException({message: e});
+                throw new InternalServerErrorException({message: e.codeName});
             }
         } else
         {
@@ -165,7 +170,7 @@ export class DocumentosService
     {
         try
         {
-            const folioGenerado = await this.genFolioSinReg({deptoId: args.deptoId, tipoDoc: 'Oficio'});
+            const folioGenerado = await this.genFolioSinReg({deptoId: args.deptoId, tipoDoc: args.tipoDoc});
             return await this.documento.findByIdAndUpdate(args._id, {$set: {folio: folioGenerado, usuarioFolio: args.usuarioFolio}},
                 {returnOriginal: false}).exec();
         } catch (e)
@@ -204,7 +209,7 @@ export class DocumentosService
 
     async subirDocs(args: DocsSubirDto, filesDocs: UploadDto, filesAcuse: UploadDto): Promise<DocumentoDto>
     {
-        const urlAchivos: Record<string, string> = {};
+        const urlAchivos: Record<string, string | number> = {};
         if (filesDocs)
         {
             // codigo por si el documento se va a subir de manera local
@@ -220,6 +225,8 @@ export class DocumentosService
         if (args.acuseUrl)
         {
             urlAchivos['acuseUrl'] = args.acuseUrl;
+            urlAchivos['proceso'] = 'terminado';
+            urlAchivos['fechaTerminado'] = AppService.fechaHoraActual();
         }
         try
         {
@@ -269,5 +276,4 @@ export class DocumentosService
     {
         throw new InternalServerErrorException({message: 'Ocurrio un error interno'});
     }
-
 }

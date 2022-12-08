@@ -2,20 +2,14 @@
 <fuse-loading-bar></fuse-loading-bar>
 
 <div class="flex flex-auto justify-center w-full sm:p-4 md:p-8 bg-gray-200 dark:bg-card">
-
     <!-- Navigation -->
     <ng-container *ngIf="isScreenSmall">
-        <fuse-vertical-navigation
-            class="dark bg-gray-900 print:hidden"
-            [mode]="'over'"
-            [name]="'mainNavigation'"
-            [navigation]="navigation.default"
-            [opened]="false">
+        <fuse-vertical-navigation class="dark bg-gray-900 print:hidden" [mode]="'over'" [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="false">
             <!-- Navigation header hook -->
             <ng-container fuseVerticalNavigationContentHeader>
                 <!-- Logo -->
                 <div class="flex items-center h-20 pt-6 px-8">
-                    <img class="w-30" src="./apps/sistema-comercial/src/assets/images/logo/logo-text-on-dark.svg" alt="">
+                    <img class="w-30" src="assets/images/logo/logo-text-on-dark.svg" alt="">
                 </div>
             </ng-container>
         </fuse-vertical-navigation>
@@ -33,18 +27,18 @@
                         <!-- Light version -->
                         <img
                             class="dark:hidden w-24"
-                            src="./apps/sistema-comercial/src/assets/images/logo/logo-text.svg"
+                            src="assets/images/logo/logo-text.svg"
                             alt="Logo image">
                         <!-- Dark version -->
                         <img
                             class="hidden dark:flex w-24"
-                            src="./apps/sistema-comercial/src/assets/images/logo/logo-text-on-dark.svg"
+                            src="assets/images/logo/logo-text-on-dark.svg"
                             alt="Logo image">
                     </div>
                     <!-- Small version -->
                     <img
                         class="flex lg:hidden w-8"
-                        src="./apps/sistema-comercial/src/assets/images/logo/logo.svg"
+                        src="assets/images/logo/logo.svg"
                         alt="Logo image">
                 </div>
                 <!-- Horizontal navigation -->
@@ -64,11 +58,11 @@
             </ng-container>
             <!-- Components -->
             <div class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2">
-<!--                <languages></languages>-->
-<!--                <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>-->
-<!--                <search [appearance]="'bar'"></search>-->
-                <shortcuts></shortcuts>
-                <messages></messages>
+                <!--                <languages></languages>-->
+                <!--                <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>-->
+                <!--                <search [appearance]="'bar'"></search>-->
+                <!--                <shortcuts></shortcuts>-->
+                <!--                <messages></messages>-->
                 <notifications></notifications>
                 <user></user>
             </div>
@@ -82,9 +76,9 @@
         </div>
 
         <!-- Footer -->
-        <div class="relative flex flex-0 items-center justify-start w-full h-16 sm:h-20 px-6 sm:px-8 z-49 bg-card border-t dark:bg-default print:hidden">
-            <span class="font-medium text-secondary">Fuse &copy; {{currentYear}}</span>
-        </div>
+        <!--        <div class="relative flex flex-0 items-center justify-start w-full h-16 sm:h-20 px-6 sm:px-8 z-49 bg-card border-t dark:bg-default print:hidden">-->
+        <!--            <span class="font-medium text-secondary">XoaSoft &copy; {{currentYear}}</span>-->
+        <!--        </div>-->
 
     </div>
 

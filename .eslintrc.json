@@ -15,6 +15,9 @@
                 "*.ts"
             ],
             "parserOptions": {
+                "project": [
+                    "tsconfig.json"
+                ],
                 "createDefaultProgram": true
             },
             "extends": [

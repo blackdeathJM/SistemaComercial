@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { FuseAnimationCurves, FuseAnimationDurations } from '@s-fuse/animations/defaults';
+import {FuseAnimationCurves, FuseAnimationDurations} from './defaults';
 
 // -----------------------------------------------------------------------------------------------------
 // @ Expand / collapse

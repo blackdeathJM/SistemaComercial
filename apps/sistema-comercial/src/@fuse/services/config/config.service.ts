@@ -1,8 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {merge} from 'lodash-es';
-import {FUSE_APP_CONFIG} from '@s-fuse/services/config/config.constants';
-import {tema} from '@s-app/config/app.config';
+import {FUSE_APP_CONFIG} from '@s-fuse/config/config.constants';
+import {tema} from '#/apps/sistema-comercial/src/app/core/config/app.config';
 
 
 @Injectable({

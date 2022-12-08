@@ -6,13 +6,12 @@
         <div class="flex gap-4">
             <button mat-flat-button [color]="'primary'" (click)="nuevosDocs()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Dar de alta nuevo documento</span>
+                <span class="ml-3">Dar de alta nuevo documento</span>
             </button>
         </div>
     </ng-container>
     <ng-container buscar>
         <div class="flex flex-col">
-            <mat-checkbox class="my-4" color="primary" [checked]="false" [formControl]="chkBuscar">Utilizar los filtros para buscar los enviados por mi</mat-checkbox>
             <div class="flex gap-4 items-center">
                 <mat-form-field class="flex-auto">
                     <mat-label>Busqueda general</mat-label>
@@ -36,6 +35,7 @@
                     <span class="ml-2 mr-1">Terminados</span>
                 </button>
             </div>
+            <mat-checkbox class="my-4" color="primary" [checked]="false" [formControl]="chkBuscar">Utilizar los filtros para buscar los enviados por mi</mat-checkbox>
         </div>
     </ng-container>
     <ng-container outlet>
@@ -48,14 +48,14 @@
                 <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
                     <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
                     <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
-                        <img class="w-16 h-16 mr-6 rounded-full" [src]="doc.resolveEmpleado.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">
-                        <div class="avatar-letra" *ngIf="!doc.resolveEmpleado.avatar">{{doc.resolveEmpleado.nombreCompleto.charAt(0)}}</div>
+                        <img class="w-16 h-16 mr-6 rounded-full" [src]="doc?.resolveEmpleado?.avatar" alt="Avatar" *ngIf="doc?.resolveEmpleado?.avatar">
+                        <div class="avatar-letra" *ngIf="!doc?.resolveEmpleado?.avatar">{{doc?.resolveEmpleado?.nombreCompleto?.charAt(0)}}</div>
                         <div class="flex flex-col">
-                            <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc.asunto}}</p>
-                            <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc.dependencia">{{doc.dependencia}}</div>
+                            <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc?.asunto}}</p>
+                            <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc.dependencia">{{doc?.dependencia}}</div>
                             <div class="flex gap-4">
-                                <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc.seguimiento}}</span>
-                                <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc.fechaRecepcion | convertirTimestamUnix}}</span>
+                                <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc?.seguimiento}}</span>
+                                <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc?.fechaRecepcion | convertirTimestamUnix}}</span>
                             </div>
                         </div>
                     </a>

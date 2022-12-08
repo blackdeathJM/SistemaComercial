@@ -12,18 +12,18 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
-import {GeneralService} from '@s-app/services/general.service';
 import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
-import {STATE_DEPTOS} from '@s-app/deptos/deptos.state';
 import {finalize, tap} from 'rxjs';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
-import {STATE_EMPLEADOS} from '@s-app/empleado/empleado.state';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_DEPTOS} from '@s-admin/deptos.state';
+import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -123,7 +123,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
 
         const empleadoDatos: TRegEmpleado =
             {
-                fechaIngreso: GeneralService.convertirUnix(fechaIngreso._i),
+                fechaIngreso: GeneralService.convertirUnix(fechaIngreso.c, fechaIngreso.ts),
                 modificadoPor:
                     [
                         {

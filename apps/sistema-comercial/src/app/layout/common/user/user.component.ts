@@ -1,12 +1,12 @@
 import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {BooleanInput} from '@angular/cdk/coercion';
-import {Subject, Subscription, tap} from 'rxjs';
-import {STATE_DATOS_SESION} from '@s-app/auth/auth.state';
+import {Subscription, tap} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {AuthService} from '@s-app/auth/auth.service';
 import {RolCambiadoGQL} from '#/libs/datos/src';
-import {TOKEN} from '@s-app/auth/const';
-import {NgxToastService} from '#/libs/services/src/lib/services/ngx-toast.service';
+import {AuthService} from '@s-core/auth/auth.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {TOKEN} from '@s-auth/const';
 
 @Component({
     selector: 'user',

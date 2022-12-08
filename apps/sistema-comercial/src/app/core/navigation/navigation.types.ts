@@ -1,6 +1,6 @@
-import { FuseNavigationItem } from '@s-fuse/components/navigation';
+import {FuseNavigationItem} from '@s-fuse/navigation';
 
-export interface Navigation
+export interface Navegation
 {
     compact: FuseNavigationItem[];
     default: FuseNavigationItem[];
