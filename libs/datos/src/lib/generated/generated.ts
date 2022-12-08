@@ -104,7 +104,7 @@ export type DocRegInput = {
   folio?: InputMaybe<Scalars['String']>;
   identificadorDoc?: InputMaybe<Scalars['String']>;
   proceso?: InputMaybe<Scalars['String']>;
-  seguimiento?: InputMaybe<Scalars['String']>;
+  seguimiento: Scalars['String'];
   tipoDoc?: InputMaybe<Scalars['String']>;
   usuarioFolio?: InputMaybe<Scalars['String']>;
   usuarios?: InputMaybe<Array<Scalars['String']>>;
@@ -137,7 +137,7 @@ export type DocumentoInput = {
   resolveEmpleado?: InputMaybe<EmpleadoInput>;
   resolveEmpleadoEnviado?: InputMaybe<Array<EmpleadoInput>>;
   resolverEmpleadoFolio?: InputMaybe<EmpleadoInput>;
-  seguimiento?: InputMaybe<Scalars['String']>;
+  seguimiento: Scalars['String'];
   tipoDoc?: InputMaybe<Scalars['String']>;
   usuarioFolio?: InputMaybe<Scalars['String']>;
   usuarios?: InputMaybe<Array<Scalars['String']>>;

@@ -64,6 +64,7 @@
                 </mat-form-field>
                 <mat-checkbox class="flex-shrink" color="primary" [checked]="false" formControlName="esInterno">Es interno?</mat-checkbox>
             </div>
+            <mat-progress-bar [value]="porcentaje" mode="determinate" color="primary"></mat-progress-bar>
         </div>
     </form>
     <app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>

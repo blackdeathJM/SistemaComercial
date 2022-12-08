@@ -5,7 +5,7 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.in
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
-import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
+import {getDownloadURL, ref, Storage, uploadBytesResumable} from '@angular/fire/storage';
 import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -28,8 +28,7 @@ import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {STATE_DOCS} from '@s-general/general.state';
-import {MatCardModule} from "@angular/material/card";
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
     standalone: true,
@@ -51,7 +50,7 @@ import {MatCardModule} from "@angular/material/card";
             MatButtonModule,
             SeleccionarEmpleadoComponent,
             MatTooltipModule,
-            MatCardModule
+            MatProgressBarModule
         ],
     providers:
         [],
@@ -72,6 +71,7 @@ export class ModDocumentosComponent implements OnInit
     empleadosSesion: IResolveEmpleado[];
     formDocs: FormGroup;
     cargando = false;
+    porcentaje: number;
     tiposDoc = TIPOS_DOCUMENTO;
     confFolio: FuseConfirmationConfig = confirmarFolio;
     #usuarioFolio = null;
@@ -99,25 +99,42 @@ export class ModDocumentosComponent implements OnInit
     {
         this.cargando = true;
         this.formDocs.disable();
-        const ano = new Date().getFullYear();
         const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
         let docUrl: string = null;
         let files = null;
 
+        const regDocumento = this.datosReg(tipoDoc, null, fechaRecepcion, fechaLimiteEntrega, resto);
         if (file)
         {
             if (esRemoto)
             {
-                try
+
+                // const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
+                // const resUpload = await uploadBytes(docRef, file._files[0]);
+                // docUrl = await getDownloadURL(resUpload.ref);
+
+                const ruta = GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos');
+
+                const docRef = ref(this.storage, ruta);
+                const subirArchivo = uploadBytesResumable(docRef, file._files[0]);
+
+                subirArchivo.on('state_changed', (s) =>
                 {
-                    const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
-                    const resUpload = await uploadBytes(docRef, file._files[0]);
-                    docUrl = await getDownloadURL(resUpload.ref);
-                } catch (e)
+                    this.porcentaje = (s.bytesTransferred / s.totalBytes) * 100;
+                    setProgress()
+                    console.log('porcentaje', this.porcentaje);
+                }, e => this.ngxToastService.errorToast(e.message, 'Error al subir archivo'), async () =>
                 {
-                    this.ngxToastService.errorToast(e, 'Ocurrio un errro al tratar de subir el documento');
-                    return;
-                }
+                    try
+                    {
+                        docUrl = await getDownloadURL(subirArchivo.snapshot.ref);
+                        const doc = this.datosReg(tipoDoc, docUrl, fechaRecepcion, fechaLimiteEntrega, resto);
+                        this.registro(doc, null);
+                    } catch (e)
+                    {
+                        this.ngxToastService.errorToast(e.message, 'Error al tratar de obtener la url');
+                    }
+                });
             } else
             {
                 files =
@@ -127,21 +144,31 @@ export class ModDocumentosComponent implements OnInit
                         carpeta: 'documentos',
                         eliminar: false
                     };
+                this.registro(regDocumento, files);
             }
+        } else
+        {
+            this.registro(regDocumento, null);
         }
-        const regDocumento: TDocumentoReg =
-            {
-                folio,
-                ano,
-                tipoDoc,
-                docUrl,
-                usuarioFolio: this.#usuarioFolio,
-                fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
-                fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
-                enviadoPor: STATE_DATOS_SESION()._id,
-                ...resto
-            };
-        this.subscripcion.add(this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
+    }
+
+    datosReg(tipoDoc: string, docUrl: string, fechaRecepcion, fechaLimiteEntrega, resto: any): TDocumentoReg
+    {
+        return {
+            ano: new Date().getFullYear(),
+            tipoDoc,
+            docUrl,
+            usuarioFolio: this.#usuarioFolio,
+            fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
+            fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
+            enviadoPor: STATE_DATOS_SESION()._id,
+            ...resto
+        };
+    }
+
+    registro(regDocumento: TDocumentoReg, files: any): void
+    {
+        this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
         {
             this.cargando = false;
             this.cerrar();
@@ -153,7 +180,7 @@ export class ModDocumentosComponent implements OnInit
                 STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
                 this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
             }
-        })).subscribe());
+        })).subscribe();
     }
 
     cerrar(): void

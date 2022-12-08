@@ -6,7 +6,7 @@ export interface IObjFecha
 {
     year: number;
     month: number;
-    date: number;
+    day: number;
 }
 
 @Injectable({
@@ -19,10 +19,6 @@ export class GeneralService
 
     static convertirUnix(fecha: IObjFecha, segundos: number): number
     {
-        // return moment(fechaHora).unix();
-        // var currentTimeInSeconds=Math.floor(Date.now()/1000); //unix timestamp in seconds
-        // var currentTimeInMilliseconds=Date.now(); // unix timestamp in milliseconds
-
         // const current = new Date();
         // current.setHours(new Date().getHours());
         // current.setMinutes(new Date().getMinutes());
@@ -30,12 +26,13 @@ export class GeneralService
         // const timestamp = current.getTime();
         // const timestampSeg = DateTime.fromMillis(timestamp, {zone: 'America/Mexico_City'}).toUnixInteger();
 
-        const horaASegundos = new Date().getHours() * 3600;
-        const minutos = new Date().getMinutes() * 60;
-        return (segundos / 1000) + horaASegundos + minutos;
+        // const horaASegundos = new Date().getHours() * 3600;
+        // const minutos = new Date().getMinutes() * 60;
+        // return (segundos / 1000) + horaASegundos + minutos;
+
         // const tiempo = DateTime.local(fecha.year, fecha.month, fecha.date, new Date().getHours(), new Date().getMinutes(), {zone: 'America/Mexico_City'});
         // return DateTime.utc(fecha.year, fecha.month + 1, fecha.date, new Date().getHours(), new Date().getMinutes(), {locale: 'es-MX'}).toUnixInteger();
-        // return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.date, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
+        return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
 
     static fechaHoraActual(): number
