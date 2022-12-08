@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule, NgIf} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
@@ -9,15 +9,15 @@ import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/docum
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
-import {deleteObject, getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
+import {getDownloadURL} from '@angular/fire/storage';
 import {SubirDocsGQL} from '#/libs/datos/src';
-import {tap} from 'rxjs';
+import {Subscription, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
-import {DisableControlModule} from '@angular-ru/cdk/directives';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_DOCS} from '@s-general/general.state';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -32,26 +32,39 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
             RegistrosComponent,
             ReactiveFormsModule,
             RxReactiveFormsModule,
-            DisableControlModule
+            MatDialogModule,
+            NgIf,
+            MatProgressBarModule,
         ],
     templateUrl: './mod-subir-docs.component.html',
     styleUrls: ['./mod-subir-docs.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModSubirDocsComponent implements OnInit
+export class ModSubirDocsComponent implements OnInit, OnDestroy
 {
     formDocsArchivo: FormGroup;
     cargando = false;
     advertencia: string = '';
+    porcentaje: number = 0;
+    subs: Subscription = new Subscription();
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService,
-                private storage: Storage, private subirDocsGQL: SubirDocsGQL)
+    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService
+        , private subirDocsGQL: SubirDocsGQL, private cdr: ChangeDetectorRef, public generalServices: GeneralService)
     {
+    }
+
+    ngOnDestroy(): void {
+        throw new Error('Method not implemented.');
     }
 
     ngOnInit(): void
     {
         this.formDocsArchivo = this.fb.formGroup(new Archivos());
+        this.subs.add(this.generalServices.progreso().subscribe((r) =>
+        {
+            this.porcentaje = r;
+            this.cdr.detectChanges();
+        }));
         if (this.data.enviadoPor !== STATE_DATOS_SESION()._id)
         {
             this.formDocsArchivo.get('docArchivo').disable();
@@ -62,6 +75,7 @@ export class ModSubirDocsComponent implements OnInit
     async reemplazar(esRemoto: boolean): Promise<void>
     {
         const {docArchivo, acuseArchivo} = this.formDocsArchivo.value;
+
         if (!docArchivo && !acuseArchivo)
         {
             this.ngxService.alertaToast('No se ha seleccionado ningun archivo', 'Reemplazo de archivos');
@@ -70,57 +84,54 @@ export class ModSubirDocsComponent implements OnInit
 
         this.cargando = true;
         this.formDocsArchivo.disable();
+
         let docUrl: string = null;
         let acuseUrl: string = null;
-        let filesDocUrl = null;
-        let filesAcuseUrl = null;
-        const carpeta = 'documentos';
+        let docArch: File[] = null;
+        let acuseArch: File[] = null;
         if (esRemoto)
         {
             if (docArchivo)
             {
+                if (this.data.docUrl)
+                {
+                    await this.generalServices.eliminarDocFirabase(this.data.docUrl);
+                }
                 try
                 {
-                    if (this.data.docUrl)
-                    {
-                        const eliminarDocUrl = ref(this.storage, this.data.docUrl);
-                        deleteObject(eliminarDocUrl).then().catch(err => this.ngxService.errorToast(`Ocurrio un error: ${err}`, 'Eliminar doc'));
-                    }
-                    const docRef = ref(this.storage, GeneralService.rutaGuardar(this.data.tipoDoc, docArchivo._files[0].name, carpeta));
-                    const subirDoc = await uploadBytes(docRef, docArchivo._files[0]);
-                    docUrl = await getDownloadURL(subirDoc.ref);
+                    const ruta = GeneralService.rutaGuardar(this.data.tipoDoc, docArchivo._files[0].name, 'documentos');
+                    const doc = await this.generalServices.subirFirebase(docArchivo._files[0], ruta);
+                    docUrl = await getDownloadURL(doc.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(`Ocurrio un error inesperado${e}`, 'Reemplazo de docs');
+                    this.ngxService.errorToast(e.message, 'Error al obtener url');
                 }
             }
-
             if (acuseArchivo)
             {
+                if (this.data.acuseUrl)
+                {
+                    await this.generalServices.eliminarDocFirabase(this.data.acuseUrl);
+                }
                 try
                 {
-                    if (this.data.acuseUrl)
-                    {
-                        const eliminarAcuse = ref(this.storage, this.data.acuseUrl);
-                        deleteObject(eliminarAcuse).then().catch(err => this.ngxService.errorToast(`Error al tratar de eliminar acuse: ${err}`, 'Eliminar acuse'));
-                    }
-                    const acuseRef = ref(this.storage, GeneralService.rutaGuardar(this.data.tipoDoc, acuseArchivo._files[0].name, carpeta));
-                    const acuseSubir = await uploadBytes(acuseRef, acuseArchivo.files[0]);
-                    acuseUrl = await getDownloadURL(acuseSubir.ref);
+                    const ruta = GeneralService.rutaGuardar(this.data.tipoDoc, acuseArchivo._files[0].name, 'documentos');
+                    const acuse = await this.generalServices.subirFirebase(acuseArchivo._files[0], ruta);
+                    acuseUrl = await getDownloadURL(acuse.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(`Ocurrio un error inesperado: ${e}`, 'Reemplazar Acuse');
+                    this.ngxService.errorToast(e.message, 'Error al obtener la url');
                 }
             }
         } else
         {
             if (docArchivo)
             {
-                filesDocUrl = docArchivo._files;
+                docArch = docArchivo._files;
             }
             if (acuseArchivo)
             {
-                filesAcuseUrl = acuseArchivo._files;
+                acuseArch = acuseArchivo._files;
             }
         }
         const actDocs =
@@ -129,19 +140,20 @@ export class ModSubirDocsComponent implements OnInit
                 docUrl,
                 acuseUrl,
             };
-
-        this.subirDocsGQL.mutate({args: actDocs, files: {file: filesDocUrl, carpeta}, filesAcuse: {file: filesAcuseUrl, carpeta}}).pipe(tap((res) =>
-        {
-            if (res.data)
+        this.subirDocsGQL.mutate({args: actDocs, files: {file: docArch, carpeta: 'documentos'}, filesAcuse: {file: acuseArch, carpeta: 'documentos'}})
+            .pipe(tap((res) =>
             {
-                unionBy(STATE_DOCS(), res.data.subirDocs as IResolveDocumento);
-                this.ngxService.satisfactorioToast('La subida de archivos se realizo con exito', 'Subida de archivos');
-                this.mdr.close(res.data.subirDocs);
-            }
-            this.cargando = false;
-            this.formDocsArchivo.enable();
-        })).subscribe();
+                if (res.data)
+                {
+                    unionBy(STATE_DOCS(), res.data.subirDocs as IResolveDocumento);
+                    this.ngxService.satisfactorioToast('La subida de archivos se realizo con exito', 'Subida de archivos');
+                    this.mdr.close(res.data.subirDocs);
+                }
+                this.cargando = false;
+                this.formDocsArchivo.enable();
+            })).subscribe();
     }
+
 
     cancelar(): void
     {

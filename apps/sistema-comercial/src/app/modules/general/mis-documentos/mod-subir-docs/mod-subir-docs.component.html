@@ -13,7 +13,7 @@
                 <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
             </mat-form-field>
         </div>
+        <mat-progress-bar [value]="porcentaje" mode="determinate" color="primary"></mat-progress-bar>
     </form>
 </mat-dialog-content>
 <app-registros (registro)="reemplazar(true)" (cancelar)="cancelar()" [deshabilitar]="formDocsArchivo.invalid || cargando" [cargando]="cargando"></app-registros>
-

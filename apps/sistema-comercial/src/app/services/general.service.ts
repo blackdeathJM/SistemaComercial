@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {DateTime} from 'luxon';
 import {v4 as uuidv4} from 'uuid';
+import {deleteObject, ref, Storage, uploadBytesResumable, UploadTask} from '@angular/fire/storage';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {Observable, ReplaySubject} from 'rxjs';
 
 export interface IObjFecha
 {
@@ -16,6 +19,11 @@ export class GeneralService
 {
     private static ano = new Date().getFullYear();
     private static mes = new Date().toLocaleString('es-mx', {month: 'long'});
+    private porcentaje: ReplaySubject<number> = new ReplaySubject<number>();
+
+    constructor(private storage: Storage, private ngxToastService: NgxToastService)
+    {
+    }
 
     static convertirUnix(fecha: IObjFecha, segundos: number): number
     {
@@ -55,6 +63,34 @@ export class GeneralService
         } else
         {
             return `SIMAPAS/${carpeta}/${tipoDoc}/${this.ano}/${this.mes}/${this.nombreArchivo(nombreArchivo)}`;
+        }
+    }
+
+    async subirFirebase(archivo: File, url: string): Promise<UploadTask>
+    {
+        const docRef = ref(this.storage, url);
+        const subirDoc: UploadTask = uploadBytesResumable(docRef, archivo);
+        subirDoc.on('state_changed', (snapshot) =>
+        {
+            this.porcentaje.next((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        }, err => this.ngxToastService.errorToast(err.message, 'Error al subir el archivo'));
+        return subirDoc;
+    }
+
+    progreso(): Observable<number>
+    {
+        return this.porcentaje;
+    }
+
+    async eliminarDocFirabase(rutaDocEliminar): Promise<void>
+    {
+        const refDocEliminar = ref(this.storage, rutaDocEliminar);
+        try
+        {
+            await deleteObject(refDocEliminar);
+        } catch (e)
+        {
+            this.ngxToastService.errorToast(e.message, 'Error al tratar de eliminar archivo');
         }
     }
 }

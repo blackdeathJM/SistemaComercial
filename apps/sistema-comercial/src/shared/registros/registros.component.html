@@ -16,8 +16,10 @@
 </mat-dialog-actions>
 
 <ng-template #cargando>
-    <mat-icon class="mr-2">
-        <mat-progress-spinner mode="indeterminate" diameter="20" color="accent"></mat-progress-spinner>
-    </mat-icon>
-    <span class="ml-3">Procesando...</span>
+    <div class="flex items-center justify-center">
+        <mat-icon>
+            <mat-progress-spinner mode="indeterminate" color="primary" ></mat-progress-spinner>
+        </mat-icon>
+        <span class="ml-3">Procesando...</span>
+    </div>
 </ng-template>
