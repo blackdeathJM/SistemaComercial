@@ -11,7 +11,7 @@ import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validat
 import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
 import {getDownloadURL} from '@angular/fire/storage';
 import {SubirDocsGQL} from '#/libs/datos/src';
-import {Subscription, tap} from 'rxjs';
+import {startWith, Subscription, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
@@ -47,24 +47,22 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     advertencia: string = '';
     porcentaje: number = 0;
     subs: Subscription = new Subscription();
+    mostrarProgreso: boolean = false;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService
         , private subirDocsGQL: SubirDocsGQL, private cdr: ChangeDetectorRef, public generalServices: GeneralService)
     {
     }
 
-    ngOnDestroy(): void {
-        throw new Error('Method not implemented.');
-    }
-
     ngOnInit(): void
     {
         this.formDocsArchivo = this.fb.formGroup(new Archivos());
-        this.subs.add(this.generalServices.progreso().subscribe((r) =>
+        this.subs.add(this.generalServices.progreso().pipe(startWith(0)).subscribe((r) =>
         {
             this.porcentaje = r;
             this.cdr.detectChanges();
         }));
+
         if (this.data.enviadoPor !== STATE_DATOS_SESION()._id)
         {
             this.formDocsArchivo.get('docArchivo').disable();
@@ -99,6 +97,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
                 }
                 try
                 {
+                    this.mostrarProgreso = true;
                     const ruta = GeneralService.rutaGuardar(this.data.tipoDoc, docArchivo._files[0].name, 'documentos');
                     const doc = await this.generalServices.subirFirebase(docArchivo._files[0], ruta);
                     docUrl = await getDownloadURL(doc.ref);
@@ -115,6 +114,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
                 }
                 try
                 {
+                    this.mostrarProgreso = true;
                     const ruta = GeneralService.rutaGuardar(this.data.tipoDoc, acuseArchivo._files[0].name, 'documentos');
                     const acuse = await this.generalServices.subirFirebase(acuseArchivo._files[0], ruta);
                     acuseUrl = await getDownloadURL(acuse.ref);
@@ -162,5 +162,10 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
             return;
         }
         this.mdr.close();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.subs.unsubscribe();
     }
 }

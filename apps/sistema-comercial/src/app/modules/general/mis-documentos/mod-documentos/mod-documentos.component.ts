@@ -1,6 +1,6 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
-import {finalize, forkJoin, Subscription, tap} from 'rxjs';
+import {combineLatest, concat, finalize, forkJoin, merge, startWith, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -15,7 +15,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FileUploadModule} from '@iplab/ngx-file-upload';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgIf} from '@angular/common';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -49,15 +49,14 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
             MatButtonModule,
             SeleccionarEmpleadoComponent,
             MatTooltipModule,
-            MatProgressBarModule
+            MatProgressBarModule,
+            NgIf
         ],
-    providers:
-        [],
     selector: 'app-mod-documentos',
     templateUrl: './mod-documentos.component.html',
     styleUrls: ['./mod-documentos.component.scss']
 })
-export class ModDocumentosComponent implements OnInit
+export class ModDocumentosComponent implements OnInit, OnDestroy
 {
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();
@@ -72,6 +71,8 @@ export class ModDocumentosComponent implements OnInit
     cargando = false;
     porcentaje: number;
     tiposDoc = TIPOS_DOCUMENTO;
+    mostrarProgreso: boolean = false;
+    sub: Subscription = new Subscription();
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService,
                 private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef)
@@ -82,20 +83,21 @@ export class ModDocumentosComponent implements OnInit
     {
         ReactiveFormConfig.set({validationMessage: {required: 'Este campo es requerido'}});
         this.formDocs = this.fb.formGroup(new Documento());
-        forkJoin([this.empleadosSesionGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges, this.generalService.progreso()]).subscribe((res) =>
-        {
-            console.log('RegDocumento', res);
-        });
 
-        // this.generalService.progreso().subscribe(res => console.log('====>', res));
-        // this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
-        // {
-        //     console.log('data', res);
-        //     if (res.data)
-        //     {
-        //         this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
-        //     }
-        // })).subscribe();
+        this.sub.add(this.generalService.progreso().subscribe((res) =>
+        {
+            this.porcentaje = res;
+            console.log('respuesta progreso', this.porcentaje);
+            this.cdr.detectChanges();
+        }));
+
+        this.sub.add(this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        {
+            if (res.data)
+            {
+                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
+            }
+        })).subscribe());
     }
 
     async reg(esRemoto: boolean): Promise<void>
@@ -113,7 +115,8 @@ export class ModDocumentosComponent implements OnInit
                 try
                 {
                     const ruta = GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos');
-                    const doc = await this.generalService.subirFirebase(file._files, ruta);
+                    this.mostrarProgreso = true;
+                    const doc = await this.generalService.subirFirebase(file._files[0], ruta);
                     docUrl = await getDownloadURL(doc.ref);
                 } catch (e)
                 {
@@ -163,5 +166,10 @@ export class ModDocumentosComponent implements OnInit
         {
             this.mdr.closeAll();
         }
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

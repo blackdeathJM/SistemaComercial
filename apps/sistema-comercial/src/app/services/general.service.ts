@@ -21,6 +21,8 @@ export class GeneralService
     private static mes = new Date().toLocaleString('es-mx', {month: 'long'});
     private porcentaje: ReplaySubject<number> = new ReplaySubject<number>();
 
+    // private porcentaje: Subject<number> = new Subject<number>();
+
     constructor(private storage: Storage, private ngxToastService: NgxToastService)
     {
     }
