@@ -1,11 +1,11 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
-import {finalize, Subscription, tap} from 'rxjs';
+import {finalize, forkJoin, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
-import {getDownloadURL, ref, Storage, uploadBytesResumable} from '@angular/fire/storage';
+import {getDownloadURL} from '@angular/fire/storage';
 import {IResolveDocumento, TDocumentoReg, TIPOS_DOCUMENTO} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -73,7 +73,7 @@ export class ModDocumentosComponent implements OnInit
     porcentaje: number;
     tiposDoc = TIPOS_DOCUMENTO;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private storage: Storage, private configService: FuseConfirmationService,
+    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService,
                 private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef)
     {
     }
@@ -82,14 +82,20 @@ export class ModDocumentosComponent implements OnInit
     {
         ReactiveFormConfig.set({validationMessage: {required: 'Este campo es requerido'}});
         this.formDocs = this.fb.formGroup(new Documento());
-
-        this.subscripcion.add(this.empleadosSesionGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
+        forkJoin([this.empleadosSesionGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges, this.generalService.progreso()]).subscribe((res) =>
         {
-            if (res.data)
-            {
-                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
-            }
-        })).subscribe());
+            console.log('RegDocumento', res);
+        });
+
+        // this.generalService.progreso().subscribe(res => console.log('====>', res));
+        // this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        // {
+        //     console.log('data', res);
+        //     if (res.data)
+        //     {
+        //         this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
+        //     }
+        // })).subscribe();
     }
 
     async reg(esRemoto: boolean): Promise<void>
@@ -100,36 +106,19 @@ export class ModDocumentosComponent implements OnInit
         let docUrl: string = null;
         let files = null;
 
-        const regDocumento = this.datosReg(tipoDoc, null, fechaRecepcion, fechaLimiteEntrega, resto);
         if (file)
         {
             if (esRemoto)
             {
-                // const docRef = ref(this.storage, GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos'));
-                // const resUpload = await uploadBytes(docRef, file._files[0]);
-                // docUrl = await getDownloadURL(resUpload.ref);
-
-                const ruta = GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos');
-
-                const docRef = ref(this.storage, ruta);
-                const subirArchivo = uploadBytesResumable(docRef, file._files[0]);
-
-                subirArchivo.on('state_changed', (s) =>
+                try
                 {
-                    this.porcentaje = (s.bytesTransferred / s.totalBytes) * 100;
-                    this.cdr.detectChanges();
-                }, e => this.ngxToastService.errorToast(e.message, 'Error al subir archivo'), async () =>
+                    const ruta = GeneralService.rutaGuardar(tipoDoc, file._files[0].name, 'documentos');
+                    const doc = await this.generalService.subirFirebase(file._files, ruta);
+                    docUrl = await getDownloadURL(doc.ref);
+                } catch (e)
                 {
-                    try
-                    {
-                        docUrl = await getDownloadURL(subirArchivo.snapshot.ref);
-                        const doc = this.datosReg(tipoDoc, docUrl, fechaRecepcion, fechaLimiteEntrega, resto);
-                        this.registro(doc, null);
-                    } catch (e)
-                    {
-                        this.ngxToastService.errorToast(e.message, 'Error al tratar de obtener la url');
-                    }
-                });
+                    this.ngxToastService.errorToast(e.message, 'Error en la carga de archivo');
+                }
             } else
             {
                 files =
@@ -139,30 +128,20 @@ export class ModDocumentosComponent implements OnInit
                         carpeta: 'documentos',
                         eliminar: false
                     };
-                this.registro(regDocumento, files);
             }
-        } else
-        {
-            this.registro(regDocumento, null);
         }
-    }
 
-    datosReg(tipoDoc: string, docUrl: string, fechaRecepcion, fechaLimiteEntrega, resto: any): TDocumentoReg
-    {
-        return {
-            ano: new Date().getFullYear(),
-            tipoDoc,
-            docUrl,
-            usuarioFolio: null,
-            fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
-            fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
-            enviadoPor: STATE_DATOS_SESION()._id,
-            ...resto
-        };
-    }
-
-    registro(regDocumento: TDocumentoReg, files: any): void
-    {
+        const regDocumento: TDocumentoReg =
+            {
+                ano: new Date().getFullYear(),
+                tipoDoc,
+                docUrl,
+                usuarioFolio: null,
+                fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
+                fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
+                enviadoPor: STATE_DATOS_SESION()._id,
+                ...resto
+            };
         this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
         {
             this.cargando = false;
