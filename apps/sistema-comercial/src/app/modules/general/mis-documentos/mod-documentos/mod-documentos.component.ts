@@ -64,8 +64,6 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
 
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 20);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
-
-    subscripcion: Subscription = new Subscription();
     empleadosSesion: IResolveEmpleado[];
     formDocs: FormGroup;
     cargando = false;

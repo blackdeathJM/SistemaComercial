@@ -32,9 +32,6 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
     visible = true;
-    selectable = true;
-    removable = true;
-    addOnBlur = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
     refCtrl = new FormControl();
     refFiltrados: Observable<string[]>;
@@ -127,18 +124,19 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
             {
                 this.cargando = false;
                 this.dRef.close(res.data.docRefFolio);
+                this.ngxToastService.satisfactorioToast('La referencia se creo correctamente', 'Referenciar folio');
             }
         })).subscribe();
+    }
+
+    _filter(value: string): string[]
+    {
+        const filterValue = value.toLowerCase();
+        return this.todasRef.filter(filtroRef => filtroRef.toLowerCase().indexOf(filterValue) === 0);
     }
 
     cerrar(): void
     {
         this.dRef.close();
-    }
-
-    private _filter(value: string): string[]
-    {
-        const filterValue = value.toLowerCase();
-        return this.todasRef.filter(filtroRef => filtroRef.toLowerCase().indexOf(filterValue) === 0);
     }
 }

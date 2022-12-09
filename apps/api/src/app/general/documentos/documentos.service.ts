@@ -48,6 +48,7 @@ export class DocumentosService
     {
         const fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
         const usuarioEnviadoPor: Record<string, string> = {};
+
         if (args.esEnviadoPor)
         {
             usuarioEnviadoPor['enviadoPor'] = args.enviadoPor;
@@ -142,11 +143,12 @@ export class DocumentosService
         try
         {
             const {_id, folio, ref, usuarioFolio} = entradas;
+            //buscamos el documento por el seguimiento y actualizamos los campos dando por finalizado el documento
             await ref.map(async (seguimiento) =>
             {
                 try
                 {
-                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio}},
+                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio, proceso: 'terminado'}},
                         {new: true}).exec();
                     if (docsAsignados)
                     {
@@ -157,6 +159,7 @@ export class DocumentosService
                     throw new ConflictException({message: e});
                 }
             });
+            // Buscamos el documento principal y seteamos el arreglo de referencias
             const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {new: true}).exec();
             docsAsig.push(docFolioPrincipal);
             return docsAsig;
