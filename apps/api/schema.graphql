@@ -91,6 +91,18 @@ type DocumentoType {
   resolveEmpleadoEnviado: [EmpleadoType!]
 }
 
+type NotificacionType {
+  descripcion: String
+  icono: String
+  idUsuario: ID
+  imagen: String
+  leido: Boolean
+  link: String
+  tiempo: Int
+  titulo: String
+  usarRouter: Boolean
+}
+
 input AuthInput {
   contrasena: String
   usuario: String
@@ -161,6 +173,18 @@ input DocumentoInput {
   resolveEmpleadoEnviado: [EmpleadoInput!]
 }
 
+input NotificacionInput {
+  descripcion: String
+  icono: String = "heroicons_outline:speakerphone"
+  idUsuario: ID
+  imagen: String = null
+  leido: Boolean = false
+  link: String = null
+  tiempo: Int = 1670587201
+  titulo: String
+  usarRouter: Boolean = false
+}
+
 type Query {
   deptos: [DeptoType!]!
   empleados: [EmpleadoType!]!
@@ -194,6 +218,7 @@ type Mutation {
   docActFolio(args: DocActFolioInput!): DocumentoType!
   reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
+  regNotificacion(datos: NotificacionInput!): NotificacionType!
 }
 
 input RegEmpleadoInput {
@@ -287,4 +312,5 @@ input DocRefFolioInput {
 
 type Subscription {
   rolCambiado(_id: String!): LoginRespuestaType!
+  nvaNotificacion(idEmpleado: String!): NotificacionType!
 }

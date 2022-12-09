@@ -52,6 +52,7 @@ export class NotificationsComponent implements OnInit, OnDestroy
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
+        console.log('componente de notificaciones');
     }
 
     /**

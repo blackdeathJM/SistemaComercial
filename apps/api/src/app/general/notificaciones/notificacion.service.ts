@@ -10,12 +10,18 @@ export class NotificacionService
     {
     }
 
-    async notificaciones(): Promise<NotificacionDto[]>
+    async notificaciones(idEmpleado: string): Promise<NotificacionDto[]>
     {
-        return [];
+        try
+        {
+            return await this.notificacion.find({idEmpleado}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.message});
+        }
     }
 
-    async regNotificacion(datos: NotificacionDto): Promise<NotificacionDto>
+    async regNot(datos: NotificacionDto): Promise<NotificacionDto>
     {
         try
         {
@@ -24,5 +30,26 @@ export class NotificacionService
         {
             throw new InternalServerErrorException({message: 'Ocurrio un error inesperado'});
         }
+    }
+
+    async eliminarNot(): Promise<NotificacionDto>
+    {
+        try
+        {
+            return null;
+        } catch (e)
+        {
+
+        }
+    }
+
+    async marcarLeido(): Promise<NotificacionDto>
+    {
+        return null;
+    }
+
+    async marcarLeidoTodos(): Promise<NotificacionDto[]>
+    {
+        return [];
     }
 }

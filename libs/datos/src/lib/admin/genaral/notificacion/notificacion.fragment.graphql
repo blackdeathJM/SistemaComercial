@@ -1,0 +1,12 @@
+fragment fragNotificacion on NotificacionType
+{
+    idUsuario
+    titulo
+    imagen
+    icono
+    descripcion
+    tiempo
+    link
+    leido
+    usarRouter
+}

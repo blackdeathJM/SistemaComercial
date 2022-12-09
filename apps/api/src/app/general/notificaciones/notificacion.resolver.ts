@@ -1,4 +1,4 @@
-import {Args, Mutation, Resolver, Subscription} from '@nestjs/graphql';
+import {Args, Mutation, Query, Resolver, Subscription} from '@nestjs/graphql';
 import {NotificacionDto} from '#api/libs/models/src/lib/general/notificacion/notificacion.dto';
 import {PubSub} from 'graphql-subscriptions';
 import {NotificacionService} from '@api-general/notificaciones/notificacion.service';
@@ -13,11 +13,18 @@ export class NotificacionResolver
 
     }
 
-    @Mutation(() => NotificacionDto)
-    async regNotificacion(@Args('datos') datos: NotificacionDto): Promise<void>
+    @Query(() => [NotificacionDto], {nullable: true, defaultValue: null})
+    async notificaciones(@Args('idUsuario') idUsuario: string): Promise<NotificacionDto[]>
     {
-        const nvaNotificacion = await this.notificacionService.regNotificacion(datos);
+        return await this.notificacionService.notificaciones(idUsuario);
+    }
+
+    @Mutation(() => NotificacionDto)
+    async regNot(@Args('datos') datos: NotificacionDto): Promise<NotificacionDto>
+    {
+        const nvaNotificacion = await this.notificacionService.regNot(datos);
         await this.#pubSub.publish('nvaNotificacion', nvaNotificacion);
+        return nvaNotificacion;
     }
 
     @Subscription(() => NotificacionDto, {

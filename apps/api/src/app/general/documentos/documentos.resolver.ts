@@ -17,8 +17,6 @@ import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
-import {UseInterceptors} from '@nestjs/common';
-import {FileInterceptor} from '@nestjs/platform-express';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver

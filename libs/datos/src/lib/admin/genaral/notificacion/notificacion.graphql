@@ -1,0 +1,7 @@
+#mutation regNot($datos: NotificacionInput!)
+#{
+#    regNot(datos: $datos)
+#    {
+#        idUsuario
+#    }
+#}

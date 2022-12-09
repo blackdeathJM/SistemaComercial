@@ -1,5 +1,5 @@
 import {INotificacion} from './notificacion.interface';
-import {Field, InputType, Int, ObjectType} from '@nestjs/graphql';
+import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 import {DateTime} from 'luxon';
@@ -18,7 +18,7 @@ export class NotificacionDto implements INotificacion
     @Prop()
     @IsOptional()
     icono: string;
-    @Field(() => String, {nullable: true})
+    @Field(() => ID, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario el id del usuario'})
     idUsuario: string;
@@ -49,4 +49,4 @@ export class NotificacionDto implements INotificacion
 }
 
 export type NotificacionType = NotificacionDto & Document;
-export const SCHEMA_NOTIFICAIONES = SchemaFactory.createForClass(NotificacionDto);
+export const SCHEMA_NOTIFICACION = SchemaFactory.createForClass(NotificacionDto);
