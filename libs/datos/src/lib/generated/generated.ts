@@ -249,6 +249,7 @@ export type Mutation = {
   login?: Maybe<LoginRespuestaType>;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
+  regNot: NotificacionType;
   subirDocs: DocumentoType;
 };
 
@@ -322,10 +323,40 @@ export type MutationRegDocArgs = {
 };
 
 
+export type MutationRegNotArgs = {
+  datos: NotificacionInput;
+};
+
+
 export type MutationSubirDocsArgs = {
   args?: InputMaybe<DocsSubirInput>;
   files?: InputMaybe<UploadInput>;
   filesAcuse?: InputMaybe<UploadInput>;
+};
+
+export type NotificacionInput = {
+  descripcion?: InputMaybe<Scalars['String']>;
+  icono?: InputMaybe<Scalars['String']>;
+  idUsuario?: InputMaybe<Scalars['ID']>;
+  imagen?: InputMaybe<Scalars['String']>;
+  leido?: InputMaybe<Scalars['Boolean']>;
+  link?: InputMaybe<Scalars['String']>;
+  tiempo?: InputMaybe<Scalars['Int']>;
+  titulo?: InputMaybe<Scalars['String']>;
+  usarRouter?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type NotificacionType = {
+  __typename?: 'NotificacionType';
+  descripcion?: Maybe<Scalars['String']>;
+  icono?: Maybe<Scalars['String']>;
+  idUsuario?: Maybe<Scalars['ID']>;
+  imagen?: Maybe<Scalars['String']>;
+  leido?: Maybe<Scalars['Boolean']>;
+  link?: Maybe<Scalars['String']>;
+  tiempo?: Maybe<Scalars['Int']>;
+  titulo?: Maybe<Scalars['String']>;
+  usarRouter?: Maybe<Scalars['Boolean']>;
 };
 
 export type Query = {
@@ -337,6 +368,7 @@ export type Query = {
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
+  notificaciones?: Maybe<Array<NotificacionType>>;
 };
 
 
@@ -370,6 +402,11 @@ export type QueryDocsUsuarioProcesoArgs = {
   usuario?: InputMaybe<Scalars['ID']>;
 };
 
+
+export type QueryNotificacionesArgs = {
+  idUsuario: Scalars['String'];
+};
+
 export type RegEmpleadoInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   avatar?: InputMaybe<Scalars['String']>;
@@ -385,7 +422,13 @@ export type RegEmpleadoInput = {
 
 export type Subscription = {
   __typename?: 'Subscription';
+  notificar: NotificacionType;
   rolCambiado: LoginRespuestaType;
+};
+
+
+export type SubscriptionNotificarArgs = {
+  idUsuario: Scalars['String'];
 };
 
 
@@ -582,6 +625,29 @@ export type DocRefFolioMutationVariables = Exact<{
 
 export type DocRefFolioMutation = { __typename?: 'Mutation', docRefFolio: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
 
+export type FragNotificacionFragment = { __typename?: 'NotificacionType', idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null };
+
+export type NotificacionesQueryVariables = Exact<{
+  idUsuario: Scalars['String'];
+}>;
+
+
+export type NotificacionesQuery = { __typename?: 'Query', notificaciones?: Array<{ __typename?: 'NotificacionType', idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null }> | null };
+
+export type RegNotMutationVariables = Exact<{
+  datos: NotificacionInput;
+}>;
+
+
+export type RegNotMutation = { __typename?: 'Mutation', regNot: { __typename?: 'NotificacionType', idUsuario?: string | null } };
+
+export type NotificarSubscriptionVariables = Exact<{
+  idUsuario: Scalars['String'];
+}>;
+
+
+export type NotificarSubscription = { __typename?: 'Subscription', notificar: { __typename?: 'NotificacionType', idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
+
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
   _id
@@ -660,6 +726,19 @@ export const FragDocFragmentDoc = gql`
   ref
   usuarios
   esRef
+}
+    `;
+export const FragNotificacionFragmentDoc = gql`
+    fragment fragNotificacion on NotificacionType {
+  idUsuario
+  titulo
+  imagen
+  icono
+  descripcion
+  tiempo
+  link
+  leido
+  usarRouter
 }
     `;
 export const DepartamentosDocument = gql`
@@ -1209,6 +1288,60 @@ export const DocRefFolioDocument = gql`
   })
   export class DocRefFolioGQL extends Apollo.Mutation<DocRefFolioMutation, DocRefFolioMutationVariables> {
     document = DocRefFolioDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NotificacionesDocument = gql`
+    query notificaciones($idUsuario: String!) {
+  notificaciones(idUsuario: $idUsuario) {
+    ...fragNotificacion
+  }
+}
+    ${FragNotificacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NotificacionesGQL extends Apollo.Query<NotificacionesQuery, NotificacionesQueryVariables> {
+    document = NotificacionesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegNotDocument = gql`
+    mutation regNot($datos: NotificacionInput!) {
+  regNot(datos: $datos) {
+    idUsuario
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RegNotGQL extends Apollo.Mutation<RegNotMutation, RegNotMutationVariables> {
+    document = RegNotDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NotificarDocument = gql`
+    subscription notificar($idUsuario: String!) {
+  notificar(idUsuario: $idUsuario) {
+    ...fragNotificacion
+  }
+}
+    ${FragNotificacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NotificarGQL extends Apollo.Subscription<NotificarSubscription, NotificarSubscriptionVariables> {
+    document = NotificarDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

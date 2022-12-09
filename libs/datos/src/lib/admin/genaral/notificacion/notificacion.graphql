@@ -1,7 +1,22 @@
-#mutation regNot($datos: NotificacionInput!)
-#{
-#    regNot(datos: $datos)
-#    {
-#        idUsuario
-#    }
-#}
+query notificaciones($idUsuario: String!)
+{
+    notificaciones(idUsuario: $idUsuario)
+    {
+        ...fragNotificacion
+    }
+}
+
+mutation regNot($datos: NotificacionInput!)
+{
+    regNot(datos: $datos)
+    {
+        idUsuario
+    }
+}
+subscription notificar($idUsuario: String!)
+{
+    notificar(idUsuario: $idUsuario)
+    {
+        ...fragNotificacion
+    }
+}

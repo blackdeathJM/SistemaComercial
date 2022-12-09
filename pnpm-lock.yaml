@@ -62,7 +62,7 @@ specifiers:
   '@rxweb/reactive-dynamic-forms': ^0.0.6
   '@rxweb/reactive-form-validators': ^13.0.0
   '@rxweb/sanitizers': ^0.0.1
-  '@sweetalert2/ngx-sweetalert2': ^12.0.2
+  '@sweetalert2/ngx-sweetalert2': ^12.1.0
   '@sweetalert2/themes': ^5.0.15
   '@tailwindcss/aspect-ratio': 0.4.2
   '@tailwindcss/line-clamp': 0.4.2
@@ -81,7 +81,7 @@ specifiers:
   '@types/lodash': 4.14.191
   '@types/lodash-es': 4.17.6
   '@types/luxon': ^3.1.0
-  '@types/marked': ^4.0.7
+  '@types/marked': ^4.0.8
   '@types/node': 18.11.12
   '@types/passport-jwt': ^3.0.7
   '@types/passport-local': ^1.0.34
@@ -198,7 +198,7 @@ dependencies:
   '@rxweb/reactive-dynamic-forms': 0.0.6
   '@rxweb/reactive-form-validators': 13.0.0
   '@rxweb/sanitizers': 0.0.1
-  '@sweetalert2/ngx-sweetalert2': 12.0.2_dbvjzabljrlnjbxkz6znyr5ks4
+  '@sweetalert2/ngx-sweetalert2': 12.1.0_dbvjzabljrlnjbxkz6znyr5ks4
   '@sweetalert2/themes': 5.0.15_sweetalert2@11.6.15
   apexcharts: 3.36.3
   apollo-angular: 4.1.1_andm4e2lfbt3sggrmjvoh5t5iu
@@ -232,7 +232,7 @@ dependencies:
   ng-apexcharts: 1.7.4_dclfjlxvbq432yt7wkwsnednfq
   ngx-image-cropper: 6.3.1_grilvk2avpl57xlholk4yoi3ie
   ngx-json-viewer: 3.2.1
-  ngx-markdown: 15.0.0_kmeh76qiewma3kx557aj2eoscy
+  ngx-markdown: 15.0.0_tzug5c3pfp6dothbir6tklcyhy
   ngx-material-file-input: 4.0.0_nm36g5jjvpg4xlqjvrvt4oahzu
   ngx-quill: 20.0.0_ow4r3t6b35ni5b7ipx7xpwjlyi
   ngx-skeleton-loader: 6.0.0_grilvk2avpl57xlholk4yoi3ie
@@ -297,7 +297,7 @@ devDependencies:
   '@types/lodash': 4.14.191
   '@types/lodash-es': 4.17.6
   '@types/luxon': 3.1.0
-  '@types/marked': 4.0.7
+  '@types/marked': 4.0.8
   '@types/node': 18.11.12
   '@types/passport-jwt': 3.0.7
   '@types/passport-local': 1.0.34
@@ -7836,11 +7836,11 @@ packages:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
     dev: false
 
-  /@sweetalert2/ngx-sweetalert2/12.0.2_dbvjzabljrlnjbxkz6znyr5ks4:
-    resolution: {integrity: sha512-P0duLXagSyYRWyMqMLLOZ7e8G3SpAJIcJPqmyKuajblTv0sU1C860nDh2u/wIhXpjWs92J1tYGK9IPSuQebUdw==}
+  /@sweetalert2/ngx-sweetalert2/12.1.0_dbvjzabljrlnjbxkz6znyr5ks4:
+    resolution: {integrity: sha512-jECRdLhdw7dsEDv22uJHVbsgQEQVOY64BPRicTfKzEqsIyLwbl3kHh24lCg3UFlD2zLFuqRHrROohU9Wz7q74Q==}
     peerDependencies:
-      '@angular/common': ^14.0.0
-      '@angular/core': ^14.0.0
+      '@angular/common': ^14.0.0 || ^15.0.0
+      '@angular/core': ^14.0.0 || ^15.0.0
       sweetalert2: ^11.0.0
     dependencies:
       '@angular/common': 15.0.3_t36irnboizi3fmcfpq7ninqjea
@@ -8184,8 +8184,8 @@ packages:
     resolution: {integrity: sha512-gCd/HcCgjqSxfMrgtqxCgYk/22NBQfypwFUG7ZAyG/4pqs51WLTcUzVp1hqTbieDYeHS3WoVEh2Yv/2l+7B0Vg==}
     dev: true
 
-  /@types/marked/4.0.7:
-    resolution: {integrity: sha512-eEAhnz21CwvKVW+YvRvcTuFKNU9CV1qH+opcgVK3pIMI6YZzDm6gc8o2vHjldFk6MGKt5pueSB7IOpvpx5Qekw==}
+  /@types/marked/4.0.8:
+    resolution: {integrity: sha512-HVNzMT5QlWCOdeuBsgXP8EZzKUf0+AXzN+sLmjvaB3ZlLqO+e4u0uXrdw9ub69wBKFs+c6/pA4r9sy6cCDvImw==}
 
   /@types/mime/3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
@@ -16413,7 +16413,7 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /ngx-markdown/15.0.0_kmeh76qiewma3kx557aj2eoscy:
+  /ngx-markdown/15.0.0_tzug5c3pfp6dothbir6tklcyhy:
     resolution: {integrity: sha512-/7IVkNwuukCK4ybI3Ag1RkkUgw5h1pA96OoOPgOCX0omeAv9dMkh5aPukQNPLtmqhkImZyXF29e4steGcjglcw==}
     peerDependencies:
       '@angular/common': ^15.0.0
@@ -16427,7 +16427,7 @@ packages:
       '@angular/common': 15.0.3_t36irnboizi3fmcfpq7ninqjea
       '@angular/core': 15.0.3_rxjs@7.6.0+zone.js@0.12.0
       '@angular/platform-browser': 15.0.3_k2ova7ehoq6i2mboehwofp54tu
-      '@types/marked': 4.0.7
+      '@types/marked': 4.0.8
       marked: 4.2.4
       rxjs: 7.6.0
       tslib: 2.4.1

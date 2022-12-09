@@ -34,7 +34,7 @@ export class NotificacionResolver
             return null;
         }, resolve: payload => console.log(payload)
     })
-    nvaNotificacion(@Args('idEmpleado') idEmpleado: string): AsyncIterator<NotificacionDto>
+    notificar(@Args('idUsuario') idUsuario: string): AsyncIterator<NotificacionDto>
     {
         return this.#pubSub.asyncIterator('nvaNotificacion');
     }

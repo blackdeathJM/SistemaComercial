@@ -1,10 +1,15 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
-import {Subject, takeUntil} from 'rxjs';
+import {Subject, Subscription, takeUntil} from 'rxjs';
 import {NotificationsService} from '@s-layout/notifications/notifications.service';
 import {Notification} from '@s-layout/notifications/notifications.types';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
+import {STATE_NOTIFICACION} from '@s-layout/notifications/notificacion.state';
+import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Component({
     selector: 'notifications',
@@ -13,13 +18,14 @@ import {Notification} from '@s-layout/notifications/notifications.types';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'notifications'
 })
-export class NotificationsComponent implements OnInit, OnDestroy
+export class NotificationsComponent implements OnInit, OnDestroy, AfterContentInit
 {
     @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
     @ViewChild('notificationsPanel') private _notificationsPanel: TemplateRef<any>;
 
     notifications: Notification[];
     unreadCount: number = 0;
+    sub: Subscription = new Subscription();
     private _overlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -27,37 +33,36 @@ export class NotificationsComponent implements OnInit, OnDestroy
      * Constructor
      */
     constructor(private _changeDetectorRef: ChangeDetectorRef, private _notificationsService: NotificationsService, private _overlay: Overlay,
-                private _viewContainerRef: ViewContainerRef)
+                private _viewContainerRef: ViewContainerRef, private notificacionesGQL: NotificacionesGQL, private notificarGQL: NotificarGQL,
+                private ngxToastService: NgxToastService)
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
-        // Subscribe to notification changes
-        this._notificationsService.notifications$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((notifications: Notification[]) =>
+
+        this.notificacionesGQL.watch().valueChanges.subscribe((res) =>
+        {
+            if (res.data.notificaciones)
             {
-                // Load the notifications
-                this.notifications = notifications;
-                // Calculate the unread count
-                this._calculateUnreadCount();
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
-        console.log('componente de notificaciones');
+                STATE_NOTIFICACION(res.data.notificaciones as INotificacion[]);
+            }
+        });
     }
 
-    /**
-     * On destroy
-     */
+    ngAfterContentInit(): void
+    {
+        this.sub.add(this.notificarGQL.subscribe({idUsuario: STATE_DATOS_SESION()._id}).subscribe((res) =>
+        {
+            const nvaNotificacion = STATE_NOTIFICACION();
+            STATE_NOTIFICACION([...nvaNotificacion, res.data.notificar as INotificacion]);
+            this.ngxToastService.infoToast(res.data.notificar.descripcion, res.data.notificar.titulo, {
+                closeButton: true, disableTimeOut: true,
+                positionClass: 'toast-bottom-full-width'
+            });
+        }));
+    }
+
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -71,13 +76,6 @@ export class NotificationsComponent implements OnInit, OnDestroy
         }
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Open the notifications panel
-     */
     openPanel(): void
     {
         // Return if the notifications panel or its origin is not defined
@@ -134,24 +132,11 @@ export class NotificationsComponent implements OnInit, OnDestroy
         this._notificationsService.delete(notification.id).subscribe();
     }
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Create the overlay
-     */
     private _createOverlay(): void
     {
         // Create the overlay
@@ -198,11 +183,7 @@ export class NotificationsComponent implements OnInit, OnDestroy
         });
     }
 
-    /**
-     * Calculate the unread count
-     *
-     * @private
-     */
+
     private _calculateUnreadCount(): void
     {
         let count = 0;

@@ -180,7 +180,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1670587201
+  tiempo: Int = 1670607296
   titulo: String
   usarRouter: Boolean = false
 }
@@ -201,6 +201,7 @@ type Query {
     """
     usuario: ID
   ): [DocumentoType!]!
+  notificaciones(idUsuario: String!): [NotificacionType!]
 }
 
 type Mutation {
@@ -218,7 +219,7 @@ type Mutation {
   docActFolio(args: DocActFolioInput!): DocumentoType!
   reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
-  regNotificacion(datos: NotificacionInput!): NotificacionType!
+  regNot(datos: NotificacionInput!): NotificacionType!
 }
 
 input RegEmpleadoInput {
@@ -312,5 +313,5 @@ input DocRefFolioInput {
 
 type Subscription {
   rolCambiado(_id: String!): LoginRespuestaType!
-  nvaNotificacion(idEmpleado: String!): NotificacionType!
+  notificar(idUsuario: String!): NotificacionType!
 }
