@@ -23,7 +23,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
     @ViewChild('notificationsPanel') private _notificationsPanel: TemplateRef<any>;
 
-    notifications: Notification[];
+    notificaciones: INotificacion[];
     unreadCount: number = 0;
     sub: Subscription = new Subscription();
     private _overlayRef: OverlayRef;
@@ -52,6 +52,8 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     ngAfterContentInit(): void
     {
+        this.notificaciones = STATE_NOTIFICACION();
+
         this.sub.add(this.notificarGQL.subscribe({idUsuario: STATE_DATOS_SESION()._id}).subscribe((res) =>
         {
             const nvaNotificacion = STATE_NOTIFICACION();
@@ -114,13 +116,13 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     /**
      * Toggle read status of the given notification
      */
-    toggleRead(notification: Notification): void
+    toggleRead(notification: INotificacion): void
     {
         // Toggle the read status
-        notification.read = !notification.read;
-
-        // Update the notification
-        this._notificationsService.update(notification.id, notification).subscribe();
+        // notification.read = !notification.read;
+        //
+        // // Update the notification
+        // this._notificationsService.update(notification.id, notification).subscribe();
     }
 
     /**
@@ -129,7 +131,6 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     delete(notification: Notification): void
     {
         // Delete the notification
-        this._notificationsService.delete(notification.id).subscribe();
     }
 
     trackByFn(index: number, item: any): any
@@ -186,13 +187,13 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     private _calculateUnreadCount(): void
     {
-        let count = 0;
-
-        if (this.notifications && this.notifications.length)
-        {
-            count = this.notifications.filter(notification => !notification.read).length;
-        }
-
-        this.unreadCount = count;
+        // let count = 0;
+        //
+        // if (this.notificaciones && this.notificaciones.length)
+        // {
+        //     count = this.notificaciones.filter(notification => !notification.read).length;
+        // }
+        //
+        // this.unreadCount = count;
     }
 }

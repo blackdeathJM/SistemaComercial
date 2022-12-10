@@ -32,24 +32,36 @@ export class NotificacionService
         }
     }
 
-    async eliminarNot(): Promise<NotificacionDto>
+    async eliminarNot(_id: string): Promise<NotificacionDto>
     {
         try
         {
-            return null;
+            return await this.notificacion.findByIdAndDelete(_id).exec();
         } catch (e)
         {
-
+            throw new InternalServerErrorException({message: e});
         }
     }
 
-    async marcarLeido(): Promise<NotificacionDto>
+    async marcarLeido(_id: string): Promise<NotificacionDto>
     {
-        return null;
+        try
+        {
+            return await this.notificacion.findByIdAndUpdate(_id, {$set: {leido: true}}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
+        }
     }
 
-    async marcarLeidoTodos(): Promise<NotificacionDto[]>
+    async marcarLeidoTodos(idUsuario: string): Promise<NotificacionDto[]>
     {
-        return [];
+        try
+        {
+            return await this.notificacion.updateMany({idUsuario}, {$set: {leido: true}}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
+        }
     }
 }
