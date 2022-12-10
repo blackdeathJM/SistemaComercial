@@ -13,3 +13,24 @@ subscription notificar($idUsuario: String!)
         ...fragNotificacion
     }
 }
+mutation eliminarNot($_id: String!)
+{
+    eliminarNot(_id: $_id)
+    {
+        ...fragNotificacion
+    }
+}
+mutation marcarLeido($_id: String!)
+{
+    marcarLeido(_id: $_id)
+    {
+        ...fragNotificacion
+    }
+}
+mutation eliminarTodos($idUsuario: String!)
+{
+    eliminarTodos(idUsuario: $idUsuario)
+    {
+        ...fragNotificacion
+    }
+}

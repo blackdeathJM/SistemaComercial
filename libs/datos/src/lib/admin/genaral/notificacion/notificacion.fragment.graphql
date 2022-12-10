@@ -1,5 +1,6 @@
 fragment fragNotificacion on NotificacionType
 {
+    _id
     idUsuario
     titulo
     imagen

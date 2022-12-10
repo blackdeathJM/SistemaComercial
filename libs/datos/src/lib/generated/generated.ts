@@ -245,11 +245,13 @@ export type Mutation = {
   docFinalizar: DocumentoType;
   docRefFolio: Array<DocumentoType>;
   eliminarDepto: DeptoType;
+  eliminarNot: NotificacionType;
+  eliminarTodos: Array<NotificacionType>;
   genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
+  marcarLeido: NotificacionType;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
-  regNot: NotificacionType;
   subirDocs: DocumentoType;
 };
 
@@ -302,6 +304,16 @@ export type MutationEliminarDeptoArgs = {
 };
 
 
+export type MutationEliminarNotArgs = {
+  _id: Scalars['String'];
+};
+
+
+export type MutationEliminarTodosArgs = {
+  idUsuario: Scalars['String'];
+};
+
+
 export type MutationGenFolioSinRegArgs = {
   args: DocFolioInput;
 };
@@ -309,6 +321,11 @@ export type MutationGenFolioSinRegArgs = {
 
 export type MutationLoginArgs = {
   login: LoginInput;
+};
+
+
+export type MutationMarcarLeidoArgs = {
+  _id: Scalars['String'];
 };
 
 
@@ -320,11 +337,6 @@ export type MutationReasignarUsuarioArgs = {
 export type MutationRegDocArgs = {
   datos: DocRegInput;
   files?: InputMaybe<UploadInput>;
-};
-
-
-export type MutationRegNotArgs = {
-  datos: NotificacionInput;
 };
 
 
@@ -627,28 +639,42 @@ export type DocRefFolioMutationVariables = Exact<{
 
 export type DocRefFolioMutation = { __typename?: 'Mutation', docRefFolio: Array<{ __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null, resolveEmpleado?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null } | null, resolverEmpleadoFolio?: { __typename?: 'EmpleadoType', nombreCompleto?: string | null } | null, resolveEmpleadoEnviado?: Array<{ __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }> | null }> };
 
-export type FragNotificacionFragment = { __typename?: 'NotificacionType', idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null };
+export type FragNotificacionFragment = { __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null };
 
 export type NotificacionesQueryVariables = Exact<{
   idUsuario: Scalars['String'];
 }>;
 
 
-export type NotificacionesQuery = { __typename?: 'Query', notificaciones?: Array<{ __typename?: 'NotificacionType', idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null }> | null };
-
-export type RegNotMutationVariables = Exact<{
-  datos: NotificacionInput;
-}>;
-
-
-export type RegNotMutation = { __typename?: 'Mutation', regNot: { __typename?: 'NotificacionType', idUsuario?: string | null } };
+export type NotificacionesQuery = { __typename?: 'Query', notificaciones?: Array<{ __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null }> | null };
 
 export type NotificarSubscriptionVariables = Exact<{
   idUsuario: Scalars['String'];
 }>;
 
 
-export type NotificarSubscription = { __typename?: 'Subscription', notificar: { __typename?: 'NotificacionType', idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
+export type NotificarSubscription = { __typename?: 'Subscription', notificar: { __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
+
+export type EliminarNotMutationVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type EliminarNotMutation = { __typename?: 'Mutation', eliminarNot: { __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
+
+export type MarcarLeidoMutationVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type MarcarLeidoMutation = { __typename?: 'Mutation', marcarLeido: { __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
+
+export type EliminarTodosMutationVariables = Exact<{
+  idUsuario: Scalars['String'];
+}>;
+
+
+export type EliminarTodosMutation = { __typename?: 'Mutation', eliminarTodos: Array<{ __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null }> };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -732,6 +758,7 @@ export const FragDocFragmentDoc = gql`
     `;
 export const FragNotificacionFragmentDoc = gql`
     fragment fragNotificacion on NotificacionType {
+  _id
   idUsuario
   titulo
   imagen
@@ -1313,24 +1340,6 @@ export const NotificacionesDocument = gql`
       super(apollo);
     }
   }
-export const RegNotDocument = gql`
-    mutation regNot($datos: NotificacionInput!) {
-  regNot(datos: $datos) {
-    idUsuario
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class RegNotGQL extends Apollo.Mutation<RegNotMutation, RegNotMutationVariables> {
-    document = RegNotDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const NotificarDocument = gql`
     subscription notificar($idUsuario: String!) {
   notificar(idUsuario: $idUsuario) {
@@ -1344,6 +1353,60 @@ export const NotificarDocument = gql`
   })
   export class NotificarGQL extends Apollo.Subscription<NotificarSubscription, NotificarSubscriptionVariables> {
     document = NotificarDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EliminarNotDocument = gql`
+    mutation eliminarNot($_id: String!) {
+  eliminarNot(_id: $_id) {
+    ...fragNotificacion
+  }
+}
+    ${FragNotificacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EliminarNotGQL extends Apollo.Mutation<EliminarNotMutation, EliminarNotMutationVariables> {
+    document = EliminarNotDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const MarcarLeidoDocument = gql`
+    mutation marcarLeido($_id: String!) {
+  marcarLeido(_id: $_id) {
+    ...fragNotificacion
+  }
+}
+    ${FragNotificacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class MarcarLeidoGQL extends Apollo.Mutation<MarcarLeidoMutation, MarcarLeidoMutationVariables> {
+    document = MarcarLeidoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const EliminarTodosDocument = gql`
+    mutation eliminarTodos($idUsuario: String!) {
+  eliminarTodos(idUsuario: $idUsuario) {
+    ...fragNotificacion
+  }
+}
+    ${FragNotificacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EliminarTodosGQL extends Apollo.Mutation<EliminarTodosMutation, EliminarTodosMutationVariables> {
+    document = EliminarTodosDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

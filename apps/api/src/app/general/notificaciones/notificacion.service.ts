@@ -21,7 +21,7 @@ export class NotificacionService
         }
     }
 
-    async regNot(datos?: NotificacionDto): Promise<NotificacionDto>
+    async regNot(datos: NotificacionDto): Promise<NotificacionDto>
     {
         try
         {
@@ -54,12 +54,13 @@ export class NotificacionService
         }
     }
 
-    async marcarLeidoTodos(idUsuario: string): Promise<NotificacionDto[]>
+    async eliminarTodos(idUsuario: string): Promise<any>
     {
         try
         {
-            // return await this.notificacion.updateMany({idUsuario}, {$set: {leido: true}}).exec();
-            return [];
+            const notEliminadas = await this.notificacion.deleteMany({idUsuario}).exec();
+            console.log('-=-=-=>', notEliminadas);
+            return notEliminadas;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

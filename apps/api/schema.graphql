@@ -182,7 +182,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1670676762
+  tiempo: Int = 1670688943
   titulo: String
   usarRouter: Boolean = false
 }
@@ -221,6 +221,9 @@ type Mutation {
   docActFolio(args: DocActFolioInput!): DocumentoType!
   reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
+  eliminarNot(_id: String!): NotificacionType!
+  marcarLeido(_id: String!): NotificacionType!
+  eliminarTodos(idUsuario: String!): [NotificacionType!]!
 }
 
 input RegEmpleadoInput {

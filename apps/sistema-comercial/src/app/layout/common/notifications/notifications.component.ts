@@ -2,12 +2,13 @@ import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
-import {Subject, Subscription} from 'rxjs';
+import {Subject, Subscription, tap} from 'rxjs';
 import {NotificationsService} from '@s-layout/notifications/notifications.service';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
-import {NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
+import {EliminarNotGQL, EliminarTodosGQL, MarcarLeidoGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {isEqual, pullAllWith} from 'lodash-es';
 
 @Component({
     selector: 'notifications',
@@ -25,14 +26,11 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     sinLeer: number = 0;
     sub: Subscription = new Subscription();
     private _overlayRef: OverlayRef;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(private cdr: ChangeDetectorRef, private _notificationsService: NotificationsService, private _overlay: Overlay,
                 private _viewContainerRef: ViewContainerRef, private notificacionesGQL: NotificacionesGQL, private notificarGQL: NotificarGQL,
-                private ngxToastService: NgxToastService)
+                private ngxToastService: NgxToastService, private eliminarNotGQL: EliminarNotGQL, private marcarLeidoGQL: MarcarLeidoGQL,
+                private eliminarTodosGQL: EliminarTodosGQL)
     {
     }
 
@@ -43,6 +41,8 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
             if (res.data.notificaciones.length > 0)
             {
                 this.notificaciones = res.data.notificaciones as INotificacion[];
+                this.calcularNotSinLeer();
+                this.cdr.detectChanges();
             }
         });
     }
@@ -64,19 +64,6 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
         }));
     }
 
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-
-        // Dispose the overlay
-        if (this._overlayRef)
-        {
-            this._overlayRef.dispose();
-        }
-    }
-
     openPanel(): void
     {
         // Return if the notifications panel or its origin is not defined
@@ -95,18 +82,12 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
         this._overlayRef.attach(new TemplatePortal(this._notificationsPanel, this._viewContainerRef));
     }
 
-    /**
-     * Close the notifications panel
-     */
     closePanel(): void
     {
         this._overlayRef.detach();
     }
 
-    /**
-     * Mark all notifications as read
-     */
-    markAllAsRead(): void
+    eliminarTodas(): void
     {
         // Mark all as read
         this._notificationsService.markAllAsRead().subscribe();
@@ -115,7 +96,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     /**
      * Toggle read status of the given notification
      */
-    toggleRead(notification: INotificacion): void
+    notLeida(notification: INotificacion): void
     {
         // Toggle the read status
         // notification.read = !notification.read;
@@ -127,14 +108,33 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     /**
      * Delete the given notification
      */
-    delete(notification: INotificacion): void
+    eliminar(notification: INotificacion): void
     {
-        // Delete the notification
+        this.eliminarNotGQL.mutate({_id: notification._id}).pipe(tap((res) =>
+        {
+            if (res.data)
+            {
+                // const notEliminada = this.notificaciones;
+                // this.notificaciones = notEliminada.filter(v => v._id !== res.data.eliminarNot._id);
+                pullAllWith(this.notificaciones, ...res.data.eliminarNot._id, isEqual);
+                this.cdr.detectChanges();
+            }
+        })).subscribe();
     }
 
     trackByFn(index: number, item: any): any
     {
+        console.log('indexTrackFN', index);
         return item.id || index;
+    }
+
+    ngOnDestroy(): void
+    {
+        // Dispose the overlay
+        if (this._overlayRef)
+        {
+            this._overlayRef.dispose();
+        }
     }
 
     private _createOverlay(): void

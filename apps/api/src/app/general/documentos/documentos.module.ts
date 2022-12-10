@@ -8,6 +8,8 @@ import {EmpleadoService} from '@api-admin/empleado.service';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {DeptosService} from '@api-admin/deptos.service';
 import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
+import {NotificacionService} from '@api-general/notificaciones/notificacion.service';
+import {NotificacionDto, SCHEMA_NOTIFICACION} from '#api/libs/models/src/lib/general/notificacion/notificacion.dto';
 
 
 @Module({
@@ -17,12 +19,13 @@ import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/admin/deptos/dept
                 [
                     {name: DocumentoDto.name, schema: SCHEMA_DOCUMENTOS},
                     {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO},
-                    {name: DeptoDto.name, schema: SCHEMA_DEPTO}
+                    {name: DeptoDto.name, schema: SCHEMA_DEPTO},
+                    {name: NotificacionDto.name, schema: SCHEMA_NOTIFICACION}
                 ])
         ],
     providers:
         [
-            DocumentosResolver, DocumentosService, EmpleadoService, SubirArchivosService, DeptosService
+            DocumentosResolver, DocumentosService, EmpleadoService, SubirArchivosService, DeptosService, NotificacionService
         ],
 })
 export class DocumentosModule

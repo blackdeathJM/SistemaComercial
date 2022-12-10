@@ -12,6 +12,7 @@ import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.
 import {AppService} from '#api/apps/api/src/app/app.service';
 import {INotificacion} from '#api/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {subNotificacion} from '@api-general/notificaciones/notificacion.resolver';
+import {NotificacionService} from '@api-general/notificaciones/notificacion.service';
 
 @Injectable()
 export class DocumentosService
@@ -19,7 +20,8 @@ export class DocumentosService
     #ano = new Date().getFullYear();
     #mes = new Date().getMonth() + 1;
 
-    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService)
+    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService,
+                private notificacionService: NotificacionService)
     {
     }
 
@@ -134,7 +136,8 @@ export class DocumentosService
                             descripcion: registro.asunto,
                             idUsuario: usuario
                         };
-                    await subNotificacion.publish('notificar', notificacion);
+                    const notRegistrado = await this.notificacionService.regNot(notificacion);
+                    await subNotificacion.publish('notificar', notRegistrado);
                 });
                 return registro;
             } catch (e)

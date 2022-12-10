@@ -1,5 +1,5 @@
 import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
-import {EmpleadosSesionGQL, RegDocGQL, RegNotGQL} from '#/libs/datos/src';
+import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
 import {finalize, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
