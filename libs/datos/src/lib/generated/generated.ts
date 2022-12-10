@@ -335,6 +335,7 @@ export type MutationSubirDocsArgs = {
 };
 
 export type NotificacionInput = {
+  _id?: InputMaybe<Scalars['ID']>;
   descripcion?: InputMaybe<Scalars['String']>;
   icono?: InputMaybe<Scalars['String']>;
   idUsuario?: InputMaybe<Scalars['ID']>;
@@ -348,6 +349,7 @@ export type NotificacionInput = {
 
 export type NotificacionType = {
   __typename?: 'NotificacionType';
+  _id?: Maybe<Scalars['ID']>;
   descripcion?: Maybe<Scalars['String']>;
   icono?: Maybe<Scalars['String']>;
   idUsuario?: Maybe<Scalars['ID']>;

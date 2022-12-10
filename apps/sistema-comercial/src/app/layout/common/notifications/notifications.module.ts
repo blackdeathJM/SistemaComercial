@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {SharedModule} from '@s-shared/shared.module';
 import {NotificationsComponent} from '@s-layout/notifications/notifications.component';
+import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 
 @NgModule({
     declarations:
@@ -21,7 +22,8 @@ import {NotificationsComponent} from '@s-layout/notifications/notifications.comp
             MatButtonModule,
             MatIconModule,
             MatTooltipModule,
-            SharedModule
+            SharedModule,
+            ConvertirTimestamUnixPipe
         ],
     exports:
         [

@@ -1,6 +1,6 @@
 export interface INotificacion
 {
-    _id: string;
+    _id?: string;
     idUsuario: string;
     titulo: string;
     imagen: string;

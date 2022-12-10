@@ -21,7 +21,7 @@ export class NotificacionService
         }
     }
 
-    async regNot(datos: NotificacionDto): Promise<NotificacionDto>
+    async regNot(datos?: NotificacionDto): Promise<NotificacionDto>
     {
         try
         {
@@ -58,7 +58,8 @@ export class NotificacionService
     {
         try
         {
-            return await this.notificacion.updateMany({idUsuario}, {$set: {leido: true}}).exec();
+            // return await this.notificacion.updateMany({idUsuario}, {$set: {leido: true}}).exec();
+            return [];
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

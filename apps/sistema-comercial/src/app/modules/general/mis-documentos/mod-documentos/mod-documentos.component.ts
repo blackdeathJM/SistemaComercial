@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
-import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
-import {combineLatest, concat, finalize, forkJoin, merge, startWith, Subscription, tap} from 'rxjs';
+import {EmpleadosSesionGQL, RegDocGQL, RegNotGQL} from '#/libs/datos/src';
+import {finalize, Subscription, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -85,11 +85,10 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
         this.sub.add(this.generalService.progreso().subscribe((res) =>
         {
             this.porcentaje = res;
-            console.log('respuesta progreso', this.porcentaje);
             this.cdr.detectChanges();
         }));
 
-        this.sub.add(this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        this.sub.add(this.empleadosSesionGQL.watch().valueChanges.pipe(finalize(() => console.log('si finaliza')), tap((res) =>
         {
             if (res.data)
             {
@@ -143,6 +142,7 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
                 enviadoPor: STATE_DATOS_SESION()._id,
                 ...resto
             };
+
         this.regDocGQL.mutate({datos: regDocumento, files}).pipe(finalize(() =>
         {
             this.cargando = false;

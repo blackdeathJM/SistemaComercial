@@ -6,13 +6,6 @@ query notificaciones($idUsuario: String!)
     }
 }
 
-mutation regNot($datos: NotificacionInput!)
-{
-    regNot(datos: $datos)
-    {
-        idUsuario
-    }
-}
 subscription notificar($idUsuario: String!)
 {
     notificar(idUsuario: $idUsuario)

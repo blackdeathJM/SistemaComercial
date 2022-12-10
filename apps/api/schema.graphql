@@ -92,6 +92,7 @@ type DocumentoType {
 }
 
 type NotificacionType {
+  _id: ID
   descripcion: String
   icono: String
   idUsuario: ID
@@ -174,13 +175,14 @@ input DocumentoInput {
 }
 
 input NotificacionInput {
+  _id: ID
   descripcion: String
   icono: String = "heroicons_outline:speakerphone"
   idUsuario: ID
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1670607296
+  tiempo: Int = 1670676762
   titulo: String
   usarRouter: Boolean = false
 }
@@ -219,7 +221,6 @@ type Mutation {
   docActFolio(args: DocActFolioInput!): DocumentoType!
   reasignarUsuario(usuarios: DocReasignarUsuarioInput!): DocumentoType!
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
-  regNot(datos: NotificacionInput!): NotificacionType!
 }
 
 input RegEmpleadoInput {

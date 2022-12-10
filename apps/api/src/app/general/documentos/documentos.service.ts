@@ -10,6 +10,8 @@ import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DeptosService} from '@api-admin/deptos.service';
 import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
 import {AppService} from '#api/apps/api/src/app/app.service';
+import {INotificacion} from '#api/libs/models/src/lib/general/notificacion/notificacion.interface';
+import {subNotificacion} from '@api-general/notificaciones/notificacion.resolver';
 
 @Injectable()
 export class DocumentosService
@@ -116,7 +118,25 @@ export class DocumentosService
         {
             try
             {
-                return await this.documento.create(datos);
+                const registro = await this.documento.create(datos);
+
+                registro.usuarios.map(async (usuario) =>
+                {
+                    const notificacion: INotificacion =
+                        {
+                            imagen: null,
+                            leido: false,
+                            link: '/sistema-comercial/general/mis-documentos',
+                            icono: 'heroicons_outline:document-text',
+                            tiempo: AppService.fechaHoraActual(),
+                            titulo: `Haz recibido un nuevo ${registro.tipoDoc}`,
+                            usarRouter: true,
+                            descripcion: registro.asunto,
+                            idUsuario: usuario
+                        };
+                    await subNotificacion.publish('notificar', notificacion);
+                });
+                return registro;
             } catch (e)
             {
                 throw new ConflictException({message: e.codeName});

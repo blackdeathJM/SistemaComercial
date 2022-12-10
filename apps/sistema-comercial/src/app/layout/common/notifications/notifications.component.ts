@@ -2,12 +2,10 @@ import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
-import {Subject, Subscription, takeUntil} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {NotificationsService} from '@s-layout/notifications/notifications.service';
-import {Notification} from '@s-layout/notifications/notifications.types';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
-import {STATE_NOTIFICACION} from '@s-layout/notifications/notificacion.state';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
@@ -15,16 +13,16 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
     selector: 'notifications',
     templateUrl: './notifications.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    exportAs: 'notifications'
+    exportAs: 'notifications',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationsComponent implements OnInit, OnDestroy, AfterContentInit
 {
     @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
     @ViewChild('notificationsPanel') private _notificationsPanel: TemplateRef<any>;
 
-    notificaciones: INotificacion[];
-    unreadCount: number = 0;
+    notificaciones: INotificacion[] = [];
+    sinLeer: number = 0;
     sub: Subscription = new Subscription();
     private _overlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -32,7 +30,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     /**
      * Constructor
      */
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private _notificationsService: NotificationsService, private _overlay: Overlay,
+    constructor(private cdr: ChangeDetectorRef, private _notificationsService: NotificationsService, private _overlay: Overlay,
                 private _viewContainerRef: ViewContainerRef, private notificacionesGQL: NotificacionesGQL, private notificarGQL: NotificarGQL,
                 private ngxToastService: NgxToastService)
     {
@@ -40,28 +38,29 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     ngOnInit(): void
     {
-
-        this.notificacionesGQL.watch().valueChanges.subscribe((res) =>
+        this.notificacionesGQL.watch({idUsuario: STATE_DATOS_SESION()._id}).valueChanges.subscribe((res) =>
         {
-            if (res.data.notificaciones)
+            if (res.data.notificaciones.length > 0)
             {
-                STATE_NOTIFICACION(res.data.notificaciones as INotificacion[]);
+                this.notificaciones = res.data.notificaciones as INotificacion[];
             }
         });
     }
 
     ngAfterContentInit(): void
     {
-        this.notificaciones = STATE_NOTIFICACION();
-
         this.sub.add(this.notificarGQL.subscribe({idUsuario: STATE_DATOS_SESION()._id}).subscribe((res) =>
         {
-            const nvaNotificacion = STATE_NOTIFICACION();
-            STATE_NOTIFICACION([...nvaNotificacion, res.data.notificar as INotificacion]);
-            this.ngxToastService.infoToast(res.data.notificar.descripcion, res.data.notificar.titulo, {
-                closeButton: true, disableTimeOut: true,
-                positionClass: 'toast-bottom-full-width'
-            });
+            if (res.data.notificar)
+            {
+                const notRecibida = res.data.notificar as INotificacion;
+                this.notificaciones.push(notRecibida);
+                this.calcularNotSinLeer();
+                this.cdr.detectChanges();
+                this.ngxToastService.infoToast(res.data.notificar.descripcion, res.data.notificar.titulo, {
+                    closeButton: true, disableTimeOut: true
+                });
+            }
         }));
     }
 
@@ -128,7 +127,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     /**
      * Delete the given notification
      */
-    delete(notification: Notification): void
+    delete(notification: INotificacion): void
     {
         // Delete the notification
     }
@@ -185,15 +184,15 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     }
 
 
-    private _calculateUnreadCount(): void
+    private calcularNotSinLeer(): void
     {
-        // let count = 0;
-        //
-        // if (this.notificaciones && this.notificaciones.length)
-        // {
-        //     count = this.notificaciones.filter(notification => !notification.read).length;
-        // }
-        //
-        // this.unreadCount = count;
+        let count = 0;
+
+        if (this.notificaciones && this.notificaciones.length)
+        {
+            count = this.notificaciones.filter(notification => !notification.leido).length;
+        }
+
+        this.sinLeer = count;
     }
 }
