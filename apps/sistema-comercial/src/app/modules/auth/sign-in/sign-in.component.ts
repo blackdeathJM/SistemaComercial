@@ -72,9 +72,12 @@ export class AuthSignInComponent implements OnInit, OnDestroy
                 if (res.data.login.token)
                 {
                     STATE_DATOS_SESION(res.data.login.datosSesion);
-                    localStorage.setItem(TOKEN, res.data.login.token);
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
-                    this._router.navigateByUrl(redirectURL).then().catch(err => console.log('error', err));
+                    setTimeout(() =>
+                    {
+                        localStorage.setItem(TOKEN, res.data.login.token);
+                        const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
+                        this._router.navigateByUrl(redirectURL).then().catch(err => console.log('error', err));
+                    }, 200);
                 }
             }
         })).subscribe());

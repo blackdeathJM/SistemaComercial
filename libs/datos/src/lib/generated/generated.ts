@@ -236,6 +236,7 @@ export type ModificadoPorType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  actualizarAvatar: Scalars['String'];
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   asignarAuth: EmpleadoType;
@@ -246,13 +247,19 @@ export type Mutation = {
   docRefFolio: Array<DocumentoType>;
   eliminarDepto: DeptoType;
   eliminarNot: NotificacionType;
-  eliminarTodos: Array<NotificacionType>;
+  eliminarTodos: Scalars['Int'];
   genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
   marcarLeido: NotificacionType;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
   subirDocs: DocumentoType;
+};
+
+
+export type MutationActualizarAvatarArgs = {
+  _id: Scalars['String'];
+  url: Scalars['String'];
 };
 
 
@@ -523,6 +530,14 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } | null };
 
+export type ActualizarAvatarMutationVariables = Exact<{
+  _id: Scalars['String'];
+  url: Scalars['String'];
+}>;
+
+
+export type ActualizarAvatarMutation = { __typename?: 'Mutation', actualizarAvatar: string };
+
 export type FragTelefonoFragment = { __typename?: 'TelefonoType', numero?: string | null };
 
 export type FragModificadoPorFragment = { __typename?: 'ModificadoPorType', fecha?: number | null, usuario?: string | null, accion?: string | null, valorAnterior?: Array<any> | null, valorActual?: Array<any> | null };
@@ -674,7 +689,7 @@ export type EliminarTodosMutationVariables = Exact<{
 }>;
 
 
-export type EliminarTodosMutation = { __typename?: 'Mutation', eliminarTodos: Array<{ __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null }> };
+export type EliminarTodosMutation = { __typename?: 'Mutation', eliminarTodos: number };
 
 export const FragDeptosFragmentDoc = gql`
     fragment fragDeptos on DeptoType {
@@ -913,6 +928,22 @@ export const LoginDocument = gql`
   })
   export class LoginGQL extends Apollo.Mutation<LoginMutation, LoginMutationVariables> {
     document = LoginDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActualizarAvatarDocument = gql`
+    mutation actualizarAvatar($_id: String!, $url: String!) {
+  actualizarAvatar(_id: $_id, url: $url)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActualizarAvatarGQL extends Apollo.Mutation<ActualizarAvatarMutation, ActualizarAvatarMutationVariables> {
+    document = ActualizarAvatarDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1396,11 +1427,9 @@ export const MarcarLeidoDocument = gql`
   }
 export const EliminarTodosDocument = gql`
     mutation eliminarTodos($idUsuario: String!) {
-  eliminarTodos(idUsuario: $idUsuario) {
-    ...fragNotificacion
-  }
+  eliminarTodos(idUsuario: $idUsuario)
 }
-    ${FragNotificacionFragmentDoc}`;
+    `;
 
   @Injectable({
     providedIn: 'root'

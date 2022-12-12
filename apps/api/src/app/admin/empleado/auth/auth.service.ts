@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
@@ -44,6 +44,18 @@ export class AuthService
         }
 
         return empleado;
+    }
+
+    async actualizarAvatar(_id: string, url: string): Promise<string>
+    {
+        try
+        {
+            const rutaImg = await this.empleado.findByIdAndUpdate(_id, {$set: {avatar: url}}).exec();
+            return rutaImg.avatar;
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
     }
 
     async validarUsuario(username: string, password: string): Promise<EmpleadoDto>

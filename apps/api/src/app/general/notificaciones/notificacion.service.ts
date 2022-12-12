@@ -14,7 +14,7 @@ export class NotificacionService
     {
         try
         {
-            return await this.notificacion.find({idEmpleado}).exec();
+            return await this.notificacion.find({idEmpleado}, {}, {sort: {tiempo: -1}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.message});
@@ -39,7 +39,7 @@ export class NotificacionService
             return await this.notificacion.findByIdAndDelete(_id).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
@@ -50,17 +50,16 @@ export class NotificacionService
             return await this.notificacion.findByIdAndUpdate(_id, {$set: {leido: true}}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
-    async eliminarTodos(idUsuario: string): Promise<any>
+    async eliminarTodos(idUsuario: string): Promise<number>
     {
         try
         {
             const notEliminadas = await this.notificacion.deleteMany({idUsuario}).exec();
-            console.log('-=-=-=>', notEliminadas);
-            return notEliminadas;
+            return notEliminadas.deletedCount;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

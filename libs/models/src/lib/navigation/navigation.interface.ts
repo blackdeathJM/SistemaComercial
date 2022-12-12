@@ -1,3 +1,5 @@
+import {IsActiveMatchOptions, Params, QueryParamsHandling} from '@angular/router';
+
 export interface INavegacion
 {
     id?: string;
@@ -11,14 +13,18 @@ export interface INavegacion
         | 'group'
         | 'spacer';
     hidden?: (item: INavegacion) => boolean;
-    active: boolean;
+    oculto?: boolean;
+    activo: boolean;
+    componentes?: object[];
+    controles?: IControl[];
+    active?: boolean;
     disabled?: boolean;
     tooltip?: string;
     link?: string;
     fragment?: string;
     preserveFragment?: boolean;
-    queryParams?: [key: string] | null;
-    queryParamsHandling?: 'merge' | 'preserve' | '' | null;
+    queryParams?: Params | null;
+    queryParamsHandling?: QueryParamsHandling | null;
     externalLink?: boolean;
     target?:
         | '_blank'
@@ -27,12 +33,7 @@ export interface INavegacion
         | '_top'
         | string;
     exactMatch?: boolean;
-    isActiveMatchOptions?: {
-        matrixParams: 'exact' | 'subset' | 'ignored';
-        queryParams: 'exact' | 'subset' | 'ignored';
-        paths: 'exact' | 'subset';
-        fragment: 'exact' | 'ignored';
-    };
+    isActiveMatchOptions?: IsActiveMatchOptions;
     function?: (item: INavegacion) => void;
     classes?: {
         title?: string;
@@ -47,6 +48,12 @@ export interface INavegacion
     };
     children?: INavegacion[];
     meta?: any;
+}
+
+interface IControl
+{
+    id: string;
+    activo: boolean;
 }
 
 export type FuseVerticalNavigationAppearance =

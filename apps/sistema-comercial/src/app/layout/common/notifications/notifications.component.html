@@ -22,7 +22,7 @@
             </div>
             <div class="text-lg font-medium leading-10">Notificaciones</div>
             <div class="ml-auto">
-                <button mat-icon-button [matTooltip]="'Eliminar todas las notificaciones'" [disabled]="sinLeer === 0" (click)="eliminarTodas()">
+                <button mat-icon-button [matTooltip]="'Eliminar todas las notificaciones'" [disabled]="this.notificaciones.length === 0" (click)="eliminarTodas()">
                     <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:mail-open'"></mat-icon>
                 </button>
             </div>
@@ -58,7 +58,7 @@
                     <!-- Actions -->
                     <div class="relative flex flex-col my-5 mr-6 ml-2">
                         <!-- Indicator -->
-                        <button class="w-6 h-6 min-h-6" mat-icon-button (click)="notLeida(notification)" [matTooltip]="'Marcar como leida'">
+                        <button class="w-6 h-6 min-h-6" mat-icon-button>
                             <span class="w-2 h-2 rounded-full"
                                   [ngClass]="{'bg-gray-400 dark:bg-gray-500 sm:opacity-0 sm:group-hover:opacity-100': notification.leido, 'bg-primary': !notification.leido}"></span>
                         </button>

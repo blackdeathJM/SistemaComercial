@@ -27,10 +27,8 @@ mutation marcarLeido($_id: String!)
         ...fragNotificacion
     }
 }
+
 mutation eliminarTodos($idUsuario: String!)
 {
     eliminarTodos(idUsuario: $idUsuario)
-    {
-        ...fragNotificacion
-    }
 }

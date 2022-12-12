@@ -39,6 +39,12 @@ export class AuthResolver
         return this.authService.login(context.user);
     }
 
+    @Mutation(() => String)
+    async actualizarAvatar(@Args('_id') _id: string, @Args('url') url: string): Promise<string>
+    {
+        return await this.authService.actualizarAvatar(_id, url);
+    }
+
     // @Mutation(() => EmpleadoDto)
     // async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto, @Args('modificadoPor') modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
     // {

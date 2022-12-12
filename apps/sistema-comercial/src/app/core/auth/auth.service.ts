@@ -76,7 +76,6 @@ export class AuthService
             return of(true);
         }
 
-        // Check the access token availability
         if (!this.jwtHelperService.tokenGetter())
         {
             return of(false);

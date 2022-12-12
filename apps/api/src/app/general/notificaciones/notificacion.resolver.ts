@@ -1,4 +1,4 @@
-import {Args, Query, Resolver, Subscription, Mutation} from '@nestjs/graphql';
+import {Args, Query, Resolver, Subscription, Mutation, Int} from '@nestjs/graphql';
 import {NotificacionDto} from '#api/libs/models/src/lib/general/notificacion/notificacion.dto';
 import {PubSub} from 'graphql-subscriptions';
 import {NotificacionService} from '@api-general/notificaciones/notificacion.service';
@@ -31,8 +31,8 @@ export class NotificacionResolver
         return await this.notificacionService.marcarLeido(_id);
     }
 
-    @Mutation(() => [NotificacionDto])
-    async eliminarTodos(@Args('idUsuario') idUsuario: string): Promise<any>
+    @Mutation(() => Int)
+    async eliminarTodos(@Args('idUsuario') idUsuario: string): Promise<number>
     {
         return await this.notificacionService.eliminarTodos(idUsuario);
     }

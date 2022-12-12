@@ -182,7 +182,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1670688943
+  tiempo: Int = 1670817850
   titulo: String
   usarRouter: Boolean = false
 }
@@ -214,6 +214,7 @@ type Mutation {
   asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
+  actualizarAvatar(_id: String!, url: String!): String!
   regDoc(datos: DocRegInput!, files: UploadInput = null): DocumentoType!
   subirDocs(args: DocsSubirInput = null, files: UploadInput = null, filesAcuse: UploadInput = null): DocumentoType!
   genFolioSinReg(args: DocFolioInput!): String!
@@ -223,7 +224,7 @@ type Mutation {
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
   eliminarNot(_id: String!): NotificacionType!
   marcarLeido(_id: String!): NotificacionType!
-  eliminarTodos(idUsuario: String!): [NotificacionType!]!
+  eliminarTodos(idUsuario: String!): Int!
 }
 
 input RegEmpleadoInput {

@@ -29,25 +29,11 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for current year
-     */
     get currentYear(): number
     {
         return new Date().getFullYear();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to navigation data
@@ -55,6 +41,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navegation) =>
             {
+                console.log('navegacion', navigation);
                 this.navigation = navigation;
             });
 
@@ -71,12 +58,10 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
 
     ngAfterContentInit(): void
     {
+        console.log('AfterContentInit');
         this.user = STATE_DATOS_SESION();
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -84,15 +69,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
     toggleNavigation(name: string): void
     {
         // Get the navigation

@@ -48,3 +48,7 @@ mutation login($login: LoginInput!)
         }
     }
 }
+mutation actualizarAvatar($_id: String!, $url: String!)
+{
+    actualizarAvatar(_id: $_id, url: $url)
+}

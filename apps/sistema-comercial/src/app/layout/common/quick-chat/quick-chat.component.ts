@@ -48,6 +48,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
     @HostBinding('class') get classList(): any
     {
         return {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'quick-chat-opened': this.opened
         };
     }

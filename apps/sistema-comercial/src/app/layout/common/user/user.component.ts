@@ -15,7 +15,7 @@ import {TOKEN} from '@s-auth/const';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user'
 })
-export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
+export class UserComponent implements AfterContentInit, AfterViewInit
 {
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
@@ -32,11 +32,13 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
 
     ngAfterContentInit(): void
     {
+        console.log('ngAfterContentInit');
         this.user = STATE_DATOS_SESION();
     }
 
     ngAfterViewInit(): void
     {
+        console.log('ngAfterViewInit');
         this.subs.add(this.rolCambiado.subscribe({_id: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
         {
             if (res.data)
@@ -66,10 +68,5 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
     signOut(): void
     {
         this.authService.signOut();
-    }
-
-    ngOnDestroy(): void
-    {
-
     }
 }

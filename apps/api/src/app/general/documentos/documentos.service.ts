@@ -131,7 +131,7 @@ export class DocumentosService
                             link: '/sistema-comercial/general/mis-documentos',
                             icono: 'heroicons_outline:document-text',
                             tiempo: AppService.fechaHoraActual(),
-                            titulo: `Haz recibido un nuevo ${registro.tipoDoc}`,
+                            titulo: `Nuevo ${registro.tipoDoc}`,
                             usarRouter: true,
                             descripcion: registro.asunto,
                             idUsuario: usuario

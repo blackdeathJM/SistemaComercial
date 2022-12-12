@@ -2,13 +2,12 @@ import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
-import {Subject, Subscription, tap} from 'rxjs';
+import {Subscription, tap} from 'rxjs';
 import {NotificationsService} from '@s-layout/notifications/notifications.service';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
-import {EliminarNotGQL, EliminarTodosGQL, MarcarLeidoGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
+import {EliminarNotGQL, EliminarTodosGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {isEqual, pullAllWith} from 'lodash-es';
 
 @Component({
     selector: 'notifications',
@@ -29,8 +28,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     constructor(private cdr: ChangeDetectorRef, private _notificationsService: NotificationsService, private _overlay: Overlay,
                 private _viewContainerRef: ViewContainerRef, private notificacionesGQL: NotificacionesGQL, private notificarGQL: NotificarGQL,
-                private ngxToastService: NgxToastService, private eliminarNotGQL: EliminarNotGQL, private marcarLeidoGQL: MarcarLeidoGQL,
-                private eliminarTodosGQL: EliminarTodosGQL)
+                private ngxToastService: NgxToastService, private eliminarNotGQL: EliminarNotGQL, private eliminarTodosGQL: EliminarTodosGQL)
     {
     }
 
@@ -40,9 +38,13 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
         {
             if (res.data.notificaciones.length > 0)
             {
-                this.notificaciones = res.data.notificaciones as INotificacion[];
-                this.calcularNotSinLeer();
-                this.cdr.detectChanges();
+                // this.notificaciones.push(...res.data.notificaciones as INotificacion[]);
+                res.data.notificaciones.map((value: INotificacion) =>
+                {
+                    this.notificaciones.push(value);
+                    this.calcularNotSinLeer();
+                    this.cdr.detectChanges();
+                });
             }
         });
     }
@@ -54,7 +56,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
             if (res.data.notificar)
             {
                 const notRecibida = res.data.notificar as INotificacion;
-                this.notificaciones.push(notRecibida);
+                this.notificaciones.unshift(notRecibida);
                 this.calcularNotSinLeer();
                 this.cdr.detectChanges();
                 this.ngxToastService.infoToast(res.data.notificar.descripcion, res.data.notificar.titulo, {
@@ -89,43 +91,34 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     eliminarTodas(): void
     {
-        // Mark all as read
-        this._notificationsService.markAllAsRead().subscribe();
+        this.eliminarTodosGQL.mutate({idUsuario: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
+        {
+            for (let i; i < res; i++)
+            {
+                this.notificaciones.pop();
+            }
+        })).subscribe();
     }
 
-    /**
-     * Toggle read status of the given notification
-     */
-    notLeida(notification: INotificacion): void
-    {
-        // Toggle the read status
-        // notification.read = !notification.read;
-        //
-        // // Update the notification
-        // this._notificationsService.update(notification.id, notification).subscribe();
-    }
-
-    /**
-     * Delete the given notification
-     */
     eliminar(notification: INotificacion): void
     {
         this.eliminarNotGQL.mutate({_id: notification._id}).pipe(tap((res) =>
         {
             if (res.data)
             {
-                // const notEliminada = this.notificaciones;
-                // this.notificaciones = notEliminada.filter(v => v._id !== res.data.eliminarNot._id);
-                pullAllWith(this.notificaciones, ...res.data.eliminarNot._id, isEqual);
-                this.cdr.detectChanges();
+                if (this.notificaciones.length > 0)
+                {
+                    this.notificaciones = this.notificaciones.filter(value => value._id !== res.data.eliminarNot._id);
+                    this.calcularNotSinLeer();
+                    this.cdr.detectChanges();
+                }
             }
         })).subscribe();
     }
 
-    trackByFn(index: number, item: any): any
+    trackByFn(index: number, item: INotificacion): any
     {
-        console.log('indexTrackFN', index);
-        return item.id || index;
+        return item._id || index;
     }
 
     ngOnDestroy(): void
@@ -192,7 +185,6 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
         {
             count = this.notificaciones.filter(notification => !notification.leido).length;
         }
-
         this.sinLeer = count;
     }
 }

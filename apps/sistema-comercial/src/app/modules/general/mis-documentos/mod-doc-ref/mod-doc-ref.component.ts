@@ -1,4 +1,4 @@
-import {AfterContentChecked, ChangeDetectionStrategy, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -26,7 +26,7 @@ import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
     styleUrls: ['./mod-doc-ref.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModDocRefComponent implements OnInit, AfterContentChecked
+export class ModDocRefComponent implements OnInit, AfterContentInit
 {
     @ViewChild('entradaRef') refInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
@@ -57,7 +57,7 @@ export class ModDocRefComponent implements OnInit, AfterContentChecked
         })).subscribe();
     }
 
-    ngAfterContentChecked(): void
+    ngAfterContentInit(): void
     {
         this.refFiltrados = this.refCtrl.valueChanges.pipe(
             startWith(null),

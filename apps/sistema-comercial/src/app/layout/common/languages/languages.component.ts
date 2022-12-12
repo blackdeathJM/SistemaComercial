@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {take} from 'rxjs';
 import {AvailableLangs, TranslocoService} from '@ngneat/transloco';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
@@ -10,15 +10,12 @@ import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/na
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'languages'
 })
-export class LanguagesComponent implements OnInit, OnDestroy
+export class LanguagesComponent implements OnInit
 {
     availableLangs: AvailableLangs;
     activeLang: string;
     flagCodes: any;
 
-    /**
-     * Constructor
-     */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
@@ -57,22 +54,6 @@ export class LanguagesComponent implements OnInit, OnDestroy
         };
     }
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Set the active lang
-     *
-     * @param lang
-     */
     setActiveLang(lang: string): void
     {
         // Set the active lang

@@ -12,7 +12,6 @@ export class TelefonoDto implements ITelefono
     @Field(() => String, {nullable: true})
     numero: string;
 }
-
 export class PuestoDto implements IPuesto
 {
     @Field(() => Int, {nullable: true})
