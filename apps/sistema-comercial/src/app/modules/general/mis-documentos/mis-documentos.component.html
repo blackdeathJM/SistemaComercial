@@ -46,9 +46,8 @@
         <div class="flex flex-wrap" *ngIf="true">
             <ng-container *ngIf="!cargandoDatos; else cargando">
                 <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
-                    <!--                <a class="z-20 flex items-center cursor-pointer" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover':}">-->
                     <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
-                        <img class="w-16 h-16 mr-6 rounded-full" [src]="doc?.resolveEmpleado?.avatar" alt="Avatar" *ngIf="doc?.resolveEmpleado?.avatar">
+                        <img class="avatar w-16 h-16 mr-4" [src]="doc?.resolveEmpleado?.avatar" alt="Avatar" *ngIf="doc?.resolveEmpleado?.avatar">
                         <div class="avatar-letra" *ngIf="!doc?.resolveEmpleado?.avatar">{{doc?.resolveEmpleado?.nombreCompleto?.charAt(0)}}</div>
                         <div class="flex flex-col">
                             <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc?.asunto}}</p>

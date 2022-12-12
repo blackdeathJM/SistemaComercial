@@ -1,7 +1,7 @@
 <mat-card class="mx-auto my-8 w-2/4 h-fit border-solid">
     <mat-card-content class="flex flex-col">
         <div class="w-36 h-36 p-4 w-full mx-auto">
-            <img class="w-full h-full rounded-full ring object-cover object-center" [src]="srcImagen" alt="">
+            <img class="avatar" [src]="srcImagen" alt="">
         </div>
         <mat-form-field class="flex-auto mt-4">
             <ngx-mat-file-input (change)="cambioImagen($event)"></ngx-mat-file-input>
