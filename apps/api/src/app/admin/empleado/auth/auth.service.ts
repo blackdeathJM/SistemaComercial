@@ -46,18 +46,6 @@ export class AuthService
         return empleado;
     }
 
-    async actualizarAvatar(_id: string, url: string): Promise<string>
-    {
-        try
-        {
-            const rutaImg = await this.empleado.findByIdAndUpdate(_id, {$set: {avatar: url}}).exec();
-            return rutaImg.avatar;
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e.codeName});
-        }
-    }
-
     async validarUsuario(username: string, password: string): Promise<EmpleadoDto>
     {
         const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
@@ -105,5 +93,30 @@ export class AuthService
             token: this.jwtService.sign(datosSesion),
             datosSesion
         };
+    }
+
+    async actualizarAvatar(_id: string, url: string): Promise<ILoginRespuesta>
+    {
+        try
+        {
+            const rutaImg = await this.empleado.findByIdAndUpdate(_id, {$set: {avatar: url}}, {new: true}).exec();
+
+            const datosSesion: IDatosSesion =
+                {
+                    _id: rutaImg._id,
+                    avatar: rutaImg.avatar,
+                    auth: rutaImg.auth,
+                    deptoId: rutaImg.deptoId,
+                    activo: rutaImg.activo,
+                    nombreCompleto: rutaImg.nombreCompleto
+                };
+            return {
+                token: this.jwtService.sign(datosSesion),
+                datosSesion
+            };
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
     }
 }

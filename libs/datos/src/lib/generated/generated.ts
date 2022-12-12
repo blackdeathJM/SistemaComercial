@@ -236,7 +236,7 @@ export type ModificadoPorType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  actualizarAvatar: Scalars['String'];
+  actualizarAvatar: LoginRespuestaType;
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   asignarAuth: EmpleadoType;
@@ -536,7 +536,7 @@ export type ActualizarAvatarMutationVariables = Exact<{
 }>;
 
 
-export type ActualizarAvatarMutation = { __typename?: 'Mutation', actualizarAvatar: string };
+export type ActualizarAvatarMutation = { __typename?: 'Mutation', actualizarAvatar: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } };
 
 export type FragTelefonoFragment = { __typename?: 'TelefonoType', numero?: string | null };
 
@@ -935,9 +935,14 @@ export const LoginDocument = gql`
   }
 export const ActualizarAvatarDocument = gql`
     mutation actualizarAvatar($_id: String!, $url: String!) {
-  actualizarAvatar(_id: $_id, url: $url)
+  actualizarAvatar(_id: $_id, url: $url) {
+    token
+    datosSesion {
+      ...fragDatosSesion
+    }
+  }
 }
-    `;
+    ${FragDatosSesionFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

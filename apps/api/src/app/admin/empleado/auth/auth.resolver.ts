@@ -39,8 +39,8 @@ export class AuthResolver
         return this.authService.login(context.user);
     }
 
-    @Mutation(() => String)
-    async actualizarAvatar(@Args('_id') _id: string, @Args('url') url: string): Promise<string>
+    @Mutation(() => LoginRespuestaDto)
+    async actualizarAvatar(@Args('_id') _id: string, @Args('url') url: string): Promise<ILoginRespuesta>
     {
         return await this.authService.actualizarAvatar(_id, url);
     }

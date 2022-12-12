@@ -88,14 +88,15 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     {
         this._overlayRef.detach();
     }
-
     eliminarTodas(): void
     {
         this.eliminarTodosGQL.mutate({idUsuario: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
         {
-            for (let i; i < res; i++)
+            for (let i = 0; i < res.data.eliminarTodos; i++)
             {
                 this.notificaciones.pop();
+                this.calcularNotSinLeer();
+                this.cdr.detectChanges();
             }
         })).subscribe();
     }

@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterContentChecked, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subject, takeUntil} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
@@ -13,7 +13,7 @@ import {Navegation} from '@s-core/navigation/navigation.types';
     templateUrl: './classy.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentInit
+export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentChecked
 {
     isScreenSmall: boolean;
     navigation: Navegation;
@@ -21,9 +21,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
     imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
@@ -32,6 +29,12 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
     get currentYear(): number
     {
         return new Date().getFullYear();
+    }
+
+    ngAfterContentChecked(): void
+    {
+        console.log('ngAfterContetChecked');
+        this.user = STATE_DATOS_SESION();
     }
 
     ngOnInit(): void
@@ -54,12 +57,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
-    }
-
-    ngAfterContentInit(): void
-    {
-        console.log('AfterContentInit');
-        this.user = STATE_DATOS_SESION();
     }
 
     ngOnDestroy(): void
