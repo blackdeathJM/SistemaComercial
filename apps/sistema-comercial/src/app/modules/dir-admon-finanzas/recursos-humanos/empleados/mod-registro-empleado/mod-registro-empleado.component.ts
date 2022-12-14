@@ -16,14 +16,15 @@ import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/emplea
 import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
-import {finalize, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DEPTOS} from '@s-admin/deptos.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
+import {StateDeptoStore} from "@s-admin/state-depto.store";
+import {Select} from "@ngxs/store";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -52,6 +53,8 @@ import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 })
 export class ModRegistroEmpleadoComponent implements OnInit
 {
+    @Select(StateDeptoStore.deptos)
+    deptos$: Observable<IDepto[]>;
     formEmpleado: FormGroup;
     cargando = false;
 
@@ -64,7 +67,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
     stateDeptos: IDepto[];
 
     constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL,
-                private ngxToastService: NgxToastService)
+                private ngxToastService: NgxToastService, public stateDepto: StateDeptoStore)
     {
     }
 
@@ -86,13 +89,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
-        this.deptosGQL.watch().valueChanges.pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
-            }
-        })).subscribe();
+        this.stateDepto.cargarDeptos();
     }
 
     agregarTel(): void

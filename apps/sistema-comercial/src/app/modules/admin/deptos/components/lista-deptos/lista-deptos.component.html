@@ -1,18 +1,19 @@
-<ng-container *ngIf="deptos.length > 0; else cargando">
-    <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
-        <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">
-            <mat-icon class="text-amber-600 mr-4" [svgIcon]="'heroicons_outline:library'"></mat-icon>
-            <div class="flex-col flex-auto">
-                <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>
-                <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>
+<ng-container *ngIf="(deptos$ | async) as deptos">
+    <ng-container *ngIf="deptos.length > 0; else cargando">
+        <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
+            <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">
+                <mat-icon class="text-amber-600 mr-4" [svgIcon]="'heroicons_outline:library'"></mat-icon>
+                <div class="flex-col flex-auto">
+                    <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>
+                    <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>
+                </div>
+                <button mat-icon-button type="button" (click)="editar(depto)">
+                    <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
+                </button>
             </div>
-            <button mat-icon-button type="button" (click)="editar(depto)">
-                <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>
-            </button>
-        </div>
+        </ng-container>
     </ng-container>
-</ng-container>
-
+    </ng-container>
 <ng-template #cargando>
     <div class="flex items-center justify-center w-full">
         <app-tailwind-loading></app-tailwind-loading>

@@ -5,7 +5,6 @@ import {ExtraOptions, PreloadAllModules, RouterModule} from '@angular/router';
 import {MarkdownModule} from 'ngx-markdown';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
@@ -28,6 +27,7 @@ import {appConfig} from '@s-core/config/app.config';
 import {mockApiServices} from '#/apps/sistema-comercial/src/app/mock-api';
 import {CoreModule} from '@s-core/core.module';
 import {LayoutModule} from '@s-layout/layout.module';
+import {NgxsGlobalModule} from '#/apps/sistema-comercial/src/ngxs/ngxsGlobal.module';
 
 const routerConfig: ExtraOptions =
     {
@@ -70,8 +70,8 @@ const routerConfig: ExtraOptions =
 
             // 3rd party modules that require global configuration via forRoot
             MarkdownModule.forRoot({}),
+            NgxsGlobalModule,
             ApolloConfigModule,
-            NgxSkeletonLoaderModule.forRoot(),
             SweetAlert2Module.forRoot(),
             ToastrModule.forRoot(),
             NgxTrimDirectiveModule,

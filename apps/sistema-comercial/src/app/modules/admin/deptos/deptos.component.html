@@ -3,17 +3,17 @@
         <div>Departamentos</div>
     </ng-container>
     <ng-container buscar>
-        <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+        <div class="flex mt-4 sm:mt-0 md:mt-4">
             <!-- Search -->
-            <div class="flex-auto">
-                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
-                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                    <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar departamento'">
-                </mat-form-field>
-            </div>
+            <mat-form-field class="flex-auto">
+                <mat-icon matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar departamento'">
+            </mat-form-field>
             <button class="ml-4" mat-flat-button [color]="'primary'" (click)="registro()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Agregar</span>
+                <div class="flex items-center justify-center">
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="mr-3">Agregar</span>
+                </div>
             </button>
         </div>
     </ng-container>

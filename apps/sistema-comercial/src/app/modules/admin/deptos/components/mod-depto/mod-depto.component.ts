@@ -1,9 +1,8 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
 import {finalize, tap} from 'rxjs';
-import {unionBy} from 'lodash-es';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -15,7 +14,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DEPTOS} from '@s-admin/deptos.state';
+import {StateDeptoStore} from '@s-admin/state-depto.store';
 
 @Component({
     standalone: true,
@@ -35,7 +34,8 @@ import {STATE_DEPTOS} from '@s-admin/deptos.state';
     selector: 'app-mod-depto',
     templateUrl: './mod-depto.component.html',
     styleUrls: ['./mod-depto.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModDeptoComponent implements OnInit
 {
@@ -43,7 +43,7 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
 
     constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
-                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto)
+                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto, private stateDepto: StateDeptoStore)
     {
     }
 
@@ -68,10 +68,10 @@ export class ModDeptoComponent implements OnInit
                 {
                     if (res.data)
                     {
-                        unionBy(STATE_DEPTOS(), res.data.actualizarDepto);
-                        this.cargandoDatos = false;
+                        this.stateDepto.actualizarDepto(this.formDepto.value, false);
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
+                    this.cargandoDatos = res.loading;
                 })
             ).subscribe();
         } else
@@ -88,8 +88,8 @@ export class ModDeptoComponent implements OnInit
             {
                 if (res.data)
                 {
-                    const elementos = STATE_DEPTOS();
-                    STATE_DEPTOS([...elementos, res.data.crearDepto as IDepto]);
+                    const depto = res.data.crearDepto as IDepto;
+                    this.stateDepto.agregarDepto(depto, res.loading);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;

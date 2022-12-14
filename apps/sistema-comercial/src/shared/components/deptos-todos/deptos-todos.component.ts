@@ -5,10 +5,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {AbstractControl, ControlValueAccessor, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator} from '@angular/forms';
 import {DepartamentosGQL} from '#/libs/datos/src';
-import {tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Empleado} from '#/libs/models/src/lib/admin/empleado/empleado';
-import {STATE_DEPTOS} from '@s-admin/deptos.state';
+import {StateDeptoStore} from '@s-admin/state-depto.store';
+import {Select} from '@ngxs/store';
 
 @Component({
     selector: 'app-deptos-todos',
@@ -39,14 +40,17 @@ import {STATE_DEPTOS} from '@s-admin/deptos.state';
 })
 export class DeptosTodosComponent implements OnInit, ControlValueAccessor, Validator
 {
+    @Select(StateDeptoStore.deptos)
+    deptos$: Observable<IDepto[]>;
+    @Select(StateDeptoStore.estaCargando)
+    estaCargando$: Observable<boolean>;
     @Input() multiple = false;
-    stateDeptos: IDepto[];
     depto: IDepto;
     deshabilitar = false;
     formDepto: FormGroup;
     private onTouched: () => void;
 
-    constructor(private departamentosGQL: DepartamentosGQL, private fb: RxFormBuilder)
+    constructor(public stateDeptos: StateDeptoStore, private fb: RxFormBuilder)
     {
     }
 
@@ -54,11 +58,7 @@ export class DeptosTodosComponent implements OnInit, ControlValueAccessor, Valid
     {
         const empleado = new Empleado();
         this.formDepto = this.fb.group({deptoId: empleado.deptoId});
-
-        this.departamentosGQL.watch().valueChanges.pipe(tap((res) =>
-        {
-            this.stateDeptos = STATE_DEPTOS(res.data.deptos as IDepto[]);
-        })).subscribe();
+        this.stateDeptos.cargarDeptos();
     }
 
     onChange: (value: boolean) => void = () =>

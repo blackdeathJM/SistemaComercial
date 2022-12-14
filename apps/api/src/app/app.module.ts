@@ -1,6 +1,5 @@
 import {Module} from '@nestjs/common';
 import {GraphQLModule} from '@nestjs/graphql';
-import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {ConfigModule, ConfigService} from '@nestjs/config';
@@ -12,6 +11,7 @@ import {GraphQLUpload} from 'graphql-upload';
 import {AppService} from '#api/apps/api/src/app/app.service';
 import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
+import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 
 @Module({
     imports:
@@ -20,8 +20,8 @@ import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/te
                 envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
-                driver: ApolloDriver,
                 installSubscriptionHandlers: true,
+                driver: ApolloDriver,
                 resolvers:
                     {
                         Upload: GraphQLUpload
