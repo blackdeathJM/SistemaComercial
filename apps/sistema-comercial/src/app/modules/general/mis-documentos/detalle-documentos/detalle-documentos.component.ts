@@ -18,7 +18,7 @@ import {STATE_DOCS} from '@s-general/general.state';
 import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasignacion.component';
 import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     standalone: true,
@@ -46,7 +46,7 @@ export class DetalleDocumentosComponent
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
-                private docFinalizarGQL: DocFinalizarGQL)
+                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth)
     {
     }
 
@@ -88,8 +88,8 @@ export class DetalleDocumentosComponent
                 const args: IDocActFolio =
                     {
                         _id: _documento._id,
-                        deptoId: STATE_DATOS_SESION().deptoId,
-                        usuarioFolio: STATE_DATOS_SESION()._id,
+                        deptoId: this.stateAuht.snapshot.deptoId,
+                        usuarioFolio: this.stateAuht.snapshot._id,
                         tipoDoc: _documento.tipoDoc
                     };
                 this.docActFolioGQL.mutate({args}).pipe(tap((docFoliado) =>
@@ -133,7 +133,7 @@ export class DetalleDocumentosComponent
 
     reasignacion(data: IResolveDocumento): void
     {
-        if (data.enviadoPor !== STATE_DATOS_SESION()._id)
+        if (data.enviadoPor !== this.stateAuht.snapshot._id)
         {
             this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
             return;

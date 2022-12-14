@@ -7,7 +7,7 @@ import {NotificationsService} from '@s-layout/notifications/notifications.servic
 import {EliminarNotGQL, EliminarTodosGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'notifications',
@@ -28,17 +28,17 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     constructor(private cdr: ChangeDetectorRef, private _notificationsService: NotificationsService, private _overlay: Overlay,
                 private _viewContainerRef: ViewContainerRef, private notificacionesGQL: NotificacionesGQL, private notificarGQL: NotificarGQL,
-                private ngxToastService: NgxToastService, private eliminarNotGQL: EliminarNotGQL, private eliminarTodosGQL: EliminarTodosGQL)
+                private ngxToastService: NgxToastService, private eliminarNotGQL: EliminarNotGQL, private eliminarTodosGQL: EliminarTodosGQL,
+                private stateAuth: StateAuth)
     {
     }
 
     ngOnInit(): void
     {
-        this.notificacionesGQL.watch({idUsuario: STATE_DATOS_SESION()._id}).valueChanges.subscribe((res) =>
+        this.notificacionesGQL.watch({idUsuario: this.stateAuth.snapshot._id}).valueChanges.subscribe((res) =>
         {
             if (res.data.notificaciones.length > 0)
             {
-                // this.notificaciones.push(...res.data.notificaciones as INotificacion[]);
                 res.data.notificaciones.map((value: INotificacion) =>
                 {
                     this.notificaciones.push(value);
@@ -51,7 +51,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     ngAfterContentInit(): void
     {
-        this.sub.add(this.notificarGQL.subscribe({idUsuario: STATE_DATOS_SESION()._id}).subscribe((res) =>
+        this.sub.add(this.notificarGQL.subscribe({idUsuario: this.stateAuth.snapshot._id}).subscribe((res) =>
         {
             if (res.data.notificar)
             {
@@ -88,9 +88,10 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     {
         this._overlayRef.detach();
     }
+
     eliminarTodas(): void
     {
-        this.eliminarTodosGQL.mutate({idUsuario: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
+        this.eliminarTodosGQL.mutate({idUsuario: this.stateAuth.snapshot._id}).pipe(tap((res) =>
         {
             for (let i = 0; i < res.data.eliminarTodos; i++)
             {

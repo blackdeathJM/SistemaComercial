@@ -1,21 +1,21 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AdminGuard implements CanActivate, CanLoad
 {
-    constructor(private ngxToastService: NgxToastService)
+    constructor(private ngxToastService: NgxToastService, private stateAuth: StateAuth)
     {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-        if (STATE_DATOS_SESION().auth.usuario === 'administrador')
+        if (this.stateAuth.snapshot.auth.usuario === 'administrador')
         {
             return true;
         }

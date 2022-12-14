@@ -17,7 +17,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {getDownloadURL} from '@angular/fire/storage';
 import {TOKEN} from '@s-auth/const';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import { STATE_DATOS_SESION } from '#/apps/sistema-comercial/src/app/core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'app-perfil',
@@ -34,6 +34,7 @@ export class PerfilComponent implements OnInit
 {
     srcImagen: string = 'assets/images/avatars/avatarDefault.jpg';
     img: File = null;
+    usuario: IDatosSesion;
     deshabilitar = false;
     formCambioContrasena = this.fb.group({
         txtContrasena: ['', RxwebValidators.required({message: 'La contrasena es requerida'})],
@@ -42,15 +43,15 @@ export class PerfilComponent implements OnInit
     });
 
     constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL,
-                private ngxToastService: NgxToastService, private generalService: GeneralService)
+                private ngxToastService: NgxToastService, private generalService: GeneralService, private stateAuth: StateAuth)
     {
     }
 
     ngOnInit(): void
     {
-        if (STATE_DATOS_SESION().avatar)
+        if (this.stateAuth.snapshot.avatar)
         {
-            this.srcImagen = STATE_DATOS_SESION().avatar;
+            this.srcImagen = this.stateAuth.snapshot.avatar;
         }
     }
 
@@ -66,19 +67,20 @@ export class PerfilComponent implements OnInit
     async cambiarImagen(): Promise<void>
     {
         this.deshabilitar = true;
-        if (STATE_DATOS_SESION().avatar)
+        if (this.stateAuth.snapshot.avatar)
         {
-            await this.generalService.eliminarDocFirabase(STATE_DATOS_SESION().avatar);
+            await this.generalService.eliminarDocFirabase(this.stateAuth.snapshot.avatar);
         }
         const ruta = GeneralService.rutaGuardar('perfil', this.img.name, 'empleado');
         const imagen = await this.generalService.subirFirebase(this.img, ruta);
         const url = await getDownloadURL(imagen.ref);
-        this.actualizarAvatarGql.mutate({_id: STATE_DATOS_SESION()._id, url}).pipe(tap((res) =>
+        this.actualizarAvatarGql.mutate({_id: this.stateAuth.snapshot._id, url}).pipe(tap((res) =>
         {
             if (res.data)
             {
                 localStorage.setItem(TOKEN, res.data.actualizarAvatar.token);
-                STATE_DATOS_SESION(res.data.actualizarAvatar.datosSesion as IDatosSesion);
+                const sesion = res.data.actualizarAvatar.datosSesion as IDatosSesion;
+                this.stateAuth.setState(sesion);
                 this.deshabilitar = false;
             }
         })).subscribe();
@@ -92,13 +94,12 @@ export class PerfilComponent implements OnInit
             {
                 accion: 'Cambio de contrasena',
                 fecha: GeneralService.fechaHoraActual(),
-                usuario: STATE_DATOS_SESION()._id,
+                usuario: this.stateAuth.snapshot._id,
                 valorActual: null,
                 valorAnterior: null
             };
-        this.actualizarContrasena.mutate({datos: {_id: STATE_DATOS_SESION()._id, contrasena: txtContrasena}, modificadoPor}).pipe(tap((res) =>
+        this.actualizarContrasena.mutate({datos: {_id: this.stateAuth.snapshot._id, contrasena: txtContrasena}, modificadoPor}).pipe(tap((res) =>
         {
-            console.log('cambio de contrasena');
             if (res.data)
             {
                 this.ngxToastService.satisfactorioToast('La contrasena se ha cambiado con exito', 'Cambio de contrasena');

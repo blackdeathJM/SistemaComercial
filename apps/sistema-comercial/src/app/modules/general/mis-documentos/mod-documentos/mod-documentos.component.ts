@@ -27,7 +27,7 @@ import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     standalone: true,
@@ -73,7 +73,8 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
     sub: Subscription = new Subscription();
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService,
-                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef)
+                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef,
+                private stateAuth: StateAuth)
     {
     }
 
@@ -139,7 +140,7 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
                 usuarioFolio: null,
                 fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
                 fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
-                enviadoPor: STATE_DATOS_SESION()._id,
+                enviadoPor: this.stateAuth.snapshot._id,
                 ...resto
             };
 

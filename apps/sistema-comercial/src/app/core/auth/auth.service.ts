@@ -7,7 +7,6 @@ import {Router} from '@angular/router';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {TOKEN} from '@s-auth/const';
-import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
@@ -47,8 +46,8 @@ export class AuthService
             const datosSesion: IDatosSesion = this.jwtHelperService.decodeToken();
             if (datosSesion)
             {
-                STATE_DATOS_SESION(datosSesion);
-                STATE_AUTENTICADO(true);
+                // STATE_DATOS_SESION(datosSesion);
+                // STATE_AUTENTICADO(true);
                 return of(true);
             } else
             {
@@ -64,15 +63,15 @@ export class AuthService
         // Remove the access token from the local storage
         localStorage.removeItem(TOKEN);
         // Set the authenticated flag to false
-        STATE_AUTENTICADO(false);
+        // STATE_AUTENTICADO(false);
         this.router.navigate(['/sign-in']).then();
     }
     check(): Observable<boolean>
     {
-        if (STATE_AUTENTICADO())
-        {
-            return of(true);
-        }
+        // if (STATE_AUTENTICADO())
+        // {
+        //     return of(true);
+        // }
 
         if (!this.jwtHelperService.tokenGetter())
         {

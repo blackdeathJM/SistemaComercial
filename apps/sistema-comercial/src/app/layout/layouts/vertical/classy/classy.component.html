@@ -1,10 +1,10 @@
 <!-- Loading bar -->
 <fuse-loading-bar></fuse-loading-bar>
-
 <!-- Navigation -->
-<fuse-vertical-navigation class="dark:bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
+<fuse-vertical-navigation class="dark:bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'"
+                          [navigation]="navigation.default" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
-    <ng-container fuseVerticalNavigationContentHeader>
+    <ng-container fuseVerticalNavigationContentHeader *ngIf="usuario$ | async as usuario">
         <div class="flex items-center w-full p-4 pl-6">
             <!-- Logo -->
             <div class="flex items-center justify-center">
@@ -19,14 +19,14 @@
         <!-- User -->
         <div class="flex flex-col items-center w-full p-4">
             <div class="relative w-36 h-36">
-                <img class="avatar" [src]="user.avatar? user.avatar : imgPorDefecto" alt="">
+                <img class="avatar" [src]="usuario.avatar? usuario.avatar : imgPorDefecto" alt="">
             </div>
             <div class="flex flex-col items-center justify-center w-full mt-2">
                 <div class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
-                    {{user.nombreCompleto}}
+                    {{usuario.nombreCompleto}}
                 </div>
                 <div class="w-full mt-0.5 whitespace-nowrap text-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
-                    {{user.auth.usuario}}
+                    {{usuario.auth.usuario}}
                 </div>
             </div>
         </div>

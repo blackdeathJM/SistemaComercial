@@ -16,7 +16,7 @@ import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/emplea
 import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
-import {finalize, Observable, tap} from 'rxjs';
+import {finalize, Observable} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
@@ -24,7 +24,7 @@ import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {StateDeptoStore} from '@s-admin/state-depto.store';
 import {Select} from '@ngxs/store';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -67,7 +67,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
     stateDeptos: IDepto[];
 
     constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL,
-                private ngxToastService: NgxToastService, public stateDepto: StateDeptoStore)
+                private ngxToastService: NgxToastService, public stateDepto: StateDeptoStore, private stateAuth: StateAuth)
     {
     }
 
@@ -124,7 +124,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
                 modificadoPor:
                     [
                         {
-                            usuario: STATE_DATOS_SESION().auth.usuario,
+                            usuario: this.stateAuth.snapshot.auth.usuario,
                             accion: 'Registro de nuevo empleado',
                             fecha: GeneralService.fechaHoraActual(),
                             valorActual: {},

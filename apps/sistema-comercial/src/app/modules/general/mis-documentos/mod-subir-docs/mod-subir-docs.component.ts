@@ -17,7 +17,7 @@ import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.
 import {STATE_DOCS} from '@s-general/general.state';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {STATE_DATOS_SESION} from "@s-core/auth/auth.state";
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -50,7 +50,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     mostrarProgreso: boolean = false;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService
-        , private subirDocsGQL: SubirDocsGQL, private cdr: ChangeDetectorRef, public generalServices: GeneralService)
+        , private subirDocsGQL: SubirDocsGQL, private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth)
     {
     }
 
@@ -63,7 +63,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
             this.cdr.detectChanges();
         }));
 
-        if (this.data.enviadoPor !== STATE_DATOS_SESION()._id)
+        if (this.data.enviadoPor !== this.stateAuth.snapshot._id)
         {
             this.formDocsArchivo.get('docArchivo').disable();
             this.advertencia = 'Este documento solo puede ser modificado por la persona que lo subio';

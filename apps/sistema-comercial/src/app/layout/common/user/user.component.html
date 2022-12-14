@@ -1,15 +1,16 @@
 <!-- Button -->
-<button mat-icon-button [matMenuTriggerFor]="userActions">
+<button mat-icon-button [matMenuTriggerFor]="userActions" *ngIf="usuario$ | async as usuario">
     <span class="relative">
-        <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && user.avatar" [src]="user.avatar" alt="">
-        <mat-icon *ngIf="!showAvatar || !user.avatar" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span class="absolute right-0 bottom-0 w-2 h-2 rounded-full" [ngClass]="{'mr-px mb-px': !showAvatar || !user.avatar,
-                          'bg-green-500': user.auth.estatus === 'En-linea',
-                          'bg-amber-500': user.auth.estatus === 'Desconectado',
-                          'bg-red-500': user.auth.estatus === 'Ocupado',
-                          'bg-gray-400': user.auth.estatus === 'No-visible'}"></span>
+        <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && usuario.avatar" [src]="usuario.avatar" alt="">
+        <mat-icon *ngIf="!showAvatar || !usuario.avatar" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+        <span class="absolute right-0 bottom-0 w-2 h-2 rounded-full" [ngClass]="{'mr-px mb-px': !showAvatar || !usuario.avatar,
+                          'bg-green-500': usuario.auth.estatus === 'En-linea',
+                          'bg-amber-500': usuario.auth.estatus === 'Desconectado',
+                          'bg-red-500': usuario.auth.estatus === 'Ocupado',
+                          'bg-gray-400': usuario.auth.estatus === 'No-visible'}"></span>
     </span>
 </button>
+
 <mat-menu [xPosition]="'before'" #userActions="matMenu">
     <a mat-menu-item [routerLink]="['/sistema-comercial', 'perfil']">
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>

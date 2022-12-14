@@ -1,23 +1,25 @@
-import {AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject, takeUntil} from 'rxjs';
+import {Observable, Subject, takeUntil} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {Navegation} from '@s-core/navigation/navigation.types';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {Select} from '@ngxs/store';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'futuristic-layout',
     templateUrl: './futuristic.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FuturisticLayoutComponent implements OnInit, OnDestroy, AfterContentInit
+export class FuturisticLayoutComponent implements OnInit, OnDestroy
 {
+    @Select(StateAuth.sesionActual)
+    usuario$: Observable<IDatosSesion>;
     isScreenSmall: boolean;
     navigation: Navegation;
-    user: IDatosSesion;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -52,11 +54,6 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy, AfterConten
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
-    }
-
-    ngAfterContentInit(): void
-    {
-        this.user = STATE_DATOS_SESION();
     }
 
     /**

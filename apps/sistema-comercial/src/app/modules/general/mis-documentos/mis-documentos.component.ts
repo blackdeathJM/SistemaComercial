@@ -22,7 +22,7 @@ import {DetalleDocumentosComponent} from '@s-general/detalle-documentos/detalle-
 import {STATE_DOCS} from '@s-general/general.state';
 import {ModDocumentosComponent} from '@s-general/mod-documentos/mod-documentos.component';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     standalone: true,
@@ -61,7 +61,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
     chkBuscar = new FormControl(false);
 
     constructor(private dRef: MatDialog, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private docsFechasGQL: DocsFechasGQL,
-                private docsBuscarGralGQL: DocsBusquedaGralGQL)
+                private docsBuscarGralGQL: DocsBusquedaGralGQL, private stateAuth: StateAuth)
     {
     }
 
@@ -76,7 +76,7 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
         this.txtBuscar.valueChanges.pipe(tap(() => this.cargandoDatos = true), debounceTime(1000), distinctUntilChanged(),
             switchMap((consulta: string) =>
                 this.docsBuscarGralGQL.watch({
-                    usuario: STATE_DATOS_SESION()._id, enviadoPor: STATE_DATOS_SESION()._id,
+                    usuario: this.stateAuth.snapshot._id, enviadoPor: this.stateAuth.snapshot._id,
                     esEnviadoPor: this.chkBuscar.value, consulta
                 }).valueChanges)).subscribe((respuesta) =>
         {
@@ -93,10 +93,10 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
         this.cargandoDatos = true;
         const args: IDocsUsuarioProceso =
             {
-                enviadoPor: STATE_DATOS_SESION()._id,
+                enviadoPor: this.stateAuth.snapshot._id,
                 esEnviadoPor,
                 proceso: proceso,
-                usuario: STATE_DATOS_SESION()._id
+                usuario: this.stateAuth.snapshot._id
 
             };
         this.docsUsuarioProcesoGQL.watch({...args}).valueChanges
@@ -148,11 +148,11 @@ export class MisDocumentosComponent implements OnInit, OnDestroy, AfterContentCh
         this.cargandoDatos = true;
         const consulta: IDocsFechas =
             {
-                enviadoPor: STATE_DATOS_SESION()._id,
+                enviadoPor: this.stateAuth.snapshot._id,
                 esEnviadoPor: this.chkBuscar.value,
                 fechaInicial: GeneralService.convertirUnix(fechaInicio.c, fechaInicio.ts),
                 fechaFinal: GeneralService.convertirUnix(fechaFin.c, fechaFin.ts),
-                usuario: STATE_DATOS_SESION()._id
+                usuario: this.stateAuth.snapshot._id
             };
         this.docsFechasGQL.watch({...consulta}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
         {

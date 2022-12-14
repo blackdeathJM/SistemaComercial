@@ -2,54 +2,39 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
 import {Observable, of, switchMap} from 'rxjs';
 import {AuthService} from '@s-core/auth/auth.service';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad
 {
-    constructor(
-        private _authService: AuthService,
-        private _router: Router
-    )
+    constructor(private _authService: AuthService, private _router: Router, private stateAuth: StateAuth)
     {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
     {
-        return this._check();
+        return this.validarSesion();
     }
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
     {
-        return this._check();
+        return this.validarSesion();
     }
 
     canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
     {
-        return this._check();
+        return this.validarSesion();
     }
 
-    private _check(): Observable<boolean>
+    private validarSesion(): Observable<boolean>
     {
-        // Check the authentication status
-        return this._authService.check()
-                   .pipe(
-                       switchMap((authenticated) => {
-
-                           // If the user is authenticated...
-                           if ( authenticated )
-                           {
-                               // Redirect to the root
-                               this._router.navigate(['']).then();
-
-                               // Prevent the access
-                               return of(false);
-                           }
-
-                           // Allow the access
-                           return of(true);
-                       })
-                   );
+        if (this.stateAuth.snapshot)
+        {
+            this._router.navigate(['']).then();
+            return of(false);
+        }
+        return of(true);
     }
 }

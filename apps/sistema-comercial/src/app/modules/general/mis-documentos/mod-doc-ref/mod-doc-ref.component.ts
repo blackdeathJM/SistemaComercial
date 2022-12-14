@@ -12,8 +12,7 @@ import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {DocRefFolioGQL, DocsRefGQL} from '#/libs/datos/src';
 import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
-
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'app-mod-doc-ref',
@@ -41,14 +40,14 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
     cargando = false;
 
     constructor(private docsRef: DocsRefGQL, private dRef: MatDialogRef<ModDocRefComponent>, @Inject(MAT_DIALOG_DATA) private data: IResolveDocumento,
-                private docRefFolioGQL: DocRefFolioGQL, private ngxToastService: NgxToastService)
+                private docRefFolioGQL: DocRefFolioGQL, private ngxToastService: NgxToastService, private stateAuth: StateAuth)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.docsRef.watch({_id: this.data._id, usuario: STATE_DATOS_SESION()._id}).valueChanges.pipe(tap((res) =>
+        this.docsRef.watch({_id: this.data._id, usuario: this.stateAuth.snapshot._id}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
@@ -116,7 +115,7 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
                 _id: this.data._id,
                 ref: this.referencias,
                 folio: this.data.folio,
-                usuarioFolio: STATE_DATOS_SESION()._id
+                usuarioFolio: this.stateAuth.snapshot._id
             };
         this.cargando = true;
         this.docRefFolioGQL.mutate({entradas}).pipe(tap((res) =>

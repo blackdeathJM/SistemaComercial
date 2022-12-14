@@ -16,8 +16,8 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {StateAuth} from '@s-core/auth/auth.store';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     standalone: true,
@@ -44,7 +44,7 @@ export class RegistroSesionComponent implements OnInit
     soloLectura = false;
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dialogRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
-                private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL)
+                private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth)
     {
     }
 
@@ -73,7 +73,7 @@ export class RegistroSesionComponent implements OnInit
                 };
             const modificadoPor: IModificado =
                 {
-                    usuario: STATE_DATOS_SESION().auth.usuario,
+                    usuario: this.stateAuth.snapshot.auth.usuario,
                     accion: 'Modificacion de contrasena',
                     fecha: GeneralService.fechaHoraActual(),
                     valorActual: [{}],
@@ -88,7 +88,6 @@ export class RegistroSesionComponent implements OnInit
             {
                 if (res.data)
                 {
-                    unionBy(STATE_EMPLEADOS(), res.data.actualizarContrasenaAdmin);
                     this.ngxToastService.satisfactorioToast('La contrasena fue reasignada con exito', 'Cambio de contrasena');
                 }
             })).subscribe();
@@ -96,7 +95,7 @@ export class RegistroSesionComponent implements OnInit
         {
             const modificadoPor: IModificado =
                 {
-                    usuario: STATE_DATOS_SESION().auth.usuario,
+                    usuario: this.stateAuth.snapshot.auth.usuario,
                     fecha: GeneralService.fechaHoraActual(),
                     accion: 'Asignacion de usuario para el inicio de sesion en el portal',
                     valorAnterior: [{}],
