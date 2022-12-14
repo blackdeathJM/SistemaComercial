@@ -6,8 +6,8 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '#/apps/sistema-comercial/src/app/core/auth/auth.state';
 import {TOKEN} from '@s-auth/const';
+import {STATE_AUTENTICADO, STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
@@ -26,6 +26,18 @@ export class AuthService
     resetPassword(password: string): Observable<any>
     {
         return this._httpClient.post('api/auth/reset-password', password);
+    }
+
+
+    signUp(user: { name: string; email: string; password: string; company: string }): Observable<any>
+    {
+        return this._httpClient.post('api/auth/sign-up', user);
+    }
+
+
+    unlockSession(credentials: { email: string; password: string }): Observable<any>
+    {
+        return this._httpClient.post('api/auth/unlock-session', credentials);
     }
 
     iniciarSesionConToken(): Observable<boolean>
@@ -55,20 +67,6 @@ export class AuthService
         STATE_AUTENTICADO(false);
         this.router.navigate(['/sign-in']).then();
     }
-
-
-    signUp(user: { name: string; email: string; password: string; company: string }): Observable<any>
-    {
-        return this._httpClient.post('api/auth/sign-up', user);
-    }
-
-
-    unlockSession(credentials: { email: string; password: string }): Observable<any>
-    {
-        return this._httpClient.post('api/auth/unlock-session', credentials);
-    }
-
-
     check(): Observable<boolean>
     {
         if (STATE_AUTENTICADO())

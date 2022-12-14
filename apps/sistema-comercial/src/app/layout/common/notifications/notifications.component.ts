@@ -4,10 +4,10 @@ import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
 import {Subscription, tap} from 'rxjs';
 import {NotificationsService} from '@s-layout/notifications/notifications.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {EliminarNotGQL, EliminarTodosGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     selector: 'notifications',

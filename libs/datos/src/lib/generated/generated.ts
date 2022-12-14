@@ -254,6 +254,7 @@ export type Mutation = {
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
   subirDocs: DocumentoType;
+  validarToken: DatosSesionType;
 };
 
 
@@ -351,6 +352,11 @@ export type MutationSubirDocsArgs = {
   args?: InputMaybe<DocsSubirInput>;
   files?: InputMaybe<UploadInput>;
   filesAcuse?: InputMaybe<UploadInput>;
+};
+
+
+export type MutationValidarTokenArgs = {
+  token: Scalars['String'];
 };
 
 export type NotificacionInput = {
@@ -537,6 +543,13 @@ export type ActualizarAvatarMutationVariables = Exact<{
 
 
 export type ActualizarAvatarMutation = { __typename?: 'Mutation', actualizarAvatar: { __typename?: 'LoginRespuestaType', token: string, datosSesion: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } } };
+
+export type ValidarTokenMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type ValidarTokenMutation = { __typename?: 'Mutation', validarToken: { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } } };
 
 export type FragTelefonoFragment = { __typename?: 'TelefonoType', numero?: string | null };
 
@@ -949,6 +962,24 @@ export const ActualizarAvatarDocument = gql`
   })
   export class ActualizarAvatarGQL extends Apollo.Mutation<ActualizarAvatarMutation, ActualizarAvatarMutationVariables> {
     document = ActualizarAvatarDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ValidarTokenDocument = gql`
+    mutation validarToken($token: String!) {
+  validarToken(token: $token) {
+    ...fragDatosSesion
+  }
+}
+    ${FragDatosSesionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ValidarTokenGQL extends Apollo.Mutation<ValidarTokenMutation, ValidarTokenMutationVariables> {
+    document = ValidarTokenDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

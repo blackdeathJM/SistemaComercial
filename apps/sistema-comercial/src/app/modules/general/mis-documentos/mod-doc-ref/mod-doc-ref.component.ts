@@ -14,6 +14,7 @@ import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/doc
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
+
 @Component({
     selector: 'app-mod-doc-ref',
     standalone: true,

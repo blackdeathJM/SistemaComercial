@@ -7,7 +7,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatDividerModule} from '@angular/material/divider';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from '@rxweb/reactive-form-validators';
 import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL} from '#/libs/datos/src';
@@ -18,6 +17,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {getDownloadURL} from '@angular/fire/storage';
 import {TOKEN} from '@s-auth/const';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import { STATE_DATOS_SESION } from '#/apps/sistema-comercial/src/app/core/auth/auth.state';
 
 @Component({
     selector: 'app-perfil',

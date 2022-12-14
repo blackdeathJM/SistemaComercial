@@ -22,15 +22,15 @@ export class ApolloConfigModule
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
         {
-            if (graphQLErrors)
-            {
-                graphQLErrors.map((value) =>
-                {
-                    this.ngxToast.error(value.message, 'Error en el servidor',
-                        {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 20000});
-                    // console.log(value.extensions['response']['message']);
-                });
-            }
+            // if (graphQLErrors)
+            // {
+            //     graphQLErrors.map((value) =>
+            //     {
+            //         this.ngxToast.error(value.message, 'Error en el servidor',
+            //             {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 20000});
+            //         // console.log(value.extensions['response']['message']);
+            //     });
+            // }
 
             if (networkError)
             {

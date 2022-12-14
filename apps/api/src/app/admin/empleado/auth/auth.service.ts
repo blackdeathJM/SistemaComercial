@@ -7,9 +7,10 @@ import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
-import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {DatosSesionDto, ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
+import {ExceptionHandler} from "@nestjs/core/errors/exception-handler";
 
 @Injectable()
 export class AuthService
@@ -93,6 +94,19 @@ export class AuthService
             token: this.jwtService.sign(datosSesion),
             datosSesion
         };
+    }
+
+    async validarToken(token: string): Promise<DatosSesionDto>
+    {
+        try
+        {
+            const validacion: IDatosSesion = await this.jwtService.verify(token);
+            return await this.empleado.findById(validacion._id).exec();
+        } catch (e)
+        {
+            throw new NotFoundException({message: 'Token no valido'});
+        }
+
     }
 
     async actualizarAvatar(_id: string, url: string): Promise<ILoginRespuesta>

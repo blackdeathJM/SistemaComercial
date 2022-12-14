@@ -46,22 +46,18 @@ export const appRoutes: Route[] = [
                 },
                 {
                     path: 'admin',
-                    canActivate: [AdminGuard],
                     loadChildren: () => import('@s-admin/admin.routing').then(a => a.adminRouting)
                 },
                 {
                     path: 'general',
-                    canActivate: [],
                     loadChildren: () => import('@s-general/general.routing').then(g => g.generalRouting)
                 },
                 {
                     path: 'dir-admon-finanzas',
-                    canActivate: [],
                     loadChildren: () => import('@s-dirAdmonFinanzas/dir-admon-finanzas.routing').then(a => a.dirAdmonFinanzasRouting)
                 },
                 {
                     path: 'dir-tecnica-operativa',
-                    canActivate: [],
                     loadChildren: () => import('@s-dir-tecnica-operativa/dir-tenica-operativa.routing').then(t => t.dirTenicaOperativaRouting)
                 }
             ]

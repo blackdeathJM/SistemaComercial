@@ -21,10 +21,10 @@ import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
-import {StateDeptoStore} from "@s-admin/state-depto.store";
-import {Select} from "@ngxs/store";
+import {StateDeptoStore} from '@s-admin/state-depto.store';
+import {Select} from '@ngxs/store';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     selector: 'app-mod-registro-empleado',

@@ -13,11 +13,11 @@ import {getDownloadURL} from '@angular/fire/storage';
 import {SubirDocsGQL} from '#/libs/datos/src';
 import {startWith, Subscription, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_DOCS} from '@s-general/general.state';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {STATE_DATOS_SESION} from "@s-core/auth/auth.state";
 
 @Component({
     selector: 'app-mod-subir-docs',

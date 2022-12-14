@@ -20,9 +20,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {DetalleDocumentosComponent} from '@s-general/detalle-documentos/detalle-documentos.component';
 import {STATE_DOCS} from '@s-general/general.state';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {ModDocumentosComponent} from '@s-general/mod-documentos/mod-documentos.component';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     standalone: true,

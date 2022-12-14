@@ -5,8 +5,8 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {Navegation} from '@s-core/navigation/navigation.types';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     selector: 'futuristic-layout',

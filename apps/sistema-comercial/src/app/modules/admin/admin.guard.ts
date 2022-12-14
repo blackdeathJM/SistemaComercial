@@ -2,15 +2,25 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AdminGuard implements CanActivate, CanLoad
 {
+    constructor(private ngxToastService: NgxToastService)
+    {
+    }
+
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-        return STATE_DATOS_SESION().auth.usuario === 'administrador';
+        if (STATE_DATOS_SESION().auth.usuario === 'administrador')
+        {
+            return true;
+        }
+        this.ngxToastService.alertaToast('No tienes permiso para acceder a esta ruta', 'Acceso denegado');
+        return false;
     }
 
     canLoad(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree

@@ -25,9 +25,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     standalone: true,

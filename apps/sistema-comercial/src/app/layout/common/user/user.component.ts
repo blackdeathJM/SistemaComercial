@@ -5,8 +5,8 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 import {RolCambiadoGQL} from '#/libs/datos/src';
 import {AuthService} from '@s-core/auth/auth.service';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {TOKEN} from '@s-auth/const';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     selector: 'user',

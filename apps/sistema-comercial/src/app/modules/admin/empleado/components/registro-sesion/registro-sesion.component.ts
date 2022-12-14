@@ -15,9 +15,9 @@ import {TrimDirective} from '@s-directives/trim.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {Auth} from '@s-admin/models/auth';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 
 @Component({
     standalone: true,

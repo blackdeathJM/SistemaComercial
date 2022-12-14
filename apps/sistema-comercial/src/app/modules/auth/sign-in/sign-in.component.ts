@@ -6,8 +6,9 @@ import {catchError, of, Subscription, tap} from 'rxjs';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {FuseAlertType} from '@s-fuse/alert';
 import {AuthService} from '@s-core/auth/auth.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {TOKEN} from '@s-auth/const';
+import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
+import {StateAuth} from '@s-core/auth/auth.store';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -28,7 +29,7 @@ export class AuthSignInComponent implements OnInit, OnDestroy
     subs: Subscription = new Subscription();
 
     constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router,
-                private loginGQL: LoginGQL, private deptosGQL: DepartamentosGQL)
+                private loginGQL: LoginGQL, private stateAuth: StateAuth)
     {
     }
 
@@ -69,15 +70,13 @@ export class AuthSignInComponent implements OnInit, OnDestroy
         {
             if (res.data !== undefined)
             {
-                if (res.data.login.token)
+                if (res.data)
                 {
                     STATE_DATOS_SESION(res.data.login.datosSesion);
-                    setTimeout(() =>
-                    {
-                        localStorage.setItem(TOKEN, res.data.login.token);
-                        const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
-                        this._router.navigateByUrl(redirectURL).then().catch(err => console.log('error', err));
-                    }, 200);
+                    this.stateAuth.login(res.data.login, res.data.token);
+                    localStorage.setItem(TOKEN, res.data.login.token);
+                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
+                    this._router.navigateByUrl(redirectURL).then().catch(err => console.log('error', err));
                 }
             }
         })).subscribe());
