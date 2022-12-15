@@ -37,7 +37,7 @@
         "@angular/router": "15.0.4",
         "@apollo/client": "^3.7.3",
         "@apollo/server": "^4.3.0",
-        "@auth0/angular-jwt": "^5.1.0",
+        "@auth0/angular-jwt": "^5.1.1",
         "@iplab/ngx-file-upload": "^15.0.0",
         "@nestjs/apollo": "^10.1.7",
         "@nestjs/common": "^9.2.1",
