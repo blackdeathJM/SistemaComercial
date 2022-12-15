@@ -25,7 +25,7 @@ specifiers:
   '@angular/router': 15.0.4
   '@apollo/client': ^3.7.2
   '@apollo/server': ^4.3.0
-  '@auth0/angular-jwt': ^5.1.0
+  '@auth0/angular-jwt': ^5.1.1
   '@babel/cli': ^7.19.3
   '@babel/core': ^7.20.5
   '@graphql-codegen/cli': ^2.16.1
@@ -186,7 +186,7 @@ dependencies:
   '@angular/router': 15.0.4_3a2u7xxmt22ynjuprkcysdnbqa
   '@apollo/client': 3.7.2_o7paodxqbevdia6ixjcodtofcm
   '@apollo/server': 4.3.0_graphql@16.6.0
-  '@auth0/angular-jwt': 5.1.0_@angular+common@15.0.4
+  '@auth0/angular-jwt': 5.1.1_@angular+common@15.0.4
   '@iplab/ngx-file-upload': 15.0.0_gn6moqwr2facjfj6i45wa6ntma
   '@nestjs/apollo': 10.1.7_abtkaagqsgvel2ybqxmuekbriy
   '@nestjs/common': 9.2.1_537f4dyna5eqdupcxnvaoq3vwa
@@ -1460,8 +1460,8 @@ packages:
     resolution: {integrity: sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==}
     dev: true
 
-  /@auth0/angular-jwt/5.1.0_@angular+common@15.0.4:
-    resolution: {integrity: sha512-EAQoNKPQSZYphcX6FnY2e7xQpD4ZdHQ1DbHq/m+G1U1qA60m3XnhdjPPfu+blVHARlxEbRzWXc48UOVrnMsrZw==}
+  /@auth0/angular-jwt/5.1.1_@angular+common@15.0.4:
+    resolution: {integrity: sha512-H+xFarhG29/m9aCkFPWKFeJvxpNljsmOT5wEfkb00eK/id/fcW8mHY3+3VYCrmJxFijaK/pgx9gBsnORb7j3rQ==}
     peerDependencies:
       '@angular/common': '>=12.0.0'
     dependencies:

@@ -22,7 +22,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
-import {StateDeptoStore} from '@s-admin/state-depto.store';
+import {DeptoStore} from '@s-admin/depto.store';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
 
@@ -53,7 +53,7 @@ import {StateAuth} from '@s-core/auth/auth.store';
 })
 export class ModRegistroEmpleadoComponent implements OnInit
 {
-    @Select(StateDeptoStore.deptos)
+    @Select(DeptoStore.deptos)
     deptos$: Observable<IDepto[]>;
     formEmpleado: FormGroup;
     cargando = false;
@@ -67,7 +67,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
     stateDeptos: IDepto[];
 
     constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL,
-                private ngxToastService: NgxToastService, public stateDepto: StateDeptoStore, private stateAuth: StateAuth)
+                private ngxToastService: NgxToastService, public stateDepto: DeptoStore, private stateAuth: StateAuth)
     {
     }
 

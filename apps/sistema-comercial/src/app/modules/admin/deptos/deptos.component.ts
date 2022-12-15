@@ -12,7 +12,7 @@ import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-de
 import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {StateDeptoStore} from '@s-admin/state-depto.store';
+import {DeptoStore} from '@s-admin/depto.store';
 import {Select} from '@ngxs/store';
 
 @Component({
@@ -35,14 +35,14 @@ import {Select} from '@ngxs/store';
 })
 export class DeptosComponent implements OnInit, OnDestroy
 {
-    @Select(StateDeptoStore.deptos)
+    @Select(DeptoStore.deptos)
     deptos$: Observable<IDepto[]>;
-    @Select(StateDeptoStore.estaCargando)
+    @Select(DeptoStore.estaCargando)
     estaCargando$: Observable<boolean>;
     subscripciones: Subscription = new Subscription();
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, public deptoState: StateDeptoStore)
+    constructor(private dRef: MatDialog, public deptoState: DeptoStore)
     {
     }
 
@@ -75,7 +75,7 @@ export class DeptosComponent implements OnInit, OnDestroy
 
     trackByFn(index: number, item: any): any
     {
-        return item.id || index;
+        return item._id || index;
     }
 
     ngOnDestroy(): void

@@ -9,7 +9,7 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 import {ValidarTokenGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {$cast} from '@angular-ru/cdk/utils';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 
 @StateRepository()
 @State<IDatosSesion>({
@@ -46,9 +46,10 @@ export class StateAuth extends NgxsImmutableDataRepository<IDatosSesion>
     public validarToken(redirectURL: string = ''): boolean
     {
         //Validar token para iniciar sesion con el token
-        const token = this.jwtHelperService.tokenGetter();
-        if (token && !this.jwtHelperService.isTokenExpired())
+
+        if (isNotNil(this.jwtHelperService.tokenGetter()) && !this.jwtHelperService.isTokenExpired())
         {
+            const token = $cast<string>(this.jwtHelperService.tokenGetter());
             this.validarTokenGQL.mutate({token}).pipe(tap((res) =>
             {
                 if (res.data)

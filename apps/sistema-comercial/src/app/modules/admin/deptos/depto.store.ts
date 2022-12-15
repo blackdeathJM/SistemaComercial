@@ -9,17 +9,17 @@ import {Immutable} from '@angular-ru/cdk/typings';
 
 interface IDeptoState
 {
-    entidad: IDepto[];
+    deptos: IDepto[];
     cargando: boolean;
 }
 
 @StateRepository()
 @State<IDeptoState>({
     name: 'depto',
-    defaults: {entidad: [], cargando: false}
+    defaults: {deptos: [], cargando: false}
 })
 @Injectable()
-export class StateDeptoStore extends NgxsImmutableDataRepository<IDeptoState>
+export class DeptoStore extends NgxsImmutableDataRepository<IDeptoState>
 {
     constructor(private departamentosGQL: DepartamentosGQL)
     {
@@ -29,7 +29,7 @@ export class StateDeptoStore extends NgxsImmutableDataRepository<IDeptoState>
     @Selector()
     public static deptos(state: IDeptoState): IDepto[]
     {
-        return state.entidad;
+        return state.deptos;
     }
 
     @Selector()
@@ -45,7 +45,7 @@ export class StateDeptoStore extends NgxsImmutableDataRepository<IDeptoState>
         return this.departamentosGQL.watch().valueChanges.pipe(
             tap((res) =>
             {
-                this.ctx.patchState({entidad: res.data.deptos as IDepto[]});
+                this.ctx.patchState({deptos: res.data.deptos as IDepto[]});
             }), map(deptos => deptos.data.deptos as IDepto[]),
             finalize(() => this.ctx.patchState({cargando: false})));
     }
@@ -54,13 +54,13 @@ export class StateDeptoStore extends NgxsImmutableDataRepository<IDeptoState>
     public agregarDepto(@Payload('agregarDepto') input: IDepto, cargando: boolean): void
     {
         this.ctx.patchState({cargando: true});
-        this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => ({entidad: state.entidad.concat(input), cargando}));
+        this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => ({deptos: state.deptos.concat(input), cargando}));
     }
 
     @DataAction({subscribeRequired: false})
     public actualizarDepto(@Payload('actualizarDepto') input: IDepto, cargando: boolean): void
     {
         this.ctx.patchState({cargando: true});
-        this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => ({entidad: state.entidad.filter(value => value._id !== input._id), cargando}));
+        this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => ({deptos: state.deptos.filter(value => value._id !== input._id), cargando}));
     }
 }

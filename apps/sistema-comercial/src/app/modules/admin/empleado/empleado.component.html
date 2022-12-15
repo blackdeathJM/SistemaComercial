@@ -12,11 +12,11 @@
         </mat-form-field>
     </ng-container>
     <ng-container lista>
-        <ng-container *ngIf="stateEmpleados; else cargando">
-            <ng-container *ngIf="stateEmpleados.length">
-                <ng-container *ngFor="let empleado of stateEmpleados; let i = index; trackBy: trackByFn">
+        <ng-container *ngIf="empleados$ | async as empleados; else cargando">
+            <ng-container *ngIf="empleados.length">
+                <ng-container *ngFor="let empleado of empleados; let i = index; trackBy: trackByFn">
                     <!-- Group -->
-                    <ng-container *ngIf="i === 0 || empleado.nombreCompleto.charAt(0) !== stateEmpleados[i - 1].nombreCompleto.charAt(0)">
+                    <ng-container *ngIf="i === 0 || empleado.nombreCompleto.charAt(0) !== empleados[i - 1].nombreCompleto.charAt(0)">
                         <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
                             {{empleado.nombreCompleto.charAt(0)}}
                         </div>

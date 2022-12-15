@@ -43,7 +43,6 @@ export class DetalleEmpleadoComponent implements OnDestroy
     _empleado: IResolveEmpleado;
     subscripcion: Subscription = new Subscription();
     role: FuseNavigationItem[];
-    roles = ['ninguno', 'lectura', 'completo'];
 
     controlRoles: FormControl = new FormControl();
 
