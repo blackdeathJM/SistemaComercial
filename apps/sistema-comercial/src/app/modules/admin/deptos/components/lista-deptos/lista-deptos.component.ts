@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 import {Select} from '@ngxs/store';
-import {StateDeptoStore} from '@s-admin/state-depto.store';
+import {DeptoStore} from '@s-admin/depto.store';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -24,9 +24,9 @@ import {Observable} from 'rxjs';
 })
 export class ListaDeptosComponent
 {
-    @Select(StateDeptoStore.deptos)
+    @Select(DeptoStore.deptos)
     deptos$: Observable<IDepto[]>;
-    @Select(StateDeptoStore.estaCargando)
+    @Select(DeptoStore.estaCargando)
     estaCargando$: Observable<boolean>;
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
 

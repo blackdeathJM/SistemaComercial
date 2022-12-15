@@ -23,9 +23,9 @@ specifiers:
   '@angular/platform-browser': 15.0.4
   '@angular/platform-browser-dynamic': 15.0.4
   '@angular/router': 15.0.4
-  '@apollo/client': ^3.7.2
+  '@apollo/client': ^3.7.3
   '@apollo/server': ^4.3.0
-  '@auth0/angular-jwt': ^5.1.0
+  '@auth0/angular-jwt': ^5.1.1
   '@babel/cli': ^7.19.3
   '@babel/core': ^7.20.5
   '@graphql-codegen/cli': ^2.16.1
@@ -184,9 +184,9 @@ dependencies:
   '@angular/platform-browser': 15.0.4_bwwplqn6fknm3semymfqlvw5bm
   '@angular/platform-browser-dynamic': 15.0.4_hnn6v3m7xpfwy5wugozvutqsyi
   '@angular/router': 15.0.4_3a2u7xxmt22ynjuprkcysdnbqa
-  '@apollo/client': 3.7.2_o7paodxqbevdia6ixjcodtofcm
+  '@apollo/client': 3.7.3_o7paodxqbevdia6ixjcodtofcm
   '@apollo/server': 4.3.0_graphql@16.6.0
-  '@auth0/angular-jwt': 5.1.0_@angular+common@15.0.4
+  '@auth0/angular-jwt': 5.1.1_@angular+common@15.0.4
   '@iplab/ngx-file-upload': 15.0.0_gn6moqwr2facjfj6i45wa6ntma
   '@nestjs/apollo': 10.1.7_abtkaagqsgvel2ybqxmuekbriy
   '@nestjs/common': 9.2.1_537f4dyna5eqdupcxnvaoq3vwa
@@ -214,10 +214,10 @@ dependencies:
   '@sweetalert2/ngx-sweetalert2': 12.1.0_pnr274jyvey5ixymyfsqbenc7i
   '@sweetalert2/themes': 5.0.15_sweetalert2@11.6.15
   apexcharts: 3.36.3
-  apollo-angular: 4.1.1_s4hljw33vr7vsav5hnhvbswag4
+  apollo-angular: 4.1.1_l7fpntg55xey2sirivfaw4nlie
   apollo-server-core: 3.11.1_graphql@16.6.0
   apollo-server-express: 3.11.1_5ha345eiak62qiwwva5z4dp6gu
-  apollo-upload-client: 17.0.0_qyljuixjfow6vokwpa4ukudbla
+  apollo-upload-client: 17.0.0_nh435tvyg5ei4quos34ypxpb6u
   autoprefixer: 10.4.13_postcss@8.4.20
   bcrypt: 5.1.0
   body-parser: 1.20.1
@@ -1104,8 +1104,8 @@ packages:
       graphql: 16.6.0
     dev: false
 
-  /@apollo/client/3.7.2_o7paodxqbevdia6ixjcodtofcm:
-    resolution: {integrity: sha512-ohAIpXl3mTa1Fd3GT/K37VwQJfTIuuJRp4aOlJ4q/hlx0Wxh+RqDrbn0awtVCOdhGDQN+CQQmVzIqFKn6GziXQ==}
+  /@apollo/client/3.7.3_o7paodxqbevdia6ixjcodtofcm:
+    resolution: {integrity: sha512-nzZ6d6a4flLpm3pZOGpuAUxLlp9heob7QcCkyIqZlCLvciUibgufRfYTwfkWCc4NaGHGSZyodzvfr79H6oUwGQ==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5
@@ -1460,8 +1460,8 @@ packages:
     resolution: {integrity: sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==}
     dev: true
 
-  /@auth0/angular-jwt/5.1.0_@angular+common@15.0.4:
-    resolution: {integrity: sha512-EAQoNKPQSZYphcX6FnY2e7xQpD4ZdHQ1DbHq/m+G1U1qA60m3XnhdjPPfu+blVHARlxEbRzWXc48UOVrnMsrZw==}
+  /@auth0/angular-jwt/5.1.1_@angular+common@15.0.4:
+    resolution: {integrity: sha512-H+xFarhG29/m9aCkFPWKFeJvxpNljsmOT5wEfkb00eK/id/fcW8mHY3+3VYCrmJxFijaK/pgx9gBsnORb7j3rQ==}
     peerDependencies:
       '@angular/common': '>=12.0.0'
     dependencies:
@@ -8274,7 +8274,7 @@ packages:
   /@types/apollo-upload-client/17.0.2_ouxcabus3txrhbd2fdoqq3qh3e:
     resolution: {integrity: sha512-NphAiBqzZv3iY8Cq+qWyi0QUFFzJ+nVd7QKI/iKV8RfILrpYDL69F/vlhjn4BNxKlmc3LxJHymcf3gFzLBwuZQ==}
     dependencies:
-      '@apollo/client': 3.7.2_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.3_o7paodxqbevdia6ixjcodtofcm
       '@types/extract-files': 8.1.1
       graphql: 16.6.0
     transitivePeerDependencies:
@@ -9408,7 +9408,7 @@ packages:
       svg.select.js: 3.0.1
     dev: false
 
-  /apollo-angular/4.1.1_s4hljw33vr7vsav5hnhvbswag4:
+  /apollo-angular/4.1.1_l7fpntg55xey2sirivfaw4nlie:
     resolution: {integrity: sha512-O774MlURHlp5pu1S6l0NQ6MB+sGonntYtcaKaDFe2hmlFlIUtCSIv5CrbCrco5w8JJDYPOwgSyTjbb3O96oBEQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -9418,7 +9418,7 @@ packages:
       rxjs: ^6.0.0 || ^7.0.0
     dependencies:
       '@angular/core': 15.0.4_rxjs@7.6.0+zone.js@0.12.0
-      '@apollo/client': 3.7.2_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.3_o7paodxqbevdia6ixjcodtofcm
       graphql: 16.6.0
       rxjs: 7.6.0
       tslib: 2.4.1
@@ -9552,14 +9552,14 @@ packages:
       - encoding
     dev: false
 
-  /apollo-upload-client/17.0.0_qyljuixjfow6vokwpa4ukudbla:
+  /apollo-upload-client/17.0.0_nh435tvyg5ei4quos34ypxpb6u:
     resolution: {integrity: sha512-pue33bWVbdlXAGFPkgz53TTmxVMrKeQr0mdRcftNY+PoHIdbGZD0hoaXHvO6OePJAkFz7OiCFUf98p1G/9+Ykw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >= 16.0.0}
     peerDependencies:
       '@apollo/client': ^3.0.0
       graphql: 14 - 16
     dependencies:
-      '@apollo/client': 3.7.2_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.3_o7paodxqbevdia6ixjcodtofcm
       extract-files: 11.0.0
       graphql: 16.6.0
     dev: false
@@ -14117,7 +14117,7 @@ packages:
       graphql: 16.6.0
       tslib: 2.4.1
     optionalDependencies:
-      '@apollo/client': 3.7.2_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.3_o7paodxqbevdia6ixjcodtofcm
     transitivePeerDependencies:
       - graphql-ws
       - react
