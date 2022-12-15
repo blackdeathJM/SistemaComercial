@@ -5,10 +5,8 @@ import {LoginGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {FuseAlertType} from '@s-fuse/alert';
-import {AuthService} from '@s-core/auth/auth.service';
 import {TOKEN} from '@s-auth/const';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 
 @Component({
@@ -28,8 +26,8 @@ export class AuthSignInComponent implements OnInit
     signInForm: FormGroup;
     showAlert: boolean = false;
 
-    constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _formBuilder: FormBuilder, private _router: Router,
-                private loginGQL: LoginGQL, private stateAuth: StateAuth, private ngxToastService: NgxToastService)
+    constructor(private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private _router: Router,
+                private loginGQL: LoginGQL, private stateAuth: StateAuth)
     {
     }
 

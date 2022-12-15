@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
-import {Observable, of, switchMap} from 'rxjs';
-import {AuthService} from '@s-core/auth/auth.service';
+import {Observable, of} from 'rxjs';
 import {StateAuth} from '@s-core/auth/auth.store';
 
 @Injectable({
@@ -9,7 +8,7 @@ import {StateAuth} from '@s-core/auth/auth.store';
 })
 export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad
 {
-    constructor(private _authService: AuthService, private _router: Router, private stateAuth: StateAuth)
+    constructor(private _router: Router, private stateAuth: StateAuth)
     {
     }
 

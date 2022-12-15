@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {AuthService} from '#/apps/sistema-comercial/src/app/core/auth/auth.service';
+
 import {StateAuth} from '@s-core/auth/auth.store';
+import {isNotNil} from '@angular-ru/cdk/utils';
+
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
 {
-    constructor(private _authService: AuthService, private _router: Router, private stateAuth: StateAuth)
+    constructor(private _router: Router, private stateAuth: StateAuth)
     {
     }
 
@@ -31,8 +33,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
 
     private validarSesion(redirectURL: string): Observable<boolean>
     {
-        const sesionActual = this.stateAuth.snapshot;
-        if (sesionActual)
+
+        if (isNotNil(this.stateAuth.snapshot))
         {
             return of(true);
         }

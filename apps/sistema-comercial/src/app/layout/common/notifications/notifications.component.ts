@@ -2,7 +2,7 @@ import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
-import {Subscription, tap} from 'rxjs';
+import {catchError, of, Subscription, tap} from 'rxjs';
 import {NotificationsService} from '@s-layout/notifications/notifications.service';
 import {EliminarNotGQL, EliminarTodosGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
@@ -46,7 +46,12 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
                     this.cdr.detectChanges();
                 });
             }
-        });
+        }, catchError((err) =>
+        {
+            console.log('Notificaciones', err);
+            this.ngxToastService.errorToast('Error al tratar de obtener las notificaciones', 'Notificaciones');
+            return of([]);
+        }));
     }
 
     ngAfterContentInit(): void
@@ -63,7 +68,12 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
                     closeButton: true, disableTimeOut: true
                 });
             }
-        }));
+        }, catchError((err) =>
+        {
+            console.log('notificaciones', err.message);
+            this.ngxToastService.errorToast('Se genero un error al establecer la subscripcion', 'Notificaciones');
+            return of([]);
+        })));
     }
 
     openPanel(): void

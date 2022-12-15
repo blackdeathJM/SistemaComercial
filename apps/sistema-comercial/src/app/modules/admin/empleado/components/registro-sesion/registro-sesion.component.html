@@ -4,7 +4,7 @@
         <div class="flex flex-col">
             <mat-form-field>
                 <mat-label>Asigna un usuario para iniciar sesion</mat-label>
-                <input matInput type="text" formControlName="usuario" trim [readonly]="soloLectura">
+                <input matInput type="text" formControlName="usuario" placeholder="  que  pinc he pedo" trim [readonly]="soloLectura">
                 <mat-error>{{formAuth.controls.usuario['errorMessage']}}</mat-error>
             </mat-form-field>
             <mat-form-field>

@@ -31,7 +31,7 @@ import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
             MatInputModule,
             RegistrosComponent,
             TrimDirective,
-            NgxTrimDirectiveModule
+            NgxTrimDirectiveModule,
         ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',
