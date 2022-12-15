@@ -15,24 +15,25 @@ interface IEmpleadoStore
 }
 
 
-// @StateRepository()
-// @State({
-//     name: 'empleado',
-//     defaults: null,
-// })
-// @Injectable()
-// export class StateEmpleado extends NgxsImmutableDataRepository<IResolveEmpleado>
-// {
-//     constructor()
-//     {
-//         super();
-//     }
-// }
+@StateRepository()
+@State({
+    name: 'empleado',
+    defaults: null,
+})
+@Injectable()
+export class StateEmpleado extends NgxsImmutableDataRepository<IResolveEmpleado>
+{
+    constructor()
+    {
+        super();
+    }
+}
 
 @StateRepository()
 @State<IEmpleadoStore>({
     name: 'empleados',
-    defaults: {cargando: false, empleados: []}
+    defaults: {cargando: false, empleados: []},
+    children: [StateEmpleado]
 })
 @Injectable()
 export class StateEmpleados extends NgxsImmutableDataRepository<IEmpleadoStore>

@@ -46,6 +46,6 @@ export class UserComponent
 
     signOut(): void
     {
-        this.stateAuth.cerrarSesion('');
+        this.stateAuth.cerrarSesion('/');
     }
 }
