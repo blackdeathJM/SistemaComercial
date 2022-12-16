@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -12,19 +12,18 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
-import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
 import {finalize, Observable} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {DeptoStore} from '@s-admin/depto.store';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {StateEmpleados} from '@s-admin/empleados.store';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -51,7 +50,7 @@ import {StateAuth} from '@s-core/auth/auth.store';
     styleUrls: ['./mod-registro-empleado.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModRegistroEmpleadoComponent implements OnInit
+export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
 {
     @Select(DeptoStore.deptos)
     deptos$: Observable<IDepto[]>;
@@ -64,10 +63,9 @@ export class ModRegistroEmpleadoComponent implements OnInit
 
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 5);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
-    stateDeptos: IDepto[];
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, private mdr: MatDialog, private deptosGQL: DepartamentosGQL,
-                private ngxToastService: NgxToastService, public stateDepto: DeptoStore, private stateAuth: StateAuth)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, public stateEmpleado: StateEmpleados
+        , public stateDepto: DeptoStore, private stateAuth: StateAuth)
     {
     }
 
@@ -89,6 +87,10 @@ export class ModRegistroEmpleadoComponent implements OnInit
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
+    }
+
+    ngAfterContentInit(): void
+    {
         this.stateDepto.cargarDeptos();
     }
 
@@ -117,14 +119,13 @@ export class ModRegistroEmpleadoComponent implements OnInit
         this.cargando = true;
         this.formEmpleado.disable();
         const {fechaIngreso, ...resto} = this.formEmpleado.value;
-
         const empleadoDatos: TRegEmpleado =
             {
                 fechaIngreso: GeneralService.convertirUnix(fechaIngreso.c, fechaIngreso.ts),
                 modificadoPor:
                     [
                         {
-                            usuario: this.stateAuth.snapshot.auth.usuario,
+                            usuario: this.stateAuth.snapshot._id,
                             accion: 'Registro de nuevo empleado',
                             fecha: GeneralService.fechaHoraActual(),
                             valorActual: {},
@@ -133,24 +134,11 @@ export class ModRegistroEmpleadoComponent implements OnInit
                     ],
                 ...resto
             };
-        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(finalize(() =>
+        this.stateEmpleado.crearEmpleado(empleadoDatos).pipe(finalize(() =>
         {
             this.cargando = false;
             this.formEmpleado.enable();
-            this.cerrar();
-        })).subscribe((res) =>
-        {
-            if (res.data)
-            {
-                const elementos = STATE_EMPLEADOS();
-                STATE_EMPLEADOS([...elementos, res.data.crearEmpleado as IResolveEmpleado]);
-                this.ngxToastService.satisfactorioToast('El empleado fue creado con exito', 'Registro de nuevos empleados');
-            }
-        });
-    }
-
-    cerrar(): void
-    {
-        this.mdr.closeAll();
+            this.mdr.closeAll();
+        })).subscribe();
     }
 }

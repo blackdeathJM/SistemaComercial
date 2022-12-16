@@ -13,7 +13,7 @@
     </ng-container>
     <ng-container lista>
         <ng-container *ngIf="!stateEmpleados.cargando; else cargando">
-            <fuse-alert type="info" appearance="border" *ngIf="stateEmpleados.longEmpleados">
+            <fuse-alert type="info" appearance="border" *ngIf="stateEmpleados.longEmpleados" class="p-4">
                 <span fuseAlertTitle>Empleados</span>
                 no se encontraron empleados para mostrar
             </fuse-alert>

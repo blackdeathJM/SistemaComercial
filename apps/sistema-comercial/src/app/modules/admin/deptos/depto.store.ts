@@ -3,9 +3,9 @@ import {Selector, State} from '@ngxs/store';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {Injectable} from '@angular/core';
 import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
-import {finalize, map, Observable, tap} from 'rxjs';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {Immutable} from '@angular-ru/cdk/typings';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 
 interface IDeptoState
 {
@@ -39,15 +39,16 @@ export class DeptoStore extends NgxsImmutableDataRepository<IDeptoState>
     }
 
     @DataAction({subscribeRequired: false})
-    public cargarDeptos(): Observable<IDepto[]>
+    public cargarDeptos(): void
     {
         this.ctx.patchState({cargando: true});
-        return this.departamentosGQL.watch().valueChanges.pipe(
-            tap((res) =>
+        this.departamentosGQL.watch().valueChanges.subscribe((res) =>
+        {
+            if (isNotNil(res.data))
             {
-                this.ctx.patchState({deptos: res.data.deptos as IDepto[]});
-            }), map(deptos => deptos.data.deptos as IDepto[]),
-            finalize(() => this.ctx.patchState({cargando: false})));
+                this.ctx.setState({cargando: res.loading, deptos: $cast<IDepto[]>(res.data.deptos)});
+            }
+        });
     }
 
     @DataAction({subscribeRequired: false})
