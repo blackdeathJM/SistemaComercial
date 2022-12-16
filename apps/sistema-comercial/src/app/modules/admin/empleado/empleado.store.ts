@@ -1,4 +1,4 @@
-import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
+import {Computed, DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
 import {catchError, map, Observable, of} from 'rxjs';
@@ -43,25 +43,38 @@ export class StateEmpleados extends NgxsImmutableDataRepository<IEmpleadoStore>
         super();
     }
 
-    @Selector()
-    public static empleados(state: IResolveEmpleado[]): IResolveEmpleado[]
+    @Computed()
+    public get cargando(): boolean
     {
-        return state;
+        return this.snapshot.cargando;
+    }
+
+    @Computed()
+    public get longEmpleados(): boolean
+    {
+        return this.snapshot.empleados.length === 0;
     }
 
     @Selector()
-    public static estaCargando(state: boolean): boolean
+    public static empleados(state: IEmpleadoStore): IResolveEmpleado[]
     {
-        return state;
+        return state.empleados;
     }
 
-    @DataAction()
+    @Selector()
+    public static estaCargando(state: IEmpleadoStore): boolean
+    {
+        return state.cargando;
+    }
+
+    @DataAction({subscribeRequired: true})
     public cargarEmpleados(): Observable<IResolveEmpleado[]>
     {
         this.ctx.patchState({cargando: true});
         return this.empleadosGql.watch().valueChanges.pipe(map((res) =>
         {
             const empleados: IResolveEmpleado[] = $cast<IResolveEmpleado[]>(res.data.empleados);
+            console.log('obteniendo empleados', empleados);
             if (isNotNil(res.data))
             {
                 this.ctx.patchState({cargando: res.loading, empleados});

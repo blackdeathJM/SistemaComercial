@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, Subscription, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonModule, DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
@@ -14,6 +14,8 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {Select} from '@ngxs/store';
 import {StateEmpleados} from '@s-admin/empleado.store';
+import {NgxSpinnerModule, NgxSpinnerService} from 'ngx-spinner';
+import {FuseAlertModule} from "@s-fuse/alert";
 
 @Component({
     standalone: true,
@@ -27,7 +29,9 @@ import {StateEmpleados} from '@s-admin/empleado.store';
             ReactiveFormsModule,
             RxReactiveFormsModule,
             DetalleEmpleadoComponent,
-            TailwindLoadingComponent
+            TailwindLoadingComponent,
+            NgxSpinnerModule,
+            FuseAlertModule
         ],
     selector: 'app-empleado',
     templateUrl: './empleado.component.html',
@@ -43,13 +47,13 @@ export class EmpleadoComponent implements OnInit, OnDestroy
     subscripciones: Subscription = new Subscription();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService, private stateEmpleados: StateEmpleados)
+                private fuseMediaWatcherService: FuseMediaWatcherService, public stateEmpleados: StateEmpleados, private ngxspinner: NgxSpinnerService)
     {
     }
 
     ngOnInit(): void
     {
-        // this.stateEmpleados.cargarEmpleados().subscribe(() => console.log('Termino la carga de empleados'));
+        this.stateEmpleados.cargarEmpleados();
         // this.subscripciones.add(this.empleadosGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(switchMap((res) =>
         // {
         //     if (res.data)
