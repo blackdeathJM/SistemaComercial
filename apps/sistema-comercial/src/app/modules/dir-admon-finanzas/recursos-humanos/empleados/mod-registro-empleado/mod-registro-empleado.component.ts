@@ -11,19 +11,20 @@ import {Empleado, Telefono} from '#/libs/models/src/lib/admin/empleado/empleado'
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {CrearEmpleadoGQL, DepartamentosGQL} from '#/libs/datos/src';
-import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {CrearEmpleadoGQL} from '#/libs/datos/src';
+import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
-import {finalize, Observable} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {DeptoStore} from '@s-admin/depto.store';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {StateEmpleados} from '@s-admin/empleados.store';
+import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {finalize, Observable, tap} from 'rxjs';
+import {$cast, isNotNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -134,7 +135,15 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
                     ],
                 ...resto
             };
-        this.stateEmpleado.crearEmpleado(empleadoDatos).pipe(finalize(() =>
+
+        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const empleadoReg = $cast<IResolveEmpleado>(res.data.crearEmpleado);
+                this.stateEmpleado.crearEmpleado(empleadoReg);
+            }
+        }), finalize(() =>
         {
             this.cargando = false;
             this.formEmpleado.enable();

@@ -10,12 +10,13 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {EmpleadosSesionGQL, ReasignarUsuarioGQL} from '#/libs/datos/src';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {STATE_DOCS} from '@s-general/general.state';
+import {Select} from '@ngxs/store';
+import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 
 @Component({
     selector: 'app-mod-reasignacion',
@@ -38,36 +39,36 @@ import {STATE_DOCS} from '@s-general/general.state';
 })
 export class ModReasignacionComponent implements OnInit
 {
-    empleados: IResolveEmpleado[];
-    selecEmpleado: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
+    @Select(StateEmpleados.empleados) empleados$: Observable<IResolveEmpleado[]>;
+    formSelect: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
     cargando: boolean = false;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, @Inject(MAT_DIALOG_DATA) private data: IResolveDocumento, private dRef: MatDialogRef<ModReasignacionComponent>,
+    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, @Inject(MAT_DIALOG_DATA) private data: IResolveDocumento, public dRef: MatDialogRef<ModReasignacionComponent>,
                 private reasignacionUsuarioGQL: ReasignarUsuarioGQL, private ngxToastService: NgxToastService)
     {
     }
 
     ngOnInit(): void
     {
+        // Asignamos los empleados que ya se les haya asignado algun documento para establecer de nuevo la asignacion
         this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
-                this.selecEmpleado.setValue(this.data.usuarios);
-                this.empleados = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
+                this.formSelect.setValue(this.data.usuarios);
             }
         })).subscribe();
     }
 
     cambiarUsuarios(): void
     {
-        if (this.selecEmpleado.value.length === 0)
+        if (this.formSelect.value.length === 0)
         {
             this.ngxToastService.alertaToast('Debes tener seleccionado por lo menos un usuario', 'Seleccion de usuarios');
             return;
         }
         this.cargando = true;
-        this.reasignacionUsuarioGQL.mutate({usuarios: {_id: this.data._id, usuarios: this.selecEmpleado.value}}).pipe(tap((res) =>
+        this.reasignacionUsuarioGQL.mutate({usuarios: {_id: this.data._id, usuarios: this.formSelect.value}}).pipe(tap((res) =>
         {
             this.cargando = res.loading;
             if (res.data)
@@ -76,10 +77,5 @@ export class ModReasignacionComponent implements OnInit
                 this.dRef.close(res.data.reasignarUsuario);
             }
         })).subscribe();
-    }
-
-    cerrar(): void
-    {
-        this.dRef.close(null);
     }
 }

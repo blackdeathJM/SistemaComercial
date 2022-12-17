@@ -13,7 +13,7 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {Select} from '@ngxs/store';
-import {StateEmpleados} from '@s-admin/empleados.store';
+import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 import {NgxSpinnerModule, NgxSpinnerService} from 'ngx-spinner';
 import {FuseAlertModule} from '@s-fuse/alert';
 
@@ -42,7 +42,7 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
     @Select(StateEmpleados.empleados)
     empleados$: Observable<IResolveEmpleado[]>;
     abrirP: boolean = false;
-    controlBuscar: FormControl = new FormControl();
+    ctrlBuscar: FormControl = new FormControl();
     empleadoSeleccionado: IResolveEmpleado;
     subscripciones: Subscription = new Subscription();
 
@@ -51,14 +51,14 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
     {
     }
 
-    ngAfterContentInit(): void
-    {
-        this.controlBuscar.valueChanges.pipe(auditTime(1000), map((res: string) => this.stateEmpleados.filtrarEmpleado(res))).subscribe();
-    }
-
     ngOnInit(): void
     {
-        this.stateEmpleados.cargarEmpleados();
+        this.stateEmpleados.empleados();
+    }
+
+    ngAfterContentInit(): void
+    {
+        // this.ctrlBuscar.valueChanges.pipe(auditTime(1000), map((res: string) => this.stateEmpleados.filtrarEmpleado(res))).subscribe();
     }
 
     seleccionarEmpleado(empleado: IResolveEmpleado): void
@@ -72,9 +72,9 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
         this.abrirP = evento;
     }
 
-    trackByFn(index: number, item: any): any
+    trackByFn(index: number, item: IResolveEmpleado): any
     {
-        return item.id || index;
+        return item._id || index;
     }
 
     ngOnDestroy(): void

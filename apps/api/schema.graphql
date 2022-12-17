@@ -136,7 +136,7 @@ input EmpleadoInput {
   nombreCompleto: String
   telefono: [TelefonoInput!] = null
   auth: AuthInput = null
-  modificadoPor: [ModificadoPorInput!]
+  modificadoPor: [ModificadoPorInput!] = []
   deptoId: ID
   deptoEmpleado: DeptoInput
 }
@@ -182,7 +182,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1671143110
+  tiempo: Int = 1671314878
   titulo: String
   usarRouter: Boolean = false
 }
@@ -237,7 +237,7 @@ input RegEmpleadoInput {
   fechaIngreso: Int
   nombreCompleto: String
   telefono: [TelefonoInput!] = null
-  modificadoPor: [ModificadoPorInput!]
+  modificadoPor: [ModificadoPorInput!] = []
   deptoId: ID
 }
 

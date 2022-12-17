@@ -8,7 +8,7 @@
     <ng-container buscar>
         <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-            <input matInput [formControl]="controlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar empleado'">
+            <input matInput [formControl]="ctrlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar empleado'">
         </mat-form-field>
     </ng-container>
     <ng-container lista>
@@ -50,7 +50,3 @@
         <app-tailwind-loading></app-tailwind-loading>
     </div>
 </ng-template>
-
-<!--<ng-template #cargando>-->
-<!--    <ngx-spinner [showSpinner]="true"></ngx-spinner>-->
-<!--</ng-template>-->

@@ -1,6 +1,6 @@
-import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
-import {finalize, Subscription, tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -23,7 +23,6 @@ import {FuseConfirmationService} from '@s-fuse/confirmation';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -56,7 +55,7 @@ import {StateAuth} from '@s-core/auth/auth.store';
     templateUrl: './mod-documentos.component.html',
     styleUrls: ['./mod-documentos.component.scss']
 })
-export class ModDocumentosComponent implements OnInit, OnDestroy
+export class ModDocumentosComponent implements OnInit
 {
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();
@@ -70,7 +69,6 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
     porcentaje: number;
     tiposDoc = TIPOS_DOCUMENTO;
     mostrarProgreso: boolean = false;
-    sub: Subscription = new Subscription();
 
     constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService,
                 private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef,
@@ -82,20 +80,20 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
     {
         ReactiveFormConfig.set({validationMessage: {required: 'Este campo es requerido'}});
         this.formDocs = this.fb.formGroup(new Documento());
-
-        this.sub.add(this.generalService.progreso().subscribe((res) =>
+        // Nos subscribimos al api de firebase para obtener el progreso para cuando se suban los archivos
+        this.generalService.progreso().subscribe((res) =>
         {
             this.porcentaje = res;
             this.cdr.detectChanges();
-        }));
-
-        this.sub.add(this.empleadosSesionGQL.watch().valueChanges.pipe(finalize(() => console.log('si finaliza')), tap((res) =>
+        });
+        // Obtenemos la lista de los empleados que tengan sesion para mostrarlos en el selec y poder seleccionarlos
+        this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
-                this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
+                // this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
             }
-        })).subscribe());
+        })).subscribe();
     }
 
     async reg(esRemoto: boolean): Promise<void>
@@ -165,10 +163,5 @@ export class ModDocumentosComponent implements OnInit, OnDestroy
         {
             this.mdr.closeAll();
         }
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
     }
 }

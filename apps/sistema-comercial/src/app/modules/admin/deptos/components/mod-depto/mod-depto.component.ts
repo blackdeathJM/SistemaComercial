@@ -42,7 +42,7 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, private dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
                 private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto, private stateDepto: DeptoStore)
     {
     }
@@ -63,7 +63,7 @@ export class ModDeptoComponent implements OnInit
         if (this.data)
         {
             const input = {_id: this.data._id, ...this.formDepto.value} as IDepto;
-            this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.cancelar()),
+            this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.dRef.closeAll()),
                 tap((res) =>
                 {
                     if (res.data)
@@ -84,7 +84,7 @@ export class ModDeptoComponent implements OnInit
                 //     data.deptos = [...data.deptos, result.data.crearDepto];
                 //     store.writeQuery({query: DepartamentosDocument, data});
                 // }
-            }).pipe(finalize(() => this.cancelar())).subscribe((res) =>
+            }).pipe(finalize(() => this.dRef.closeAll())).subscribe((res) =>
             {
                 if (res.data)
                 {
@@ -95,10 +95,5 @@ export class ModDeptoComponent implements OnInit
                 this.cargandoDatos = res.loading;
             });
         }
-    }
-
-    cancelar(): void
-    {
-        this.dRef.closeAll();
     }
 }

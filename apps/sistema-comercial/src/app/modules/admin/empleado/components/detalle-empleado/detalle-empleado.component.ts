@@ -15,7 +15,6 @@ import {MatListModule} from '@angular/material/list';
 import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 
 @Component({
     standalone: true,
@@ -64,13 +63,12 @@ export class DetalleEmpleadoComponent implements OnDestroy
 
     asignarSesion(data: IResolveEmpleado): void
     {
-        this.subscripcion.add(this.dialogRef.open(RegistroSesionComponent, {data, width: '40%'}).afterClosed().subscribe(() =>
-        {
-            setTimeout(() =>
-            {
-                this._empleado = STATE_EMPLEADOS().filter(value => value._id === data._id)[0];
-            }, 200);
-        }));
+        // this.dialogRef.open(RegistroSesionComponent, {data, width: '40%'}).afterClosed().subscribe(() =>
+        // {
+        //     this._empleado = STATE_EMPLEADOS().filter(value => value._id === data._id)[0];
+        // });
+
+        this.dialogRef.open(RegistroSesionComponent, {data, width: '40%'});
     }
 
     trackByFn(index: number, item: any): any

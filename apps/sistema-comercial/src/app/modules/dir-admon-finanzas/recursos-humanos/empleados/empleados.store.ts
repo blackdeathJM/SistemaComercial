@@ -1,14 +1,12 @@
 import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
-import {catchError, finalize, map, Observable, of, tap} from 'rxjs';
-import {CrearEmpleadoGQL, CrearEmpleadoMutation, EmpleadosGQL} from '#/libs/datos/src';
+import {catchError, finalize, map, of} from 'rxjs';
+import {CrearEmpleadoGQL, EmpleadosGQL} from '#/libs/datos/src';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {Injectable} from '@angular/core';
-import {StateEmpleado} from '@s-admin/empleado.store';
-import {MutationResult} from 'apollo-angular';
 import {Immutable} from '@angular-ru/cdk/typings';
 
 interface IStoreEmpleado
@@ -20,8 +18,7 @@ interface IStoreEmpleado
 @StateRepository()
 @State<IStoreEmpleado>({
     name: 'empleados',
-    defaults: {empleados: [], cargando: false},
-    children: [StateEmpleado]
+    defaults: {empleados: [], cargando: false}
 })
 @Injectable()
 export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
@@ -34,24 +31,28 @@ export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
     @Computed()
     public get cargando(): boolean
     {
+        // Obtener el estado de carga de las subscripciones para mostrar el loading a la hora de procesar la consulta graphql
         return this.snapshot.cargando;
     }
 
     @Computed()
     public get longEmpleados(): boolean
     {
+        // Obtener la longitud del estado de empleados el cual es utilizado para mostrar la alerta si no hay datos en el estado
         return this.snapshot.empleados.length === 0;
     }
 
     @Selector()
     public static empleados(state: IStoreEmpleado): IResolveEmpleado[]
     {
+        // Observable al que se subscriben las peticiones a la base de datos
         return state.empleados;
     }
 
     @DataAction({subscribeRequired: false})
-    public cargarEmpleados(): void
+    public empleados(): void
     {
+        // Carga inicial de empleados en esta consulta se obtienen todos los empleados registrados
         this.ctx.patchState({cargando: true});
         this.empleadosGql.watch().valueChanges.pipe(map((res) =>
         {
@@ -75,22 +76,20 @@ export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
     }
 
     @DataAction({subscribeRequired: true})
-    public crearEmpleado(@Payload('crearEmpleado') empleadoDatos: TRegEmpleado): Observable<MutationResult<CrearEmpleadoMutation>>
+    public crearEmpleado(@Payload('crearEmpleado') empleadoDatos: IResolveEmpleado): void
     {
-        return this.crearEmpleadoGql.mutate({empleadoDatos}).pipe(tap((res) =>
-        {
-            this.ctx.patchState({cargando: res.loading});
-            if (isNotNil(res.data))
-            {
-                const nvoEmpleado: IResolveEmpleado = $cast<IResolveEmpleado>(res.data.crearEmpleado);
-                this.ctx.setState((state: Immutable<IStoreEmpleado>): Immutable<IStoreEmpleado> => ({empleados: state.empleados.concat(nvoEmpleado), cargando: res.loading}));
-            }
-        }), catchError((err) =>
-        {
-            this.ngxToast.errorToast('Ocurrio un error al tratar al registrar el empleado', 'Error en registro');
-            console.log('error empleados', err);
-            return of(null);
-        }));
+        this.ctx.setState((state: Immutable<IStoreEmpleado>): Immutable<IStoreEmpleado> => ({empleados: state.empleados.concat(empleadoDatos), cargando: false}));
+    }
+
+    @DataAction({subscribeRequired: false})
+    asignarAuth(@Payload('AsignarAuth') sesionAsignada: IResolveEmpleado): void
+    {
+        this.actualizarEdo(sesionAsignada._id);
+    }
+
+    private actualizarEdo(_id: string): void
+    {
+        this.ctx.setState((state: Immutable<IStoreEmpleado>): Immutable<IStoreEmpleado> => ({empleados: state.empleados.filter(value => value._id !== _id), cargando: false}));
     }
 }
 

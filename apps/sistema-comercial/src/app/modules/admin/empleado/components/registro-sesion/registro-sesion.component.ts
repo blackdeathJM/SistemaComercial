@@ -4,7 +4,6 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
-import {unionBy} from 'lodash-es';
 import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -17,7 +16,6 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 
 @Component({
     standalone: true,
@@ -43,7 +41,7 @@ export class RegistroSesionComponent implements OnInit
     formAuth: FormGroup;
     soloLectura = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dialogRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
+    constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
                 private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth)
     {
     }
@@ -110,7 +108,7 @@ export class RegistroSesionComponent implements OnInit
             {
                 if (res.data)
                 {
-                    unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
+                    // unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
                     this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
                 } else
                 {
@@ -123,6 +121,6 @@ export class RegistroSesionComponent implements OnInit
 
     cancelar(): void
     {
-        this.dialogRef.closeAll();
+        this.dRef.closeAll();
     }
 }

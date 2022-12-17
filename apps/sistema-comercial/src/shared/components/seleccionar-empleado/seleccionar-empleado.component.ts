@@ -4,9 +4,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {EmpleadosSesionGQL} from '#/libs/datos/src';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Subscription, tap} from 'rxjs';
+import {Observable, Subscription, tap} from 'rxjs';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
+import {Select} from "@ngxs/store";
+import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -29,8 +30,8 @@ import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
 })
 export class SeleccionarEmpleadoComponent implements OnInit, ControlValueAccessor
 {
+    @Select(StateEmpleados.empleados) empleados$: Observable<IResolveEmpleado[]>;
     @Input() multiple: boolean = false;
-    empleados: IResolveEmpleado[];
     sub: Subscription = new Subscription();
     valor: any;
     cambio: (v: any) => void;
@@ -43,13 +44,7 @@ export class SeleccionarEmpleadoComponent implements OnInit, ControlValueAccesso
 
     ngOnInit(): void
     {
-        this.empleadosSesionGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                this.empleados = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
-            }
-        })).subscribe();
+
     }
 
     writeValue(obj: any): void

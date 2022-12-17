@@ -79,7 +79,7 @@ export class EmpleadoDto implements IEmpleado
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop()
     auth: AuthDto;
-    @Field(() => [ModificadoPorDto], {nullable: true})
+    @Field(() => [ModificadoPorDto], {nullable: true, defaultValue:[]})
     @Prop()
     @IsNotEmpty({message: 'Este campo es requerido'})
     modificadoPor: ModificadoPorDto[];

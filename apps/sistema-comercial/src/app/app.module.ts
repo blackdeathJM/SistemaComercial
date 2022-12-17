@@ -13,7 +13,7 @@ import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';
-import {provideStorage, getStorage} from '@angular/fire/storage';
+import {getStorage, provideStorage} from '@angular/fire/storage';
 import {LuxonModule} from 'luxon-angular';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
@@ -55,6 +55,7 @@ const routerConfig: ExtraOptions =
             LuxonModule,
             ReactiveFormsModule,
             BrowserAnimationsModule,
+            NgxsGlobalModule,
             RouterModule.forRoot(appRoutes, routerConfig),
 
             // Fuse, FuseConfig & FuseMockAPI
@@ -70,7 +71,6 @@ const routerConfig: ExtraOptions =
 
             // 3rd party modules that require global configuration via forRoot
             MarkdownModule.forRoot({}),
-            NgxsGlobalModule,
             ApolloConfigModule,
             SweetAlert2Module.forRoot(),
             ToastrModule.forRoot(),
