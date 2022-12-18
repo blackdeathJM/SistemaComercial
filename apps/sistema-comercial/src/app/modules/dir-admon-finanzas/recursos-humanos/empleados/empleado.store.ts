@@ -26,6 +26,6 @@ export class StateEmpleado extends NgxsImmutableDataRepository<IResolveEmpleado>
     @DataAction({subscribeRequired: false})
     selecEmpleado(empleado: IResolveEmpleado): void
     {
-        this.setState(empleado);
+        this.ctx.setState(empleado);
     }
 }

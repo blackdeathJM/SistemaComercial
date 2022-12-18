@@ -9,7 +9,7 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 import {ValidarTokenGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {$cast, isNil, isNotNil} from '@angular-ru/cdk/utils';
 
 @StateRepository()
 @State<IDatosSesion>({
@@ -37,39 +37,41 @@ export class StateAuth extends NgxsImmutableDataRepository<IDatosSesion>
     }
 
     @DataAction({subscribeRequired: false})
-    public cerrarSesion(redirectURL: string): void
+    validarSesion(): void
     {
-        localStorage.removeItem(TOKEN);
-        this.router.navigate(['/sign-in'], {queryParams: {redirectURL}}).then();
-    }
-
-    public validarToken(redirectURL: string = ''): boolean
-    {
-        //Validar token para iniciar sesion con el token
-
-        if (isNotNil(this.jwtHelperService.tokenGetter()) && !this.jwtHelperService.isTokenExpired())
+        if (isNil(this.ctx.getState()))
         {
-            const token = $cast<string>(this.jwtHelperService.tokenGetter());
-            this.validarTokenGQL.mutate({token}).pipe(tap((res) =>
+            if (isNotNil(this.jwtHelperService.tokenGetter() && !this.jwtHelperService.isTokenExpired()))
             {
-                if (res.data)
+                const token = $cast<string>(this.jwtHelperService.tokenGetter());
+                this.validarTokenGQL.mutate({token}).pipe(tap((res) =>
                 {
-                    const sesionPorToken = $cast<IDatosSesion>(res.data.validarToken);
-                    this.ctx.setState(sesionPorToken);
-                    return true;
-                } else
+                    if (res.data)
+                    {
+                        const sesionPorToken = $cast<IDatosSesion>(res.data.validarToken);
+                        this.ctx.setState(sesionPorToken);
+                    } else
+                    {
+                        this.cerrarSesion();
+                    }
+                }), catchError((err) =>
                 {
-                    this.cerrarSesion(redirectURL);
-                }
-            }), catchError((err) =>
+                    this.ngxToastService.errorToast(err, 'Error');
+                    return of(false);
+                })).subscribe();
+            } else
             {
-                this.ngxToastService.errorToast(err, 'Error');
-                return of(false);
-            })).subscribe();
+                this.cerrarSesion();
+            }
         } else
         {
-            this.cerrarSesion(redirectURL);
-            return false;
+            this.cerrarSesion();
         }
+    }
+
+    cerrarSesion(): void
+    {
+        localStorage.removeItem(TOKEN);
+        this.router.navigate(['/sign-in']).then(() => this.reset());
     }
 }

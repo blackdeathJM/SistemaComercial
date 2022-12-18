@@ -23,8 +23,9 @@ import {DeptoStore} from '@s-admin/depto.store';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
-import {finalize, Observable, tap} from 'rxjs';
-import {$cast, isNotNil} from "@angular-ru/cdk/utils";
+import {catchError, finalize, Observable, of, tap} from 'rxjs';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -66,7 +67,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
     constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, public stateEmpleado: StateEmpleados
-        , public stateDepto: DeptoStore, private stateAuth: StateAuth)
+        , public stateDepto: DeptoStore, private stateAuth: StateAuth, private ngxToast: NgxToastService)
     {
     }
 
@@ -142,7 +143,13 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
             {
                 const empleadoReg = $cast<IResolveEmpleado>(res.data.crearEmpleado);
                 this.stateEmpleado.crearEmpleado(empleadoReg);
+                this.ngxToast.satisfactorioToast('El registro fue realizado con exito', 'Registro de empleados');
             }
+        }), catchError((err) =>
+        {
+            console.log('Registro de empleados', err);
+            this.ngxToast.errorToast('Ocurrio un error al registrar el documento', 'Registro empleados');
+            return of(null);
         }), finalize(() =>
         {
             this.cargando = false;

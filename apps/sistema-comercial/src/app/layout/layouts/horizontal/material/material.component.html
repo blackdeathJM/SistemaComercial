@@ -44,9 +44,7 @@
                 </ng-container>
                 <!-- Navigation toggle button -->
                 <ng-container *ngIf="isScreenSmall">
-                    <button
-                        mat-icon-button
-                        (click)="toggleNavigation('mainNavigation')">
+                    <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
                         <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
                     </button>
                 </ng-container>
@@ -64,9 +62,7 @@
             <!-- Bottom bar -->
             <ng-container *ngIf="!isScreenSmall">
                 <div class="relative flex flex-auto flex-0 items-center h-16 px-4">
-                    <fuse-horizontal-navigation
-                        [name]="'mainNavigation'"
-                        [navigation]="navigation.horizontal"></fuse-horizontal-navigation>
+                    <fuse-horizontal-navigation [name]="'mainNavigation'" [navigation]="navigation.horizontal"></fuse-horizontal-navigation>
                 </div>
             </ng-container>
         </div>

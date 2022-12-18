@@ -1,11 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation} from '@angular/core';
 import {BooleanInput} from '@angular/cdk/coercion';
-import {Observable, Subscription, tap} from 'rxjs';
+import {Observable} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {RolCambiadoGQL} from '#/libs/datos/src';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {Router} from '@angular/router';
+import {TOKEN} from '@s-auth/const';
 
 @Component({
     selector: 'user',
@@ -22,10 +23,8 @@ export class UserComponent
     @Select(StateAuth.sesionActual)
     usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
-    subs: Subscription = new Subscription();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private rolCambiado: RolCambiadoGQL, private ngxToatService: NgxToastService,
-                private stateAuth: StateAuth)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private rolCambiado: RolCambiadoGQL, private router: Router, private stateAuth: StateAuth)
     {
     }
 
@@ -46,6 +45,8 @@ export class UserComponent
 
     signOut(): void
     {
-        this.stateAuth.cerrarSesion('/');
+        localStorage.removeItem(TOKEN);
+        this.stateAuth.reset();
+        this.router.navigateByUrl('/sign-in').then();
     }
 }

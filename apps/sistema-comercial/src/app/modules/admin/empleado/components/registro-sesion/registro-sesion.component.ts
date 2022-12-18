@@ -4,7 +4,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
 import {finalize, tap} from 'rxjs';
-import {IEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
@@ -16,6 +16,9 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
+import {StateEmpleado} from "@s-dirAdmonFinanzas/empleados/empleado.store";
+import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
     standalone: true,
@@ -42,7 +45,8 @@ export class RegistroSesionComponent implements OnInit
     soloLectura = false;
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
-                private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth)
+                private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth,
+                private stateEmpleados: StateEmpleados, private stateEmpleado: StateEmpleado)
     {
     }
 
@@ -109,6 +113,9 @@ export class RegistroSesionComponent implements OnInit
                 if (res.data)
                 {
                     // unionBy(STATE_EMPLEADOS(), res.data.asignarAuth);
+                    const sesionAsignada: IResolveEmpleado = $cast<IResolveEmpleado>(res.data.asignarAuth);
+                    this.stateEmpleados.asignarAuth(sesionAsignada);
+
                     this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
                 } else
                 {

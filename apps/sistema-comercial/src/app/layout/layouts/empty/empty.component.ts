@@ -1,19 +1,10 @@
-import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
-    selector     : 'empty-layout',
-    templateUrl  : './empty.component.html',
+    selector: 'empty-layout',
+    templateUrl: './empty.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class EmptyLayoutComponent implements OnDestroy
+export class EmptyLayoutComponent
 {
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
 }

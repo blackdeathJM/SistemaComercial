@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment} from '@angular/router';
 import {Observable, of} from 'rxjs';
-
 import {StateAuth} from '@s-core/auth/auth.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
 
@@ -10,7 +9,7 @@ import {isNotNil} from '@angular-ru/cdk/utils';
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
 {
-    constructor(private _router: Router, private stateAuth: StateAuth)
+    constructor(private router: Router, private stateAuth: StateAuth)
     {
     }
 
@@ -34,10 +33,13 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     private validarSesion(redirectURL: string): Observable<boolean>
     {
 
-        if (isNotNil(this.stateAuth.snapshot))
+        if (isNotNil(this.stateAuth.getState()))
         {
             return of(true);
+        } else
+        {
+            this.router.navigate(['sign-in'], {queryParams: {redirectURL}}).then();
+            return of(false);
         }
-        return of(this.stateAuth.validarToken(redirectURL));
     }
 }

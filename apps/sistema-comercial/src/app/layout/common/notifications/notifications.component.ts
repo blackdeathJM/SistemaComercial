@@ -35,6 +35,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
 
     ngOnInit(): void
     {
+        console.log('notificaciones');
         this.notificacionesGQL.watch({idUsuario: this.stateAuth.snapshot._id}).valueChanges.subscribe((res) =>
         {
             if (res.data.notificaciones.length > 0)

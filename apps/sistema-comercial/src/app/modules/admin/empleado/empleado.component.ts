@@ -1,10 +1,9 @@
 import {AfterContentInit, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {auditTime, map, Observable, Subscription, tap} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 import {CommonModule, DOCUMENT} from '@angular/common';
-import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
@@ -14,7 +13,7 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {Select} from '@ngxs/store';
 import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
-import {NgxSpinnerModule, NgxSpinnerService} from 'ngx-spinner';
+import {NgxSpinnerModule} from 'ngx-spinner';
 import {FuseAlertModule} from '@s-fuse/alert';
 
 @Component({
@@ -46,8 +45,7 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
     empleadoSeleccionado: IResolveEmpleado;
     subscripciones: Subscription = new Subscription();
 
-    constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService, public stateEmpleados: StateEmpleados, private ngxspinner: NgxSpinnerService)
+    constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, public stateEmpleados: StateEmpleados)
     {
     }
 

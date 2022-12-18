@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {EmpleadosSesionGQL, RegDocGQL} from '#/libs/datos/src';
-import {finalize, tap} from 'rxjs';
+import {RegDocGQL} from '#/libs/datos/src';
+import {finalize, Observable, tap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -27,6 +27,8 @@ import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.
 import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {Select} from "@ngxs/store";
+import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
 
 @Component({
     standalone: true,
@@ -57,22 +59,22 @@ import {StateAuth} from '@s-core/auth/auth.store';
 })
 export class ModDocumentosComponent implements OnInit
 {
+    @Select(StateEmpleados.empleados)
+    empleadosSesion$: Observable<IResolveEmpleado[]>;
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();
     diaActual = new Date().getDate();
 
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 20);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
-    empleadosSesion: IResolveEmpleado[];
     formDocs: FormGroup;
     cargando = false;
     porcentaje: number;
     tiposDoc = TIPOS_DOCUMENTO;
     mostrarProgreso: boolean = false;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService,
-                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef,
-                private stateAuth: StateAuth)
+    constructor(private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService, private stateAuth: StateAuth,
+                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef)
     {
     }
 
@@ -86,14 +88,6 @@ export class ModDocumentosComponent implements OnInit
             this.porcentaje = res;
             this.cdr.detectChanges();
         });
-        // Obtenemos la lista de los empleados que tengan sesion para mostrarlos en el selec y poder seleccionarlos
-        this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                // this.empleadosSesion = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
-            }
-        })).subscribe();
     }
 
     async reg(esRemoto: boolean): Promise<void>

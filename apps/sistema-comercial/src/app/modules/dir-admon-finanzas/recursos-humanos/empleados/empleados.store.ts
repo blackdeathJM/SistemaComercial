@@ -1,8 +1,8 @@
 import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
-import {catchError, finalize, map, of} from 'rxjs';
-import {CrearEmpleadoGQL, EmpleadosGQL} from '#/libs/datos/src';
+import {catchError, finalize, map, of, tap} from 'rxjs';
+import {EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
@@ -23,7 +23,7 @@ interface IStoreEmpleado
 @Injectable()
 export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
 {
-    constructor(private empleadosGql: EmpleadosGQL, private ngxToastService: NgxToastService, private crearEmpleadoGql: CrearEmpleadoGQL, private ngxToast: NgxToastService)
+    constructor(private empleadosGql: EmpleadosGQL, private ngxToastService: NgxToastService, private empleadosSesionGQL: EmpleadosSesionGQL)
     {
         super();
     }
@@ -70,6 +70,19 @@ export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
     }
 
     @DataAction({subscribeRequired: false})
+    public empleadosConSesion(): void
+    {
+        this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const empleados = $cast<IResolveEmpleado[]>(res.data.empleadosSesion);
+                this.ctx.setState({empleados, cargando: res.loading});
+            }
+        })).subscribe();
+    }
+
+    @DataAction({subscribeRequired: false})
     public filtrarEmpleado(@Payload('empleadoFiltrado') arg: string): void
     {
         // this.ctx.setState((state: Immutable<IResolveEmpleado[]>): Immutable<IResolveEmpleado[]> => (state.filter()));
@@ -92,4 +105,3 @@ export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
         this.ctx.setState((state: Immutable<IStoreEmpleado>): Immutable<IStoreEmpleado> => ({empleados: state.empleados.filter(value => value._id !== _id), cargando: false}));
     }
 }
-

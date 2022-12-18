@@ -3,7 +3,6 @@ import {NoAuthGuard} from '@s-core/auth/guards/noAuth.guard';
 import {LayoutComponent} from '@s-layout/layout.component';
 import {AuthGuard} from '@s-core/auth/guards/auth.guard';
 import {InitialDataResolver} from '#/apps/sistema-comercial/src/app/app.resolvers';
-import {AdminGuard} from '@s-admin/admin.guard';
 
 // @formatter:off
 /* eslint-disable max-len */

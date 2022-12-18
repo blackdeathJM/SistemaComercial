@@ -23,9 +23,6 @@ export class LayoutComponent implements OnInit, OnDestroy
     theme: string;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(
         private _activatedRoute: ActivatedRoute,
         @Inject(DOCUMENT) private _document: any,

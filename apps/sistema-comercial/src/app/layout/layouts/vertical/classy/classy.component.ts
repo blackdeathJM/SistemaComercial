@@ -1,4 +1,4 @@
-import {AfterContentChecked, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subject, takeUntil} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
@@ -8,7 +8,6 @@ import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Navegation} from '@s-core/navigation/navigation.types';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {ILoginRespuesta} from "#/libs/models/src/lib/admin/empleado/auth/login.dto";
 
 @Component({
     selector: 'classy-layout',
