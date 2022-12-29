@@ -1,4 +1,4 @@
-import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
+@import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
 import {catchError, finalize, map, of, tap} from 'rxjs';
