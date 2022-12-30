@@ -34,7 +34,7 @@ specifiers:
   '@graphql-codegen/typescript-operations': ^2.5.11
   '@iplab/ngx-file-upload': ^15.0.0
   '@nestjs/apollo': ^10.1.7
-  '@nestjs/cli': ^9.1.7
+  '@nestjs/cli': ^9.1.8
   '@nestjs/common': ^9.2.1
   '@nestjs/config': ^2.2.0
   '@nestjs/core': ^9.2.1
@@ -131,7 +131,7 @@ specifiers:
   jsonwebtoken: ^9.0.0
   lodash: 4.17.21
   lodash-es: 4.17.21
-  luxon: ^3.1.1
+  luxon: ^3.2.0
   luxon-angular: ^6.0.0
   marked: ^4.2.5
   mongoose: ^6.8.2
@@ -180,7 +180,7 @@ dependencies:
   '@angular/fire': 7.5.0_yjhxddwggmk6zxrqr3igt5nnrq
   '@angular/forms': 15.0.4_xkplghntscucsztvq3p7ejhl3e
   '@angular/material': 15.0.3_ganrzarlsrocqqyksgil7wut3u
-  '@angular/material-luxon-adapter': 15.0.3_dzsqfk2cfyuhs6laq6hafhzocu
+  '@angular/material-luxon-adapter': 15.0.3_expn2vnxdc7ropy4ncvj4iquyu
   '@angular/platform-browser': 15.0.4_bwwplqn6fknm3semymfqlvw5bm
   '@angular/platform-browser-dynamic': 15.0.4_hnn6v3m7xpfwy5wugozvutqsyi
   '@angular/router': 15.0.4_xkplghntscucsztvq3p7ejhl3e
@@ -237,8 +237,8 @@ dependencies:
   js-yaml: 4.1.0
   jsonwebtoken: 9.0.0
   lodash-es: 4.17.21
-  luxon: 3.1.1
-  luxon-angular: 6.0.0_s2m24jp47fhsz2iw6an6btyrnu
+  luxon: 3.2.0
+  luxon-angular: 6.0.0_ev2fgf77x2d3nufjqnagldwglu
   marked: 4.2.5
   mongoose: 6.8.2
   nest-access-control: 2.2.0_@nestjs+graphql@10.1.7
@@ -279,7 +279,7 @@ devDependencies:
   '@graphql-codegen/fragment-matcher': 3.3.3_graphql@16.6.0
   '@graphql-codegen/typescript-apollo-angular': 3.5.6_graphql@16.6.0
   '@graphql-codegen/typescript-operations': 2.5.11_graphql@16.6.0
-  '@nestjs/cli': 9.1.7
+  '@nestjs/cli': 9.1.8
   '@nestjs/schematics': 9.0.4_typescript@4.8.4
   '@nestjs/swagger': 6.1.4_4fhhxyztwhblafku3krlstrun4
   '@nestjs/testing': 9.2.1_wdbvfsxfdwzlwdfiyh2gynjl4m
@@ -862,7 +862,7 @@ packages:
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
     dev: true
 
-  /@angular/material-luxon-adapter/15.0.3_dzsqfk2cfyuhs6laq6hafhzocu:
+  /@angular/material-luxon-adapter/15.0.3_expn2vnxdc7ropy4ncvj4iquyu:
     resolution: {integrity: sha512-y1ZMMMBhCoPgQdP6RdLSby0nBkCgbc0blrzY6gQkjgy2nmiQ5nCaQr5ObXZ6bdtL3fgHC8DZIJBkWOJBze2CbA==}
     peerDependencies:
       '@angular/core': ^15.0.0 || ^16.0.0
@@ -871,7 +871,7 @@ packages:
     dependencies:
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       '@angular/material': 15.0.3_ganrzarlsrocqqyksgil7wut3u
-      luxon: 3.1.1
+      luxon: 3.2.0
       tslib: 2.4.1
     dev: false
 
@@ -6474,8 +6474,8 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@nestjs/cli/9.1.7:
-    resolution: {integrity: sha512-l0+vWXr571JcQ2LnQU3otxsvF5KUXqcAWCjnjMZH7ALVxcYi7BTif8q9YX0QHUETd9xPbH2YWkqV8SvlwgqEVg==}
+  /@nestjs/cli/9.1.8:
+    resolution: {integrity: sha512-53laCMoPLAkjyz3405FlMSrHnbr3DGeoaQjY963bEroezLlm/qfQhwj6oGJwtgA28eNFgx68mvQV2f1VZNUJtw==}
     engines: {node: '>= 12.9.0'}
     hasBin: true
     dependencies:
@@ -16026,19 +16026,19 @@ packages:
     resolution: {integrity: sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==}
     engines: {node: '>=12'}
 
-  /luxon-angular/6.0.0_s2m24jp47fhsz2iw6an6btyrnu:
+  /luxon-angular/6.0.0_ev2fgf77x2d3nufjqnagldwglu:
     resolution: {integrity: sha512-Ib6tSV3DKaqta/GSZ4XfAwsUkxL+VavyawfvzTBiDI9FKiJuVFRoW7xZMwB9l7dkCKboomc9HDocCP8DGhS7oQ==}
     peerDependencies:
       '@angular/core': '>=12'
       luxon: '>=2.0.0 <4'
     dependencies:
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
-      luxon: 3.1.1
+      luxon: 3.2.0
       tslib: 2.4.1
     dev: false
 
-  /luxon/3.1.1:
-    resolution: {integrity: sha512-Ah6DloGmvseB/pX1cAmjbFvyU/pKuwQMQqz7d0yvuDlVYLTs2WeDHQMpC8tGjm1da+BriHROW/OEIT/KfYg6xw==}
+  /luxon/3.2.0:
+    resolution: {integrity: sha512-Namj3XqoJjFekq/JHQEaaAv4zyE/fyyDBrMEBnIL2s/X54SC8W5Ea0uej1TRXUArWec8OojsAVsGBYhNRjpMVw==}
     engines: {node: '>=12'}
     dev: false
 
