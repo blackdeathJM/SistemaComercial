@@ -16,8 +16,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
-import {StateEmpleado} from "@s-dirAdmonFinanzas/empleados/empleado.store";
+import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
@@ -46,7 +45,7 @@ export class RegistroSesionComponent implements OnInit
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: IEmpleado, private fb: RxFormBuilder, private dRef: MatDialog, private asignarAuthGQL: AsignarAuthGQL,
                 private ngxToastService: NgxToastService, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth,
-                private stateEmpleados: StateEmpleados, private stateEmpleado: StateEmpleado)
+                private stateEmpleados: EmpleadosStore, private empleadoStore: EmpleadosStore)
     {
     }
 

@@ -24,10 +24,8 @@ import {Observable} from 'rxjs';
 })
 export class ListaDeptosComponent
 {
-    @Select(DeptoStore.deptos)
-    deptos$: Observable<IDepto[]>;
-    @Select(DeptoStore.estaCargando)
-    estaCargando$: Observable<boolean>;
+    @Select(DeptoStore.deptos) deptos$: Observable<IDepto[]>;
+    @Select(DeptoStore.estaCargando) estaCargando$: Observable<boolean>;
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
 
     trackByFn(index: number, item: IDepto): string

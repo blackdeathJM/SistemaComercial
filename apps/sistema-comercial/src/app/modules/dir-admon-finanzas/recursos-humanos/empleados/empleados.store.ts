@@ -21,7 +21,7 @@ interface IStoreEmpleado
     defaults: {empleados: [], cargando: false}
 })
 @Injectable()
-export class StateEmpleados extends NgxsImmutableDataRepository<IStoreEmpleado>
+export class EmpleadosStore extends NgxsImmutableDataRepository<IStoreEmpleado>
 {
     constructor(private empleadosGql: EmpleadosGQL, private ngxToastService: NgxToastService, private empleadosSesionGQL: EmpleadosSesionGQL)
     {

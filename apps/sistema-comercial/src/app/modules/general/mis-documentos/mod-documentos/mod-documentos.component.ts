@@ -28,7 +28,7 @@ import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {Select} from "@ngxs/store";
-import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
+import {EmpleadosStore} from "@s-dirAdmonFinanzas/empleados/empleados.store";
 
 @Component({
     standalone: true,
@@ -59,7 +59,7 @@ import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
 })
 export class ModDocumentosComponent implements OnInit
 {
-    @Select(StateEmpleados.empleados)
+    @Select(EmpleadosStore.empleados)
     empleadosSesion$: Observable<IResolveEmpleado[]>;
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();

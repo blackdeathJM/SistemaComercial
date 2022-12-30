@@ -7,7 +7,7 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.in
 import {Observable, Subscription, tap} from 'rxjs';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Select} from "@ngxs/store";
-import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
+import {EmpleadosStore} from "@s-dirAdmonFinanzas/empleados/empleados.store";
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -30,7 +30,7 @@ import {StateEmpleados} from "@s-dirAdmonFinanzas/empleados/empleados.store";
 })
 export class SeleccionarEmpleadoComponent implements OnInit, ControlValueAccessor
 {
-    @Select(StateEmpleados.empleados) empleados$: Observable<IResolveEmpleado[]>;
+    @Select(EmpleadosStore.empleados) empleados$: Observable<IResolveEmpleado[]>;
     @Input() multiple: boolean = false;
     sub: Subscription = new Subscription();
     valor: any;

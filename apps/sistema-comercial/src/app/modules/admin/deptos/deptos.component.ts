@@ -33,22 +33,19 @@ import {Select} from '@ngxs/store';
     styleUrls: ['./deptos.component.scss'],
     animations: [fuseAnimations]
 })
-export class DeptosComponent implements OnInit, OnDestroy
+export class DeptosComponent implements OnInit
 {
-    @Select(DeptoStore.deptos)
-    deptos$: Observable<IDepto[]>;
-    @Select(DeptoStore.estaCargando)
-    estaCargando$: Observable<boolean>;
-    subscripciones: Subscription = new Subscription();
+    @Select(DeptoStore.deptos) deptos$: Observable<IDepto[]>;
+    @Select(DeptoStore.estaCargando) estaCargando$: Observable<boolean>;
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, public deptoState: DeptoStore)
+    constructor(private dRef: MatDialog, public deptoStore: DeptoStore)
     {
     }
 
     ngOnInit(): void
     {
-        this.deptoState.cargarDeptos();
+        this.deptoStore.cargarDeptos();
         // this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(switchMap((res) =>
         // {
         //     if (res.data)
@@ -76,10 +73,5 @@ export class DeptosComponent implements OnInit, OnDestroy
     trackByFn(index: number, item: any): any
     {
         return item._id || index;
-    }
-
-    ngOnDestroy(): void
-    {
-        this.subscripciones.unsubscribe();
     }
 }

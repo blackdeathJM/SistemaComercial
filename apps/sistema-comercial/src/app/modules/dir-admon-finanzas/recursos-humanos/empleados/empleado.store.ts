@@ -10,7 +10,7 @@ import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
     defaults: null,
 })
 @Injectable()
-export class StateEmpleado extends NgxsImmutableDataRepository<IResolveEmpleado>
+export class EmpleadoStore extends NgxsImmutableDataRepository<IResolveEmpleado>
 {
     constructor()
     {

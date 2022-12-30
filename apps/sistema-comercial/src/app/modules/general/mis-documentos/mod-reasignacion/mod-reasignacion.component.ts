@@ -16,7 +16,7 @@ import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {STATE_DOCS} from '@s-general/general.state';
 import {Select} from '@ngxs/store';
-import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 
 @Component({
     selector: 'app-mod-reasignacion',
@@ -39,7 +39,7 @@ import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 })
 export class ModReasignacionComponent implements OnInit
 {
-    @Select(StateEmpleados.empleados) empleados$: Observable<IResolveEmpleado[]>;
+    @Select(EmpleadosStore.empleados) empleados$: Observable<IResolveEmpleado[]>;
     formSelect: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
     cargando: boolean = false;
 

@@ -12,7 +12,7 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {Select} from '@ngxs/store';
-import {StateEmpleados} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {FuseAlertModule} from '@s-fuse/alert';
 
@@ -38,14 +38,13 @@ import {FuseAlertModule} from '@s-fuse/alert';
 })
 export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
 {
-    @Select(StateEmpleados.empleados)
-    empleados$: Observable<IResolveEmpleado[]>;
+    @Select(EmpleadosStore.empleados) empleados$: Observable<IResolveEmpleado[]>;
     abrirP: boolean = false;
     ctrlBuscar: FormControl = new FormControl();
     empleadoSeleccionado: IResolveEmpleado;
     subscripciones: Subscription = new Subscription();
 
-    constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, public stateEmpleados: StateEmpleados)
+    constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, public stateEmpleados: EmpleadosStore)
     {
     }
 

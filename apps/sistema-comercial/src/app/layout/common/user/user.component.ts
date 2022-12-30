@@ -20,8 +20,7 @@ export class UserComponent
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
-    @Select(StateAuth.sesionActual)
-    usuario$: Observable<IDatosSesion>;
+    @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, private rolCambiado: RolCambiadoGQL, private router: Router, private stateAuth: StateAuth)
