@@ -1,4 +1,4 @@
-import {AfterContentChecked, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';

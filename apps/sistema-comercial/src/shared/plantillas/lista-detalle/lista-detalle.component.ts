@@ -5,7 +5,6 @@ import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 
-
 @Component({
     standalone: true,
     imports:

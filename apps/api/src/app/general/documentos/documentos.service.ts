@@ -2,8 +2,18 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasDto, DocsRefDto, DocsSubirDto,
-    DocsUsuarioProcesoDto, DocumentoDto, DocumentoType
+    DocActFolioDto,
+    DocFolioDto,
+    DocReasignarUsuarioDto,
+    DocRefFolioDto,
+    DocRegDto,
+    DocsBusquedaGralDto,
+    DocsFechasDto,
+    DocsRefDto,
+    DocsSubirDto,
+    DocsUsuarioProcesoDto,
+    DocumentoDto,
+    DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
@@ -229,7 +239,7 @@ export class DocumentosService
             return reasignacionUsuarios;
         } catch (e)
         {
-
+// TODO mandar respuesta de error
         }
     }
 

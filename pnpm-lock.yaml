@@ -83,7 +83,7 @@ specifiers:
   '@types/fs-extra': ^9.0.13
   '@types/graphql-upload': ^8.0.12
   '@types/jasmine': 4.3.1
-  '@types/jest': 29.2.4
+  '@types/jest': 29.2.5
   '@types/js-yaml': ^4.0.5
   '@types/jsonwebtoken': ^9.0.0
   '@types/lodash': 4.14.191
@@ -304,7 +304,7 @@ devDependencies:
   '@types/fs-extra': 9.0.13
   '@types/graphql-upload': 8.0.12
   '@types/jasmine': 4.3.1
-  '@types/jest': 29.2.4
+  '@types/jest': 29.2.5
   '@types/js-yaml': 4.0.5
   '@types/jsonwebtoken': 9.0.0
   '@types/lodash': 4.14.191
@@ -7963,8 +7963,8 @@ packages:
     resolution: {integrity: sha512-Vu8l+UGcshYmV1VWwULgnV/2RDbBaO6i2Ptx7nd//oJPIZGhoI1YLST4VKagD2Pq/Bc2/7zvtvhM7F3p4SN7kQ==}
     dev: true
 
-  /@types/jest/29.2.4:
-    resolution: {integrity: sha512-PipFB04k2qTRPePduVLTRiPzQfvMeLwUN3Z21hsAKaB/W9IIzgB2pizCL466ftJlcyZqnHoC9ZHpxLGl3fS86A==}
+  /@types/jest/29.2.5:
+    resolution: {integrity: sha512-H2cSxkKgVmqNHXP7TC2L/WUorrZu8ZigyRywfVzv6EyBlxj39n4C00hjXYQWsbwqgElaj/CiAeSRmk5GoaKTgw==}
     dependencies:
       expect: 29.3.1
       pretty-format: 29.3.1
