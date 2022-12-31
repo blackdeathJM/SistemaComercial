@@ -43,7 +43,7 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
 
     constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
-                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto, private stateDepto: DeptoStore)
+                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto, private deptoStore: DeptoStore)
     {
     }
 
@@ -68,7 +68,7 @@ export class ModDeptoComponent implements OnInit
                 {
                     if (res.data)
                     {
-                        this.stateDepto.actualizarDepto(this.formDepto.value, false);
+                        this.deptoStore.actualizarDepto(this.formDepto.value, false);
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
                     this.cargandoDatos = res.loading;
@@ -89,7 +89,7 @@ export class ModDeptoComponent implements OnInit
                 if (res.data)
                 {
                     const depto = res.data.crearDepto as IDepto;
-                    this.stateDepto.agregarDepto(depto, res.loading);
+                    this.deptoStore.agregarDepto(depto, res.loading);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;

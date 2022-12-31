@@ -82,12 +82,6 @@ export class EmpleadosStore extends NgxsImmutableDataRepository<IStoreEmpleado>
         })).subscribe();
     }
 
-    @DataAction({subscribeRequired: false})
-    public filtrarEmpleado(@Payload('empleadoFiltrado') arg: string): void
-    {
-        // this.ctx.setState((state: Immutable<IResolveEmpleado[]>): Immutable<IResolveEmpleado[]> => (state.filter()));
-    }
-
     @DataAction({subscribeRequired: true})
     public crearEmpleado(@Payload('crearEmpleado') empleadoDatos: IResolveEmpleado): void
     {
