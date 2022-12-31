@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
 
     private validarSesion(redirectURL: string): Observable<boolean>
     {
-
+        console.log('authGuard');
         if (isNotNil(this.stateAuth.getState()))
         {
             return of(true);

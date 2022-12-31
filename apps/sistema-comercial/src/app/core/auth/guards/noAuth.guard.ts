@@ -30,6 +30,7 @@ export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad
 
     private validarSesion(): Observable<boolean>
     {
+        console.log('noAuthGuard');
         // Si se tiene sesion activa evita que entre a las rutas del login, ya que solo el usuario no logeado pueden accesar al componente
         if (isNotNil(this.stateAuth.snapshot))
         {

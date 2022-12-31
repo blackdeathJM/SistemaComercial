@@ -59,7 +59,7 @@ export class EmpleadosStore extends NgxsImmutableDataRepository<IStoreEmpleado>
             const empleados: IResolveEmpleado[] = $cast<IResolveEmpleado[]>(res.data.empleados);
             if (isNotNil(res.data))
             {
-                this.ctx.setState({cargando: res.loading, empleados});
+                this.ctx.patchState({cargando: res.loading, empleados});
             }
         }), catchError((err) =>
         {
