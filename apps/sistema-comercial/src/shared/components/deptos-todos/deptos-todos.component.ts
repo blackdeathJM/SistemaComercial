@@ -7,7 +7,7 @@ import {AbstractControl, ControlValueAccessor, FormGroup, NG_VALIDATORS, NG_VALU
 import {Observable} from 'rxjs';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Empleado} from '#/libs/models/src/lib/admin/empleado/empleado';
-import {DeptoStore} from '@s-admin/depto.store';
+import {DeptoEliminarStore} from '#/apps/sistema-comercial/src/query/deptoEliminar.store';
 import {Select} from '@ngxs/store';
 
 @Component({
@@ -39,9 +39,9 @@ import {Select} from '@ngxs/store';
 })
 export class DeptosTodosComponent implements OnInit, ControlValueAccessor, Validator
 {
-    @Select(DeptoStore.deptos)
+    @Select(DeptoEliminarStore.deptos)
     deptos$: Observable<IDepto[]>;
-    @Select(DeptoStore.estaCargando)
+    @Select(DeptoEliminarStore.estaCargando)
     estaCargando$: Observable<boolean>;
     @Input() multiple = false;
     depto: IDepto;
@@ -49,7 +49,7 @@ export class DeptosTodosComponent implements OnInit, ControlValueAccessor, Valid
     formDepto: FormGroup;
     private onTouched: () => void;
 
-    constructor(public stateDeptos: DeptoStore, private fb: RxFormBuilder)
+    constructor(public stateDeptos: DeptoEliminarStore, private fb: RxFormBuilder)
     {
     }
 

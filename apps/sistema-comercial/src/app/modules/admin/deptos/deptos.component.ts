@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -40,6 +39,7 @@ export class DeptosComponent implements OnInit
 
     ngOnInit(): void
     {
+        //TODO crear filtro para la lista de arreglos
         // this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(switchMap((res) =>
         // {
         //     if (res.data)
@@ -57,11 +57,6 @@ export class DeptosComponent implements OnInit
     registro(): void
     {
         this.dRef.open(ModDeptoComponent, {width: '40%', data: null});
-    }
-
-    editar(data: IDepto): void
-    {
-        this.dRef.open(ModDeptoComponent, {width: '40%', data});
     }
 
     trackByFn(index: number, item: any): any

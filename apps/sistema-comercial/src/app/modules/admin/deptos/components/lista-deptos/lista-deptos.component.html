@@ -1,4 +1,4 @@
-<ng-container *ngIf="(deptosState.entitiesArray$ | async) as deptos">
+<ng-container *ngIf="(eDeptoStore.entitiesArray$ | async) as deptos">
     <ng-container *ngIf="deptos.length > 0; else cargando">
         <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
             <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">
@@ -13,7 +13,7 @@
             </div>
         </ng-container>
     </ng-container>
-    </ng-container>
+</ng-container>
 <ng-template #cargando>
     <div class="flex items-center justify-center w-full">
         <app-tailwind-loading></app-tailwind-loading>

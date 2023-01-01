@@ -19,7 +19,7 @@ interface IDeptoState
     defaults: {deptos: [], cargando: false}
 })
 @Injectable()
-export class DeptoStore extends NgxsImmutableDataRepository<IDeptoState>
+export class DeptoEliminarStore extends NgxsImmutableDataRepository<IDeptoState>
 {
     constructor(private departamentosGQL: DepartamentosGQL)
     {

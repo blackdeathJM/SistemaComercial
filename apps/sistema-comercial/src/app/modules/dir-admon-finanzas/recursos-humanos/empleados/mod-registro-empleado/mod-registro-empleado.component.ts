@@ -19,7 +19,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {DeptoStore} from '@s-admin/depto.store';
+import {DeptoEliminarStore} from '#/apps/sistema-comercial/src/query/deptoEliminar.store';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
@@ -54,7 +54,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 })
 export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
 {
-    @Select(DeptoStore.deptos)
+    @Select(DeptoEliminarStore.deptos)
     deptos$: Observable<IDepto[]>;
     formEmpleado: FormGroup;
     cargando = false;
@@ -67,7 +67,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
     constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, public empleadosStore: EmpleadosStore
-        , public stateDepto: DeptoStore, private stateAuth: StateAuth, private ngxToast: NgxToastService)
+        , public stateDepto: DeptoEliminarStore, private stateAuth: StateAuth, private ngxToast: NgxToastService)
     {
     }
 

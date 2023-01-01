@@ -13,7 +13,7 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
     defaults: createEntityCollections()
 })
 @Injectable()
-export class DeptoEntitieState extends NgxsDataEntityCollectionsRepository<IDepto>
+export class EDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto>
 {
     constructor(private departamentosGQL: DepartamentosGQL)
     {
@@ -42,10 +42,4 @@ export class DeptoEntitieState extends NgxsDataEntityCollectionsRepository<IDept
     {
         return entity._id;
     }
-
-    // @Computed()
-    // public get cargando(): boolean
-    // {
-    //     return this.snapshot.cargando;
-    // }
 }

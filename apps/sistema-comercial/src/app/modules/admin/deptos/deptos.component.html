@@ -2,6 +2,7 @@
     <ng-container titulo>
         <div>Departamentos</div>
     </ng-container>
+    <!--    Opciones de busqueda podriamos hacerlo en un componente aparte-->
     <ng-container buscar>
         <div class="flex mt-4 sm:mt-0 md:mt-4">
             <!-- Search -->
@@ -17,7 +18,8 @@
             </button>
         </div>
     </ng-container>
+    <!--    Carga la lista de departamentos-->
     <ng-container lista>
-        <app-lista-deptos (eventoEditar)="editar($event)"></app-lista-deptos>
+        <app-lista-deptos></app-lista-deptos>
     </ng-container>
 </app-lista-detalle>

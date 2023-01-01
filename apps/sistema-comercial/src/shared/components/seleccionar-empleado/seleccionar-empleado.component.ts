@@ -4,10 +4,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {EmpleadosSesionGQL} from '#/libs/datos/src';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Observable, Subscription, tap} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Select} from "@ngxs/store";
-import {EmpleadosStore} from "@s-dirAdmonFinanzas/empleados/empleados.store";
+import {Select} from '@ngxs/store';
+import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 
 @Component({
     selector: 'app-seleccionar-empleado',

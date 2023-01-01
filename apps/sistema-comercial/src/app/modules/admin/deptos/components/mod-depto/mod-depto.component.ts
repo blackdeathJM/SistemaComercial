@@ -14,9 +14,8 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {DeptoStore} from '@s-admin/depto.store';
-import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
-import {$cast} from '@angular-ru/cdk/utils';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {EDeptoStore} from '@s-admin/e-depto.store';
 
 @Component({
     standalone: true,
@@ -44,17 +43,18 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL, private deptoEntitie: DeptoEntitieState,
-                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL, private eDeptoStore: EDeptoStore,
+                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
     {
+
     }
 
     ngOnInit(): void
     {
         this.formDepto = this.fb.formGroup(new Depto());
-        if (this.data)
+        if (isNotNil(this.depto))
         {
-            this.formDepto.patchValue(this.data);
+            this.formDepto.patchValue(this.depto);
         }
     }
 
@@ -62,16 +62,16 @@ export class ModDeptoComponent implements OnInit
     {
         this.cargandoDatos = true;
         // si vienen datos cuando se abre el modal cargamos los datos en el formulario para poder actualizarlos y si no realizamos un nuevo registro
-        if (this.data)
+        if (isNotNil(this.depto))
         {
-            const input = {_id: this.data._id, ...this.formDepto.value} as IDepto;
+            const input = {_id: this.depto._id, ...this.formDepto.value};
             this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.dRef.closeAll()),
                 tap((res) =>
                 {
                     if (res.data)
                     {
                         const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-                        this.deptoEntitie.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
+                        this.eDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
                     this.cargandoDatos = res.loading;
@@ -89,10 +89,10 @@ export class ModDeptoComponent implements OnInit
                 // }
             }).pipe(finalize(() => this.dRef.closeAll())).subscribe((res) =>
             {
-                if (res.data)
+                if (isNotNil(res.data))
                 {
                     const depto = $cast<IDepto>(res.data.crearDepto);
-                    this.deptoEntitie.addOne(depto);
+                    this.eDeptoStore.addOne(depto);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;

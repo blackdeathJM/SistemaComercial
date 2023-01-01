@@ -1,11 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
-import {Observable} from 'rxjs';
-import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
+import {EDeptoStore} from '@s-admin/e-depto.store';
+import {MatDialog} from '@angular/material/dialog';
+import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 
 @Component({
     standalone: true,
@@ -23,16 +24,14 @@ import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
 })
 export class ListaDeptosComponent implements OnInit
 {
-    @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(public deptosState: DeptoEntitieState)
+    constructor(public eDeptoStore: EDeptoStore, private dRef: MatDialog)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.deptosState.cargarDeptos();
+        this.eDeptoStore.cargarDeptos();
     }
 
     trackByFn(index: number, item: IDepto): string
@@ -40,8 +39,8 @@ export class ListaDeptosComponent implements OnInit
         return item._id;
     }
 
-    editar(valor: any): void
+    editar(data: IDepto): void
     {
-        this.eventoEditar.emit(valor);
+        this.dRef.open(ModDeptoComponent, {width: '40%', data});
     }
 }
