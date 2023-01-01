@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
@@ -12,11 +11,6 @@ import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-de
 import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {DeptoStore} from '@s-admin/depto.store';
-import {Select} from '@ngxs/store';
-import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
-import {DepartamentosGQL} from '#/libs/datos/src';
-import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
     standalone: true,

@@ -1,4 +1,4 @@
-<ng-container *ngIf="(deptos$ | async) as deptos">
+<ng-container *ngIf="(deptosState.entitiesArray$ | async) as deptos">
     <ng-container *ngIf="deptos.length > 0; else cargando">
         <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
             <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">

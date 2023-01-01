@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {DepartamentosGQL} from '#/libs/datos/src';
-import {isNotNil} from "@angular-ru/cdk/utils";
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 
 @StateRepository()
 @State({
@@ -33,7 +33,7 @@ export class DeptoEntitieState extends NgxsDataEntityCollectionsRepository<IDept
         {
             if (isNotNil(res.data))
             {
-
+                this.setAll($cast<IDepto[]>(res.data.deptos));
             }
         });
     }

@@ -4,10 +4,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
-import {Select} from '@ngxs/store';
-import {DeptoStore} from '@s-admin/depto.store';
 import {Observable} from 'rxjs';
-import {DeptoEntitieState} from "@s-admin/depto.storeEntity";
+import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
 
 @Component({
     standalone: true,
@@ -25,14 +23,17 @@ import {DeptoEntitieState} from "@s-admin/depto.storeEntity";
 })
 export class ListaDeptosComponent implements OnInit
 {
-    deptos$: Observable<IDepto[]>;
+    @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private deptosState: DeptoEntitieState)
+    constructor(public deptosState: DeptoEntitieState)
     {
 
     }
 
-    @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
+    ngOnInit(): void
+    {
+        this.deptosState.cargarDeptos();
+    }
 
     trackByFn(index: number, item: IDepto): string
     {
@@ -42,10 +43,5 @@ export class ListaDeptosComponent implements OnInit
     editar(valor: any): void
     {
         this.eventoEditar.emit(valor);
-    }
-
-    ngOnInit(): void
-    {
-        this.deptos$ = this.deptosState.entitiesArray$;
     }
 }
