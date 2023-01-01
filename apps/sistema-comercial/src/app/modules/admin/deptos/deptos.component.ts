@@ -14,6 +14,9 @@ import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 import {DeptoStore} from '@s-admin/depto.store';
 import {Select} from '@ngxs/store';
+import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
+import {DepartamentosGQL} from '#/libs/datos/src';
+import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
     standalone: true,
@@ -35,17 +38,14 @@ import {Select} from '@ngxs/store';
 })
 export class DeptosComponent implements OnInit
 {
-    @Select(DeptoStore.deptos) deptos$: Observable<IDepto[]>;
-    @Select(DeptoStore.estaCargando) estaCargando$: Observable<boolean>;
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, public deptoStore: DeptoStore)
+    constructor(private dRef: MatDialog)
     {
     }
 
     ngOnInit(): void
     {
-        this.deptoStore.cargarDeptos();
         // this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(switchMap((res) =>
         // {
         //     if (res.data)

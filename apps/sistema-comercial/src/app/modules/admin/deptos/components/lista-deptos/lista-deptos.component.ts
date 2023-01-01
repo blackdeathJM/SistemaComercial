@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -7,6 +7,7 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {Select} from '@ngxs/store';
 import {DeptoStore} from '@s-admin/depto.store';
 import {Observable} from 'rxjs';
+import {DeptoEntitieState} from "@s-admin/depto.storeEntity";
 
 @Component({
     standalone: true,
@@ -22,10 +23,15 @@ import {Observable} from 'rxjs';
     templateUrl: './lista-deptos.component.html',
     styleUrls: ['./lista-deptos.component.scss'],
 })
-export class ListaDeptosComponent
+export class ListaDeptosComponent implements OnInit
 {
-    @Select(DeptoStore.deptos) deptos$: Observable<IDepto[]>;
-    @Select(DeptoStore.estaCargando) estaCargando$: Observable<boolean>;
+    deptos$: Observable<IDepto[]>;
+
+    constructor(private deptosState: DeptoEntitieState)
+    {
+
+    }
+
     @Output() eventoEditar: EventEmitter<any> = new EventEmitter<any>();
 
     trackByFn(index: number, item: IDepto): string
@@ -36,5 +42,10 @@ export class ListaDeptosComponent
     editar(valor: any): void
     {
         this.eventoEditar.emit(valor);
+    }
+
+    ngOnInit(): void
+    {
+        this.deptos$ = this.deptosState.entitiesArray$;
     }
 }

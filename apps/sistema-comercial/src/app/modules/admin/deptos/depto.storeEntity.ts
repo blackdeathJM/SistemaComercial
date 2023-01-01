@@ -1,37 +1,23 @@
-import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
+import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {createEntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {Injectable} from '@angular/core';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {DepartamentosGQL} from "#/libs/datos/src";
-import {$cast} from "@angular-ru/cdk/utils";
-
-interface IDeptoCargando
-{
-    cargando: boolean;
-}
+import {DepartamentosGQL} from '#/libs/datos/src';
+import {isNotNil} from "@angular-ru/cdk/utils";
 
 @StateRepository()
 @State({
     name: 'deptos',
-    defaults: {
-        ...createEntityCollections(),
-        cargando: false
-    }
+    defaults: createEntityCollections()
 })
 @Injectable()
-export class DeptoEntitieState extends NgxsDataEntityCollectionsRepository<IDepto, EntityIdType, IDeptoCargando>
+export class DeptoEntitieState extends NgxsDataEntityCollectionsRepository<IDepto>
 {
     constructor(private departamentosGQL: DepartamentosGQL)
     {
         super();
-    }
-
-    @Computed()
-    public get cargando(): boolean
-    {
-        return this.snapshot.cargando;
     }
 
     @Selector()
@@ -43,19 +29,23 @@ export class DeptoEntitieState extends NgxsDataEntityCollectionsRepository<IDept
     @DataAction({subscribeRequired: false})
     public cargarDeptos(): void
     {
-        this.departamentosGQL.watch().valueChanges.subscribe((deptos) =>
+        this.departamentosGQL.watch().valueChanges.subscribe((res) =>
         {
-            const cargaDeptos = $cast<IDepto[]>(deptos.data.deptos);
-            this.ctx.setState({entities: cargaDeptos, cargando: false, ids:})
+            if (isNotNil(res.data))
+            {
+
+            }
         });
     }
 
-    @DataAction()
-    public setCargando(@Payload('cargando') cargando: boolean): void
+    public selectId(entity: IDepto): EntityIdType
     {
-        const state = this.getState();
-        this.setEntitiesState({...state, cargando});
-
+        return entity._id;
     }
 
+    // @Computed()
+    // public get cargando(): boolean
+    // {
+    //     return this.snapshot.cargando;
+    // }
 }
