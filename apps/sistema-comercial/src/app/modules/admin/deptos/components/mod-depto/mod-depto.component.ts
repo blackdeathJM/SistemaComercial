@@ -15,6 +15,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {DeptoStore} from '@s-admin/depto.store';
+import {DeptoEntitieState} from '@s-admin/depto.storeEntity';
 
 @Component({
     standalone: true,
@@ -42,7 +43,7 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL, private deptoEntitie: DeptoEntitieState,
                 private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private data: IDepto, private deptoStore: DeptoStore)
     {
     }
