@@ -41,12 +41,12 @@ export class StateAuth extends NgxsImmutableDataRepository<IDatosSesion>
     {
         if (isNil(this.ctx.getState()))
         {
-            if (isNotNil(this.jwtHelperService.tokenGetter() && !this.jwtHelperService.isTokenExpired()))
+            if (isNotNil(this.jwtHelperService.tokenGetter()) && !this.jwtHelperService.isTokenExpired())
             {
                 const token = $cast<string>(this.jwtHelperService.tokenGetter());
                 this.validarTokenGQL.mutate({token}).pipe(tap((res) =>
                 {
-                    if (res.data)
+                    if (isNotNil(res.data))
                     {
                         const sesionPorToken = $cast<IDatosSesion>(res.data.validarToken);
                         this.ctx.setState(sesionPorToken);

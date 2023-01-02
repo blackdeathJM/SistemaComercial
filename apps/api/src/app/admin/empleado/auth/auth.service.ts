@@ -10,7 +10,6 @@ import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/a
 import {DatosSesionDto, ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
-import {ExceptionHandler} from "@nestjs/core/errors/exception-handler";
 
 @Injectable()
 export class AuthService
@@ -25,44 +24,43 @@ export class AuthService
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}, $push: {modificadoPor}}, {returnOriginal: false, runValidators: true}).exec();
-        if (!empleado)
+        try
         {
-            throw new NotFoundException('No se pudo asignar una sesion por que el usuario no fue encontrado');
+            return await this.empleado.findByIdAndUpdate(_id, {$set: {auth}, $push: {modificadoPor}}, {returnOriginal: false, runValidators: true}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
         }
-        return empleado;
     }
 
     async actualizarContrasenaAdmin(datos: CambioContrsenaDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
-
-        const empleado = await this.empleado.findByIdAndUpdate(datos._id,
-            {$set: {'auth.contrasena': nvaContrasena}, $push: {modificadoPor}}, {returnOriginal: false}).exec();
-        if (!empleado)
+        try
         {
-            throw new NotFoundException('No se encontro registro para actualizar la contrasena');
+            return await this.empleado.findByIdAndUpdate(datos._id,
+                {$set: {'auth.contrasena': nvaContrasena}, $push: {modificadoPor}}, {returnOriginal: false}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
         }
-
-        return empleado;
     }
 
     async validarUsuario(username: string, password: string): Promise<EmpleadoDto>
     {
-        const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
-        if (empleado)
+        try
         {
+            const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
             const validar = await bcrypt.compare(password, empleado.auth.contrasena);
             if (validar)
             {
                 delete empleado.auth.contrasena;
                 return empleado;
             }
-        } else
+        } catch (e)
         {
-            throw new NotFoundException({message: 'Usuario o contrasena no correctas'});
+            throw new InternalServerErrorException({message: e.codeName});
         }
-        return null;
     }
 
     // async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
@@ -81,19 +79,19 @@ export class AuthService
 
     login(empleado: any): ILoginRespuesta
     {
-        const datosSesion: IDatosSesion =
-            {
-                _id: empleado._id,
-                avatar: empleado.avatar,
-                nombreCompleto: empleado.nombreCompleto,
-                activo: empleado.activo,
-                auth: empleado.auth,
-                deptoId: empleado.deptoId
-            };
-        return {
-            token: this.jwtService.sign(datosSesion),
-            datosSesion
-        };
+        return this.datosSesion(empleado);
+    }
+
+    async actualizarAvatar(_id: string, url: string): Promise<ILoginRespuesta>
+    {
+        try
+        {
+            const rutaImg = await this.empleado.findByIdAndUpdate(_id, {$set: {avatar: url}}, {new: true}).exec();
+            return this.datosSesion(rutaImg);
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
     }
 
     async validarToken(token: string): Promise<DatosSesionDto>
@@ -109,28 +107,20 @@ export class AuthService
 
     }
 
-    async actualizarAvatar(_id: string, url: string): Promise<ILoginRespuesta>
+    private datosSesion(empleado: IEmpleado): ILoginRespuesta
     {
-        try
-        {
-            const rutaImg = await this.empleado.findByIdAndUpdate(_id, {$set: {avatar: url}}, {new: true}).exec();
-
-            const datosSesion: IDatosSesion =
-                {
-                    _id: rutaImg._id,
-                    avatar: rutaImg.avatar,
-                    auth: rutaImg.auth,
-                    deptoId: rutaImg.deptoId,
-                    activo: rutaImg.activo,
-                    nombreCompleto: rutaImg.nombreCompleto
-                };
-            return {
-                token: this.jwtService.sign(datosSesion),
-                datosSesion
+        const datosSesion: IDatosSesion =
+            {
+                _id: empleado._id,
+                avatar: empleado.avatar,
+                nombreCompleto: empleado.nombreCompleto,
+                activo: empleado.activo,
+                auth: empleado.auth,
+                deptoId: empleado.deptoId
             };
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e.codeName});
-        }
+        return {
+            token: this.jwtService.sign(datosSesion),
+            datosSesion
+        };
     }
 }

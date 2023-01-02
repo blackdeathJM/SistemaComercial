@@ -1,5 +1,5 @@
 import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
-import {Selector, State} from '@ngxs/store';
+import {State} from '@ngxs/store';
 import {createEntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {Injectable} from '@angular/core';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
@@ -18,12 +18,6 @@ export class EDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto>
     constructor(private departamentosGQL: DepartamentosGQL)
     {
         super();
-    }
-
-    @Selector()
-    public static deptos(state: IDepto[]): IDepto[]
-    {
-        return state;
     }
 
     @DataAction({subscribeRequired: false})

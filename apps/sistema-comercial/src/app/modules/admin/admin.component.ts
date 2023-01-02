@@ -8,17 +8,17 @@ import {CommonModule} from '@angular/common';
 import {DeptosComponent} from '@s-admin/deptos.component';
 import {EmpleadoComponent} from '@s-admin/empleado.component';
 
+interface IPanels
+{
+    id: string;
+    icon: string;
+    title: string;
+    description: string;
+}
+
 @Component({
     standalone: true,
-    imports:
-        [
-            CommonModule,
-            MatButtonModule,
-            MatIconModule,
-            MatSidenavModule,
-            DeptosComponent,
-            EmpleadoComponent,
-        ],
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatSidenavModule, DeptosComponent, EmpleadoComponent],
     selector: 'app-admin',
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.scss']
@@ -28,7 +28,7 @@ export class AdminComponent implements OnInit, OnDestroy
     @ViewChild('drawer') drawer: MatDrawer;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
-    panels: any[] = [];
+    panels: IPanels[] = [];
     selectedPanel: string = 'deptos';
 
     private eliminarSubscripcion: Subject<any> = new Subject<any>();
@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit, OnDestroy
                     id: 'empleado',
                     icon: 'heroicons_outline:user-circle',
                     title: 'Empleados',
-                    description: 'Adminitra los permisos de los empleados y asigna permisos para cada uno de los departamentos'
+                    description: 'Crea, asigna y administra permisos a empleados'
                 }
             ];
         this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.eliminarSubscripcion)).subscribe(({matchingAliases}) =>
