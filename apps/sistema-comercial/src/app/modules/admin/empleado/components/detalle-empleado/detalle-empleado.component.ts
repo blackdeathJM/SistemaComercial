@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
@@ -14,7 +14,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatListModule} from '@angular/material/list';
 import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
-import {EntityEmpleadoStore} from "@s-dirAdmonFinanzas/empleados/entity-empleado.store";
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 
 @Component({
     standalone: true,
@@ -39,10 +39,9 @@ import {EntityEmpleadoStore} from "@s-dirAdmonFinanzas/empleados/entity-empleado
 export class DetalleEmpleadoComponent implements OnDestroy
 {
     @Output() cerrarPanel = new EventEmitter<boolean>();
-    _empleado: IResolveEmpleado;
     subscripcion: Subscription = new Subscription();
     role: FuseNavigationItem[];
-
+    emp: IResolveEmpleado;
     controlRoles: FormControl = new FormControl();
 
 
@@ -51,24 +50,14 @@ export class DetalleEmpleadoComponent implements OnDestroy
 
     }
 
-    @Input() set empleado(valor: IResolveEmpleado)
-    {
-        this._empleado = valor;
-    }
-
     cerrarP(): void
     {
         this.cerrarPanel.emit(false);
     }
 
-    asignarSesion(data: IResolveEmpleado): void
+    asignarSesion(): void
     {
-        // this.dialogRef.open(RegistroSesionComponent, {data, width: '40%'}).afterClosed().subscribe(() =>
-        // {
-        //     this._empleado = STATE_EMPLEADOS().filter(value => value._id === data._id)[0];
-        // });
-
-        this.dialogRef.open(RegistroSesionComponent, {data, width: '40%'});
+        this.dialogRef.open(RegistroSesionComponent, {width: '40%', data: null});
     }
 
     trackByFn(index: number, item: any): any
