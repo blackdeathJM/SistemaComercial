@@ -40,9 +40,6 @@ export class DetalleEmpleadoComponent implements OnDestroy
 {
     @Output() cerrarPanel = new EventEmitter<boolean>();
     subscripcion: Subscription = new Subscription();
-    role: FuseNavigationItem[];
-    emp: IResolveEmpleado;
-    controlRoles: FormControl = new FormControl();
 
 
     constructor(private dialogRef: MatDialog, public entityEmpleadoStore: EntityEmpleadoStore)
