@@ -16,7 +16,7 @@ import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {STATE_DOCS} from '@s-general/general.state';
 import {Select} from '@ngxs/store';
-import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store';
 
 @Component({
     selector: 'app-mod-reasignacion',

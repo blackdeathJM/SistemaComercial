@@ -15,7 +15,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {EDeptoStore} from '@s-admin/e-depto.store';
+import {EntityDeptoStore} from '@s-admin/entity-depto.store';
 
 @Component({
     standalone: true,
@@ -43,7 +43,8 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL, private eDeptoStore: EDeptoStore,
+    // eslint-disable-next-line max-len
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL, private entityDeptoStore: EntityDeptoStore,
                 private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
     {
 
@@ -71,7 +72,7 @@ export class ModDeptoComponent implements OnInit
                     if (res.data)
                     {
                         const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-                        this.eDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
+                        this.entityDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
                     this.cargandoDatos = res.loading;
@@ -92,7 +93,7 @@ export class ModDeptoComponent implements OnInit
                 if (isNotNil(res.data))
                 {
                     const depto = $cast<IDepto>(res.data.crearDepto);
-                    this.eDeptoStore.addOne(depto);
+                    this.entityDeptoStore.addOne(depto);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;

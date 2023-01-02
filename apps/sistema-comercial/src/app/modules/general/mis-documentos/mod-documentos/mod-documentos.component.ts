@@ -28,7 +28,7 @@ import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {Select} from '@ngxs/store';
-import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store';
 
 @Component({
     standalone: true,

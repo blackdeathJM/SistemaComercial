@@ -13,7 +13,7 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
     defaults: createEntityCollections()
 })
 @Injectable()
-export class EDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto>
+export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto>
 {
     constructor(private departamentosGQL: DepartamentosGQL)
     {

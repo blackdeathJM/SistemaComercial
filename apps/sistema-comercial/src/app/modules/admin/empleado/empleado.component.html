@@ -12,12 +12,12 @@
         </mat-form-field>
     </ng-container>
     <ng-container lista>
-        <ng-container *ngIf="!stateEmpleados.cargando; else cargando">
-            <fuse-alert type="info" appearance="border" *ngIf="stateEmpleados.longEmpleados" class="p-4">
+        <ng-container *ngIf="!entityEmpleadoStore.cargando; else cargando">
+            <fuse-alert type="info" appearance="border" *ngIf="entityEmpleadoStore.longListaEmpleados" class="p-4">
                 <span fuseAlertTitle>Empleados</span>
                 no se encontraron empleados para mostrar
             </fuse-alert>
-            <ng-container *ngFor="let empleado of empleados$ | async as empleados; let i = index; trackBy: trackByFn">
+            <ng-container *ngFor="let empleado of entityEmpleadoStore.entitiesArray$ | async as empleados; let i = index; trackBy: trackByFn">
                 <!-- Group -->
                 <ng-container *ngIf="i === 0 || empleado.nombreCompleto.charAt(0) !== empleados[i - 1].nombreCompleto.charAt(0)">
                     <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">

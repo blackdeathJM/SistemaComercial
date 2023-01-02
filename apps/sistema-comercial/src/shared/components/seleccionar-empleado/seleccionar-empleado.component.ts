@@ -7,7 +7,7 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.in
 import {Observable, Subscription} from 'rxjs';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Select} from '@ngxs/store';
-import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store';
 
 @Component({
     selector: 'app-seleccionar-empleado',

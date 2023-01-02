@@ -13,8 +13,8 @@ import {FuseNavigationItem} from '@s-fuse/navigation';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatListModule} from '@angular/material/list';
 import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
+import {EntityEmpleadoStore} from "@s-dirAdmonFinanzas/empleados/entity-empleado.store";
 
 @Component({
     standalone: true,
@@ -46,7 +46,7 @@ export class DetalleEmpleadoComponent implements OnDestroy
     controlRoles: FormControl = new FormControl();
 
 
-    constructor(private dialogRef: MatDialog, private ngxToast: NgxToastService)
+    constructor(private dialogRef: MatDialog, public entityEmpleadoStore: EntityEmpleadoStore)
     {
 
     }

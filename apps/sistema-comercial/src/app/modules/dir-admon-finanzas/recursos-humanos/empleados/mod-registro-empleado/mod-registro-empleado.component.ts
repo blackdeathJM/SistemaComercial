@@ -22,10 +22,11 @@ import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.
 import {DeptoEliminarStore} from '#/apps/sistema-comercial/src/query/deptoEliminar.store';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
 import {catchError, finalize, Observable, of, tap} from 'rxjs';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {EntityDeptoStore} from '@s-admin/entity-depto.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -66,8 +67,8 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 5);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, public empleadosStore: EmpleadosStore
-        , public stateDepto: DeptoEliminarStore, private stateAuth: StateAuth, private ngxToast: NgxToastService)
+    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, private stateAuth: StateAuth, private ngxToast: NgxToastService,
+                private entityDeptoStore: EntityDeptoStore, public entityEmpleadoStore: EntityEmpleadoStore)
     {
     }
 
@@ -93,7 +94,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
 
     ngAfterContentInit(): void
     {
-        this.stateDepto.cargarDeptos();
+        this.entityDeptoStore.cargarDeptos();
     }
 
     agregarTel(): void
@@ -142,10 +143,10 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
             if (isNotNil(res.data))
             {
                 const empleadoReg = $cast<IResolveEmpleado>(res.data.crearEmpleado);
-                this.empleadosStore.crearEmpleado(empleadoReg);
+                this.entityEmpleadoStore.addOne(empleadoReg);
                 this.ngxToast.satisfactorioToast('El registro fue realizado con exito', 'Registro de empleados');
             }
-        }), catchError((err) =>
+        }), catchError(() =>
         {
             this.ngxToast.errorToast('Ocurrio un error al registrar el documento', 'Registro empleados');
             return of(null);

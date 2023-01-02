@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLinkWithHref} from '@angular/router';
@@ -10,25 +10,13 @@ import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-re
 @Component({
     selector: 'app-empleados',
     standalone: true,
-    imports:
-        [
-            CommonModule,
-            MatIconModule,
-            RouterLinkWithHref,
-            MatButtonModule,
-            MatTabsModule
-        ],
+    imports: [CommonModule, MatIconModule, RouterLinkWithHref, MatButtonModule, MatTabsModule],
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss']
 })
-export class EmpleadosComponent implements OnInit
+export class EmpleadosComponent
 {
-
     constructor(private mdr: MatDialog)
-    {
-    }
-
-    ngOnInit(): void
     {
     }
 

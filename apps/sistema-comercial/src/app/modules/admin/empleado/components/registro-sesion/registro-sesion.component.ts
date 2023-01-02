@@ -16,7 +16,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {EmpleadosStore} from '@s-dirAdmonFinanzas/empleados/empleados.store';
+import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store';
 import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
