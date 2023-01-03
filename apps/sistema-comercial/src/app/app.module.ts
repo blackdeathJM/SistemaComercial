@@ -29,6 +29,7 @@ import {CoreModule} from '@s-core/core.module';
 import {LayoutModule} from '@s-layout/layout.module';
 import {NgxsGlobalModule} from '#/apps/sistema-comercial/src/ngxs/ngxsGlobal.module';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {NgxSpinnerModule} from "ngx-spinner";
 
 const routerConfig: ExtraOptions =
     {

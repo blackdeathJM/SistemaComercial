@@ -39,7 +39,7 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     @Computed()
     public get longListaEmpleados(): boolean
     {
-        return this.entitiesArray.length > 0;
+        return this.entitiesArray.length === 0;
     }
 
     @Computed()
@@ -62,12 +62,13 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     public empleados(): void
     {
         this.cargandoDatos = true;
-        this.empleadosGQL.watch().valueChanges.pipe(finalize(() => this.cargandoDatos = false)).subscribe((listaEmpleados) =>
+        this.empleadosGQL.watch().valueChanges.pipe(finalize(() => console.log('empleados no entra finalize'))).subscribe((listaEmpleados) =>
         {
             if (isNotNil(listaEmpleados.data))
             {
                 const lista = $cast<IResolveEmpleado[]>(listaEmpleados.data.empleados);
                 this.setAll(lista);
+                this.cargandoDatos = false;
             }
         });
     }

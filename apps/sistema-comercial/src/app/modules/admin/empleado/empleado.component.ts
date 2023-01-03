@@ -11,7 +11,6 @@ import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
-import {NgxSpinnerModule} from 'ngx-spinner';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 
@@ -28,8 +27,7 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado
             RxReactiveFormsModule,
             DetalleEmpleadoComponent,
             TailwindLoadingComponent,
-            NgxSpinnerModule,
-            FuseAlertModule
+            FuseAlertModule,
         ],
     selector: 'app-empleado',
     templateUrl: './empleado.component.html',
@@ -59,7 +57,7 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
         this.empleadoSeleccionado = empleado;
-        this.entityEmpleadoStore.seleccionarEmpleado(empleado);
+        // this.entityEmpleadoStore.seleccionarEmpleado(empleado);
         this.abrirP = true;
     }
 
