@@ -13,10 +13,12 @@
     </ng-container>
     <ng-container lista>
         <ng-container *ngIf="!entityEmpleadoStore.cargando; else cargando">
+
             <fuse-alert type="info" appearance="border" *ngIf="entityEmpleadoStore.longListaEmpleados" class="p-4">
                 <span fuseAlertTitle>Empleados</span>
                 no se encontraron empleados para mostrar
             </fuse-alert>
+
             <ng-container *ngFor="let empleado of entityEmpleadoStore.entitiesArray$ | async as empleados; let i = index; trackBy: trackByFn">
                 <!-- Group -->
                 <ng-container *ngIf="i === 0 || empleado.nombreCompleto.charAt(0) !== empleados[i - 1].nombreCompleto.charAt(0)">
@@ -41,6 +43,7 @@
                     </div>
                 </a>
             </ng-container>
+
         </ng-container>
     </ng-container>
 </app-lista-detalle>

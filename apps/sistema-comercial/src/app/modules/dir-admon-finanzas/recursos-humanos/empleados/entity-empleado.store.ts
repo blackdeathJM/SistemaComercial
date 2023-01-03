@@ -1,14 +1,14 @@
 import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
-import {State} from '@ngxs/store';
+import {NgxsOnChanges, Selector, State} from '@ngxs/store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Injectable} from '@angular/core';
-import {createEntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
+import {Injectable, OnChanges, SimpleChanges} from '@angular/core';
+import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {finalize} from 'rxjs';
 
-interface IEmpleadoSelect
+export interface IEmpleadoSelect
 {
     empleado: IResolveEmpleado;
 }
@@ -21,9 +21,10 @@ interface IEmpleadoSelect
     }
 })
 @Injectable()
-export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, EntityIdType, IEmpleadoSelect>
+export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, EntityIdType, IEmpleadoSelect> implements NgxsOnChanges
 {
     public cargandoDatos = false;
+    public primaryKey = '_id';
 
     constructor(private empleadosGQL: EmpleadosGQL, private empleadosSesionGQL: EmpleadosSesionGQL)
     {
@@ -42,16 +43,17 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
         return this.entitiesArray.length === 0;
     }
 
-    @Computed()
-    public get obtenerEmpleado(): IResolveEmpleado
+    @Selector()
+    public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>): EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>
     {
-        return this.snapshot.empleado;
+        return stateEmpleado;
     }
 
     @DataAction()
-    public seleccionarEmpleado(@Payload('empleadoSeleccionado') empleado: IResolveEmpleado): void
+    public seleccionarEmpleado(@Payload('empleadoSeleccionado') _id: string): void
     {
         const state = this.getState();
+        const empleado = this.selectOne(_id);
         this.setEntitiesState({
             ...state,
             empleado
@@ -68,8 +70,8 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
             {
                 const lista = $cast<IResolveEmpleado[]>(listaEmpleados.data.empleados);
                 this.setAll(lista);
-                this.cargandoDatos = false;
             }
+            this.cargandoDatos = false;
         });
     }
 
@@ -77,13 +79,14 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     public empleadosConSesion(): void
     {
         this.cargandoDatos = true;
-        this.empleadosSesionGQL.watch().valueChanges.pipe(finalize(() => this.cargandoDatos = false)).subscribe((empleadosSesion) =>
+        this.empleadosSesionGQL.watch().valueChanges.subscribe((empleadosSesion) =>
         {
             if (isNotNil(empleadosSesion.data.empleadosSesion))
             {
                 const empleados = $cast<IResolveEmpleado[]>(empleadosSesion.data.empleadosSesion);
                 this.setAll(empleados);
             }
+            this.cargandoDatos = false;
         });
     }
 }

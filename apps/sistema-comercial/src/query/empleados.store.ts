@@ -17,7 +17,7 @@ interface IStoreEmpleado
 
 @StateRepository()
 @State<IStoreEmpleado>({
-    name: 'empleados',
+    name: 'trabajadores',
     defaults: {empleados: [], cargando: false}
 })
 @Injectable()

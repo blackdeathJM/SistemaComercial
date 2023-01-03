@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {Subscription} from 'rxjs';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {AfterContentChecked, AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Observable, Subscription} from 'rxjs';
+import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {MatButtonModule} from '@angular/material/button';
@@ -9,12 +9,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {NgxJsonViewerModule} from 'ngx-json-viewer';
-import {FuseNavigationItem} from '@s-fuse/navigation';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatListModule} from '@angular/material/list';
 import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityEmpleadoStore, IEmpleadoSelect} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {Select} from '@ngxs/store';
+import {EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
+import {isNotNil} from '@angular-ru/cdk/utils';
 
 @Component({
     standalone: true,
@@ -34,15 +36,15 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado
     exportAs: 'app-detalle-empleado',
     selector: 'app-detalle-empleado',
     templateUrl: './detalle-empleado.component.html',
-    styleUrls: ['./detalle-empleado.component.scss']
+    styleUrls: ['./detalle-empleado.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetalleEmpleadoComponent implements OnDestroy
+export class DetalleEmpleadoComponent
 {
+    @Select(EntityEmpleadoStore.empleado) empleado$: Observable<EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>>;
     @Output() cerrarPanel = new EventEmitter<boolean>();
-    subscripcion: Subscription = new Subscription();
 
-
-    constructor(private dialogRef: MatDialog, public entityEmpleadoStore: EntityEmpleadoStore)
+    constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore)
     {
 
     }
@@ -54,7 +56,13 @@ export class DetalleEmpleadoComponent implements OnDestroy
 
     asignarSesion(): void
     {
-        this.dialogRef.open(RegistroSesionComponent, {width: '40%', data: null});
+        this.dRef.open(RegistroSesionComponent, {width: '40%', data: null}).afterClosed().subscribe((res: IResolveEmpleado) =>
+        {
+            if (isNotNil(res))
+            {
+                this.entityEmpleadoStore.seleccionarEmpleado(res._id);
+            }
+        });
     }
 
     trackByFn(index: number, item: any): any
@@ -85,10 +93,5 @@ export class DetalleEmpleadoComponent implements OnDestroy
         //         this.ngxToast.satisfactorioToast('El permiso se ha cambiado con exito', 'Cambio de rol');
         //     }
         // })).subscribe();
-    }
-
-    ngOnDestroy(): void
-    {
-        this.subscripcion.unsubscribe();
     }
 }

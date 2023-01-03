@@ -37,7 +37,6 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
 {
     abrirP: boolean = false;
     ctrlBuscar: FormControl = new FormControl();
-    empleadoSeleccionado: IResolveEmpleado;
     subscripciones: Subscription = new Subscription();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, public entityEmpleadoStore: EntityEmpleadoStore)
@@ -56,8 +55,7 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
 
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
-        this.empleadoSeleccionado = empleado;
-        // this.entityEmpleadoStore.seleccionarEmpleado(empleado);
+        this.entityEmpleadoStore.seleccionarEmpleado(empleado._id);
         this.abrirP = true;
     }
 

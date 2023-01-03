@@ -49,7 +49,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     subs: Subscription = new Subscription();
     mostrarProgreso: boolean = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService
+    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService
         , private subirDocsGQL: SubirDocsGQL, private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth)
     {
     }
@@ -147,7 +147,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
                 {
                     unionBy(STATE_DOCS(), res.data.subirDocs as IResolveDocumento);
                     this.ngxService.satisfactorioToast('La subida de archivos se realizo con exito', 'Subida de archivos');
-                    this.mdr.close(res.data.subirDocs);
+                    this.dRef.close(res.data.subirDocs);
                 }
                 this.cargando = false;
                 this.formDocsArchivo.enable();
@@ -161,7 +161,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
         {
             return;
         }
-        this.mdr.close();
+        this.dRef.close();
     }
 
     ngOnDestroy(): void
