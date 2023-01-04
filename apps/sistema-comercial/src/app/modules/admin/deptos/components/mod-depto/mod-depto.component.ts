@@ -42,9 +42,8 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    // eslint-disable-next-line max-len
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL, private entityDeptoStore: EntityDeptoStore,
-                private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
+                private entityDeptoStore: EntityDeptoStore, private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
     {
 
     }
@@ -71,8 +70,9 @@ export class ModDeptoComponent implements OnInit
                     if (res.data)
                     {
                         const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-                        const estado = {...this.entityDeptoStore.getState()};
-                        this.entityDeptoStore.updateOne({changes: actualizarDepto, id: actualizarDepto._id});
+                        const seleccionar = this.entityDeptoStore.selectOne(actualizarDepto._id);
+
+                        this.entityDeptoStore.updateOne({id: seleccionar._id, changes: actualizarDepto});
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
                     this.cargandoDatos = res.loading;

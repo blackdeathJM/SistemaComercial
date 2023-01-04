@@ -60,7 +60,7 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
         });
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public empleados(): void
     {
         this.cargandoDatos = true;
@@ -75,7 +75,7 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
         });
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public empleadosConSesion(): void
     {
         this.cargandoDatos = true;

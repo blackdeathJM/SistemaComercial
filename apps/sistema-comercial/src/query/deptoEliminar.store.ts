@@ -6,6 +6,7 @@ import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {Immutable} from '@angular-ru/cdk/typings';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {merge} from 'lodash-es';
 
 interface IDeptoState
 {
@@ -38,7 +39,7 @@ export class DeptoEliminarStore extends NgxsImmutableDataRepository<IDeptoState>
         return state.cargando;
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public cargarDeptos(): void
     {
         this.ctx.patchState({cargando: true});
@@ -51,17 +52,17 @@ export class DeptoEliminarStore extends NgxsImmutableDataRepository<IDeptoState>
         });
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public agregarDepto(@Payload('agregarDepto') input: IDepto, cargando: boolean): void
     {
         this.ctx.patchState({cargando: true});
         this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => ({deptos: state.deptos.concat(input), cargando}));
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public actualizarDepto(@Payload('actualizarDepto') input: IDepto, cargando: boolean): void
     {
         this.ctx.patchState({cargando: true});
-        this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => ({deptos: state.deptos.filter(value => value._id !== input._id), cargando}));
+        this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => merge(state, input));
     }
 }

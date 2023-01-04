@@ -22,7 +22,7 @@
     "dependencies": {
         "@angular-material-components/datetime-picker": "^9.0.0",
         "@angular-ru/cdk": "^14.7.0",
-        "@angular-ru/ngxs": "^14.0.3",
+        "@angular-ru/ngxs": "14.0.3",
         "@angular/animations": "^15.0.4",
         "@angular/cdk": "^15.0.3",
         "@angular/common": "15.0.4",
@@ -57,7 +57,7 @@
         "@ngxs/storage-plugin": "^3.7.6",
         "@ngxs/store": "^3.7.6",
         "@ngxs/websocket-plugin": "^3.7.6",
-        "@rxweb/angular-router": "^0.0.2-beta4",
+        "@rxweb/angular-router": "^0.0.2",
         "@rxweb/generics": "^0.0.1-4",
         "@rxweb/reactive-dynamic-forms": "^0.0.6",
         "@rxweb/reactive-form-validators": "^13.0.0",

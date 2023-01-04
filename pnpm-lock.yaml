@@ -7,7 +7,7 @@ specifiers:
   '@angular-eslint/template-parser': 15.1.0
   '@angular-material-components/datetime-picker': ^9.0.0
   '@angular-ru/cdk': ^14.7.0
-  '@angular-ru/ngxs': ^14.0.3
+  '@angular-ru/ngxs': 14.0.3
   '@angular/animations': ^15.0.4
   '@angular/cdk': ^15.0.3
   '@angular/cli': 15.0.4
@@ -65,7 +65,7 @@ specifiers:
   '@nrwl/nest': 15.4.4
   '@nrwl/node': 15.4.4
   '@nrwl/workspace': 15.4.4
-  '@rxweb/angular-router': ^0.0.2-beta4
+  '@rxweb/angular-router': ^0.0.2
   '@rxweb/generics': ^0.0.1-4
   '@rxweb/reactive-dynamic-forms': ^0.0.6
   '@rxweb/reactive-form-validators': ^13.0.0
@@ -206,7 +206,7 @@ dependencies:
   '@ngxs/storage-plugin': 3.7.6_vhgncvxdbu4fciod5m6sbzimgm
   '@ngxs/store': 3.7.6_2kx3gifw2v5d4j22ydwztvu5ey
   '@ngxs/websocket-plugin': 3.7.6_vhgncvxdbu4fciod5m6sbzimgm
-  '@rxweb/angular-router': 0.0.2-beta4
+  '@rxweb/angular-router': 0.0.2
   '@rxweb/generics': 0.0.1-4
   '@rxweb/reactive-dynamic-forms': 0.0.6
   '@rxweb/reactive-form-validators': 13.0.0
@@ -7589,10 +7589,10 @@ packages:
     resolution: {integrity: sha512-AW8PKd6iX3vAZ0vA43nOUOnbq/X5ihgU+mSXXqunMkeQADGiqw/PY0JNeYtD5sr0PAy51YPgAPbDoeapv9r8WA==}
     dev: true
 
-  /@rxweb/angular-router/0.0.2-beta4:
-    resolution: {integrity: sha512-7LQcjmaX2zNInYrEbhxk4P8DCxMNaNWxCbc0bGL98wXjfh7eZJRqlnBXpJ6S3YOZwiI4TwITBNzBglmHzjCwYA==}
+  /@rxweb/angular-router/0.0.2:
+    resolution: {integrity: sha512-7r+sOanm27S1MzmcbRY+YfqcfHRvU8BS0vJLHU+g822rNzFiM8l72MeRgt+RvVZKpE2PGcLX00MoRzxI9SKpcg==}
     dependencies:
-      tslib: 1.14.1
+      tslib: 2.4.1
     dev: false
 
   /@rxweb/generics/0.0.1-4:

@@ -49,7 +49,7 @@ export class EmpleadosStore extends NgxsImmutableDataRepository<IStoreEmpleado>
         return state.empleados;
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public empleados(): void
     {
         // Carga inicial de empleados en esta consulta se obtienen todos los empleados registrados
@@ -69,7 +69,7 @@ export class EmpleadosStore extends NgxsImmutableDataRepository<IStoreEmpleado>
         }), finalize(() => console.log('si finaliza carga de empleados'))).subscribe();
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public empleadosConSesion(): void
     {
         this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
@@ -82,13 +82,13 @@ export class EmpleadosStore extends NgxsImmutableDataRepository<IStoreEmpleado>
         })).subscribe();
     }
 
-    @DataAction({subscribeRequired: true})
+    @DataAction()
     public crearEmpleado(@Payload('crearEmpleado') empleadoDatos: IResolveEmpleado): void
     {
         this.ctx.setState((state: Immutable<IStoreEmpleado>): Immutable<IStoreEmpleado> => ({empleados: state.empleados.concat(empleadoDatos), cargando: false}));
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     asignarAuth(@Payload('AsignarAuth') sesionAsignada: IResolveEmpleado): void
     {
         this.actualizarEdo(sesionAsignada._id);

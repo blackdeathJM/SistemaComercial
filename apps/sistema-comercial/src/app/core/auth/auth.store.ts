@@ -30,13 +30,13 @@ export class StateAuth extends NgxsImmutableDataRepository<IDatosSesion>
         return state;
     }
 
-    @DataAction({subscribeRequired: true})
+    @DataAction()
     public login(@Payload('sesion') datosSesion: IDatosSesion): void
     {
         this.ctx.setState(datosSesion);
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     validarSesion(): void
     {
         if (isNil(this.ctx.getState()))
