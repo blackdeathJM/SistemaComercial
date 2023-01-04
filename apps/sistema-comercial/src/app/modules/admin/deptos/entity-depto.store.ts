@@ -1,6 +1,6 @@
 import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
-import {State} from '@ngxs/store';
-import {createEntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
+import {NgxsOnChanges, NgxsSimpleChange, State} from '@ngxs/store';
+import {createEntityCollections} from '@angular-ru/cdk/entity';
 import {Injectable} from '@angular/core';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
@@ -10,17 +10,19 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 @StateRepository()
 @State({
     name: 'deptos',
-    defaults: createEntityCollections()
+    defaults: createEntityCollections<IDepto>()
 })
 @Injectable()
-export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto>
+export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto> implements NgxsOnChanges
 {
+    public primaryKey = '_id';
+
     constructor(private departamentosGQL: DepartamentosGQL)
     {
         super();
     }
 
-    @DataAction({subscribeRequired: false})
+    @DataAction()
     public cargarDeptos(): void
     {
         this.departamentosGQL.watch().valueChanges.subscribe((res) =>
@@ -32,8 +34,10 @@ export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto
         });
     }
 
-    public selectId(entity: IDepto): EntityIdType
+    public ngxsOnChanges(_?: NgxsSimpleChange): void
     {
-        return entity._id;
+        super.ngxsOnChanges(_);
+        console.log('ngxsChanges', _.currentValue);
     }
+
 }

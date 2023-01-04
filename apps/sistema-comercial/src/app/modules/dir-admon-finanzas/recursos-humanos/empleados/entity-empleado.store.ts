@@ -1,7 +1,7 @@
 import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {NgxsOnChanges, Selector, State} from '@ngxs/store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Injectable, OnChanges, SimpleChanges} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
@@ -44,16 +44,16 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     }
 
     @Selector()
-    public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>): EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>
+    public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>): IResolveEmpleado
     {
-        return stateEmpleado;
+        return stateEmpleado.empleado;
     }
 
     @DataAction()
-    public seleccionarEmpleado(@Payload('empleadoSeleccionado') _id: string): void
+    public async seleccionarEmpleado(@Payload('empleadoSeleccionado') _id: string): Promise<void>
     {
         const state = this.getState();
-        const empleado = this.selectOne(_id);
+        const empleado = await this.selectOne(_id);
         this.setEntitiesState({
             ...state,
             empleado

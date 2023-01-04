@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
@@ -35,8 +35,7 @@ import {EntityDeptoStore} from '@s-admin/entity-depto.store';
     selector: 'app-mod-depto',
     templateUrl: './mod-depto.component.html',
     styleUrls: ['./mod-depto.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    encapsulation: ViewEncapsulation.None
 })
 export class ModDeptoComponent implements OnInit
 {
@@ -72,7 +71,7 @@ export class ModDeptoComponent implements OnInit
                     if (res.data)
                     {
                         const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-                        this.entityDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
+                        this.entityDeptoStore.updateOne({changes: actualizarDepto, id: actualizarDepto._id});
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
                     this.cargandoDatos = res.loading;
@@ -93,7 +92,7 @@ export class ModDeptoComponent implements OnInit
                 if (isNotNil(res.data))
                 {
                     const depto = $cast<IDepto>(res.data.crearDepto);
-                    this.entityDeptoStore.addOne(depto);
+                    this.entityDeptoStore.setOne(depto);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;

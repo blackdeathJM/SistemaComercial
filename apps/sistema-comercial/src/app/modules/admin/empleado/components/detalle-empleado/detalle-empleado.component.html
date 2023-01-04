@@ -13,72 +13,74 @@
 
     <!-- Empleado -->
     <ng-container *ngIf="empleado$ | async as empleado">
-        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
-            <div class="w-full max-w-3xl">
-                <!-- Avatar and actions -->
-                <div class="flex flex-auto items-end -mt-16">
-                    <!-- Avatar -->
-                    <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
-                        <img class="object-cover w-full h-full" *ngIf="empleado.empleado?.avatar" [src]="empleado.empleado?.avatar" alt="Avatar">
-                        <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                             *ngIf="!empleado.empleado?.avatar">
-                            {{empleado.empleado?.nombreCompleto.charAt(0)}}
-                        </div>
-                    </div>
-                    <div class="flex items-center ml-auto mb-1">
-                        <button mat-stroked-button (click)="asignarSesion()">
-                            <mat-icon class="icon-size-5" [svgIcon]="empleado.empleado?.auth ? 'heroicons_solid:key' : 'heroicons_outline:user-add'"></mat-icon>
-                            <span class="ml-2">{{empleado.empleado?.auth ? 'Modificar contrasena' : 'Asignar Sesion'}}</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Name -->
-                <div class="mt-3 text-4xl font-bold truncate">{{empleado.empleado?.nombreCompleto}}</div>
-
-                <!--Tags -->
-                <div class="flex flex-wrap items-center mt-2">
-                    <!-- Tag -->
-                    <div class="flex items-center justify-center py-1 px-3 mr-3 mb-3 rounded-full leading-normal text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                        <span class="text-sm font-medium whitespace-nowrap">Puesto</span>
-                    </div>
-                </div>
-                <ng-container *ngIf="empleado.empleado?.auth">
-                    <div class="flex flex-col mt-4 pt-6 border-t space-y-4">
-                        <div class="flex sm:items-center border-b pb-6">
-                            <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-                            <div class="ml-6 leading-6">{{empleado.empleado?.auth?.usuario}}</div>
-                        </div>
-                    </div>
-                </ng-container>
-
-                <div class="flex flex-col mt-4 divide-y">
-                    <ng-container *ngFor="let permiso of empleado.empleado?.auth?.role; trackBy: trackByFn;">
-                        <div class="flex flex-col sm:flex-row sm:items-center py-3">
-                            <div class="flex items-center">
-                                <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-                                    <ng-container>
-                                        <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                            <mat-icon [svgIcon]="'heroicons_outline:key'"></mat-icon>
-                                        </div>
-                                    </ng-container>
-                                </div>
-                                <div class="font-bold text-lg leading-6 text-amber-600 ml-3">{{permiso.title}}</div>
+        <ng-container *ngIf="empleado">
+            <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+                <div class="w-full max-w-3xl">
+                    <!-- Avatar and actions -->
+                    <div class="flex flex-auto items-end -mt-16">
+                        <!-- Avatar -->
+                        <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
+                            <img class="object-cover w-full h-full" *ngIf="empleado?.avatar" [src]="empleado?.avatar" alt="Avatar">
+                            <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                                 *ngIf="!empleado?.avatar">
+                                {{empleado?.nombreCompleto.charAt(0)}}
                             </div>
                         </div>
-                        <mat-selection-list>
-                            <div class="flex flex-column w-full" *ngFor="let hijo of permiso?.children">
-                                <mat-slide-toggle>{{hijo.title}}</mat-slide-toggle>
+                        <div class="flex items-center ml-auto mb-1">
+                            <button mat-stroked-button (click)="asignarSesion()">
+                                <mat-icon class="icon-size-5" [svgIcon]="empleado?.auth ? 'heroicons_solid:key' : 'heroicons_outline:user-add'"></mat-icon>
+                                <span class="ml-2">{{empleado?.auth ? 'Modificar contrasena' : 'Asignar Sesion'}}</span>
+                            </button>
+                        </div>
+                    </div>
 
-                                <div class="flex flex-column w-full m-2 mt-4" *ngFor="let hijo2 of hijo?.children">
-                                    <mat-slide-toggle>{{hijo2?.title}}</mat-slide-toggle>
-                                </div>
+                    <!-- Name -->
+                    <div class="mt-3 text-4xl font-bold truncate">{{empleado?.nombreCompleto}}</div>
+
+                    <!--Tags -->
+                    <div class="flex flex-wrap items-center mt-2">
+                        <!-- Tag -->
+                        <div class="flex items-center justify-center py-1 px-3 mr-3 mb-3 rounded-full leading-normal text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                            <span class="text-sm font-medium whitespace-nowrap">Puesto</span>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="empleado?.auth">
+                        <div class="flex flex-col mt-4 pt-6 border-t space-y-4">
+                            <div class="flex sm:items-center border-b pb-6">
+                                <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                                <div class="ml-6 leading-6">{{empleado?.auth?.usuario}}</div>
                             </div>
-                        </mat-selection-list>
+                        </div>
                     </ng-container>
+
+                    <div class="flex flex-col mt-4 divide-y">
+                        <ng-container *ngFor="let permiso of empleado?.auth?.role; trackBy: trackByFn;">
+                            <div class="flex flex-col sm:flex-row sm:items-center py-3">
+                                <div class="flex items-center">
+                                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                                        <ng-container>
+                                            <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                                <mat-icon [svgIcon]="'heroicons_outline:key'"></mat-icon>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="font-bold text-lg leading-6 text-amber-600 ml-3">{{permiso.title}}</div>
+                                </div>
+                            </div>
+                            <mat-selection-list>
+                                <div class="flex flex-column w-full" *ngFor="let hijo of permiso?.children">
+                                    <mat-slide-toggle>{{hijo.title}}</mat-slide-toggle>
+
+                                    <div class="flex flex-column w-full m-2 mt-4" *ngFor="let hijo2 of hijo?.children">
+                                        <mat-slide-toggle>{{hijo2?.title}}</mat-slide-toggle>
+                                    </div>
+                                </div>
+                            </mat-selection-list>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
     </ng-container>
     <!--    empleado-->
 

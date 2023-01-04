@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor
         // We won't add the Authorization header if the access token expired.
         // This will force the server to return a "401 Unauthorized" response
         // for the protected API routes which our response interceptor will
-        // catch and delete the access token from the local storage while logging
+        // catch and delete the access token from the local store while logging
         // the user out from the app.
         // if ( this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken) )
         // {

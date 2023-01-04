@@ -1,6 +1,6 @@
-import {AfterContentChecked, AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Observable, Subscription} from 'rxjs';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Observable} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import {IEmpleado, IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
@@ -13,9 +13,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatListModule} from '@angular/material/list';
 import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
-import {EntityEmpleadoStore, IEmpleadoSelect} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 import {Select} from '@ngxs/store';
-import {EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {isNotNil} from '@angular-ru/cdk/utils';
 
 @Component({
@@ -41,7 +40,7 @@ import {isNotNil} from '@angular-ru/cdk/utils';
 })
 export class DetalleEmpleadoComponent
 {
-    @Select(EntityEmpleadoStore.empleado) empleado$: Observable<EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>>;
+    @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
     @Output() cerrarPanel = new EventEmitter<boolean>();
 
     constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore)

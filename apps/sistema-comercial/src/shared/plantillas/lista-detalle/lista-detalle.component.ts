@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
@@ -14,14 +14,15 @@ import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
     selector: 'app-lista-detalle',
     templateUrl: './lista-detalle.component.html',
     styleUrls: ['./lista-detalle.component.scss'],
-    exportAs: 'app-lista-detalle'
+    exportAs: 'app-lista-detalle',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListaDetalleComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     drawerMode: 'side' | 'over';
     _abriP: boolean = false;
-    private eliminarSubscripcion: Subject<any> = new Subject<any>();
+    private sub: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
                 private fuseMediaWatcherService: FuseMediaWatcherService)
@@ -43,7 +44,7 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
             }
         });
 
-        this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.eliminarSubscripcion)).subscribe(({matchingAliases}) =>
+        this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.sub)).subscribe(({matchingAliases}) =>
         {
             if (matchingAliases.includes('lg'))
             {
@@ -68,7 +69,7 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     {
-        this.eliminarSubscripcion.next(null);
-        this.eliminarSubscripcion.complete();
+        this.sub.next(null);
+        this.sub.complete();
     }
 }

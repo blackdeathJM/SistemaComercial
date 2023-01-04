@@ -13,6 +13,7 @@
                     </button>
                 </div>
             </div>
+
             <!-- Panel links -->
             <div class="flex flex-col divide-y border-t border-b">
                 <ng-container *ngFor="let panel of panels; trackBy: trackByFn">
@@ -31,6 +32,7 @@
                     </div>
                 </ng-container>
             </div>
+
         </mat-drawer>
 
         <!-- Drawer content -->
@@ -45,10 +47,8 @@
                     </button>
                 </div>
 
-                <!-- Load settings panel -->
                 <div class="mt-8">
                     <ng-container [ngSwitch]="selectedPanel">
-                        <!-- Account -->
                         <ng-container *ngSwitchCase="'deptos'">
                             <app-deptos-principal></app-deptos-principal>
                         </ng-container>
@@ -58,6 +58,7 @@
                     </ng-container>
                 </div>
             </div>
+
         </mat-drawer-content>
     </mat-drawer-container>
 </div>

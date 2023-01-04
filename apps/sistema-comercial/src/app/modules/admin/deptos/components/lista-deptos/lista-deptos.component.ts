@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -7,6 +7,7 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {EntityDeptoStore} from '@s-admin/entity-depto.store';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
+import {DepartamentosGQL} from '#/libs/datos/src';
 
 @Component({
     standalone: true,
@@ -21,10 +22,11 @@ import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.compone
     selector: 'app-lista-deptos',
     templateUrl: './lista-deptos.component.html',
     styleUrls: ['./lista-deptos.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListaDeptosComponent implements OnInit
 {
-    constructor(public entityDeptoStore: EntityDeptoStore, private dRef: MatDialog)
+    constructor(public entityDeptoStore: EntityDeptoStore, private dRef: MatDialog, private departamentosGQL: DepartamentosGQL)
     {
 
     }
