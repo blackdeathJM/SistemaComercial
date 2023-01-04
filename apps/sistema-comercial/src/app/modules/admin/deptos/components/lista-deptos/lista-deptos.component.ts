@@ -7,7 +7,6 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {EntityDeptoStore} from '@s-admin/entity-depto.store';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {DepartamentosGQL} from '#/libs/datos/src';
 
 @Component({
     standalone: true,
@@ -26,7 +25,7 @@ import {DepartamentosGQL} from '#/libs/datos/src';
 })
 export class ListaDeptosComponent implements OnInit
 {
-    constructor(public entityDeptoStore: EntityDeptoStore, private dRef: MatDialog, private departamentosGQL: DepartamentosGQL)
+    constructor(public entityDeptoStore: EntityDeptoStore, private dRef: MatDialog)
     {
 
     }

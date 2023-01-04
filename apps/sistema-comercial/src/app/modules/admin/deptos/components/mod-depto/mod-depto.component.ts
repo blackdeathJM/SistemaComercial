@@ -71,6 +71,7 @@ export class ModDeptoComponent implements OnInit
                     if (res.data)
                     {
                         const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
+                        const estado = {...this.entityDeptoStore.getState()};
                         this.entityDeptoStore.updateOne({changes: actualizarDepto, id: actualizarDepto._id});
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
@@ -92,7 +93,7 @@ export class ModDeptoComponent implements OnInit
                 if (isNotNil(res.data))
                 {
                     const depto = $cast<IDepto>(res.data.crearDepto);
-                    this.entityDeptoStore.setOne(depto);
+                    this.entityDeptoStore.addOne(depto);
                     this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;
