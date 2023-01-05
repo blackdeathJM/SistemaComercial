@@ -7,6 +7,7 @@ import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories
 import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 export interface IDocSeleccionar
 {
@@ -24,23 +25,10 @@ export interface IDocSeleccionar
 @Injectable()
 export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepository<IResolveDocumento, EntityIdType, IDocSeleccionar>
 {
-    private cargandoDatos = false;
 
-    constructor(private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private stateAuth: StateAuth)
+    constructor(private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private stateAuth: StateAuth, private ngxLoader: NgxUiLoaderService)
     {
         super();
-    }
-
-    @Computed()
-    public get cargando(): boolean
-    {
-        return this.cargandoDatos;
-    }
-
-    @Computed()
-    public get longDocs(): boolean
-    {
-        return this.entitiesArray.length === 0;
     }
 
     @Selector()
@@ -63,7 +51,7 @@ export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepositor
     public cargarDocsPorProceso(@Payload('seleccionarDocsProcesoYEnviadoPor') proceso: 'pendiente' | 'terminado', esEnviadoPor: boolean): void
     {
         // Realizamos consulta para obtener los documentos de la carga inicial en la cual checamos el proceso y si es enviado por mi o son para mi
-        this.cargandoDatos = true;
+        this.ngxLoader.startLoader('listaDocs');
         const args: IDocsUsuarioProceso =
             {
                 enviadoPor: this.stateAuth.snapshot._id,
@@ -80,7 +68,7 @@ export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepositor
                 console.log('documentos', documentos);
                 this.setAll(documentos);
             }
-            this.cargandoDatos = false;
+            this.ngxLoader.stopLoader('listaDocs');
         });
     }
 

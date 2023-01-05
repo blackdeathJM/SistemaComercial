@@ -29,7 +29,8 @@ import {CoreModule} from '@s-core/core.module';
 import {LayoutModule} from '@s-layout/layout.module';
 import {NgxsGlobalModule} from '#/apps/sistema-comercial/src/store/ngxsGlobal.module';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {NgxSpinnerModule} from "ngx-spinner";
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {configLoader} from '#/apps/sistema-comercial/src/app/configLoader';
 
 const routerConfig: ExtraOptions =
     {
@@ -75,6 +76,7 @@ const routerConfig: ExtraOptions =
             MarkdownModule.forRoot({}),
             ApolloConfigModule,
             SweetAlert2Module.forRoot(),
+            NgxUiLoaderModule.forRoot(configLoader),
             ToastrModule.forRoot(),
             NgxTrimDirectiveModule,
             MatLuxonDateModule,

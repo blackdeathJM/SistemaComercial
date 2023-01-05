@@ -7,6 +7,7 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {EntityDeptoStore} from '@s-admin/entity-depto.store';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
+import {NgxUiLoaderModule} from "ngx-ui-loader";
 
 @Component({
     standalone: true,
@@ -17,6 +18,7 @@ import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.compone
             MatButtonModule,
             MatIconModule,
             TailwindLoadingComponent,
+            NgxUiLoaderModule,
         ],
     selector: 'app-lista-deptos',
     templateUrl: './lista-deptos.component.html',

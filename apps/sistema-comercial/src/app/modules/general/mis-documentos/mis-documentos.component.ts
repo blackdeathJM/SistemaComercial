@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
 import {CommonModule} from '@angular/common';
@@ -14,13 +14,15 @@ import {MatIconModule} from '@angular/material/icon';
     imports: [CommonModule, ListaDetalleComponent, DetalleDocumentosComponent, ListaDocumentosComponent, DocConsultaComponent, MatButtonModule, MatIconModule],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
-    styleUrls: ['./mis-documentos.component.scss']
+    styleUrls: ['./mis-documentos.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MisDocumentosComponent
 {
     constructor(private dRef: MatDialog)
     {
     }
+
     nuevosDocs(): void
     {
         this.dRef.open(ModDocumentosComponent, {width: '40%', data: null, hasBackdrop: false});

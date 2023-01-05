@@ -6,6 +6,7 @@ import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {DepartamentosGQL} from '#/libs/datos/src';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 @StateRepository()
 @State({
@@ -16,8 +17,9 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto, string>
 {
     public override primaryKey = '_id';
+    #loaderId = 'listaDeptos';
 
-    constructor(private departamentosGQL: DepartamentosGQL)
+    constructor(private departamentosGQL: DepartamentosGQL, private ngxLoader: NgxUiLoaderService)
     {
         super();
     }
@@ -25,12 +27,14 @@ export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto
     @DataAction()
     public cargarDeptos(): void
     {
+        this.ngxLoader.startLoader(this.#loaderId);
         this.departamentosGQL.watch().valueChanges.subscribe((res) =>
         {
             if (isNotNil(res.data))
             {
                 const deptos = $cast<IDepto[]>(res.data.deptos);
                 this.setAll(deptos);
+                this.ngxLoader.stopLoader(this.#loaderId);
             }
         });
     }

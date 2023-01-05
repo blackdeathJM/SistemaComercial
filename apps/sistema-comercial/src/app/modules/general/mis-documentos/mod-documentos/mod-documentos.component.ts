@@ -11,7 +11,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {FileUploadModule} from '@iplab/ngx-file-upload';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {CommonModule, NgIf} from '@angular/common';
@@ -41,7 +40,6 @@ import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
             MatInputModule,
             MatSelectModule,
             MatDatepickerModule,
-            FileUploadModule,
             MatCheckboxModule,
             RegistrosComponent,
             MaterialFileInputModule,

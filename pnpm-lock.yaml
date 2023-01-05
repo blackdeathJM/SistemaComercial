@@ -34,7 +34,6 @@ specifiers:
   '@graphql-codegen/fragment-matcher': ^3.3.3
   '@graphql-codegen/typescript-apollo-angular': ^3.5.6
   '@graphql-codegen/typescript-operations': ^2.5.11
-  '@iplab/ngx-file-upload': ^15.0.0
   '@nestjs/apollo': ^10.1.7
   '@nestjs/cli': ^9.1.8
   '@nestjs/common': ^9.2.1
@@ -66,7 +65,6 @@ specifiers:
   '@nrwl/nest': 15.4.4
   '@nrwl/node': 15.4.4
   '@nrwl/workspace': 15.4.4
-  '@rxweb/angular-router': ^0.0.2
   '@rxweb/generics': ^0.0.1-4
   '@rxweb/reactive-dynamic-forms': ^0.0.6
   '@rxweb/reactive-form-validators': ^13.0.0
@@ -143,7 +141,6 @@ specifiers:
   ngx-markdown: 15.0.0
   ngx-material-file-input: ^4.0.0
   ngx-quill: 20.0.1
-  ngx-spinner: ^15.0.1
   ngx-toastr: ^16.0.1
   ngx-trim-directive: ^2.0.0
   ngx-ui-loader: ^13.0.0
@@ -189,7 +186,6 @@ dependencies:
   '@apollo/server': 4.3.0_graphql@16.6.0
   '@auth0/angular-jwt': 5.1.2_@angular+common@15.0.4
   '@datorama/akita': 7.1.1_rxjs@7.8.0
-  '@iplab/ngx-file-upload': 15.0.0_q6ynwzmfhqgedjggl7xz2nulfa
   '@nestjs/apollo': 10.1.7_abtkaagqsgvel2ybqxmuekbriy
   '@nestjs/common': 9.2.1_welcnyot5bzd5wa2aovbkxpi4i
   '@nestjs/config': 2.2.0_b4pxbpa7chblgbyake5iz5rdmu
@@ -207,7 +203,6 @@ dependencies:
   '@ngxs/router-plugin': 3.7.6_t2agwniy6hl36jfjcxsgxelgr4
   '@ngxs/storage-plugin': 3.7.6_vhgncvxdbu4fciod5m6sbzimgm
   '@ngxs/store': 3.7.6_2kx3gifw2v5d4j22ydwztvu5ey
-  '@rxweb/angular-router': 0.0.2
   '@rxweb/generics': 0.0.1-4
   '@rxweb/reactive-dynamic-forms': 0.0.6
   '@rxweb/reactive-form-validators': 13.0.0
@@ -249,7 +244,6 @@ dependencies:
   ngx-markdown: 15.0.0_ffsvmg52cvqngwf3z2dbso6p74
   ngx-material-file-input: 4.0.0_q3wcplzwn4sik4r55hsxfdkyly
   ngx-quill: 20.0.1_6bbvy3hpaiyg2vss2cyp33ypwa
-  ngx-spinner: 15.0.1_wcjhsjedbutghxn65tv34lliyq
   ngx-toastr: 16.0.1_ffwmyjw524znisgsuqdcsdyzqa
   ngx-trim-directive: 2.0.0_wcjhsjedbutghxn65tv34lliyq
   ngx-ui-loader: 13.0.0_wcjhsjedbutghxn65tv34lliyq
@@ -5339,21 +5333,6 @@ packages:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: true
 
-  /@iplab/ngx-file-upload/15.0.0_q6ynwzmfhqgedjggl7xz2nulfa:
-    resolution: {integrity: sha512-EGsw3NKs9VeTacxbH1t7FbpUxnC5QVv/aAmzkSsgaJru+jOrcET8v79AkUXNcpiDtHkM6nu/rc0M4jnWKUqx+g==}
-    peerDependencies:
-      '@angular/animations': ^15.0.0
-      '@angular/common': ^15.0.0
-      '@angular/core': ^15.0.0
-      rxjs: ^7.0.0
-    dependencies:
-      '@angular/animations': 15.0.4_@angular+core@15.0.4
-      '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
-      '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
-      rxjs: 7.8.0
-      tslib: 2.4.1
-    dev: false
-
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
     engines: {node: '>=8'}
@@ -7617,12 +7596,6 @@ packages:
   /@repeaterjs/repeater/3.0.4:
     resolution: {integrity: sha512-AW8PKd6iX3vAZ0vA43nOUOnbq/X5ihgU+mSXXqunMkeQADGiqw/PY0JNeYtD5sr0PAy51YPgAPbDoeapv9r8WA==}
     dev: true
-
-  /@rxweb/angular-router/0.0.2:
-    resolution: {integrity: sha512-7r+sOanm27S1MzmcbRY+YfqcfHRvU8BS0vJLHU+g822rNzFiM8l72MeRgt+RvVZKpE2PGcLX00MoRzxI9SKpcg==}
-    dependencies:
-      tslib: 2.4.1
-    dev: false
 
   /@rxweb/generics/0.0.1-4:
     resolution: {integrity: sha512-HC8hVa3gVWxmKb4usibNjJiQxx1YA30kXviGMeMypeD2yBQSgF8l320tOzYJubk6hErrNPNoc3t9LMs8yB+Peg==}
@@ -16818,17 +16791,6 @@ packages:
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       quill: 1.3.7
       rxjs: 7.8.0
-      tslib: 2.4.1
-    dev: false
-
-  /ngx-spinner/15.0.1_wcjhsjedbutghxn65tv34lliyq:
-    resolution: {integrity: sha512-7DjETmBpuXTwI68ad1xMKpwt4Cyz1eyu8E7AJcFiKa+8JAnbo0k1qfvWur0aemncRNxDxHoyl6jw42MsnE/B+g==}
-    peerDependencies:
-      '@angular/common': ^15.0.0
-      '@angular/core': ^15.0.0
-    dependencies:
-      '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
-      '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       tslib: 2.4.1
     dev: false
 

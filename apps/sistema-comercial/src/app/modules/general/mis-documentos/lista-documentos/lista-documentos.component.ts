@@ -8,11 +8,12 @@ import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/docume
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
+import {NgxUiLoaderModule} from "ngx-ui-loader";
 
 @Component({
     selector: 'app-lista-documentos',
     standalone: true,
-    imports: [CommonModule, FuseCardModule, FuseAlertModule, TailwindLoadingComponent, MatTooltipModule, ConvertirTimestamUnixPipe],
+    imports: [CommonModule, FuseCardModule, FuseAlertModule, MatTooltipModule, ConvertirTimestamUnixPipe, NgxUiLoaderModule],
     templateUrl: './lista-documentos.component.html',
     styleUrls: ['./lista-documentos.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
