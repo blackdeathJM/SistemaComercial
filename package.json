@@ -56,7 +56,6 @@
         "@ngxs/router-plugin": "^3.7.6",
         "@ngxs/storage-plugin": "^3.7.6",
         "@ngxs/store": "^3.7.6",
-        "@ngxs/websocket-plugin": "^3.7.6",
         "@rxweb/angular-router": "^0.0.2",
         "@rxweb/generics": "^0.0.1-4",
         "@rxweb/reactive-dynamic-forms": "^0.0.6",

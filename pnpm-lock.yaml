@@ -55,7 +55,6 @@ specifiers:
   '@ngxs/router-plugin': ^3.7.6
   '@ngxs/storage-plugin': ^3.7.6
   '@ngxs/store': ^3.7.6
-  '@ngxs/websocket-plugin': ^3.7.6
   '@nrwl/angular': 15.4.4
   '@nrwl/cli': 15.4.4
   '@nrwl/cypress': 15.4.4
@@ -205,7 +204,6 @@ dependencies:
   '@ngxs/router-plugin': 3.7.6_t2agwniy6hl36jfjcxsgxelgr4
   '@ngxs/storage-plugin': 3.7.6_vhgncvxdbu4fciod5m6sbzimgm
   '@ngxs/store': 3.7.6_2kx3gifw2v5d4j22ydwztvu5ey
-  '@ngxs/websocket-plugin': 3.7.6_vhgncvxdbu4fciod5m6sbzimgm
   '@rxweb/angular-router': 0.0.2
   '@rxweb/generics': 0.0.1-4
   '@rxweb/reactive-dynamic-forms': 0.0.6
@@ -6964,19 +6962,6 @@ packages:
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       rxjs: 7.8.0
       tslib: 1.14.1
-
-  /@ngxs/websocket-plugin/3.7.6_vhgncvxdbu4fciod5m6sbzimgm:
-    resolution: {integrity: sha512-hROtAvAlIiU9QHWHKKD5vWO/Uak9ov2oHGoYI8mF+ia65Pl5j0RIRiO69auaCYbr87yw1IKotCq42ADiD0YF+Q==}
-    peerDependencies:
-      '@angular/core': '>=6.1.0 <16.0.0'
-      '@ngxs/store': ^3.7.6 || ^3.7.6-dev
-      rxjs: '>=6.5.5'
-    dependencies:
-      '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
-      '@ngxs/store': 3.7.6_2kx3gifw2v5d4j22ydwztvu5ey
-      rxjs: 7.8.0
-      tslib: 1.14.1
-    dev: false
 
   /@nicolo-ribaudo/chokidar-2/2.1.8-no-fsevents.3:
     resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}

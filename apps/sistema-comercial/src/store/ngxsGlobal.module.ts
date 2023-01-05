@@ -6,12 +6,13 @@ import {NGXS_DATA_STORAGE_CONTAINER, NGXS_DATA_STORAGE_PLUGIN} from '@angular-ru
 import {StateAuth} from '@s-core/auth/auth.store';
 import {EntityDeptoStore} from '@s-admin/entity-depto.store';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 
 @NgModule({
     imports:
         [
             NgxsModule.forRoot(
-                [StateAuth, EntityDeptoStore, EntityEmpleadoStore], {
+                [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore], {
                     developmentMode: !environment.production
                 }),
             NgxsDataPluginModule.forRoot([NGXS_DATA_STORAGE_PLUGIN, NGXS_DATA_STORAGE_CONTAINER]),

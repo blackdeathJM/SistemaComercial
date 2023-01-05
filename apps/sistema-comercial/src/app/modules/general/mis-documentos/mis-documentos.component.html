@@ -1,4 +1,4 @@
-<app-lista-detalle [abriP]="abrirP">
+<app-lista-detalle>
     <ng-container titulo>
         <div>Mis documentos</div>
     </ng-container>
@@ -14,18 +14,12 @@
         <app-doc-consulta></app-doc-consulta>
     </ng-container>
     <ng-container outlet>
-        <app-detalle-documentos (click)="abrirP= false"></app-detalle-documentos>
+        <app-detalle-documentos></app-detalle-documentos>
     </ng-container>
 
     <ng-container lista>
         <div class="flex flex-wrap">
-            <app-lista-documentos (click)="abrirP = true"></app-lista-documentos>
+            <app-lista-documentos></app-lista-documentos>
         </div>
     </ng-container>
 </app-lista-detalle>
-
-<ng-template #cargando>
-    <div class="flex justify-center w-full">
-        <app-tailwind-loading></app-tailwind-loading>
-    </div>
-</ng-template>

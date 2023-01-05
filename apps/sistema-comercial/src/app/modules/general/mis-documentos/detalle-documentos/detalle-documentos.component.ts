@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {IDocActFolio, IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {MatDialog} from '@angular/material/dialog';
@@ -22,6 +22,7 @@ import {StateAuth} from '@s-core/auth/auth.store';
 import {Select} from '@ngxs/store';
 import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
 
 @Component({
     standalone: true,
@@ -43,7 +44,6 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 export class DetalleDocumentosComponent
 {
     @Select(EntityMisDocumentosStore.documento) documento$: Observable<IResolveDocumento>;
-    @Output() cerrarPanel = new EventEmitter<boolean>();
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
     cargando = false;
@@ -138,11 +138,13 @@ export class DetalleDocumentosComponent
         {
             if (res)
             {
-                this._documento = res;
-                if (this._documento.acuseUrl)
-                {
-                    this.ngxToastService.infoToast('El documento se ha dado por terminado con exito', 'Termino de procesos');
-                }
+
+                //TODO cambiar la asignacion de cuando se reasigna el documento que por el momento esta al cerrar el modal de cuando se reasigna
+                // this._documento = res;
+                // if (this._documento.acuseUrl)
+                // {
+                //     this.ngxToastService.infoToast('El documento se ha dado por terminado con exito', 'Termino de procesos');
+                // }
             }
         })).subscribe();
 
@@ -152,10 +154,11 @@ export class DetalleDocumentosComponent
     {
         this.dRef.open(ModSubirDocsComponent, {width: '40%', data}).afterClosed().subscribe((res: IResolveDocumento) =>
         {
-            if (res)
-            {
-                this._documento = res;
-            }
+            //TODO cambiar la modificacion de documentos igual que la reasignacion
+            // if (res)
+            // {
+            //     this._documento = res;
+            // }
         });
     }
 
@@ -176,7 +179,7 @@ export class DetalleDocumentosComponent
 
     cerrarP(): void
     {
-        this.cerrarPanel.emit(false);
+        STATE_ABRIR_CERRAR_PANEL(false);
     }
 
 }

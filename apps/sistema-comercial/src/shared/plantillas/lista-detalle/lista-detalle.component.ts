@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
+import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
 
 @Component({
     standalone: true,
@@ -14,26 +15,19 @@ import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
     selector: 'app-lista-detalle',
     templateUrl: './lista-detalle.component.html',
     styleUrls: ['./lista-detalle.component.scss'],
-    exportAs: 'app-lista-detalle',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    exportAs: 'app-lista-detalle'
 })
 export class ListaDetalleComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     drawerMode: 'side' | 'over';
-    _abriP: boolean = false;
+    abriPanel = STATE_ABRIR_CERRAR_PANEL();
     private sub: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
                 private fuseMediaWatcherService: FuseMediaWatcherService)
     {
     }
-
-    @Input() set abriP(value: boolean)
-    {
-        this._abriP = value;
-    }
-
     ngOnInit(): void
     {
         this.matDrawer.openedChange.subscribe((opened) =>
@@ -64,7 +58,7 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
 
     trackByFn(index: number, item: any): any
     {
-        return item.id || index;
+        return item._id || index;
     }
 
     ngOnDestroy(): void

@@ -4,14 +4,15 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs';
-import {STATE_DOCS} from '@s-general/general.state';
-import {IDocsFechas, IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IDocsFechas, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {DocsBusquedaGralGQL, DocsFechasGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
+import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
     selector: 'app-doc-consulta',
@@ -29,14 +30,12 @@ export class DocConsultaComponent implements OnInit
     cargandoDatos = false;
 
     constructor(private docsBuscarGralGQL: DocsBusquedaGralGQL, private stateAuth: StateAuth, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL,
-                private docsFechasGQL: DocsFechasGQL)
+                private docsFechasGQL: DocsFechasGQL, private entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
 
     ngOnInit(): void
     {
-        this.docUsuarioProceso('pendiente', this.chkBuscar.value);
-
         this.txtBuscar.valueChanges.pipe(tap(() => this.cargandoDatos = true), debounceTime(1000), distinctUntilChanged(),
             switchMap((consulta: string) =>
                 this.docsBuscarGralGQL.watch({
@@ -46,39 +45,21 @@ export class DocConsultaComponent implements OnInit
         {
             if (respuesta.data)
             {
-                STATE_DOCS(respuesta.data.docsBusquedaGral as IResolveDocumento[]);
+                const busqueda = $cast<IResolveDocumento[]>(respuesta.data.docsBusquedaGral);
+                this.entityMisDocumentos.setAll(busqueda);
                 this.cargandoDatos = false;
             }
         });
     }
 
-    docUsuarioProceso(proceso: 'pendiente' | 'terminado', esEnviadoPor: boolean): void
-    {
-        this.cargandoDatos = true;
-        const args: IDocsUsuarioProceso =
-            {
-                enviadoPor: this.stateAuth.snapshot._id,
-                esEnviadoPor,
-                proceso: proceso,
-                usuario: this.stateAuth.snapshot._id
-
-            };
-        this.docsUsuarioProcesoGQL.watch({...args}).valueChanges
-            .pipe(tap((res) =>
-            {
-                this.cargandoDatos = false;
-                STATE_DOCS(res.data.docsUsuarioProceso as IResolveDocumento[]);
-            })).subscribe();
-    }
-
     pendientes(): void
     {
-        this.docUsuarioProceso('pendiente', this.chkBuscar.value);
+        this.entityMisDocumentos.cargarDocsPorProceso('pendiente', this.chkBuscar.value);
     }
 
     terminados(): void
     {
-        this.docUsuarioProceso('terminado', this.chkBuscar.value);
+        this.entityMisDocumentos.cargarDocsPorProceso('terminado', this.chkBuscar.value);
     }
 
     consultaFechasUsuario(): void
@@ -97,12 +78,14 @@ export class DocConsultaComponent implements OnInit
                 fechaFinal: GeneralService.convertirUnix(fechaFin.c, fechaFin.ts),
                 usuario: this.stateAuth.snapshot._id
             };
+
         this.docsFechasGQL.watch({...consulta}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
                 this.cargandoDatos = false;
-                STATE_DOCS(res.data.docsFechas as IResolveDocumento[]);
+                const consultaFechas = $cast<IResolveDocumento[]>(res.data.docsFechas);
+                this.entityMisDocumentos.setAll(consultaFechas);
             }
         })).subscribe();
     }
