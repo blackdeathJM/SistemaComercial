@@ -67,12 +67,10 @@ export class ModDeptoComponent implements OnInit
             this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.dRef.closeAll()),
                 tap((res) =>
                 {
-                    if (res.data)
+                    if (isNotNil(res.data))
                     {
                         const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-                        const seleccionar = this.entityDeptoStore.selectOne(actualizarDepto._id);
-
-                        this.entityDeptoStore.updateOne({id: seleccionar._id, changes: actualizarDepto});
+                        this.entityDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
                         this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
                     }
                     this.cargandoDatos = res.loading;
@@ -94,7 +92,7 @@ export class ModDeptoComponent implements OnInit
                 {
                     const depto = $cast<IDepto>(res.data.crearDepto);
                     this.entityDeptoStore.addOne(depto);
-                    this.ngxToast.satisfactorioToast('El documento se registro con exito', 'Registro');
+                    this.ngxToast.satisfactorioToast('El departamento se registro con exito', 'Registro');
                 }
                 this.cargandoDatos = res.loading;
             });

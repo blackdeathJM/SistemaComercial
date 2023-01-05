@@ -8,7 +8,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
-import {tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {unionBy} from 'lodash-es';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
@@ -19,6 +19,9 @@ import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasigna
 import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {Select} from '@ngxs/store';
+import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 
 @Component({
     standalone: true,
@@ -39,26 +42,17 @@ import {StateAuth} from '@s-core/auth/auth.store';
 })
 export class DetalleDocumentosComponent
 {
+    @Select(EntityMisDocumentosStore.documento) documento$: Observable<IResolveDocumento>;
     @Output() cerrarPanel = new EventEmitter<boolean>();
-    _documento: IResolveDocumento;
     confFolio: FuseConfirmationConfig = confirmarFolio;
     confFinalizarDoc: FuseConfirmationConfig = confirmarFinalizarDoc;
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
-                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth)
+                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
 
-    @Input() set documento(v: IResolveDocumento)
-    {
-        this._documento = v;
-    }
-
-    cerrarP(): void
-    {
-        this.cerrarPanel.emit(false);
-    }
 
     trackByFn(index: number, item: any): any
     {
@@ -94,10 +88,11 @@ export class DetalleDocumentosComponent
                     };
                 this.docActFolioGQL.mutate({args}).pipe(tap((docFoliado) =>
                 {
-                    if (docFoliado.data)
+                    if (isNotNil(docFoliado.data))
                     {
-                        unionBy(STATE_DOCS(), docFoliado.data.docActFolio as IResolveDocumento);
-                        this._documento = docFoliado.data.docActFolio as IResolveDocumento;
+                        const docFol = $cast<IResolveDocumento>(docFoliado.data.docActFolio);
+                        this.entityMisDocumentos.updateOne({id: docFol._id, changes: docFol});
+                        this.entityMisDocumentos.seleccionarDoc(docFol);
                         this.ngxToastService.satisfactorioToast('Haz registrado un nuevo folio con exito', 'Alta de folios');
                         this.cargando = false;
                     }
@@ -122,8 +117,9 @@ export class DetalleDocumentosComponent
                 {
                     if (docFinalizado.data)
                     {
-                        unionBy(STATE_DOCS(), docFinalizado.data.docFinalizar as IResolveDocumento);
-                        this._documento = docFinalizado.data.docFinalizar as IResolveDocumento;
+                        const docFin = $cast<IResolveDocumento>(docFinalizado.data.docFinalizar);
+                        this.entityMisDocumentos.updateOne({id: docFin._id, changes: docFin});
+                        this.entityMisDocumentos.seleccionarDoc(docFin);
                         this.ngxToastService.satisfactorioToast('El documento ha finalizado con exito', 'Finalizar documentos');
                     }
                 })).subscribe();
@@ -177,4 +173,10 @@ export class DetalleDocumentosComponent
             });
         });
     }
+
+    cerrarP(): void
+    {
+        this.cerrarPanel.emit(false);
+    }
+
 }

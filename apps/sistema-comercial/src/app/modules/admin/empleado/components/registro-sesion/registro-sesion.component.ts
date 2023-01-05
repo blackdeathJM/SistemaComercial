@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
@@ -51,7 +51,7 @@ export class RegistroSesionComponent implements OnInit
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
-        if (this.entityEmpleadoStore.snapshot.empleado.auth)
+        if (isNotNil(this.entityEmpleadoStore.snapshot.empleado.auth))
         {
             this.soloLectura = true;
             this.formAuth.patchValue(this.entityEmpleadoStore.snapshot.empleado.auth);
@@ -86,7 +86,7 @@ export class RegistroSesionComponent implements OnInit
                 this.dRef.close();
             }), tap((res) =>
             {
-                if (res.data)
+                if (isNotNil(res.data))
                 {
                     this.ngxToastService.satisfactorioToast('La contrasena fue reasignada con exito', 'Cambio de contrasena');
                 }

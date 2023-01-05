@@ -50,10 +50,10 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     }
 
     @DataAction()
-    public async seleccionarEmpleado(@Payload('empleadoSeleccionado') _id: string): Promise<void>
+    public seleccionarEmpleado(@Payload('empleadoSeleccionado') _id: string): void
     {
         const state = this.getState();
-        const empleado = await this.selectOne(_id);
+        const empleado = this.selectOne(_id);
         this.setEntitiesState({
             ...state,
             empleado

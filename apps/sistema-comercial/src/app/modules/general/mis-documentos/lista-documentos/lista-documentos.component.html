@@ -1,0 +1,29 @@
+<ng-container *ngIf="!entityMisDocumentos.cargando; else cargando">
+    <ng-container *ngIf="entityMisDocumentos.entitiesArray$ | async as documentos">
+
+        <fuse-alert type="info" appearance="border" *ngIf="entityMisDocumentos.longDocs">
+            <span fuseAlertTitle>Documentos</span>
+            No se encontraron documentos para mostrar
+        </fuse-alert>
+
+        <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of documentos; let i=index; trackBy: trackByFn">
+            <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
+                <img class="avatar w-16 h-16 mr-4" [src]="doc.resolveEmpleado.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">
+                <div class="avatar-letra" *ngIf="!doc.resolveEmpleado.avatar">{{doc.resolveEmpleado.nombreCompleto.charAt(0)}}</div>
+                <div class="flex flex-col">
+                    <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc.asunto}}</p>
+                    <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc.dependencia">{{doc.dependencia}}</div>
+                    <div class="flex gap-4">
+                        <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc.seguimiento}}</span>
+                        <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc.fechaRecepcion | convertirTimestamUnix}}</span>
+                    </div>
+                </div>
+            </a>
+        </fuse-card>
+
+    </ng-container>
+</ng-container>
+
+<ng-template #cargando>
+    <app-tailwind-loading></app-tailwind-loading>
+</ng-template>

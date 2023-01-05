@@ -18,6 +18,7 @@ import {getDownloadURL} from '@angular/fire/storage';
 import {TOKEN} from '@s-auth/const';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {isNotNil} from '@angular-ru/cdk/utils';
 
 @Component({
     selector: 'app-perfil',
@@ -49,7 +50,7 @@ export class PerfilComponent implements OnInit
 
     ngOnInit(): void
     {
-        if (this.stateAuth.snapshot.avatar)
+        if (isNotNil(this.stateAuth.snapshot.avatar))
         {
             this.srcImagen = this.stateAuth.snapshot.avatar;
         }

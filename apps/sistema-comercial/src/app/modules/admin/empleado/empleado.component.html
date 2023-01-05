@@ -16,7 +16,7 @@
 
             <fuse-alert type="info" appearance="border" *ngIf="entityEmpleadoStore.longListaEmpleados" class="p-4">
                 <span fuseAlertTitle>Empleados</span>
-                no se encontraron empleados para mostrar
+                No se encontraron empleados para mostrar
             </fuse-alert>
 
             <ng-container *ngFor="let empleado of entityEmpleadoStore.entitiesArray$ | async as empleados; let i = index; trackBy: trackByFn">
@@ -43,13 +43,10 @@
                     </div>
                 </a>
             </ng-container>
-
         </ng-container>
     </ng-container>
 </app-lista-detalle>
 
 <ng-template #cargando>
-    <div class="flex items-center justify-center w-full">
-        <app-tailwind-loading></app-tailwind-loading>
-    </div>
+    <app-tailwind-loading></app-tailwind-loading>
 </ng-template>

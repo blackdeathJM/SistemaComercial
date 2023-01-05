@@ -11,55 +11,15 @@
         </div>
     </ng-container>
     <ng-container buscar>
-        <div class="flex flex-col">
-            <div class="flex gap-4 items-center">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Busqueda general</mat-label>
-                    <input matInput id="busquedaGralDoc" placeholder="puedes buscar por asunto, dependencia, año, proceso, seguimiento" [formControl]="txtBuscar">
-                </mat-form-field>
-                <mat-form-field class="flex-auto">
-                    <mat-label>Selecciona un rango de fechas</mat-label>
-                    <mat-date-range-input [rangePicker]="picker" [formGroup]="formBuscarFechas">
-                        <input matStartDate placeholder="Fecha de inicio" formControlName="fechaInicio">
-                        <input matEndDate placeholder="Fecha fin" formControlName="fechaFin">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker (closed)="consultaFechasUsuario()"></mat-date-range-picker>
-                </mat-form-field>
-                <button class="flex-auto" id="btnPendientesDoc" mat-stroked-button color="primary" (click)="pendientes()">
-                    <mat-icon svgIcon="pending_actions"></mat-icon>
-                    <span class="ml-2 mr-1">Pendientes</span>
-                </button>
-                <button class="flex-auto" id="btnTerminadosDoc" mat-stroked-button color="primary" (click)="terminados()">
-                    <mat-icon svgIcon="fact_check"></mat-icon>
-                    <span class="ml-2 mr-1">Terminados</span>
-                </button>
-            </div>
-            <mat-checkbox class="my-4" color="primary" [checked]="false" [formControl]="chkBuscar">Utilizar los filtros para buscar los enviados por mi</mat-checkbox>
-        </div>
+        <app-doc-consulta></app-doc-consulta>
     </ng-container>
     <ng-container outlet>
-        <app-detalle-documentos [documento]="docSeleccionado" (cerrarPanel)="cerrarP($event)"></app-detalle-documentos>
+        <app-detalle-documentos (click)="abrirP= false"></app-detalle-documentos>
     </ng-container>
 
     <ng-container lista>
-        <div class="flex flex-wrap" *ngIf="true">
-            <ng-container *ngIf="!cargandoDatos; else cargando">
-                <fuse-card class="flex items-center p-4 filter-info m-2 w-90" *ngFor="let doc of docs; let i=index; trackBy: trackByFn">
-                    <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
-                        <img class="avatar w-16 h-16 mr-4" [src]="doc?.resolveEmpleado?.avatar" alt="Avatar" *ngIf="doc?.resolveEmpleado?.avatar">
-                        <div class="avatar-letra" *ngIf="!doc?.resolveEmpleado?.avatar">{{doc?.resolveEmpleado?.nombreCompleto?.charAt(0)}}</div>
-                        <div class="flex flex-col">
-                            <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc.asunto">{{doc?.asunto}}</p>
-                            <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc.dependencia">{{doc?.dependencia}}</div>
-                            <div class="flex gap-4">
-                                <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc?.seguimiento}}</span>
-                                <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc?.fechaRecepcion | convertirTimestamUnix}}</span>
-                            </div>
-                        </div>
-                    </a>
-                </fuse-card>
-            </ng-container>
+        <div class="flex flex-wrap">
+            <app-lista-documentos (click)="abrirP = true"></app-lista-documentos>
         </div>
     </ng-container>
 </app-lista-detalle>

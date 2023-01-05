@@ -1,131 +1,135 @@
-<div class="flex flex-col flex-auto p-6 md:p-8">
-    <!-- Close button -->
-    <div class="flex items-center justify-end">
-        <button mat-icon-button (click)="cerrarP()">
-            <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
-        </button>
-    </div>
-
-    <!-- Name & Type -->
-    <div class="flex flex-col mt-8">
-        <div class="text-xl font-medium truncate" matTooltip="Asunto">{{_documento?.asunto}}</div>
-        <div class="flex justify-between gap-2">
-            <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-800 truncate" matTooltip="Dependencia: {{_documento?.dependencia}}">{{_documento?.dependencia}}</div>
-            <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-500" matTooltip="Seguimiento">{{_documento?.seguimiento}}</div>
-        </div>
-
-    </div>
-    <!-- Information -->
-    <div class="text-lg font-medium mt-8">Informacion:</div>
-    <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Folio:</div>
-            <div class="flex flex-inline">
-                <div class="text-green-300 rounded px-2 text-xl font-semibold leading-tight bg-green-800">{{_documento?.folio}}</div>
-                <mat-icon svgIcon="autofps_select" class="text-cyan-800 dark:text-cyan-300" *ngIf="_documento?.esRef"></mat-icon>
-            </div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Enviado por:</div>
-            <div class="text-green-800 text-xl font-semibold leading-tight">{{_documento?.resolveEmpleado?.nombreCompleto}}</div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Fecha de recepcion:</div>
-            <div>{{_documento?.fechaRecepcion | convertirTimestamUnix}}</div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Fecha limite para entregar respuesta:</div>
-            <div>{{_documento?.fechaLimiteEntrega | convertirTimestamUnix: false}}</div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Fecha que se dio por finalizado el documento:</div>
-            <div>{{_documento?.fechaTerminado | convertirTimestamUnix}}</div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Tipo de documento:</div>
-            <div>{{_documento?.tipoDoc}}</div>
-            <div class="px-1.5 rounded text-secondary font-semibold leading-5 text-white bg-blue-800" *ngIf="_documento?.esInterno">Documento interno</div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary">Usuario que genero el folio de respuesta:</div>
-            <div>{{_documento?.resolverEmpleadoFolio?.nombreCompleto}}</div>
-        </div>
-        <div class="flex items-center justify-between py-3">
-            <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
-            <div class="flex items-center gap-3">
-                <div>{{_documento?.ref}}</div>
-                <button mat-mini-fab color="warn" *ngIf="_documento?.folio && !_documento?.esRef" (click)="docRef(_documento)" [disabled]="_documento?.ref.length > 0">
-                    <mat-icon svgIcon="subtitles"></mat-icon>
+<ng-container *ngIf="documento$ | async as documento">
+    <ng-container *ngIf="documento">
+        <div class="flex flex-col flex-auto p-6 md:p-8">
+            <!-- Close button -->
+            <div class="flex items-center justify-end">
+                <button mat-icon-button (click)="cerrarP()">
+                    <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
                 </button>
             </div>
-        </div>
-        <div class="flex items-center py-3 justify-end">
-            <div class="flex flex-0 items-center -space-x-1.5">
-                <ng-container *ngFor="let usuarioEnviado of _documento?.resolveEmpleadoEnviado">
-                    <img class="grupo-avatar-img" [src]="usuarioEnviado?.avatar" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="usuarioEnviado?.avatar" alt="avatar">
-                    <div class="avatar-letra-grupo" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="!usuarioEnviado?.avatar">
-                        {{usuarioEnviado?.nombreCompleto?.charAt(0)}}
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-        <div class="flex flex-row-reverse py-3 gap-4">
-            <button mat-mini-fab color="primary" matTooltip="Abrir documento recibido" *ngIf="_documento?.docUrl" (click)="abrirLink(_documento.docUrl)">
-                <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
-            </button>
-            <button mat-mini-fab color="accent" matTooltip="Abrir documento respuesta" *ngIf="_documento?.acuseUrl" (click)="abrirLink(_documento.acuseUrl)">
-                <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
-            </button>
-        </div>
-    </div>
-    <input #archivoDoc hidden id="subirDoc" type="file"/>
-    <!-- Description -->
-    <div class="flex mt-2">
-        <div class="py-3">
-            <ng-container *ngIf="true">
-                <div>Observaciones</div>
-            </ng-container>
-            <ng-container *ngIf="true">
-                <div class="italic text-secondary">{{_documento?.comentario}}</div>
-            </ng-container>
-        </div>
-    </div>
 
-    <!-- Actions -->
-    <ng-container *ngIf="_documento?.proceso !== 'terminado' ">
-        <div class="flex gap-4 mt-8">
-            <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(_documento)" [disabled]="_documento?.folio !== null">
-                <ng-container *ngIf="!cargando; else genFolio">
-                    <div class="flex items-center justify-center">
-                        <mat-icon svgIcon="subtitles"></mat-icon>
-                        <span class="ml-3">Generar folio</span>
+            <!-- Name & Type -->
+            <div class="flex flex-col mt-8">
+                <div class="text-xl font-medium truncate" matTooltip="Asunto">{{documento.asunto}}</div>
+                <div class="flex justify-between gap-2">
+                    <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-800 truncate" matTooltip="Dependencia: {{documento.dependencia}}">{{documento.dependencia}}</div>
+                    <div class="mt-1 px-1.5 rounded text-lg font-semibold leading-5 text-white bg-blue-500" matTooltip="Seguimiento">{{documento.seguimiento}}</div>
+                </div>
+
+            </div>
+            <!-- Information -->
+            <div class="text-lg font-medium mt-8">Informacion:</div>
+            <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Folio:</div>
+                    <div class="flex flex-inline">
+                        <div class="text-green-300 rounded px-2 text-xl font-semibold leading-tight bg-green-800">{{documento.folio}}</div>
+                        <mat-icon svgIcon="autofps_select" class="text-cyan-800 dark:text-cyan-300" *ngIf="documento.esRef"></mat-icon>
                     </div>
-                </ng-container>
-            </button>
-            <button class="flex-auto" color="warn" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(_documento)"
-                    [disabled]="(_documento?.docUrl === null && _documento?.acuseUrl === null) || _documento.proceso === 'terminado'">
-                <div class="flex items-center justify-center">
-                    <mat-icon svgIcon="mat_outline:checklist"></mat-icon>
-                    <span class="ml-3">Finaliza doc</span>
                 </div>
-            </button>
-        </div>
-        <div class="flex gap-4 mt-4">
-            <button class="flex-auto" mat-stroked-button (click)="reasignacion(_documento)" matTooltip="Reasignacion de usuarios para el documento seleccionado">
-                <div class="flex items-center justify-center">
-                    <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
-                    <span class="ml-3">Reasignacion</span>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Enviado por:</div>
+                    <div class="text-green-800 text-xl font-semibold leading-tight">{{documento.resolveEmpleado.nombreCompleto}}</div>
                 </div>
-            </button>
-            <button class="flex-auto" mat-stroked-button matTooltip="Modifica los documentos que haz subido a la nube" (click)="modDocs(_documento)">
-                <div class="flex items-center justify-center">
-                    <mat-icon svgIcon="feather:refresh-cw" class="mr-2"></mat-icon>
-                    <span class="ml-2">Mod. Docs</span>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Fecha de recepcion:</div>
+                    <div>{{documento.fechaRecepcion | convertirTimestamUnix}}</div>
                 </div>
-            </button>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Fecha limite para entregar respuesta:</div>
+                    <div>{{documento.fechaLimiteEntrega | convertirTimestamUnix: false}}</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Fecha que se dio por finalizado el documento:</div>
+                    <div>{{documento.fechaTerminado | convertirTimestamUnix}}</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Tipo de documento:</div>
+                    <div>{{documento.tipoDoc}}</div>
+                    <div class="px-1.5 rounded text-secondary font-semibold leading-5 text-white bg-blue-800" *ngIf="documento.esInterno">Documento interno</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary">Usuario que genero el folio de respuesta:</div>
+                    <div>{{documento.resolverEmpleadoFolio.nombreCompleto}}</div>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                    <div class="text-secondary" matTooltip="Un folio referenciado refiere a que un folio asignado es utilizado por varios documentos">Folio referenciado:</div>
+                    <div class="flex items-center gap-3">
+                        <div>{{documento.ref}}</div>
+                        <button mat-mini-fab color="warn" *ngIf="documento.folio && !documento.esRef" (click)="docRef(documento)" [disabled]="documento.ref.length > 0">
+                            <mat-icon svgIcon="subtitles"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center py-3 justify-end">
+                    <div class="flex flex-0 items-center -space-x-1.5">
+                        <ng-container *ngFor="let usuarioEnviado of documento.resolveEmpleadoEnviado">
+                            <img class="grupo-avatar-img" [src]="usuarioEnviado.avatar" [matTooltip]="usuarioEnviado.nombreCompleto" *ngIf="usuarioEnviado.avatar" alt="avatar">
+                            <div class="avatar-letra-grupo" [matTooltip]="usuarioEnviado.nombreCompleto" *ngIf="!usuarioEnviado.avatar">
+                                {{usuarioEnviado.nombreCompleto.charAt(0)}}
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="flex flex-row-reverse py-3 gap-4">
+                    <button mat-mini-fab color="primary" matTooltip="Abrir documento recibido" *ngIf="documento.docUrl" (click)="abrirLink(documento.docUrl)">
+                        <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
+                    </button>
+                    <button mat-mini-fab color="accent" matTooltip="Abrir documento respuesta" *ngIf="documento.acuseUrl" (click)="abrirLink(documento.acuseUrl)">
+                        <mat-icon svgIcon="heroicons_outline:link"></mat-icon>
+                    </button>
+                </div>
+            </div>
+            <input #archivoDoc hidden id="subirDoc" type="file"/>
+            <!-- Description -->
+            <div class="flex mt-2">
+                <div class="py-3">
+                    <ng-container *ngIf="true">
+                        <div>Observaciones</div>
+                    </ng-container>
+                    <ng-container *ngIf="true">
+                        <div class="italic text-secondary">{{documento.comentario}}</div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <ng-container *ngIf="documento.proceso !== 'terminado' ">
+                <div class="flex gap-4 mt-8">
+                    <button class="flex-auto" mat-raised-button color="primary" (click)="generarFolio(documento)" [disabled]="documento.folio !== null">
+                        <ng-container *ngIf="!cargando; else genFolio">
+                            <div class="flex items-center justify-center">
+                                <mat-icon svgIcon="subtitles"></mat-icon>
+                                <span class="ml-3">Generar folio</span>
+                            </div>
+                        </ng-container>
+                    </button>
+                    <button class="flex-auto" color="warn" mat-stroked-button matTooltip="Da finalizar si el documento yo tiene respuesta" (click)="finalizarDoc(documento)"
+                            [disabled]="(documento.docUrl === null && documento.acuseUrl === null) || documento.proceso === 'terminado'">
+                        <div class="flex items-center justify-center">
+                            <mat-icon svgIcon="mat_outline:checklist"></mat-icon>
+                            <span class="ml-3">Finaliza doc</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="flex gap-4 mt-4">
+                    <button class="flex-auto" mat-stroked-button (click)="reasignacion(documento)" matTooltip="Reasignacion de usuarios para el documento seleccionado">
+                        <div class="flex items-center justify-center">
+                            <mat-icon svgIcon="group_add" class="mr-2"></mat-icon>
+                            <span class="ml-3">Reasignacion</span>
+                        </div>
+                    </button>
+                    <button class="flex-auto" mat-stroked-button matTooltip="Modifica los documentos que haz subido a la nube" (click)="modDocs(documento)">
+                        <div class="flex items-center justify-center">
+                            <mat-icon svgIcon="feather:refresh-cw" class="mr-2"></mat-icon>
+                            <span class="ml-2">Mod. Docs</span>
+                        </div>
+                    </button>
+                </div>
+            </ng-container>
         </div>
     </ng-container>
-</div>
+</ng-container>
 <ng-template #genFolio>
     <mat-icon class="mr-2">
         <mat-progress-spinner mode="indeterminate" diameter="20" color="warn"></mat-progress-spinner>
