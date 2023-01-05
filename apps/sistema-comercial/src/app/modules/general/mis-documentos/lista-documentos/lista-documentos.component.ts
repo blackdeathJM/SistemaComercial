@@ -7,7 +7,7 @@ import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-load
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
-import {STATE_ABRIR_CERRAR_PANEL} from "@s-general/variables-docs.state";
+import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
 
 @Component({
     selector: 'app-lista-documentos',

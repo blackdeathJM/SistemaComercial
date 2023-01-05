@@ -1,18 +1,20 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocomplete, MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {map, Observable, startWith, tap} from 'rxjs';
+import {finalize, map, Observable, startWith, tap} from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {DocRefFolioGQL, DocsRefGQL} from '#/libs/datos/src';
 import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {StateAuth} from '@s-core/auth/auth.store';
+import {$cast} from '@angular-ru/cdk/utils';
+import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 
 @Component({
     selector: 'app-mod-doc-ref',
@@ -39,7 +41,7 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
     todasRef: string[] = [];
     cargando = false;
 
-    constructor(private docsRef: DocsRefGQL, private dRef: MatDialogRef<ModDocRefComponent>, @Inject(MAT_DIALOG_DATA) private data: IResolveDocumento,
+    constructor(private docsRef: DocsRefGQL, public dRef: MatDialogRef<ModDocRefComponent>, private entityMisDocumentos: EntityMisDocumentosStore,
                 private docRefFolioGQL: DocRefFolioGQL, private ngxToastService: NgxToastService, private stateAuth: StateAuth)
     {
 
@@ -47,11 +49,12 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
 
     ngOnInit(): void
     {
-        this.docsRef.watch({_id: this.data._id, usuario: this.stateAuth.snapshot._id}).valueChanges.pipe(tap((res) =>
+
+        this.docsRef.watch({_id: this.entityMisDocumentos.snapshot.documento._id, usuario: this.stateAuth.snapshot._id}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
-                const respuesta = res.data.docsRef as IResolveDocumento[];
+                const respuesta = $cast<IResolveDocumento[]>(res.data.docsRef);
                 respuesta.map(r => this.todasRef.push(r.seguimiento));
             }
         })).subscribe();
@@ -59,9 +62,7 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
 
     ngAfterContentInit(): void
     {
-        this.refFiltrados = this.refCtrl.valueChanges.pipe(
-            startWith(null),
-            map((referencia: string | null) => referencia ? this._filter(referencia) : this.todasRef.slice()));
+        this.refFiltrados = this.refCtrl.valueChanges.pipe(startWith(null), map((referencia: string | null) => referencia ? this._filter(referencia) : this.todasRef.slice()));
     }
 
     add(event: MatChipInputEvent): void
@@ -112,9 +113,9 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
         }
         const entradas: TDocRefFolio =
             {
-                _id: this.data._id,
+                _id: this.entityMisDocumentos.snapshot.documento._id,
                 ref: this.referencias,
-                folio: this.data.folio,
+                folio: this.entityMisDocumentos.snapshot.documento.folio,
                 usuarioFolio: this.stateAuth.snapshot._id
             };
         this.cargando = true;
@@ -123,20 +124,16 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
             if (res.data)
             {
                 this.cargando = false;
-                this.dRef.close(res.data.docRefFolio);
+                const docRefModificado = $cast<IResolveDocumento>(res.data.docRefFolio);
+                this.entityMisDocumentos.updateOne({id: docRefModificado._id, changes: docRefModificado});
                 this.ngxToastService.satisfactorioToast('La referencia se creo correctamente', 'Referenciar folio');
             }
-        })).subscribe();
+        }), finalize(() => this.dRef.close())).subscribe();
     }
 
     _filter(value: string): string[]
     {
         const filterValue = value.toLowerCase();
         return this.todasRef.filter(filtroRef => filtroRef.toLowerCase().indexOf(filterValue) === 0);
-    }
-
-    cerrar(): void
-    {
-        this.dRef.close();
     }
 }

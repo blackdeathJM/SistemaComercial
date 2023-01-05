@@ -1,7 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {RegDocGQL} from '#/libs/datos/src';
-import {finalize, Observable, tap} from 'rxjs';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {finalize, tap} from 'rxjs';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Documento} from '#/libs/models/src/lib/general/documentos/documento';
@@ -24,11 +23,11 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {STATE_DOCS} from '@s-general/general.state';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {StateAuth} from '@s-core/auth/auth.store';
-import {Select} from '@ngxs/store';
-import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {$cast} from '@angular-ru/cdk/utils';
+import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 
 @Component({
     standalone: true,
@@ -57,9 +56,8 @@ import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store
     templateUrl: './mod-documentos.component.html',
     styleUrls: ['./mod-documentos.component.scss']
 })
-export class ModDocumentosComponent implements OnInit
+export class ModDocumentosComponent implements OnInit, AfterContentInit
 {
-    @Select(EmpleadosStore.empleados) empleadosSesion$: Observable<IResolveEmpleado[]>;
     anoActual = new Date().getFullYear();
     mesActual = new Date().getMonth();
     diaActual = new Date().getDate();
@@ -73,7 +71,8 @@ export class ModDocumentosComponent implements OnInit
     mostrarProgreso: boolean = false;
 
     constructor(private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService, private stateAuth: StateAuth,
-                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef)
+                private mdr: MatDialog, private regDocGQL: RegDocGQL, private ngxToastService: NgxToastService, private cdr: ChangeDetectorRef,
+                public entityEmpleado: EntityEmpleadoStore, private entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
 
@@ -89,11 +88,17 @@ export class ModDocumentosComponent implements OnInit
         });
     }
 
+    ngAfterContentInit(): void
+    {
+        this.entityEmpleado.empleadosConSesion();
+    }
+
     async reg(esRemoto: boolean): Promise<void>
     {
         this.cargando = true;
         this.formDocs.disable();
         const {file, fechaRecepcion, fechaLimiteEntrega, tipoDoc, folio, ...resto} = this.formDocs.value;
+        // declaro estas variables porque se van a tomar otros valores
         let docUrl: string = null;
         let files = null;
 
@@ -143,8 +148,8 @@ export class ModDocumentosComponent implements OnInit
         {
             if (res.data)
             {
-                const elementos = STATE_DOCS();
-                STATE_DOCS([...elementos, res.data.regDoc as IResolveDocumento]);
+                const agregarDoc = $cast<IResolveDocumento>(res.data.regDoc);
+                this.entityMisDocumentos.addOne(agregarDoc);
                 this.ngxToastService.satisfactorioToast('El documento fue registrado con exito', 'Alta a documentos');
             }
         })).subscribe();

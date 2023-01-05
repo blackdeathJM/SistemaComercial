@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, of, switchMap, tap} from 'rxjs';
 import {IDocsFechas, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {DocsBusquedaGralGQL, DocsFechasGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/auth.store';
@@ -13,6 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 import {$cast} from '@angular-ru/cdk/utils';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Component({
     selector: 'app-doc-consulta',
@@ -27,16 +28,19 @@ export class DocConsultaComponent implements OnInit
     formBuscarFechas = new FormGroup({fechaInicio: new FormControl(), fechaFin: new FormControl()});
     txtBuscar = new FormControl();
     chkBuscar = new FormControl(false);
-    cargandoDatos = false;
 
     constructor(private docsBuscarGralGQL: DocsBusquedaGralGQL, private stateAuth: StateAuth, private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL,
-                private docsFechasGQL: DocsFechasGQL, private entityMisDocumentos: EntityMisDocumentosStore)
+                private docsFechasGQL: DocsFechasGQL, private entityMisDocumentos: EntityMisDocumentosStore, private ngxToast: NgxToastService)
     {
     }
 
     ngOnInit(): void
     {
-        this.txtBuscar.valueChanges.pipe(tap(() => this.cargandoDatos = true), debounceTime(1000), distinctUntilChanged(),
+        this.txtBuscar.valueChanges.pipe(debounceTime(1000), distinctUntilChanged(), catchError(() =>
+            {
+                this.ngxToast.errorToast('Ocurrio un error al tratar de realizar la consulta', 'Consulta de documentos');
+                return of([]);
+            }),
             switchMap((consulta: string) =>
                 this.docsBuscarGralGQL.watch({
                     usuario: this.stateAuth.snapshot._id, enviadoPor: this.stateAuth.snapshot._id,
@@ -47,7 +51,6 @@ export class DocConsultaComponent implements OnInit
             {
                 const busqueda = $cast<IResolveDocumento[]>(respuesta.data.docsBusquedaGral);
                 this.entityMisDocumentos.setAll(busqueda);
-                this.cargandoDatos = false;
             }
         });
     }
@@ -69,7 +72,6 @@ export class DocConsultaComponent implements OnInit
         {
             return;
         }
-        this.cargandoDatos = true;
         const consulta: IDocsFechas =
             {
                 enviadoPor: this.stateAuth.snapshot._id,
@@ -83,7 +85,6 @@ export class DocConsultaComponent implements OnInit
         {
             if (res.data)
             {
-                this.cargandoDatos = false;
                 const consultaFechas = $cast<IResolveDocumento[]>(res.data.docsFechas);
                 this.entityMisDocumentos.setAll(consultaFechas);
             }

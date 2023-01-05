@@ -16,5 +16,5 @@
             </mat-autocomplete>
         </mat-chip-grid>
     </mat-form-field>
-    <app-registros (registro)="asignar()" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="cargando"></app-registros>
+    <app-registros (registro)="asignar()" (cancelar)="dRef.close()" [cargando]="cargando" [deshabilitar]="cargando"></app-registros>
 </div>

@@ -9,12 +9,10 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
 import {Observable, tap} from 'rxjs';
-import {unionBy} from 'lodash-es';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {confirmarFinalizarDoc, confirmarFolio} from '@s-general/detalle-documentos/dialogConfirmacion';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DOCS} from '@s-general/general.state';
 import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasignacion.component';
 import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
@@ -74,6 +72,7 @@ export class DetalleDocumentosComponent
             this.ngxToastService.alertaToast('El documento ya cuenta con un folio y no puedes volverlo asignar', 'Asignacion de folio');
             return;
         }
+
         this.confirmacionService.open(this.confFolio).afterClosed().subscribe((res) =>
         {
             if (res === 'confirmed')
@@ -115,7 +114,7 @@ export class DetalleDocumentosComponent
             {
                 this.docFinalizarGQL.mutate({_id: _documento._id}).pipe(tap((docFinalizado) =>
                 {
-                    if (docFinalizado.data)
+                    if (isNotNil(docFinalizado.data))
                     {
                         const docFin = $cast<IResolveDocumento>(docFinalizado.data.docFinalizar);
                         this.entityMisDocumentos.updateOne({id: docFin._id, changes: docFin});
@@ -127,54 +126,31 @@ export class DetalleDocumentosComponent
         });
     }
 
-    reasignacion(data: IResolveDocumento): void
+    reasignacion(documento: IResolveDocumento): void
     {
-        if (data.enviadoPor !== this.stateAuht.snapshot._id)
+        if (documento.enviadoPor !== this.stateAuht.snapshot._id)
         {
             this.ngxToastService.alertaToast('Solo puedes reasignar usuarios a los documentos que tu hayas registrado', 'Reasignacion de usuarios');
             return;
         }
-        this.dRef.open(ModReasignacionComponent, {width: '40%', data}).afterClosed().pipe(tap((res) =>
-        {
-            if (res)
-            {
 
-                //TODO cambiar la asignacion de cuando se reasigna el documento que por el momento esta al cerrar el modal de cuando se reasigna
-                // this._documento = res;
-                // if (this._documento.acuseUrl)
-                // {
-                //     this.ngxToastService.infoToast('El documento se ha dado por terminado con exito', 'Termino de procesos');
-                // }
-            }
-        })).subscribe();
+        this.entityMisDocumentos.seleccionarDoc(documento);
+
+        this.dRef.open(ModReasignacionComponent, {width: '40%', data: documento});
 
     }
 
-    modDocs(data: IResolveDocumento): void
+    modDocs(documento: IResolveDocumento): void
     {
-        this.dRef.open(ModSubirDocsComponent, {width: '40%', data}).afterClosed().subscribe((res: IResolveDocumento) =>
-        {
-            //TODO cambiar la modificacion de documentos igual que la reasignacion
-            // if (res)
-            // {
-            //     this._documento = res;
-            // }
-        });
+        this.entityMisDocumentos.seleccionarDoc(documento);
+        this.dRef.open(ModSubirDocsComponent, {width: '40%'});
     }
 
-    docRef(data: IResolveDocumento): void
+    docRef(documento: IResolveDocumento): void
     {
-        this.dRef.open(ModDocRefComponent, {width: '40%', data}).afterClosed().subscribe((res: IResolveDocumento[]) =>
-        {
-            res.map((value) =>
-            {
-                unionBy(STATE_DOCS(), value);
-                if (data._id === value._id)
-                {
-                    data = value;
-                }
-            });
-        });
+
+        this.entityMisDocumentos.seleccionarDoc(documento);
+        this.dRef.open(ModDocRefComponent, {width: '40%'});
     }
 
     cerrarP(): void

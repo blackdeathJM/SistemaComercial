@@ -7,7 +7,6 @@ import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories
 import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/auth.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {finalize} from "rxjs";
 
 export interface IDocSeleccionar
 {
