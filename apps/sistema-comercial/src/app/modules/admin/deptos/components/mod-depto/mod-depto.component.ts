@@ -15,7 +15,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {EntityDeptoStore} from '@s-admin/entity-depto.store';
+import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 
 @Component({
     standalone: true,
@@ -64,38 +64,47 @@ export class ModDeptoComponent implements OnInit
         if (isNotNil(this.depto))
         {
             const input = {_id: this.depto._id, ...this.formDepto.value};
-            this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.dRef.closeAll()),
-                tap((res) =>
-                {
-                    if (isNotNil(res.data))
-                    {
-                        const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-                        this.entityDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
-                        this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
-                    }
-                    this.cargandoDatos = res.loading;
-                })
-            ).subscribe();
+
+            this.entityDeptoStore.actualizarDepto(input).subscribe(() =>
+            {
+                this.ngxToast.satisfactorioToast('Todo salio bien', 'Actualizar depto');
+            });
+            // this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.dRef.closeAll()),
+            //     tap((res) =>
+            //     {
+            //         if (isNotNil(res.data))
+            //         {
+            //             const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
+            //             this.entityDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
+            //             this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
+            //         }
+            //         this.cargandoDatos = res.loading;
+            //     })
+            // ).subscribe();
         } else
         {
-            this.crearDeptoGQL.mutate({input: this.formDepto.value}, {
-                useMutationLoading: true,
-                // update: (store, result) =>
-                // {
-                //     const data: DepartamentosQuery = store.readQuery({query: DepartamentosDocument});
-                //     data.deptos = [...data.deptos, result.data.crearDepto];
-                //     store.writeQuery({query: DepartamentosDocument, data});
-                // }
-            }).pipe(finalize(() => this.dRef.closeAll())).subscribe((res) =>
+            this.entityDeptoStore.agregarDepto(this.formDepto.value).subscribe(() =>
             {
-                if (isNotNil(res.data))
-                {
-                    const depto = $cast<IDepto>(res.data.crearDepto);
-                    this.entityDeptoStore.addOne(depto);
-                    this.ngxToast.satisfactorioToast('El departamento se registro con exito', 'Registro');
-                }
-                this.cargandoDatos = res.loading;
+                this.ngxToast.satisfactorioToast('Se registro bien', 'Registro');
             });
+            // this.crearDeptoGQL.mutate({input: this.formDepto.value}, {
+            //     useMutationLoading: true,
+            //     // update: (store, result) =>
+            //     // {
+            //     //     const data: DepartamentosQuery = store.readQuery({query: DepartamentosDocument});
+            //     //     data.deptos = [...data.deptos, result.data.crearDepto];
+            //     //     store.writeQuery({query: DepartamentosDocument, data});
+            //     // }
+            // }).pipe(finalize(() => this.dRef.closeAll())).subscribe((res) =>
+            // {
+            //     if (isNotNil(res.data))
+            //     {
+            //         const depto = $cast<IDepto>(res.data.crearDepto);
+            //         this.entityDeptoStore.addOne(depto);
+            //         this.ngxToast.satisfactorioToast('El departamento se registro con exito', 'Registro');
+            //     }
+            //     this.cargandoDatos = res.loading;
+            // });
         }
     }
 }

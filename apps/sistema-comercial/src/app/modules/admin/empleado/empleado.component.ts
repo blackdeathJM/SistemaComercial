@@ -46,6 +46,7 @@ export class EmpleadoComponent implements OnInit, AfterContentInit, OnDestroy
     ngOnInit(): void
     {
         this.entityEmpleadoStore.empleados();
+
     }
 
     ngAfterContentInit(): void

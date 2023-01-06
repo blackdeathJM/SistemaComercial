@@ -4,11 +4,11 @@ import {Injectable} from '@angular/core';
 
 export interface DeptoState extends EntityState<IDepto, string>
 {
-    deptoSelect: IDepto;
+    deptoSeleccionado: IDepto;
 }
 
 @Injectable({providedIn: 'root'})
-@StoreConfig({name: 'deptos', idKey:'_id'})
+@StoreConfig({name: 'deptos', idKey: '_id'})
 export class DeptoStore extends EntityStore<DeptoState, IDepto>
 {
     constructor()

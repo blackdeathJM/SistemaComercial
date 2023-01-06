@@ -25,7 +25,7 @@ import {StateAuth} from '@s-core/auth/auth.store';
 import {catchError, finalize, Observable, of, tap} from 'rxjs';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {EntityDeptoStore} from '@s-admin/entity-depto.store';
+import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 
 @Component({

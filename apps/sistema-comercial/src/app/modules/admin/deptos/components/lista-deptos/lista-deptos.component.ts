@@ -4,10 +4,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
-import {EntityDeptoStore} from '@s-admin/entity-depto.store';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {NgxUiLoaderModule} from "ngx-ui-loader";
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 
 @Component({
     standalone: true,
@@ -27,14 +27,14 @@ import {NgxUiLoaderModule} from "ngx-ui-loader";
 })
 export class ListaDeptosComponent implements OnInit
 {
-    constructor(public entityDeptoStore: EntityDeptoStore, private dRef: MatDialog)
+    constructor(public entityDepto: EntityDeptoStore, private dRef: MatDialog)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.entityDeptoStore.cargarDeptos();
+        this.entityDepto.cargarDeptos();
     }
 
     trackByFn(index: number, item: IDepto): string
@@ -42,8 +42,8 @@ export class ListaDeptosComponent implements OnInit
         return item._id;
     }
 
-    editar(data: IDepto): void
+    editar(depto: IDepto): void
     {
-        this.dRef.open(ModDeptoComponent, {width: '40%', data});
+        this.dRef.open(ModDeptoComponent, {width: '40%', data: depto});
     }
 }

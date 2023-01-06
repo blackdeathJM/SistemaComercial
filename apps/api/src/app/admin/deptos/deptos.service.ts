@@ -26,6 +26,7 @@ export class DeptosService
             return await this.depto.create(input);
         } catch (e)
         {
+            console.log('----', e);
             throw new ConflictException({message: e.codeName});
         }
     }

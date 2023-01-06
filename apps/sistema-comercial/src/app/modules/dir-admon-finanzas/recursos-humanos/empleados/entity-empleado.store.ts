@@ -52,12 +52,14 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     @DataAction()
     public seleccionarEmpleado(@Payload('empleadoSeleccionado') _id: string): void
     {
-        const state = this.getState();
+        // const state = this.getState();
+        // const empleado = this.selectOne(_id);
+        // this.setEntitiesState({
+        //     ...state,
+        //     empleado
+        // });
         const empleado = this.selectOne(_id);
-        this.setEntitiesState({
-            ...state,
-            empleado
-        });
+        this.ctx.patchState({empleado});
     }
 
     @DataAction()

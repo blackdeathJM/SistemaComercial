@@ -6,6 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDialog} from '@angular/material/dialog';
 import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 
 @Component({
     selector: 'app-empleados',
@@ -16,7 +17,7 @@ import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-re
 })
 export class EmpleadosComponent
 {
-    constructor(private mdr: MatDialog)
+    constructor(private mdr: MatDialog, public ent: EntityEmpleadoStore)
     {
     }
 

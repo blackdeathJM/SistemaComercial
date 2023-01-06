@@ -10,6 +10,7 @@ import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-de
 import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
+import {EntityDeptoStore} from "@s-admin/store/entity-depto.store";
 
 @Component({
     standalone: true,
@@ -32,8 +33,7 @@ import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.compone
 export class DeptosComponent implements OnInit
 {
     controlBuscar: FormControl = new FormControl();
-
-    constructor(private dRef: MatDialog)
+    constructor(private dRef: MatDialog, private entityDepto: EntityDeptoStore)
     {
     }
 
