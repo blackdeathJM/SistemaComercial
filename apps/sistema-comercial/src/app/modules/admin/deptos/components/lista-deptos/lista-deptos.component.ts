@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
+import {DeptoService} from '@s-admin/store/depto.service';
 
 @Component({
     standalone: true,
@@ -27,14 +28,14 @@ import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 })
 export class ListaDeptosComponent implements OnInit
 {
-    constructor(public entityDepto: EntityDeptoStore, private dRef: MatDialog)
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.entityDepto.cargarDeptos();
+        this.deptoService.departamentos().subscribe();
     }
 
     trackByFn(index: number, item: IDepto): string

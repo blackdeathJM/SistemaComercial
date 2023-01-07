@@ -27,6 +27,7 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {DeptoService} from "@s-admin/store/depto.service";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -68,7 +69,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
     constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, private stateAuth: StateAuth, private ngxToast: NgxToastService,
-                private entityDeptoStore: EntityDeptoStore, public entityEmpleadoStore: EntityEmpleadoStore)
+                private deptoService: DeptoService, public entityEmpleadoStore: EntityEmpleadoStore)
     {
     }
 
@@ -94,7 +95,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
 
     ngAfterContentInit(): void
     {
-        this.entityDeptoStore.cargarDeptos();
+        this.deptoService.departamentos();
     }
 
     agregarTel(): void

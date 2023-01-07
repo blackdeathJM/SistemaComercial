@@ -2,8 +2,7 @@ import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
-import {finalize, Observable, switchMap, tap} from 'rxjs';
-import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
+import {finalize} from 'rxjs';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -15,7 +14,6 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {isNotNil} from '@angular-ru/cdk/utils';
-import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {DeptoService} from '@s-admin/store/depto.service';
 
 @Component({
@@ -40,12 +38,10 @@ import {DeptoService} from '@s-admin/store/depto.service';
 })
 export class ModDeptoComponent implements OnInit
 {
-    // @Select(EntityDeptoStore.estaCargando) estaCargando$: Observable<boolean>;
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private entityDepto: EntityDeptoStore,
-                @Inject(MAT_DIALOG_DATA) private depto: IDepto, private deptoService: DeptoService)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
     {
 
     }
