@@ -9,7 +9,7 @@ specifiers:
   '@angular-ru/cdk': ^14.8.0
   '@angular-ru/ngxs': 14.1.0
   '@angular/animations': ^15.0.4
-  '@angular/cdk': ^15.0.3
+  '@angular/cdk': ^15.0.4
   '@angular/cli': 15.0.4
   '@angular/common': 15.0.4
   '@angular/compiler': 15.0.4
@@ -18,8 +18,8 @@ specifiers:
   '@angular/fire': ^7.5.0
   '@angular/forms': 15.0.4
   '@angular/language-service': ~15.0.4
-  '@angular/material': ^15.0.3
-  '@angular/material-luxon-adapter': ^15.0.3
+  '@angular/material': ^15.0.4
+  '@angular/material-luxon-adapter': ^15.0.4
   '@angular/platform-browser': 15.0.4
   '@angular/platform-browser-dynamic': 15.0.4
   '@angular/router': 15.0.4
@@ -167,18 +167,18 @@ specifiers:
   zone.js: 0.12.0
 
 dependencies:
-  '@angular-material-components/datetime-picker': 9.0.0_tfkwdgihft3apaclx7yl7xs6va
+  '@angular-material-components/datetime-picker': 9.0.0_jnvkdbcrvzexffun2ubly4elzu
   '@angular-ru/cdk': 14.8.0
   '@angular-ru/ngxs': 14.1.0
   '@angular/animations': 15.0.4_@angular+core@15.0.4
-  '@angular/cdk': 15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu
+  '@angular/cdk': 15.0.4_fbpzarz5tzwyhbfyo4dgitdwqu
   '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
   '@angular/compiler': 15.0.4_@angular+core@15.0.4
   '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
   '@angular/fire': 7.5.0_yjhxddwggmk6zxrqr3igt5nnrq
   '@angular/forms': 15.0.4_xkplghntscucsztvq3p7ejhl3e
-  '@angular/material': 15.0.3_ganrzarlsrocqqyksgil7wut3u
-  '@angular/material-luxon-adapter': 15.0.3_6quhgoy4bxr2k3er4of6mas3uy
+  '@angular/material': 15.0.4_rpl3ot4pfzcgkkatimnmed4tgy
+  '@angular/material-luxon-adapter': 15.0.4_kayntvmyy6vx3y467mk6mnxboa
   '@angular/platform-browser': 15.0.4_bwwplqn6fknm3semymfqlvw5bm
   '@angular/platform-browser-dynamic': 15.0.4_hnn6v3m7xpfwy5wugozvutqsyi
   '@angular/router': 15.0.4_xkplghntscucsztvq3p7ejhl3e
@@ -242,7 +242,7 @@ dependencies:
   ngx-image-cropper: 6.3.2_wcjhsjedbutghxn65tv34lliyq
   ngx-json-viewer: 3.2.1
   ngx-markdown: 15.0.0_ffsvmg52cvqngwf3z2dbso6p74
-  ngx-material-file-input: 4.0.0_q3wcplzwn4sik4r55hsxfdkyly
+  ngx-material-file-input: 4.0.0_w6vtnzzz4zhooec54ght7olgz4
   ngx-quill: 20.0.1_6bbvy3hpaiyg2vss2cyp33ypwa
   ngx-toastr: 16.0.2_ffwmyjw524znisgsuqdcsdyzqa
   ngx-trim-directive: 2.0.0_wcjhsjedbutghxn65tv34lliyq
@@ -669,7 +669,7 @@ packages:
       - supports-color
     dev: true
 
-  /@angular-material-components/datetime-picker/9.0.0_tfkwdgihft3apaclx7yl7xs6va:
+  /@angular-material-components/datetime-picker/9.0.0_jnvkdbcrvzexffun2ubly4elzu:
     resolution: {integrity: sha512-F+yf5kxzu62q1H2ZiVbKGfKHlszQhYN/avZyejCyq7bI7V9kg93BaTJ+ACOf9NEtM05USzrLXdiBGjEAMW82aQ==}
     peerDependencies:
       '@angular/cdk': ^15.0.1
@@ -679,11 +679,11 @@ packages:
       '@angular/material': ^15.0.1
       '@angular/platform-browser': ^15.0.1
     dependencies:
-      '@angular/cdk': 15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu
+      '@angular/cdk': 15.0.4_fbpzarz5tzwyhbfyo4dgitdwqu
       '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       '@angular/forms': 15.0.4_xkplghntscucsztvq3p7ejhl3e
-      '@angular/material': 15.0.3_ganrzarlsrocqqyksgil7wut3u
+      '@angular/material': 15.0.4_rpl3ot4pfzcgkkatimnmed4tgy
       '@angular/platform-browser': 15.0.4_bwwplqn6fknm3semymfqlvw5bm
       tslib: 2.4.1
     dev: false
@@ -709,8 +709,8 @@ packages:
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       tslib: 2.4.1
 
-  /@angular/cdk/15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu:
-    resolution: {integrity: sha512-iRLV6V6ksIshDL8Cdn1+DUNTRLqj+DAqmYTWYCEvH4qU6o0XSeXrAHNW5zNFqWgCZbmWt03G5jOBWBNaxa9QKw==}
+  /@angular/cdk/15.0.4_fbpzarz5tzwyhbfyo4dgitdwqu:
+    resolution: {integrity: sha512-I+OedGqv9cBsHMVGl/VfjGItAi8pK7UuYiPnxSB25+m8v3jh7dMzfVGqdqpTSGxd1Zv02ypLZvEbiI30abRykQ==}
     peerDependencies:
       '@angular/common': ^15.0.0 || ^16.0.0
       '@angular/core': ^15.0.0 || ^16.0.0
@@ -875,24 +875,24 @@ packages:
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0}
     dev: true
 
-  /@angular/material-luxon-adapter/15.0.3_6quhgoy4bxr2k3er4of6mas3uy:
-    resolution: {integrity: sha512-y1ZMMMBhCoPgQdP6RdLSby0nBkCgbc0blrzY6gQkjgy2nmiQ5nCaQr5ObXZ6bdtL3fgHC8DZIJBkWOJBze2CbA==}
+  /@angular/material-luxon-adapter/15.0.4_kayntvmyy6vx3y467mk6mnxboa:
+    resolution: {integrity: sha512-uGAGBxlOwMcpz5bowPCfaUIiy9GO20KdFGvLmY23q9M4Bcrpja66G3Zb9ShtwsjBkf6Gqw8LI35ywLt5mVzvkg==}
     peerDependencies:
       '@angular/core': ^15.0.0 || ^16.0.0
-      '@angular/material': 15.0.3
+      '@angular/material': 15.0.4
       luxon: ^3.0.0
     dependencies:
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
-      '@angular/material': 15.0.3_ganrzarlsrocqqyksgil7wut3u
+      '@angular/material': 15.0.4_rpl3ot4pfzcgkkatimnmed4tgy
       luxon: 3.2.1
       tslib: 2.4.1
     dev: false
 
-  /@angular/material/15.0.3_ganrzarlsrocqqyksgil7wut3u:
-    resolution: {integrity: sha512-x7c6Uc9SnQW0AGTFJZFMQHP80YzmrExtrNn5vYUyWB9QFiNM+jcsqAsSEoGhABU/G5xs8fd40Fj7o2HBixQ0fw==}
+  /@angular/material/15.0.4_rpl3ot4pfzcgkkatimnmed4tgy:
+    resolution: {integrity: sha512-hvGQYzfttb78WZdNrYjA3dwKNtCiJ3NXLzTUbEGppDG5/9awCphDyN/5Lj3tNLsU8lus8l/UAIn6CCXCw2p3Vw==}
     peerDependencies:
       '@angular/animations': ^15.0.0 || ^16.0.0
-      '@angular/cdk': 15.0.3
+      '@angular/cdk': 15.0.4
       '@angular/common': ^15.0.0 || ^16.0.0
       '@angular/core': ^15.0.0 || ^16.0.0
       '@angular/forms': ^15.0.0 || ^16.0.0
@@ -900,7 +900,7 @@ packages:
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:
       '@angular/animations': 15.0.4_@angular+core@15.0.4
-      '@angular/cdk': 15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu
+      '@angular/cdk': 15.0.4_fbpzarz5tzwyhbfyo4dgitdwqu
       '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
       '@angular/forms': 15.0.4_xkplghntscucsztvq3p7ejhl3e
@@ -16603,7 +16603,7 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /ngx-material-file-input/4.0.0_q3wcplzwn4sik4r55hsxfdkyly:
+  /ngx-material-file-input/4.0.0_w6vtnzzz4zhooec54ght7olgz4:
     resolution: {integrity: sha512-N0lpuwO1Td3VUR/KnylVi0EObJ2f9s/3jvOUyIGWvy25l4fQOs8zl6cf+OqXIoYLsOHBnC2vVRNugbEuT9CaDQ==}
     peerDependencies:
       '@angular/cdk': ^14.0.0
@@ -16611,10 +16611,10 @@ packages:
       '@angular/core': ^14.0.0
       '@angular/material': ^14.0.0
     dependencies:
-      '@angular/cdk': 15.0.3_fbpzarz5tzwyhbfyo4dgitdwqu
+      '@angular/cdk': 15.0.4_fbpzarz5tzwyhbfyo4dgitdwqu
       '@angular/common': 15.0.4_2kx3gifw2v5d4j22ydwztvu5ey
       '@angular/core': 15.0.4_rxjs@7.8.0+zone.js@0.12.0
-      '@angular/material': 15.0.3_ganrzarlsrocqqyksgil7wut3u
+      '@angular/material': 15.0.4_rpl3ot4pfzcgkkatimnmed4tgy
       tslib: 2.4.1
     dev: false
 

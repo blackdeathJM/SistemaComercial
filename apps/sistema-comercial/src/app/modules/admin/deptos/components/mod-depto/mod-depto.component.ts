@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
-import {finalize, tap} from 'rxjs';
+import {finalize, Observable, switchMap, tap} from 'rxjs';
 import {ActualizarDeptoGQL, CrearDeptoGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -14,8 +14,9 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {isNotNil} from '@angular-ru/cdk/utils';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
+import {DeptoService} from '@s-admin/store/depto.service';
 
 @Component({
     standalone: true,
@@ -39,11 +40,12 @@ import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 })
 export class ModDeptoComponent implements OnInit
 {
+    // @Select(EntityDeptoStore.estaCargando) estaCargando$: Observable<boolean>;
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private crearDeptoGQL: CrearDeptoGQL,
-                private entityDeptoStore: EntityDeptoStore, private actualizarDeptoGQL: ActualizarDeptoGQL, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private entityDepto: EntityDeptoStore,
+                @Inject(MAT_DIALOG_DATA) private depto: IDepto, private deptoService: DeptoService)
     {
 
     }
@@ -57,7 +59,7 @@ export class ModDeptoComponent implements OnInit
         }
     }
 
-    registrar(): void
+    async registrar(): Promise<void>
     {
         this.cargandoDatos = true;
         // si vienen datos cuando se abre el modal cargamos los datos en el formulario para poder actualizarlos y si no realizamos un nuevo registro
@@ -65,46 +67,18 @@ export class ModDeptoComponent implements OnInit
         {
             const input = {_id: this.depto._id, ...this.formDepto.value};
 
-            this.entityDeptoStore.actualizarDepto(input).subscribe(() =>
+            this.deptoService.actualizarDepto(input).pipe(finalize(() =>
             {
-                this.ngxToast.satisfactorioToast('Todo salio bien', 'Actualizar depto');
-            });
-            // this.actualizarDeptoGQL.mutate({input}, {}).pipe(finalize(() => this.dRef.closeAll()),
-            //     tap((res) =>
-            //     {
-            //         if (isNotNil(res.data))
-            //         {
-            //             const actualizarDepto = $cast<IDepto>(res.data.actualizarDepto);
-            //             this.entityDeptoStore.updateOne({id: actualizarDepto._id, changes: actualizarDepto});
-            //             this.ngxToast.satisfactorioToast('El registro fue actualizado con exito', 'Modificar datos');
-            //         }
-            //         this.cargandoDatos = res.loading;
-            //     })
-            // ).subscribe();
+                this.cargandoDatos = false;
+                this.dRef.closeAll();
+            })).subscribe();
         } else
         {
-            this.entityDeptoStore.agregarDepto(this.formDepto.value).subscribe(() =>
+            this.deptoService.crearDepto(this.formDepto.value).pipe(finalize(() =>
             {
-                this.ngxToast.satisfactorioToast('Se registro bien', 'Registro');
-            });
-            // this.crearDeptoGQL.mutate({input: this.formDepto.value}, {
-            //     useMutationLoading: true,
-            //     // update: (store, result) =>
-            //     // {
-            //     //     const data: DepartamentosQuery = store.readQuery({query: DepartamentosDocument});
-            //     //     data.deptos = [...data.deptos, result.data.crearDepto];
-            //     //     store.writeQuery({query: DepartamentosDocument, data});
-            //     // }
-            // }).pipe(finalize(() => this.dRef.closeAll())).subscribe((res) =>
-            // {
-            //     if (isNotNil(res.data))
-            //     {
-            //         const depto = $cast<IDepto>(res.data.crearDepto);
-            //         this.entityDeptoStore.addOne(depto);
-            //         this.ngxToast.satisfactorioToast('El departamento se registro con exito', 'Registro');
-            //     }
-            //     this.cargandoDatos = res.loading;
-            // });
+                this.cargandoDatos = false;
+                this.dRef.closeAll();
+            })).subscribe();
         }
     }
 }

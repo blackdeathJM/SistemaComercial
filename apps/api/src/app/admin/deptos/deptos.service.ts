@@ -15,7 +15,6 @@ export class DeptosService
 
     async deptos(): Promise<IDepto[]>
     {
-        console.log('enviroments', environment.uriMongo, environment.production);
         return this.depto.find().exec();
     }
 
@@ -26,7 +25,6 @@ export class DeptosService
             return await this.depto.create(input);
         } catch (e)
         {
-            console.log('----', e);
             throw new ConflictException({message: e.codeName});
         }
     }

@@ -11,6 +11,10 @@ import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-depto
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 import {EntityDeptoStore} from "@s-admin/store/entity-depto.store";
+import {DeptoStore} from "@s-admin/store/depto.store";
+import {DeptoService} from "@s-admin/store/depto.service";
+import {DeptoQuery} from "@s-admin/store/depto.query";
+import {AsyncPipe, NgIf} from "@angular/common";
 
 @Component({
     standalone: true,
@@ -24,6 +28,10 @@ import {EntityDeptoStore} from "@s-admin/store/entity-depto.store";
             MatInputModule,
             ListaDeptosComponent,
             ListaDetalleComponent,
+            MatInputModule,
+            MatButtonModule,
+            NgIf,
+            AsyncPipe,
         ],
     selector: 'app-deptos-principal',
     templateUrl: './deptos.component.html',
@@ -33,7 +41,7 @@ import {EntityDeptoStore} from "@s-admin/store/entity-depto.store";
 export class DeptosComponent implements OnInit
 {
     controlBuscar: FormControl = new FormControl();
-    constructor(private dRef: MatDialog, private entityDepto: EntityDeptoStore)
+    constructor(private dRef: MatDialog, private entityDepto: EntityDeptoStore, private deptoStore: DeptoStore, private deptoService: DeptoService, public deptoQuery: DeptoQuery)
     {
     }
 

@@ -7,6 +7,7 @@ import {Injectable} from '@angular/core';
 
 export class DeptoQuery extends QueryEntity<DeptoState, IDepto>
 {
+    deptoFiltrado$ = this.select(state => state.ui.nombre);
     constructor(protected deptoStore: DeptoStore)
     {
         super(deptoStore);

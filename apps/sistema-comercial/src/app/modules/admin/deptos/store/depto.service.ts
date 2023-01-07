@@ -1,52 +1,55 @@
 import {Injectable} from '@angular/core';
-import {DeptoStore} from '@s-admin/store/depto.store';
-import {ActualizarDeptoGQL, CrearDeptoGQL, CrearDeptoMutation, DepartamentosGQL} from '#/libs/datos/src';
+import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {Observable, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {SingleExecutionResult} from '@apollo/client';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Injectable({providedIn: 'root'})
 export class DeptoService
 {
-    constructor(private deptoStore: DeptoStore, private departamentosGQL: DepartamentosGQL, private crearDeptoGQL: CrearDeptoGQL, private actualizarDeptoGQL: ActualizarDeptoGQL)
+    constructor(private entityDepto: EntityDeptoStore, private departamentosGQL: DepartamentosGQL, private crearDeptoGQL: CrearDeptoGQL, private actualizarDeptoGQL: ActualizarDeptoGQL,
+                private ngxToast: NgxToastService)
     {
     }
 
-    departamentos(): void
+    departamentos(): Observable<SingleExecutionResult>
     {
-        this.departamentosGQL.watch({}).valueChanges.subscribe((res) =>
+        return this.departamentosGQL.watch({}).valueChanges.pipe(tap((res) =>
         {
             if (res.data)
             {
                 const deptos = res.data.deptos as IDepto[];
-                this.deptoStore.set(deptos);
+                this.entityDepto.setAll(deptos);
             }
-        });
+        }));
     }
 
     // Observable<SingleExecutionResult<CrearDeptoMutation>>
-    crearDepto(input: IDepto): void
+    crearDepto(input: IDepto): Observable<SingleExecutionResult>
     {
-        this.crearDeptoGQL.mutate({input}).pipe(tap((res) =>
+        return this.crearDeptoGQL.mutate({input}).pipe(tap((res) =>
         {
             if (res.data)
             {
-                const depto = res.data.crearDepto as IDepto;
-                this.deptoStore.add(depto);
+                const depto = $cast<IDepto>(res.data.crearDepto);
+                this.entityDepto.addOne(depto);
             }
-        })).subscribe();
+        }));
     }
 
-    actualizarDepto(input: IDepto): void
+    actualizarDepto(input: IDepto): Observable<SingleExecutionResult>
     {
-        this.deptoStore.setLoading(true);
-        this.actualizarDeptoGQL.mutate({input}).subscribe((res) =>
+        return this.actualizarDeptoGQL.mutate({input}).pipe(tap((res) =>
         {
-            if (res.data)
+            if (isNotNil(res.data))
             {
-                this.deptoStore.update(input._id, {...input});
-                this.deptoStore.setLoading(false);
+                const changes = $cast<IDepto>(res.data.actualizarDepto);
+                this.entityDepto.updateOne({id: changes._id, changes});
+                this.ngxToast.satisfactorioToast('El Departamento se actualizo con exito', 'Actualizar departamento');
             }
-        });
+        }));
     }
 }
