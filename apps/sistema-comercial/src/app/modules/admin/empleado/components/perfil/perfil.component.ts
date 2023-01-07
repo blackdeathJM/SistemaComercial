@@ -17,7 +17,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {getDownloadURL} from '@angular/fire/storage';
 import {TOKEN} from '@s-auth/const';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
 
 @Component({

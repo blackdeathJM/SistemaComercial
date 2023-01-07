@@ -1,13 +1,10 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoginGQL} from '#/libs/datos/src';
 import {catchError, of, tap} from 'rxjs';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {FuseAlertType} from '@s-fuse/alert';
-import {TOKEN} from '@s-auth/const';
-import {StateAuth} from '@s-core/auth/auth.store';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Component({
     selector: 'auth.ts-sign-in',
@@ -26,8 +23,7 @@ export class AuthSignInComponent implements OnInit
     signInForm: FormGroup;
     showAlert: boolean = false;
 
-    constructor(private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private _router: Router,
-                private loginGQL: LoginGQL, private stateAuth: StateAuth)
+    constructor(private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private _router: Router, private authService: AuthService)
     {
     }
 
@@ -54,7 +50,7 @@ export class AuthSignInComponent implements OnInit
         this.showAlert = false;
 
         // Sign in
-        this.loginGQL.mutate({login: this.signInForm.value}).pipe(catchError((err) =>
+        this.authService.login(this.signInForm.value).pipe(catchError(() =>
         {
             this.signInForm.enable();
             this.signInNgForm.resetForm();
@@ -63,17 +59,7 @@ export class AuthSignInComponent implements OnInit
                 message: 'Los datos proporcionados no son correctos'
             };
             this.showAlert = true;
-            return of(err);
-        }), tap((res) =>
-        {
-            if (res.data)
-            {
-                localStorage.setItem(TOKEN, res.data.login.token);
-                const datosSesion: IDatosSesion = res.data.login.datosSesion;
-                this.stateAuth.login(datosSesion);
-                const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/redireccionar';
-                this._router.navigateByUrl(redirectURL).then().catch(err => console.log('error login', err));
-            }
+            return of(null);
         })).subscribe();
     }
 }

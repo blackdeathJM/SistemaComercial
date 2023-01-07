@@ -7,7 +7,7 @@ import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/na
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Navegation} from '@s-core/navigation/navigation.types';
 import {Select} from '@ngxs/store';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 
 @Component({
     selector: 'classy-layout',

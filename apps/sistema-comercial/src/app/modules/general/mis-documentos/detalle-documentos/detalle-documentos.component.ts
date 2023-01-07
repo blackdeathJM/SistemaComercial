@@ -16,7 +16,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasignacion.component';
 import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Select} from '@ngxs/store';
 import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';

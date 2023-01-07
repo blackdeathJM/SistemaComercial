@@ -12,7 +12,7 @@ import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {DocRefFolioGQL, DocsRefGQL} from '#/libs/datos/src';
 import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {$cast} from '@angular-ru/cdk/utils';
 import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 

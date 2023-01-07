@@ -31,7 +31,7 @@ export class LoginRespuestaDto implements ILoginRespuesta
 }
 
 @InputType('LoginInput')
-export class LoginDto
+export class LoginDto implements ILogin
 {
     @Field({nullable: true})
     @IsNotEmpty({message: 'El usuario no puede estar vacio'})
@@ -46,4 +46,10 @@ export interface ILoginRespuesta
 {
     token: string;
     datosSesion: IDatosSesion;
+}
+
+export interface ILogin
+{
+    usuario: string;
+    contrasena: string;
 }

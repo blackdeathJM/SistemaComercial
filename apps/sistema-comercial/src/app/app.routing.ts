@@ -10,11 +10,10 @@ import {InitialDataResolver} from '#/apps/sistema-comercial/src/app/app.resolver
 export const appRoutes: Route[] = [
 
     {path: '', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
-    {path: 'redireccionar', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
+    {path: 'redireccion', pathMatch: 'full', redirectTo: 'sistema-comercial/inicio'},
     {
         path: '',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
+        canMatch: [NoAuthGuard],
         component: LayoutComponent,
         data:
             {
@@ -30,8 +29,7 @@ export const appRoutes: Route[] = [
     {
         path: 'sistema-comercial',
         component: LayoutComponent,
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canMatch: [AuthGuard],
         resolve: {initialData: InitialDataResolver},
         children:
             [
@@ -62,7 +60,9 @@ export const appRoutes: Route[] = [
             ]
     },
     {
-        path: '**',
-        redirectTo: ''
+        path: '404-not-found', pathMatch: 'full', loadChildren: () => import('@s-error/error-404/error-404.module').then(e => e.Error404Module)
+    },
+    {
+        path: '**', redirectTo: '404-not-found'
     }
 ];

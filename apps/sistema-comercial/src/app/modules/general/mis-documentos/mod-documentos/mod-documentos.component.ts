@@ -23,7 +23,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
 import {$cast} from '@angular-ru/cdk/utils';
 import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';

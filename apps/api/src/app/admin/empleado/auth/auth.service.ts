@@ -79,6 +79,7 @@ export class AuthService
 
     login(empleado: any): ILoginRespuesta
     {
+        console.log('login', empleado);
         return this.datosSesion(empleado);
     }
 

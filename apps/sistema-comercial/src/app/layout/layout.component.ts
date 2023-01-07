@@ -133,7 +133,6 @@ export class LayoutComponent implements OnInit, OnDestroy
         const paths = route.pathFromRoot;
         paths.forEach((path) =>
         {
-
             // Check if there is a 'layout' data
             if (path.routeConfig && path.routeConfig.data && path.routeConfig.data.layout)
             {

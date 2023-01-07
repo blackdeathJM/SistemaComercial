@@ -7,7 +7,7 @@ import {NotificationsService} from '@s-layout/notifications/notifications.servic
 import {EliminarNotGQL, EliminarTodosGQL, NotificacionesGQL, NotificarGQL} from '#/libs/datos/src';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 
 @Component({
     selector: 'notifications',

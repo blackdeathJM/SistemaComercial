@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {RolCambiadoGQL} from '#/libs/datos/src';
 import {Select} from '@ngxs/store';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Router} from '@angular/router';
 import {TOKEN} from '@s-auth/const';
 

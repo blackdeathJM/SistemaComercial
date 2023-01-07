@@ -21,7 +21,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {DeptoEliminarStore} from '#/apps/sistema-comercial/src/query/deptoEliminar.store';
 import {Select} from '@ngxs/store';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {catchError, finalize, Observable, of, tap} from 'rxjs';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';

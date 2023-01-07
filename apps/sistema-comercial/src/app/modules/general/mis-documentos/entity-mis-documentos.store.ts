@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 

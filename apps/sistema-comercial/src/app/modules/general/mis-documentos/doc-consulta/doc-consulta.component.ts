@@ -6,7 +6,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {catchError, debounceTime, distinctUntilChanged, of, switchMap, tap} from 'rxjs';
 import {IDocsFechas, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {DocsBusquedaGralGQL, DocsFechasGQL, DocsUsuarioProcesoGQL} from '#/libs/datos/src';
-import {StateAuth} from '@s-core/auth/auth.store';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';

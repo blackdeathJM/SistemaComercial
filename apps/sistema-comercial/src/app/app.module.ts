@@ -28,7 +28,6 @@ import {mockApiServices} from '#/apps/sistema-comercial/src/app/mock-api';
 import {CoreModule} from '@s-core/core.module';
 import {LayoutModule} from '@s-layout/layout.module';
 import {NgxsGlobalModule} from '#/apps/sistema-comercial/src/store/ngxsGlobal.module';
-import {StateAuth} from '@s-core/auth/auth.store';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {configLoader} from '#/apps/sistema-comercial/src/app/configLoader';
 
@@ -93,9 +92,4 @@ const routerConfig: ExtraOptions =
 })
 export class AppModule
 {
-    constructor(stateAuth: StateAuth)
-    {
-        console.log('constructor AppModule');
-        stateAuth.validarSesion();
-    }
 }

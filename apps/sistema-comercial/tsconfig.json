@@ -65,6 +65,7 @@
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/*",
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/telemetria/*"
             ],
+            "@s-error/*": ["apps/sistema-comercial/src/app/modules/error/*"],
             "@s-general/*": [
                 "apps/sistema-comercial/src/app/modules/general/*",
                 "apps/sistema-comercial/src/app/modules/general/mis-documentos/*",
