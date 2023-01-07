@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL} from '#/libs/datos/src';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
-import {finalize, Observable, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {SingleExecutionResult} from '@apollo/client';
@@ -32,10 +32,11 @@ export class DeptoService
     {
         return this.crearDeptoGQL.mutate({input}).pipe(tap((res) =>
         {
-            if (res.data)
+            if (isNotNil(res.data))
             {
                 const depto = $cast<IDepto>(res.data.crearDepto);
                 this.entityDepto.addOne(depto);
+                this.ngxToast.satisfactorioToast('El departamento ser registro con exito', 'Nuevo departamento');
             }
         }));
     }
