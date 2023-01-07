@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL} from '#/libs/datos/src';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
@@ -11,16 +10,13 @@ import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 @Injectable({providedIn: 'root'})
 export class DeptoService
 {
-    #loaderId: 'listaDeptos';
-
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL, private ngxToast: NgxToastService,
-                private ngxLoader: NgxUiLoaderService, private entityDepto: EntityDeptoStore)
+                private entityDepto: EntityDeptoStore)
     {
     }
 
     departamentos(): Observable<SingleExecutionResult>
     {
-        this.ngxLoader.startLoader(this.#loaderId);
         return this.departamentosGQL.watch({}).valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))

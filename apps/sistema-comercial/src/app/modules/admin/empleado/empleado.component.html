@@ -12,41 +12,6 @@
         </mat-form-field>
     </ng-container>
     <ng-container lista>
-        <ng-container *ngIf="!entityEmpleadoStore.cargando; else cargando">
-
-            <fuse-alert type="info" appearance="border" *ngIf="entityEmpleadoStore.longListaEmpleados" class="p-4">
-                <span fuseAlertTitle>Empleados</span>
-                No se encontraron empleados para mostrar
-            </fuse-alert>
-
-            <ng-container *ngFor="let empleado of entityEmpleadoStore.entitiesArray$ | async as empleados; let i = index; trackBy: trackByFn">
-                <!-- Group -->
-                <ng-container *ngIf="i === 0 || empleado.nombreCompleto.charAt(0) !== empleados[i - 1].nombreCompleto.charAt(0)">
-                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
-                        {{empleado.nombreCompleto.charAt(0)}}
-                    </div>
-                </ng-container>
-                <!-- Contact -->
-                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b hover:bg-amber-100 dark:hover:bg-gray-600" (click)="seleccionarEmpleado(empleado)">
-                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-                        <ng-container *ngIf="empleado.avatar">
-                            <img class="object-cover w-full h-full" [src]="empleado.avatar" alt="Avatar"/>
-                        </ng-container>
-                        <ng-container *ngIf="!empleado.avatar">
-                            <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                {{empleado.nombreCompleto.charAt(0)}}
-                            </div>
-                        </ng-container>
-                    </div>
-                    <div class="min-w-0 ml-4">
-                        <div class="font-medium leading-5 truncate">{{empleado.nombreCompleto}}</div>
-                    </div>
-                </a>
-            </ng-container>
-        </ng-container>
+        <app-lista-Empleados></app-lista-Empleados>
     </ng-container>
 </app-lista-detalle>
-
-<ng-template #cargando>
-    <app-tailwind-loading></app-tailwind-loading>
-</ng-template>

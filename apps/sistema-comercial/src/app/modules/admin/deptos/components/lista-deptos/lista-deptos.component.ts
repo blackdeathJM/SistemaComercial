@@ -6,9 +6,10 @@ import {CommonModule} from '@angular/common';
 import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {DeptoService} from '@s-admin/store/depto.service';
+import {finalize} from "rxjs";
 
 @Component({
     standalone: true,
@@ -28,14 +29,17 @@ import {DeptoService} from '@s-admin/store/depto.service';
 })
 export class ListaDeptosComponent implements OnInit
 {
-    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
+    idLoader: 'listaDeptos';
+
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore, private ngxLoader: NgxUiLoaderService)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.deptoService.departamentos().subscribe();
+        this.ngxLoader.startLoader(this.idLoader);
+        this.deptoService.departamentos().subscribe(() => this.ngxLoader.stopLoader(this.idLoader));
     }
 
     trackByFn(index: number, item: IDepto): string

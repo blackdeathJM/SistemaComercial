@@ -26,7 +26,7 @@ import {catchError, finalize, Observable, of, tap} from 'rxjs';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {DeptoService} from "@s-admin/store/depto.service";
 
 @Component({

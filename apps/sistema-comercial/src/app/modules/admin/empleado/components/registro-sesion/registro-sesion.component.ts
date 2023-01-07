@@ -17,7 +17,7 @@ import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Component({
     standalone: true,

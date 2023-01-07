@@ -29,7 +29,6 @@ export class AuthService
                 this.stateAuth.setState(respuestaLogin.datosSesion);
 
                 const redireccionUrl = this.activatedRoute.snapshot.queryParamMap.get('redirectUrl') || '/redireccion';
-                console.log('-------', redireccionUrl);
                 this.router.navigateByUrl(redireccionUrl).then();
             }
         }));
@@ -41,12 +40,23 @@ export class AuthService
         {
             return of(false);
         }
+
         if (this.jwtHelperService.isTokenExpired())
         {
             return of(false);
         }
+        if (isNotNil(this.stateAuth.snapshot))
+        {
+            return of(true);
+        }
         const sesionPorToken = this.jwtHelperService.decodeToken();
         this.stateAuth.setState(sesionPorToken);
         return of(true);
+    }
+
+    cerrarSesion(): void
+    {
+        localStorage.removeItem(TOKEN);
+        this.router.navigateByUrl('/').then(() => this.stateAuth.reset());
     }
 }

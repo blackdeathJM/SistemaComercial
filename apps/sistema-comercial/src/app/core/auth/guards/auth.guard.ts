@@ -27,7 +27,6 @@ export class AuthGuard implements CanMatch
             {
                 const redirectURL = `/${segments.join('/')}`;
                 const urlTree = this.router.parseUrl(`sign-in?redirectURL=${redirectURL}`);
-                console.log('El usuario no esta autenticado', urlTree);
                 return of(urlTree);
             }
 

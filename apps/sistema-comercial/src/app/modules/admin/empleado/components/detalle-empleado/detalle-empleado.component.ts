@@ -13,7 +13,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatListModule} from '@angular/material/list';
 import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Select} from '@ngxs/store';
 import {isNotNil} from '@angular-ru/cdk/utils';
 
@@ -59,7 +59,7 @@ export class DetalleEmpleadoComponent
         {
             if (isNotNil(res))
             {
-                this.entityEmpleadoStore.seleccionarEmpleado(res._id);
+                this.entityEmpleadoStore.seleccionarEmpleado(res);
             }
         });
     }

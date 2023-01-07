@@ -14,7 +14,7 @@ import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/entity-empleado.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Component({
     selector: 'app-mod-reasignacion',

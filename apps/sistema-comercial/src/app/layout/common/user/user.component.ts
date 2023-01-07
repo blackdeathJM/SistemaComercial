@@ -5,8 +5,7 @@ import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.inter
 import {RolCambiadoGQL} from '#/libs/datos/src';
 import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {Router} from '@angular/router';
-import {TOKEN} from '@s-auth/const';
+import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Component({
     selector: 'user',
@@ -23,7 +22,7 @@ export class UserComponent
     @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private rolCambiado: RolCambiadoGQL, private router: Router, private stateAuth: StateAuth)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private rolCambiado: RolCambiadoGQL, private authService: AuthService)
     {
     }
 
@@ -44,8 +43,6 @@ export class UserComponent
 
     signOut(): void
     {
-        localStorage.removeItem(TOKEN);
-        this.stateAuth.reset();
-        this.router.navigateByUrl('/sign-in').then();
+        this.authService.cerrarSesion();
     }
 }
