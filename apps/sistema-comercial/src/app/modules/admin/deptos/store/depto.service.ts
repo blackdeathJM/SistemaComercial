@@ -27,7 +27,6 @@ export class DeptoService
         }));
     }
 
-    // Observable<SingleExecutionResult<CrearDeptoMutation>>
     crearDepto(input: IDepto): Observable<SingleExecutionResult>
     {
         return this.crearDeptoGQL.mutate({input}).pipe(tap((res) =>
