@@ -1,13 +1,9 @@
 import {DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
-import {IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {Injectable} from '@angular/core';
 import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
-import {DocsUsuarioProcesoGQL} from '#/libs/datos/src';
-import {StateAuth} from '@s-core/auth/store/auth.store';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 export interface IDocSeleccionar
 {
@@ -26,7 +22,7 @@ export interface IDocSeleccionar
 export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepository<IResolveDocumento, EntityIdType, IDocSeleccionar>
 {
 
-    constructor(private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private stateAuth: StateAuth, private ngxLoader: NgxUiLoaderService)
+    constructor()
     {
         super();
     }
@@ -38,15 +34,15 @@ export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepositor
     }
 
     @DataAction()
-    public seleccionarDoc(@Payload('seleccionarDoc') docSelect: IResolveDocumento): void
+    public seleccionarDoc(@Payload('seleccionarDoc') documento: IResolveDocumento): void
     {
         // const state = this.getState();
         // this.setEntitiesState({
         //     ...state,
         //     documento
         // });
-        const documento = $cast<IResolveDocumento>(docSelect);
-        this.ctx.patchState({documento});
+        const docSele = this.selectOne(documento._id);
+        this.ctx.patchState({documento: docSele});
     }
 
     public selectId(entity: IResolveDocumento): EntityIdType

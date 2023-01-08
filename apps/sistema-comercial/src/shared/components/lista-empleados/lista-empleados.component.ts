@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -12,7 +12,8 @@ import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-deta
     imports: [CommonModule, FuseAlertModule, NgxUiLoaderModule],
     selector: 'app-lista-Empleados',
     templateUrl: './lista-empleados.component.html',
-    styleUrls: ['./lista-empleados.component.scss']
+    styleUrls: ['./lista-empleados.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListaEmpleadosComponent implements OnInit
 {
@@ -28,14 +29,14 @@ export class ListaEmpleadosComponent implements OnInit
         this.empleadoService.empleados().subscribe(() => this.ngxLoader.stopLoader(this.listaEmpleados));
     }
 
-    trackByFn(index: number, item: IResolveEmpleado): any
-    {
-        return item._id || index;
-    }
-
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.seleccionarEmpleado(empleado);
         this.panelService.setPanel = true;
+    }
+
+    trackByFn(index: number, item: IResolveEmpleado): any
+    {
+        return item._id || index;
     }
 }

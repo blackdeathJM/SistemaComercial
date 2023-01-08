@@ -28,8 +28,8 @@
 </ng-container>
 <ngx-ui-loader [loaderId]="listaEmpleados"></ngx-ui-loader>
 <ng-template #noHayEmpleados>
-    <fuse-alert type="info" appearance="border" class="p-4">
+    <fuse-alert type="info" appearance="border" class="p-8">
         <span fuseAlertTitle>Empleados</span>
-        No se encontraron empleados para mostrar
+        <span class="text-2xl">No se encontraron empleados para mostrar</span>
     </fuse-alert>
 </ng-template>

@@ -1,17 +1,22 @@
 <app-lista-detalle>
+
     <ng-container outlet>
-        <app-detalle-empleado (cerrarPanel)="cerrarP($event)"></app-detalle-empleado>
+        <app-detalle-empleado></app-detalle-empleado>
     </ng-container>
+
     <ng-container titulo>
         <div>Sesion y permisos</div>
     </ng-container>
+
     <ng-container buscar>
         <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
             <input matInput [formControl]="ctrlBuscar" [autocomplete]="'off'" [placeholder]="'Buscar empleado'">
         </mat-form-field>
     </ng-container>
+
     <ng-container lista>
         <app-lista-Empleados></app-lista-Empleados>
     </ng-container>
+
 </app-lista-detalle>

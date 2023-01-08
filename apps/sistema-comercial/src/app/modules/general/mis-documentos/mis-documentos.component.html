@@ -1,7 +1,9 @@
 <app-lista-detalle>
+
     <ng-container titulo>
         <div>Mis documentos</div>
     </ng-container>
+
     <ng-container acciones>
         <div class="flex gap-4">
             <button mat-flat-button [color]="'primary'" (click)="nuevosDocs()">
@@ -10,16 +12,17 @@
             </button>
         </div>
     </ng-container>
+
     <ng-container buscar>
         <app-doc-consulta></app-doc-consulta>
     </ng-container>
+
     <ng-container outlet>
         <app-detalle-documentos></app-detalle-documentos>
     </ng-container>
 
     <ng-container lista>
-        <div class="flex flex-wrap">
-            <app-lista-documentos></app-lista-documentos>
-        </div>
+        <app-lista-documentos></app-lista-documentos>
     </ng-container>
+
 </app-lista-detalle>

@@ -7,14 +7,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {ReasignarUsuarioGQL} from '#/libs/datos/src';
-import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {Observable, tap} from 'rxjs';
+import {finalize} from 'rxjs';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 
 @Component({
     selector: 'app-mod-reasignacion',
@@ -40,14 +39,14 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
     formSelect: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
     cargando: boolean = false;
 
-    constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private reasignacionUsuarioGQL: ReasignarUsuarioGQL, private ngxToast: NgxToastService,
+    constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService,
                 private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EntityEmpleadoStore)
     {
     }
 
     ngOnInit(): void
     {
-        // Asignamos los empleados que ya se les haya asignado algun documento para establecer de nuevo la asignacion
+        // Asignamos los empleados que ya se les haya asignado algún documento para establecer de nuevo la asignacion
         this.entityEmpleados.empleadosConSesion();
     }
 
@@ -67,16 +66,10 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
             return;
         }
         this.cargando = true;
-
-        this.reasignacionUsuarioGQL.mutate({usuarios: {_id: this.entityMisDocumentos.snapshot.documento._id, usuarios: this.formSelect.value}}).pipe(tap((res) =>
+        this.misDocumentosService.reasignacionUsuarios(this.entityMisDocumentos.snapshot.documento._id, this.formSelect.value).pipe(finalize(() =>
         {
-            this.cargando = res.loading;
-            if (isNotNil(res.data))
-            {
-                const docCambiado = $cast<IResolveDocumento>(res.data.reasignarUsuario);
-                this.entityMisDocumentos.updateOne({id: docCambiado._id, changes: docCambiado});
-                this.dRef.close();
-            }
+            this.cargando = false;
+            this.dRef.close();
         })).subscribe();
     }
 }

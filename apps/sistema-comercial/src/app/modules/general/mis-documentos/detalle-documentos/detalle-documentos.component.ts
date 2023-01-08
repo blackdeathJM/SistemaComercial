@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IDocActFolio, IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FuseConfirmationConfig, FuseConfirmationService} from '@s-fuse/confirmation';
 import {MatDialog} from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DocActFolioGQL, DocFinalizarGQL} from '#/libs/datos/src';
-import {Observable, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {confirmarFinalizarDoc, confirmarFolio} from '@s-general/detalle-documentos/dialogConfirmacion';
@@ -20,7 +20,9 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Select} from '@ngxs/store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
+import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
+import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 
 @Component({
     standalone: true,
@@ -32,7 +34,8 @@ import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
             ConvertirTimestamUnixPipe,
             MatTooltipModule,
             ReactiveFormsModule,
-            MatProgressSpinnerModule
+            MatProgressSpinnerModule,
+            DefaultValuePipeModule
 
         ],
     selector: 'app-detalle-documentos',
@@ -47,10 +50,10 @@ export class DetalleDocumentosComponent
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
-                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore)
+                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore, public listaDetalleService: ListaDetalleService,
+                private misDocumentosService: MisDocumentosService)
     {
     }
-
 
     trackByFn(index: number, item: any): any
     {
@@ -67,7 +70,7 @@ export class DetalleDocumentosComponent
 
     generarFolio(_documento: IDocumento): void
     {
-        if (_documento.folio)
+        if (isNotNil(_documento.folio))
         {
             this.ngxToastService.alertaToast('El documento ya cuenta con un folio y no puedes volverlo asignar', 'Asignacion de folio');
             return;
@@ -85,24 +88,14 @@ export class DetalleDocumentosComponent
                         usuarioFolio: this.stateAuht.snapshot._id,
                         tipoDoc: _documento.tipoDoc
                     };
-                this.docActFolioGQL.mutate({args}).pipe(tap((docFoliado) =>
-                {
-                    if (isNotNil(docFoliado.data))
-                    {
-                        const docFol = $cast<IResolveDocumento>(docFoliado.data.docActFolio);
-                        this.entityMisDocumentos.updateOne({id: docFol._id, changes: docFol});
-                        this.entityMisDocumentos.seleccionarDoc(docFol);
-                        this.ngxToastService.satisfactorioToast('Haz registrado un nuevo folio con exito', 'Alta de folios');
-                        this.cargando = false;
-                    }
-                })).subscribe();
+                this.misDocumentosService.docActFolio(args).pipe(finalize(() => this.cargando = false)).subscribe();
             }
         });
     }
 
-    finalizarDoc(_documento: IResolveDocumento): void
+    finalizarDoc(documento: IResolveDocumento): void
     {
-        if (_documento.docUrl === null && _documento.acuseUrl === null)
+        if (documento.docUrl === null && documento.acuseUrl === null)
         {
             this.ngxToastService.errorToast('No puedes dar por finalizado el documento por que no tienes ningun documento subido', 'Finalizar documentos');
             return;
@@ -112,16 +105,7 @@ export class DetalleDocumentosComponent
         {
             if (res === 'confirmed')
             {
-                this.docFinalizarGQL.mutate({_id: _documento._id}).pipe(tap((docFinalizado) =>
-                {
-                    if (isNotNil(docFinalizado.data))
-                    {
-                        const docFin = $cast<IResolveDocumento>(docFinalizado.data.docFinalizar);
-                        this.entityMisDocumentos.updateOne({id: docFin._id, changes: docFin});
-                        this.entityMisDocumentos.seleccionarDoc(docFin);
-                        this.ngxToastService.satisfactorioToast('El documento ha finalizado con exito', 'Finalizar documentos');
-                    }
-                })).subscribe();
+                this.misDocumentosService.finalizarDoc(documento._id).subscribe();
             }
         });
     }
@@ -134,7 +118,7 @@ export class DetalleDocumentosComponent
             return;
         }
 
-        this.entityMisDocumentos.seleccionarDoc(documento);
+        this.entityMisDocumentos.patchState({documento});
 
         this.dRef.open(ModReasignacionComponent, {width: '40%', data: documento});
 
@@ -142,20 +126,14 @@ export class DetalleDocumentosComponent
 
     modDocs(documento: IResolveDocumento): void
     {
-        this.entityMisDocumentos.seleccionarDoc(documento);
+        this.entityMisDocumentos.patchState({documento});
         this.dRef.open(ModSubirDocsComponent, {width: '40%'});
     }
 
     docRef(documento: IResolveDocumento): void
     {
 
-        this.entityMisDocumentos.seleccionarDoc(documento);
+        this.entityMisDocumentos.patchState({documento});
         this.dRef.open(ModDocRefComponent, {width: '40%'});
     }
-
-    cerrarP(): void
-    {
-        STATE_ABRIR_CERRAR_PANEL(false);
-    }
-
 }

@@ -83,9 +83,13 @@ export class EmpleadoService
         {
             if (isNotNil(res.data))
             {
-                const empleadosSesion = $cast<IResolveEmpleado>(res.data.empleadosSesion);
-                this.stateAuth.setState(empleadosSesion);
+                const empleadosSesion = $cast<IResolveEmpleado[]>(res.data.empleadosSesion);
+                this.entityEmpleado.setAll(empleadosSesion);
             }
+        }), catchError(() =>
+        {
+            this.ngxToast.errorToast('Ocurrio un error al tratar de cargar los usuarios', 'Usuario con sesion');
+            return of(null);
         }));
     }
 }

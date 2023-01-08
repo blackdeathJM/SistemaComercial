@@ -1,23 +1,22 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule, NgIf} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
-import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
 import {getDownloadURL} from '@angular/fire/storage';
-import {SubirDocsGQL} from '#/libs/datos/src';
-import {finalize, startWith, Subscription, tap} from 'rxjs';
+import {finalize, startWith, Subscription} from 'rxjs';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
+import {checkValueIsFilled} from '@angular-ru/cdk/utils';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -37,8 +36,7 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
             MatProgressBarModule,
         ],
     templateUrl: './mod-subir-docs.component.html',
-    styleUrls: ['./mod-subir-docs.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./mod-subir-docs.component.scss']
 })
 export class ModSubirDocsComponent implements OnInit, OnDestroy
 {
@@ -49,9 +47,8 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     subs: Subscription = new Subscription();
     mostrarProgreso: boolean = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService
-        , private subirDocsGQL: SubirDocsGQL, private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth,
-                private entityMisDocumentos: EntityMisDocumentosStore)
+    constructor(private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService, private misDocumentosService: MisDocumentosService,
+                private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth, public entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
 
@@ -93,31 +90,31 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
         {
             if (docArchivo)
             {
-                if (this.data.docUrl)
+                if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.docUrl))
                 {
-                    await this.generalServices.eliminarDocFirabase(this.data.docUrl);
+                    await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.docUrl);
                 }
                 try
                 {
                     this.mostrarProgreso = true;
-                    const ruta = GeneralService.rutaGuardar(this.data.tipoDoc, docArchivo._files[0].name, 'documentos');
+                    const ruta = GeneralService.rutaGuardar(this.entityMisDocumentos.snapshot.documento.tipoDoc, docArchivo._files[0].name, 'documentos');
                     const doc = await this.generalServices.subirFirebase(docArchivo._files[0], ruta);
                     docUrl = await getDownloadURL(doc.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(e.message, 'Error al obtener url');
+                    this.ngxService.errorToast(e.message, 'Error al obtener url del documento');
                 }
             }
             if (acuseArchivo)
             {
-                if (this.data.acuseUrl)
+                if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.acuseUrl))
                 {
-                    await this.generalServices.eliminarDocFirabase(this.data.acuseUrl);
+                    await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.acuseUrl);
                 }
                 try
                 {
                     this.mostrarProgreso = true;
-                    const ruta = GeneralService.rutaGuardar(this.data.tipoDoc, acuseArchivo._files[0].name, 'documentos');
+                    const ruta = GeneralService.rutaGuardar(this.entityMisDocumentos.snapshot.documento.tipoDoc, acuseArchivo._files[0].name, 'documentos');
                     const acuse = await this.generalServices.subirFirebase(acuseArchivo._files[0], ruta);
                     acuseUrl = await getDownloadURL(acuse.ref);
                 } catch (e)
@@ -138,24 +135,15 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
         }
         const actDocs =
             {
-                _id: this.data._id,
+                _id: this.entityMisDocumentos.snapshot.documento._id,
                 docUrl,
                 acuseUrl,
             };
-        this.subirDocsGQL.mutate({args: actDocs, files: {file: docArch, carpeta: 'documentos'}, filesAcuse: {file: acuseArch, carpeta: 'documentos'}})
-            .pipe(tap((res) =>
-            {
-                if (isNotNil(res.data))
-                {
-                    const archivoModificado = $cast<IResolveDocumento>(res.data.subirDocs);
-                    this.entityMisDocumentos.updateOne({id: archivoModificado._id, changes: archivoModificado});
-                    this.ngxService.satisfactorioToast('La subida de archivos se realizo con exito', 'Subida de archivos');
-                }
-            }), finalize(() =>
-            {
-                this.cargando = false;
-                this.formDocsArchivo.enable();
-            })).subscribe();
+        this.misDocumentosService.subirDocs(actDocs, docArch, acuseArch).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.formDocsArchivo.enable();
+        })).subscribe();
     }
 
 
