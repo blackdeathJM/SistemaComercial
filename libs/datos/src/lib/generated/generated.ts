@@ -250,7 +250,6 @@ export type Mutation = {
   eliminarTodos: Scalars['Int'];
   genFolioSinReg: Scalars['String'];
   login?: Maybe<LoginRespuestaType>;
-  marcarLeido: NotificacionType;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
   subirDocs: DocumentoType;
@@ -329,11 +328,6 @@ export type MutationGenFolioSinRegArgs = {
 
 export type MutationLoginArgs = {
   login: LoginInput;
-};
-
-
-export type MutationMarcarLeidoArgs = {
-  _id: Scalars['String'];
 };
 
 
@@ -689,13 +683,6 @@ export type EliminarNotMutationVariables = Exact<{
 
 
 export type EliminarNotMutation = { __typename?: 'Mutation', eliminarNot: { __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
-
-export type MarcarLeidoMutationVariables = Exact<{
-  _id: Scalars['String'];
-}>;
-
-
-export type MarcarLeidoMutation = { __typename?: 'Mutation', marcarLeido: { __typename?: 'NotificacionType', _id?: string | null, idUsuario?: string | null, titulo?: string | null, imagen?: string | null, icono?: string | null, descripcion?: string | null, tiempo?: number | null, link?: string | null, leido?: boolean | null, usarRouter?: boolean | null } };
 
 export type EliminarTodosMutationVariables = Exact<{
   idUsuario: Scalars['String'];
@@ -1438,24 +1425,6 @@ export const EliminarNotDocument = gql`
   })
   export class EliminarNotGQL extends Apollo.Mutation<EliminarNotMutation, EliminarNotMutationVariables> {
     document = EliminarNotDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const MarcarLeidoDocument = gql`
-    mutation marcarLeido($_id: String!) {
-  marcarLeido(_id: $_id) {
-    ...fragNotificacion
-  }
-}
-    ${FragNotificacionFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class MarcarLeidoGQL extends Apollo.Mutation<MarcarLeidoMutation, MarcarLeidoMutationVariables> {
-    document = MarcarLeidoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

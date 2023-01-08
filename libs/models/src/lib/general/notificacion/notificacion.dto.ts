@@ -1,7 +1,7 @@
 import {INotificacion} from './notificacion.interface';
-import {Field, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
+import {Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsBoolean, IsMongoId, IsNotEmpty, IsOptional} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 import {DateTime} from 'luxon';
 import {Document} from 'mongoose';
 

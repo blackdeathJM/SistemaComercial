@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
@@ -21,7 +21,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     sub: Subscription = new Subscription();
     private _overlayRef: OverlayRef;
 
-    constructor(private cdr: ChangeDetectorRef, private _overlay: Overlay, private _viewContainerRef: ViewContainerRef, public entityNotificacion: EntityNotificacion,
+    constructor(private _overlay: Overlay, private _viewContainerRef: ViewContainerRef, public entityNotificacion: EntityNotificacion,
                 private notificacionService: NotificacionService)
     {
     }
@@ -81,6 +81,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
         {
             this._overlayRef.dispose();
         }
+        this.sub.unsubscribe();
     }
 
     private _createOverlay(): void

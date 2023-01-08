@@ -46,7 +46,7 @@ export class NotificacionService
     {
         return this.eliminarTodosGQL.mutate({idUsuario: this.stateAuth.snapshot._id}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data.eliminarTodos !== 0)
             {
                 this.entityNotificacion.removeAll();
             }

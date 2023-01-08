@@ -10,11 +10,11 @@ export class NotificacionService
     {
     }
 
-    async notificaciones(idEmpleado: string): Promise<NotificacionDto[]>
+    async notificaciones(idUsuario: string): Promise<NotificacionDto[]>
     {
         try
         {
-            return await this.notificacion.find({idEmpleado}, {}, {sort: {tiempo: -1}}).exec();
+            return await this.notificacion.find({idUsuario}, {}, {sort: {tiempo: -1}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.message});
@@ -42,18 +42,6 @@ export class NotificacionService
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
-
-    async marcarLeido(_id: string): Promise<NotificacionDto>
-    {
-        try
-        {
-            return await this.notificacion.findByIdAndUpdate(_id, {$set: {leido: true}}).exec();
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e.codeName});
-        }
-    }
-
     async eliminarTodos(idUsuario: string): Promise<number>
     {
         try

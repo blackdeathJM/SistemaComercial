@@ -25,12 +25,6 @@ export class NotificacionResolver
         return await this.notificacionService.eliminarNot(_id);
     }
 
-    @Mutation(() => NotificacionDto)
-    async marcarLeido(@Args('_id') _id: string): Promise<NotificacionDto>
-    {
-        return await this.notificacionService.marcarLeido(_id);
-    }
-
     @Mutation(() => Int)
     async eliminarTodos(@Args('idUsuario') idUsuario: string): Promise<number>
     {
