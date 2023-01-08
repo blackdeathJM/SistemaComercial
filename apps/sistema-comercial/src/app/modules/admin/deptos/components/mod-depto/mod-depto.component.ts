@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/admin/deptos/depto';
@@ -34,7 +34,7 @@ import {DeptoService} from '@s-admin/store/depto.service';
     selector: 'app-mod-depto',
     templateUrl: './mod-depto.component.html',
     styleUrls: ['./mod-depto.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModDeptoComponent implements OnInit
 {

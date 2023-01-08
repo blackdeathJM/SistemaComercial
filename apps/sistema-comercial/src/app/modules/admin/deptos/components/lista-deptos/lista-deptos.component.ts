@@ -9,7 +9,6 @@ import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.compone
 import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
 import {DeptoService} from '@s-admin/store/depto.service';
-import {finalize} from "rxjs";
 
 @Component({
     standalone: true,

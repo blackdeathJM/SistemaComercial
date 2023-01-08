@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
-import {catchError, Observable, of, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -53,10 +53,6 @@ export class EmpleadoService
                 this.stateAuth.setState(nvosDatos.datosSesion);
                 this.ngxToast.satisfactorioToast('Tu avatar se ha cambiado con exito', 'Cambio de avatar');
             }
-        }), catchError(() =>
-        {
-            this.ngxToast.errorToast('Ocurrio un error al tratar de gardar el avatar', 'Error en el servidor');
-            return of(null);
         }));
     }
 
@@ -70,10 +66,6 @@ export class EmpleadoService
                 this.entityEmpleado.addOne(nvoEmpleado);
                 this.ngxToast.satisfactorioToast('El empleado fue dado de alta con exito', 'Alta empleados');
             }
-        }), catchError(() =>
-        {
-            this.ngxToast.errorToast('Ocurrio un error al tratar de dar de alta el registro', 'Alta de empleados');
-            return of(null);
         }));
     }
 
@@ -86,10 +78,6 @@ export class EmpleadoService
                 const empleadosSesion = $cast<IResolveEmpleado[]>(res.data.empleadosSesion);
                 this.entityEmpleado.setAll(empleadosSesion);
             }
-        }), catchError(() =>
-        {
-            this.ngxToast.errorToast('Ocurrio un error al tratar de cargar los usuarios', 'Usuario con sesion');
-            return of(null);
         }));
     }
 }

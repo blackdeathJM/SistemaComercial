@@ -39,8 +39,7 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
     todasRef: string[] = [];
     cargando = false;
 
-    constructor(public dRef: MatDialogRef<ModDocRefComponent>, private ngxToastService: NgxToastService,
-                private misDocumentosService: MisDocumentosService)
+    constructor(public dRef: MatDialogRef<ModDocRefComponent>, private ngxToastService: NgxToastService, private misDocumentosService: MisDocumentosService)
     {
 
     }
@@ -69,7 +68,6 @@ export class ModDocRefComponent implements OnInit, AfterContentInit
             const input = event;
             const value = event.value;
 
-            // Add our fruit
             if ((value || '').trim())
             {
                 this.referencias.push(value.trim());
