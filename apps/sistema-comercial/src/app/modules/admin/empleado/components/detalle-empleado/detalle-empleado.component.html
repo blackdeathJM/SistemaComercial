@@ -5,7 +5,7 @@
         <img class="absolute inset-0 object-cover w-full h-full" [src]="'assets/images/fondos/fondoPerfilEmpleado.jpg'" alt="Fondo">
         <!-- Close button -->
         <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
-            <button mat-icon-button [matTooltip]="'Cerrar panel'" (click)="cerrarP()">
+            <button mat-icon-button [matTooltip]="'Cerrar panel'" (click)="panelService.setPanel = false">
                 <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x'"></mat-icon>
             </button>
         </div>
@@ -64,12 +64,12 @@
                                             </div>
                                         </ng-container>
                                     </div>
-                                    <div class="font-bold text-lg leading-6 text-amber-600 ml-3">{{permiso.title}}</div>
+                                    <div class="font-bold text-lg leading-6 text-amber-600 ml-3">{{permiso?.title}}</div>
                                 </div>
                             </div>
                             <mat-selection-list>
                                 <div class="flex flex-column w-full" *ngFor="let hijo of permiso?.children">
-                                    <mat-slide-toggle>{{hijo.title}}</mat-slide-toggle>
+                                    <mat-slide-toggle>{{hijo?.title}}</mat-slide-toggle>
 
                                     <div class="flex flex-column w-full m-2 mt-4" *ngFor="let hijo2 of hijo?.children">
                                         <mat-slide-toggle>{{hijo2?.title}}</mat-slide-toggle>

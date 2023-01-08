@@ -11,23 +11,18 @@ import {Empleado, Telefono} from '#/libs/models/src/lib/admin/empleado/empleado'
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {CrearEmpleadoGQL} from '#/libs/datos/src';
-import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
-import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {DeptoEliminarStore} from '#/apps/sistema-comercial/src/query/deptoEliminar.store';
-import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {catchError, finalize, Observable, of, tap} from 'rxjs';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {finalize} from 'rxjs';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {DeptoService} from '@s-admin/store/depto.service';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {DeptoService} from "@s-admin/store/depto.service";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -56,8 +51,6 @@ import {DeptoService} from "@s-admin/store/depto.service";
 })
 export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
 {
-    @Select(DeptoEliminarStore.deptos)
-    deptos$: Observable<IDepto[]>;
     formEmpleado: FormGroup;
     cargando = false;
 
@@ -68,8 +61,8 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 5);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
-    constructor(private fb: RxFormBuilder, private crearEmpleadoGQL: CrearEmpleadoGQL, public mdr: MatDialog, private stateAuth: StateAuth, private ngxToast: NgxToastService,
-                private deptoService: DeptoService, public entityEmpleadoStore: EntityEmpleadoStore)
+    constructor(private fb: RxFormBuilder, public mdr: MatDialog, private stateAuth: StateAuth, private ngxToast: NgxToastService, public entityDepto: EntityDeptoStore,
+                private deptoService: DeptoService, private empleadoService: EmpleadoService)
     {
     }
 
@@ -95,7 +88,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
 
     ngAfterContentInit(): void
     {
-        this.deptoService.departamentos();
+        this.deptoService.departamentos().subscribe();
     }
 
     agregarTel(): void
@@ -138,20 +131,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
                     ],
                 ...resto
             };
-
-        this.crearEmpleadoGQL.mutate({empleadoDatos}).pipe(tap((res) =>
-        {
-            if (isNotNil(res.data))
-            {
-                const empleadoReg = $cast<IResolveEmpleado>(res.data.crearEmpleado);
-                this.entityEmpleadoStore.addOne(empleadoReg);
-                this.ngxToast.satisfactorioToast('El registro fue realizado con exito', 'Registro de empleados');
-            }
-        }), catchError(() =>
-        {
-            this.ngxToast.errorToast('Ocurrio un error al registrar el documento', 'Registro empleados');
-            return of(null);
-        }), finalize(() =>
+        this.empleadoService.crearEmpleado(empleadoDatos).pipe(finalize(() =>
         {
             this.cargando = false;
             this.formEmpleado.enable();

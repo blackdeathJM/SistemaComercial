@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuseCardModule} from '@s-fuse/card';
-import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
+import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';

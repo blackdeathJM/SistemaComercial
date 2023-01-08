@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation} from '@angular/core';
-import {BooleanInput} from '@angular/cdk/coercion';
 import {Observable} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {RolCambiadoGQL} from '#/libs/datos/src';
@@ -16,9 +15,6 @@ import {AuthService} from '@s-core/auth/store/auth.service';
 })
 export class UserComponent
 {
-    /* eslint-disable @typescript-eslint/naming-convention */
-    static ngAcceptInputType_showAvatar: BooleanInput;
-    /* eslint-enable @typescript-eslint/naming-convention */
     @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
 

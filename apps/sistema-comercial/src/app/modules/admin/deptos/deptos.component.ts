@@ -15,6 +15,7 @@ import {DeptoStore} from "@s-admin/store/depto.store";
 import {DeptoService} from "@s-admin/store/depto.service";
 import {DeptoQuery} from "@s-admin/store/depto.query";
 import {AsyncPipe, NgIf} from "@angular/common";
+import {ListaDetalleService} from "@s-shared/plantillas/lista-detalle/lista-detalle.service";
 
 @Component({
     standalone: true,
@@ -41,25 +42,14 @@ import {AsyncPipe, NgIf} from "@angular/common";
 export class DeptosComponent implements OnInit
 {
     controlBuscar: FormControl = new FormControl();
-    constructor(private dRef: MatDialog, private entityDepto: EntityDeptoStore, private deptoStore: DeptoStore, private deptoService: DeptoService, public deptoQuery: DeptoQuery)
+
+    constructor(private dRef: MatDialog, private panelService: ListaDetalleService)
     {
     }
 
     ngOnInit(): void
     {
-        //TODO crear filtro para la lista de arreglos
-        // this.subscripciones.add(this.deptosGQL.watch().valueChanges.pipe(switchMap((res) =>
-        // {
-        //     if (res.data)
-        //     {
-        //         STATE_DEPTOS(cloneDeep(res.data.deptos as IDepto[]));
-        //     }
-        //     return this.controlBuscar.valueChanges.pipe(debounceTime(200), map(value => res.data.deptos.filter(v => v.nombre.toLowerCase().includes(value.toLowerCase()))));
-        // })).subscribe((res) =>
-        // {
-        //     this.datosCargados = false;
-        //     STATE_DEPTOS(res as IDepto[]);
-        // }));
+        this.panelService.setPanel = false;
     }
 
     registro(): void

@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectorRef, Component, Inject} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {CommonModule, DOCUMENT} from '@angular/common';
@@ -30,18 +30,18 @@ import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
     templateUrl: './empleado.component.html',
     styleUrls: ['./empleado.component.scss']
 })
-export class EmpleadoComponent implements AfterContentInit
+export class EmpleadoComponent implements OnInit
 {
-    abrirP: boolean = STATE_ABRIR_CERRAR_PANEL();
+    abrirP: boolean = false;
     ctrlBuscar: FormControl = new FormControl();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, public entityEmpleadoStore: EntityEmpleadoStore)
     {
     }
 
-    ngAfterContentInit(): void
+    ngOnInit(): void
     {
-        // this.ctrlBuscar.valueChanges.pipe(auditTime(1000), map((res: string) => this.stateEmpleados.filtrarEmpleado(res))).subscribe();
+        this.abrirP = STATE_ABRIR_CERRAR_PANEL();
     }
 
     cerrarP(evento: boolean): void

@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit, OnDestroy
     panels: IPanels[] = [];
     selectedPanel: string = 'deptos';
 
-    private eliminarSubscripcion: Subject<any> = new Subject<any>();
+    private sub: Subject<any> = new Subject<any>();
 
     constructor(private cdr: ChangeDetectorRef, private fuseMediaWatcherService: FuseMediaWatcherService)
     {
@@ -54,7 +54,7 @@ export class AdminComponent implements OnInit, OnDestroy
                     description: 'Crea, asigna y administra permisos a empleados'
                 }
             ];
-        this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.eliminarSubscripcion)).subscribe(({matchingAliases}) =>
+        this.fuseMediaWatcherService.onMediaChange$.pipe(takeUntil(this.sub)).subscribe(({matchingAliases}) =>
         {
             if (matchingAliases.includes('lg'))
             {
@@ -85,7 +85,7 @@ export class AdminComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     {
-        this.eliminarSubscripcion.next(null);
-        this.eliminarSubscripcion.complete();
+        this.sub.next(null);
+        this.sub.complete();
     }
 }

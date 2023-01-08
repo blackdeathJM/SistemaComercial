@@ -1,16 +1,17 @@
 import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DOCUMENT} from '@angular/common';
+import {AsyncPipe, DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
-import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
+import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
 
 @Component({
     standalone: true,
     imports:
         [
-            MatSidenavModule
+            MatSidenavModule,
+            AsyncPipe
         ],
     selector: 'app-lista-detalle',
     templateUrl: './lista-detalle.component.html',
@@ -21,13 +22,14 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     drawerMode: 'side' | 'over';
-    abriPanel = STATE_ABRIR_CERRAR_PANEL();
+    panel$ = this.panelService.getPanel;
     private sub: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService)
+                private fuseMediaWatcherService: FuseMediaWatcherService, private panelService: ListaDetalleService)
     {
     }
+
     ngOnInit(): void
     {
         this.matDrawer.openedChange.subscribe((opened) =>

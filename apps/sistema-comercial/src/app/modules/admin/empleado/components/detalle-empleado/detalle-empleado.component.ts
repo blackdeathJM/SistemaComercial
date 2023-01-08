@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -15,7 +15,7 @@ import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Select} from '@ngxs/store';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
 
 @Component({
     standalone: true,
@@ -41,27 +41,15 @@ import {isNotNil} from '@angular-ru/cdk/utils';
 export class DetalleEmpleadoComponent
 {
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
-    @Output() cerrarPanel = new EventEmitter<boolean>();
 
-    constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore)
+    constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore, public panelService: ListaDetalleService)
     {
 
-    }
-
-    cerrarP(): void
-    {
-        this.cerrarPanel.emit(false);
     }
 
     asignarSesion(): void
     {
-        this.dRef.open(RegistroSesionComponent, {width: '40%', data: null}).afterClosed().subscribe((res: IResolveEmpleado) =>
-        {
-            if (isNotNil(res))
-            {
-                this.entityEmpleadoStore.seleccionarEmpleado(res);
-            }
-        });
+        this.dRef.open(RegistroSesionComponent, {width: '40%', data: null});
     }
 
     trackByFn(index: number, item: any): any

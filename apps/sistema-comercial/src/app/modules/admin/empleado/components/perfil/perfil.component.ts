@@ -12,13 +12,13 @@ import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from '@rxweb/reac
 import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL} from '#/libs/datos/src';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {tap} from 'rxjs';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {finalize} from 'rxjs';
 import {getDownloadURL} from '@angular/fire/storage';
-import {TOKEN} from '@s-auth/const';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 
 @Component({
     selector: 'app-perfil',
@@ -43,8 +43,8 @@ export class PerfilComponent implements OnInit
             RxwebValidators.compare({fieldName: 'txtContrasena', message: 'Las contrasenas no son iguales'})]]
     });
 
-    constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL,
-                private ngxToastService: NgxToastService, private generalService: GeneralService, private stateAuth: StateAuth)
+    constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL
+        , private generalService: GeneralService, private stateAuth: StateAuth, private empleadoService: EmpleadoService, private ngxToast: NgxToastService)
     {
     }
 
@@ -68,23 +68,21 @@ export class PerfilComponent implements OnInit
     async cambiarImagen(): Promise<void>
     {
         this.deshabilitar = true;
-        if (this.stateAuth.snapshot.avatar)
+        try
         {
-            await this.generalService.eliminarDocFirabase(this.stateAuth.snapshot.avatar);
-        }
-        const ruta = GeneralService.rutaGuardar('perfil', this.img.name, 'empleado');
-        const imagen = await this.generalService.subirFirebase(this.img, ruta);
-        const url = await getDownloadURL(imagen.ref);
-        this.actualizarAvatarGql.mutate({_id: this.stateAuth.snapshot._id, url}).pipe(tap((res) =>
-        {
-            if (res.data)
+            if (this.stateAuth.snapshot.avatar)
             {
-                localStorage.setItem(TOKEN, res.data.actualizarAvatar.token);
-                const sesion = res.data.actualizarAvatar.datosSesion as IDatosSesion;
-                this.stateAuth.setState(sesion);
-                this.deshabilitar = false;
+                await this.generalService.eliminarDocFirabase(this.stateAuth.snapshot.avatar);
             }
-        })).subscribe();
+            const ruta = GeneralService.rutaGuardar('perfil', this.img.name, 'empleado');
+            const imagen = await this.generalService.subirFirebase(this.img, ruta);
+            const url = await getDownloadURL(imagen.ref);
+
+            this.empleadoService.actualizarAvatar(this.stateAuth.snapshot._id, url).pipe(finalize(() => this.deshabilitar = false)).subscribe();
+        } catch (e)
+        {
+            this.ngxToast.satisfactorioToast('Ocurrio un error al tratar de cambiar tu avatar', 'Error cambio de avatar');
+        }
     }
 
     cambiarContrasena(): void
@@ -99,13 +97,6 @@ export class PerfilComponent implements OnInit
                 valorActual: null,
                 valorAnterior: null
             };
-        this.actualizarContrasena.mutate({datos: {_id: this.stateAuth.snapshot._id, contrasena: txtContrasena}, modificadoPor}).pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                this.ngxToastService.satisfactorioToast('La contrasena se ha cambiado con exito', 'Cambio de contrasena');
-                this.formCambioContrasena.enable();
-            }
-        })).subscribe();
+        this.empleadoService.actualizarContrasena(this.stateAuth.snapshot._id, txtContrasena, modificadoPor).pipe(finalize(() => this.formCambioContrasena.enable())).subscribe();
     }
 }

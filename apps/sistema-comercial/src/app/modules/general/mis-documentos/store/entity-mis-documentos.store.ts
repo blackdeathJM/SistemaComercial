@@ -1,4 +1,4 @@
-import {Computed, DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
+import {DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {IDocsUsuarioProceso, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {Injectable} from '@angular/core';
@@ -38,38 +38,15 @@ export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepositor
     }
 
     @DataAction()
-    public seleccionarDoc(@Payload('seleccionarDoc') documento: IResolveDocumento): void
+    public seleccionarDoc(@Payload('seleccionarDoc') docSelect: IResolveDocumento): void
     {
-        const state = this.getState();
-        this.setEntitiesState({
-            ...state,
-            documento
-        });
-    }
-
-    @DataAction()
-    public cargarDocsPorProceso(@Payload('seleccionarDocsProcesoYEnviadoPor') proceso: 'pendiente' | 'terminado', esEnviadoPor: boolean): void
-    {
-        // Realizamos consulta para obtener los documentos de la carga inicial en la cual checamos el proceso y si es enviado por mi o son para mi
-        this.ngxLoader.startLoader('listaDocs');
-        const args: IDocsUsuarioProceso =
-            {
-                enviadoPor: this.stateAuth.snapshot._id,
-                esEnviadoPor,
-                proceso,
-                usuario: this.stateAuth.snapshot._id
-            };
-
-        this.docsUsuarioProcesoGQL.watch({...args}).valueChanges.subscribe((res) =>
-        {
-            if (isNotNil(res.data))
-            {
-                const documentos = $cast<IResolveDocumento[]>(res.data.docsUsuarioProceso);
-                console.log('documentos', documentos);
-                this.setAll(documentos);
-            }
-            this.ngxLoader.stopLoader('listaDocs');
-        });
+        // const state = this.getState();
+        // this.setEntitiesState({
+        //     ...state,
+        //     documento
+        // });
+        const documento = $cast<IResolveDocumento>(docSelect);
+        this.ctx.patchState({documento});
     }
 
     public selectId(entity: IResolveDocumento): EntityIdType

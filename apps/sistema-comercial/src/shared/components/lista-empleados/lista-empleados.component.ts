@@ -5,7 +5,7 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
-import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
+import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
 
 @Component({
     standalone: true,
@@ -18,7 +18,7 @@ export class ListaEmpleadosComponent implements OnInit
 {
     listaEmpleados = 'listaEmpleados';
 
-    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService)
+    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService, private panelService: ListaDetalleService)
     {
     }
 
@@ -36,6 +36,6 @@ export class ListaEmpleadosComponent implements OnInit
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.seleccionarEmpleado(empleado);
-        STATE_ABRIR_CERRAR_PANEL(true);
+        this.panelService.setPanel = true;
     }
 }

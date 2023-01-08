@@ -18,7 +18,7 @@ import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.co
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Select} from '@ngxs/store';
-import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
+import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {STATE_ABRIR_CERRAR_PANEL} from '@s-general/variables-docs.state';
 

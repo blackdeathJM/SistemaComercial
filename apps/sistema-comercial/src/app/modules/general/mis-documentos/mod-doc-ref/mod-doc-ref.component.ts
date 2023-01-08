@@ -14,7 +14,7 @@ import {IResolveDocumento, TDocRefFolio} from '#/libs/models/src/lib/general/doc
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {$cast} from '@angular-ru/cdk/utils';
-import {EntityMisDocumentosStore} from '@s-general/entity-mis-documentos.store';
+import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 
 @Component({
     selector: 'app-mod-doc-ref',
