@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {DocActFolioGQL, DocFinalizarGQL, DocsBusquedaGralGQL, DocsFechasGQL, DocsUsuarioProcesoGQL, ReasignarUsuarioGQL, RegDocGQL, SubirDocsGQL} from '#/libs/datos/src';
+import {DocActFolioGQL, DocFinalizarGQL, DocRefFolioGQL, DocsBusquedaGralGQL, DocsFechasGQL, DocsRefGQL, DocsUsuarioProcesoGQL, ReasignarUsuarioGQL, RegDocGQL, SubirDocsGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {IDocActFolio, IDocsFechas, IDocsUsuarioProceso, IResolveDocumento, TDocumentoReg} from '#/libs/models/src/lib/general/documentos/documento.interface';
+import {IDocActFolio, IDocsFechas, IDocsUsuarioProceso, IResolveDocumento, TDocRefFolio, TDocumentoReg} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 
@@ -16,7 +16,8 @@ export class MisDocumentosService
 {
     constructor(private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private stateAuth: StateAuth, private ngxToast: NgxToastService, private entityMisDocumentos: EntityMisDocumentosStore,
                 private docsBuscarGralGQL: DocsBusquedaGralGQL, private docsFechasGQL: DocsFechasGQL, private ngxLoader: NgxUiLoaderService, private regDocGQL: RegDocGQL,
-                private finalizarDocGQL: DocFinalizarGQL, private docActFolioGQL: DocActFolioGQL, private subirDocsGQL: SubirDocsGQL, private reasignarUsuarioGQL: ReasignarUsuarioGQL)
+                private finalizarDocGQL: DocFinalizarGQL, private docActFolioGQL: DocActFolioGQL, private subirDocsGQL: SubirDocsGQL, private reasignarUsuarioGQL: ReasignarUsuarioGQL,
+                private docsRefGQL: DocsRefGQL, private docRefFolioGQL: DocRefFolioGQL)
     {
     }
 
@@ -143,6 +144,32 @@ export class MisDocumentosService
                 this.entityMisDocumentos.updateOne({id: changes._id, changes});
                 this.entityMisDocumentos.patchState({documento: changes});
                 this.ngxToast.satisfactorioToast('La reasignacion se ha realizado con exito', 'Reasignacion de usuarios');
+            }
+        }));
+    }
+
+    docsRef(): Observable<SingleExecutionResult>
+    {
+        return this.docsRefGQL.watch({_id: this.entityMisDocumentos.snapshot.documento._id, usuario: this.stateAuth.snapshot._id}).valueChanges;
+    }
+
+    docRefFolio(ref: string[]): Observable<SingleExecutionResult>
+    {
+        const entradas: TDocRefFolio =
+            {
+                _id: this.entityMisDocumentos.snapshot.documento._id,
+                folio: this.entityMisDocumentos.snapshot.documento.folio,
+                usuarioFolio: this.stateAuth.snapshot._id,
+                ref,
+            };
+        return this.docRefFolioGQL.mutate({entradas}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const changes = $cast<IResolveDocumento>(res.data.docRefFolio);
+                this.entityMisDocumentos.updateOne({id: changes._id, changes});
+                this.entityMisDocumentos.patchState({documento: changes});
+                this.ngxToast.satisfactorioToast('La referencia se creo correctamente', 'Referenciar folio');
             }
         }));
     }
