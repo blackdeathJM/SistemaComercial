@@ -1,6 +1,5 @@
 <div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
     <mat-drawer-container class="flex-auto overflow-visible">
-        <!-- Drawer -->
         <mat-drawer class="w-72 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened" #matDrawer>
             <app-menu-empleados></app-menu-empleados>
         </mat-drawer>
@@ -13,6 +12,7 @@
                     <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
                 </button>
             </div>
+
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-4 sm:py-8 sm:px-10 border-b">
                 <div class="flex-1 min-w-0">
                     <app-consulta-empleado></app-consulta-empleado>
@@ -22,9 +22,10 @@
             <!-- Main -->
             <div class="flex-auto p-6 sm:p-10">
                 <div class="h-400 min-h-400 max-h-400">
-
+                    <router-outlet></router-outlet>
                 </div>
             </div>
+
         </mat-drawer-content>
     </mat-drawer-container>
 

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
-import {RouterLink, RouterLinkWithHref} from '@angular/router';
+import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -18,7 +18,7 @@ import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-
     imports:
         [
             CommonModule, MatIconModule, RouterLinkWithHref, MatButtonModule, MatTabsModule, MatSidenavModule,
-            RouterLink, MenuEmpleadosComponent, ListaEmpleadosComponent, FuseCardModule, ConsultaEmpleadoComponent
+            RouterLink, MenuEmpleadosComponent, ListaEmpleadosComponent, FuseCardModule, ConsultaEmpleadoComponent, RouterOutlet
         ],
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss']
