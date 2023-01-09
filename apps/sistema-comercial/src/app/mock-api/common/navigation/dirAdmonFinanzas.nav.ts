@@ -23,12 +23,57 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                             [
                                 {
                                     id: 'empleados',
-                                    title: 'Empleados',
+                                    title: 'Info. gral empleados',
                                     type: 'basic',
                                     icon: 'people',
                                     activo: false,
                                     disabled: false,
                                     link: dirAdmonFinanzas + 'recursos-humanos/' + 'empleados'
+                                },
+                                {
+                                    id: 'imss',
+                                    title: 'Imss',
+                                    type: 'basic',
+                                    icon: 'people',
+                                    activo: false,
+                                    disabled: false,
+                                    link: ''
+                                },
+                                {
+                                    id: 'nomina',
+                                    title: 'Nomina',
+                                    type: 'basic',
+                                    icon: 'people',
+                                    activo: false,
+                                    disabled: false,
+                                    link: ''
+                                },
+                                {
+                                    id: 'retardos',
+                                    title: 'Retardos',
+                                    type: 'basic',
+                                    icon: 'people',
+                                    activo: false,
+                                    disabled: false,
+                                    link: ''
+                                },
+                                {
+                                    id: 'cuotas',
+                                    title: 'Cuotas',
+                                    type: 'basic',
+                                    icon: 'people',
+                                    activo: false,
+                                    disabled: false,
+                                    link: ''
+                                },
+                                {
+                                    id: 'fondoDeAhoro',
+                                    title: 'Fondo de ahorro',
+                                    type: 'basic',
+                                    icon: 'people',
+                                    activo: false,
+                                    disabled: false,
+                                    link: ''
                                 }
                             ]
                     },

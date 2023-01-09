@@ -4,8 +4,6 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.in
 import {Injectable} from '@angular/core';
 import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
-import {EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 
 export interface IEmpleadoSelect
 {
@@ -24,7 +22,7 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
 {
     public primaryKey = '_id';
 
-    constructor(private empleadosGQL: EmpleadosGQL, private empleadosSesionGQL: EmpleadosSesionGQL)
+    constructor()
     {
         super();
     }
@@ -46,18 +44,5 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
         // });
         const empleadoSeleccionado = this.selectOne(empleado._id);
         this.ctx.patchState({empleado: empleadoSeleccionado});
-    }
-
-    @DataAction()
-    public empleadosConSesion(): void
-    {
-        this.empleadosSesionGQL.watch().valueChanges.subscribe((empleadosSesion) =>
-        {
-            if (isNotNil(empleadosSesion.data.empleadosSesion))
-            {
-                const empleados = $cast<IResolveEmpleado[]>(empleadosSesion.data.empleadosSesion);
-                this.setAll(empleados);
-            }
-        });
     }
 }

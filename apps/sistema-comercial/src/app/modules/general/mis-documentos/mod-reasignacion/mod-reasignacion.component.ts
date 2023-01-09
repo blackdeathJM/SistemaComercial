@@ -14,6 +14,7 @@ import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.s
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 
 @Component({
     selector: 'app-mod-reasignacion',
@@ -40,14 +41,14 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
     cargando: boolean = false;
 
     constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService,
-                private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EntityEmpleadoStore)
+                private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EntityEmpleadoStore, private empleadoService: EmpleadoService)
     {
     }
 
     ngOnInit(): void
     {
         // Asignamos los empleados que ya se les haya asignado algún documento para establecer de nuevo la asignacion
-        this.entityEmpleados.empleadosConSesion();
+        this.empleadoService.empleadosConSesion().subscribe();
     }
 
     ngAfterContentInit(): void

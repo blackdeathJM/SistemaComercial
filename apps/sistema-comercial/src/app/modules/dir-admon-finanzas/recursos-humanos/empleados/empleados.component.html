@@ -1,53 +1,53 @@
-<div class="flex flex-col flex-auto min-w-0">
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
-        <div class="flex-1 min-w-0">
-            <!-- Title -->
-            <div class="mt-2">
-                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Panel de busqueda
-                </h2>
+<div
+    class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto"
+    cdkScrollable>
+
+    <mat-drawer-container class="flex-auto overflow-visible">
+
+        <!-- Drawer -->
+        <mat-drawer
+            class="w-72 dark:bg-gray-900"
+            [autoFocus]="false"
+            [mode]="drawerMode"
+            [opened]="drawerOpened"
+            #matDrawer>
+            <!-- Demo sidebar -->
+            <app-menu-empleados></app-menu-empleados>
+        </mat-drawer>
+
+        <!-- Drawer content -->
+        <mat-drawer-content class="flex flex-col">
+
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+                <div class="flex-1 min-w-0">
+                    <!-- Title -->
+                    <div class="mt-2">
+                        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                            Consulta empleados
+                        </h2>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+                    <button
+                        mat-icon-button
+                        (click)="matDrawer.toggle()">
+                        <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+                    </button>
+                </div>
             </div>
-        </div>
-        <!-- Actions -->
-        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button mat-raised-button color="primary" (click)="registroEmpleado()">
-                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'mat_outline:person_add'"></mat-icon>
-                Registrar nuevo empleado
-            </button>
-            <button class="ml-3" mat-flat-button [color]="'accent'">
-                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:link'"></mat-icon>
-                Otra accion
-            </button>
-        </div>
-    </div>
 
-    <!-- Main -->
-    <div class="flex-auto pt-6 sm:px-4 sm:pb-4">
-        <!-- Tabs -->
-        <mat-tab-group [animationDuration]="'0'">
-            <!-- Tab #1 -->
-            <mat-tab label="Lista empleados">
-                <!-- TAB CONTENT GOES HERE -->
-                <div class="flex justify-center h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    <div class="mt-52 text-4xl font-bold text-hint">Informacion</div>
-                </div>
-            </mat-tab>
-            <!-- Tab #2 -->
-            <mat-tab label="Informacion seguro">
-                <!-- TAB CONTENT GOES HERE -->
-                <div class="flex justify-center h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    <div class="mt-52 text-4xl font-bold text-hint">Informacion seguro</div>
-                </div>
-            </mat-tab>
+            <!-- Main -->
+            <div class="flex-auto p-6 sm:p-10">
 
-            <!-- Tab #3 -->
-            <mat-tab label="Otra informacion">
-                <!-- TAB CONTENT GOES HERE -->
-                <div class="flex justify-center h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    <div class="mt-52 text-4xl font-bold text-hint">Otra informacion</div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
+                <!-- CONTENT GOES HERE -->
+                <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl"></div>
+
+            </div>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
 </div>
