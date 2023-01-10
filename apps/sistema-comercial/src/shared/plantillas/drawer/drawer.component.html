@@ -3,9 +3,8 @@
         <ng-content select="[panelIzq]"></ng-content>
     </mat-drawer>
 
-    <mat-drawer-content class="flex flex-col h-full">
-
-        <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-6 sm:py-8 md:px-8 border-b bg-card dark:bg-transparent">
+    <mat-drawer-content class="flex flex-col bg-green-900">
+        <div class="flex sm:flex-row items-start sm:items-center sm:justify-between p-6 sm:py-8 md:px-8 border-b bg-card dark:bg-transparent">
             <!-- Title -->
             <div class="text-4xl font-extrabold tracking-tight leading-none">
                 <ng-content select="[titulo]"></ng-content>
@@ -16,15 +15,15 @@
             </div>
         </div>
 
-<!--        <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between p-2 sm:py-4 md:px-8 border-b bg-card dark:bg-transparent">-->
-<!--            <div class="flex items-center mt-4 sm:mt-0 md:mt-4 w-full">-->
-<!--                &lt;!&ndash; Search &ndash;&gt;-->
-<!--                <div class="flex-auto">-->
-<!--                    <ng-content select="[buscar]"></ng-content>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <ng-content select="[contenido]"></ng-content>-->
+        <div class="flex sm:flex-row items-start sm:items-center sm:justify-between p-2 sm:py-4 md:px-8 border-b bg-card dark:bg-transparent">
+            <div class="flex items-center mt-4 sm:mt-0 md:mt-4 w-full">
+                <!-- Search -->
+                <div class="flex-auto">
+                    <ng-content select="[buscar]"></ng-content>
+                </div>
+            </div>
+        </div>
+        <!--        <ng-content select="[contenido]"></ng-content>-->
 
     </mat-drawer-content>
     <mat-drawer class="{{anchoDer}} dark:bg-gray-900" [mode]="drawModeDer" [opened]="panelDer$ | async" position="end" autoFocus="false" [disableClose]="true" #matDrawerDer>

@@ -1,4 +1,4 @@
-<div class="flex-auto absolute inset-0 min-w-0 overflow-y-auto">
+<div class="flex flex-col overflow-y-auto max-h-screen">
     <ng-container *ngIf="(entityDepto.entitiesArray$| async) as deptos">
         <ng-container *ngIf="deptos.length > 0" ngxUiLoaderBlurred>
             <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
@@ -14,6 +14,6 @@
                 </div>
             </ng-container>
         </ng-container>
+        <ngx-ui-loader [loaderId]="idLoader"></ngx-ui-loader>
     </ng-container>
 </div>
-<ngx-ui-loader [loaderId]="idLoader"></ngx-ui-loader>

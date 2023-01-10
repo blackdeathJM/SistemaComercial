@@ -21,8 +21,5 @@
 
 <ngx-ui-loader [loaderId]="loaderListaDocs"></ngx-ui-loader>
 <ng-template #noHayDocs>
-    <fuse-alert type="info" appearance="border" class="w-full p-8">
-        <span fuseAlertTitle>Documentos</span>
-        <span class="text-2xl">No se encontraron documentos para mostrar</span>
-    </fuse-alert>
+    <app-sin-datos></app-sin-datos>
 </ng-template>
