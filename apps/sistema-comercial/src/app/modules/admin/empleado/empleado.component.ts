@@ -3,11 +3,12 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
+import {DrawerComponent} from '@s-shared/plantillas/lista-detalle/drawer.component';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @Component({
     standalone: true,
@@ -16,12 +17,13 @@ import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/list
             CommonModule,
             MatFormFieldModule,
             MatIconModule,
-            ListaDetalleComponent,
+            DrawerComponent,
             MatInputModule,
             ReactiveFormsModule,
             RxReactiveFormsModule,
             DetalleEmpleadoComponent,
             ListaEmpleadosComponent,
+            MatSidenavModule,
         ],
     selector: 'app-empleado',
     templateUrl: './empleado.component.html',
@@ -30,8 +32,4 @@ import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/list
 export class EmpleadoComponent
 {
     ctrlBuscar: FormControl = new FormControl();
-
-    constructor()
-    {
-    }
 }

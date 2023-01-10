@@ -13,12 +13,12 @@ import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-deta
             MatSidenavModule,
             AsyncPipe
         ],
-    selector: 'app-lista-detalle',
-    templateUrl: './lista-detalle.component.html',
-    styleUrls: ['./lista-detalle.component.scss'],
+    selector: 'app-drawer',
+    templateUrl: './drawer.component.html',
+    styleUrls: ['./drawer.component.scss'],
     exportAs: 'app-lista-detalle'
 })
-export class ListaDetalleComponent implements OnInit, OnDestroy
+export class DrawerComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     drawerMode: 'side' | 'over';
@@ -60,6 +60,7 @@ export class ListaDetalleComponent implements OnInit, OnDestroy
 
     trackByFn(index: number, item: any): any
     {
+        console.log('lista detalle', item);
         return item._id || index;
     }
 

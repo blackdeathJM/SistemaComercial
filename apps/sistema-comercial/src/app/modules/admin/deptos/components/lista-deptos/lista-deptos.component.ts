@@ -3,7 +3,6 @@ import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
-import {TailwindLoadingComponent} from '@s-shared/tailwind-loading/tailwind-loading.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
@@ -18,7 +17,6 @@ import {DeptoService} from '@s-admin/store/depto.service';
             CommonModule,
             MatButtonModule,
             MatIconModule,
-            TailwindLoadingComponent,
             NgxUiLoaderModule,
         ],
     selector: 'app-lista-deptos',

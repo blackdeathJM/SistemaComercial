@@ -1,14 +1,29 @@
-<section class="bg-gray-400 flex flex-col">
-<div>texto</div>
-</section>
-    <ng-container *ngIf="entityEmpleado.entitiesArray$ | async as empleados" ngxUiLoaderBlurred>
-        <ng-container *ngIf="empleados.length > 0; else noHayEmpleados">
-            <ng-container *ngFor="let empleado of empleados; let i = index; trackBy: trackByFn">
-                <!-- Contact -->
-                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b hover:bg-amber-100 dark:hover:bg-gray-600" (click)="seleccionarEmpleado(empleado)">
-                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+<ng-container *ngIf="entityEmpleado.entitiesArray && entityEmpleado.entitiesArray.length > 0; else sinEmpleados">
+    <div class="flex flex-auto flex-col w-full min-w-0">
+        <!-- Header -->
+        <div class="flex flex-col flex-0 py-4 px-8 border-b bg-gray-50 dark:bg-transparent">
+            <div class="mt-4">
+                <mat-form-field class="fuse-mat-rounded fuse-mat-dense w-full" [subscriptSizing]="'dynamic'">
+                    <mat-icon matPrefix class="icon-size-5" [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                    <input matInput [autocomplete]="'off'" [placeholder]="'Buscar'" (input)="filtrarEmpleados(searchField.value)" #searchField/>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col inset-0 flex-auto overflow-y-auto inset-0">
+        <!--            <ng-container *ngIf="empleadosFiltrados.length > 0; else sinEmpleados">-->
+        <ng-container *ngIf="entityEmpleado.entitiesArray.length > 0; else sinEmpleados">
+            <!--                <ng-container *ngFor=" let empleado of empleadosFiltrados;trackBy: trackByFn">-->
+            <ng-container *ngFor=" let empleado of entityEmpleado.entitiesArray$ | async;trackBy: trackByFn">
+                <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b"
+                   [ngClass]="{
+                                        'hover:bg-gray-100 dark:hover:bg-hover':!empleadoSeleccionado || empleadoSeleccionado._id !== empleado._id,
+                                        'bg-primary-50 dark:bg-hover': empleadoSeleccionado && empleadoSeleccionado._id === empleado._id
+                                  }">
+                    <div class="relative flex flex-0 items-center justify-center w-10 h-10">
                         <ng-container *ngIf="empleado.avatar">
-                            <img class="object-cover w-full h-full" [src]="empleado.avatar" alt="Avatar"/>
+                            <img class="w-full h-full rounded-full object-cover"
+                                 [src]="empleado.avatar" alt="avatar"/>
                         </ng-container>
                         <ng-container *ngIf="!empleado.avatar">
                             <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
@@ -17,18 +32,21 @@
                         </ng-container>
                     </div>
                     <div class="min-w-0 ml-4">
-                        <div class="font-medium leading-5 truncate">{{empleado.nombreCompleto}}</div>
+                        <div class="font-medium leading-5 truncate">
+                            {{ empleado.nombreCompleto }}
+                        </div>
+                        <div class="leading-5 truncate text-secondary">
+                            puesto
+                        </div>
                     </div>
                 </a>
             </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
+</ng-container>
 
 
 <ngx-ui-loader [loaderId]="listaEmpleados"></ngx-ui-loader>
-<ng-template #noHayEmpleados>
-    <fuse-alert type="info" appearance="border" class="p-8">
-        <span fuseAlertTitle>Empleados</span>
-        <span class="text-2xl">No se encontraron empleados para mostrar</span>
-    </fuse-alert>
+<ng-template #sinEmpleados>
+    <app-sin-datos></app-sin-datos>
 </ng-template>

@@ -6,16 +6,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
+import {DrawerComponent} from '@s-shared/plantillas/lista-detalle/drawer.component';
 import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {EntityDeptoStore} from "@s-admin/store/entity-depto.store";
-import {DeptoStore} from "@s-admin/store/depto.store";
-import {DeptoService} from "@s-admin/store/depto.service";
-import {DeptoQuery} from "@s-admin/store/depto.query";
-import {AsyncPipe, NgIf} from "@angular/common";
-import {ListaDetalleService} from "@s-shared/plantillas/lista-detalle/lista-detalle.service";
+import {AsyncPipe} from '@angular/common';
+import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
 
 @Component({
     standalone: true,
@@ -28,10 +24,9 @@ import {ListaDetalleService} from "@s-shared/plantillas/lista-detalle/lista-deta
             MatButtonModule,
             MatInputModule,
             ListaDeptosComponent,
-            ListaDetalleComponent,
+            DrawerComponent,
             MatInputModule,
             MatButtonModule,
-            NgIf,
             AsyncPipe,
         ],
     selector: 'app-deptos-principal',

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ListaDetalleComponent} from '@s-shared/plantillas/lista-detalle/lista-detalle.component';
+import {DrawerComponent} from '@s-shared/plantillas/lista-detalle/drawer.component';
 import {CommonModule} from '@angular/common';
 import {DetalleDocumentosComponent} from '@s-general/detalle-documentos/detalle-documentos.component';
 import {ModDocumentosComponent} from '@s-general/mod-documentos/mod-documentos.component';
@@ -11,7 +11,7 @@ import {MatIconModule} from '@angular/material/icon';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, ListaDetalleComponent, DetalleDocumentosComponent, ListaDocumentosComponent, DocConsultaComponent, MatButtonModule, MatIconModule],
+    imports: [CommonModule, DrawerComponent, DetalleDocumentosComponent, ListaDocumentosComponent, DocConsultaComponent, MatButtonModule, MatIconModule],
     selector: 'app-mis-documentos',
     templateUrl: './mis-documentos.component.html',
     styleUrls: ['./mis-documentos.component.scss'],

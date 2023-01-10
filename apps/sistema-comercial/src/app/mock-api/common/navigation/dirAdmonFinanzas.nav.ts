@@ -25,55 +25,55 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                                     id: 'empleados',
                                     title: 'Info. gral empleados',
                                     type: 'basic',
-                                    icon: 'people',
+                                    icon: 'badge',
                                     activo: false,
                                     disabled: false,
-                                    link: dirAdmonFinanzas + 'recursos-humanos/' + 'empleados'
+                                    link: dirAdmonFinanzas + 'empleados/info-general'
                                 },
                                 {
                                     id: 'imss',
                                     title: 'Imss',
                                     type: 'basic',
-                                    icon: 'people',
+                                    icon: 'featured_play_list',
                                     activo: false,
                                     disabled: false,
-                                    link: ''
+                                    link: dirAdmonFinanzas + 'empleados/imss'
                                 },
                                 {
                                     id: 'nomina',
                                     title: 'Nomina',
                                     type: 'basic',
-                                    icon: 'people',
+                                    icon: 'account_balance_wallet',
                                     activo: false,
                                     disabled: false,
-                                    link: ''
+                                    link: dirAdmonFinanzas + 'empleados/nomina'
                                 },
                                 {
                                     id: 'retardos',
                                     title: 'Retardos',
                                     type: 'basic',
-                                    icon: 'people',
+                                    icon: 'rule',
                                     activo: false,
                                     disabled: false,
-                                    link: ''
+                                    link: dirAdmonFinanzas + 'empleados/retardos'
                                 },
                                 {
                                     id: 'cuotas',
                                     title: 'Cuotas',
                                     type: 'basic',
-                                    icon: 'people',
+                                    icon: 'money',
                                     activo: false,
                                     disabled: false,
-                                    link: ''
+                                    link: dirAdmonFinanzas + 'empleados/cuotas'
                                 },
                                 {
                                     id: 'fondoDeAhoro',
                                     title: 'Fondo de ahorro',
                                     type: 'basic',
-                                    icon: 'people',
+                                    icon: 'savings',
                                     activo: false,
                                     disabled: false,
-                                    link: ''
+                                    link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                                 }
                             ]
                     },

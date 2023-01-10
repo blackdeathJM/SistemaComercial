@@ -12,7 +12,7 @@ export const recursosHumanosRouting: Routes =
                 [
                     {
                         path: 'empleados',
-                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/empleados.component').then(e => e.EmpleadosComponent)
+                        loadChildren: () => import('@s-dirAdmonFinanzas/empleados/empleados.routing').then(e => e.empleadosRouting)
                     }
                 ]
         }

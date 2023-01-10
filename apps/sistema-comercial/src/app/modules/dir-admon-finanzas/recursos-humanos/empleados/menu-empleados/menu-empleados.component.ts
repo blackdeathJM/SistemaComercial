@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuseNavigationItem, FuseNavigationModule} from '@s-fuse/navigation';
 import {MatIconModule} from '@angular/material/icon';
+import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
 @Component({
     selector: 'app-menu-empleados',
@@ -25,7 +26,7 @@ export class MenuEmpleadosComponent implements OnInit
                     activo: true,
                     icon: 'badge',
                     type: 'basic',
-                    link: ''
+                    link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
                     id: 'imss',
@@ -33,7 +34,7 @@ export class MenuEmpleadosComponent implements OnInit
                     activo: true,
                     icon: 'featured_play_list',
                     type: 'basic',
-                    link: ''
+                    link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
                     id: 'nomina',
@@ -41,7 +42,7 @@ export class MenuEmpleadosComponent implements OnInit
                     activo: true,
                     icon: 'account_balance_wallet',
                     type: 'basic',
-                    link: ''
+                    link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
                     id: 'retardos',
@@ -49,7 +50,7 @@ export class MenuEmpleadosComponent implements OnInit
                     activo: true,
                     icon: 'rule',
                     type: 'basic',
-                    link: ''
+                    link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
                     id: 'cuotas',
@@ -57,7 +58,7 @@ export class MenuEmpleadosComponent implements OnInit
                     activo: true,
                     icon: 'money',
                     type: 'basic',
-                    link: ''
+                    link: dirAdmonFinanzas + 'empleados/cuotas'
                 },
                 {
                     id: 'fondoDeAhorro',
@@ -65,7 +66,7 @@ export class MenuEmpleadosComponent implements OnInit
                     activo: true,
                     icon: 'savings',
                     type: 'basic',
-                    link: ''
+                    link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 }
             ];
     }
