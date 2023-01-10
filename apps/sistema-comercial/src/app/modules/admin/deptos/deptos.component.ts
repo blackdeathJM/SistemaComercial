@@ -6,12 +6,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import {DrawerComponent} from '@s-shared/plantillas/lista-detalle/drawer.component';
+import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
 import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 import {AsyncPipe} from '@angular/common';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 
 @Component({
     standalone: true,
@@ -38,13 +38,13 @@ export class DeptosComponent implements OnInit
 {
     controlBuscar: FormControl = new FormControl();
 
-    constructor(private dRef: MatDialog, private panelService: ListaDetalleService)
+    constructor(private dRef: MatDialog, private panelService: DrawerService)
     {
     }
 
     ngOnInit(): void
     {
-        this.panelService.setPanel = false;
+        this.panelService.setPanelDer = false;
     }
 
     registro(): void

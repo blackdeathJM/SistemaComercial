@@ -1,7 +1,6 @@
 <ng-container *ngIf="entityMisDocumentos.entitiesArray$ | async as documentos">
-
-    <ng-container *ngIf="documentos.length > 0; else noHayDocs" ngxUiLoaderBlurred>
-        <div class="flex flex-wrap gap-2">
+    <ng-container *ngIf="documentos.length > 0; else noHayDocs">
+        <div class="flex flex-wrap gap-2" ngxUiLoaderBlurred>
             <fuse-card class="flex items-center mt-2 ml-2 p-4 w-90" *ngFor="let doc of documentos; let i=index; trackBy: trackByFn">
                 <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
                     <img class="avatar w-16 h-16 mr-4" [src]="doc.resolveEmpleado?.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">

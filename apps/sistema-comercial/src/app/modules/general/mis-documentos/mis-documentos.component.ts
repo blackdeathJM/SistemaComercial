@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {DrawerComponent} from '@s-shared/plantillas/lista-detalle/drawer.component';
+import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
 import {CommonModule} from '@angular/common';
 import {DetalleDocumentosComponent} from '@s-general/detalle-documentos/detalle-documentos.component';
 import {ModDocumentosComponent} from '@s-general/mod-documentos/mod-documentos.component';

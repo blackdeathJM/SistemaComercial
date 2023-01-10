@@ -5,10 +5,10 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import {SinDatosComponent} from "@s-shared/sin-datos/sin-datos.component";
+import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 
 @Component({
     standalone: true,
@@ -25,7 +25,7 @@ export class ListaEmpleadosComponent implements OnInit
     empleados: IResolveEmpleado[];
     empleadoSeleccionado: IResolveEmpleado;
 
-    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService, private panelService: ListaDetalleService)
+    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService, private panelService: DrawerService)
     {
     }
 
@@ -38,7 +38,7 @@ export class ListaEmpleadosComponent implements OnInit
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.seleccionarEmpleado(empleado);
-        this.panelService.setPanel = true;
+        this.panelService.setPanelDer = true;
     }
 
     trackByFn(index: number, item: IResolveEmpleado): any

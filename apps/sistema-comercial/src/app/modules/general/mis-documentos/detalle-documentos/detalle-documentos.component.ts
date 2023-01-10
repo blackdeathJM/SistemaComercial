@@ -20,7 +20,7 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Select} from '@ngxs/store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 
@@ -50,7 +50,7 @@ export class DetalleDocumentosComponent
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
-                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore, public listaDetalleService: ListaDetalleService,
+                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore, public listaDetalleService: DrawerService,
                 private misDocumentosService: MisDocumentosService)
     {
     }

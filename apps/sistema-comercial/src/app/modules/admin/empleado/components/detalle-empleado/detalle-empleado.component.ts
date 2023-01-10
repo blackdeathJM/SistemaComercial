@@ -15,7 +15,7 @@ import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Select} from '@ngxs/store';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 
 @Component({
     standalone: true,
@@ -42,7 +42,7 @@ export class DetalleEmpleadoComponent
 {
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
 
-    constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore, public panelService: ListaDetalleService)
+    constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore, public panelService: DrawerService)
     {
 
     }

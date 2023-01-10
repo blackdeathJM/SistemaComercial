@@ -8,7 +8,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {loaderMisDocs, MisDocumentosService} from '@s-general/store/mis-documentos.service';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 
 export const LISTA_DOCS_TOKEN = new InjectionToken<ListaDocumentosComponent>('lista-docs-token');
 
@@ -25,7 +25,7 @@ export class ListaDocumentosComponent implements OnInit
 {
     loaderListaDocs = loaderMisDocs;
 
-    constructor(public entityMisDocumentos: EntityMisDocumentosStore, private misDocumentosService: MisDocumentosService, private panelService: ListaDetalleService)
+    constructor(public entityMisDocumentos: EntityMisDocumentosStore, private misDocumentosService: MisDocumentosService, private panelService: DrawerService)
     {
     }
 
@@ -42,6 +42,6 @@ export class ListaDocumentosComponent implements OnInit
     seleccionarDoc(doc: IResolveDocumento): void
     {
         this.entityMisDocumentos.seleccionarDoc(doc);
-        this.panelService.setPanel = true;
+        this.panelService.setPanelDer = true;
     }
 }

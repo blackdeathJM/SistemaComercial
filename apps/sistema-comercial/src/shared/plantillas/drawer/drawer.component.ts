@@ -1,10 +1,10 @@
-import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AsyncPipe, DOCUMENT} from '@angular/common';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 
 @Component({
     standalone: true,
@@ -20,21 +20,33 @@ import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-deta
 })
 export class DrawerComponent implements OnInit, OnDestroy
 {
-    @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
-    drawerMode: 'side' | 'over';
-    panel$ = this.panelService.getPanel;
+    @ViewChild('matDrawerIzq', {static: true}) matDrawerIzq: MatDrawer;
+    @ViewChild('matDrawerDer', {static: true}) matDrawerDer: MatDrawer;
+    @Input() anchoIzq: string = 'w-72';
+    @Input() anchoDer: string = 'w-72';
+    drawerModeIzq: 'side' | 'over';
+    drawModeDer: 'side' | 'over';
+    panelIzq$ = this.panelService.getPanelIzq;
+    panelDer$ = this.panelService.getPanelDer;
     private sub: Subject<any> = new Subject<any>();
 
     constructor(private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private document: any, private router: Router,
-                private fuseMediaWatcherService: FuseMediaWatcherService, private panelService: ListaDetalleService)
+                private fuseMediaWatcherService: FuseMediaWatcherService, private panelService: DrawerService)
     {
     }
 
     ngOnInit(): void
     {
-        this.matDrawer.openedChange.subscribe((opened) =>
+        this.matDrawerIzq.openedChange.subscribe((opened) =>
         {
             if (!opened)
+            {
+                this.cdr.reattach();
+            }
+        });
+        this.matDrawerDer.openedChange.subscribe((abierto) =>
+        {
+            if (!abierto)
             {
                 this.cdr.reattach();
             }
@@ -44,10 +56,12 @@ export class DrawerComponent implements OnInit, OnDestroy
         {
             if (matchingAliases.includes('lg'))
             {
-                this.drawerMode = 'side';
+                this.drawerModeIzq = 'side';
+                this.drawModeDer = 'side';
             } else
             {
-                this.drawerMode = 'over';
+                this.drawerModeIzq = 'over';
+                this.drawModeDer = 'over';
             }
         });
     }
@@ -60,8 +74,7 @@ export class DrawerComponent implements OnInit, OnDestroy
 
     trackByFn(index: number, item: any): any
     {
-        console.log('lista detalle', item);
-        return item._id || index;
+        return item.id || index;
     }
 
     ngOnDestroy(): void

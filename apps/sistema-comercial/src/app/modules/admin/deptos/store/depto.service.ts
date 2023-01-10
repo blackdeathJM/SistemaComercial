@@ -6,13 +6,13 @@ import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
-import {ListaDetalleService} from '@s-shared/plantillas/lista-detalle/lista-detalle.service';
+import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 
 @Injectable({providedIn: 'root'})
 export class DeptoService
 {
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL, private ngxToast: NgxToastService,
-                private entityDepto: EntityDeptoStore, private listaDetalleService: ListaDetalleService)
+                private entityDepto: EntityDeptoStore, private listaDetalleService: DrawerService)
     {
     }
 

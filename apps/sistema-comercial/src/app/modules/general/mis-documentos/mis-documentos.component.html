@@ -1,4 +1,4 @@
-<app-drawer class="w-full">
+<app-drawer class="flex-auto" anchoDer="w-128">
     <ng-container titulo>
         <div>Mis documentos</div>
     </ng-container>
@@ -16,12 +16,11 @@
         <app-doc-consulta></app-doc-consulta>
     </ng-container>
 
-    <ng-container outlet>
+    <ng-container panelDer>
         <app-detalle-documentos></app-detalle-documentos>
     </ng-container>
 
-    <ng-container lista>
+    <ng-container contenido>
         <app-lista-documentos></app-lista-documentos>
     </ng-container>
-
 </app-drawer>

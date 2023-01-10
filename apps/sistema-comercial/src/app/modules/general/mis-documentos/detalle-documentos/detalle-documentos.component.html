@@ -1,15 +1,12 @@
 <ng-container *ngIf="documento$ | async as documento">
-
     <ng-container *ngIf="documento">
-
         <div class="flex flex-col flex-auto p-6 md:p-8">
             <!-- Close button -->
             <div class="flex items-center justify-end">
-                <button mat-icon-button (click)="listaDetalleService.setPanel = false">
+                <button mat-icon-button (click)="listaDetalleService.setPanelDer = false">
                     <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
                 </button>
             </div>
-
             <!-- Name & Type -->
             <div class="flex flex-col mt-8">
                 <div class="text-xl font-medium truncate" matTooltip="Asunto">{{documento?.asunto | defaultValue: '-'}}</div>
