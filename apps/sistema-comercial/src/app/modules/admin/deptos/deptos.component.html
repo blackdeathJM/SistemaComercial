@@ -1,12 +1,18 @@
 <section class="relative flex flex-col">
+
     <div class="flex justify-between border-b-4">
+
         <mat-form-field class="flex-initial w-100">
             <input matInput placeholder="Filtrar departamentos">
         </mat-form-field>
+
         <button mat-flat-button color="primary" (click)="registro()">
             <mat-icon svgIcon="add" class="mr-4"></mat-icon>
             Registrar nuevo depto
         </button>
+
     </div>
+
     <app-lista-deptos></app-lista-deptos>
+
 </section>
