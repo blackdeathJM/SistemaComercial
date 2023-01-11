@@ -6,7 +6,7 @@ import {FuseAlertModule} from '@s-fuse/alert';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
 import {loaderMisDocs, MisDocumentosService} from '@s-general/store/mis-documentos.service';
 import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';

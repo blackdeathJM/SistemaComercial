@@ -81,7 +81,8 @@ export class PerfilComponent implements OnInit
             this.empleadoService.actualizarAvatar(this.stateAuth.snapshot._id, url).pipe(finalize(() => this.deshabilitar = false)).subscribe();
         } catch (e)
         {
-            this.ngxToast.satisfactorioToast('Ocurrio un error al tratar de cambiar tu avatar', 'Error cambio de avatar');
+            this.ngxToast.errorToast('Ocurrio un error al tratar de cambiar tu avatar', 'Error cambio de avatar');
+            this.deshabilitar = false;
         }
     }
 

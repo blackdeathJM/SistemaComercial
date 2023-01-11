@@ -7,10 +7,10 @@
                                     }">
                 <div class="relative flex flex-0 items-center justify-center w-10 h-10">
                     <ng-container *ngIf="empleado.avatar">
-                        <img class="w-full h-full rounded-full object-cover" [src]="empleado.avatar" alt="Avatar"/>
+                        <img class="avatar" [src]="empleado.avatar" alt="Avatar"/>
                     </ng-container>
                     <ng-container *ngIf="!empleado.avatar">
-                        <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                        <div class="flex ring items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                             {{empleado.nombreCompleto.charAt(0)}}
                         </div>
                     </ng-container>
@@ -25,9 +25,9 @@
                 </div>
             </a>
         </ng-container>
-        <ngx-ui-loader [loaderId]="listaEmpleados"></ngx-ui-loader>
     </div>
 </ng-container>
+<ngx-ui-loader [loaderId]="listaEmpleados"></ngx-ui-loader>
 <!--<div class="relative flex flex-auto flex-col w-full min-w-0 lg:min-w-90 lg:max-w-90 border-r z-10 bg-blue-800">-->
 <!--    <div>lista</div>-->
 <!--</div>-->

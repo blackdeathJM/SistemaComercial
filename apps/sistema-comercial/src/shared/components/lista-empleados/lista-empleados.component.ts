@@ -9,6 +9,7 @@ import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
+import {tap} from 'rxjs';
 
 @Component({
     standalone: true,
@@ -32,7 +33,8 @@ export class ListaEmpleadosComponent implements OnInit
     ngOnInit(): void
     {
         this.ngxLoader.startLoader(this.listaEmpleados);
-        this.empleadoService.empleados().subscribe(() => this.ngxLoader.stopLoader(this.listaEmpleados));
+        console.log('init en lista de empleados');
+        this.empleadoService.empleados().pipe(tap(res => console.log(res.data))).subscribe(() => this.ngxLoader.stopLoader(this.listaEmpleados));
     }
 
     seleccionarEmpleado(empleado: IResolveEmpleado): void

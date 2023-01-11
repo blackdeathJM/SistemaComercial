@@ -7,7 +7,7 @@
 }
 
 .avatar-letra {
-    @apply w-16 h-16 mr-6 text-5xl flex items-center justify-center rounded-full uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200
+    @apply mr-6 h-16 w-16 text-5xl flex items-center justify-center rounded-full uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200
 }
 
 .avatar-letra-grupo {
@@ -16,4 +16,12 @@
 
 .avatar {
     @apply ring h-full rounded-full object-cover object-center
+}
+
+.acciones-en-cabecera {
+    @apply flex-auto flex flex-row-reverse border-b-2 p-4 items-center rounded-lg gap-4 bg-card my-2 mx-4
+}
+
+.consultas {
+    @apply flex-auto p-4 rounded-lg bg-card my-2 border-green-900 border-b-8 mx-4
 }

@@ -4,15 +4,7 @@
     </mat-drawer>
 
     <mat-drawer-content class="h-screen h-full">
-        <section class="flex flex-col mx-4 my-4">
-            <div class="flex-auto flex flex-row-reverse border-b-2 p-4 items-center rounded-lg gap-4 bg-card my-2">
-                <ng-content select="[acciones]"></ng-content>
-            </div>
-            <div class="flex-auto p-4 rounded-lg bg-card my-2 border-green-900 border-b-8">
-                <ng-content select="[consulta]"></ng-content>
-            </div>
-            <ng-content select="[contenido]"></ng-content>
-        </section>
+        <ng-content select="[contenido]"></ng-content>
     </mat-drawer-content>
     <mat-drawer class="{{anchoDer}} dark:bg-gray-900" [mode]="drawModeDer" [opened]="panelDer$ | async" position="end" autoFocus="false" [disableClose]="true" #matDrawerDer>
         <ng-content select="[panelDer]"></ng-content>

@@ -8,7 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
-import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @Component({
     standalone: true,
