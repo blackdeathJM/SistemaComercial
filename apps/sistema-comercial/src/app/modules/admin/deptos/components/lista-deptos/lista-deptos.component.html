@@ -1,7 +1,7 @@
 <div class="flex flex-col flex-auto">
-    <ng-container *ngIf="(entityDepto.entitiesArray$| async) as deptos" >
+    <ng-container *ngIf="(entityDepto.entitiesArray$| async) as deptos">
         <ng-container *ngIf="deptos.length > 0">
-            <div class="absolute overflow-y-auto w-full h-screen" ngxUiLoaderBlurred>
+            <div class="flex-auto overflow-y-auto" ngxUiLoaderBlurred>
                 <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">
                     <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">
                         <mat-icon class="text-amber-600 mr-4" [svgIcon]="'heroicons_outline:library'"></mat-icon>

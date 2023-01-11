@@ -1,26 +1,17 @@
 <app-drawer class="flex-auto" anchoDer="w-128">
-    <ng-container titulo>
-        <div>Mis documentos</div>
-    </ng-container>
-
     <ng-container acciones>
-        <div class="flex gap-4">
-            <button mat-flat-button [color]="'primary'" (click)="nuevosDocs()">
-                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-3">Dar de alta nuevo documento</span>
-            </button>
-        </div>
+        <button mat-raised-button type="button" color="primary" (click)="nuevosDocs()">
+            <mat-icon svgIcon="add" class="mr-5"></mat-icon>
+            Agregar nuevo documento
+        </button>
     </ng-container>
-
-<!--    <ng-container buscar>-->
-<!--        <app-doc-consulta></app-doc-consulta>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container panelDer>-->
-<!--        <app-detalle-documentos></app-detalle-documentos>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container contenido>-->
-<!--        <app-lista-documentos></app-lista-documentos>-->
-<!--    </ng-container>-->
+    <ng-container consulta>
+        <app-doc-consulta></app-doc-consulta>
+    </ng-container>
+    <ng-container contenido>
+        <app-lista-documentos></app-lista-documentos>
+    </ng-container>
+    <ng-container panelDer>
+        <app-detalle-documentos></app-detalle-documentos>
+    </ng-container>
 </app-drawer>

@@ -5,13 +5,19 @@ import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Subject, takeUntil} from 'rxjs';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
     standalone: true,
     imports:
         [
             MatSidenavModule,
-            AsyncPipe
+            AsyncPipe,
+            MatButtonModule,
+            MatIconModule,
+            MatCardModule
         ],
     selector: 'app-drawer',
     templateUrl: './drawer.component.html',
