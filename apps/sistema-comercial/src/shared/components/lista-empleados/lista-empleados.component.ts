@@ -24,7 +24,6 @@ export class ListaEmpleadosComponent implements OnInit
     listaEmpleados = 'listaEmpleados';
     empleadosFiltrados: IResolveEmpleado[] = [];
     empleados: IResolveEmpleado[];
-    empleadoSeleccionado: IResolveEmpleado;
 
     constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService, private panelService: DrawerService)
     {

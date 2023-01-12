@@ -1,25 +1,22 @@
 <ng-container *ngIf="entityEmpleado.entitiesArray && entityEmpleado.entitiesArray.length > 0; else sinDatos">
-    <div class="flex-auto flex flex-col m-4 min-w-0 relative overflow-y-auto" ngxUiLoaderBlurred>
+    <div class="flex-auto flex flex-col m-4 min-w-0 relative" ngxUiLoaderBlurred>
         <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async; trackBy: trackByFn">
-            <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b" [ngClass]="{
-                                        'hover:bg-gray-100 dark:hover:bg-hover':!empleadoSeleccionado || empleadoSeleccionado._id !== empleado._id,
-                                        'bg-primary-50 dark:bg-hover':empleadoSeleccionado &&     empleadoSeleccionado._id === empleado._id
-                                    }" (click)="seleccionarEmpleado(empleado)">
+            <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b hover:bg-amber-100 dark:hover:bg-gray-800" (click)="seleccionarEmpleado(empleado)">
                 <div class="relative flex flex-0 items-center justify-center w-10 h-10">
-                    <ng-container *ngIf="empleado.avatar">
-                        <img class="avatar" [src]="empleado.avatar" alt="Avatar"/>
+                    <ng-container *ngIf="empleado?.avatar">
+                        <img class="avatar" [src]="empleado?.avatar" alt="Avatar"/>
                     </ng-container>
                     <ng-container *ngIf="!empleado.avatar">
                         <div class="flex ring items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                            {{empleado.nombreCompleto.charAt(0)}}
+                            {{empleado?.nombreCompleto?.charAt(0)}}
                         </div>
                     </ng-container>
                 </div>
                 <div class="min-w-0 ml-4">
                     <div class="font-medium leading-5 truncate">
-                        {{ empleado.nombreCompleto }}
+                        {{ empleado?.nombreCompleto }}
                     </div>
-                    <div class="leading-5 truncate text-secondary">
+                    <div class="leading-5 truncate text-secondary text-amber-800">
                         puesto
                     </div>
                 </div>

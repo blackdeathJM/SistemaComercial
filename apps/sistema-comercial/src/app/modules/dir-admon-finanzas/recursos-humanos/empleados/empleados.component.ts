@@ -27,12 +27,11 @@ import {DrawerService} from "@s-shared/plantillas/drawer/drawer.service";
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss']
 })
-export class EmpleadosComponent implements OnInit
+export class EmpleadosComponent implements OnInit, OnDestroy
 {
     constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService)
     {
     }
-
 
     // registroEmpleado(): void
     // {
@@ -50,4 +49,16 @@ export class EmpleadosComponent implements OnInit
     {
         return item.id || index;
     }
+
+    nvoEmpleado(): void
+    {
+
+    }
+
+    ngOnDestroy(): void
+    {
+        this.drawerService.setPanelIzq = false;
+        this.drawerService.setPanelDer = false;
+    }
+
 }

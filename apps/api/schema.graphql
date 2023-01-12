@@ -27,6 +27,13 @@ type TelefonoType {
   numero: String
 }
 
+type PuestoType {
+  fechaAsignacion: Int
+  isr: Float
+  puesto: String
+  sueldo: Float
+}
+
 type EmpleadoType {
   _id: ID
   avatar: String
@@ -40,6 +47,7 @@ type EmpleadoType {
   telefono: [TelefonoType!]
   auth: AuthType
   modificadoPor: [ModificadoPorType!]
+  puesto: [PuestoType!]
   deptoId: ID
   deptoEmpleado: DeptoType
 }
@@ -124,6 +132,13 @@ input TelefonoInput {
   numero: String
 }
 
+input PuestoInput {
+  fechaAsignacion: Int
+  isr: Float
+  puesto: String
+  sueldo: Float = 0
+}
+
 input EmpleadoInput {
   _id: ID
   avatar: String = null
@@ -137,6 +152,7 @@ input EmpleadoInput {
   telefono: [TelefonoInput!] = null
   auth: AuthInput = null
   modificadoPor: [ModificadoPorInput!] = []
+  puesto: [PuestoInput!] = []
   deptoId: ID
   deptoEmpleado: DeptoInput
 }
@@ -182,7 +198,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1673503509
+  tiempo: Int = 1673568438
   titulo: String
   usarRouter: Boolean = false
 }
@@ -237,6 +253,7 @@ input RegEmpleadoInput {
   nombreCompleto: String
   telefono: [TelefonoInput!] = null
   modificadoPor: [ModificadoPorInput!] = []
+  puesto: [PuestoInput!] = []
   deptoId: ID
 }
 

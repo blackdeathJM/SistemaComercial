@@ -3,7 +3,7 @@
         <ng-content select="[panelIzq]"></ng-content>
     </mat-drawer>
 
-    <mat-drawer-content class="h-screen h-full">
+    <mat-drawer-content>
         <ng-content select="[contenido]"></ng-content>
     </mat-drawer-content>
     <mat-drawer class="{{anchoDer}} dark:bg-gray-900" [mode]="drawModeDer" [opened]="panelDer$ | async" position="end" autoFocus="false" [disableClose]="true" #matDrawerDer>

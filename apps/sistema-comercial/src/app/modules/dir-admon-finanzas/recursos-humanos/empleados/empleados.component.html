@@ -1,8 +1,10 @@
-<!--<div class="relative flex flex-auto w-full bg-card dark:bg-transparent">-->
-<!--    -->
-<!--</div>-->
-<app-drawer anchoIzq="w-96">
-    <ng-container panelIzq>
-        <app-lista-Empleados></app-lista-Empleados>
-    </ng-container>
-</app-drawer>
+<mat-drawer-container>
+    <mat-drawer class="w-96" opened="true" autoFocus="false" mode="side" position="start">
+        <div class="flex flex-col">
+            <mat-form-field>
+                <input matInput type="text">
+            </mat-form-field>
+            <app-lista-Empleados></app-lista-Empleados>
+        </div>
+    </mat-drawer>
+</mat-drawer-container>

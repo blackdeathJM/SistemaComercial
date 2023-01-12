@@ -12,7 +12,7 @@ export interface IPuesto
     puesto: string;
     sueldo: number;
     isr: number;
-    fecha: number;
+    fechaAsignacion: number;
 }
 
 export interface ISeguroSocial
@@ -35,6 +35,7 @@ export interface IEmpleado
     correo: string;
     modificadoPor: IModificado[];
     //Relacion
+    puesto: IPuesto[];
     deptoId: string;
 }
 
@@ -44,4 +45,3 @@ export interface IResolveEmpleado extends IEmpleado
 }
 
 export type TRegEmpleado = Omit<IEmpleado, '_id' | 'auth' | 'fechaBaja'>;
-

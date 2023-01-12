@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
 import {CommonModule} from '@angular/common';
@@ -8,6 +8,7 @@ import {ListaDocumentosComponent} from '@s-general/lista-documentos/lista-docume
 import {DocConsultaComponent} from '@s-general/doc-consulta/doc-consulta.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {DrawerService} from "@s-shared/plantillas/drawer/drawer.service";
 
 @Component({
     standalone: true,
@@ -17,14 +18,20 @@ import {MatIconModule} from '@angular/material/icon';
     styleUrls: ['./mis-documentos.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MisDocumentosComponent
+export class MisDocumentosComponent implements OnDestroy
 {
-    constructor(private dRef: MatDialog)
+    constructor(private dRef: MatDialog, private drawerService: DrawerService)
     {
     }
 
     nuevosDocs(): void
     {
         this.dRef.open(ModDocumentosComponent, {width: '40%', data: null, hasBackdrop: false});
+    }
+
+    ngOnDestroy(): void
+    {
+        this.drawerService.setPanelIzq = false;
+        this.drawerService.setPanelDer = false;
     }
 }

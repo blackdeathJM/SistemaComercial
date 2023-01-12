@@ -12,11 +12,14 @@ export class TelefonoDto implements ITelefono
     @Field(() => String, {nullable: true})
     numero: string;
 }
+
+@InputType('PuestoInput')
+@ObjectType('PuestoType')
 export class PuestoDto implements IPuesto
 {
     @Field(() => Int, {nullable: true})
     @IsNotEmpty({message: 'Es necesaria una fecha'})
-    fecha: number;
+    fechaAsignacion: number;
     @Field(() => Float, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el ISR'})
     isr: number;
@@ -79,10 +82,14 @@ export class EmpleadoDto implements IEmpleado
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop()
     auth: AuthDto;
-    @Field(() => [ModificadoPorDto], {nullable: true, defaultValue:[]})
+    @Field(() => [ModificadoPorDto], {nullable: true, defaultValue: []})
     @Prop()
-    @IsNotEmpty({message: 'Este campo es requerido'})
+    @IsNotEmpty({message: 'Es necesario el campo modificado por'})
     modificadoPor: ModificadoPorDto[];
+    @Field(() => [PuestoDto], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsNotEmpty({message: 'Es necesario asignar un puesto'})
+    puesto: PuestoDto[];
     @Field(() => ID, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es nesario el id del departamento al que sera asignado el empleado'})
