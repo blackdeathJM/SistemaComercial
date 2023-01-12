@@ -42,7 +42,7 @@ export class DetalleEmpleadoComponent
 {
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
 
-    constructor(private dRef: MatDialog, private entityEmpleadoStore: EntityEmpleadoStore, public panelService: DrawerService)
+    constructor(private dRef: MatDialog, public panelService: DrawerService)
     {
 
     }

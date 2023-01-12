@@ -23,7 +23,7 @@
                             <img class="object-cover w-full h-full" *ngIf="empleado?.avatar" [src]="empleado?.avatar" alt="Avatar">
                             <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                                  *ngIf="!empleado?.avatar">
-                                {{empleado?.nombreCompleto.charAt(0)}}
+                                {{empleado?.nombreCompleto?.charAt(0)}}
                             </div>
                         </div>
                         <div class="flex items-center ml-auto mb-1">

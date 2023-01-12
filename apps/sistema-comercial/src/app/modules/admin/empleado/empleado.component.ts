@@ -9,6 +9,7 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {ConsultaEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component";
 
 @Component({
     standalone: true,
@@ -24,6 +25,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
             DetalleEmpleadoComponent,
             ListaEmpleadosComponent,
             MatSidenavModule,
+            ConsultaEmpleadoComponent,
+            MatInputModule,
+            MatInputModule,
+            MatInputModule,
         ],
     selector: 'app-empleado',
     templateUrl: './empleado.component.html',

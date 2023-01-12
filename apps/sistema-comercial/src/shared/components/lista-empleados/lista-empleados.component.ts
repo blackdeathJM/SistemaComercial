@@ -33,13 +33,12 @@ export class ListaEmpleadosComponent implements OnInit
     ngOnInit(): void
     {
         this.ngxLoader.startLoader(this.listaEmpleados);
-        console.log('init en lista de empleados');
         this.empleadoService.empleados().pipe(tap(res => console.log(res.data))).subscribe(() => this.ngxLoader.stopLoader(this.listaEmpleados));
     }
 
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
-        this.entityEmpleado.seleccionarEmpleado(empleado);
+        this.entityEmpleado.patchState({empleado});
         this.panelService.setPanelDer = true;
     }
 

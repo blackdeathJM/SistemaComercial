@@ -13,6 +13,8 @@ import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-
 import {MatInputModule} from '@angular/material/input';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {DrawerComponent} from "@s-shared/plantillas/drawer/drawer.component";
+import {DrawerService} from "@s-shared/plantillas/drawer/drawer.service";
 
 @Component({
     selector: 'app-empleados',
@@ -20,20 +22,14 @@ import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.serv
     imports:
         [
             CommonModule, MatIconModule, RouterLinkWithHref, MatButtonModule, MatTabsModule, MatSidenavModule, RouterLink, MenuEmpleadosComponent, ListaEmpleadosComponent, FuseCardModule,
-            ConsultaEmpleadoComponent, RouterOutlet, MatInputModule
+            ConsultaEmpleadoComponent, RouterOutlet, MatInputModule, DrawerComponent
         ],
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss']
 })
 export class EmpleadosComponent implements OnInit
 {
-    drawerMode: 'over' | 'side' = 'side';
-    drawerOpened: boolean = true;
-    selectedChat: any;
-    filteredChats: any;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService)
+    constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService)
     {
     }
 
@@ -45,13 +41,10 @@ export class EmpleadosComponent implements OnInit
 
     ngOnInit(): void
     {
+        this.drawerService.setPanelIzq = true;
         this.empleadoService.empleados().subscribe();
     }
 
-    filterChats(value: string): void
-    {
-
-    }
 
     trackByFn(index: number, item: any): any
     {

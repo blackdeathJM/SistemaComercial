@@ -1,5 +1,14 @@
-<app-drawer anchoDer="w-100">
+<app-drawer anchoDer="w-2/4">
+    <ng-container panelDer>
+        <app-detalle-empleado></app-detalle-empleado>
+    </ng-container>
     <ng-container contenido>
+        <div class="relative flex flex-col border-b-8">
+            <mat-form-field class="flex-initial w-1/3">
+                <mat-label>Filtrar empleados</mat-label>
+                <input matInput placeholder="Nombre a filtrar">
+            </mat-form-field>
+        </div>
         <app-lista-Empleados></app-lista-Empleados>
     </ng-container>
 </app-drawer>
