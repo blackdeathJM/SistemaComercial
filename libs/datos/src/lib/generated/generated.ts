@@ -185,6 +185,7 @@ export type EmpleadoInput = {
   fechaIngreso?: InputMaybe<Scalars['Int']>;
   modificadoPor?: InputMaybe<Array<ModificadoPorInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
+  puesto?: InputMaybe<Array<PuestoInput>>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
 
@@ -203,6 +204,7 @@ export type EmpleadoType = {
   fechaIngreso?: Maybe<Scalars['Int']>;
   modificadoPor?: Maybe<Array<ModificadoPorType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
+  puesto?: Maybe<Array<PuestoType>>;
   telefono?: Maybe<Array<TelefonoType>>;
 };
 
@@ -380,6 +382,21 @@ export type NotificacionType = {
   usarRouter?: Maybe<Scalars['Boolean']>;
 };
 
+export type PuestoInput = {
+  fechaAsignacion?: InputMaybe<Scalars['Int']>;
+  isr?: InputMaybe<Scalars['Float']>;
+  puesto?: InputMaybe<Scalars['String']>;
+  sueldo?: InputMaybe<Scalars['Float']>;
+};
+
+export type PuestoType = {
+  __typename?: 'PuestoType';
+  fechaAsignacion?: Maybe<Scalars['Int']>;
+  isr?: Maybe<Scalars['Float']>;
+  puesto?: Maybe<Scalars['String']>;
+  sueldo?: Maybe<Scalars['Float']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   deptos: Array<DeptoType>;
@@ -389,6 +406,7 @@ export type Query = {
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
+  filtrarDeptos: Array<DeptoType>;
   notificaciones?: Maybe<Array<NotificacionType>>;
 };
 
@@ -424,6 +442,11 @@ export type QueryDocsUsuarioProcesoArgs = {
 };
 
 
+export type QueryFiltrarDeptosArgs = {
+  nombre: Scalars['String'];
+};
+
+
 export type QueryNotificacionesArgs = {
   idUsuario: Scalars['String'];
 };
@@ -438,6 +461,7 @@ export type RegEmpleadoInput = {
   fechaIngreso?: InputMaybe<Scalars['Int']>;
   modificadoPor?: InputMaybe<Array<ModificadoPorInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
+  puesto?: InputMaybe<Array<PuestoInput>>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
 
@@ -480,6 +504,13 @@ export type DepartamentosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type DepartamentosQuery = { __typename?: 'Query', deptos: Array<{ __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null }> };
+
+export type FiltrarDeptosQueryVariables = Exact<{
+  nombre: Scalars['String'];
+}>;
+
+
+export type FiltrarDeptosQuery = { __typename?: 'Query', filtrarDeptos: Array<{ __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null }> };
 
 export type CrearDeptoMutationVariables = Exact<{
   input: DeptoInput;
@@ -798,6 +829,24 @@ export const DepartamentosDocument = gql`
   })
   export class DepartamentosGQL extends Apollo.Query<DepartamentosQuery, DepartamentosQueryVariables> {
     document = DepartamentosDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FiltrarDeptosDocument = gql`
+    query filtrarDeptos($nombre: String!) {
+  filtrarDeptos(nombre: $nombre) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FiltrarDeptosGQL extends Apollo.Query<FiltrarDeptosQuery, FiltrarDeptosQueryVariables> {
+    document = FiltrarDeptosDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

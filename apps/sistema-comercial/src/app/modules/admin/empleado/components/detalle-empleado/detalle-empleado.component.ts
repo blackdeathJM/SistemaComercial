@@ -15,7 +15,7 @@ import {CambioIconoRolPipe} from '@s-admin/pipes/cambio-icono-rol.pipe';
 import {RegistroSesionComponent} from '@s-admin/components/registro-sesion/registro-sesion.component';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Select} from '@ngxs/store';
-import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 
 @Component({
     standalone: true,
@@ -42,7 +42,7 @@ export class DetalleEmpleadoComponent
 {
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
 
-    constructor(private dRef: MatDialog, public panelService: DrawerService)
+    constructor(private dRef: MatDialog, public empleadoService: EmpleadoService)
     {
 
     }
@@ -57,7 +57,7 @@ export class DetalleEmpleadoComponent
         return item.id || index;
     }
 
-    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: string, empleado: IEmpleado): void
+    permisoSeleccionado(evento: void | MatButtonToggleChange, permiso: string,  empleado: IEmpleado): void
     {
         // TODO: Cambiar a la nueva estructura de roles
         // const role = {...permiso};

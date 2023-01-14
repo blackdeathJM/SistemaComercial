@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
-import {Observable, tap} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -14,9 +14,21 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 @Injectable({providedIn: 'root'})
 export class EmpleadoService
 {
+    #panel = new BehaviorSubject<boolean>(false);
+
     constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
                 private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL)
     {
+    }
+
+    get getPanel(): Observable<boolean>
+    {
+        return this.#panel.asObservable();
+    }
+
+    set setPanel(v: boolean)
+    {
+        this.#panel.next(v);
     }
 
     empleados(): Observable<SingleExecutionResult>

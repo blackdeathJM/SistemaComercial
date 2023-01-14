@@ -1,14 +1,18 @@
-<app-drawer anchoDer="w-2/4">
-    <ng-container panelDer>
+<mat-drawer-container class="w-full">
+    <mat-drawer class="w-2/4" position="end" autoFocus="false" [opened]="empleadoService.getPanel | async" mode="side">
         <app-detalle-empleado></app-detalle-empleado>
-    </ng-container>
-    <ng-container contenido>
-        <div class="relative flex flex-col border-b-8">
-            <mat-form-field class="flex-initial w-1/3">
-                <mat-label>Filtrar empleados</mat-label>
-                <input matInput placeholder="Nombre a filtrar">
-            </mat-form-field>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="flex flex-col">
+            <div class="flex consultas">
+                <mat-form-field class="basis-5/12">
+                    <mat-label>Filtrar empleados</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div class="flex-auto">
+                <app-lista-Empleados></app-lista-Empleados>
+            </div>
         </div>
-        <app-lista-Empleados></app-lista-Empleados>
-    </ng-container>
-</app-drawer>
+    </mat-drawer-content>
+</mat-drawer-container>

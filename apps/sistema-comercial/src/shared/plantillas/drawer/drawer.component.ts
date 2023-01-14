@@ -72,14 +72,9 @@ export class DrawerComponent implements OnInit, OnDestroy
         this.cdr.markForCheck();
     }
 
-    trackByFn(index: number, item: any): any
-    {
-        return item.id || index;
-    }
-
     ngOnDestroy(): void
     {
-        this.sub.next(null);
+        this.sub.next(false);
         this.sub.complete();
     }
 }

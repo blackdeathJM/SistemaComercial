@@ -1,18 +1,17 @@
 import {Injectable} from '@angular/core';
-import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL} from '#/libs/datos/src';
+import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL, FiltrarDeptosGQL, FiltrarDeptosQuery} from '#/libs/datos/src';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
 import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
-import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 
 @Injectable({providedIn: 'root'})
 export class DeptoService
 {
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL, private ngxToast: NgxToastService,
-                private entityDepto: EntityDeptoStore, private listaDetalleService: DrawerService)
+                private entityDepto: EntityDeptoStore, private filtrarDeptosGQL: FiltrarDeptosGQL)
     {
     }
 
@@ -24,6 +23,18 @@ export class DeptoService
             {
                 const deptos = $cast<IDepto[]>(res.data.deptos);
                 this.entityDepto.setAll(deptos);
+            }
+        }));
+    }
+
+    filtarDeptos(nombre: string): Observable<SingleExecutionResult<FiltrarDeptosQuery>>
+    {
+        return this.filtrarDeptosGQL.watch({nombre}).valueChanges.pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const deptosFiltrados = $cast<IDepto[]>(res.data.filtrarDeptos);
+                this.entityDepto.setAll(deptosFiltrados);
             }
         }));
     }

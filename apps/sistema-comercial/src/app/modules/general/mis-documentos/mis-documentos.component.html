@@ -1,17 +1,23 @@
-<app-drawer class="flex-auto" anchoDer="w-128">
-    <ng-container contenido>
-        <div class="acciones-en-cabecera">
-            <button mat-raised-button type="button" color="primary" (click)="nuevosDocs()">
-                <mat-icon svgIcon="add" class="mr-5"></mat-icon>
-                Agregar nuevo documento
-            </button>
-        </div>
-        <div class="consultas">
-            <app-doc-consulta></app-doc-consulta>
-        </div>
-        <app-lista-documentos></app-lista-documentos>
-    </ng-container>
-    <ng-container panelDer>
+<mat-drawer-container class="w-full bg-green-900">
+    <mat-drawer class="w-128" position="end" autoFocus="false" [opened]="misDocService.getPanel | async" [mode]="drawerMode" #matDrawerDocs>
         <app-detalle-documentos></app-detalle-documentos>
-    </ng-container>
-</app-drawer>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="flex flex-col">
+            <div class="acciones-en-cabecera">
+                <button mat-raised-button type="button" color="primary" (click)="nuevosDocs()">
+                    <mat-icon svgIcon="add" class="mr-5"></mat-icon>
+                    Agregar nuevo documento
+                </button>
+            </div>
+            <div class="consultas">
+                <app-doc-consulta></app-doc-consulta>
+            </div>
+            <div class="flex-auto relative">
+                <div class="absolute w-full">
+                    <app-lista-documentos></app-lista-documentos>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

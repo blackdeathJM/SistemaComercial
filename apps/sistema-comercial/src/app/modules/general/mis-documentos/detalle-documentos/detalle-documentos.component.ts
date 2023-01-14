@@ -20,7 +20,6 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Select} from '@ngxs/store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
-import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 
@@ -50,8 +49,7 @@ export class DetalleDocumentosComponent
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
-                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore, public listaDetalleService: DrawerService,
-                private misDocumentosService: MisDocumentosService)
+                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore, public misDocService: MisDocumentosService)
     {
     }
 
@@ -88,7 +86,7 @@ export class DetalleDocumentosComponent
                         usuarioFolio: this.stateAuht.snapshot._id,
                         tipoDoc: _documento.tipoDoc
                     };
-                this.misDocumentosService.docActFolio(args).pipe(finalize(() => this.cargando = false)).subscribe();
+                this.misDocService.docActFolio(args).pipe(finalize(() => this.cargando = false)).subscribe();
             }
         });
     }
@@ -105,7 +103,7 @@ export class DetalleDocumentosComponent
         {
             if (res === 'confirmed')
             {
-                this.misDocumentosService.finalizarDoc(documento._id).subscribe();
+                this.misDocService.finalizarDoc(documento._id).subscribe();
             }
         });
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -11,7 +11,8 @@ import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-depto
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
 import {AsyncPipe} from '@angular/common';
-import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
+import {debounceTime, Subscription, switchMap} from 'rxjs';
+import {DeptoService} from '@s-admin/store/depto.service';
 
 @Component({
     standalone: true,
@@ -32,19 +33,22 @@ import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
     selector: 'app-deptos-principal',
     templateUrl: './deptos.component.html',
     styleUrls: ['./deptos.component.scss'],
-    animations: [fuseAnimations]
+    animations: [fuseAnimations],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DeptosComponent implements OnInit
+export class DeptosComponent implements OnInit, OnDestroy
 {
     controlBuscar: FormControl = new FormControl();
+    private sub = new Subscription();
 
-    constructor(private dRef: MatDialog, private panelService: DrawerService)
+    constructor(private dRef: MatDialog, private deptosService: DeptoService)
     {
     }
 
     ngOnInit(): void
     {
-        this.panelService.setPanelDer = false;
+        this.sub.add(this.controlBuscar.valueChanges.pipe(debounceTime(300), switchMap((res: string) =>
+        this.deptosService.filtarDeptos(res))).subscribe());
     }
 
     registro(): void
@@ -52,8 +56,8 @@ export class DeptosComponent implements OnInit
         this.dRef.open(ModDeptoComponent, {width: '40%', data: null});
     }
 
-    trackByFn(index: number, item: any): any
+    ngOnDestroy(): void
     {
-        return item._id || index;
+        this.sub.unsubscribe();
     }
 }

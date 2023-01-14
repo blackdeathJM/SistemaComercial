@@ -6,9 +6,8 @@ import {FuseAlertModule} from '@s-fuse/alert';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
-import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {loaderMisDocs, MisDocumentosService} from '@s-general/store/mis-documentos.service';
-import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 
 export const LISTA_DOCS_TOKEN = new InjectionToken<ListaDocumentosComponent>('lista-docs-token');
@@ -26,13 +25,13 @@ export class ListaDocumentosComponent implements OnInit
 {
     loaderListaDocs = loaderMisDocs;
 
-    constructor(public entityMisDocumentos: EntityMisDocumentosStore, private misDocumentosService: MisDocumentosService, private panelService: DrawerService)
+    constructor(public entityMisDocumentos: EntityMisDocumentosStore, private misDocsService: MisDocumentosService)
     {
     }
 
     ngOnInit(): void
     {
-        this.misDocumentosService.docUsuarioProceso('pendiente', false).subscribe();
+        this.misDocsService.docUsuarioProceso('pendiente', false).subscribe();
     }
 
     trackByFn(index: number, item: any): any
@@ -43,6 +42,6 @@ export class ListaDocumentosComponent implements OnInit
     seleccionarDoc(doc: IResolveDocumento): void
     {
         this.entityMisDocumentos.seleccionarDoc(doc);
-        this.panelService.setPanelDer = true;
+        this.misDocsService.setPanel = true;
     }
 }

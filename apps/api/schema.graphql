@@ -198,13 +198,14 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1673646629
+  tiempo: Int = 1673667302
   titulo: String
   usarRouter: Boolean = false
 }
 
 type Query {
   deptos: [DeptoType!]!
+  filtrarDeptos(nombre: String!): [DeptoType!]!
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
   docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!

@@ -1,8 +1,8 @@
 <ng-container *ngIf="entityEmpleado.entitiesArray && entityEmpleado.entitiesArray.length > 0; else sinDatos">
-    <div class="flex-auto flex flex-col m-4 min-w-0 relative" ngxUiLoaderBlurred>
+    <div class="flex-auto flex flex-col m-4 min-w-0" ngxUiLoaderBlurred>
         <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async; trackBy: trackByFn">
             <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b hover:bg-amber-100 dark:hover:bg-gray-800" (click)="seleccionarEmpleado(empleado)">
-                <div class="relative flex flex-0 items-center justify-center w-10 h-10">
+                <div class="flex flex-0 items-center justify-center w-10 h-10">
                     <ng-container *ngIf="empleado?.avatar">
                         <img class="avatar" [src]="empleado?.avatar" alt="Avatar"/>
                     </ng-container>

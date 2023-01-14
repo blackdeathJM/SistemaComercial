@@ -40,7 +40,6 @@
         "@auth0/angular-jwt": "^5.1.2",
         "@datorama/akita": "^8.0.0",
         "@graphql-codegen/typescript": "^2.8.7",
-        "@jridgewell/sourcemap-codec": "^1.4.14",
         "@nestjs/apollo": "^10.1.7",
         "@nestjs/common": "^9.2.1",
         "@nestjs/config": "^2.2.0",
@@ -112,7 +111,6 @@
         "reflect-metadata": "^0.1.13",
         "rxjs": "7.8.0",
         "sweetalert2": "^11.7.0",
-        "ts-evaluator": "^1.1.0",
         "tslib": "2.4.1",
         "uuid": "^9.0.0",
         "zone.js": "0.12.0"

@@ -1,4 +1,4 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {DeptoDto, DeptoType} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
@@ -14,10 +14,27 @@ export class DeptosService
 
     async deptos(): Promise<IDepto[]>
     {
-        return this.depto.find().exec();
+        try
+        {
+            return await this.depto.find().exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: 'Error al consutar los departamentos'});
+        }
     }
 
-    async crearDepto(input: DeptoDto): Promise<DeptoDto>
+    async filtrarDeptos(nombre: string): Promise<IDepto[]>
+    {
+        try
+        {
+            return await this.depto.find({nombre: {$regex: nombre, $options: 'i'}}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: 'Error al consultar los departamentos'});
+        }
+    }
+
+    async crearDepto(input: DeptoDto): Promise<IDepto>
     {
         try
         {

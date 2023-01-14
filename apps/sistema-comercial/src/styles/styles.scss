@@ -19,7 +19,7 @@
 }
 
 .acciones-en-cabecera {
-    @apply flex-auto flex flex-row-reverse border-b-2 p-4 items-center rounded-lg gap-4 bg-card my-2 mx-4
+    @apply flex flex-row-reverse flex-auto items-center border-b-2 rounded-lg bg-card my-2 mx-4 p-8 gap-4
 }
 
 .consultas {

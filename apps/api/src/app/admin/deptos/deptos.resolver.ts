@@ -14,7 +14,13 @@ export class DeptosResolver
     // @UseGuards(JwtAuthGuard)
     async deptos(): Promise<IDepto[]>
     {
-        return this.deptosService.deptos();
+        return await this.deptosService.deptos();
+    }
+
+    @Query(() => [DeptoDto])
+    async filtrarDeptos(@Args('nombre') nombre: string): Promise<DeptoDto[]>
+    {
+        return await this.deptosService.filtrarDeptos(nombre);
     }
 
     // async crearDepto(@Args('input', PruebaPipe) input: DeptoDto): Promise<IDepto>

@@ -9,7 +9,8 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/detalle-empleado.component';
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {ConsultaEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component";
+import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 
 @Component({
     standalone: true,
@@ -37,4 +38,9 @@ import {ConsultaEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/consulta-
 export class EmpleadoComponent
 {
     ctrlBuscar: FormControl = new FormControl();
+
+    constructor(public empleadoService: EmpleadoService)
+    {
+    }
+
 }

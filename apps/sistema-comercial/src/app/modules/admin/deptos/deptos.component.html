@@ -3,7 +3,8 @@
     <div class="flex justify-between border-b-4">
 
         <mat-form-field class="flex-initial w-100">
-            <input matInput placeholder="Filtrar departamentos">
+            <mat-label>Filtrar departamentos</mat-label>
+            <input matInput [formControl]="controlBuscar">
         </mat-form-field>
 
         <button mat-flat-button color="primary" (click)="registro()">

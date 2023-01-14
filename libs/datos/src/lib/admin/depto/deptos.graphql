@@ -4,6 +4,13 @@ query Departamentos
         ...fragDeptos
     }
 }
+query filtrarDeptos($nombre: String!)
+{
+    filtrarDeptos(nombre: $nombre)
+    {
+        ...fragDeptos
+    }
+}
 mutation crearDepto($input: DeptoInput!)
 {
     crearDepto(input: $input)
