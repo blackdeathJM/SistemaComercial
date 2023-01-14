@@ -1,8 +1,7 @@
-import {ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
+import {ConflictException, Injectable, InternalServerErrorException, UnauthorizedException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {EmpleadoDto, EmpleadoType, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
-import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 
 @Injectable()
 export class EmpleadoService
@@ -11,16 +10,33 @@ export class EmpleadoService
     {
     }
 
-    async empleados(): Promise<IEmpleado[]>
-    {
-        return await this.empleado.find().exec();
-    }
-
-    async empleadosSesion(): Promise<IEmpleado[]>
+    async empleados(): Promise<EmpleadoDto[]>
     {
         try
         {
-            return await this.empleado.find({auth: {$ne: null}}).exec();
+            return await this.empleado.find().exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: 'Error al consultar empleados'});
+        }
+    }
+
+    async filtrarEmpleadosConSesion(nombreCompleto: string): Promise<EmpleadoDto[]>
+    {
+        try
+        {
+            return await this.empleado.find({nombreCompleto: {$regex: nombreCompleto, $options: 'i'}, auth: {$ne: null}, activo: true}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async empleadosSesion(): Promise<EmpleadoDto[]>
+    {
+        try
+        {
+            return await this.empleado.find({auth: {$ne: null}, activo: true}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e.codeName});
@@ -47,7 +63,7 @@ export class EmpleadoService
         return null;
     }
 
-    async validarUsuarioActivo(_id: string): Promise<IEmpleado>
+    async validarUsuarioActivo(_id: string): Promise<EmpleadoDto>
     {
         const empleado = await this.empleado.findById(_id).exec();
         if (!empleado.activo)

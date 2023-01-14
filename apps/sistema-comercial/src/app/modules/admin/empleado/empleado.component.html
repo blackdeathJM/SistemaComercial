@@ -7,7 +7,7 @@
             <div class="flex consultas">
                 <mat-form-field class="basis-5/12">
                     <mat-label>Filtrar empleados</mat-label>
-                    <input matInput>
+                    <input matInput [formControl]="ctrlBuscar">
                 </mat-form-field>
             </div>
             <div class="flex-auto">

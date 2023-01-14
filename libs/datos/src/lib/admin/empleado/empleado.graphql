@@ -32,6 +32,19 @@ query empleadosSesion
         }
     }
 }
+query filtrarEmpleadosConSesion($consulta: String!)
+{
+    filtrarEmpleadosConSesion(consulta: $consulta)
+    {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}
 mutation crearEmpleado($empleadoDatos: RegEmpleadoInput!)
 {
     crearEmpleado(empleadoDatos: $empleadoDatos)

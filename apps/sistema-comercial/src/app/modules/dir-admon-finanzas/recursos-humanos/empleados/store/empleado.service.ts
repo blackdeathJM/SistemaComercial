@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
+import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL, FiltrarEmpleadosConSesionGQL, FiltrarEmpleadosConSesionQuery} from '#/libs/datos/src';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
@@ -17,7 +17,8 @@ export class EmpleadoService
     #panel = new BehaviorSubject<boolean>(false);
 
     constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
-                private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL)
+                private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
+                private filtrarEmpleadosConSesionGQL: FiltrarEmpleadosConSesionGQL)
     {
     }
 
@@ -89,6 +90,18 @@ export class EmpleadoService
             {
                 const empleadosSesion = $cast<IResolveEmpleado[]>(res.data.empleadosSesion);
                 this.entityEmpleado.setAll(empleadosSesion);
+            }
+        }));
+    }
+
+    filtrarEmpleadosConSesion(consulta: string): Observable<SingleExecutionResult<FiltrarEmpleadosConSesionQuery>>
+    {
+        return this.filtrarEmpleadosConSesionGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const filtroEmpleados = $cast<IResolveEmpleado[]>(res.data.filtrarEmpleadosConSesion);
+                this.entityEmpleado.setAll(filtroEmpleados);
             }
         }));
     }

@@ -2,7 +2,6 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {DeptoDto, DeptoType} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
-import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
 
 
 @Injectable()
@@ -12,7 +11,7 @@ export class DeptosService
     {
     }
 
-    async deptos(): Promise<IDepto[]>
+    async deptos(): Promise<DeptoDto[]>
     {
         try
         {
@@ -23,7 +22,7 @@ export class DeptosService
         }
     }
 
-    async filtrarDeptos(nombre: string): Promise<IDepto[]>
+    async filtrarDeptos(nombre: string): Promise<DeptoDto[]>
     {
         try
         {
@@ -34,7 +33,7 @@ export class DeptosService
         }
     }
 
-    async crearDepto(input: DeptoDto): Promise<IDepto>
+    async crearDepto(input: DeptoDto): Promise<DeptoDto>
     {
         try
         {
@@ -45,7 +44,7 @@ export class DeptosService
         }
     }
 
-    async actualizarDepto(input: DeptoDto): Promise<IDepto>
+    async actualizarDepto(input: DeptoDto): Promise<DeptoDto>
     {
         try
         {
@@ -57,7 +56,7 @@ export class DeptosService
 
     }
 
-    async eliminarDepto(_id: string): Promise<IDepto>
+    async eliminarDepto(_id: string): Promise<DeptoDto>
     {
         try
         {
@@ -68,7 +67,7 @@ export class DeptosService
         }
     }
 
-    async deptoPorId(_id: string): Promise<IDepto>
+    async deptoPorId(_id: string): Promise<DeptoDto>
     {
         return this.depto.findById(_id).exec();
     }
