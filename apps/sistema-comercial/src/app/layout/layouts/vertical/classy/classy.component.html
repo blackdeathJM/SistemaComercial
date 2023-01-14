@@ -17,10 +17,8 @@
             </div>
         </div>
         <!-- User -->
-        <div class="flex flex-col items-center w-full p-4">
-            <div class="relative w-36 h-36">
-                <img class="avatar" [src]="usuario.avatar? usuario.avatar : imgPorDefecto" alt="">
-            </div>
+        <div class="flex flex-col items-center basis-full p-4">
+            <img class="avatar w-36 h-36" [src]="usuario.avatar? usuario.avatar : imgPorDefecto" alt="">
             <div class="flex flex-col items-center justify-center w-full mt-2">
                 <div class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
                     {{usuario.nombreCompleto}}

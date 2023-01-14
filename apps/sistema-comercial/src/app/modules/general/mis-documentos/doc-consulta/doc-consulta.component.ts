@@ -23,6 +23,7 @@ export class DocConsultaComponent implements OnInit
     formBuscarFechas = new FormGroup({fechaInicio: new FormControl(), fechaFin: new FormControl()});
     txtBuscar = new FormControl();
     chkBuscar = new FormControl(false);
+    chkBuscarFechaPendYTerm = new FormControl(false);
 
     constructor(private misDocumentosService: MisDocumentosService)
     {
@@ -30,7 +31,7 @@ export class DocConsultaComponent implements OnInit
 
     ngOnInit(): void
     {
-        this.txtBuscar.valueChanges.pipe(debounceTime(1000), distinctUntilChanged(), switchMap(consulta =>
+        this.txtBuscar.valueChanges.pipe(debounceTime(500), distinctUntilChanged(), switchMap(consulta =>
             this.misDocumentosService.docsBuscarGral(this.chkBuscar.value, consulta))).subscribe();
     }
 

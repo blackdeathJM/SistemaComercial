@@ -1,26 +1,26 @@
-<ng-container *ngIf="entityMisDocumentos.entitiesArray$ | async as documentos">
+<div class="flex flex-wrap gap-2 mx-4" ngxUiLoaderBlurred *ngIf="entityMisDocumentos.entitiesArray.length > 0; else noHayDocs">
+    <fuse-card class="p-4 basis-80 relative" *ngFor="let doc of entityMisDocumentos.entitiesArray$ | async; let i=index; trackBy: trackByFn">
+        <a class="flex gap-4 cursor-pointer" (click)="seleccionarDoc(doc)">
+            <div class="flex flex-col items-center">
+                <img class="rounded-full ring w-16 h-16 object-cover object-center" [src]="doc.resolveEmpleado.avatar" alt="A" *ngIf="doc.resolveEmpleado.avatar">
+                <div class="rounded-full ring w-16 h-16 flex items-center justify-center text-6xl" *ngIf="!doc.resolveEmpleado.avatar">
+                    {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}
+                </div>
+            </div>
+            <mat-icon class="absolute left-0 top-0 text-red-800" svgIcon="heroicons_solid:exclamation-circle" *ngIf="doc.proceso === 'pendiente'" matTooltip="Documento pendiente"></mat-icon>
+            <div class="flex flex-col">
+                <p class="text-xl font-semibold leading-tight truncate">{{doc?.dependencia}}</p>
+                <div class="text-md leading-tight text-primary truncate" [matTooltip]="doc?.dependencia">{{doc?.dependencia}}</div>
+                <div class="flex gap-4">
+                    <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc?.seguimiento}}</span>
+                    <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc?.fechaRecepcion | convertirTimestamUnix}}</span>
+                </div>
+            </div>
+        </a>
+    </fuse-card>
+</div>
+<ngx-ui-loader [loaderId]="loaderListaDocs"></ngx-ui-loader>
 
-    <ng-container *ngIf="documentos.length > 0; else noHayDocs">
-        <div class="flex flex-wrap gap-2" ngxUiLoaderBlurred>
-            <fuse-card class="flex items-center mt-2 ml-2 p-4 w-90 shadow-lg  hover:shadow-cyan-700" *ngFor="let doc of documentos; let i=index; trackBy: trackByFn">
-                <a class="z-20 flex items-center cursor-pointer" (click)="seleccionarDoc(doc)">
-                    <img class="avatar w-16 h-16 mr-4" [src]="doc.resolveEmpleado?.avatar" alt="Avatar" *ngIf="doc.resolveEmpleado.avatar">
-                    <div class="avatar-letra" *ngIf="!doc.resolveEmpleado?.avatar">{{doc.resolveEmpleado?.nombreCompleto?.charAt(0)}}</div>
-                    <div class="flex flex-col">
-                        <p class="text-xl font-semibold leading-tight truncate ..." [matTooltip]="doc?.asunto">{{doc?.asunto}}</p>
-                        <div class="text-md leading-tight text-primary truncate ..." [matTooltip]="doc?.dependencia">{{doc?.dependencia}}</div>
-                        <div class="flex gap-4">
-                            <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc?.seguimiento}}</span>
-                            <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc?.fechaRecepcion | convertirTimestamUnix}}</span>
-                        </div>
-                    </div>
-                </a>
-            </fuse-card>
-        </div>
-    </ng-container>
-
-    <ngx-ui-loader [loaderId]="loaderListaDocs"></ngx-ui-loader>
-</ng-container>
 <ng-template #noHayDocs>
     <app-sin-datos></app-sin-datos>
 </ng-template>

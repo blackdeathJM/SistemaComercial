@@ -9,13 +9,16 @@ import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {loaderMisDocs, MisDocumentosService} from '@s-general/store/mis-documentos.service';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 
 export const LISTA_DOCS_TOKEN = new InjectionToken<ListaDocumentosComponent>('lista-docs-token');
 
 @Component({
     selector: 'app-lista-documentos',
     standalone: true,
-    imports: [CommonModule, FuseCardModule, FuseAlertModule, MatTooltipModule, ConvertirTimestamUnixPipe, NgxUiLoaderModule, SinDatosComponent],
+    imports: [CommonModule, FuseCardModule, FuseAlertModule, MatTooltipModule, ConvertirTimestamUnixPipe, NgxUiLoaderModule, SinDatosComponent, MatIconModule, MatTableModule, MatSortModule],
     templateUrl: './lista-documentos.component.html',
     styleUrls: ['./lista-documentos.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

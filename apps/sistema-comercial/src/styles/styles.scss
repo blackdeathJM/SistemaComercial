@@ -7,7 +7,7 @@
 }
 
 .avatar-letra {
-    @apply mr-6 h-16 w-16 text-5xl flex items-center justify-center rounded-full uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200
+    @apply rounded-full ring flex items-center justify-center text-4xl uppercase
 }
 
 .avatar-letra-grupo {
@@ -15,7 +15,7 @@
 }
 
 .avatar {
-    @apply ring h-full rounded-full object-cover object-center
+    @apply rounded-full ring object-cover object-center
 }
 
 .acciones-en-cabecera {

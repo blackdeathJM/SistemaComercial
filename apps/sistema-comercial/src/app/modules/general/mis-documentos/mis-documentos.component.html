@@ -1,4 +1,4 @@
-<mat-drawer-container class="w-full bg-green-900">
+<mat-drawer-container class="w-full">
     <mat-drawer class="w-128" position="end" autoFocus="false" [opened]="misDocService.getPanel | async" [mode]="drawerMode" #matDrawerDocs>
         <app-detalle-documentos></app-detalle-documentos>
     </mat-drawer>
@@ -14,9 +14,7 @@
                 <app-doc-consulta></app-doc-consulta>
             </div>
             <div class="flex-auto relative">
-                <div class="absolute w-full">
-                    <app-lista-documentos></app-lista-documentos>
-                </div>
+                <app-lista-documentos></app-lista-documentos>
             </div>
         </div>
     </mat-drawer-content>

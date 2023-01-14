@@ -35,11 +35,11 @@ export class DocumentosService
     {
     }
 
-// Filtrar los documentos por usuario y por ano
+// Filtrar los documentos por usuario y por año
     async docsUsuarioProceso(datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
         const tipoBusqueda: Record<string, string> = {};
-        const consulta = {proceso: datos.proceso, ano: this.#ano};
+        const consulta = {proceso: datos.proceso};
         if (datos.esEnviadoPor)
         {
             tipoBusqueda['enviadoPor'] = datos.enviadoPor;

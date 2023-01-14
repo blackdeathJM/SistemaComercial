@@ -2,7 +2,7 @@
     <!-- Header -->
     <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
         <!-- Background -->
-        <img class="absolute inset-0 object-cover w-full h-full" [src]="'assets/images/fondos/fondoPerfilEmpleado.jpg'" alt="Fondo">
+        <img class="absolute inset-0 object-cover w-full h-full ring" [src]="'assets/images/fondos/fondoPerfilEmpleado.jpg'" alt="Fondo">
         <!-- Close button -->
         <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
             <button mat-icon-button [matTooltip]="'Cerrar panel'" (click)="empleadoService.setPanel = false">
@@ -20,7 +20,7 @@
                     <div class="flex flex-auto items-end -mt-16">
                         <!-- Avatar -->
                         <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
-                            <img class="object-cover w-full h-full" *ngIf="empleado?.avatar" [src]="empleado?.avatar" alt="Avatar">
+                            <img class="object-cover w-full h-full ring" *ngIf="empleado?.avatar" [src]="empleado?.avatar" alt="Avatar">
                             <div class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
                                  *ngIf="!empleado?.avatar">
                                 {{empleado?.nombreCompleto?.charAt(0)}}
