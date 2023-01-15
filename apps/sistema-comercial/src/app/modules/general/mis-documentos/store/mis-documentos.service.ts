@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {DocActFolioGQL, DocFinalizarGQL, DocRefFolioGQL, DocsBusquedaGralGQL, DocsFechasGQL, DocsRefGQL, DocsUsuarioProcesoGQL, ReasignarUsuarioGQL, RegDocGQL, SubirDocsGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {BehaviorSubject, finalize, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDocActFolio, IDocsFechas, IDocsUsuarioProceso, IResolveDocumento, TDocRefFolio, TDocumentoReg} from '#/libs/models/src/lib/general/documentos/documento.interface';
@@ -60,11 +60,13 @@ export class MisDocumentosService
 
     docsBuscarGral(esEnviadoPor: boolean, consulta: string): Observable<SingleExecutionResult>
     {
+        this.ngxLoader.startLoader(loaderMisDocs);
         const idEmpleado = this.stateAuth.snapshot._id;
         return this.docsBuscarGralGQL.watch({usuario: idEmpleado, consulta, esEnviadoPor: esEnviadoPor, enviadoPor: idEmpleado}).valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
+                this.ngxLoader.stopLoader(loaderMisDocs);
                 const listaConsulta = $cast<IResolveDocumento[]>(res.data.docsBusquedaGral);
                 this.entityMisDocumentos.setAll(listaConsulta);
             }
@@ -73,6 +75,7 @@ export class MisDocumentosService
 
     consultaFechas(fechaInicial: number, fechaFinal: number, esEnviadoPor: boolean): Observable<SingleExecutionResult>
     {
+        this.ngxLoader.startLoader(loaderMisDocs);
         const consulta: IDocsFechas =
             {
                 enviadoPor: this.stateAuth.snapshot._id,
@@ -85,6 +88,8 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
+                console.log('*********************************');
+                this.ngxLoader.stopLoader(loaderMisDocs);
                 const consultaFechas = $cast<IResolveDocumento[]>(res.data.docsFechas);
                 this.entityMisDocumentos.setAll(consultaFechas);
             }

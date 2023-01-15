@@ -42,9 +42,9 @@ export class ListaDocumentosComponent implements OnInit
         return item._id || index;
     }
 
-    seleccionarDoc(doc: IResolveDocumento): void
+    seleccionarDoc(documento: IResolveDocumento): void
     {
-        this.entityMisDocumentos.seleccionarDoc(doc);
+        this.entityMisDocumentos.patchState({documento});
         this.misDocsService.setPanel = true;
     }
 }

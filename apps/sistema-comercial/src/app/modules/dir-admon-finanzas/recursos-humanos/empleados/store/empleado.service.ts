@@ -10,6 +10,9 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
 import {TOKEN} from '@s-auth/const';
 import {ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {StateAuth} from '@s-core/auth/store/auth.store';
+import {NgxUiLoaderService} from 'ngx-ui-loader';
+
+export const loaderEmpleados = 'listaEmpleados';
 
 @Injectable({providedIn: 'root'})
 export class EmpleadoService
@@ -18,7 +21,7 @@ export class EmpleadoService
 
     constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
                 private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
-                private filtrarEmpleadosConSesionGQL: FiltrarEmpleadosConSesionGQL)
+                private filtrarEmpleadosConSesionGQL: FiltrarEmpleadosConSesionGQL, private ngxLoader: NgxUiLoaderService)
     {
     }
 
@@ -34,6 +37,7 @@ export class EmpleadoService
 
     empleados(): Observable<SingleExecutionResult>
     {
+        this.ngxLoader.startLoader(loaderEmpleados);
         return this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
@@ -41,6 +45,7 @@ export class EmpleadoService
                 const empleados = $cast<IResolveEmpleado[]>(res.data.empleados);
                 this.entityEmpleado.setAll(empleados);
             }
+            this.ngxLoader.stopLoader(loaderEmpleados);
         }));
     }
 
@@ -96,6 +101,7 @@ export class EmpleadoService
 
     filtrarEmpleadosConSesion(consulta: string): Observable<SingleExecutionResult<FiltrarEmpleadosConSesionQuery>>
     {
+        this.ngxLoader.startLoader(loaderEmpleados);
         return this.filtrarEmpleadosConSesionGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
@@ -103,6 +109,7 @@ export class EmpleadoService
                 const filtroEmpleados = $cast<IResolveEmpleado[]>(res.data.filtrarEmpleadosConSesion);
                 this.entityEmpleado.setAll(filtroEmpleados);
             }
+            this.ngxLoader.stopLoader(loaderEmpleados);
         }));
     }
 }

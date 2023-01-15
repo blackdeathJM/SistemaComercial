@@ -1,15 +1,16 @@
 <div class="flex flex-wrap gap-2 mx-4" ngxUiLoaderBlurred *ngIf="entityMisDocumentos.entitiesArray.length > 0; else noHayDocs">
-    <fuse-card class="p-4 basis-80 relative" *ngFor="let doc of entityMisDocumentos.entitiesArray$ | async; let i=index; trackBy: trackByFn">
+    <fuse-card class="p-4 basis-80 relative" *ngFor="let doc of (entityMisDocumentos.entitiesArray$ | async); let i=index; trackBy: trackByFn">
         <a class="flex gap-4 cursor-pointer" (click)="seleccionarDoc(doc)">
-            <div class="flex flex-col items-center">
-                <img class="rounded-full ring w-16 h-16 object-cover object-center" [src]="doc.resolveEmpleado.avatar" alt="A" *ngIf="doc.resolveEmpleado.avatar">
-                <div class="rounded-full ring w-16 h-16 flex items-center justify-center text-6xl" *ngIf="!doc.resolveEmpleado.avatar">
+            <div class="flex items-center w-16">
+                <img class="avatar w-16 h-16" [src]="doc.resolveEmpleado.avatar" alt="A" *ngIf="doc.resolveEmpleado.avatar"
+                     [matTooltip]="doc?.resolveEmpleado?.nombreCompleto">
+                <div class="avatar-letra w-16 h-16" *ngIf="!doc.resolveEmpleado.avatar" [matTooltip]="doc?.resolveEmpleado.nombreCompleto">
                     {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}
                 </div>
             </div>
             <mat-icon class="absolute left-0 top-0 text-red-800" svgIcon="heroicons_solid:exclamation-circle" *ngIf="doc.proceso === 'pendiente'" matTooltip="Documento pendiente"></mat-icon>
             <div class="flex flex-col">
-                <p class="text-xl font-semibold leading-tight truncate">{{doc?.dependencia}}</p>
+                <span class="text-xl font-semibold leading-tight truncate" [matTooltip]="doc?.asunto">{{doc?.asunto}}</span>
                 <div class="text-md leading-tight text-primary truncate" [matTooltip]="doc?.dependencia">{{doc?.dependencia}}</div>
                 <div class="flex gap-4">
                     <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc?.seguimiento}}</span>

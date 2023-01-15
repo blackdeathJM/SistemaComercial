@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -15,16 +15,13 @@ import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
     standalone: true,
     imports: [CommonModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, MatButtonModule, MatIconModule, MatCheckboxModule],
     templateUrl: './doc-consulta.component.html',
-    styleUrls: ['./doc-consulta.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./doc-consulta.component.scss']
 })
 export class DocConsultaComponent implements OnInit
 {
     formBuscarFechas = new FormGroup({fechaInicio: new FormControl(), fechaFin: new FormControl()});
     txtBuscar = new FormControl();
     chkBuscar = new FormControl(false);
-    chkBuscarFechaPendYTerm = new FormControl(false);
-
     constructor(private misDocumentosService: MisDocumentosService)
     {
     }
@@ -50,6 +47,7 @@ export class DocConsultaComponent implements OnInit
         const esEnviadoPor = this.chkBuscar.value;
         const fechaInicial = GeneralService.convertirUnix(fechaInicio.c, fechaInicio.ts);
         const fechaFinal = GeneralService.convertirUnix(fechaFin.c, fechaFin.ts);
+
         this.misDocumentosService.consultaFechas(fechaInicial, fechaFinal, esEnviadoPor).subscribe();
     }
 }
