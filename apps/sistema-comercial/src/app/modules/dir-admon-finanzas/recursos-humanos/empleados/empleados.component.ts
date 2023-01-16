@@ -15,6 +15,7 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DrawerComponent} from "@s-shared/plantillas/drawer/drawer.component";
 import {DrawerService} from "@s-shared/plantillas/drawer/drawer.service";
+import {FuseAlertModule} from "@s-fuse/alert";
 
 @Component({
     selector: 'app-empleados',
@@ -22,7 +23,7 @@ import {DrawerService} from "@s-shared/plantillas/drawer/drawer.service";
     imports:
         [
             CommonModule, MatIconModule, RouterLinkWithHref, MatButtonModule, MatTabsModule, MatSidenavModule, RouterLink, MenuEmpleadosComponent, ListaEmpleadosComponent, FuseCardModule,
-            ConsultaEmpleadoComponent, RouterOutlet, MatInputModule, DrawerComponent
+            ConsultaEmpleadoComponent, RouterOutlet, MatInputModule, DrawerComponent, FuseAlertModule
         ],
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss']
