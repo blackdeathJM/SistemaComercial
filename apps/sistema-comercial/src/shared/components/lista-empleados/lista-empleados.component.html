@@ -1,4 +1,4 @@
-<ng-container *ngIf="entityEmpleado.entitiesArray && entityEmpleado.entitiesArray.length > 0; else sinDatos">
+<ng-container *ngIf="entityEmpleado.entitiesArray.length > 0; else sinDatos">
     <div class="relative flex-auto flex flex-col m-4" ngxUiLoaderBlurred>
         <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async; trackBy: trackByFn">
             <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b hover:bg-amber-100 dark:hover:bg-gray-800" (click)="seleccionarEmpleado(empleado)">

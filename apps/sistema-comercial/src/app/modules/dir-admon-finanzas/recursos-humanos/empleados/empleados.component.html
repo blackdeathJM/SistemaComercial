@@ -4,6 +4,13 @@
             <mat-form-field class="mx-4">
                 <input matInput type="text">
             </mat-form-field>
+            <mat-form-field class="mx-4">
+                <mat-select>
+                    <mat-option value="option1">Opcion 1</mat-option>
+                    <mat-option value="option2">Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </mat-form-field>
             <app-lista-Empleados></app-lista-Empleados>
         </div>
     </mat-drawer>
@@ -17,7 +24,7 @@
             </section>
             <section class="flex-auto my-4">
                 <mat-card>
-                    <mat-card-header class="border-b-2">
+                    <mat-card-header class="border-b-2 py-2">
                         <span class="text-xl">Informacion personal</span>
                     </mat-card-header>
                     <mat-card-content>
@@ -26,23 +33,162 @@
                                 <div class="avatar-letra w-36 h-36 mr-4">B</div>
                             </div>
                             <div class="flex-grow">
-                                <div class="grid grid-cols-4 gap-4">
-                                    <span class="justify-self-end text-secondary">Nombre compleato</span>
-                                    <span class="col-span-3">Juanito perez Gonzalez</span>
-                                    <span class="justify-self-end text-secondary">Calle</span>
-                                    <span class="justify-self-start">Nombre de la calle</span>
-                                    <span class="justify-self-end text-secondary">Colonia</span>
-                                    <span class="justify-self-start">Nombre colonia</span>
-                                    <span class="justify-self-end text-secondary">Email</span>
-                                    <span class="justify-self-start">correoEjemplo@Gmail.com</span>
-                                    <span class="justify-self-end text-secondary">Telefono</span>
-                                    <span class="justify-self-start">4181813113</span>
+                                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <span class="text-end text-secondary border-b-2">Nombre completo</span>
+                                    <span class="lg:col-span-3 border-b-2">Juanito perez Gonzalez</span>
+                                    <span class="text-end text-secondary border-b-2">Calle</span>
+                                    <span class="border-b-2">Nombre de la calle</span>
+                                    <span class="text-end text-secondary border-b-2">Colonia</span>
+                                    <span class="border-b-2">Nombre colonia</span>
+                                    <span class="text-end text-secondary border-b-2">Email</span>
+                                    <span class="border-b-2">correoEjemplo@Gmail.com</span>
+                                    <span class="text-end text-secondary border-b-2">Telefono</span>
+                                    <span class="border-b-2">4181813113</span>
+                                    <span class="text-end text-secondary border-b-2">Departamento</span>
+                                    <span class="border-b-2">Area tecnica</span>
+                                    <span class="text-end text-secondary border-b-2">Fecha de ingreso</span>
+                                    <span class="border-b-2">23/06/2011</span>
                                 </div>
                             </div>
                         </div>
                     </mat-card-content>
+                    <mat-card-actions class="border-t-amber-600 border-t-4">
+                        <div class="flex flex-row-reverse flex-auto">
+                            <button mat-raised-button color="primary">
+                                Editar informacion
+                            </button>
+                        </div>
+                    </mat-card-actions>
                 </mat-card>
             </section>
+
+            <section class="flex-auto my-4">
+                <fuse-card>
+                    <mat-card class="flex-auto">
+                        <mat-card-header class="border-b-2 py-2">
+                            <span class="text-xl">Informacion puesto</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="grid grid-cols-6 gap-4 py-4">
+                                <span class="text-end text-secondary border-b-2">Departamento</span>
+                                <span class="border-b-2">info departamento</span>
+                                <span class="text-end text-secondary border-b-2">puesto</span>
+                                <span class="border-b-2">info puesto</span>
+                                <span class="text-end text-secondary border-b-2">Fecha asignacion</span>
+                                <span class="border-b-2">13/06/2011</span>
+
+                                <span class="text-end text-secondary border-b-2 col-start-3">sueldo</span>
+                                <span class="border-b-2 text-right">000.00</span>
+                                <span class="text-end text-secondary border-b-2">ISR</span>
+                                <span class="border-b-2 text-right">00.00</span>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions class="border-t-emerald-800 border-t-4">
+                            <div class="flex flex-row-reverse flex-auto">
+                                <button mat-raised-button color="primary">
+                                    Acciones
+                                </button>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </fuse-card>
+            </section>
+
+            <section class="flex-auto my-4">
+                <fuse-card>
+                    <mat-card class="flex-auto">
+                        <mat-card-header class="border-b-2 py-2">
+                            <span class="text-xl">Informacion I.M.S.S.</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <mat-tab-group>
+                                <mat-tab label="Ene">
+                                    <div class="grid grid-cols-8 gap-4 py-4">
+                                        <span class="text-end text-secondary border-b-2 col-start-7">No. Seguro social</span>
+                                        <span class="border-b-2">NS255125282</span>
+                                        <span class="text-end text-secondary border-b-2">Mes</span>
+                                        <span class="border-b-2">28</span>
+                                        <span class="text-end text-secondary border-b-2">SDI</span>
+                                        <span class="border-b-2">$730.91</span>
+                                        <span class="text-end text-secondary border-b-2">SBC</span>
+                                        <span class="border-b-2">$20,465.48</span>
+                                        <span class="text-end text-secondary border-b-2">Cuota fija</span>
+                                        <span class="border-b-2">$549.61</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">EXCEDENTE</span>
+                                        <span class="text-end text-secondary border-b-2 col-start-3">Patron (1.10%)</span>
+                                        <span class="border-b-2">$136.21</span>
+                                        <span class="text-end text-secondary border-b-2">Obrero (.40%)</span>
+                                        <span class="border-b-2">$49.53</span>
+                                        <span class="text-end text-secondary border-b-2 text-orange-300">Total</span>
+                                        <span class="border-b-2 text-orange-300">$185.75</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">PRESTACIONES EN DINERO</span>
+                                        <span class="text-end text-secondary border-b-2 col-start-3">Patron (.7%)</span>
+                                        <span class="border-b-2">$143.26</span>
+                                        <span class="text-end text-secondary border-b-2">Obrero (.25%)</span>
+                                        <span class="border-b-2">$51.16</span>
+                                        <span class="text-end text-secondary border-b-2 text-orange-300">Total</span>
+                                        <span class="border-b-2 text-orange-300">$194.42</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">PENSIONADOS Y BENEFICIADOS</span>
+                                        <span class="text-end text-secondary border-b-2 col-start-3">Patron (1.050%)</span>
+                                        <span class="border-b-2">$214.89</span>
+                                        <span class="text-end text-secondary border-b-2">Obrero (.375%)</span>
+                                        <span class="border-b-2">$76.75</span>
+                                        <span class="text-end text-secondary border-b-2 text-orange-300">Total</span>
+                                        <span class="border-b-2 text-orange-300">$291.36</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">RIESGO DE TRABAJO</span>
+                                        <span class="text-end text-secondary border-b-2 col-start-7">(.72980%)</span>
+                                        <span class="border-b-2">$149.36</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">INVALIDEZ Y VIDA</span>
+                                        <span class="text-end text-secondary border-b-2 col-start-3">Patron (1.75%)</span>
+                                        <span class="border-b-2">$358.15</span>
+                                        <span class="text-end text-secondary border-b-2">Obrero (.625%)</span>
+                                        <span class="border-b-2">$127.91</span>
+                                        <span class="text-end text-secondary border-b-2 text-orange-300">Total</span>
+                                        <span class="border-b-2 text-orange-300">$486.06</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">GUARDERIA Y PRESTACIONES</span>
+                                        <span class="border-b-2 col-start-8">$149.36</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">RESUMEN</span>
+                                        <span class="text-end text-secondary border-b-2 col-start-5">Patron</span>
+                                        <span class="border-b-2">$1,756.13</span>
+                                        <span class="text-end text-secondary border-b-2">Obrero</span>
+                                        <span class="border-b-2">$305.35</span>
+
+                                        <span class="text-md col-span-full border-b-2 text-start text-amber-500">TOTAL</span>
+                                        <span class="border-b-2 col-start-8">$2,061.48</span>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Feb"></mat-tab>
+                                <mat-tab label="Mar"></mat-tab>
+                                <mat-tab label="Abr"></mat-tab>
+                                <mat-tab label="May"></mat-tab>
+                                <mat-tab label="Jun"></mat-tab>
+                                <mat-tab label="Jul"></mat-tab>
+                                <mat-tab label="Ago"></mat-tab>
+                                <mat-tab label="Sep"></mat-tab>
+                                <mat-tab label="Oct"></mat-tab>
+                                <mat-tab label="Nov"></mat-tab>
+                                <mat-tab label="Dic"></mat-tab>
+                            </mat-tab-group>
+                        </mat-card-content>
+                        <mat-card-actions class="border-t-fuchsia-700 border-t-4">
+                            <div class="flex flex-row-reverse flex-auto">
+                                <button mat-raised-button color="primary">
+                                    Acciones
+                                </button>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </fuse-card>
+            </section>
+
+
             <section class="flex-auto">
                 <mat-card>
                     <mat-card-header class="border-b-2">
@@ -93,19 +239,106 @@
                     <mat-card-footer class="m-2 content-center">
                         <span class="p-4 text-lg w-full">2023</span>
                     </mat-card-footer>
-                    <mat-card-actions class="border-t-2">
-                        <button mat-raised-button color="primary">
-                            Guardar cambios
-                        </button>
+                    <mat-card-actions class="border-t-green-400 border-t-4">
+                        <div class="flex flex-row-reverse flex-auto">
+                            <button mat-raised-button color="primary">
+                                Guardar cambios
+                            </button>
+                        </div>
                     </mat-card-actions>
                 </mat-card>
             </section>
-            <section class="flex-auto mt-8">
-                <mat-card>
-                    <mat-card-header class="border-b-2">
-                        <span class="text-xl">Concentrado de entradas y salidas</span>
-                    </mat-card-header>
-                </mat-card>
+
+
+            <section class="flex-auto my-4">
+                <fuse-card>
+                    <mat-card class="flex-auto">
+                        <mat-card-header class="border-b-2 py-2">
+                            <span class="text-xl">Prestamos - (2023)</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="grid grid-cols-10 gap-4 py-2">
+                                <b class="col-span-full text-2xl text-green-800 text-center border-b-2">$20,000</b>
+                                <span class="text-end text-secondary border-b-2">De</span>
+                                <span class="border-b-2">5/02/2023</span>
+                                <span class="text-end text-secondary border-b-2">Hasta</span>
+                                <span class="border-b-2">17/12/2023</span>
+                                <span class="text-end text-secondary border-b-2">Dias</span>
+                                <span class="border-b-2">315</span>
+                                <span class="text-end text-secondary border-b-2">% Cat</span>
+                                <span class="border-b-2">22.50%</span>
+                                <span class="text-end text-secondary border-b-2">.5%</span>
+                                <span class="border-b-2">23</span>
+                                <b class="col-span-full text-2xl text-green-800 text-center border-b-2">Pagos</b>
+                                <div class="col-span-full">
+                                    <table mat-table [dataSource]="data">
+                                        <ng-container [matColumnDef]="column" *ngFor="let column of columns">
+                                            <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+                                            <td mat-cell *matCellDef="let elemento">{{elemento[column]}}</td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: columnasAMostrar"></tr>
+                                    </table>
+                                </div>
+                                <b class="col-span-full text-2xl text-green-800 text-center border-b-2">Total a recuperar</b>
+                                <span class="text-end text-secondary border-b-2 col-start-7">Interes</span>
+                                <span class="border-b-2">$0,000.00</span>
+                                <span class="text-end text-secondary border-b-2">Descuento</span>
+                                <span class="border-b-2">$000.00</span>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions class="border-t-emerald-800 border-t-4">
+                            <div class="flex flex-row-reverse flex-auto">
+                                <button mat-raised-button color="primary">
+                                    Acciones
+                                </button>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </fuse-card>
+            </section>
+
+
+            <section class="flex-auto my-4">
+                <fuse-card>
+                    <mat-card class="flex-auto">
+                        <mat-card-header class="border-b-2 py-2">
+                            <span class="text-xl">Fondo de ahorro</span>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="flex flex-col">
+                                <table mat-table [dataSource]="dataFondo">
+                                    <ng-container [matColumnDef]="column" *ngFor="let column of columnasFondo">
+                                        <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+                                        <td mat-cell *matCellDef="let elemento">{{elemento[column]}}</td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="columnasFondoMostrar"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: columnasFondoMostrar"></tr>
+                                </table>
+                                <div class="grid">
+                                    <div class="flex flex-auto gap-4 justify-end">
+                                        <div>Total Aportaciones</div>
+                                        <div>$4.382.16</div>
+                                        <div>$4,382.16</div>
+                                        <div>$3,450</div>
+                                        <div>$9,034.20</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions class="border-t-blue-800 border-t-4">
+                            <div class="flex flex-row-reverse flex-auto">
+                                <button mat-raised-button color="primary">
+                                    Acciones
+                                </button>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </fuse-card>
+            </section>
+
+            <section>
+
             </section>
         </article>
     </mat-drawer-content>
