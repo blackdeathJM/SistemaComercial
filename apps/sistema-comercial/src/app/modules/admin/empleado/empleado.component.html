@@ -11,7 +11,7 @@
                 </mat-form-field>
             </div>
             <div class="flex-auto">
-                <app-lista-Empleados></app-lista-Empleados>
+                <app-lista-Empleados (seleccionar)="seleccionar($event)"></app-lista-Empleados>
             </div>
         </div>
     </mat-drawer-content>

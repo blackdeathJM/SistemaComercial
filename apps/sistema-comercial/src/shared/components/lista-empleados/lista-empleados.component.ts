@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -19,7 +19,7 @@ import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 })
 export class ListaEmpleadosComponent implements OnInit
 {
-
+    @Output() seleccionar = new EventEmitter<IResolveEmpleado>(false);
     empleados: IResolveEmpleado[];
     loaderEmp = loaderEmpleados;
 
@@ -34,8 +34,7 @@ export class ListaEmpleadosComponent implements OnInit
 
     seleccionarEmpleado(empleado: IResolveEmpleado): void
     {
-        this.entityEmpleado.patchState({empleado});
-        this.empleadoService.setPanel = true;
+        this.seleccionar.emit(empleado);
     }
 
     trackByFn(index: number, item: IResolveEmpleado): any

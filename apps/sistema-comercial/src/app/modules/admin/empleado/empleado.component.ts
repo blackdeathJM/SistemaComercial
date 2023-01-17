@@ -12,6 +12,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
+import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Component({
     standalone: true,
@@ -42,7 +44,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy
     ctrlBuscar: FormControl = new FormControl();
     private sub = new Subscription();
 
-    constructor(public empleadoService: EmpleadoService)
+    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore)
     {
     }
 
@@ -55,5 +57,11 @@ export class EmpleadoComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+    }
+
+    seleccionar(empleado: IResolveEmpleado): void
+    {
+        this.entityEmpleado.patchState({empleado});
+        this.empleadoService.setPanel = true;
     }
 }

@@ -1,4 +1,4 @@
-import { ITelefono, TRegEmpleado} from './empleado.interface';
+import {ITelefono, TRegEmpleado} from './empleado.interface';
 import {email, maxLength, minLength, propArray, required} from '@rxweb/reactive-form-validators';
 import {lowerCase, sanitize} from '@rxweb/sanitizers';
 import {Modificado} from '../../common/common';
@@ -23,9 +23,7 @@ export class Empleado implements TRegEmpleado
     nombreCompleto: string;
     @propArray(undefined, {allowMaxIndex: 3, createBlank: true})
     telefono: Telefono[];
-
     modificadoPor: Modificado[];
-    fechaBaja: number;
     activo: boolean;
     avatar: string;
 }
@@ -38,4 +36,3 @@ export class Telefono implements ITelefono
     @minLength({value: 10, message: 'La longitud minima es de 10 numeros'})
     numero: string;
 }
-

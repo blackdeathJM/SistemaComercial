@@ -14,6 +14,8 @@ import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.serv
 import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
 import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {MatCardModule} from '@angular/material/card';
+import {ModRegistroEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-empleados',
@@ -41,14 +43,9 @@ import {MatCardModule} from '@angular/material/card';
 })
 export class EmpleadosComponent implements OnInit, OnDestroy
 {
-    constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService)
+    constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService, private mdr: MatDialog)
     {
     }
-
-    // registroEmpleado(): void
-    // {
-    //     this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
-    // }
 
     ngOnInit(): void
     {
@@ -64,7 +61,7 @@ export class EmpleadosComponent implements OnInit, OnDestroy
 
     nvoEmpleado(): void
     {
-
+        this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
     }
 
     ngOnDestroy(): void

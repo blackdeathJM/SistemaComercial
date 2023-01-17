@@ -44,4 +44,4 @@ export interface IResolveEmpleado extends IEmpleado
     deptoEmpleado: IDepto;
 }
 
-export type TRegEmpleado = Omit<IEmpleado, '_id' | 'auth' | 'fechaBaja'>;
+export type TRegEmpleado = Omit<IEmpleado, '_id' | 'auth' | 'fechaBaja' | 'puesto'>;

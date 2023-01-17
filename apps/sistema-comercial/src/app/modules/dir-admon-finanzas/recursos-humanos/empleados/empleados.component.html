@@ -8,29 +8,105 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="flex flex-col p-4">
-            <fuse-card>
-                <mat-card class="flex-auto">
+        <article class="flex flex-col p-4 mb-8">
+            <section class="acciones-en-cabecera -mx-1 -mt-2">
+                <button mat-raised-button color="primary" (click)="nvoEmpleado()">
+                    <mat-icon class="mr-5">add</mat-icon>
+                    Dar de alta nuevo empleado
+                </button>
+            </section>
+            <section class="flex-auto my-4">
+                <mat-card>
                     <mat-card-header class="border-b-2">
-                        <span class="text-xl">Concentrado de entradas y salidas</span>
+                        <span class="text-xl">Informacion personal</span>
                     </mat-card-header>
-                    <mat-card-title-group class="p-2 border-b-2">
-                        <span class="text-lg">Permisos</span>
-                    </mat-card-title-group>
                     <mat-card-content>
-                        <div class="grid grid-rows-5 grid-cols-4">
-                            <div>
-
+                        <div class="flex flex-auto gap-4 p-4">
+                            <div class="basis-10 border-r-2">
+                                <div class="avatar-letra w-36 h-36 mr-4">B</div>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="grid grid-cols-4 gap-4">
+                                    <span class="justify-self-end text-secondary">Nombre compleato</span>
+                                    <span class="col-span-3">Juanito perez Gonzalez</span>
+                                    <span class="justify-self-end text-secondary">Calle</span>
+                                    <span class="justify-self-start">Nombre de la calle</span>
+                                    <span class="justify-self-end text-secondary">Colonia</span>
+                                    <span class="justify-self-start">Nombre colonia</span>
+                                    <span class="justify-self-end text-secondary">Email</span>
+                                    <span class="justify-self-start">correoEjemplo@Gmail.com</span>
+                                    <span class="justify-self-end text-secondary">Telefono</span>
+                                    <span class="justify-self-start">4181813113</span>
+                                </div>
                             </div>
                         </div>
                     </mat-card-content>
                 </mat-card>
-            </fuse-card>
-            <!--            <div class="flex flex-auto border-4 border-cyan-900 rounded-lg m-4 p-4">-->
-            <!--                <div class="flex-auto p-3 bg-card rounded-lg">-->
-            <!--                    texto-->
-            <!--                </div>-->
-            <!--            </div>-->
-        </div>
+            </section>
+            <section class="flex-auto">
+                <mat-card>
+                    <mat-card-header class="border-b-2">
+                        <span class="text-xl">Concentrado de entradas y salidas</span>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="grid grid-cols-4 gap-4 py-2 items-center">
+                            <div class="justify-self-end">
+                                Con sueldo
+                            </div>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+
+                            <div class="justify-self-end">
+                                Sin sueldo
+                            </div>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+
+
+                            <div class="justify-self-end">
+                                Vacaciones 1er
+                            </div>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+                            <div class="justify-self-end">2do periodo</div>
+                            <mat-form-field>
+                                <input matInput>
+                            </mat-form-field>
+
+                        </div>
+                    </mat-card-content>
+                    <mat-card-footer class="m-2 content-center">
+                        <span class="p-4 text-lg w-full">2023</span>
+                    </mat-card-footer>
+                    <mat-card-actions class="border-t-2">
+                        <button mat-raised-button color="primary">
+                            Guardar cambios
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </section>
+            <section class="flex-auto mt-8">
+                <mat-card>
+                    <mat-card-header class="border-b-2">
+                        <span class="text-xl">Concentrado de entradas y salidas</span>
+                    </mat-card-header>
+                </mat-card>
+            </section>
+        </article>
     </mat-drawer-content>
 </mat-drawer-container>
