@@ -12,7 +12,7 @@ import {ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.d
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 
-export const loaderEmpleados = 'listaEmpleados';
+export const ngxLoaderEmp = 'loaderEmpleados';
 
 @Injectable({providedIn: 'root'})
 export class EmpleadoService
@@ -35,9 +35,9 @@ export class EmpleadoService
         this.#panel.next(v);
     }
 
-    empleados(): Observable<SingleExecutionResult>
+    empleados(loader: string): Observable<SingleExecutionResult>
     {
-        this.ngxLoader.startLoader(loaderEmpleados);
+        this.ngxLoader.startLoader(loader);
         return this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
@@ -45,7 +45,7 @@ export class EmpleadoService
                 const empleados = $cast<IResolveEmpleado[]>(res.data.empleados);
                 this.entityEmpleado.setAll(empleados);
             }
-            this.ngxLoader.stopLoader(loaderEmpleados);
+            this.ngxLoader.stopLoader(loader);
         }));
     }
 
@@ -99,9 +99,9 @@ export class EmpleadoService
         }));
     }
 
-    filtrarEmpleadosConSesion(consulta: string): Observable<SingleExecutionResult<FiltrarEmpleadosConSesionQuery>>
+    filtrarEmpleadosConSesion(consulta: string, loader: string): Observable<SingleExecutionResult<FiltrarEmpleadosConSesionQuery>>
     {
-        this.ngxLoader.startLoader(loaderEmpleados);
+        this.ngxLoader.startLoader(loader);
         return this.filtrarEmpleadosConSesionGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
@@ -109,7 +109,7 @@ export class EmpleadoService
                 const filtroEmpleados = $cast<IResolveEmpleado[]>(res.data.filtrarEmpleadosConSesion);
                 this.entityEmpleado.setAll(filtroEmpleados);
             }
-            this.ngxLoader.stopLoader(loaderEmpleados);
+            this.ngxLoader.stopLoader(loader);
         }));
     }
 }

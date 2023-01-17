@@ -10,7 +10,7 @@ import {DetalleEmpleadoComponent} from '@s-admin/components/detalle-empleado/det
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
-import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -42,6 +42,7 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 export class EmpleadoComponent implements OnInit, OnDestroy
 {
     ctrlBuscar: FormControl = new FormControl();
+    ngxLoader = ngxLoaderEmp;
     private sub = new Subscription();
 
     constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore)
@@ -51,7 +52,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(3000), switchMap((res: string) =>
-            this.empleadoService.filtrarEmpleadosConSesion(res))).subscribe());
+            this.empleadoService.filtrarEmpleadosConSesion(res, this.ngxLoader))).subscribe());
     }
 
     ngOnDestroy(): void

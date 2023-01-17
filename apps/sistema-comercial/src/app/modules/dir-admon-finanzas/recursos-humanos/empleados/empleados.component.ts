@@ -16,6 +16,8 @@ import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
 import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
 
 
 @Component({
@@ -38,22 +40,23 @@ import {MatSelectModule} from '@angular/material/select';
             MatInputModule,
             DrawerComponent,
             MatSelectModule,
+            NgxUiLoaderModule,
         ],
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss']
 })
-export class EmpleadosComponent implements OnInit, OnDestroy
+export class EmpleadosComponent implements OnInit
 {
+    ngxLoader = 'loaderGralInfo';
 
 
-    constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService, private mdr: MatDialog)
+    constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService, private mdr: MatDialog, public entityEmpleado: EntityEmpleadoStore)
     {
     }
 
     ngOnInit(): void
     {
-        this.drawerService.setPanelIzq = true;
-        this.empleadoService.empleados().subscribe();
+        this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
 
@@ -65,12 +68,6 @@ export class EmpleadosComponent implements OnInit, OnDestroy
     nvoEmpleado(): void
     {
         this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
-    }
-
-    ngOnDestroy(): void
-    {
-        this.drawerService.setPanelIzq = false;
-        this.drawerService.setPanelDer = false;
     }
 
 }

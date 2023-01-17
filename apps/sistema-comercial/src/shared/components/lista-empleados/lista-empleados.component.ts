@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {EmpleadoService, loaderEmpleados} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -21,7 +21,7 @@ export class ListaEmpleadosComponent implements OnInit
 {
     @Output() seleccionar = new EventEmitter<IResolveEmpleado>(false);
     empleados: IResolveEmpleado[];
-    loaderEmp = loaderEmpleados;
+    loaderEmp = ngxLoaderEmp;
 
     constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService)
     {
@@ -29,7 +29,7 @@ export class ListaEmpleadosComponent implements OnInit
 
     ngOnInit(): void
     {
-        this.empleadoService.empleados().subscribe();
+        this.empleadoService.empleados(this.loaderEmp).subscribe();
     }
 
     seleccionarEmpleado(empleado: IResolveEmpleado): void

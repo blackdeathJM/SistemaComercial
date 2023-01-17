@@ -5,11 +5,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
     selector: 'app-info-gral-empleado',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatButtonModule, FuseCardModule, MatFormFieldModule, MatInputModule],
+    imports: [CommonModule, MatCardModule, MatButtonModule, FuseCardModule, MatFormFieldModule, MatInputModule, MatIconModule],
     templateUrl: './info-gral-empleado.component.html',
     styleUrls: ['./info-gral-empleado.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
