@@ -1,1 +1,39 @@
-<p>fondo-de-ahorro works!</p>
+<article class="flex flex-col flex-auto">
+    <section class="flex-auto my-4">
+        <fuse-card>
+            <mat-card class="flex-auto">
+                <mat-card-header class="border-b-2 py-2">
+                    <span class="text-xl">Fondo de ahorro</span>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="flex flex-col">
+                        <table mat-table [dataSource]="dataFondo">
+                            <ng-container [matColumnDef]="column" *ngFor="let column of columnasFondo">
+                                <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+                                <td mat-cell *matCellDef="let elemento">{{elemento[column]}}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnasFondoMostrar"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnasFondoMostrar"></tr>
+                        </table>
+                        <div class="grid">
+                            <div class="flex flex-auto gap-4 justify-end">
+                                <div>Total Aportaciones</div>
+                                <div>$4.382.16</div>
+                                <div>$4,382.16</div>
+                                <div>$3,450</div>
+                                <div>$9,034.20</div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions class="border-t-blue-800 border-t-4">
+                    <div class="flex flex-row-reverse flex-auto">
+                        <button mat-raised-button color="primary">
+                            Acciones
+                        </button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </fuse-card>
+    </section>
+</article>

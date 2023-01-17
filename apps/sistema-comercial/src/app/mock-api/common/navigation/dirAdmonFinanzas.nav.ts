@@ -58,15 +58,6 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                                     link: dirAdmonFinanzas + 'empleados/retardos'
                                 },
                                 {
-                                    id: 'cuotas',
-                                    title: 'Cuotas',
-                                    type: 'basic',
-                                    icon: 'money',
-                                    activo: false,
-                                    disabled: false,
-                                    link: dirAdmonFinanzas + 'empleados/cuotas'
-                                },
-                                {
                                     id: 'fondoDeAhoro',
                                     title: 'Fondo de ahorro',
                                     type: 'basic',

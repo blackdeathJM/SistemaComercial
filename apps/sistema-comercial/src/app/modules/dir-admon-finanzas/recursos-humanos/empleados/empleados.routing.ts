@@ -4,7 +4,6 @@ import {InfoGralEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/info-gral
 import {ImssComponent} from '@s-dirAdmonFinanzas/empleados/imss/imss.component';
 import {NominaComponent} from '@s-dirAdmonFinanzas/empleados/nomina/nomina.component';
 import {CtrlRetardosComponent} from '@s-dirAdmonFinanzas/empleados/ctrl-retardos/ctrl-retardos.component';
-import {CuotasComponent} from '@s-dirAdmonFinanzas/empleados/cuotas/cuotas.component';
 import {FondoDeAhorroComponent} from '@s-dirAdmonFinanzas/empleados/fondo-de-ahorro/fondo-de-ahorro.component';
 
 export const empleadosRouting: Routes =
@@ -29,10 +28,6 @@ export const empleadosRouting: Routes =
                     {
                         path: 'retardos',
                         component: CtrlRetardosComponent
-                    },
-                    {
-                        path: 'cuotas',
-                        component: CuotasComponent
                     },
                     {
                         path: 'fondo-de-ahorro',
