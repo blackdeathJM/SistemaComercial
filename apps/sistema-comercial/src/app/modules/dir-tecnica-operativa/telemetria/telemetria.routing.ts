@@ -10,7 +10,7 @@ export const telemetriaRouting: Routes =
                 [
                     {
                         path: 'instalaciones',
-                        loadComponent: () => import('@s-dir-tecnica-operativa/telemetria/instalaciones/instalaciones.component').then(c => c.InstalacionesComponent)
+                        loadComponent: () => import('@s-dir-tecnica-operativa/telemetria/instalaciones/detalle-instalacion/detalle-instalacion.component').then(c => c.DetalleInstalacionComponent)
                     },
                     {
                         path: 'bombas',

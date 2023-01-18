@@ -1,77 +1,90 @@
-<div class="flex flex-col overflow-x-auto relative shadow-md sm:rounded-lg mt-10">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-            <th scope="col" class="py-3 px-6">
-                serie
-            </th>
-            <th scope="col" class="py-3 px-6">
-                modelo
-            </th>
-            <th scope="col" class="py-3 px-6">
-                fecha Instalacion
-            </th>
-            <th scope="col" class="py-3 px-6">
-                activo
-            </th>
-            <th scope="col" class="py-3 px-6">
-                Acciones
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="odd:bg-white even:bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                Apple MacBook Pro 17"
-            </th>
-            <td class="py-4 px-6">
-                Sliver
-            </td>
-            <td class="py-4 px-6">
-                Laptop
-            </td>
-            <td class="py-4 px-6">
-                $2999
-            </td>
-            <td class="py-4 px-6">
-                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <button mat-raised-button>Nueva bomba</button>
-</div>
-
-<div class="flex flex-col flex-auto bg-card shadow rounded overflow-hidden mt-2">
-    <div class="p-3 bg-gray-50 dark:bg-gray-700">
-        <p class="text-lg font-medium">Bomba instalada actualmente</p>
-    </div>
-    <mat-divider></mat-divider>
-    <section class="grid grid-cols-6 gap-4 p-3">
-        <div class="text-secondary">serie:</div>
-        <div>XALDO5253LDOR</div>
-        <div class="text-secondary">Marca:</div>
-        <div>DLLSOLD -- adasde</div>
-        <div class="text-secondary">Modelo:</div>
-        <div>MODELO-MOTOR</div>
-
-
-        <div class="text-secondary">No. Impulsores:</div>
-        <div>XALDO</div>
-        <div class="text-secondary">Rmp:</div>
-        <div>3300</div>
-        <div class="text-secondary">Tipo:</div>
-        <div>Tipo de bomba</div>
-
-        <div class="text-secondary col-start-3">Fecha instalacion:</div>
-        <div>13/06/2021</div>
-        <div class="text-secondary">Fecha retiro:</div>
-        <div>19/09/2023</div>
-
-        <div class="text-secondary">Descripcion:</div>
-        <div class="col-span-5">asdf dasfa asera dasfasdf aesera</div>
-
-        <div class="text-secondary">Observaciones:</div>
-        <div class="col-span-5">asdf dasfa asera dasfasdf aesera afasd adfe</div>
+<article class="flex flex-col flex-auto p-4">
+    <section class="flex-auto">
+        <div class="flex flex-col overflow-x-auto relative shadow-md sm:rounded-lg mt-10">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="py-3 px-6">
+                        serie
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        modelo
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        fecha Instalacion
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        activo
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Acciones
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="odd:bg-white even:bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Apple MacBook Pro 17"
+                    </th>
+                    <td class="py-4 px-6">
+                        Sliver
+                    </td>
+                    <td class="py-4 px-6">
+                        Laptop
+                    </td>
+                    <td class="py-4 px-6">
+                        $2999
+                    </td>
+                    <td class="py-4 px-6">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
-</div>
+    <section class="flex-auto mt-8">
+        <mat-card>
+            <mat-card-header class="tarjeta-mat-cabecera border-b-purple-500">
+                <span class="text-lg font-medium">Bomba (Colocar el nombre de la instalacion)</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="grid grid-cols-6 gap-4 p-3">
+                    <div class="text-secondary">serie:</div>
+                    <div>XALDO5253LDOR</div>
+                    <div class="text-secondary">Marca:</div>
+                    <div>DLLSOLD -- adasde</div>
+                    <div class="text-secondary">Modelo:</div>
+                    <div>MODELO-MOTOR</div>
+
+
+                    <div class="text-secondary">No. Impulsores:</div>
+                    <div>XALDO</div>
+                    <div class="text-secondary">Rmp:</div>
+                    <div>3300</div>
+                    <div class="text-secondary">Tipo:</div>
+                    <div>Tipo de bomba</div>
+
+                    <div class="text-secondary col-start-3">Fecha instalacion:</div>
+                    <div>13/06/2021</div>
+                    <div class="text-secondary">Fecha retiro:</div>
+                    <div>19/09/2023</div>
+
+                    <div class="text-secondary">Descripcion:</div>
+                    <div class="col-span-5">asdf dasfa asera dasfasdf aesera</div>
+
+                    <div class="text-secondary">Observaciones:</div>
+                    <div class="col-span-5">asdf dasfa asera dasfasdf aesera afasd adfe</div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-purple-500">
+                <div class="flex flex-row-reverse flex-auto">
+                    <button mat-raised-button color="primary">
+                        <mat-icon class="mr-5" svgIcon="edit"></mat-icon>
+                        Editar informacion
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+</article>
