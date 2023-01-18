@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
@@ -18,6 +18,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 
 @Component({
@@ -43,7 +44,8 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
             NgxUiLoaderModule,
         ],
     templateUrl: './empleados.component.html',
-    styleUrls: ['./empleados.component.scss']
+    styleUrls: ['./empleados.component.scss'],
+    animations: fuseAnimations
 })
 export class EmpleadosComponent implements OnInit
 {

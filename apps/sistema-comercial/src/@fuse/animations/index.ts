@@ -1,1 +1,1 @@
-export * from '../../@fuse/animations/public-api';
+export * from '@s-fuse/public-api';

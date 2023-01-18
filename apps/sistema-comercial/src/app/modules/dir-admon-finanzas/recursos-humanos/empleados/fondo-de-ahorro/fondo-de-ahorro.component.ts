@@ -4,6 +4,7 @@ import {FuseCardModule} from '@s-fuse/card';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 export interface IFondoAhorro
 {
@@ -276,6 +277,7 @@ const DATA_FONDO_AHORRO: IFondoAhorro[] =
     imports: [CommonModule, FuseCardModule, MatCardModule, MatTableModule, MatButtonModule],
     templateUrl: './fondo-de-ahorro.component.html',
     styleUrls: ['./fondo-de-ahorro.component.scss'],
+    animations: fuseAnimations,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FondoDeAhorroComponent

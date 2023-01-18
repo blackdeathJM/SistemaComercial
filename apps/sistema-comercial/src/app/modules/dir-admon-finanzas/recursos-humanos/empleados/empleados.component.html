@@ -1,9 +1,10 @@
 <mat-drawer-container class="w-full">
     <mat-drawer class="w-80" opened="true" autoFocus="false" mode="side" position="start">
-        <div class="relative flex flex-col border-b-2">
+        <div class="flex flex-col border-b-2 my-2">
             <mat-form-field class="mx-4">
                 <input matInput type="text">
             </mat-form-field>
+
             <mat-form-field class="mx-4">
                 <mat-select>
                     <mat-option value="option1">Opcion 1</mat-option>
@@ -11,23 +12,23 @@
                     <mat-option value="option3">Option 3</mat-option>
                 </mat-select>
             </mat-form-field>
-            <div class="relative flex flex-col flex-auto">
-                <div class="overflow-y-auto flex-auto" ngxUiLoaderBlurred>
-                    <div class="flex flex-auto justify-between gap-2 px-2">
-                        <ng-container>
-                            <span class="leading-relaxed">Jose Omar Carrillo Lopez</span>
-                            <div>
-                                <mat-icon svgIcon="warning"></mat-icon>
-                                <mat-icon svgIcon="warning"></mat-icon>
-                                <mat-icon svgIcon="warning"></mat-icon>
-                                <mat-icon svgIcon="warning"></mat-icon>
-                            </div>
-                        </ng-container>
+        </div>
+        <div class="flex flex-col flex-auto mt-2">
+            <div class="overflow-y-auto flex-auto" ngxUiLoaderBlurred>
+                <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async">
+                    <div class="flex flex-auto basis-full justify-between py-2 border-b-2 odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary pl-1">
+                        <span class="leading-relaxed cursor-pointer">{{empleado.nombreCompleto}}</span>
+                        <div>
+                            <mat-icon svgIcon="warning"></mat-icon>
+                            <mat-icon svgIcon="warning"></mat-icon>
+                            <mat-icon svgIcon="warning"></mat-icon>
+                        </div>
                     </div>
-                    <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
-                </div>
+                </ng-container>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </div>
         </div>
+
     </mat-drawer>
     <mat-drawer-content>
         <article class="flex flex-col p-4 mb-8">
