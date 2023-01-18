@@ -27,5 +27,13 @@
 }
 
 .tarjeta-mat {
-    @apply rounded-lg border-2 border-neutral-500 shadow-md shadow-neutral-500
+    @apply rounded-lg border-2 border-gray-400 dark:border-black shadow-md shadow-gray-500
+}
+.tarjeta-mat-cabecera
+{
+    @apply border-b-2 bg-gray-400 dark:bg-gray-700 rounded-t-lg
+}
+.tarjeta-mat-acciones
+{
+    @apply border-t-4 bg-gray-300 dark:bg-gray-700 rounded-b-lg
 }

@@ -47,7 +47,7 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
                         children:
                             [
                                 {
-                                    id: 'resumInstalacion',
+                                    id: 'instalaciones',
                                     title: 'Instalaciones',
                                     type: 'basic',
                                     icon: 'device_hub',
@@ -61,6 +61,33 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
                                             }
                                         ],
                                     link: dirTecnicaOperativa + 'telemetria/' + 'instalaciones'
+                                },
+                                {
+                                    id: 'motores',
+                                    title: 'Motores',
+                                    type: 'basic',
+                                    icon: 'feather:sliders',
+                                    activo: true,
+                                    disabled: false,
+                                    link: dirTecnicaOperativa + 'telemetria/' + 'motores'
+                                },
+                                {
+                                    id: 'bombas',
+                                    title: 'Bombas',
+                                    type: 'basic',
+                                    icon: 'settings_input_composite',
+                                    activo: true,
+                                    disabled: false,
+                                    link: dirTecnicaOperativa + 'telemetria/' + 'bombas'
+                                },
+                                {
+                                    id: 'cfe',
+                                    title: 'C.F.E',
+                                    type: 'basic',
+                                    icon: 'bolt',
+                                    activo: true,
+                                    disabled: false,
+                                    link: dirTecnicaOperativa + 'telemetria/' + 'cfe'
                                 }
                             ]
                     }
