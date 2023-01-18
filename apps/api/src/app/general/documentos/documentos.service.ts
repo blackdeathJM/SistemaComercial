@@ -35,7 +35,7 @@ export class DocumentosService
     {
     }
 
-// Filtrar los documentos por usuario y por año
+// Filtrar los documentos por usuario
     async docsUsuarioProceso(datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
         const tipoBusqueda: Record<string, string> = {};
@@ -71,6 +71,7 @@ export class DocumentosService
             usuarioEnviadoPor['usuarios'] = args.usuario;
         }
         const valor = Object.assign(usuarioEnviadoPor, fechas);
+        console.log('****************', valor);
         try
         {
             return await this.documento.find({...valor}, {}, {sort: {fechaRecepcion: -1}}).exec();

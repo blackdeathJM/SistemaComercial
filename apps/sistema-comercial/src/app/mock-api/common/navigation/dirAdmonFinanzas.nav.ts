@@ -65,6 +65,15 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                                     activo: false,
                                     disabled: false,
                                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
+                                },
+                                {
+                                    id: 'fondoDeAhoro',
+                                    title: 'Presta,ps',
+                                    type: 'basic',
+                                    icon: 'paid',
+                                    activo: false,
+                                    disabled: false,
+                                    link: dirAdmonFinanzas + 'empleados/prestamos'
                                 }
                             ]
                     },

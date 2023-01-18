@@ -1,4 +1,4 @@
-import {Args, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver} from '@nestjs/graphql';
+import {Args, Mutation, Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
 import {DocumentosService} from './documentos.service';
 import {
     DocsSubirDto,

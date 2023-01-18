@@ -116,7 +116,7 @@ specifiers:
   eslint: 8.32.0
   eslint-config-prettier: 8.6.0
   eslint-plugin-import: 2.27.5
-  eslint-plugin-jsdoc: 39.6.4
+  eslint-plugin-jsdoc: 39.6.6
   eslint-plugin-prefer-arrow: 1.2.3
   express: ^4.18.2
   fs-extra: ^11.1.0
@@ -326,7 +326,7 @@ devDependencies:
   eslint: 8.32.0
   eslint-config-prettier: 8.6.0_eslint@8.32.0
   eslint-plugin-import: 2.27.5_2l6piu6guil2f63lj3qmhzbnn4
-  eslint-plugin-jsdoc: 39.6.4_eslint@8.32.0
+  eslint-plugin-jsdoc: 39.6.6_eslint@8.32.0
   eslint-plugin-prefer-arrow: 1.2.3_eslint@8.32.0
   jasmine-core: 4.5.0
   jest: 29.3.1_zfha7dvnw4nti6zkbsmhmn6xo4
@@ -11335,8 +11335,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsdoc/39.6.4_eslint@8.32.0:
-    resolution: {integrity: sha512-fskvdLCfwmPjHb6e+xNGDtGgbF8X7cDwMtVLAP2WwSf9Htrx68OAx31BESBM1FAwsN2HTQyYQq7m4aW4Q4Nlag==}
+  /eslint-plugin-jsdoc/39.6.6_eslint@8.32.0:
+    resolution: {integrity: sha512-cFkmcdMYHw4XwA4fM5Rdopn9wB2p+Yu966F/6fa9C/oIMH99+YCfhH3+qXMc39VX9KYZ0d/KHgUbKo8D7N/27A==}
     engines: {node: ^14 || ^16 || ^17 || ^18 || ^19}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
