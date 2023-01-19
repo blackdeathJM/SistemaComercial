@@ -1,13 +1,9 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import {EmpleadosSesionGQL} from '#/libs/datos/src';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Observable, Subscription} from 'rxjs';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Select} from '@ngxs/store';
-import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -28,34 +24,26 @@ import {EmpleadosStore} from '#/apps/sistema-comercial/src/query/empleados.store
         }
     ]
 })
-export class SeleccionarEmpleadoComponent implements OnInit, ControlValueAccessor
+export class SeleccionarEmpleadoComponent implements ControlValueAccessor
 {
-    @Select(EmpleadosStore.empleados) empleados$: Observable<IResolveEmpleado[]>;
     @Input() multiple: boolean = false;
-    sub: Subscription = new Subscription();
     valor: any;
     cambio: (v: any) => void;
     tocado: () => void;
     estaDeshabilitado: boolean;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL)
+    constructor(public entityEmpleado: EntityEmpleadoStore)
     {
-    }
-
-    ngOnInit(): void
-    {
-
     }
 
     writeValue(obj: any): void
     {
-        console.log('valor', obj, typeof obj);
         this.valor = obj;
     }
 
     registerOnChange(fn: any): void
     {
-        console.log('cambio', fn);
+
         this.cambio = fn;
     }
 
