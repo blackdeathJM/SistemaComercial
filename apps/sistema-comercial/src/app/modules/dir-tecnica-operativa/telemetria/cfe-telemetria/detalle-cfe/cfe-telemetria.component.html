@@ -1,23 +1,105 @@
-<article class="flex flex-col flex-auto gap-4">
-    <h1 class="bg-zinc-900">que onda on esto</h1>
-    <h1 class="bg-zinc-800">que onda on esto</h1>
-    <h1 class="bg-zinc-700">que onda on esto</h1>
-    <h1 class="bg-zinc-600">que onda on esto</h1>
-    <h1 class="bg-zinc-500">que onda on esto</h1>
-    <h1 class="bg-zinc-400">que onda on esto</h1>
-    <h1 class="bg-zinc-300">que onda on esto</h1>
-    <h1 class="bg-zinc-200">que onda on esto</h1>
-    <h1 class="bg-zinc-100">que onda on esto</h1>
-    <h1 class="bg-zinc-50">que onda on esto</h1>
+<article class="flex flex-col flex-auto gap-4 p-4">
+    <section class="acciones-en-cabecera -mx-1 -mt-2">
+        <button mat-raised-button color="primary">
+            <mat-icon class="mr-5">add</mat-icon>
+            Nuevo medidor
+        </button>
+    </section>
+    <section class="flex-auto flex basis-full gap-4">
+        <mat-card class="w-96 bg-gray-300 dark:bg-gray-800 cursor-pointer">
+            <mat-card-header class="tarjeta-mat-cabecera border-b-fuchsia-700">
+                <div class="text-xl text-center">Nombre de la instalaccion</div>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex flex-auto flex-col items-center justify-center p-4">
+                    <div class="text-3xl">G2562254</div>
+                    <div class="text-xl">Servicio</div>
+                </div>
+            </mat-card-content>
+            <mat-card-footer>
+                <div class="flex flex-auto justify-between p-4">
+                    <div class="text-xl text-green-700">17/febrero/2019</div>
+                    <div class="text-xl text-orange-700">22/septiembre/2022</div>
+                </div>
+            </mat-card-footer>
+            <mat-card-actions class="border-t-fuchsia-700 tarjeta-mat-acciones">
+                <div class="flex flex-row-reverse flex-auto">
+                    <button mat-raised-button color="primary">
+                        <mat-icon svgIcon="edit"></mat-icon>
+                        Acciones
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
 
-    <h1 class="bg-neutral-900">que onda on esto</h1>
-    <h1 class="bg-neutral-800">que onda on esto</h1>
-    <h1 class="bg-neutral-700">que onda on esto</h1>
-    <h1 class="bg-neutral-600">que onda on esto</h1>
-    <h1 class="bg-neutral-500">que onda on esto</h1>
-    <h1 class="bg-neutral-400">que onda on esto</h1>
-    <h1 class="bg-neutral-300">que onda on esto</h1>
-    <h1 class="bg-neutral-200">que onda on esto</h1>
-    <h1 class="bg-neutral-100">que onda on esto</h1>
-    <h1 class="bg-neutral-50">que onda on esto</h1>
+        <mat-card class="w-96 bg-gray-300 dark:bg-gray-800 cursor-pointer">
+            <mat-card-header class="tarjeta-mat-cabecera border-b-fuchsia-700">
+                <div class="text-xl text-center">Nombre de la instalaccion</div>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex flex-auto flex-col items-center justify-center p-4">
+                    <div class="text-3xl">G52258674</div>
+                    <div class="text-xl">Servicio</div>
+                </div>
+            </mat-card-content>
+            <mat-card-footer>
+                <div class="flex flex-auto justify-between p-4">
+                    <div class="text-xl text-green-700">17/Abril/2019</div>
+                    <div class="text-xl text-orange-700">22/Mayo/2022</div>
+                </div>
+            </mat-card-footer>
+            <mat-card-actions class="border-t-fuchsia-700 tarjeta-mat-acciones">
+                <div class="flex flex-row-reverse flex-auto">
+                    <button mat-raised-button color="primary">
+                        <mat-icon svgIcon="edit"></mat-icon>
+                        Acciones
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+    <section class="flex-auto">
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-10">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="py-3 px-6">
+                        serie
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        modelo
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        fecha Instalacion
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        activo
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Acciones
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="odd:bg-white even:bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Apple MacBook Pro 17"
+                    </th>
+                    <td class="py-4 px-6">
+                        Sliver
+                    </td>
+                    <td class="py-4 px-6">
+                        Laptop
+                    </td>
+                    <td class="py-4 px-6">
+                        $2999
+                    </td>
+                    <td class="py-4 px-6">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </article>

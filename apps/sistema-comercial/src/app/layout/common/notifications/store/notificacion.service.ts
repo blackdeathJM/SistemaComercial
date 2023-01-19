@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EliminarNotGQL, EliminarNotMutation, EliminarTodosGQL, EliminarTodosMutation, NotificacionesGQL, NotificacionesQuery, NotificarGQL, NotificarSubscription} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Observable, tap} from 'rxjs';

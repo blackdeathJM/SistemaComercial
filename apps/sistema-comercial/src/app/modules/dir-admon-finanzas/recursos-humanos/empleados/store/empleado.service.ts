@@ -6,7 +6,7 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {TOKEN} from '@s-auth/const';
 import {ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {StateAuth} from '@s-core/auth/store/auth.store';

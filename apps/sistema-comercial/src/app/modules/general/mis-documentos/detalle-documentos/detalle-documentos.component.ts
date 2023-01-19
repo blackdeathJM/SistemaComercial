@@ -12,7 +12,7 @@ import {finalize, Observable} from 'rxjs';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {confirmarFinalizarDoc, confirmarFolio} from '@s-general/detalle-documentos/dialogConfirmacion';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasignacion.component';
 import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';

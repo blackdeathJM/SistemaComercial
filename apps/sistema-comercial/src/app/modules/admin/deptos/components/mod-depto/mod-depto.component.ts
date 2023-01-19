@@ -12,7 +12,7 @@ import {TrimDirective} from '@s-directives/trim.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {DeptoService} from '@s-admin/store/depto.service';
 

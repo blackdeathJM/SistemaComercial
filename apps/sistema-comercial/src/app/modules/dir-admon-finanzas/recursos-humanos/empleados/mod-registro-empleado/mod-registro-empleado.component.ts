@@ -16,10 +16,10 @@ import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-tod
 import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
-import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
+import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {finalize} from 'rxjs';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {DeptoService} from '@s-admin/store/depto.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';

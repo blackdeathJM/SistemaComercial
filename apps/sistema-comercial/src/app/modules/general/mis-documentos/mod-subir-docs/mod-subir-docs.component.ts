@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule, NgIf} from '@angular/common';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -10,8 +10,8 @@ import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validat
 import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
 import {getDownloadURL} from '@angular/fire/storage';
 import {finalize, startWith, Subscription} from 'rxjs';
-import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';

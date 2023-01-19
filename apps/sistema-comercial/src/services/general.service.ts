@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {DateTime} from 'luxon';
 import {v4 as uuidv4} from 'uuid';
 import {deleteObject, ref, Storage, uploadBytesResumable, UploadTask} from '@angular/fire/storage';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {Observable, ReplaySubject} from 'rxjs';
 
 export interface IObjFecha

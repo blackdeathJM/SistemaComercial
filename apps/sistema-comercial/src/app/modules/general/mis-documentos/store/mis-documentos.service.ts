@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DocActFolioGQL, DocFinalizarGQL, DocRefFolioGQL, DocsBusquedaGralGQL, DocsFechasGQL, DocsRefGQL, DocsUsuarioProcesoGQL, ReasignarUsuarioGQL, RegDocGQL, SubirDocsGQL} from '#/libs/datos/src';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {BehaviorSubject, finalize, Observable, tap} from 'rxjs';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDocActFolio, IDocsFechas, IDocsUsuarioProceso, IResolveDocumento, TDocRefFolio, TDocumentoReg} from '#/libs/models/src/lib/general/documentos/documento.interface';

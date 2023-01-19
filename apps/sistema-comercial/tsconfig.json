@@ -29,6 +29,7 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version/*"
             ],
+            "@s-services/*": ["apps/sistema-comercial/src/services/*"],
             "@s-core/*": [
                 "apps/sistema-comercial/src/app/core/*",
                 "apps/sistema-comercial/src/app/auth/*",

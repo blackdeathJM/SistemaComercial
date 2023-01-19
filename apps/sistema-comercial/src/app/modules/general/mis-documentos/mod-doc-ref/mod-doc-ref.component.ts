@@ -10,7 +10,7 @@ import {finalize, map, Observable, startWith} from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 

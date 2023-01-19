@@ -6,12 +6,12 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 @Injectable({providedIn: 'root'})
 export class InfoGralEmpleadoGuard implements CanActivate
 {
-    constructor(private stateAuth: StateAuth)
+    constructor()
     {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-        return false;
+        return true;
     }
 }

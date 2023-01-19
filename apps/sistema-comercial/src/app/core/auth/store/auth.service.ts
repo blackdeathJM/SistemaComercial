@@ -6,7 +6,7 @@ import {SingleExecutionResult} from '@apollo/client';
 import {ILogin, ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {$cast, isNil, isNotNil} from '@angular-ru/cdk/utils';
 import {TOKEN} from '@s-auth/const';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 

@@ -68,7 +68,7 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                                 },
                                 {
                                     id: 'fondoDeAhoro',
-                                    title: 'Presta,ps',
+                                    title: 'Prestamos',
                                     type: 'basic',
                                     icon: 'paid',
                                     activo: false,

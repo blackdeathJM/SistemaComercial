@@ -9,7 +9,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {finalize} from 'rxjs';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
