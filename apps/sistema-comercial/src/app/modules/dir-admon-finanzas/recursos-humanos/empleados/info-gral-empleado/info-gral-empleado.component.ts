@@ -7,6 +7,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {fuseAnimations} from '@s-fuse/public-api';
+import {MatDialog} from "@angular/material/dialog";
+import {ModRegistroEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component";
 
 @Component({
     selector: 'app-info-gral-empleado',
@@ -28,4 +30,12 @@ import {fuseAnimations} from '@s-fuse/public-api';
 })
 export class InfoGralEmpleadoComponent
 {
+    constructor(private mdr: MatDialog)
+    {
+    }
+
+    nvoEmpleado(): void
+    {
+        this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
+    }
 }

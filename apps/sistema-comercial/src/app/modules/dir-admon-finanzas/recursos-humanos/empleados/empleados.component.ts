@@ -67,9 +67,4 @@ export class EmpleadosComponent implements OnInit
         return item.id || index;
     }
 
-    nvoEmpleado(): void
-    {
-        this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
-    }
-
 }

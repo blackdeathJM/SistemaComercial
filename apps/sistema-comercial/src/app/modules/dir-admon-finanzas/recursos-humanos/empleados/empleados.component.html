@@ -31,14 +31,6 @@
 
     </mat-drawer>
     <mat-drawer-content>
-        <article class="flex flex-col p-4 mb-8">
-            <section class="acciones-en-cabecera -mx-1 -mt-2">
-                <button mat-raised-button color="primary" (click)="nvoEmpleado()">
-                    <mat-icon class="mr-5">add</mat-icon>
-                    Dar de alta nuevo empleado
-                </button>
-            </section>
-            <router-outlet></router-outlet>
-        </article>
+        <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

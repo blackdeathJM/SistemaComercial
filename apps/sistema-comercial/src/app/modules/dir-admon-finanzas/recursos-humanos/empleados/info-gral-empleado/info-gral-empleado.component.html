@@ -1,5 +1,11 @@
-<article class="flex flex-col flex-auto">
-    <section class="flex-auto my-4 tarjeta-mat" @zoomIn>
+<article class="flex flex-col flex-auto" @zoomIn>
+    <section class="acciones-en-cabecera -mx-1 -mt-2">
+        <button mat-raised-button color="primary" (click)="nvoEmpleado()">
+            <mat-icon class="mr-5">add</mat-icon>
+            Dar de alta nuevo empleado
+        </button>
+    </section>
+    <section class="flex-auto my-4 tarjeta-mat">
         <mat-card class="bg-gray-300 dark:bg-gray-800">
             <mat-card-header class="tarjeta-mat-cabecera border-b-cyan-500">
                 <span class="text-xl">Informacion personal</span>
@@ -40,7 +46,7 @@
         </mat-card>
     </section>
 
-    <section class="flex-auto my-4 tarjeta-mat" @zoomIn>
+    <section class="flex-auto my-4 tarjeta-mat">
         <mat-card class="bg-gray-300 dark:bg-gray-800">
             <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
                 <span class="text-xl">Informacion puesto</span>
@@ -76,7 +82,7 @@
     </section>
 
 
-    <section class="flex-auto tarjeta-mat" @zoomIn>
+    <section class="flex-auto tarjeta-mat">
         <mat-card class="bg-gray-300 dark:bg-gray-800">
             <mat-card-header class="tarjeta-mat-cabecera border-b-pink-400">
                 <span class="text-xl">Concentrado de entradas y salidas</span>
