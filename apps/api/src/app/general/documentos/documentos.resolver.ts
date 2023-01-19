@@ -72,7 +72,6 @@ export class DocumentosResolver
         }
         return usuarios;
     }
-
     @Mutation(() => DocumentoDto, {nullable: false})
     // @UsePipes(new DocsSeguimientoPipe())
     async regDoc(@Args('datos', DocsSeguimientoPipe) datos: DocRegDto, @Args('files',
@@ -80,7 +79,6 @@ export class DocumentosResolver
     {
         return await this.documentosService.regDoc(datos, files);
     }
-
     @Mutation(() => DocumentoDto)
     async subirDocs(@Args('args', {nullable: true, defaultValue: null}) args: DocsSubirDto,
                     @Args('files', {nullable: true, defaultValue: null}) files: UploadDto,
@@ -88,31 +86,26 @@ export class DocumentosResolver
     {
         return await this.documentosService.subirDocs(args, files, filesAcuse);
     }
-
     @Mutation(() => String)
     async genFolioSinReg(@Args('args') args: DocFolioDto): Promise<string>
     {
         return await this.documentosService.genFolioSinReg(args);
     }
-
     @Mutation(() => DocumentoDto)
     async docFinalizar(@Args('_id') _id: string): Promise<DocumentoDto>
     {
         return await this.documentosService.docFinalizar(_id);
     }
-
     @Mutation(() => DocumentoDto)
     async docActFolio(@Args('args') args: DocActFolioDto): Promise<DocumentoDto>
     {
         return await this.documentosService.docActFolio(args);
     }
-
     @Mutation(() => DocumentoDto)
     async reasignarUsuario(@Args('usuarios') usuarios: DocReasignarUsuarioDto): Promise<DocumentoDto>
     {
         return await this.documentosService.reasignarUsuario(usuarios);
     }
-
     @Mutation(() => [DocumentoDto])
     async docRefFolio(@Args('entradas') entradas: DocRefFolioDto): Promise<DocumentoDto[]>
     {

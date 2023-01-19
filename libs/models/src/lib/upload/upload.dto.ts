@@ -1,5 +1,5 @@
 import {Field, InputType} from '@nestjs/graphql';
-import {GraphQLUpload} from 'graphql-upload';
+import {GraphQLUpload} from 'graphql-upload-ts';
 import {IArchivo, IDatosArchivo} from './upload.interface';
 import {IsOptional} from 'class-validator';
 
