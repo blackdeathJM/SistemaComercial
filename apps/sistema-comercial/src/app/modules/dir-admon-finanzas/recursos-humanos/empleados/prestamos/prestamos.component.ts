@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 export interface IPrestamo
 {
@@ -59,7 +60,7 @@ const DATA_PRESTAMO: IPrestamo[] =
     imports: [CommonModule, MatButtonModule, MatCardModule, MatTableModule],
     templateUrl: './prestamos.component.html',
     styleUrls: ['./prestamos.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: fuseAnimations,
 })
 export class PrestamosComponent
 {

@@ -47,7 +47,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     subs: Subscription = new Subscription();
     mostrarProgreso: boolean = false;
 
-    constructor(private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService, private misDocumentosService: MisDocumentosService,
+    constructor(private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxToast: NgxToastService, private misDocumentosService: MisDocumentosService,
                 private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth, public entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
@@ -75,7 +75,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
 
         if (!docArchivo && !acuseArchivo)
         {
-            this.ngxService.alertaToast('No se ha seleccionado ningun archivo', 'Reemplazo de archivos');
+            this.ngxToast.alertaToast('No se ha seleccionado ningun archivo', 'Reemplazo de archivos');
             return;
         }
 
@@ -102,14 +102,21 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
                     docUrl = await getDownloadURL(doc.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(e.message, 'Error al obtener url del documento');
+                    this.ngxToast.errorToast(e.message, 'Error al obtener url del documento');
+                    this.dRef.close();
                 }
             }
             if (acuseArchivo)
             {
                 if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.acuseUrl))
                 {
-                    await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.acuseUrl);
+                    try
+                    {
+                        await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.acuseUrl);
+                    } catch (e)
+                    {
+                        this.ngxToast.errorToast(e, 'Ocurrio un error al tratar de eminar el documento');
+                    }
                 }
                 try
                 {
@@ -119,7 +126,8 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
                     acuseUrl = await getDownloadURL(acuse.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(e.message, 'Error al obtener la url');
+                    this.ngxToast.errorToast(e.message, 'Error al obtener la url');
+                    this.dRef.close();
                 }
             }
         } else
