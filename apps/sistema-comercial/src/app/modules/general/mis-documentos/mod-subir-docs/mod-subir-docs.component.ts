@@ -143,6 +143,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
         {
             this.cargando = false;
             this.formDocsArchivo.enable();
+            this.dRef.close();
         })).subscribe();
     }
 
