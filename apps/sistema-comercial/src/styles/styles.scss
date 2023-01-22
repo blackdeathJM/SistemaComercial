@@ -3,15 +3,15 @@
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 .grupo-avatar-img {
-    @apply flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring ring-offset-gray-800 object-cover object-center
+    @apply inline-block h-10 w-10 rounded-full object-cover object-center
+}
+
+.grupo-avatar-letra {
+    @apply w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800  flex items-center justify-center uppercase dark:bg-gray-700 dark:text-gray-200
 }
 
 .avatar-letra {
     @apply rounded-full ring flex items-center justify-center text-4xl uppercase
-}
-
-.avatar-letra-grupo {
-    @apply w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800  flex items-center justify-center uppercase dark:bg-gray-700 dark:text-gray-200
 }
 
 .avatar {
@@ -29,11 +29,11 @@
 .tarjeta-mat {
     @apply rounded-lg border-2 border-gray-400 dark:border-black shadow-md shadow-gray-500
 }
-.tarjeta-mat-cabecera
-{
+
+.tarjeta-mat-cabecera {
     @apply border-b-2 bg-gray-400 dark:bg-gray-700 rounded-t-lg
 }
-.tarjeta-mat-acciones
-{
+
+.tarjeta-mat-acciones {
     @apply border-t-2 bg-gray-400 dark:bg-gray-700 rounded-b-lg
 }

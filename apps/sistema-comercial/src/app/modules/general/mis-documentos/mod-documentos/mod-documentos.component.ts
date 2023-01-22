@@ -127,7 +127,7 @@ export class ModDocumentosComponent implements OnInit, AfterContentInit, OnDestr
             }
         }
 
-        const regDocumento: TDocumentoReg =
+        const regDoc: TDocumentoReg =
             {
                 ano: new Date().getFullYear(),
                 tipoDoc,
@@ -139,7 +139,7 @@ export class ModDocumentosComponent implements OnInit, AfterContentInit, OnDestr
                 ...resto
             };
 
-        this.misDocumentosService.regdoc(regDocumento, files).pipe(finalize(() =>
+        this.misDocumentosService.regdoc(regDoc, files).pipe(finalize(() =>
         {
             this.cargando = false;
             this.mdr.closeAll();

@@ -11,9 +11,9 @@ export class ValorColumnaPipe implements PipeTransform
         switch (columna.tipoDeDato)
         {
             case 'date':
-                if (columna.format !== undefined)
+                if (columna.formato !== undefined)
                 {
-                    mostrarValor = new DatePipe('mx').transform(mostrarValor, columna.format);
+                    mostrarValor = new DatePipe('mx').transform(mostrarValor, columna.formato);
                 }
                 break;
             case 'object':
