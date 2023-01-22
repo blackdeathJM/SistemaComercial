@@ -71,5 +71,6 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+        this.misDocsService.setPanel = false;
     }
 }
