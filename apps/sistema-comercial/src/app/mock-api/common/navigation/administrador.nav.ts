@@ -9,6 +9,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             type: 'group',
             icon: 'feather:settings',
             activo: false,
+            badge: {},
             disabled: false,
             tooltip: 'Modulo para establecer configuraciones para el funcionamiento del sistema comercial',
             children:
@@ -29,4 +30,3 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
 export const ADMINISTRADOR_C: FuseNavigationItem[] = [];
 export const ADMINISTRADOR_F: FuseNavigationItem[] = [];
 export const ADMINISTRADOR_H: FuseNavigationItem[] = [];
-
