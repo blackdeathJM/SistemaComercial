@@ -7,12 +7,12 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
-import {ListaDeptosComponent} from '@s-admin/components/lista-deptos/lista-deptos.component';
+import {ListaDeptosComponent} from '@s-admin/../../dir-admon-finanzas/recursos-humanos/departamento/components/lista-deptos/lista-deptos.component';
 import {fuseAnimations} from '@s-fuse/public-api';
-import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
+import {ModDeptoComponent} from '@s-admin/../../dir-admon-finanzas/recursos-humanos/departamento/components/mod-depto/mod-depto.component';
 import {AsyncPipe} from '@angular/common';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
-import {DeptoService} from '@s-admin/store/depto.service';
+import {DeptoService} from '@s-admin/../../dir-admon-finanzas/recursos-humanos/departamento/store/depto.service';
 
 @Component({
     standalone: true,

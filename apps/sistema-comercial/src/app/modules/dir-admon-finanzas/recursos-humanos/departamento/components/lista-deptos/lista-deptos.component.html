@@ -1,0 +1,58 @@
+<ng-container *ngIf="(entityDepto.entitiesArray$ | async) as deptos" ngxUiLoaderBlurred>
+    <section class="flex flex-row flex-auto flex-wrap justify-center gap-10">
+        <div class="my-2 tarjeta-mat basis-2/5" *ngFor="let depto of deptos">
+            <mat-card class="bg-gray-300 dark:bg-gray-800">
+                <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500 text-xl">
+                    <div class="flex flex-auto justify-between items-center">
+                        <span>{{depto.nombre}}</span>
+                        <button mat-icon-button color="warn" matTooltip="Editar nombre del departamento">
+                            <mat-icon svgIcon="edit"></mat-icon>
+                        </button>
+                    </div>
+                </mat-card-header>
+                <mat-card-subtitle class="p-2 border-b-2"><span matTooltip="Centro gestor">{{depto.centroGestor}}</span></mat-card-subtitle>
+                <mat-card-content class="py-2">
+                    <mat-list role="list">
+                        <mat-list-item role="listitem">Item 1</mat-list-item>
+                        <mat-list-item role="listitem">Item 2</mat-list-item>
+                        <mat-list-item role="listitem">Item 3</mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+                <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
+                    <div class="flex flex-row-reverse flex-auto gap-4">
+                        <button mat-raised-button color="primary">
+                            <mat-icon svgIcon="add"></mat-icon>
+                            Registrar nuevo puesto
+                        </button>
+                        <mat-form-field class="w-100">
+                            <input matInput placeholder="Ingresa un nuevo puesto">
+                        </mat-form-field>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </section>
+    <ngx-ui-loader [loaderId]="idLoader"></ngx-ui-loader>
+</ng-container>
+
+<!--<div class="flex flex-col flex-auto">-->
+<!--    <ng-container *ngIf="(entityDepto.entitiesArray$| async) as deptos">-->
+<!--        <ng-container *ngIf="deptos.length > 0">-->
+<!--            <div class="flex-auto overflow-y-auto" ngxUiLoaderBlurred>-->
+<!--                <ng-container *ngFor="let depto of deptos; let i = index; trackBy: trackByFn">-->
+<!--                    <div class="flex p-4 items-center border-b hover:bg-amber-100 dark:hover:bg-gray-600">-->
+<!--                        <mat-icon class="text-amber-600 mr-4" [svgIcon]="'heroicons_outline:library'"></mat-icon>-->
+<!--                        <div class="flex-col flex-auto">-->
+<!--                            <div class="font-medium leading-5 truncate">{{depto.nombre}}</div>-->
+<!--                            <div class="leading-5 truncate text-secondary">{{depto.centroGestor}}</div>-->
+<!--                        </div>-->
+<!--                        <button mat-icon-button type="button" (click)="editar(depto)">-->
+<!--                            <mat-icon class="text-green-800 dark:text-green-600">edit</mat-icon>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+
+<!--            </div>-->
+<!--        </ng-container>-->
+<!--    </ng-container>-->
+<!--</div>-->

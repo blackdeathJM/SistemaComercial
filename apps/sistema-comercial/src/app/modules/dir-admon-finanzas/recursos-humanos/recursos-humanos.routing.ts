@@ -11,6 +11,10 @@ export const recursosHumanosRouting: Routes =
                     {
                         path: 'empleados',
                         loadChildren: () => import('@s-dirAdmonFinanzas/empleados/empleados.routing').then(e => e.empleadosRouting)
+                    },
+                    {
+                        path: 'departamentos',
+                        loadComponent: () => import('@s-dirAdmonFinanzas/departamento/departamento.component').then(c => c.DepartamentoComponent)
                     }
                 ]
         }

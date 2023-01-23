@@ -1,27 +1,4 @@
-<!--<div class="flex flex-wrap gap-2 mx-4" ngxUiLoaderBlurred *ngIf="entityMisDocumentos.entitiesArray.length > 0; else noHayDocs">-->
-<!--    <fuse-card class="p-4 basis-80 relative" *ngFor="let doc of (entityMisDocumentos.entitiesArray$ | async); let i=index; trackBy: trackByFn">-->
-<!--        <a class="flex gap-4 cursor-pointer" (click)="seleccionarDoc(doc)">-->
-<!--            <div class="flex items-center w-16">-->
-<!--                <img class="avatar w-16 h-16" [src]="doc.resolveEmpleado.avatar" alt="A" *ngIf="doc.resolveEmpleado.avatar"-->
-<!--                     [matTooltip]="doc?.resolveEmpleado?.nombreCompleto">-->
-<!--                <div class="avatar-letra w-16 h-16" *ngIf="!doc.resolveEmpleado.avatar" [matTooltip]="doc?.resolveEmpleado.nombreCompleto">-->
-<!--                    {{doc.resolveEmpleado.nombreCompleto.charAt(0)}}-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <mat-icon class="absolute left-0 top-0 text-red-800" svgIcon="heroicons_solid:exclamation-circle" *ngIf="doc.proceso === 'pendiente'" matTooltip="Documento pendiente"></mat-icon>-->
-<!--            <div class="flex flex-col">-->
-<!--                <span class="text-xl font-semibold leading-tight truncate" [matTooltip]="doc?.asunto">{{doc?.asunto}}</span>-->
-<!--                <div class="text-md leading-tight text-primary truncate" [matTooltip]="doc?.dependencia">{{doc?.dependencia}}</div>-->
-<!--                <div class="flex gap-4">-->
-<!--                    <span class="text-sm font-bold text-green-700 dark:text-white mt-1" matTooltip="Seguimiento">{{doc?.seguimiento}}</span>-->
-<!--                    <span class="text-sm text-secondary mt-1" matTooltip="Fecha de recepcion">{{doc?.fechaRecepcion | convertirTimestamUnix}}</span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </a>-->
-<!--    </fuse-card>-->
-<!--</div>-->
-
-<div class="mx-4">
+<div class="flex flex-col mx-4">
     <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="nombreCompleto">
             <mat-header-cell *matHeaderCellDef>Usuario</mat-header-cell>
@@ -67,7 +44,9 @@
         <mat-header-row *matHeaderRowDef="columnasMostrar"></mat-header-row>
         <mat-row class="cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900" (click)="seleccionarDoc(row)" *matRowDef="let row; columns: columnasMostrar;"></mat-row>
     </table>
-    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    <div class="mt-4">
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    </div>
     <ngx-ui-loader [loaderId]="loaderListaDocs"></ngx-ui-loader>
 </div>
 

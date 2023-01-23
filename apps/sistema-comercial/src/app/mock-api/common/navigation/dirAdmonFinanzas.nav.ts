@@ -24,6 +24,17 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
                         children:
                             [
                                 {
+                                    id: 'departamentos',
+                                    title: 'Departamentos',
+                                    type: 'basic',
+                                    icon: 'bento',
+                                    badge: {},
+                                    controles: [],
+                                    activo: false,
+                                    disabled: false,
+                                    link: dirAdmonFinanzas + 'departamentos'
+                                },
+                                {
                                     id: 'empleados',
                                     title: 'Info. gral empleados',
                                     type: 'basic',

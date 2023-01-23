@@ -56,6 +56,7 @@ type DeptoType {
   _id: ID
   nombre: String
   centroGestor: String
+  puestos: [String!]
 }
 
 type DatosSesionType {
@@ -161,6 +162,7 @@ input DeptoInput {
   _id: ID
   nombre: String
   centroGestor: String
+  puestos: [String!] = []
 }
 
 input DocumentoInput {
@@ -198,7 +200,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1674421798
+  tiempo: Int = 1674435973
   titulo: String
   usarRouter: Boolean = false
 }

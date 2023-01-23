@@ -19,7 +19,7 @@
 }
 
 .acciones-en-cabecera {
-    @apply flex flex-row-reverse flex-auto items-center border-b-2 rounded-lg bg-card my-2 mx-4 p-8 gap-4 bg-gray-300 dark:bg-gray-800
+    @apply flex flex-row-reverse flex-auto items-center border-b-2 rounded-lg bg-card my-2 mx-4 p-8 gap-4 bg-gray-300 dark:bg-gray-800 max-h-24
 }
 
 .consultas {
@@ -31,9 +31,9 @@
 }
 
 .tarjeta-mat-cabecera {
-    @apply border-b-2 bg-gray-400 dark:bg-gray-700 rounded-t-lg
+    @apply border-b-2 bg-gray-400 dark:bg-gray-700 rounded-t-lg max-h-22
 }
 
 .tarjeta-mat-acciones {
-    @apply border-t-2 bg-gray-400 dark:bg-gray-700 rounded-b-lg
+    @apply border-t-2 bg-gray-400 dark:bg-gray-700 rounded-b-lg max-h-22
 }

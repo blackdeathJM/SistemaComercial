@@ -20,9 +20,9 @@ import {GeneralService} from '#/apps/sistema-comercial/src/services/general.serv
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {finalize} from 'rxjs';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import {DeptoService} from '@s-admin/store/depto.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
+import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
+import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 
 @Component({
     selector: 'app-mod-registro-empleado',

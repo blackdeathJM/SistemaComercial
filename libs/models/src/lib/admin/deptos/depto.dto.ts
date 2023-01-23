@@ -23,6 +23,10 @@ export class DeptoDto implements IDepto
     @Length(3, 4, {message: 'El centro gestor tiene que tener como minimo y maximo 3 caracteres'})
     @IsUppercase({message: 'El centro gestor debe estar en mayusculas'})
     centroGestor: string;
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    puestos: string[];
 }
 
 export type DeptoType = DeptoDto & Document;

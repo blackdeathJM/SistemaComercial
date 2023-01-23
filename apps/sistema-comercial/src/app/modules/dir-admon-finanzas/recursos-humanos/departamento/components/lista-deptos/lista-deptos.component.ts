@@ -4,10 +4,15 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
-import {ModDeptoComponent} from '@s-admin/components/mod-depto/mod-depto.component';
-import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
-import {EntityDeptoStore} from '@s-admin/store/entity-depto.store';
-import {DeptoService} from '@s-admin/store/depto.service';
+import {ModDeptoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-depto/mod-depto.component';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {DeptoService, loaderDeptos} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
+import {FuseCardModule} from '@s-fuse/card';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
     standalone: true,
@@ -18,6 +23,11 @@ import {DeptoService} from '@s-admin/store/depto.service';
             MatButtonModule,
             MatIconModule,
             NgxUiLoaderModule,
+            FuseCardModule,
+            MatCardModule,
+            MatListModule,
+            MatTooltipModule,
+            MatInputModule,
         ],
     selector: 'app-lista-deptos',
     templateUrl: './lista-deptos.component.html',
@@ -26,17 +36,16 @@ import {DeptoService} from '@s-admin/store/depto.service';
 })
 export class ListaDeptosComponent implements OnInit
 {
-    idLoader: 'listaDeptos';
+    idLoader = loaderDeptos;
 
-    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore, private ngxLoader: NgxUiLoaderService)
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
     {
 
     }
 
     ngOnInit(): void
     {
-        this.ngxLoader.startLoader(this.idLoader);
-        this.deptoService.departamentos().subscribe(() => this.ngxLoader.stopLoader(this.idLoader));
+        this.deptoService.departamentos().subscribe();
     }
 
     trackByFn(index: number, item: IDepto): string

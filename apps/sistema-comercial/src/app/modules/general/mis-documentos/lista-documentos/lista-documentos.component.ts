@@ -64,13 +64,16 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
 
     seleccionarDoc(documento: IResolveDocumento): void
     {
+        // al seleccionar la fila parcho el estado para mostrar el detalle del documento en la venta que se despliega a la derecha
         this.entityMisDocumentos.patchState({documento});
+        // Al seleccionar el documento se abre la venta de la derecha
         this.misDocsService.setPanel = true;
     }
 
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+        // Al momento que salgo del componente cierro el panel de la derecha para que si vuelve el usuario a seleccionar una fila se vuelva abrir
         this.misDocsService.setPanel = false;
     }
 }
