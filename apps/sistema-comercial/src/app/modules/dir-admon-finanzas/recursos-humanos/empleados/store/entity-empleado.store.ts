@@ -18,7 +18,7 @@ export interface IEmpleadoSelect
     }
 })
 @Injectable()
-export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, EntityIdType, IEmpleadoSelect> implements NgxsOnChanges
+export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, string, IEmpleadoSelect>
 {
     public primaryKey = '_id';
 
@@ -28,7 +28,7 @@ export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IRe
     }
 
     @Selector()
-    public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, EntityIdType, IEmpleadoSelect>): IResolveEmpleado
+    public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, string, IEmpleadoSelect>): IResolveEmpleado
     {
         return stateEmpleado.empleado;
     }
