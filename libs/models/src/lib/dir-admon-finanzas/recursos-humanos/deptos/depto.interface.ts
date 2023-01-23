@@ -5,3 +5,8 @@ export interface IDepto
     centroGestor: string;
     puestos?: string[];
 }
+
+export interface IRegPuesto extends Pick<IDepto, '_id'>
+{
+    puesto: string;
+}

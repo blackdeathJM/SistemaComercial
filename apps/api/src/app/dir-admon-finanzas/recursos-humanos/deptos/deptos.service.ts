@@ -1,7 +1,8 @@
 import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {DeptoDto, DeptoType} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
+import {DeptoDto, DeptoType, RegPuestoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.dto';
+
 @Injectable()
 export class DeptosService
 {
@@ -39,6 +40,17 @@ export class DeptosService
         } catch (e)
         {
             throw new ConflictException({message: e.codeName});
+        }
+    }
+
+    async agregarPuesto(puesto: RegPuestoDto): Promise<DeptoDto>
+    {
+        try
+        {
+            return await this.depto.findByIdAndUpdate(puesto._id, {$push: {puestos: puesto.puesto}}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 

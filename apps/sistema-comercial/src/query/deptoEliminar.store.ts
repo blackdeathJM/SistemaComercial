@@ -1,6 +1,6 @@
 import {DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
-import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {Injectable} from '@angular/core';
 import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
 import {DepartamentosGQL} from '#/libs/datos/src';
@@ -60,7 +60,7 @@ export class DeptoEliminarStore extends NgxsImmutableDataRepository<IDeptoState>
     }
 
     @DataAction()
-    public actualizarDepto(@Payload('actualizarDepto') input: IDepto, cargando: boolean): void
+    public actualizarDepto(@Payload('actualizarDepto') input: IDepto): void
     {
         this.ctx.patchState({cargando: true});
         this.ctx.setState((state: Immutable<IDeptoState>): Immutable<IDeptoState> => merge(state, input));

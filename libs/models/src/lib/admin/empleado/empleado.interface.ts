@@ -1,5 +1,5 @@
 import {IAuth} from './auth/auth.interface';
-import {IDepto} from '../deptos/depto.interface';
+import {IDepto} from '@lib-dir-admon-finanzas/depto.interface';
 import {IModificado} from '../../common/common.interface';
 
 export interface ITelefono

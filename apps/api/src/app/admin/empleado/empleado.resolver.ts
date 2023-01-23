@@ -1,9 +1,9 @@
 import {Args, Mutation, Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
 import {EmpleadoService} from './empleado.service';
-import {DeptosService} from '../deptos/deptos.service';
+import {DeptosService} from '@api-dir-admon-finanzas/deptos.service';
 import {EmpleadoDto, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
-import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
+import {DeptoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.dto';
 
 @Resolver(() => EmpleadoDto)
 export class EmpleadoResolver

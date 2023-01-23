@@ -200,7 +200,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1674435973
+  tiempo: Int = 1674442953
   titulo: String
   usarRouter: Boolean = false
 }
@@ -230,6 +230,7 @@ type Mutation {
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
+  agregarPuesto(puesto: PuestoDeptoInput!): DeptoType!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
   asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
@@ -245,6 +246,10 @@ type Mutation {
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
   eliminarNot(_id: String!): NotificacionType!
   eliminarTodos(idUsuario: String!): Int!
+}
+
+input PuestoDeptoInput {
+  _id: ID
 }
 
 input RegEmpleadoInput {

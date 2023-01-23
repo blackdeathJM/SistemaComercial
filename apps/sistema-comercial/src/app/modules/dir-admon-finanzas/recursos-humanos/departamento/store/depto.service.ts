@@ -4,7 +4,7 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {finalize, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 

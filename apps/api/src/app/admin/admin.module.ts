@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {EmpleadoModule} from './empleado/empleado.module';
-import {DeptosModule} from './deptos/deptos.module';
+import {DeptosModule} from '@api-dir-admon-finanzas/deptos.module';
 
 @Module({
     imports:

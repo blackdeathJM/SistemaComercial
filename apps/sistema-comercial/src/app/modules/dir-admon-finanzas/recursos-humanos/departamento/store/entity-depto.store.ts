@@ -3,7 +3,7 @@ import {State} from '@ngxs/store';
 import {createEntityCollections} from '@angular-ru/cdk/entity';
 import {Injectable} from '@angular/core';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
-import {IDepto} from '#/libs/models/src/lib/admin/deptos/depto.interface';
+import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 
 
 @StateRepository()

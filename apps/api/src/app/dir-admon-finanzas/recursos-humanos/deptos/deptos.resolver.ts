@@ -1,7 +1,6 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {DeptosService} from './deptos.service';
-import {DeptoDto} from '#api/libs/models/src/lib/admin/deptos/depto.dto';
-import {IDepto} from '#api/libs/models/src/lib/admin/deptos/depto.interface';
+import {DeptoDto, RegPuestoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.dto';
 
 @Resolver(() => DeptoDto)
 export class DeptosResolver
@@ -12,7 +11,7 @@ export class DeptosResolver
 
     @Query(() => [DeptoDto])
     // @UseGuards(JwtAuthGuard)
-    async deptos(): Promise<IDepto[]>
+    async deptos(): Promise<DeptoDto[]>
     {
         return await this.deptosService.deptos();
     }
@@ -33,14 +32,20 @@ export class DeptosResolver
     }
 
     @Mutation(() => DeptoDto)
-    async actualizarDepto(@Args('input') input: DeptoDto): Promise<IDepto>
+    async actualizarDepto(@Args('input') input: DeptoDto): Promise<DeptoDto>
     {
         return await this.deptosService.actualizarDepto(input);
     }
 
     @Mutation(() => DeptoDto)
-    async eliminarDepto(@Args('_id') _id: string): Promise<IDepto>
+    async eliminarDepto(@Args('_id') _id: string): Promise<DeptoDto>
     {
         return await this.deptosService.eliminarDepto(_id);
+    }
+
+    @Mutation(() => DeptoDto)
+    async agregarPuesto(@Args('puesto') puesto: RegPuestoDto): Promise<DeptoDto>
+    {
+        return await this.deptosService.agregarPuesto(puesto);
     }
 }

@@ -1,14 +1,15 @@
 {
     "extends": "../../tsconfig.base.json",
-    "files": [],
-    "include": [],
+    "files": [ ],
+    "include": [ ],
     "compilerOptions": {
         "experimentalDecorators": true,
         "paths": {
-            "#api/*": ["./*"],
-            "@api-environments:/*": ["apps/api/src/environments/*"],
-            "@api-admin/*": ["apps/api/src/app/admin/deptos/*", "apps/api/src/app/admin/empleado/auth/*", "apps/api/src/app/admin/empleado/*"],
-            "@api-general/*": ["apps/api/src/app/general/*"]
+            "#api/*": [ "./*" ],
+            "@api-environments:/*": [ "apps/api/src/environments/*" ],
+            "@api-dir-admon-finanzas/*": [ "apps/api/src/app/dir-admon-finanzas/recursos-humanos/deptos/*" ],
+            "@api-admin/*": [ "apps/api/src/app/admin/deptos/*", "apps/api/src/app/admin/empleado/auth/*", "apps/api/src/app/admin/empleado/*" ],
+            "@api-general/*": [ "apps/api/src/app/general/*" ]
         }
     },
     "references": [

@@ -1,8 +1,8 @@
-import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
+import {Field, ID, InputType, ObjectType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Document} from 'mongoose';
 import {IsNotEmpty, IsOptional, IsUppercase, Length} from 'class-validator';
-import {IDepto} from './depto.interface';
+import {IDepto, IRegPuesto} from './depto.interface';
 
 // definimos el esquema para la base de datos y el tipo para la generacion del dsl de graphql en una sola clase
 @ObjectType('DeptoType')
@@ -37,3 +37,9 @@ export const SCHEMA_DEPTO = SchemaFactory.createForClass(DeptoDto).index({centro
 //     console.log('input', resp);
 //     return resp;
 // })
+
+@InputType('PuestoDeptoInput')
+export class RegPuestoDto extends PickType(DeptoDto, ['_id'], InputType) implements IRegPuesto
+{
+    puesto: string;
+}

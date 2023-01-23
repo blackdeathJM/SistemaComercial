@@ -55,6 +55,7 @@ export type DeptoInput = {
   _id?: InputMaybe<Scalars['ID']>;
   centroGestor?: InputMaybe<Scalars['String']>;
   nombre?: InputMaybe<Scalars['String']>;
+  puestos?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type DeptoType = {
@@ -62,6 +63,7 @@ export type DeptoType = {
   _id?: Maybe<Scalars['ID']>;
   centroGestor?: Maybe<Scalars['String']>;
   nombre?: Maybe<Scalars['String']>;
+  puestos?: Maybe<Array<Scalars['String']>>;
 };
 
 export type DocActFolioInput = {
@@ -241,6 +243,7 @@ export type Mutation = {
   actualizarAvatar: LoginRespuestaType;
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
+  agregarPuesto: DeptoType;
   asignarAuth: EmpleadoType;
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
@@ -273,6 +276,11 @@ export type MutationActualizarContrasenaAdminArgs = {
 
 export type MutationActualizarDeptoArgs = {
   input: DeptoInput;
+};
+
+
+export type MutationAgregarPuestoArgs = {
+  puesto: PuestoDeptoInput;
 };
 
 
@@ -380,6 +388,10 @@ export type NotificacionType = {
   tiempo?: Maybe<Scalars['Int']>;
   titulo?: Maybe<Scalars['String']>;
   usarRouter?: Maybe<Scalars['Boolean']>;
+};
+
+export type PuestoDeptoInput = {
+  _id?: InputMaybe<Scalars['ID']>;
 };
 
 export type PuestoInput = {
@@ -503,34 +515,6 @@ export type UploadInput = {
   /** Es la url A eliminar en caso de que sea remplazar o eliminar el archivo */
   url?: InputMaybe<Scalars['String']>;
 };
-
-export type FragDeptosFragment = { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null };
-
-export type DepartamentosQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DepartamentosQuery = { __typename?: 'Query', deptos: Array<{ __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null }> };
-
-export type FiltrarDeptosQueryVariables = Exact<{
-  nombre: Scalars['String'];
-}>;
-
-
-export type FiltrarDeptosQuery = { __typename?: 'Query', filtrarDeptos: Array<{ __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null }> };
-
-export type CrearDeptoMutationVariables = Exact<{
-  input: DeptoInput;
-}>;
-
-
-export type CrearDeptoMutation = { __typename?: 'Mutation', crearDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
-
-export type ActualizarDeptoMutationVariables = Exact<{
-  input: DeptoInput;
-}>;
-
-
-export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
 export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null };
 
@@ -735,13 +719,34 @@ export type EliminarTodosMutationVariables = Exact<{
 
 export type EliminarTodosMutation = { __typename?: 'Mutation', eliminarTodos: number };
 
-export const FragDeptosFragmentDoc = gql`
-    fragment fragDeptos on DeptoType {
-  _id
-  nombre
-  centroGestor
-}
-    `;
+export type FragDeptosFragment = { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null };
+
+export type DepartamentosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DepartamentosQuery = { __typename?: 'Query', deptos: Array<{ __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null }> };
+
+export type FiltrarDeptosQueryVariables = Exact<{
+  nombre: Scalars['String'];
+}>;
+
+
+export type FiltrarDeptosQuery = { __typename?: 'Query', filtrarDeptos: Array<{ __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null }> };
+
+export type CrearDeptoMutationVariables = Exact<{
+  input: DeptoInput;
+}>;
+
+
+export type CrearDeptoMutation = { __typename?: 'Mutation', crearDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
+
+export type ActualizarDeptoMutationVariables = Exact<{
+  input: DeptoInput;
+}>;
+
+
+export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
+
 export const FragAuthFragmentDoc = gql`
     fragment fragAuth on AuthType {
   usuario
@@ -829,78 +834,13 @@ export const FragNotificacionFragmentDoc = gql`
   usarRouter
 }
     `;
-export const DepartamentosDocument = gql`
-    query Departamentos {
-  deptos {
-    ...fragDeptos
-  }
+export const FragDeptosFragmentDoc = gql`
+    fragment fragDeptos on DeptoType {
+  _id
+  nombre
+  centroGestor
 }
-    ${FragDeptosFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DepartamentosGQL extends Apollo.Query<DepartamentosQuery, DepartamentosQueryVariables> {
-    document = DepartamentosDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const FiltrarDeptosDocument = gql`
-    query filtrarDeptos($nombre: String!) {
-  filtrarDeptos(nombre: $nombre) {
-    ...fragDeptos
-  }
-}
-    ${FragDeptosFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FiltrarDeptosGQL extends Apollo.Query<FiltrarDeptosQuery, FiltrarDeptosQueryVariables> {
-    document = FiltrarDeptosDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CrearDeptoDocument = gql`
-    mutation crearDepto($input: DeptoInput!) {
-  crearDepto(input: $input) {
-    ...fragDeptos
-  }
-}
-    ${FragDeptosFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CrearDeptoGQL extends Apollo.Mutation<CrearDeptoMutation, CrearDeptoMutationVariables> {
-    document = CrearDeptoDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const ActualizarDeptoDocument = gql`
-    mutation actualizarDepto($input: DeptoInput!) {
-  actualizarDepto(input: $input) {
-    ...fragDeptos
-  }
-}
-    ${FragDeptosFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
-    document = ActualizarDeptoDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
+    `;
 export const AsignarAuthDocument = gql`
     mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!) {
   asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor) {
@@ -1529,6 +1469,78 @@ export const EliminarTodosDocument = gql`
   })
   export class EliminarTodosGQL extends Apollo.Mutation<EliminarTodosMutation, EliminarTodosMutationVariables> {
     document = EliminarTodosDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DepartamentosDocument = gql`
+    query Departamentos {
+  deptos {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DepartamentosGQL extends Apollo.Query<DepartamentosQuery, DepartamentosQueryVariables> {
+    document = DepartamentosDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FiltrarDeptosDocument = gql`
+    query filtrarDeptos($nombre: String!) {
+  filtrarDeptos(nombre: $nombre) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FiltrarDeptosGQL extends Apollo.Query<FiltrarDeptosQuery, FiltrarDeptosQueryVariables> {
+    document = FiltrarDeptosDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CrearDeptoDocument = gql`
+    mutation crearDepto($input: DeptoInput!) {
+  crearDepto(input: $input) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CrearDeptoGQL extends Apollo.Mutation<CrearDeptoMutation, CrearDeptoMutationVariables> {
+    document = CrearDeptoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActualizarDeptoDocument = gql`
+    mutation actualizarDepto($input: DeptoInput!) {
+  actualizarDepto(input: $input) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
+    document = ActualizarDeptoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

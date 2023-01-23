@@ -17,12 +17,13 @@ import {
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
-import {DeptosService} from '@api-admin/deptos.service';
 import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
 import {AppService} from '#api/apps/api/src/app/app.service';
 import {INotificacion} from '#api/libs/models/src/lib/general/notificacion/notificacion.interface';
 import {subNotificacion} from '@api-general/notificaciones/notificacion.resolver';
 import {NotificacionService} from '@api-general/notificaciones/notificacion.service';
+import {DeptosService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/deptos/deptos.service';
+
 
 @Injectable()
 export class DocumentosService
@@ -71,7 +72,6 @@ export class DocumentosService
             usuarioEnviadoPor['usuarios'] = args.usuario;
         }
         const valor = Object.assign(usuarioEnviadoPor, fechas);
-        console.log('****************', valor);
         try
         {
             return await this.documento.find({...valor}, {}, {sort: {fechaRecepcion: -1}}).exec();
