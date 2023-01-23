@@ -5,7 +5,6 @@ import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {PubSub} from 'graphql-subscriptions';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
-import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {DatosSesionDto, ILoginRespuesta, LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';

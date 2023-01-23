@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto';
 import {finalize} from 'rxjs';
-import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
@@ -15,6 +14,7 @@ import {CommonModule} from '@angular/common';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
+import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 
 @Component({
     standalone: true,
@@ -41,7 +41,7 @@ export class ModDeptoComponent implements OnInit
     cargandoDatos = false;
     formDepto: FormGroup;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, @Inject(MAT_DIALOG_DATA) private depto: IDepto)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, private entityDepto: EntityDeptoStore)
     {
 
     }
@@ -49,9 +49,9 @@ export class ModDeptoComponent implements OnInit
     ngOnInit(): void
     {
         this.formDepto = this.fb.formGroup(new Depto());
-        if (isNotNil(this.depto))
+        if (isNotNil(this.entityDepto.snapshot.depto))
         {
-            this.formDepto.patchValue(this.depto);
+            this.formDepto.patchValue(this.entityDepto.snapshot.depto);
         }
     }
 
@@ -59,9 +59,9 @@ export class ModDeptoComponent implements OnInit
     {
         this.cargandoDatos = true;
         // si vienen datos cuando se abre el modal cargamos los datos en el formulario para poder actualizarlos y si no realizamos un nuevo registro
-        if (isNotNil(this.depto))
+        if (isNotNil(this.entityDepto.snapshot.depto))
         {
-            const input = {_id: this.depto._id, ...this.formDepto.value};
+            const input = {_id: this.entityDepto.snapshot.depto._id, ...this.formDepto.value};
 
             this.deptoService.actualizarDepto(input).pipe(finalize(() =>
             {

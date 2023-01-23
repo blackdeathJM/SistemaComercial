@@ -747,6 +747,13 @@ export type ActualizarDeptoMutationVariables = Exact<{
 
 export type ActualizarDeptoMutation = { __typename?: 'Mutation', actualizarDepto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
 
+export type AgregarPuestoMutationVariables = Exact<{
+  puesto: PuestoDeptoInput;
+}>;
+
+
+export type AgregarPuestoMutation = { __typename?: 'Mutation', agregarPuesto: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null } };
+
 export const FragAuthFragmentDoc = gql`
     fragment fragAuth on AuthType {
   usuario
@@ -1541,6 +1548,24 @@ export const ActualizarDeptoDocument = gql`
   })
   export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
     document = ActualizarDeptoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AgregarPuestoDocument = gql`
+    mutation agregarPuesto($puesto: PuestoDeptoInput!) {
+  agregarPuesto(puesto: $puesto) {
+    ...fragDeptos
+  }
+}
+    ${FragDeptosFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AgregarPuestoGQL extends Apollo.Mutation<AgregarPuestoMutation, AgregarPuestoMutationVariables> {
+    document = AgregarPuestoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

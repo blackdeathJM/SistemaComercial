@@ -13,11 +13,6 @@
     "compilerOptions": {
         "forceConsistentCasingInFileNames": true,
         "strict": false,
-        "paths": {
-            "@lib-admin/*": [ "libs/models/src/lib/admin/empleado/*" ],
-            "@lib-general/*": [ "libs/models/src/lib/general/documentos/*", "libs/models/src/lib/general/notificacion/*" ],
-            "@lib-dir-admon-finanzas/*": [ "libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/*" ]
-        },
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true
     }

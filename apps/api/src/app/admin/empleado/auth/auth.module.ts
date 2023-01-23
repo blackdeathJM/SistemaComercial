@@ -7,8 +7,8 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
 import {LocalStrategy} from './strategy/local.strategy';
 import {JwtStrategy} from './strategy/jwt.strategy';
 import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
-import {PassportModule} from "@nestjs/passport";
-import {EmpleadoService} from "@api-admin/empleado.service";
+import {PassportModule} from '@nestjs/passport';
+import {EmpleadoService} from '@api-admin/empleado.service';
 
 @Module({
     imports:

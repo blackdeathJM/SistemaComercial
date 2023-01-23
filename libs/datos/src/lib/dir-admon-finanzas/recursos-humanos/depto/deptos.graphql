@@ -25,3 +25,10 @@ mutation actualizarDepto($input: DeptoInput!)
         ...fragDeptos
     }
 }
+mutation agregarPuesto($puesto: PuestoDeptoInput!)
+{
+    agregarPuesto(puesto: $puesto)
+    {
+        ...fragDeptos
+    }
+}

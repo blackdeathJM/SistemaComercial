@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL, FiltrarDeptosGQL, FiltrarDeptosQuery} from '#/libs/datos/src';
+import {ActualizarDeptoGQL, AgregarPuestoGQL, AgregarPuestoMutation, CrearDeptoGQL, DepartamentosGQL, FiltrarDeptosGQL, FiltrarDeptosQuery} from '#/libs/datos/src';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {finalize, Observable, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
@@ -14,7 +14,7 @@ export const loaderDeptos = 'loaderDeptos';
 export class DeptoService
 {
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL, private ngxToast: NgxToastService,
-                private entityDepto: EntityDeptoStore, private filtrarDeptosGQL: FiltrarDeptosGQL, private ngxLoader: NgxUiLoaderService)
+                private entityDepto: EntityDeptoStore, private filtrarDeptosGQL: FiltrarDeptosGQL, private ngxLoader: NgxUiLoaderService, private agregarPuestoGQL: AgregarPuestoGQL)
     {
     }
 
@@ -35,13 +35,14 @@ export class DeptoService
     filtarDeptos(nombre: string): Observable<SingleExecutionResult<FiltrarDeptosQuery>>
     {
         this.ngxLoader.startLoader(loaderDeptos);
-        return this.filtrarDeptosGQL.watch({nombre}).valueChanges.pipe(finalize(() => this.ngxLoader.stopLoader(loaderDeptos)), tap((res) =>
+        return this.filtrarDeptosGQL.watch({nombre}).valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
                 const deptosFiltrados = $cast<IDepto[]>(res.data.filtrarDeptos);
                 this.entityDepto.setAll(deptosFiltrados);
             }
+            this.ngxLoader.stopLoader(loaderDeptos);
         }));
     }
 
@@ -67,6 +68,18 @@ export class DeptoService
                 const changes = $cast<IDepto>(res.data.actualizarDepto);
                 this.entityDepto.updateOne({id: changes._id, changes});
                 this.ngxToast.satisfactorioToast('El Departamento se actualizo con exito', 'Actualizar departamento');
+            }
+        }));
+    }
+
+    agregarPuesto(): Observable<SingleExecutionResult<AgregarPuestoMutation>>
+    {
+        return this.agregarPuestoGQL.mutate().pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const changes = $cast<IDepto>(res.data.agregarPuesto);
+                this.entityDepto.updateOne({id: changes._id, changes});
             }
         }));
     }
