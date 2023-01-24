@@ -5,4 +5,4 @@
         <mat-error>{{ctrlPuesto['errorMessage']}}</mat-error>
     </mat-form-field>
 </div>
-<app-registros (registro)="registro()" [cargando]="cargandoDatos" [deshabilitar]="ctrlPuesto.invalid || cargandoDatos"></app-registros>
+<app-registros (registro)="registro()" (cancelar)="mdr.close()" [cargando]="cargandoDatos" [deshabilitar]="ctrlPuesto.invalid || cargandoDatos"></app-registros>

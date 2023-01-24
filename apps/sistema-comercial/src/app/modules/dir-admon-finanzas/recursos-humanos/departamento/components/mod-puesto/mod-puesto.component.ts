@@ -24,7 +24,7 @@ export class ModPuestoComponent
     ctrlPuesto = new FormControl('', RxwebValidators.required({message: 'El puesto es requerido'}));
     cargandoDatos = false;
 
-    constructor(public entityDepto: EntityDeptoStore, private deptoService: DeptoService, private mdr: MatDialogRef<ModPuestoComponent>)
+    constructor(public entityDepto: EntityDeptoStore, private deptoService: DeptoService, public mdr: MatDialogRef<ModPuestoComponent>)
     {
     }
 
