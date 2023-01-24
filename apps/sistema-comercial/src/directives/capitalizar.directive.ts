@@ -16,7 +16,7 @@ export class CapitalizarDirective
 
     @HostListener('input', ['$event.target']) onInput(input: HTMLInputElement): void
     {
-        const cambio = input.value.toLowerCase().replace(/\w\S*/g, w => (w.replace(/^\w/, (c) => c.toUpperCase())));
+        const cambio = input.value.toLowerCase().replace(/\w\S*/g, w => (w.replace(/^\w/, c => c.toUpperCase())));
         this.control.control.setValue(cambio);
     }
 }

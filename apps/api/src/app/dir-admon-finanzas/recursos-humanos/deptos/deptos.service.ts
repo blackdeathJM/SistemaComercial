@@ -14,6 +14,7 @@ export class DeptosService
     {
         try
         {
+            // await this.depto.updateMany({}, {$set: {puestos: []}}).exec();
             return await this.depto.find().exec();
         } catch (e)
         {
@@ -47,7 +48,7 @@ export class DeptosService
     {
         try
         {
-            return await this.depto.findByIdAndUpdate(puesto._id, {$push: {puestos: puesto.puesto}}).exec();
+            return await this.depto.findByIdAndUpdate(puesto._id, {$push: {puestos: puesto.puesto}}, {new: true}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
@@ -58,7 +59,7 @@ export class DeptosService
     {
         try
         {
-            return await this.depto.findByIdAndUpdate(input._id, {...input}, {returnOriginal: false}).exec();
+            return await this.depto.findByIdAndUpdate(input._id, {...input}, {new: true}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e.codeName});

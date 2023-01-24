@@ -41,5 +41,7 @@ export const SCHEMA_DEPTO = SchemaFactory.createForClass(DeptoDto).index({centro
 @InputType('PuestoDeptoInput')
 export class RegPuestoDto extends PickType(DeptoDto, ['_id'], InputType) implements IRegPuesto
 {
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario un puesto'})
     puesto: string;
 }

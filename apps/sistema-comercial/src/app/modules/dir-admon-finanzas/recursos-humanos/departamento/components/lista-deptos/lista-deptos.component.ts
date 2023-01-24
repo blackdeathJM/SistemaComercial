@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -13,8 +13,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatInputModule} from '@angular/material/input';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {RxwebValidators} from '@rxweb/reactive-form-validators';
+import {ReactiveFormsModule} from '@angular/forms';
+import {ModPuestoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-puesto/mod-puesto.component';
 
 @Component({
     standalone: true,
@@ -34,14 +34,11 @@ import {RxwebValidators} from '@rxweb/reactive-form-validators';
         ],
     selector: 'app-lista-deptos',
     templateUrl: './lista-deptos.component.html',
-    styleUrls: ['./lista-deptos.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./lista-deptos.component.scss']
 })
 export class ListaDeptosComponent implements OnInit
 {
     idLoader = loaderDeptos;
-    ctrlAgregarPuesto = new FormControl([], RxwebValidators.required({message: 'es necesario un puesto'}));
-
     constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
     {
 
@@ -65,7 +62,7 @@ export class ListaDeptosComponent implements OnInit
 
     nuevoPuesto(depto: IDepto): void
     {
-        console.log('****', this.ctrlAgregarPuesto.value, depto);
-        // this.deptoService.agregarPuesto().subscribe();
+        this.entityDepto.patchState({depto});
+        this.dRef.open(ModPuestoComponent, {width: '40%'});
     }
 }

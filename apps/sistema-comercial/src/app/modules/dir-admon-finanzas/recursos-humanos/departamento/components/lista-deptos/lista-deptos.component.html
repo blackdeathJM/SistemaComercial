@@ -5,30 +5,22 @@
                 <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500 text-xl">
                     <div class="flex flex-auto justify-between items-center">
                         <span>{{depto.nombre}}</span>
-                        <button mat-icon-button color="warn" matTooltip="Editar nombre del departamento" (click)="editar(depto)">
-                            <mat-icon svgIcon="edit"></mat-icon>
-                        </button>
+                        <div>
+                            <button mat-icon-button color="warn" matTooltip="Editar nombre del departamento" (click)="editar(depto)">
+                                <mat-icon svgIcon="edit"></mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" matTooltip="Editar nombre del departamento" (click)="nuevoPuesto(depto)">
+                                <mat-icon svgIcon="add"></mat-icon>
+                            </button>
+                        </div>
                     </div>
                 </mat-card-header>
                 <mat-card-subtitle class="p-2 border-b-2"><span matTooltip="Centro gestor">{{depto.centroGestor}}</span></mat-card-subtitle>
                 <mat-card-content class="py-2">
-                    <mat-list role="list">
-                        <mat-list-item role="listitem">Item 1</mat-list-item>
-                        <mat-list-item role="listitem">Item 2</mat-list-item>
-                        <mat-list-item role="listitem">Item 3</mat-list-item>
+                    <mat-list role="list" *ngIf="depto.puestos.length > 0 && depto.puestos !== undefined">
+                        <mat-list-item role="listitem" *ngFor="let puesto of depto.puestos">{{puesto}}</mat-list-item>
                     </mat-list>
                 </mat-card-content>
-                <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
-                    <div class="flex flex-row-reverse flex-auto gap-4">
-                        <button mat-raised-button color="primary" (click)="nuevoPuesto(depto)">
-                            <mat-icon svgIcon="add"></mat-icon>
-                            Registrar nuevo puesto
-                        </button>
-                        <mat-form-field class="w-100">
-                            <input matInput placeholder="Ingresa un nuevo puesto" [formControl]="ctrlAgregarPuesto">
-                        </mat-form-field>
-                    </div>
-                </mat-card-actions>
             </mat-card>
         </div>
     </section>

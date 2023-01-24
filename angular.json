@@ -3,8 +3,8 @@
     "version": 2,
     "projects": {
         "api": "apps/api",
-        "sistema-comercial": "apps/sistema-comercial",
         "datos": "libs/datos",
-        "models": "libs/models"
+        "models": "libs/models",
+        "sistema-comercial": "apps/sistema-comercial"
     }
 }

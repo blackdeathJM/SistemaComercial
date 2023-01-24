@@ -200,7 +200,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1674455858
+  tiempo: Int = 1674551420
   titulo: String
   usarRouter: Boolean = false
 }
@@ -250,6 +250,7 @@ type Mutation {
 
 input PuestoDeptoInput {
   _id: ID
+  puesto: String
 }
 
 input RegEmpleadoInput {

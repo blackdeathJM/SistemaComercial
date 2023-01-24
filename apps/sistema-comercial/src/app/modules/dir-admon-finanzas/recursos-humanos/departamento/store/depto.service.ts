@@ -4,7 +4,7 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
+import {IDepto, IRegPuesto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 
@@ -72,14 +72,14 @@ export class DeptoService
         }));
     }
 
-    agregarPuesto(): Observable<SingleExecutionResult<AgregarPuestoMutation>>
+    agregarPuesto(puesto: IRegPuesto): Observable<SingleExecutionResult<AgregarPuestoMutation>>
     {
-        return this.agregarPuestoGQL.mutate().pipe(tap((res) =>
+        return this.agregarPuestoGQL.mutate({puesto}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
                 const changes = $cast<IDepto>(res.data.agregarPuesto);
-                this.entityDepto.updateOne({id: changes._id, changes});
+                this.entityDepto.setOne(changes);
             }
         }));
     }
