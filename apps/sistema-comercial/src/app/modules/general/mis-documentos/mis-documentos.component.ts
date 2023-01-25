@@ -56,7 +56,7 @@ export class MisDocumentosComponent implements OnDestroy, OnInit
 
     nuevosDocs(): void
     {
-        this.dRef.open(ModDocumentosComponent, {width: '40%', data: null, hasBackdrop: false});
+        this.dRef.open(ModDocumentosComponent, {width: '40%', hasBackdrop: false});
     }
 
     ngOnDestroy(): void

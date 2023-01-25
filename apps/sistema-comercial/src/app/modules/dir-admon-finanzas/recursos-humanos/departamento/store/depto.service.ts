@@ -79,7 +79,8 @@ export class DeptoService
             if (isNotNil(res.data))
             {
                 const changes = $cast<IDepto>(res.data.agregarPuesto);
-                this.entityDepto.setOne(changes);
+                this.entityDepto.updateOne({id: changes._id, changes});
+                this.ngxToast.satisfactorioToast('El puesto se a agregado correctamente', 'Agregar nuevo puesto');
             }
         }));
     }

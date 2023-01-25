@@ -13,6 +13,7 @@ import {ModDeptoComponent} from '@s-admin/../../dir-admon-finanzas/recursos-huma
 import {AsyncPipe} from '@angular/common';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {DeptoService} from '@s-admin/../../dir-admon-finanzas/recursos-humanos/departamento/store/depto.service';
+import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 
 @Component({
     standalone: true,
@@ -41,19 +42,20 @@ export class DeptosComponent implements OnInit, OnDestroy
     controlBuscar: FormControl = new FormControl();
     private sub = new Subscription();
 
-    constructor(private dRef: MatDialog, private deptosService: DeptoService)
+    constructor(private dRef: MatDialog, private deptosService: DeptoService, private entityDepto: EntityDeptoStore)
     {
     }
 
     ngOnInit(): void
     {
         this.sub.add(this.controlBuscar.valueChanges.pipe(debounceTime(300), switchMap((res: string) =>
-        this.deptosService.filtarDeptos(res))).subscribe());
+            this.deptosService.filtarDeptos(res))).subscribe());
     }
 
     registro(): void
     {
-        this.dRef.open(ModDeptoComponent, {width: '40%', data: null});
+        this.entityDepto.patchState({depto: null});
+        this.dRef.open(ModDeptoComponent, {width: '40%'});
     }
 
     ngOnDestroy(): void
