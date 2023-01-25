@@ -19,6 +19,8 @@ export const GENERAL: FuseNavigationItem[] =
                         icon: 'feather:folder',
                         activo: false,
                         disabled: false,
+                        badge: {},
+                        classes: {},
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
@@ -28,6 +30,8 @@ export const GENERAL: FuseNavigationItem[] =
                         icon: 'feather:archive',
                         activo: false,
                         disabled: false,
+                        badge: {},
+                        classes: {},
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
@@ -37,7 +41,20 @@ export const GENERAL: FuseNavigationItem[] =
                         icon: 'feather:file-text',
                         activo: false,
                         disabled: false,
+                        badge: {},
+                        classes: {},
                         link: rutaGeneral + 'ordenes-atencion'
+                    },
+                    {
+                        id: 'sesionEmpleados',
+                        title: 'Permisos',
+                        type: 'basic',
+                        icon: 'admin_panel_settings',
+                        activo: false,
+                        disabled: false,
+                        badge: {},
+                        classes: {},
+                        link: rutaGeneral + 'permisos'
                     }
                 ]
         }

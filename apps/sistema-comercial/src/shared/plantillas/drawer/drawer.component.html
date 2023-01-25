@@ -1,12 +1,18 @@
 <mat-drawer-container>
     <mat-drawer class="{{anchoIzq}} dark:bg-gray-900" [mode]="drawerModeIzq" [opened]="panelIzq$ | async" position="start" autoFocus="false" [disableClose]="true" #matDrawerIzq>
-        <ng-content select="[panelIzq]"></ng-content>
+        <div class="flex flex-auto flex-col">
+            <ng-content select="[panelIzq]"></ng-content>
+        </div>
     </mat-drawer>
 
     <mat-drawer-content>
-        <ng-content select="[contenido]"></ng-content>
+        <div class="flex flex-auto flex-col">
+            <ng-content select="[contenido]"></ng-content>
+        </div>
     </mat-drawer-content>
     <mat-drawer class="{{anchoDer}} dark:bg-gray-900" [mode]="drawModeDer" [opened]="panelDer$ | async" position="end" autoFocus="false" [disableClose]="true" #matDrawerDer>
-        <ng-content select="[panelDer]"></ng-content>
+        <div class="flex flex-auto flex-col">
+            <ng-content select="[panelDer]"></ng-content>
+        </div>
     </mat-drawer>
 </mat-drawer-container>

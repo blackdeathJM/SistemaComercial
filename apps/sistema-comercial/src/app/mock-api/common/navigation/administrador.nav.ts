@@ -15,13 +15,15 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             children:
                 [
                     {
-                        id: 'adminGeneral',
-                        title: 'Admin Gral',
+                        id: 'admonSesiones',
+                        title: 'Admon. sesiones',
                         type: 'basic',
-                        icon: 'feather:settings',
+                        icon: 'admin_panel_settings',
                         disabled: false,
                         activo: false,
-                        link: rutaBaseAdministrador
+                        badge: {},
+                        classes: {},
+                        link: rutaBaseAdministrador + 'empleados-sesion'
                     }
                 ]
         }

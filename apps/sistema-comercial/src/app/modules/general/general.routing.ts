@@ -19,6 +19,10 @@ export const generalRouting: Routes =
                     {
                         path: 'ordenes-atencion',
                         loadComponent: () => import('@s-general/ordenes-atencion/ordenes-atencion.component').then(c => c.OrdenesAtencionComponent)
+                    },
+                    {
+                        path: 'permisos',
+                        loadComponent: () => import('@s-general/sesion/sesion.component').then(c => c.SesionComponent)
                     }
                 ]
         }

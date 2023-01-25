@@ -39,7 +39,7 @@ export const appRoutes: Route[] = [
                 },
                 {
                     path: 'perfil',
-                    loadComponent: () => import('@s-admin/components/perfil/perfil.component').then(p => p.PerfilComponent)
+                    loadComponent: () => import('@s-admin/empleado-admin/components/perfil/perfil.component').then(p => p.PerfilComponent)
                 },
                 {
                     path: 'admin',

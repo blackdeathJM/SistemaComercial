@@ -1,4 +1,4 @@
-export const rutaBaseAdministrador = '/sistema-comercial/admin/administrador/';
+export const rutaBaseAdministrador = '/sistema-comercial/admin/';
 export const rutaGeneral = '/sistema-comercial/general/';
 export const dirAdmonFinanzas = '/sistema-comercial/dir-admon-finanzas/recursos-humanos/';
 export const dirComercial = '/sistema-comercial/dir-comercial/';

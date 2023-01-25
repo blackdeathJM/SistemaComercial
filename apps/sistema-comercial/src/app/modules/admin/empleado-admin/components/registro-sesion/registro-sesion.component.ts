@@ -13,11 +13,11 @@ import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {TrimDirective} from '@s-directives/trim.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import {Auth} from '@s-admin/models/auth';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {Auth} from '@s-admin/empleado-admin/models/auth';
 
 @Component({
     standalone: true,

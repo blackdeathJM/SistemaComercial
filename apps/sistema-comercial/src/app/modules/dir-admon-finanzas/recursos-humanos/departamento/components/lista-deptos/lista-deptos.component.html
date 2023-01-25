@@ -1,26 +1,30 @@
 <ng-container *ngIf="(entityDepto.entitiesArray$ | async) as deptos">
-    <section class="sticky flex flex-auto flex-wrap gap-4" ngxUiLoaderBlurred>
-        <mat-card class="bg-gray-300 dark:bg-gray-800 my-2 w-3/12" *ngFor="let depto of deptos">
-            <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500 text-xl">
-                <div class="flex flex-auto justify-between items-center">
-                    <span>{{depto.nombre}}</span>
-                    <div>
-                        <button mat-icon-button color="warn" matTooltip="Editar nombre del departamento" (click)="editar(depto)">
-                            <mat-icon svgIcon="edit"></mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" matTooltip="Editar nombre del departamento" (click)="nuevoPuesto(depto)">
-                            <mat-icon svgIcon="add"></mat-icon>
-                        </button>
-                    </div>
-                </div>
-            </mat-card-header>
-            <mat-card-subtitle class="p-2 border-b-2"><span matTooltip="Centro gestor">{{depto.centroGestor}}</span></mat-card-subtitle>
-            <mat-card-content class="py-2">
-                <mat-list role="list" *ngIf="depto.puestos.length > 0 && depto.puestos !== undefined">
-                    <mat-list-item role="listitem" *ngFor="let puesto of depto.puestos">{{puesto}}</mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-        <ngx-ui-loader [loaderId]="idLoader"></ngx-ui-loader>
-    </section>
+    <fuse-card class="flex flex-col p-4 mt-4" #fuseCard *ngFor="let depto of deptos">
+        <div class="flex flex-auto px-4 border-b-2 justify-between">
+            <div class="text-lg font-bold">{{depto.nombre}}</div>
+            <div>
+                <button mat-icon-button color="warn" matTooltip="Editar nombre del departamento" (click)="editar(depto)">
+                    <mat-icon svgIcon="edit"></mat-icon>
+                </button>
+                <button mat-icon-button color="primary" matTooltip="Editar nombre del departamento" (click)="nuevoPuesto(depto)">
+                    <mat-icon svgIcon="add"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="mt-3 -mx-3">
+            <button class="px-3" mat-button color="primary" (click)="fuseCard.expanded = !fuseCard.expanded">
+                <span class="mr-1">Puestos</span>
+                <mat-icon class="icon-size-5" *ngIf="!fuseCard.expanded" [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+                <mat-icon class="icon-size-5" *ngIf="fuseCard.expanded" [svgIcon]="'heroicons_solid:chevron-up'"></mat-icon>
+            </button>
+        </div>
+
+        <!-- Expansion -->
+        <ng-container fuseCardExpansion>
+            <mat-list role="list" *ngIf="depto.puestos.length > 0 && depto.puestos !== undefined">
+                <mat-list-item role="listitem" *ngFor="let puesto of depto.puestos">{{puesto}}</mat-list-item>
+            </mat-list>
+        </ng-container>
+    </fuse-card>
+    <ngx-ui-loader [loaderId]="idLoader"></ngx-ui-loader>
 </ng-container>
