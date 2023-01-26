@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
-import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL, FiltrarEmpleadosConSesionGQL, FiltrarEmpleadosConSesionQuery} from '#/libs/datos/src';
+import {
+    ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL, FiltrarEmpleadosGQL,
+    FiltrarEmpleadosQuery
+} from '#/libs/datos/src';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
@@ -21,7 +24,7 @@ export class EmpleadoService
 
     constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
                 private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
-                private filtrarEmpleadosConSesionGQL: FiltrarEmpleadosConSesionGQL, private ngxLoader: NgxUiLoaderService)
+                private filtrarEmpleadosGQL: FiltrarEmpleadosGQL, private ngxLoader: NgxUiLoaderService)
     {
     }
 
@@ -99,14 +102,14 @@ export class EmpleadoService
         }));
     }
 
-    filtrarEmpleadosConSesion(consulta: string, loader: string): Observable<SingleExecutionResult<FiltrarEmpleadosConSesionQuery>>
+    filtrarEmpleados(consulta: string, loader: string): Observable<SingleExecutionResult<FiltrarEmpleadosQuery>>
     {
         this.ngxLoader.startLoader(loader);
-        return this.filtrarEmpleadosConSesionGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
+        return this.filtrarEmpleadosGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const filtroEmpleados = $cast<IResolveEmpleado[]>(res.data.filtrarEmpleadosConSesion);
+                const filtroEmpleados = $cast<IResolveEmpleado[]>(res.data.filtrarEmpleados);
                 this.entityEmpleado.setAll(filtroEmpleados);
             }
             this.ngxLoader.stopLoader(loader);

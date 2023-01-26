@@ -32,9 +32,9 @@ query empleadosSesion
         }
     }
 }
-query filtrarEmpleadosConSesion($consulta: String!)
+query filtrarEmpleados($consulta: String!)
 {
-    filtrarEmpleadosConSesion(consulta: $consulta)
+    filtrarEmpleados(consulta: $consulta)
     {
         ...fragEmpleado
         auth {

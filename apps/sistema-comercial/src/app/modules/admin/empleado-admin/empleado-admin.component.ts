@@ -3,19 +3,21 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/empleado-sesion/empleado-sesion.component';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatButtonModule} from '@angular/material/button';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     standalone: true,
@@ -24,19 +26,21 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
             CommonModule,
             MatFormFieldModule,
             MatIconModule,
-            DrawerComponent,
             MatInputModule,
             ReactiveFormsModule,
             RxReactiveFormsModule,
             ListaEmpleadosComponent,
             MatSidenavModule,
-            ConsultaEmpleadoComponent,
             MatInputModule,
             MatInputModule,
             MatInputModule,
-            EmpleadoSesionComponent,
             MatTableModule,
             MatPaginatorModule,
+            MatButtonModule,
+            NgxUiLoaderModule,
+            DefaultValuePipeModule,
+            MatSlideToggleModule,
+            MatTooltipModule,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
@@ -59,8 +63,8 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     ngOnInit(): void
     {
         //TODO: buscar como implemetar los observables con buenas practicas
-        this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(3000), switchMap((res: string) =>
-            this.empleadoService.filtrarEmpleadosConSesion(res, this.ngxLoader))).subscribe());
+        this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
+            this.empleadoService.filtrarEmpleados(res, this.ngxLoader))).subscribe());
 
         this.sub.add(this.empleadoService.empleados(this.ngxLoader).subscribe());
 
@@ -81,5 +85,20 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     {
         this.entityEmpleado.patchState({empleado});
         this.empleadoService.setPanel = true;
+    }
+
+    crearSesion(empleado: IResolveEmpleado): void
+    {
+
+    }
+
+    modContrasena(empleado: IResolveEmpleado): void
+    {
+
+    }
+
+    actDes(empleado: IResolveEmpleado): void
+    {
+
     }
 }

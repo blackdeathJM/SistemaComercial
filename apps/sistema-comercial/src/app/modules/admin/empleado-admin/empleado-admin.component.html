@@ -1,47 +1,62 @@
-<div class="flex flex-col flex-auto mx-4">
+<section class="relative flex flex-col flex-auto p-4">
+    <mat-form-field>
+        <input matInput type="text" [formControl]="ctrlBuscar" placeholder="Filtrar empleados">
+    </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="avatar" class="w-10">
-            <th *matHeaderCellDef>Avatar</th>
-            <td *matCellDef="let empleado">
-                <div class="flex flex-0 py-2">
-                    <img class="avatar w-10 h-10" [src]="empleado.avatar" *ngIf="empleado.avatar" alt="">
-                    <div class="avatar-letra w-10 h-10" *ngIf="!empleado.avatar">{{empleado.nombreCompleto.charAt(0)}}</div>
-                </div>
-            </td>
-        </ng-container>
+    <div class="sticky flex flex-auto flex-col">
+        <table mat-table [dataSource]="dataSource" ngxUiLoaderBlurred>
+            <ng-container matColumnDef="avatar" class="w-10">
+                <th *matHeaderCellDef>Avatar</th>
+                <td *matCellDef="let empleado">
+                    <div class="flex flex-0 py-2">
+                        <img class="avatar w-10 h-10" [src]="empleado.avatar" *ngIf="empleado.avatar" alt="">
+                        <div class="avatar-letra w-10 h-10" *ngIf="!empleado.avatar">{{empleado.nombreCompleto.charAt(0)}}</div>
+                    </div>
+                </td>
+            </ng-container>
 
-        <ng-container matColumnDef="nombreCompleto">
-            <th *matHeaderCellDef>Nombre</th>
-            <td *matCellDef="let empleado">{{empleado.nombreCompleto}}</td>
-        </ng-container>
+            <ng-container matColumnDef="nombreCompleto">
+                <th *matHeaderCellDef>Nombre</th>
+                <td *matCellDef="let empleado">{{empleado.nombreCompleto}}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="nombre">
-            <th *matHeaderCellDef>Departamento</th>
-            <td *matCellDef="let empleado">{{empleado?.deptoEmpleado?.nombre}}</td>
-        </ng-container>
+            <ng-container matColumnDef="nombre">
+                <th *matHeaderCellDef>Departamento</th>
+                <td *matCellDef="let empleado">{{empleado?.deptoEmpleado?.nombre}}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="puesto">
-            <th *matHeaderCellDef>Puesto</th>
-            <td *matCellDef="let empleado">{{empleado?.puesto}}</td>
-        </ng-container>
+            <ng-container matColumnDef="puesto">
+                <th *matHeaderCellDef>Puesto</th>
+                <td *matCellDef="let empleado">{{empleado?.puesto | defaultValue: '---'}}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="usuario">
-            <th *matHeaderCellDef>Usuario</th>
-            <td *matCellDef="let empleado">{{empleado?.auth?.usuario}}</td>
-        </ng-container>
+            <ng-container matColumnDef="usuario">
+                <th *matHeaderCellDef>Usuario</th>
+                <td *matCellDef="let empleado">{{empleado?.auth?.usuario}}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="acciones">
-            <th *matHeaderCellDef>Acciones</th>
-            <td *matCellDef="let empleado">
+            <ng-container matColumnDef="acciones">
+                <th *matHeaderCellDef>Acciones</th>
+                <td *matCellDef="let empleado" class="text-center">
+                    <div class="flex flex-auto gap-4 items-center justify-center">
+                        <button mat-icon-button *ngIf="!empleado.auth" matTooltip="Crear sesion" (click)="crearSesion(empleado)">
+                            <mat-icon svgIcon="lock_open"></mat-icon>
+                        </button>
+                        <button mat-icon-button *ngIf="empleado.auth" matTooltip="Modificar contraseña" (click)="modContrasena(empleado)">
+                            <mat-icon svgIcon="password"></mat-icon>
+                        </button>
+                        <mat-slide-toggle [checked]="empleado?.auth?.activo" color="primary" *ngIf="empleado?.auth" matTooltip="Activar o desactivar sesion" (toggleChange)="actDes(empleado)">
+                        </mat-slide-toggle>
+                    </div>
+                </td>
+            </ng-container>
 
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columnasMostrar"></tr>
-        <tr mat-row class="odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" *matRowDef="let row; columns: columnasMostrar;"></tr>
-    </table>
-    <div class="mt-4">
-        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+            <tr mat-header-row *matHeaderRowDef="columnasMostrar"></tr>
+            <tr mat-row class="odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700 text-center" *matRowDef="let row; columns: columnasMostrar"></tr>
+        </table>
+        <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
+        <div class="mt-4">
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+        </div>
     </div>
-</div>
+</section>

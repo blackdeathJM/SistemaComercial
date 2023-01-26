@@ -21,11 +21,11 @@ export class EmpleadoService
         }
     }
 
-    async filtrarEmpleadosConSesion(nombreCompleto: string): Promise<EmpleadoDto[]>
+    async filtrarEmpleados(nombreCompleto: string): Promise<EmpleadoDto[]>
     {
         try
         {
-            return await this.empleado.find({nombreCompleto: {$regex: nombreCompleto, $options: 'i'}, auth: {$ne: null}, activo: true}).exec();
+            return await this.empleado.find({nombreCompleto: {$regex: nombreCompleto, $options: 'i'}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});

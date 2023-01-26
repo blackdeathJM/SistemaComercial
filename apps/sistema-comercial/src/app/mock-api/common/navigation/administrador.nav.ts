@@ -18,7 +18,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
                         id: 'admonSesiones',
                         title: 'Admon. sesiones',
                         type: 'basic',
-                        icon: 'admin_panel_settings',
+                        icon: 'manage_accounts',
                         disabled: false,
                         activo: false,
                         badge: {},

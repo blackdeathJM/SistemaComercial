@@ -25,9 +25,9 @@ export class EmpleadoResolver
     }
 
     @Query(() => [EmpleadoDto])
-    async filtrarEmpleadosConSesion(@Args('consulta') consulta: string): Promise<EmpleadoDto[]>
+    async filtrarEmpleados(@Args('consulta') consulta: string): Promise<EmpleadoDto[]>
     {
-        return await this.empleadoService.filtrarEmpleadosConSesion(consulta);
+        return await this.empleadoService.filtrarEmpleados(consulta);
     }
 
     @Mutation(() => EmpleadoDto)

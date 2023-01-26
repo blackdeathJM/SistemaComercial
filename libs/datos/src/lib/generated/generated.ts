@@ -420,7 +420,7 @@ export type Query = {
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
   filtrarDeptos: Array<DeptoType>;
-  filtrarEmpleadosConSesion: Array<EmpleadoType>;
+  filtrarEmpleados: Array<EmpleadoType>;
   notificaciones?: Maybe<Array<NotificacionType>>;
 };
 
@@ -461,7 +461,7 @@ export type QueryFiltrarDeptosArgs = {
 };
 
 
-export type QueryFiltrarEmpleadosConSesionArgs = {
+export type QueryFiltrarEmpleadosArgs = {
   consulta: Scalars['String'];
 };
 
@@ -583,12 +583,12 @@ export type EmpleadosSesionQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type EmpleadosSesionQuery = { __typename?: 'Query', empleadosSesion: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null, puestos?: Array<string> | null } | null }> };
 
-export type FiltrarEmpleadosConSesionQueryVariables = Exact<{
+export type FiltrarEmpleadosQueryVariables = Exact<{
   consulta: Scalars['String'];
 }>;
 
 
-export type FiltrarEmpleadosConSesionQuery = { __typename?: 'Query', filtrarEmpleadosConSesion: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null, puestos?: Array<string> | null } | null }> };
+export type FiltrarEmpleadosQuery = { __typename?: 'Query', filtrarEmpleados: Array<{ __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null, puestos?: Array<string> | null } | null }> };
 
 export type CrearEmpleadoMutationVariables = Exact<{
   empleadoDatos: RegEmpleadoInput;
@@ -1043,9 +1043,9 @@ ${FragDeptosFragmentDoc}`;
       super(apollo);
     }
   }
-export const FiltrarEmpleadosConSesionDocument = gql`
-    query filtrarEmpleadosConSesion($consulta: String!) {
-  filtrarEmpleadosConSesion(consulta: $consulta) {
+export const FiltrarEmpleadosDocument = gql`
+    query filtrarEmpleados($consulta: String!) {
+  filtrarEmpleados(consulta: $consulta) {
     ...fragEmpleado
     auth {
       ...fragAuth
@@ -1062,8 +1062,8 @@ ${FragDeptosFragmentDoc}`;
   @Injectable({
     providedIn: 'root'
   })
-  export class FiltrarEmpleadosConSesionGQL extends Apollo.Query<FiltrarEmpleadosConSesionQuery, FiltrarEmpleadosConSesionQueryVariables> {
-    document = FiltrarEmpleadosConSesionDocument;
+  export class FiltrarEmpleadosGQL extends Apollo.Query<FiltrarEmpleadosQuery, FiltrarEmpleadosQueryVariables> {
+    document = FiltrarEmpleadosDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

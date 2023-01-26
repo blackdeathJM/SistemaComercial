@@ -200,7 +200,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1674634309
+  tiempo: Int = 1674657816
   titulo: String
   usarRouter: Boolean = false
 }
@@ -210,7 +210,7 @@ type Query {
   filtrarDeptos(nombre: String!): [DeptoType!]!
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
-  filtrarEmpleadosConSesion(consulta: String!): [EmpleadoType!]!
+  filtrarEmpleados(consulta: String!): [EmpleadoType!]!
   docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!
   docsFechas(usuario: ID, enviadoPor: ID, fechaInicial: Int = null, fechaFinal: Int = null, esEnviadoPor: Boolean = false): [DocumentoType!]!
   docsBusquedaGral(consulta: String = "", enviadoPor: ID, esEnviadoPor: Boolean = false, usuario: ID): [DocumentoType!]!
