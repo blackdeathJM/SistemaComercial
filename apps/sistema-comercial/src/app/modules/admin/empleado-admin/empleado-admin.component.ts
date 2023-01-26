@@ -20,6 +20,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
+import {FuseDrawerModule} from '@s-fuse/drawer';
 
 @Component({
     standalone: true,
@@ -43,6 +44,7 @@ import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/regist
             DefaultValuePipeModule,
             MatSlideToggleModule,
             MatTooltipModule,
+            FuseDrawerModule,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
@@ -54,6 +56,8 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild(MatPaginator) paginator: MatPaginator;
     ctrlBuscar: FormControl = new FormControl();
     ngxLoader = ngxLoaderEmp;
+    drawerMode = 'side';
+    drawerOpened: true;
     columnasMostrar: string[] = ['avatar', 'nombreCompleto', 'nombre', 'puesto', 'usuario', 'acciones'];
     dataSource = new MatTableDataSource<IResolveEmpleado>([]);
     private sub = new Subscription();

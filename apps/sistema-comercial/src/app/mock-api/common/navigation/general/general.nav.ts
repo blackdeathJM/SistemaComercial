@@ -1,5 +1,5 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {rutaGeneral} from './constantes/rutas';
+import {rutaGeneral} from '../constantes/rutas';
 
 export const GENERAL: FuseNavigationItem[] =
     [
