@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import {AuthService} from '#/apps/sistema-comercial/src/app/core/auth/auth.service';
+import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
@@ -47,7 +47,7 @@ export class AuthInterceptor implements HttpInterceptor
                 if ( error instanceof HttpErrorResponse && error.status === 401 )
                 {
                     // Sign out
-                    this._authService.signOut();
+                    // this._authService.signOut();
 
                     // Reload the app
                     location.reload();

@@ -18,6 +18,8 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialog} from '@angular/material/dialog';
+import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
 
 @Component({
     standalone: true,
@@ -56,7 +58,7 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     dataSource = new MatTableDataSource<IResolveEmpleado>([]);
     private sub = new Subscription();
 
-    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore)
+    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog)
     {
     }
 
@@ -89,7 +91,8 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
 
     crearSesion(empleado: IResolveEmpleado): void
     {
-
+        this.entityEmpleado.patchState({empleado});
+        this.mdr.open(RegistroSesionComponent, {width: '40%'});
     }
 
     modContrasena(empleado: IResolveEmpleado): void

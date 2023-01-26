@@ -5,7 +5,6 @@ import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
-import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {DatosSesionDto, ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
@@ -20,7 +19,7 @@ export class AuthService
     {
     }
 
-    async asignarAuth(_id: string, auth: AuthDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
+    async asignarAuth(_id: string, auth: AuthDto, modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
@@ -33,7 +32,7 @@ export class AuthService
         }
     }
 
-    async actualizarContrasenaAdmin(datos: CambioContrsenaDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
+    async actualizarContrasenaAdmin(datos: CambioContrsenaDto, modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
         try
@@ -107,7 +106,7 @@ export class AuthService
 
     }
 
-    private datosSesion(empleado: IEmpleado): ILoginRespuesta
+    private datosSesion(empleado: EmpleadoDto): ILoginRespuesta
     {
         const datosSesion: IDatosSesion =
             {

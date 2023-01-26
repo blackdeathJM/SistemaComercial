@@ -18,6 +18,7 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Auth} from '@s-admin/empleado-admin/models/auth';
+import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Component({
     standalone: true,
@@ -43,18 +44,18 @@ export class RegistroSesionComponent implements OnInit
     formAuth: FormGroup;
     soloLectura = false;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialogRef<RegistroSesionComponent>, private asignarAuthGQL: AsignarAuthGQL, private ngxToastService: NgxToastService,
-                private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth, private entityEmpleadoStore: EntityEmpleadoStore)
+    constructor(private fb: RxFormBuilder, public mdr: MatDialogRef<RegistroSesionComponent>, private asignarAuthGQL: AsignarAuthGQL, private ngxToastService: NgxToastService,
+                private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore, private authService: AuthService)
     {
     }
 
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
-        if (isNotNil(this.entityEmpleadoStore.snapshot.empleado.auth))
+        if (isNotNil(this.entityEmpleado.snapshot.empleado.auth))
         {
             this.soloLectura = true;
-            this.formAuth.patchValue(this.entityEmpleadoStore.snapshot.empleado.auth);
+            this.formAuth.patchValue(this.entityEmpleado.snapshot.empleado.auth);
         }
     }
 
@@ -64,11 +65,11 @@ export class RegistroSesionComponent implements OnInit
         this.formAuth.disable();
         const {confirmContrasena, ...resto} = this.formAuth.value;
         // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
-        if (this.entityEmpleadoStore.snapshot.empleado.auth)
+        if (isNotNil(this.entityEmpleado.snapshot.empleado.auth))
         {
             const datos =
                 {
-                    _id: this.entityEmpleadoStore.snapshot.empleado._id,
+                    _id: this.entityEmpleado.snapshot.empleado._id,
                     contrasena: this.formAuth.get('contrasena').value,
                 };
             const modificadoPor: IModificado =
@@ -80,17 +81,12 @@ export class RegistroSesionComponent implements OnInit
                     valorAnterior: [{}]
                 };
 
-            this.actualizarContrasenaAdminGQL.mutate({datos, modificadoPor}).pipe(finalize(() =>
+            this.authService.actualizarContrasena(datos, modificadoPor).pipe(finalize(() =>
             {
                 this.cargandoDatos = false;
-                this.dRef.close();
-            }), tap((res) =>
-            {
-                if (isNotNil(res.data))
-                {
-                    this.ngxToastService.satisfactorioToast('La contrasena fue reasignada con exito', 'Cambio de contrasena');
-                }
+                this.mdr.close();
             })).subscribe();
+
         } else
         {
             const modificadoPor: IModificado =
@@ -102,16 +98,16 @@ export class RegistroSesionComponent implements OnInit
                     valorActual: [{}]
                 };
 
-            this.asignarAuthGQL.mutate({_id: this.entityEmpleadoStore.snapshot.empleado._id, auth: resto, modificadoPor}, {fetchPolicy: 'network-only'}).pipe(finalize(() =>
+            this.asignarAuthGQL.mutate({_id: this.entityEmpleado.snapshot.empleado._id, auth: resto, modificadoPor}, {fetchPolicy: 'network-only'}).pipe(finalize(() =>
             {
                 this.cargandoDatos = false;
+                this.mdr.close();
             }), tap((res) =>
             {
                 if (isNotNil(res.data))
                 {
                     const sesionAsignada: IResolveEmpleado = $cast<IResolveEmpleado>(res.data.asignarAuth);
-                    this.entityEmpleadoStore.updateOne({changes: sesionAsignada, id: sesionAsignada._id});
-                    this.dRef.close(res.data.asignarAuth);
+                    this.entityEmpleado.updateOne({changes: sesionAsignada, id: sesionAsignada._id});
                     this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
                 } else
                 {

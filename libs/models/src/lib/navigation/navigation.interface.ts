@@ -1,6 +1,4 @@
-import {IsActiveMatchOptions, Params, QueryParamsHandling} from '@angular/router';
-
-export interface INavegacion
+export interface IFuseNavigationItem
 {
     id?: string;
     title?: string;
@@ -12,7 +10,7 @@ export interface INavegacion
         | 'divider'
         | 'group'
         | 'spacer';
-    hidden?: (item: INavegacion) => boolean;
+    hidden?: (item: IFuseNavigationItem) => boolean;
     oculto?: boolean;
     activo: boolean;
     componentes?: object[];
@@ -23,8 +21,8 @@ export interface INavegacion
     link?: string;
     fragment?: string;
     preserveFragment?: boolean;
-    queryParams?: Params | null;
-    queryParamsHandling?: QueryParamsHandling | null;
+    queryParams?: any | null;
+    queryParamsHandling?: any | null;
     externalLink?: boolean;
     target?:
         | '_blank'
@@ -33,8 +31,8 @@ export interface INavegacion
         | '_top'
         | string;
     exactMatch?: boolean;
-    isActiveMatchOptions?: IsActiveMatchOptions;
-    function?: (item: INavegacion) => void;
+    isActiveMatchOptions?: any;
+    function?: (item: IFuseNavigationItem) => void;
     classes?: {
         title?: string;
         subtitle?: string;
@@ -46,7 +44,7 @@ export interface INavegacion
         title?: string;
         classes?: string;
     };
-    children?: INavegacion[];
+    children?: IFuseNavigationItem[];
     meta?: any;
 }
 

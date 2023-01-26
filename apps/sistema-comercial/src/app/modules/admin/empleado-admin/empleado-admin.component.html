@@ -39,13 +39,13 @@
                 <th *matHeaderCellDef>Acciones</th>
                 <td *matCellDef="let empleado" class="text-center">
                     <div class="flex flex-auto gap-4 items-center justify-center">
-                        <button mat-icon-button *ngIf="!empleado.auth" matTooltip="Crear sesion" (click)="crearSesion(empleado)">
+                        <button mat-icon-button [disabled]="empleado.auth" matTooltip="Crear sesion" (click)="crearSesion(empleado)">
                             <mat-icon svgIcon="lock_open"></mat-icon>
                         </button>
-                        <button mat-icon-button *ngIf="empleado.auth" matTooltip="Modificar contraseña" (click)="modContrasena(empleado)">
+                        <button mat-icon-button [disabled]="!empleado.auth" matTooltip="Modificar contraseña" (click)="modContrasena(empleado)">
                             <mat-icon svgIcon="password"></mat-icon>
                         </button>
-                        <mat-slide-toggle [checked]="empleado?.auth?.activo" color="primary" *ngIf="empleado?.auth" matTooltip="Activar o desactivar sesion" (toggleChange)="actDes(empleado)">
+                        <mat-slide-toggle [checked]="empleado?.auth?.activo" color="primary" [disabled]="!empleado?.auth" matTooltip="Activar o desactivar sesion" (toggleChange)="actDes(empleado)">
                         </mat-slide-toggle>
                     </div>
                 </td>

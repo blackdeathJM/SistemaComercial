@@ -16,3 +16,8 @@ export interface IDatosSesion
     deptoId: string;
     auth: IAuth;
 }
+
+export interface ICambioContrasena extends Pick<IAuth, 'contrasena'>
+{
+    _id: string;
+}
