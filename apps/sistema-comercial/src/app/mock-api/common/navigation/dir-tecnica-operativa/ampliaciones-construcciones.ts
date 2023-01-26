@@ -8,5 +8,10 @@ export const AMPLIACIONES_CONSTRUCCIONES: FuseNavigationItem =
         type: 'basic',
         icon: 'add_road',
         activo: false,
+        oculto: false,
+        hidden: (item: FuseNavigationItem): boolean => item.oculto,
+        badge: {},
+        controles: [],
         disabled: false,
+        active: false,
     };

@@ -18,9 +18,12 @@ export const GENERAL: FuseNavigationItem[] =
                         type: 'basic',
                         icon: 'feather:folder',
                         activo: false,
-                        disabled: false,
+                        oculto: false,
+                        hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
-                        classes: {},
+                        controles: [],
+                        disabled: false,
+                        active: false,
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
@@ -29,9 +32,12 @@ export const GENERAL: FuseNavigationItem[] =
                         type: 'basic',
                         icon: 'feather:archive',
                         activo: false,
-                        disabled: false,
+                        oculto: false,
+                        hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
-                        classes: {},
+                        controles: [],
+                        disabled: false,
+                        active: false,
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
@@ -40,9 +46,12 @@ export const GENERAL: FuseNavigationItem[] =
                         type: 'basic',
                         icon: 'feather:file-text',
                         activo: false,
-                        disabled: false,
+                        oculto: false,
+                        hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
-                        classes: {},
+                        controles: [],
+                        disabled: false,
+                        active: false,
                         link: rutaGeneral + 'ordenes-atencion'
                     },
                     {
@@ -51,9 +60,12 @@ export const GENERAL: FuseNavigationItem[] =
                         type: 'basic',
                         icon: 'admin_panel_settings',
                         activo: false,
-                        disabled: false,
+                        oculto: false,
+                        hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
-                        classes: {},
+                        controles: [],
+                        disabled: false,
+                        active: false,
                         link: rutaGeneral + 'permisos'
                     }
                 ]

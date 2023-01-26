@@ -7,5 +7,10 @@ export const OPERACIONES: FuseNavigationItem =
         type: 'basic',
         icon: 'blur_linear',
         activo: false,
+        oculto: false,
+        hidden: (item: FuseNavigationItem): boolean => item.oculto,
+        badge: {},
+        controles: [],
         disabled: false,
+        active: false,
     };

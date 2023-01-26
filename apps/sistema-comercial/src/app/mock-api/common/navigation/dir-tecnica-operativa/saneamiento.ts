@@ -7,5 +7,10 @@ export const SANEAMIENTO: FuseNavigationItem =
         type: 'basic',
         icon: 'adjust',
         activo: false,
+        oculto: false,
+        hidden: (item: FuseNavigationItem): boolean => item.oculto,
+        badge: {},
+        controles: [],
         disabled: false,
+        active: false,
     };
