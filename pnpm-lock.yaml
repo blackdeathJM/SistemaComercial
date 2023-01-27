@@ -61,7 +61,6 @@ importers:
       '@ngxs/router-plugin': ^3.7.6
       '@ngxs/storage-plugin': ^3.7.6
       '@ngxs/store': ^3.7.6
-      '@npmcli/fs': ^3.1.0
       '@nrwl/angular': 15.6.2
       '@nrwl/cli': 15.6.2
       '@nrwl/cypress': 15.6.2
@@ -214,7 +213,6 @@ importers:
       '@ngxs/router-plugin': 3.7.6_xalhibn5ps6beqnrhy4qdcvmuq
       '@ngxs/storage-plugin': 3.7.6_6zz6lp3gpv7uu5yedbjgkuxfgi
       '@ngxs/store': 3.7.6_77moedl5bs7lqwcv53ddrcqlqi
-      '@npmcli/fs': 3.1.0
       '@rxweb/generics': 0.0.1-4
       '@rxweb/reactive-dynamic-forms': 0.0.6
       '@rxweb/reactive-form-validators': 13.0.0
@@ -6773,6 +6771,7 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       semver: 7.3.8
+    dev: true
 
   /@npmcli/git/4.0.3:
     resolution: {integrity: sha512-8cXNkDIbnXPVbhXMmQ7/bklCAjtmPaXfI9aEM4iH+xSuEHINLMHhlfESvVwdqmHJRJkR48vNJTSUvoF6GRPSFA==}
