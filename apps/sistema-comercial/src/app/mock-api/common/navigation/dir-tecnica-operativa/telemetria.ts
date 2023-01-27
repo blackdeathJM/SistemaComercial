@@ -13,6 +13,7 @@ export const TELEMETRIA: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
         children:
             [
                 {
@@ -26,6 +27,7 @@ export const TELEMETRIA: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'instalaciones'
                 },
                 {
@@ -39,6 +41,7 @@ export const TELEMETRIA: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'motores'
                 },
                 {
@@ -52,6 +55,7 @@ export const TELEMETRIA: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'bombas'
                 },
                 {
@@ -65,6 +69,7 @@ export const TELEMETRIA: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'cfe'
                 }
             ]

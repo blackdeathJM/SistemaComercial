@@ -27,6 +27,7 @@ export class MenuEmpleadosComponent implements OnInit
                     type: 'basic',
                     oculto: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
@@ -36,6 +37,7 @@ export class MenuEmpleadosComponent implements OnInit
                     type: 'basic',
                     oculto: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
@@ -45,6 +47,7 @@ export class MenuEmpleadosComponent implements OnInit
                     type: 'basic',
                     oculto: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
@@ -54,6 +57,7 @@ export class MenuEmpleadosComponent implements OnInit
                     type: 'basic',
                     oculto: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
@@ -63,6 +67,7 @@ export class MenuEmpleadosComponent implements OnInit
                     type: 'basic',
                     oculto: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/cuotas'
                 },
                 {
@@ -72,6 +77,7 @@ export class MenuEmpleadosComponent implements OnInit
                     type: 'basic',
                     oculto: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 }
             ];

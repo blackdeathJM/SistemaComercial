@@ -4,11 +4,12 @@ import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
-import {AuthDto, RoleDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {AsigRolesDto, AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {DatosSesionDto, ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
+import {flatten} from 'lodash-es';
 
 @Injectable()
 export class AuthService
@@ -62,17 +63,14 @@ export class AuthService
         }
     }
 
-    async todosRoles(role: RoleDto): Promise<boolean>
+    async asigTodosRoles(rol: AsigRolesDto): Promise<boolean>
     {
-        console.log(role);
         try
         {
-            // const res = await this.empleado.updateMany({auth: {$exists: true}}, {$set: {auth: {$elemMatch: {role: role.rol}}}}).exec();
-            // console.log(res);
-            return true;
+            const res = await this.empleado.updateMany({auth: {$ne: null}}, {$set: {'auth.role': rol.rol}}).exec();
+            return res.acknowledged;
         } catch (e)
         {
-            console.log(e);
             return false;
         }
     }

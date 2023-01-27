@@ -47,7 +47,7 @@
                         <button mat-icon-button [disabled]="!empleado.auth" matTooltip="Modificar contraseña" (click)="modContrasena(empleado)">
                             <mat-icon svgIcon="password" color="primary"></mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Mostrar informacion" (click)="modContrasena(empleado)">
+                        <button mat-icon-button matTooltip="Mostrar informacion" (click)="mostrarRoles(empleado)">
                             <mat-icon svgIcon="info" color="primary"></mat-icon>
                         </button>
                         <mat-slide-toggle [checked]="empleado?.auth?.activo" color="primary" [disabled]="!empleado?.auth" matTooltip="Activar o desactivar sesion" (toggleChange)="actDes(empleado)">
@@ -68,6 +68,6 @@
 
 <div class="relative flex overflow-hidden border-l-4">
     <fuse-drawer position="right" fixed="true" opened="true" mode="side">
-        <div>aqui es voy a poner la sesion</div>
+        <app-empleado-sesion></app-empleado-sesion>
     </fuse-drawer>
 </div>

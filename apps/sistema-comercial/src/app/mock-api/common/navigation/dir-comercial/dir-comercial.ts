@@ -18,6 +18,7 @@ export const DIR_COMERCIAL: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children: [INFORMATICAFACTURACION, PLANEACION, INGRESOS, CARTERA_VENCIDA, CONTRATOS]
         }
     ];

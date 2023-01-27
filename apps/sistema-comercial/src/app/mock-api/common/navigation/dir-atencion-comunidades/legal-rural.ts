@@ -12,4 +12,5 @@ export const LEGAL_RURAL: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
     };

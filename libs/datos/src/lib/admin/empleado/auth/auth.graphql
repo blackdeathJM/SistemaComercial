@@ -1,6 +1,6 @@
-mutation todosRoles($role: RolInput!)
+mutation asigTodosRoles($rol: AsigRolesInput!)
 {
-    todosRoles(role: $role)
+    asigTodosRoles(rol: $rol)
 }
 mutation registroSesion($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!)
 {

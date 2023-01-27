@@ -15,15 +15,21 @@ export type Scalars = {
   Float: number;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
+};
+
+export type AsigRolesInput = {
+  rol?: InputMaybe<Array<Scalars['JSONObject']>>;
 };
 
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   contrasena?: InputMaybe<Scalars['String']>;
   estatus?: InputMaybe<Scalars['String']>;
-  role?: InputMaybe<Array<Scalars['JSON']>>;
+  role?: InputMaybe<Array<Scalars['JSONObject']>>;
   usuario?: InputMaybe<Scalars['String']>;
 };
 
@@ -32,7 +38,7 @@ export type AuthType = {
   activo?: Maybe<Scalars['Boolean']>;
   contrasena?: Maybe<Scalars['String']>;
   estatus?: Maybe<Scalars['String']>;
-  role?: Maybe<Array<Scalars['JSON']>>;
+  role?: Maybe<Array<Scalars['JSONObject']>>;
   usuario?: Maybe<Scalars['String']>;
 };
 
@@ -244,6 +250,7 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarPuesto: DeptoType;
+  asigTodosRoles: Scalars['Boolean'];
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
   docActFolio: DocumentoType;
@@ -258,7 +265,6 @@ export type Mutation = {
   regDoc: DocumentoType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
-  todosRoles: Scalars['Boolean'];
   validarToken: DatosSesionType;
 };
 
@@ -282,6 +288,11 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationAgregarPuestoArgs = {
   puesto: PuestoDeptoInput;
+};
+
+
+export type MutationAsigTodosRolesArgs = {
+  rol: AsigRolesInput;
 };
 
 
@@ -357,11 +368,6 @@ export type MutationSubirDocsArgs = {
   args?: InputMaybe<DocsSubirInput>;
   files?: InputMaybe<UploadInput>;
   filesAcuse?: InputMaybe<UploadInput>;
-};
-
-
-export type MutationTodosRolesArgs = {
-  role: RolInput;
 };
 
 
@@ -490,10 +496,6 @@ export type RegEmpleadoInput = {
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
 
-export type RolInput = {
-  rol?: InputMaybe<Scalars['String']>;
-};
-
 export type Subscription = {
   __typename?: 'Subscription';
   notificar: NotificacionType;
@@ -531,12 +533,12 @@ export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | nul
 
 export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } };
 
-export type TodosRolesMutationVariables = Exact<{
-  role: RolInput;
+export type AsigTodosRolesMutationVariables = Exact<{
+  rol: AsigRolesInput;
 }>;
 
 
-export type TodosRolesMutation = { __typename?: 'Mutation', todosRoles: boolean };
+export type AsigTodosRolesMutation = { __typename?: 'Mutation', asigTodosRoles: boolean };
 
 export type RegistroSesionMutationVariables = Exact<{
   _id: Scalars['String'];
@@ -867,17 +869,17 @@ export const FragDeptosFragmentDoc = gql`
   puestos
 }
     `;
-export const TodosRolesDocument = gql`
-    mutation todosRoles($role: RolInput!) {
-  todosRoles(role: $role)
+export const AsigTodosRolesDocument = gql`
+    mutation asigTodosRoles($rol: AsigRolesInput!) {
+  asigTodosRoles(rol: $rol)
 }
     `;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class TodosRolesGQL extends Apollo.Mutation<TodosRolesMutation, TodosRolesMutationVariables> {
-    document = TodosRolesDocument;
+  export class AsigTodosRolesGQL extends Apollo.Mutation<AsigTodosRolesMutation, AsigTodosRolesMutationVariables> {
+    document = AsigTodosRolesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

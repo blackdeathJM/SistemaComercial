@@ -5,15 +5,15 @@
 type AuthType {
   contrasena: String
   usuario: String
-  role: [JSON!]
+  role: [JSONObject!]
   activo: Boolean
   estatus: String
 }
 
 """
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
-scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 type ModificadoPorType {
   accion: String
@@ -22,6 +22,11 @@ type ModificadoPorType {
   valorActual: [JSON!]
   valorAnterior: [JSON!]
 }
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 type TelefonoType {
   numero: String
@@ -116,7 +121,7 @@ type NotificacionType {
 input AuthInput {
   contrasena: String
   usuario: String
-  role: [JSON!] = null
+  role: [JSONObject!] = null
   activo: Boolean = true
   estatus: String = "En-linea"
 }
@@ -200,7 +205,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1674819593
+  tiempo: Int = 1674839285
   titulo: String
   usarRouter: Boolean = false
 }
@@ -232,7 +237,7 @@ type Mutation {
   eliminarDepto(_id: String!): DeptoType!
   agregarPuesto(puesto: PuestoDeptoInput!): DeptoType!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
-  todosRoles(role: RolInput!): Boolean!
+  asigTodosRoles(rol: AsigRolesInput!): Boolean!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -268,8 +273,8 @@ input RegEmpleadoInput {
   deptoId: ID
 }
 
-input RolInput {
-  rol: String
+input AsigRolesInput {
+  rol: [JSONObject!]
 }
 
 input CambioContrasenaInput {

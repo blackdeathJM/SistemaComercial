@@ -17,6 +17,7 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children: [AMPLIACIONES_CONSTRUCCIONES, OPERACIONES, SANEAMIENTO, TELEMETRIA]
         }
     ];

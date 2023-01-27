@@ -13,5 +13,6 @@ export const TRANSPARENCIA: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
         link: dirArchivoRegulacion
     };

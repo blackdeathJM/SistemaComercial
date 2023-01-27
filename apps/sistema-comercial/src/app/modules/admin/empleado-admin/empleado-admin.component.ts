@@ -21,7 +21,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
 import {FuseDrawerModule} from '@s-fuse/drawer';
-import {TodosRolesGQL} from '#/libs/datos/src';
+import {AsigTodosRolesGQL} from '#/libs/datos/src';
+import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
+import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/empleado-sesion/empleado-sesion.component';
 
 @Component({
     standalone: true,
@@ -46,6 +48,7 @@ import {TodosRolesGQL} from '#/libs/datos/src';
             MatSlideToggleModule,
             MatTooltipModule,
             FuseDrawerModule,
+            EmpleadoSesionComponent,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
@@ -63,7 +66,7 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     dataSource = new MatTableDataSource<IResolveEmpleado>([]);
     private sub = new Subscription();
 
-    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private todosRolesGQL: TodosRolesGQL)
+    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private asi: AsigTodosRolesGQL)
     {
     }
 
@@ -110,8 +113,13 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
 
     }
 
+    mostrarRoles(empleado): void
+    {
+        this.entityEmpleado.patchState({empleado});
+    }
+
     asigTodos(): void
     {
-        this.todosRolesGQL.mutate({role: {rol: 'hola'}}).subscribe();
+        this.asi.mutate({rol: {rol: defaultNavigation}}).subscribe();
     }
 }

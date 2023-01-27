@@ -18,6 +18,7 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children: [RECURSOS_HUMANOS, CONTABILIDAD, EGRESOS, COMPRAS_SERVICIOS, ALMACEN]
         }
     ];

@@ -13,5 +13,6 @@ export const ADMON_SESIONES: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
         link: rutaBaseAdministrador + 'empleados-sesion'
     };

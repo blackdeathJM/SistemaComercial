@@ -1,7 +1,7 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IAuth, IRole} from './auth.interface';
-import {GraphQLJSON} from 'graphql-scalars';
+import {IAsigRoles, IAuth} from './auth.interface';
+import {GraphQLJSONObject} from 'graphql-scalars';
 
 @ObjectType('AuthType')
 @InputType('AuthInput')
@@ -13,7 +13,7 @@ export class AuthDto implements IAuth
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'El usuario es necesario'})
     usuario: string;
-    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
+    @Field(() => [GraphQLJSONObject], {nullable: true, defaultValue: null})
     @IsOptional()
     role: object[];
     @Field(() => Boolean, {nullable: true, defaultValue: true})
@@ -25,9 +25,10 @@ export class AuthDto implements IAuth
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }
 
-@InputType('RolInput')
-export class RoleDto implements IRole
+@InputType('AsigRolesInput')
+export class AsigRolesDto implements IAsigRoles
 {
-    @Field(() => String, {nullable: true})
-    rol: string;
+    @Field(() => [GraphQLJSONObject], {nullable: true})
+    @IsNotEmpty({message: 'Requerido'})
+    rol: object[];
 }

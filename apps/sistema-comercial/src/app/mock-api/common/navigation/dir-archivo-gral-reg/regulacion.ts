@@ -11,5 +11,6 @@ export const REGULACION: FuseNavigationItem =
         badge: {},
         controles: [],
         disabled: false,
+        acceso: true,
         puedeAsigPermisos: true,
     };

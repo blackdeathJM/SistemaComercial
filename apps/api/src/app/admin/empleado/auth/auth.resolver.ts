@@ -4,7 +4,7 @@ import {UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {PubSub} from 'graphql-subscriptions';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
-import {AuthDto, RoleDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {AsigRolesDto, AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {DatosSesionDto, ILoginRespuesta, LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
@@ -20,10 +20,9 @@ export class AuthResolver
     }
 
     @Mutation(() => Boolean)
-    async todosRoles(@Args('role') role: RoleDto): Promise<boolean>
+    async asigTodosRoles(@Args('rol') rol: AsigRolesDto): Promise<boolean>
     {
-        console.log(role);
-        return await this.authService.todosRoles(role);
+        return await this.authService.asigTodosRoles(rol);
     }
 
     @Mutation(() => EmpleadoDto)

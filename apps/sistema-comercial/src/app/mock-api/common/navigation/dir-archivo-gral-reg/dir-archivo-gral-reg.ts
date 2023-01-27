@@ -17,6 +17,7 @@ export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children: [TRANSPARENCIA, REGULACION, JURIDICO]
         }
     ];

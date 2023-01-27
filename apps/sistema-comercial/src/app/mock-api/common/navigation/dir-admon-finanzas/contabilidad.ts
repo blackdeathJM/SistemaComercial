@@ -13,5 +13,6 @@ export const CONTABILIDAD: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
         link: dirAdmonFinanzas + 'contabilidad'
     };

@@ -12,5 +12,6 @@ export const CARTERA_VENCIDA: FuseNavigationItem =
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true
+        puedeAsigPermisos: true,
+        acceso: true
     };

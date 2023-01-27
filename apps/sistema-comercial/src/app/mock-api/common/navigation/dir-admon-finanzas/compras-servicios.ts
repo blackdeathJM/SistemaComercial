@@ -13,5 +13,6 @@ export const COMPRAS_SERVICIOS: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
         link: dirAdmonFinanzas + 'compras-servicios'
     };

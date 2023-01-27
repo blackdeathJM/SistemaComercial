@@ -16,6 +16,7 @@ export const DIR_ATENCION_COMUNIDADES: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children: [FINANCIERO_RURAL, OPERATIVO_RURAL, LEGAL_RURAL]
         }
     ];

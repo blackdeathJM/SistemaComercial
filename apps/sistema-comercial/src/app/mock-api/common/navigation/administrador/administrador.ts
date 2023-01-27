@@ -14,6 +14,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children: [ADMON_SESIONES]
         }
     ];

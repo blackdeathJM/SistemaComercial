@@ -15,6 +15,7 @@ export interface FuseNavigationItem
     hidden?: (item: FuseNavigationItem) => boolean;
     oculto: boolean;
     componentes?: object[];
+    acceso: boolean;
     controles?: IControl[];
     puedeAsigPermisos: boolean;
     active?: boolean;

@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
@@ -12,8 +11,8 @@ import {MatListModule} from '@angular/material/list';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Select} from '@ngxs/store';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
     standalone: true,
@@ -26,7 +25,8 @@ import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
             ReactiveFormsModule,
             MatSlideToggleModule,
             MatListModule,
-            DefaultValuePipeModule
+            DefaultValuePipeModule,
+            MatCardModule
         ],
     selector: 'app-empleado-sesion',
     templateUrl: './empleado-sesion.component.html',
@@ -37,14 +37,9 @@ export class EmpleadoSesionComponent
 {
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
 
-    constructor(private dRef: MatDialog, public empleadoService: EmpleadoService)
+    constructor(public empleadoService: EmpleadoService)
     {
 
-    }
-
-    asignarSesion(): void
-    {
-        this.dRef.open(RegistroSesionComponent, {width: '40%', data: null});
     }
 
     trackByFn(index: number, item: any): any

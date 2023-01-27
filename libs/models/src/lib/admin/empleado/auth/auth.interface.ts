@@ -22,7 +22,7 @@ export interface ICambioContrasena extends Pick<IAuth, 'contrasena'>
     _id: string;
 }
 
-export interface IRole
+export interface IAsigRoles
 {
-    rol: string;
+    rol: object[];
 }

@@ -13,6 +13,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
         controles: [],
         disabled: false,
         puedeAsigPermisos: true,
+        acceso: true,
         children:
             [
                 {
@@ -26,6 +27,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'departamentos'
                 },
                 {
@@ -39,6 +41,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
@@ -52,6 +55,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
@@ -65,6 +69,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
@@ -78,6 +83,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
@@ -91,6 +97,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 },
                 {
@@ -104,6 +111,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     controles: [],
                     disabled: false,
                     puedeAsigPermisos: true,
+                    acceso: true,
                     link: dirAdmonFinanzas + 'empleados/prestamos'
                 }
             ]

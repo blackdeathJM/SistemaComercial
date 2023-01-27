@@ -14,6 +14,7 @@ export const GENERAL: FuseNavigationItem[] =
             controles: [],
             disabled: false,
             puedeAsigPermisos: true,
+            acceso: true,
             children:
                 [
                     {
@@ -27,6 +28,7 @@ export const GENERAL: FuseNavigationItem[] =
                         controles: [],
                         disabled: false,
                         puedeAsigPermisos: true,
+                        acceso: true,
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
@@ -40,6 +42,7 @@ export const GENERAL: FuseNavigationItem[] =
                         controles: [],
                         disabled: false,
                         puedeAsigPermisos: true,
+                        acceso: true,
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
@@ -53,6 +56,7 @@ export const GENERAL: FuseNavigationItem[] =
                         controles: [],
                         disabled: false,
                         puedeAsigPermisos: true,
+                        acceso: true,
                         link: rutaGeneral + 'ordenes-atencion'
                     },
                     {
@@ -66,6 +70,7 @@ export const GENERAL: FuseNavigationItem[] =
                         controles: [],
                         disabled: false,
                         puedeAsigPermisos: true,
+                        acceso: true,
                         link: rutaGeneral + 'permisos'
                     }
                 ]

@@ -12,5 +12,6 @@ export const AMPLIACIONES_CONSTRUCCIONES: FuseNavigationItem =
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true
+        puedeAsigPermisos: true,
+        acceso: true
     };
