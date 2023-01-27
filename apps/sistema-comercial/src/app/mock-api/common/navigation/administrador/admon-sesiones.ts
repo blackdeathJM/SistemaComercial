@@ -3,16 +3,15 @@ import {rutaBaseAdministrador} from '#/apps/sistema-comercial/src/app/mock-api/c
 
 export const ADMON_SESIONES: FuseNavigationItem =
     {
-        id: 'admonSesiones',
+        id: 'depto-admonSesiones',
         title: 'Admon. sesiones',
         type: 'basic',
         icon: 'manage_accounts',
-        activo: false,
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        active: false,
+        puedeAsigPermisos: true,
         link: rutaBaseAdministrador + 'empleados-sesion'
     };

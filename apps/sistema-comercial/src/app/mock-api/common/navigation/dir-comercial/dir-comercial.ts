@@ -8,17 +8,16 @@ import {CONTRATOS} from '#/apps/sistema-comercial/src/app/mock-api/common/naviga
 export const DIR_COMERCIAL: FuseNavigationItem[] =
     [
         {
-            id: 'dirComercial',
+            id: 'depto-dirComercial',
             title: ' DIR. COMERCIAL',
             type: 'group',
             icon: 'heroicons_outline:library',
-            activo: false,
             oculto: false,
             hidden: (item: FuseNavigationItem): boolean => item.oculto,
             badge: {},
             controles: [],
             disabled: false,
-            active: false,
+            puedeAsigPermisos: true,
             children: [INFORMATICAFACTURACION, PLANEACION, INGRESOS, CARTERA_VENCIDA, CONTRATOS]
         }
     ];

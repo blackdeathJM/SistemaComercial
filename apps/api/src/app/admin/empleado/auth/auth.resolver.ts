@@ -4,7 +4,7 @@ import {UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {PubSub} from 'graphql-subscriptions';
 import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
-import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {AuthDto, RoleDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {DatosSesionDto, ILoginRespuesta, LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
@@ -19,10 +19,17 @@ export class AuthResolver
         this.#pubSub = new PubSub();
     }
 
-    @Mutation(() => EmpleadoDto)
-    async asignarAuth(@Args('_id') _id: string, @Args('auth') auth: AuthDto, @Args('modificadoPor') modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
+    @Mutation(() => Boolean)
+    async todosRoles(@Args('role') role: RoleDto): Promise<boolean>
     {
-        return await this.authService.asignarAuth(_id, auth, modificadoPor);
+        console.log(role);
+        return await this.authService.todosRoles(role);
+    }
+
+    @Mutation(() => EmpleadoDto)
+    async registroSesion(@Args('_id') _id: string, @Args('auth') auth: AuthDto, @Args('modificadoPor') modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
+    {
+        return await this.authService.registroSesion(_id, auth, modificadoPor);
     }
 
     @Mutation(() => EmpleadoDto)

@@ -3,17 +3,16 @@ import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common
 
 export const RECURSOS_HUMANOS: FuseNavigationItem =
     {
-        id: 'rhh',
+        id: 'depto-recursos-humanos',
         title: 'Recursos humanos',
         type: 'collapsable',
         icon: 'people',
-        activo: false,
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        active: false,
+        puedeAsigPermisos: true,
         children:
             [
                 {
@@ -21,13 +20,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Departamentos',
                     type: 'basic',
                     icon: 'bento',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'departamentos'
                 },
                 {
@@ -35,13 +33,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Info. gral empleados',
                     type: 'basic',
                     icon: 'badge',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
@@ -49,13 +46,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Imss',
                     type: 'basic',
                     icon: 'featured_play_list',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
@@ -63,13 +59,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Nomina',
                     type: 'basic',
                     icon: 'account_balance_wallet',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
@@ -77,13 +72,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Retardos',
                     type: 'basic',
                     icon: 'rule',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
@@ -91,13 +85,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Fondo de ahorro',
                     type: 'basic',
                     icon: 'savings',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 },
                 {
@@ -105,13 +98,12 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     title: 'Prestamos',
                     type: 'basic',
                     icon: 'paid',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/prestamos'
                 }
             ]

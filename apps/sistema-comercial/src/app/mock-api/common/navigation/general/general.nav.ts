@@ -8,8 +8,12 @@ export const GENERAL: FuseNavigationItem[] =
             title: 'GENERAL',
             type: 'group',
             icon: '6_ft_apart',
-            activo: false,
+            oculto: false,
+            hidden: (item: FuseNavigationItem): boolean => item.oculto,
+            badge: {},
+            controles: [],
             disabled: false,
+            puedeAsigPermisos: true,
             children:
                 [
                     {
@@ -17,13 +21,12 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Mis documentos',
                         type: 'basic',
                         icon: 'feather:folder',
-                        activo: false,
                         oculto: false,
                         hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
                         controles: [],
                         disabled: false,
-                        active: false,
+                        puedeAsigPermisos: true,
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
@@ -31,13 +34,12 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Mis resguardos',
                         type: 'basic',
                         icon: 'feather:archive',
-                        activo: false,
                         oculto: false,
                         hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
                         controles: [],
                         disabled: false,
-                        active: false,
+                        puedeAsigPermisos: true,
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
@@ -45,13 +47,12 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Ordenes de atencion',
                         type: 'basic',
                         icon: 'feather:file-text',
-                        activo: false,
                         oculto: false,
                         hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
                         controles: [],
                         disabled: false,
-                        active: false,
+                        puedeAsigPermisos: true,
                         link: rutaGeneral + 'ordenes-atencion'
                     },
                     {
@@ -59,13 +60,12 @@ export const GENERAL: FuseNavigationItem[] =
                         title: 'Permisos',
                         type: 'basic',
                         icon: 'admin_panel_settings',
-                        activo: false,
                         oculto: false,
                         hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
                         controles: [],
                         disabled: false,
-                        active: false,
+                        puedeAsigPermisos: true,
                         link: rutaGeneral + 'permisos'
                     }
                 ]

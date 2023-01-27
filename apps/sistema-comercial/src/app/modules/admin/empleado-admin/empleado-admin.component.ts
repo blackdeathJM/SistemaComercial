@@ -21,6 +21,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
 import {FuseDrawerModule} from '@s-fuse/drawer';
+import {TodosRolesGQL} from '#/libs/datos/src';
 
 @Component({
     standalone: true,
@@ -62,7 +63,7 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     dataSource = new MatTableDataSource<IResolveEmpleado>([]);
     private sub = new Subscription();
 
-    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog)
+    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private todosRolesGQL: TodosRolesGQL)
     {
     }
 
@@ -107,5 +108,10 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     actDes(empleado: IResolveEmpleado): void
     {
 
+    }
+
+    asigTodos(): void
+    {
+        this.todosRolesGQL.mutate({role: {rol: 'hola'}}).subscribe();
     }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ActualizarContrasenaAdminGQL, ActualizarContrasenaAdminMutation, AsignarAuthGQL, AsignarAuthMutation, LoginGQL} from '#/libs/datos/src';
+import {ActualizarContrasenaAdminGQL, ActualizarContrasenaAdminMutation, LoginGQL, RegistroSesionGQL, RegistroSesionMutation} from '#/libs/datos/src';
 import {Observable, of, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {ILogin, ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
@@ -9,15 +9,17 @@ import {TOKEN} from '@s-auth/const';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {ICambioContrasena} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {IAuth, ICambioContrasena} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
 {
     constructor(private jwtHelperService: JwtHelperService, private loginGQL: LoginGQL, private ngxToast: NgxToastService, private router: Router,
                 private stateAuth: StateAuth, private activatedRoute: ActivatedRoute, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL,
-                private asignarAuthGQL: AsignarAuthGQL)
+                private registroSesionGQL: RegistroSesionGQL, private entityEmpleado: EntityEmpleadoStore)
     {
     }
 
@@ -68,9 +70,17 @@ export class AuthService
         }));
     }
 
-    asignarAuth(): Observable<SingleExecutionResult<AsignarAuthMutation>>
+    registroSesion(_id: string, auth: IAuth, modificadoPor: IModificado): Observable<SingleExecutionResult<RegistroSesionMutation>>
     {
-        return this.asignarAuthGQL.mutate().pipe();
+        return this.registroSesionGQL.mutate({_id, auth, modificadoPor}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const changes = $cast<IResolveEmpleado>(res.data.registroSesion);
+                this.entityEmpleado.updateOne({id: changes._id, changes});
+                this.ngxToast.satisfactorioToast('La sesion fue asignada con exito', 'Asignacion de sesion');
+            }
+        }));
     }
 
     cerrarSesion(): void

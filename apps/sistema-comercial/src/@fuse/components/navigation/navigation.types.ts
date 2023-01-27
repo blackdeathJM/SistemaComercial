@@ -13,10 +13,10 @@ export interface FuseNavigationItem
         | 'group'
         | 'spacer';
     hidden?: (item: FuseNavigationItem) => boolean;
-    oculto?: boolean;
-    activo: boolean;
+    oculto: boolean;
     componentes?: object[];
     controles?: IControl[];
+    puedeAsigPermisos: boolean;
     active?: boolean;
     disabled?: boolean;
     tooltip?: string;

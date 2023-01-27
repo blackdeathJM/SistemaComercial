@@ -4,17 +4,16 @@ import {ADMON_SESIONES} from '#/apps/sistema-comercial/src/app/mock-api/common/n
 export const ADMINISTRADOR: FuseNavigationItem[] =
     [
         {
-            id: 'adminitrador',
+            id: 'dir-adminitrador',
             title: 'ADMINISTRADOR',
             type: 'group',
             icon: 'feather:settings',
-            activo: false,
             oculto: false,
             hidden: (item: FuseNavigationItem): boolean => item.oculto,
             badge: {},
             controles: [],
             disabled: false,
-            active: false,
+            puedeAsigPermisos: true,
             children: [ADMON_SESIONES]
         }
     ];

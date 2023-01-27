@@ -200,7 +200,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1674755711
+  tiempo: Int = 1674819593
   titulo: String
   usarRouter: Boolean = false
 }
@@ -232,7 +232,8 @@ type Mutation {
   eliminarDepto(_id: String!): DeptoType!
   agregarPuesto(puesto: PuestoDeptoInput!): DeptoType!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
-  asignarAuth(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
+  todosRoles(role: RolInput!): Boolean!
+  registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
   actualizarAvatar(_id: String!, url: String!): LoginRespuestaType!
@@ -265,6 +266,10 @@ input RegEmpleadoInput {
   modificadoPor: [ModificadoPorInput!] = []
   puesto: [PuestoInput!] = []
   deptoId: ID
+}
+
+input RolInput {
+  rol: String
 }
 
 input CambioContrasenaInput {

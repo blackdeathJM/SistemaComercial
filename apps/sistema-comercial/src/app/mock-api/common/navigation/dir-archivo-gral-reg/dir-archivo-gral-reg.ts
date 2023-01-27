@@ -6,18 +6,17 @@ import {JURIDICO} from '#/apps/sistema-comercial/src/app/mock-api/common/navigat
 export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
     [
         {
-            id: 'dirArchivoReg',
+            id: 'dir-archivoReg',
             title: 'DIR. ARCHIVO GRAL REG',
             tooltip: 'Direccion de archivo general y regulacion',
             type: 'group',
             icon: 'heroicons_outline:office-building',
-            activo: false,
             oculto: false,
             hidden: (item: FuseNavigationItem): boolean => item.oculto,
             badge: {},
             controles: [],
             disabled: false,
-            active: false,
+            puedeAsigPermisos: true,
             children: [TRANSPARENCIA, REGULACION, JURIDICO]
         }
     ];

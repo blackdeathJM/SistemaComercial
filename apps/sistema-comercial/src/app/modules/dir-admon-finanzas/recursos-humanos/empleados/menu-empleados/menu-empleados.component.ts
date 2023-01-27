@@ -23,49 +23,55 @@ export class MenuEmpleadosComponent implements OnInit
                 {
                     id: 'infoGral',
                     title: 'Info General',
-                    activo: true,
                     icon: 'badge',
                     type: 'basic',
+                    oculto: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
                     id: 'imss',
                     title: 'IMSS',
-                    activo: true,
                     icon: 'featured_play_list',
                     type: 'basic',
+                    oculto: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
                     id: 'nomina',
                     title: 'Nomina',
-                    activo: true,
                     icon: 'account_balance_wallet',
                     type: 'basic',
+                    oculto: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
                     id: 'retardos',
                     title: 'Retardos',
-                    activo: true,
                     icon: 'rule',
                     type: 'basic',
+                    oculto: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
                     id: 'cuotas',
                     title: 'Cuotas',
-                    activo: true,
                     icon: 'money',
                     type: 'basic',
+                    oculto: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/cuotas'
                 },
                 {
                     id: 'fondoDeAhorro',
                     title: 'Fondo de ahorro',
-                    activo: true,
                     icon: 'savings',
                     type: 'basic',
+                    oculto: false,
+                    puedeAsigPermisos: true,
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 }
             ];

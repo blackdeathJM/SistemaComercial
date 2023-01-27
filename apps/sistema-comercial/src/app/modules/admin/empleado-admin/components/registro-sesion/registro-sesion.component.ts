@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {ActualizarContrasenaAdminGQL, AsignarAuthGQL} from '#/libs/datos/src';
-import {finalize, tap} from 'rxjs';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {ActualizarContrasenaAdminGQL, RegistroSesionGQL} from '#/libs/datos/src';
+import {finalize} from 'rxjs';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
@@ -15,7 +14,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Auth} from '@s-admin/empleado-admin/models/auth';
 import {AuthService} from '@s-core/auth/store/auth.service';
@@ -44,7 +43,7 @@ export class RegistroSesionComponent implements OnInit
     formAuth: FormGroup;
     soloLectura = false;
 
-    constructor(private fb: RxFormBuilder, public mdr: MatDialogRef<RegistroSesionComponent>, private asignarAuthGQL: AsignarAuthGQL, private ngxToastService: NgxToastService,
+    constructor(private fb: RxFormBuilder, public mdr: MatDialogRef<RegistroSesionComponent>, private registroSesionGQL: RegistroSesionGQL, private ngxToastService: NgxToastService,
                 private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore, private authService: AuthService)
     {
     }
@@ -91,30 +90,17 @@ export class RegistroSesionComponent implements OnInit
         {
             const modificadoPor: IModificado =
                 {
-                    usuario: this.stateAuth.snapshot.auth.usuario,
+                    usuario: this.stateAuth.snapshot.nombreCompleto,
                     fecha: GeneralService.fechaHoraActual(),
                     accion: 'Asignacion de usuario para el inicio de sesion en el portal',
                     valorAnterior: [{}],
                     valorActual: [{}]
                 };
-
-            this.asignarAuthGQL.mutate({_id: this.entityEmpleado.snapshot.empleado._id, auth: resto, modificadoPor}, {fetchPolicy: 'network-only'}).pipe(finalize(() =>
+            this.authService.registroSesion(this.entityEmpleado.snapshot.empleado._id, resto, modificadoPor).pipe(finalize(() =>
             {
                 this.cargandoDatos = false;
                 this.mdr.close();
-            }), tap((res) =>
-            {
-                if (isNotNil(res.data))
-                {
-                    const sesionAsignada: IResolveEmpleado = $cast<IResolveEmpleado>(res.data.asignarAuth);
-                    this.entityEmpleado.updateOne({changes: sesionAsignada, id: sesionAsignada._id});
-                    this.ngxToastService.satisfactorioToast('La asignacion de sesion fue realizada correctamente', 'Asignacion de sesion');
-                } else
-                {
-                    this.ngxToastService.errorToast('Asignacion de sesion', 'Ocurrio un error al tratar de asignar la sesion para este usuario');
-                }
             })).subscribe();
         }
-
     }
 }

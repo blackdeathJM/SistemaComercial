@@ -100,8 +100,7 @@ export class DocumentosService
                         {identificadorDoc: {$regex: args.consulta, $options: 'i'}},
                         {asunto: {$regex: args.consulta, $options: 'i'}},
                         {dependencia: {$regex: args.consulta, $options: 'i'}},
-                        {tipoDoc: {$regex: args.consulta, $options: 'i'}}
-                    ]
+                        {tipoDoc: {$regex: args.consulta, $options: 'i'}}]
             }).exec();
         } catch (e)
         {
@@ -199,7 +198,7 @@ export class DocumentosService
             return docsAsig;
         } catch (e)
         {
-
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
@@ -240,7 +239,7 @@ export class DocumentosService
             return reasignacionUsuarios;
         } catch (e)
         {
-// TODO mandar respuesta de error
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
@@ -283,7 +282,7 @@ export class DocumentosService
             return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${this.#mes}-${this.#ano}`;
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 

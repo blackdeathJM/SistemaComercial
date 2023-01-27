@@ -3,16 +3,15 @@ import {dirArchivoRegulacion} from '#/apps/sistema-comercial/src/app/mock-api/co
 
 export const TRANSPARENCIA: FuseNavigationItem =
     {
-        id: 'transparencia',
+        id: 'depto-transparencia',
         title: 'Transparencia',
         type: 'basic',
         icon: 'heroicons_outline:document-report',
-        activo: false,
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        active: false,
+        puedeAsigPermisos: true,
         link: dirArchivoRegulacion
     };

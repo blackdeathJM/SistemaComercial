@@ -8,13 +8,16 @@ import {ALMACEN} from '#/apps/sistema-comercial/src/app/mock-api/common/navigati
 export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
     [
         {
-            id: 'dirAdmonFinanzas',
+            id: 'dir-admonFinanzas',
             title: 'DIR. ADMON FINANZAS',
             type: 'group',
             icon: 'work',
-            activo: false,
+            oculto: false,
+            hidden: (item: FuseNavigationItem): boolean => item.oculto,
+            badge: {},
+            controles: [],
             disabled: false,
-            active: true,
+            puedeAsigPermisos: true,
             children: [RECURSOS_HUMANOS, CONTABILIDAD, EGRESOS, COMPRAS_SERVICIOS, ALMACEN]
         }
     ];

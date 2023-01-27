@@ -7,12 +7,16 @@ import {TELEMETRIA} from '#/apps/sistema-comercial/src/app/mock-api/common/navig
 export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
     [
         {
-            id: 'dirTecnicaOperativa',
+            id: 'dir-tecnicaOperativa',
             title: 'DIR. TECNICA OPERATIVA',
             type: 'group',
             icon: 'heroicons_outline:cube-transparent',
-            activo: false,
+            oculto: false,
+            hidden: (item: FuseNavigationItem): boolean => item.oculto,
+            badge: {},
+            controles: [],
             disabled: false,
+            puedeAsigPermisos: true,
             children: [AMPLIACIONES_CONSTRUCCIONES, OPERACIONES, SANEAMIENTO, TELEMETRIA]
         }
     ];

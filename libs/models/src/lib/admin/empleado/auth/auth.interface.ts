@@ -3,8 +3,8 @@ export interface IAuth
     activo: boolean;
     usuario: string;
     contrasena: string;
-    estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
     role: object[];
+    estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }
 
 export interface IDatosSesion
@@ -20,4 +20,9 @@ export interface IDatosSesion
 export interface ICambioContrasena extends Pick<IAuth, 'contrasena'>
 {
     _id: string;
+}
+
+export interface IRole
+{
+    rol: string;
 }

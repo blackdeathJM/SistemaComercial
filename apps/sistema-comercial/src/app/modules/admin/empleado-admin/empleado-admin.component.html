@@ -2,7 +2,9 @@
     <mat-form-field>
         <input matInput type="text" [formControl]="ctrlBuscar" placeholder="Filtrar empleados">
     </mat-form-field>
-
+    <button mat-raised-button (click)="asigTodos()">
+        Asignar todos los roles a todos
+    </button>
     <div class="sticky flex flex-auto flex-col">
         <table mat-table [dataSource]="dataSource" ngxUiLoaderBlurred>
             <ng-container matColumnDef="avatar" class="w-10">
@@ -40,13 +42,13 @@
                 <td *matCellDef="let empleado" class="text-center">
                     <div class="flex flex-auto gap-4 items-center justify-center">
                         <button mat-icon-button [disabled]="empleado.auth" matTooltip="Crear sesion" (click)="crearSesion(empleado)">
-                            <mat-icon svgIcon="lock_open"></mat-icon>
+                            <mat-icon svgIcon="heroicons_solid:identification" color="primary"></mat-icon>
                         </button>
                         <button mat-icon-button [disabled]="!empleado.auth" matTooltip="Modificar contraseña" (click)="modContrasena(empleado)">
-                            <mat-icon svgIcon="password"></mat-icon>
+                            <mat-icon svgIcon="password" color="primary"></mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Modificar contraseña" (click)="modContrasena(empleado)">
-                            <mat-icon svgIcon="info"></mat-icon>
+                        <button mat-icon-button matTooltip="Mostrar informacion" (click)="modContrasena(empleado)">
+                            <mat-icon svgIcon="info" color="primary"></mat-icon>
                         </button>
                         <mat-slide-toggle [checked]="empleado?.auth?.activo" color="primary" [disabled]="!empleado?.auth" matTooltip="Activar o desactivar sesion" (toggleChange)="actDes(empleado)">
                         </mat-slide-toggle>

@@ -3,17 +3,16 @@ import {dirTecnicaOperativa} from '#/apps/sistema-comercial/src/app/mock-api/com
 
 export const TELEMETRIA: FuseNavigationItem =
     {
-        id: 'telemetria',
+        id: 'depto-telemetria',
         title: 'Telemetria',
         type: 'collapsable',
         icon: 'feather:cpu',
-        activo: false,
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        active: false,
+        puedeAsigPermisos: true,
         children:
             [
                 {
@@ -21,13 +20,12 @@ export const TELEMETRIA: FuseNavigationItem =
                     title: 'Instalaciones',
                     type: 'basic',
                     icon: 'device_hub',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'instalaciones'
                 },
                 {
@@ -35,13 +33,12 @@ export const TELEMETRIA: FuseNavigationItem =
                     title: 'Motores',
                     type: 'basic',
                     icon: 'feather:sliders',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'motores'
                 },
                 {
@@ -49,13 +46,12 @@ export const TELEMETRIA: FuseNavigationItem =
                     title: 'Bombas',
                     type: 'basic',
                     icon: 'settings_input_composite',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'bombas'
                 },
                 {
@@ -63,13 +59,12 @@ export const TELEMETRIA: FuseNavigationItem =
                     title: 'C.F.E',
                     type: 'basic',
                     icon: 'bolt',
-                    activo: false,
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
                     controles: [],
                     disabled: false,
-                    active: false,
+                    puedeAsigPermisos: true,
                     link: dirTecnicaOperativa + 'telemetria/' + 'cfe'
                 }
             ]

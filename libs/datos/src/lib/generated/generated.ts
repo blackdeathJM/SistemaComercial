@@ -244,7 +244,6 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarPuesto: DeptoType;
-  asignarAuth: EmpleadoType;
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
   docActFolio: DocumentoType;
@@ -257,7 +256,9 @@ export type Mutation = {
   login?: Maybe<LoginRespuestaType>;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
+  registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
+  todosRoles: Scalars['Boolean'];
   validarToken: DatosSesionType;
 };
 
@@ -281,13 +282,6 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationAgregarPuestoArgs = {
   puesto: PuestoDeptoInput;
-};
-
-
-export type MutationAsignarAuthArgs = {
-  _id: Scalars['String'];
-  auth: AuthInput;
-  modificadoPor: ModificadoPorInput;
 };
 
 
@@ -352,10 +346,22 @@ export type MutationRegDocArgs = {
 };
 
 
+export type MutationRegistroSesionArgs = {
+  _id: Scalars['String'];
+  auth: AuthInput;
+  modificadoPor: ModificadoPorInput;
+};
+
+
 export type MutationSubirDocsArgs = {
   args?: InputMaybe<DocsSubirInput>;
   files?: InputMaybe<UploadInput>;
   filesAcuse?: InputMaybe<UploadInput>;
+};
+
+
+export type MutationTodosRolesArgs = {
+  role: RolInput;
 };
 
 
@@ -484,6 +490,10 @@ export type RegEmpleadoInput = {
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
 
+export type RolInput = {
+  rol?: InputMaybe<Scalars['String']>;
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   notificar: NotificacionType;
@@ -521,14 +531,21 @@ export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | nul
 
 export type FragDatosSesionFragment = { __typename?: 'DatosSesionType', _id: string, nombreCompleto: string, avatar?: string | null, activo: boolean, deptoId?: string | null, auth: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } };
 
-export type AsignarAuthMutationVariables = Exact<{
+export type TodosRolesMutationVariables = Exact<{
+  role: RolInput;
+}>;
+
+
+export type TodosRolesMutation = { __typename?: 'Mutation', todosRoles: boolean };
+
+export type RegistroSesionMutationVariables = Exact<{
   _id: Scalars['String'];
   auth: AuthInput;
   modificadoPor: ModificadoPorInput;
 }>;
 
 
-export type AsignarAuthMutation = { __typename?: 'Mutation', asignarAuth: { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null, puestos?: Array<string> | null } | null } };
+export type RegistroSesionMutation = { __typename?: 'Mutation', registroSesion: { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, auth?: { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, role?: Array<any> | null, estatus?: string | null } | null, deptoEmpleado?: { __typename?: 'DeptoType', _id?: string | null, nombre?: string | null, centroGestor?: string | null, puestos?: Array<string> | null } | null } };
 
 export type ActualizarContrasenaAdminMutationVariables = Exact<{
   datos: CambioContrasenaInput;
@@ -850,9 +867,25 @@ export const FragDeptosFragmentDoc = gql`
   puestos
 }
     `;
-export const AsignarAuthDocument = gql`
-    mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!) {
-  asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor) {
+export const TodosRolesDocument = gql`
+    mutation todosRoles($role: RolInput!) {
+  todosRoles(role: $role)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class TodosRolesGQL extends Apollo.Mutation<TodosRolesMutation, TodosRolesMutationVariables> {
+    document = TodosRolesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegistroSesionDocument = gql`
+    mutation registroSesion($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!) {
+  registroSesion(_id: $_id, auth: $auth, modificadoPor: $modificadoPor) {
     ...fragEmpleado
     auth {
       ...fragAuth
@@ -869,8 +902,8 @@ ${FragDeptosFragmentDoc}`;
   @Injectable({
     providedIn: 'root'
   })
-  export class AsignarAuthGQL extends Apollo.Mutation<AsignarAuthMutation, AsignarAuthMutationVariables> {
-    document = AsignarAuthDocument;
+  export class RegistroSesionGQL extends Apollo.Mutation<RegistroSesionMutation, RegistroSesionMutationVariables> {
+    document = RegistroSesionDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

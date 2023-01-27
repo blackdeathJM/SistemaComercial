@@ -6,17 +6,16 @@ import {LEGAL_RURAL} from '#/apps/sistema-comercial/src/app/mock-api/common/navi
 export const DIR_ATENCION_COMUNIDADES: FuseNavigationItem[] =
     [
         {
-            id: 'dirAtencionComunidades',
+            id: 'dir-atencionComunidades',
             title: 'DIR. ATENCION COMUNIDADES',
             type: 'group',
             icon: 'attractions',
-            activo: false,
             oculto: false,
             hidden: (item: FuseNavigationItem): boolean => item.oculto,
             badge: {},
             controles: [],
             disabled: false,
-            active: false,
+            puedeAsigPermisos: true,
             children: [FINANCIERO_RURAL, OPERATIVO_RURAL, LEGAL_RURAL]
         }
     ];
