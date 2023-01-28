@@ -1,14 +1,15 @@
-<ng-container *ngIf="empleado$ | async as empleado">
-<mat-selection-list>
-
-</mat-selection-list>
+<ng-container *ngIf="(empleado$ | async) as empleado">
+    <section class="sticky flex flex-col h-screen overflow-y-auto" *ngIf="empleado.auth !== null">
+        <div class="border-b-2 py-2 flex flex-col flex-auto" *ngFor="let rol of empleado.auth.role">
+            {{rol.title}}
+            <div class="pl-4 flex flex-col flex-auto" *ngFor="let sub of rol.children">
+                {{sub.title}}
+                <mat-selection-list>
+                    <mat-list-option *ngFor="let ruta of sub.children" color="primary" [value]="ruta.acceso">
+                        {{ruta.title}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+        </div>
+    </section>
 </ng-container>
-<!--<mat-list>-->
-<!--    <mat-list-item *ngFor="let grupo of empleado.auth.role">-->
-<!--        <span matListItemTitle>{{grupo.title}}</span>-->
-<!--        <div *ngFor="let ruta of grupo.children" class="flex flex-col flex-auto">-->
-<!--            <span matListItemLine>{{ruta.title}}</span>-->
-<!--            <div matListItemLine *ngFor="let subRuta of ruta.children" class="pl-4">{{subRuta.title}}</div>-->
-<!--        </div>-->
-<!--    </mat-list-item>-->
-<!--</mat-list>-->

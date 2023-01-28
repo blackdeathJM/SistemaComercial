@@ -1,72 +1,59 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatButtonModule} from '@angular/material/button';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
-import {FuseDrawerModule} from '@s-fuse/drawer';
 import {AsigTodosRolesGQL} from '#/libs/datos/src';
 import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
-import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/empleado-sesion/empleado-sesion.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {RouterLink} from '@angular/router';
+import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
+import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @Component({
     standalone: true,
     imports:
         [
             CommonModule,
-            MatFormFieldModule,
-            MatIconModule,
-            MatInputModule,
             ReactiveFormsModule,
             RxReactiveFormsModule,
-            ListaEmpleadosComponent,
-            MatSidenavModule,
             MatInputModule,
-            MatInputModule,
-            MatInputModule,
-            MatTableModule,
-            MatPaginatorModule,
+            MatDividerModule,
             MatButtonModule,
-            NgxUiLoaderModule,
+            MatIconModule,
+            MatCardModule,
+            MatSidenavModule,
+            RouterLink,
+            ImgDefectoPipe,
             DefaultValuePipeModule,
-            MatSlideToggleModule,
-            MatTooltipModule,
-            FuseDrawerModule,
-            EmpleadoSesionComponent,
+            MatBadgeModule,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
     styleUrls: ['./empleado-admin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
+export class EmpleadoAdminComponent implements OnInit, OnDestroy
 {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     ctrlBuscar: FormControl = new FormControl();
     ngxLoader = ngxLoaderEmp;
-    drawerMode = 'side';
-    drawerOpened: true;
-    columnasMostrar: string[] = ['avatar', 'nombreCompleto', 'nombre', 'puesto', 'usuario', 'acciones'];
-    dataSource = new MatTableDataSource<IResolveEmpleado>([]);
-    private sub = new Subscription();
+    empleadoSeleccionado: IResolveEmpleado;
+    sub = new Subscription();
 
-    constructor(public empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private asi: AsigTodosRolesGQL)
+    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private asi: AsigTodosRolesGQL)
     {
     }
 
@@ -75,15 +62,7 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
         //TODO: buscar como implemetar los observables con buenas practicas
         this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
             this.empleadoService.filtrarEmpleados(res, this.ngxLoader))).subscribe());
-
-        this.sub.add(this.empleadoService.empleados(this.ngxLoader).subscribe());
-
-        this.sub.add(this.entityEmpleado.entitiesArray$.subscribe(res => this.dataSource.data = res));
-    }
-
-    ngAfterViewInit(): void
-    {
-        this.dataSource.paginator = this.paginator;
+        this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
     ngOnDestroy(): void
@@ -121,5 +100,10 @@ export class EmpleadoAdminComponent implements OnInit, AfterViewInit, OnDestroy
     asigTodos(): void
     {
         this.asi.mutate({rol: {rol: defaultNavigation}}).subscribe();
+    }
+
+    trackByFn(index: number, item: any): any
+    {
+        return item.id || index;
     }
 }

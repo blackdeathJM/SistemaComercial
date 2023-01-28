@@ -19,7 +19,6 @@
 
         <!-- Items -->
         <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
-
             <!-- Skip the hidden items -->
             <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
                 <!-- Aside -->
@@ -112,9 +111,7 @@
                         [name]="name"
                         [autoCollapse]="autoCollapse"></fuse-vertical-navigation-aside-item>
                 </ng-container>
-
             </ng-container>
-
         </ng-container>
 
     </div>
