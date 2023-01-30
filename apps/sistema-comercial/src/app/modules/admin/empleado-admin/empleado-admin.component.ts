@@ -15,12 +15,11 @@ import {AsigTodosRolesGQL} from '#/libs/datos/src';
 import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {RouterLink} from '@angular/router';
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
-import {MatBadgeModule} from '@angular/material/badge';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/empleado-sesion/empleado-sesion.component';
 
 @Component({
     standalone: true,
@@ -33,12 +32,11 @@ import {MatBadgeModule} from '@angular/material/badge';
             MatDividerModule,
             MatButtonModule,
             MatIconModule,
-            MatCardModule,
             MatSidenavModule,
-            RouterLink,
             ImgDefectoPipe,
             DefaultValuePipeModule,
-            MatBadgeModule,
+            NgxUiLoaderModule,
+            EmpleadoSesionComponent,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
@@ -50,8 +48,8 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     @ViewChild(MatPaginator) paginator: MatPaginator;
     ctrlBuscar: FormControl = new FormControl();
     ngxLoader = ngxLoaderEmp;
-    empleadoSeleccionado: IResolveEmpleado;
     sub = new Subscription();
+    abriPanel = false;
 
     constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private asi: AsigTodosRolesGQL)
     {
@@ -65,15 +63,10 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
-    }
-
     seleccionar(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.patchState({empleado});
-        this.empleadoService.setPanel = true;
+        this.abriPanel = true;
     }
 
     crearSesion(empleado: IResolveEmpleado): void
@@ -105,5 +98,19 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
+        this.abriPanel = false;
+    }
+
+    nombre(nombre: HTMLInputElement, apellido: HTMLInputElement): void
+    {
+        const cadena = 'asesa faseas';
+        console.log(cadena.toUpperCase());
+        console.log((cadena.toLowerCase()));
+
     }
 }

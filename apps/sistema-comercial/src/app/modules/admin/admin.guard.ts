@@ -15,10 +15,11 @@ export class AdminGuard implements CanActivate, CanLoad
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-        if (this.stateAuth.snapshot.auth.usuario === 'administrador')
+        if (this.stateAuth.snapshot.auth.usuario === 'administrador' && this.stateAuth.snapshot.auth.activo === true)
         {
             return true;
         }
+
         this.ngxToastService.alertaToast('No tienes permiso para acceder a esta ruta', 'Acceso denegado');
         return false;
     }

@@ -2,41 +2,41 @@
     <div class="relative flex bg-gray-300 dark:bg-gray-800 border-green-900 dark:border-emerald-400 p-4 rounded-lg border-b-8">
         <mat-form-field class="flex-auto">
             <mat-label>Filtrar empleados</mat-label>
-            <input matInput placeholder="Introduce el nombre de un empleado">
+            <input matInput [formControl]="ctrlBuscar" placeholder="Introduce el nombre de un empleado">
         </mat-form-field>
     </div>
-    <mat-divider class="mt-4 border-2"></mat-divider>
 
-    <section class="relative overflow-y-auto flex basis-full flex-wrap gap-4 p-2">
+    <section class="relative overflow-y-auto flex basis-full flex-wrap gap-4 px-2 pt-4">
         <mat-drawer-container class="flex-auto">
-            <mat-drawer class="w-1/2" position="end" mode="side" autoFocus="false"></mat-drawer>
-            <mat-drawer-content class="flex-flex-col">
-                <div class="relative">
-                    <ng-container *ngIf="entityEmpleado.entitiesArray$ | async as contacts">
-                        <ng-container *ngIf="contacts.length; else noContacts">
-                            <ng-container *ngFor="let contact of contacts; let i = index; trackBy: trackByFn">
-                                <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
-                                   [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !empleadoSeleccionado || empleadoSeleccionado._id !== contact._id,
-                                                'bg-primary-50 dark:bg-hover': empleadoSeleccionado && empleadoSeleccionado._id === contact._id}">
-                                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-                                        <img class="object-cover w-full h-full" src="{{contact.avatar | imgDefecto}} " alt="x"/>
-                                    </div>
-                                    <div class="min-w-0 ml-4 flex gap-8">
-                                        <div class="font-medium leading-5 truncate">{{contact?.nombreCompleto}}</div>
-                                        <div class="leading-5 truncate text-secondary">{{contact?.deptoEmpleado?.nombre}}</div>
-                                        <div class="leading-5 truncate text-secondary">{{contact?.puesto | defaultValue:'---'}}</div>
-                                    </div>
-                                </a>
-                            </ng-container>
-                        </ng-container>
-                    </ng-container>
+            <mat-drawer class="w-1/2" position="end" mode="side" autoFocus="false" [opened]="abriPanel">
+                <section class="relative flex flex-auto flex-col">
+                    <app-empleado-sesion (panel)="abriPanel = false"></app-empleado-sesion>
+                </section>
+            </mat-drawer>
 
-                    <!-- No contacts -->
-                    <ng-template #noContacts>
-                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No hay contactos</div>
-                    </ng-template>
-
-                </div>
+            <mat-drawer-content class="flex flex-col" ngxUiLoaderBlurred>
+                <mat-form-field>
+                    <input matInput #nombr>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput #apellid>
+                </mat-form-field>
+                <button mat-raised-button [color]="'primary'" (click)="nombre(nombr, apellid)">Aceptar</button>
+                <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async; let i = index; trackBy: trackByFn">
+                    <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b odd:bg-gray-300 dark:odd:bg-gray-800 hover:text-primary-700" (click)="seleccionar(empleado)">
+                        <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                            <img class="object-cover w-full h-full" src="{{empleado?.avatar | imgDefecto}} " alt="x"/>
+                        </div>
+                        <div class="flex min-w-0 ml-4 flex-auto gap-8">
+                            <div class="font-medium leading-5 truncate border-r-2 basis-72">{{empleado?.nombreCompleto}}</div>
+                            <div class="leading-5 truncate text-secondary border-r-2 basis-1/5">{{empleado?.deptoEmpleado?.nombre}}</div>
+                            <div class="leading-5 truncate text-secondary border-r-2 basis-1/6">{{empleado?.puesto | defaultValue:'---'}}</div>
+                            <div class="leading-5 truncate text-secondary border-r-2 grow">{{empleado?.auth?.usuario | defaultValue:'---'}}</div>
+                            <mat-icon svgIcon="{{empleado?.auth !== null? 'lock_open' : 'lock'}}" [ngClass]="empleado?.auth !== null? 'text-green-700': 'text-red-500'"></mat-icon>
+                        </div>
+                    </a>
+                </ng-container>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </mat-drawer-content>
         </mat-drawer-container>
     </section>

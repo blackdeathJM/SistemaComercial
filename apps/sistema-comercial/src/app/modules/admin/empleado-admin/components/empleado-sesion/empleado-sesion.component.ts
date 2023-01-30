@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
 import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
@@ -13,6 +13,7 @@ import {Select} from '@ngxs/store';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {MatCardModule} from '@angular/material/card';
+import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 
 @Component({
     standalone: true,
@@ -26,7 +27,8 @@ import {MatCardModule} from '@angular/material/card';
             MatSlideToggleModule,
             MatListModule,
             DefaultValuePipeModule,
-            MatCardModule
+            MatCardModule,
+            ImgDefectoPipe
         ],
     selector: 'app-empleado-sesion',
     templateUrl: './empleado-sesion.component.html',
@@ -36,6 +38,7 @@ import {MatCardModule} from '@angular/material/card';
 export class EmpleadoSesionComponent
 {
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
+    @Output() panel = new EventEmitter<boolean>();
 
     constructor(public empleadoService: EmpleadoService)
     {
@@ -45,5 +48,15 @@ export class EmpleadoSesionComponent
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
+    }
+
+    cerrarP(): void
+    {
+        this.panel.emit(true);
+    }
+
+    asignarSesion(_empleado: any): void
+    {
+
     }
 }
