@@ -19,8 +19,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/empleado-sesion/empleado-sesion.component';
-import {MatExpansionModule, MatExpansionPanel} from "@angular/material/expansion";
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {FuseCardModule} from "@s-fuse/card";
 import {MatListModule} from "@angular/material/list";
 
 @Component({
@@ -38,8 +39,9 @@ import {MatListModule} from "@angular/material/list";
             ImgDefectoPipe,
             DefaultValuePipeModule,
             NgxUiLoaderModule,
-            EmpleadoSesionComponent,
             MatExpansionModule,
+            MatCheckboxModule,
+            FuseCardModule,
             MatListModule,
         ],
     selector: 'app-empleado-admin',
@@ -67,12 +69,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
-    seleccionar(empleado: IResolveEmpleado): void
-    {
-        this.entityEmpleado.patchState({empleado});
-        this.abriPanel = true;
-    }
-
     sesion(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.patchState({empleado});
@@ -83,12 +79,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     {
 
     }
-
-    mostrarRoles(empleado): void
-    {
-        this.entityEmpleado.patchState({empleado});
-    }
-
     asigTodos(): void
     {
         this.asi.mutate({rol: {rol: defaultNavigation}}).subscribe();

@@ -39,6 +39,7 @@ import {ModPuestoComponent} from '@s-dirAdmonFinanzas/departamento/components/mo
 export class ListaDeptosComponent implements OnInit
 {
     idLoader = loaderDeptos;
+
     constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
     {
 
@@ -49,9 +50,9 @@ export class ListaDeptosComponent implements OnInit
         this.deptoService.departamentos().subscribe();
     }
 
-    trackByFn(index: number, item: IDepto): string
+    trackByFn(index: number, item: IDepto): string | number
     {
-        return item._id;
+        return item._id || index;
     }
 
     editar(depto: IDepto): void

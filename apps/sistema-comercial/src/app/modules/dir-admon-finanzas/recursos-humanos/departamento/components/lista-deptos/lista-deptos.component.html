@@ -1,5 +1,5 @@
 <ng-container *ngIf="(entityDepto.entitiesArray$ | async) as deptos">
-    <fuse-card class="flex flex-col p-4 mt-4" #fuseCard *ngFor="let depto of deptos">
+    <fuse-card class="flex flex-col p-4 mt-4" #fuseCard *ngFor="let depto of deptos; trackBy: trackByFn">
         <div class="flex flex-auto px-4 border-b-2 justify-between">
             <div class="text-lg font-bold">{{depto.nombre}}</div>
             <div>
