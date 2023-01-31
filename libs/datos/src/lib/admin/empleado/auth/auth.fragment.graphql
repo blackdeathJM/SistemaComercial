@@ -2,7 +2,7 @@ fragment fragAuth on AuthType
 {
     usuario
     activo
-    role
+    roles
     estatus
 }
 

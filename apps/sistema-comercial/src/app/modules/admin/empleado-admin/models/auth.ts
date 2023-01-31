@@ -19,4 +19,7 @@ export class Auth implements IAuth
     role: object[] = defaultNavigation;
     activo: boolean;
     estatus: 'En-linea';
+    controles: string[] = [];
+    guards: string[] = [];
+    roles: object[] = [];
 }

@@ -1,9 +1,10 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
 import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
+export const GUARD_ALMACEN = 'depto-almacen';
 export const ALMACEN: FuseNavigationItem =
     {
-        id: 'depto-almacen',
+        id: GUARD_ALMACEN,
         title: 'Almacen',
         type: 'basic',
         icon: 'margin',

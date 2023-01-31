@@ -4,12 +4,11 @@ import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
-import {AsigRolesDto, AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
-import {DatosSesionDto, ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {DatosSesionDto, ILoginRespuesta, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
-import {flatten} from 'lodash-es';
 
 @Injectable()
 export class AuthService
@@ -77,12 +76,12 @@ export class AuthService
     //     return empleado;
     // }
 
-    login(empleado: any): ILoginRespuesta
+    login(empleado: any): LoginRespuestaDto
     {
         return this.datosSesion(empleado);
     }
 
-    async actualizarAvatar(_id: string, url: string): Promise<ILoginRespuesta>
+    async actualizarAvatar(_id: string, url: string): Promise<LoginRespuestaDto>
     {
         try
         {
@@ -92,19 +91,6 @@ export class AuthService
         {
             throw new InternalServerErrorException({message: e.codeName});
         }
-    }
-
-    async validarToken(token: string): Promise<DatosSesionDto>
-    {
-        try
-        {
-            const validacion: IDatosSesion = await this.jwtService.verify(token);
-            return await this.empleado.findById(validacion._id).exec();
-        } catch (e)
-        {
-            throw new NotFoundException({message: 'Token no valido'});
-        }
-
     }
 
     private datosSesion(empleado: EmpleadoDto): ILoginRespuesta

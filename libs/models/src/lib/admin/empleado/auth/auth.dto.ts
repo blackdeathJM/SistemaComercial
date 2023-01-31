@@ -17,9 +17,12 @@ export class AuthDto implements IAuth
     @IsBoolean({message: 'Activo debe ser booleano'})
     @IsOptional()
     activo: boolean;
+    @Field(() => [GraphQLJSONObject], {nullable: true})
+    @IsNotEmpty({message: 'Es necesario los roles a administrar'})
+    roles: object[];
     @Field(() => [String], {nullable: true, defaultValue: []})
     @IsOptional()
-    permisos: string[];
+    guards: string[];
     @Field(() => [String], {nullable: true, defaultValue: []})
     @IsOptional()
     controles: string[];
@@ -33,5 +36,5 @@ export class AsigRolesDto implements IAsigRoles
 {
     @Field(() => [GraphQLJSONObject], {nullable: true})
     @IsNotEmpty({message: 'Requerido'})
-    rol: object[];
+    roles: object[];
 }

@@ -29,7 +29,7 @@
                 <ng-container *ngIf="empleado.auth !== null && empleado.auth.usuario !== 'administrador'">
                     <section class="flex flex-auto flex-col">
                         <mat-list>
-                            <mat-list-item *ngFor="let grupo of empleado.auth.role">
+                            <mat-list-item *ngFor="let grupo of empleado.auth.roles">
                                 <div matListItemTitle class="flex flex-col flex-auto">
                                     <span class="flex-auto border-b-2">{{grupo['title']}}</span>
                                     <div class="flex flex-auto flex-col" matListItemLine *ngFor="let expandible of grupo.children">

@@ -1,6 +1,17 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
 import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
+export enum RecursosHumanos
+{
+    deptos = 'departamentos',
+    empleados = 'empleados',
+    imss = 'imss',
+    nomina = 'nomina',
+    retardos = 'retardos',
+    fondoDeAhoro = 'fondoDeAhoro',
+    prestamos = 'prestamos'
+}
+
 export const RECURSOS_HUMANOS: FuseNavigationItem =
     {
         id: 'depto-recursos-humanos',
@@ -17,7 +28,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
         children:
             [
                 {
-                    id: 'departamentos',
+                    id: RecursosHumanos.deptos,
                     title: 'Departamentos',
                     type: 'basic',
                     icon: 'bento',
@@ -31,7 +42,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'departamentos'
                 },
                 {
-                    id: 'empleados',
+                    id: RecursosHumanos.empleados,
                     title: 'Info. gral empleados',
                     type: 'basic',
                     icon: 'badge',
@@ -45,7 +56,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
-                    id: 'imss',
+                    id: RecursosHumanos.imss,
                     title: 'Imss',
                     type: 'basic',
                     icon: 'featured_play_list',
@@ -59,7 +70,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
-                    id: 'nomina',
+                    id: RecursosHumanos.nomina,
                     title: 'Nomina',
                     type: 'basic',
                     icon: 'account_balance_wallet',
@@ -73,7 +84,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
-                    id: 'retardos',
+                    id: RecursosHumanos.retardos,
                     title: 'Retardos',
                     type: 'basic',
                     icon: 'rule',
@@ -87,7 +98,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
-                    id: 'fondoDeAhoro',
+                    id: RecursosHumanos.fondoDeAhoro,
                     title: 'Fondo de ahorro',
                     type: 'basic',
                     icon: 'savings',
@@ -101,7 +112,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 },
                 {
-                    id: 'fondoDeAhoro',
+                    id: RecursosHumanos.prestamos,
                     title: 'Prestamos',
                     type: 'basic',
                     icon: 'paid',

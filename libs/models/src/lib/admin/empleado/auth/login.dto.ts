@@ -2,8 +2,6 @@ import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 import {IsNotEmpty} from 'class-validator';
 import {IDatosSesion} from './auth.interface';
 import {AuthDto} from './auth.dto';
-
-
 @ObjectType('DatosSesionType')
 export class DatosSesionDto implements IDatosSesion
 {
@@ -20,7 +18,11 @@ export class DatosSesionDto implements IDatosSesion
     @Field(() => ID, {nullable: true})
     deptoId: string;
 }
-
+export interface ILoginRespuesta
+{
+    token: string;
+    datosSesion: IDatosSesion;
+}
 @ObjectType('LoginRespuestaType')
 export class LoginRespuestaDto implements ILoginRespuesta
 {
@@ -40,12 +42,6 @@ export class LoginDto implements ILogin
     @Field({nullable: true})
     @IsNotEmpty({message: 'La contrasena no puede estar vacia'})
     contrasena: string;
-}
-
-export interface ILoginRespuesta
-{
-    token: string;
-    datosSesion: IDatosSesion;
 }
 
 export interface ILogin

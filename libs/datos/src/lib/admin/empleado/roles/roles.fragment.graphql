@@ -1,0 +1,6 @@
+fragment fragRoles on RolesType
+{
+    _id
+    idEmpleado
+    roles
+}

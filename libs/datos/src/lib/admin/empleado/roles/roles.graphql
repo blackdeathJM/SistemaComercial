@@ -1,0 +1,15 @@
+mutation crearRoles($args: RolesInput!)
+{
+    crearRoles(args: $args)
+    {
+        ...fragRoles
+    }
+}
+
+query rolesAsig($idEmpleado: ID!)
+{
+    rolesAsig(idEmpleado: $idEmpleado)
+    {
+        ...fragRoles
+    }
+}

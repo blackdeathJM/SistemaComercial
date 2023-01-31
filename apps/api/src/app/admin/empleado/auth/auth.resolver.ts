@@ -4,9 +4,9 @@ import {UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
 import {PubSub} from 'graphql-subscriptions';
 import {EmpleadoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
-import {AsigRolesDto, AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
+import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
-import {DatosSesionDto, ILoginRespuesta, LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
 
 @Resolver(() => AuthDto)
@@ -43,13 +43,6 @@ export class AuthResolver
     {
         return await this.authService.actualizarAvatar(_id, url);
     }
-
-    @Mutation(() => DatosSesionDto)
-    async validarToken(@Args('token') token: string): Promise<DatosSesionDto>
-    {
-        return await this.authService.validarToken(token);
-    }
-
     // @Mutation(() => EmpleadoDto)
     // async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto, @Args('modificadoPor') modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
     // {

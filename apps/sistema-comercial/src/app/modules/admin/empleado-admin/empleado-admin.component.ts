@@ -11,8 +11,6 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
-import {AsigTodosRolesGQL} from '#/libs/datos/src';
-import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -21,8 +19,8 @@ import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {FuseCardModule} from "@s-fuse/card";
-import {MatListModule} from "@angular/material/list";
+import {FuseCardModule} from '@s-fuse/card';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
     standalone: true,
@@ -57,7 +55,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     sub = new Subscription();
     abriPanel = false;
 
-    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private asi: AsigTodosRolesGQL)
+    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog)
     {
     }
 
@@ -78,15 +76,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     actDes(empleado: IResolveEmpleado): void
     {
 
-    }
-    asigTodos(): void
-    {
-        this.asi.mutate({rol: {rol: defaultNavigation}}).subscribe();
-    }
-
-    trackByFn(index: number, item: any): any
-    {
-        return item.id || index;
     }
 
     ngOnDestroy(): void

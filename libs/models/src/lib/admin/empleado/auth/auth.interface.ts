@@ -3,7 +3,8 @@ export interface IAuth
     activo: boolean;
     usuario: string;
     contrasena: string;
-    permisos: string[];
+    roles: object[];
+    guards: string[];
     controles: string[];
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }
@@ -16,7 +17,6 @@ export interface IDatosSesion
     activo: boolean;
     deptoId: string;
     auth: IAuth;
-    permisos: string[];
 }
 
 export interface ICambioContrasena extends Pick<IAuth, 'contrasena'>
@@ -26,5 +26,5 @@ export interface ICambioContrasena extends Pick<IAuth, 'contrasena'>
 
 export interface IAsigRoles
 {
-    rol: object[];
+    roles: object[];
 }

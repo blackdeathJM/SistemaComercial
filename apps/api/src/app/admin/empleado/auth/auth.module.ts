@@ -9,11 +9,14 @@ import {JwtStrategy} from './strategy/jwt.strategy';
 import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {PassportModule} from '@nestjs/passport';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
+import {RolesDto, SCHEMA_ROLES} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
+import {RolesService} from '@api-admin/roles/roles.service';
+import {RolesResolver} from '@api-admin/roles/roles.resolver';
 
 @Module({
     imports:
         [
-            MongooseModule.forFeature([{name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}]),
+            MongooseModule.forFeature([{name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}, {name: RolesDto.name, schema: SCHEMA_ROLES}]),
             PassportModule.register({defaultStrategy: 'jwt'}),
             JwtModule.registerAsync({
                 imports: [ConfigModule],
@@ -24,7 +27,7 @@ import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos
                 })
             }),
         ],
-    providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy, EmpleadoService]
+    providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy, EmpleadoService, RolesService, RolesResolver]
 })
 export class AuthModule
 {

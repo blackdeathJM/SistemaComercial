@@ -59,10 +59,3 @@ mutation actualizarAvatar($_id: String!, $url: String!)
         }
     }
 }
-mutation validarToken($token: String!)
-{
-    validarToken(token: $token)
-    {
-        ...fragDatosSesion
-    }
-}

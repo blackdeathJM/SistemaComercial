@@ -1,5 +1,5 @@
-import { IModificado } from '../../../common/common.interface';
-import {IAuth} from '@sistema-comercial/modelos/auth/auth.interface';
+import {IModificado} from '../../../common/common.interface';
+import {IAuth} from '../../../admin/empleado/auth/auth.interface';
 import {IDepto} from '../deptos/depto.interface';
 
 export interface ITelefono

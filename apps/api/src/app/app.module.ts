@@ -12,6 +12,7 @@ import {AppService} from '#api/apps/api/src/app/app.service';
 import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
+import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
 
 @Module({
     imports:
@@ -44,8 +45,6 @@ import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
                         ApolloServerPluginLandingPageLocalDefault
                     ]
             }),
-            // MongooseModule.forRoot('mongodb+srv://blackdeath:FernandaTeamo1017@simapas-api-k3zc5.mongodb.net/simapas-api?retryWrites=true&w=majority'),
-            // MongooseModule.forRoot(environment.uriMongo),
             MongooseModule.forRootAsync({
                 imports: [ConfigModule],
                 inject: [ConfigService],
@@ -58,6 +57,7 @@ import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
             }),
             SubirArchivoModule,
             AdminModule,
+            DirAdmonFinanzasModule,
             GeneralModule,
             TecnicaOperativaModule
         ],
