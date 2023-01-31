@@ -20,6 +20,8 @@ import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/empleado-sesion/empleado-sesion.component';
+import {MatExpansionModule, MatExpansionPanel} from "@angular/material/expansion";
+import {MatListModule} from "@angular/material/list";
 
 @Component({
     standalone: true,
@@ -37,6 +39,8 @@ import {EmpleadoSesionComponent} from '@s-admin/empleado-admin/components/emplea
             DefaultValuePipeModule,
             NgxUiLoaderModule,
             EmpleadoSesionComponent,
+            MatExpansionModule,
+            MatListModule,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
@@ -69,15 +73,10 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         this.abriPanel = true;
     }
 
-    crearSesion(empleado: IResolveEmpleado): void
+    sesion(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.patchState({empleado});
         this.mdr.open(RegistroSesionComponent, {width: '40%'});
-    }
-
-    modContrasena(empleado: IResolveEmpleado): void
-    {
-
     }
 
     actDes(empleado: IResolveEmpleado): void
@@ -104,13 +103,5 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     {
         this.sub.unsubscribe();
         this.abriPanel = false;
-    }
-
-    nombre(nombre: HTMLInputElement, apellido: HTMLInputElement): void
-    {
-        const cadena = 'asesa faseas';
-        console.log(cadena.toUpperCase());
-        console.log((cadena.toLowerCase()));
-
     }
 }

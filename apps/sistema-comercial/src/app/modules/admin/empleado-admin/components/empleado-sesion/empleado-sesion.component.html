@@ -15,7 +15,7 @@
     <div class="relative flex flex-col flex-auto items-center p-2 pt-0 sm:p-12 sm:pt-0">
         <ng-container *ngIf="empleado$ | async as empleado">
             <ng-container *ngIf="empleado">
-                <div class="w-full max-w-3xl">
+                <section class="w-full max-w-3xl">
                     <!-- Avatar and actions -->
                     <div class="flex flex-auto items-end -mt-16">
                         <!-- Avatar -->
@@ -29,18 +29,30 @@
                             </button>
                         </div>
                     </div>
-
                     <!-- Name -->
                     <div class="mt-3 text-2xl text-primary-500">{{empleado?.nombreCompleto}}</div>
-                </div>
+                </section>
             </ng-container>
+
+            <ng-container *ngIf="empleado.auth !== null && empleado.auth.usuario !== 'administrador'">
+                <section class="flex flex-col w-full" *ngFor="let grupo of empleado.auth.role">
+                    <div class="text-primary py-2 flex-auto">{{grupo.title}}</div>
+                    <div class="flex-auto" *ngFor="let expandible of grupo.children">
+                        <span class="pb-2">{{expandible['title']}}</span>
+                        <mat-selection-list>
+                            <mat-list-option color="primary" *ngFor="let ruta of expandible.children">{{ruta['title']}}</mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                </section>
+            </ng-container>
+
         </ng-container>
     </div>
 </div>
 
-<mat-divider class="border-2"></mat-divider>
 
-<!--<ng-container *ngIf="(empleado$ | async) as empleado">-->
+<!--<ng-container *ngIf=" (empleado$ | async) as empleado
+            ">-->
 <!--    <section class="sticky flex flex-col h-screen overflow-y-auto" *ngIf="empleado.auth !== null">-->
 <!--        <div class="border-b-2 py-2 flex flex-col flex-auto" *ngFor="let rol of empleado.auth.role">-->
 <!--            {{rol.title}}-->

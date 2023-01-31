@@ -6,7 +6,6 @@ export class ImgDefectoPipe implements PipeTransform
 {
     transform(value: string): string
     {
-        console.log('=====', value);
         if (isNil(value))
         {
             return 'assets/images/avatars/no-img.jpeg';

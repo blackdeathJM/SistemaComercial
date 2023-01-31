@@ -38,7 +38,6 @@
         "@apollo/server": "^4.3.2",
         "@auth0/angular-jwt": "^5.1.2",
         "@datorama/akita": "^8.0.0",
-        "@graphql-codegen/typescript": "^2.8.7",
         "@nestjs/apollo": "^10.1.7",
         "@nestjs/common": "^9.2.1",
         "@nestjs/config": "^2.2.0",
@@ -126,11 +125,12 @@
         "@babel/cli": "^7.20.7",
         "@babel/core": "^7.20.12",
         "@datorama/akita-ngdevtools": "^7.0.0",
-        "@graphql-codegen/cli": "^2.16.4",
+        "@graphql-codegen/cli": "^2.16.5",
         "@graphql-codegen/fragment-matcher": "^3.3.3",
         "@graphql-codegen/typescript-apollo-angular": "^3.5.6",
-        "@graphql-codegen/typescript-operations": "^2.5.12",
-        "@graphql-codegen/typescript-resolvers": "^2.7.12",
+        "@graphql-codegen/typescript-operations": "^2.5.13",
+        "@graphql-codegen/typescript-resolvers": "^2.7.13",
+        "@graphql-codegen/typescript": "^2.8.8",
         "@nestjs/cli": "^9.1.9",
         "@nestjs/schematics": "^9.0.4",
         "@nestjs/swagger": "^6.1.4",
@@ -190,7 +190,7 @@
         "ts-morph": "^17.0.1",
         "ts-node": "10.9.1",
         "turbo": "^1.7.0",
-        "typescript": "4.9.4",
+        "typescript": "4.9.5",
         "webpack": "^5.75.0"
     }
 }
