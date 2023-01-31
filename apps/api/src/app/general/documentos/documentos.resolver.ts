@@ -13,7 +13,7 @@ import {
     DocRefFolioDto, DocsRefDto
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
-import {EmpleadoService} from '@api-admin/empleado.service';
+import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
 import {IEmpleado} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';

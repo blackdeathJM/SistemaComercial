@@ -13,9 +13,6 @@ export class AuthDto implements IAuth
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'El usuario es necesario'})
     usuario: string;
-    @Field(() => [GraphQLJSONObject], {nullable: true, defaultValue: null})
-    @IsOptional()
-    role: object[];
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsBoolean({message: 'Activo debe ser booleano'})
     @IsOptional()

@@ -19,12 +19,6 @@ export class AuthResolver
         this.#pubSub = new PubSub();
     }
 
-    @Mutation(() => Boolean)
-    async asigTodosRoles(@Args('rol') rol: AsigRolesDto): Promise<boolean>
-    {
-        return await this.authService.asigTodosRoles(rol);
-    }
-
     @Mutation(() => EmpleadoDto)
     async registroSesion(@Args('_id') _id: string, @Args('auth') auth: AuthDto, @Args('modificadoPor') modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
     {

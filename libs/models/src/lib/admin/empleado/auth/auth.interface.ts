@@ -3,7 +3,6 @@ export interface IAuth
     activo: boolean;
     usuario: string;
     contrasena: string;
-    role: object[];
     permisos: string[];
     controles: string[];
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';

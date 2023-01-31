@@ -63,18 +63,6 @@ export class AuthService
         }
     }
 
-    async asigTodosRoles(rol: AsigRolesDto): Promise<boolean>
-    {
-        try
-        {
-            const res = await this.empleado.updateMany({auth: {$ne: null}}, {$set: {'auth.role': rol.rol}}).exec();
-            return res.acknowledged;
-        } catch (e)
-        {
-            return false;
-        }
-    }
-
     // async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
     // {
     //     const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {

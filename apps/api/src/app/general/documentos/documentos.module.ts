@@ -4,7 +4,7 @@ import {DocumentosService} from './documentos.service';
 import {MongooseModule} from '@nestjs/mongoose';
 import {DocumentoDto, SCHEMA_DOCUMENTOS} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
-import {EmpleadoService} from '@api-admin/empleado.service';
+import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.dto';
 import {NotificacionService} from '@api-general/notificaciones/notificacion.service';

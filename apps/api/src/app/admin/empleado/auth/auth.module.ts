@@ -8,7 +8,7 @@ import {LocalStrategy} from './strategy/local.strategy';
 import {JwtStrategy} from './strategy/jwt.strategy';
 import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {PassportModule} from '@nestjs/passport';
-import {EmpleadoService} from '@api-admin/empleado.service';
+import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 
 @Module({
     imports:
