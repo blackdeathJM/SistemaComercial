@@ -3,7 +3,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {AsigRolesDto, AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
 import {DatosSesionDto, ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';

@@ -14,7 +14,7 @@
                 <span class="basis-1/4">{{empleado?.puesto | defaultValue: '---'}}</span>
                 <span class="grow">{{empleado?.auth?.usuario | defaultValue: '---'}}</span>
                 <button mat-icon-button (click)="sesion(empleado)">
-                    <mat-icon color="primary" [svgIcon]="empleado.auth === null? 'add': 'password'"></mat-icon>
+                    <mat-icon color="primary" [svgIcon]="empleado.auth === null? 'heroicons_solid:identification': 'password'"></mat-icon>
                 </button>
             </div>
 
@@ -33,9 +33,9 @@
                                 <div matListItemTitle class="flex flex-col flex-auto">
                                     <span class="flex-auto border-b-2">{{grupo['title']}}</span>
                                     <div class="flex flex-auto flex-col" matListItemLine *ngFor="let expandible of grupo.children">
-                                        <span class="flex-auto">{{expandible['title']}}</span>
+                                        <span class="flex-auto text-lg text-primary">{{expandible['title']}}</span>
                                         <div class="flex flex-col flex-auto" matListItemLine *ngFor="let ruta of expandible.children">
-                                            <div class="ml-8 flex flex-auto items-center justify-between">
+                                            <div class="ml-8 flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
                                                 <span>{{ruta['title']}}</span>
                                                 <mat-checkbox></mat-checkbox>
                                             </div>

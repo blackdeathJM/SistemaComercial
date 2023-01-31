@@ -1,7 +1,7 @@
 import {ConflictException, Injectable, InternalServerErrorException, UnauthorizedException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {EmpleadoDto, EmpleadoType, RegEmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType, RegEmpleadoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 
 @Injectable()
 export class EmpleadoService

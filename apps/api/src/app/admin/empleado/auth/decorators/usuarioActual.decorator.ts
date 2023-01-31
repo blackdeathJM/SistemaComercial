@@ -1,6 +1,6 @@
 import {createParamDecorator, ExecutionContext, InternalServerErrorException} from '@nestjs/common';
 import {GqlExecutionContext} from '@nestjs/graphql';
-import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 
 export const usuarioActualDecorator = createParamDecorator((data: any, context: ExecutionContext) =>
 {

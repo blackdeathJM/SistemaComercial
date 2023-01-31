@@ -5,7 +5,7 @@ import {catchError, finalize, map, of, tap} from 'rxjs';
 import {EmpleadosGQL, EmpleadosSesionGQL} from '#/libs/datos/src';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Injectable} from '@angular/core';
 import {Immutable} from '@angular-ru/cdk/typings';
 

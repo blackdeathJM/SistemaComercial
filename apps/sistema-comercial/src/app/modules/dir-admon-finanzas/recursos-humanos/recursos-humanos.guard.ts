@@ -19,6 +19,7 @@ export class RecursosHumanosGuard implements CanActivate
         {
             return true;
         }
+
         this.ngxTotastService.alertaToast('No cuentas con los privilegios necesario para acceder a este modulo', 'Permiso denegado');
         return false;
     }

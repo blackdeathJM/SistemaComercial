@@ -20,6 +20,12 @@ export class AuthDto implements IAuth
     @IsBoolean({message: 'Activo debe ser booleano'})
     @IsOptional()
     activo: boolean;
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @IsOptional()
+    permisos: string[];
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @IsOptional()
+    controles: string[];
     @Field(() => String, {nullable: true, defaultValue: 'En-linea'})
     @IsNotEmpty({message: 'El valor del estatus es necesario'})
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';

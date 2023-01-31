@@ -12,11 +12,11 @@ import {
     DocsBusquedaGralDto,
     DocRefFolioDto, DocsRefDto
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
-import {EmpleadoDto} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {EmpleadoService} from '@api-admin/empleado.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
 import {DocsSeguimientoPipe} from '@api-general/documentos/docsSeguimiento.pipe';
-import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IEmpleado} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 
 @Resolver(() => DocumentoDto)
 export class DocumentosResolver

@@ -1,6 +1,6 @@
 import {StateRepository} from '@angular-ru/ngxs/decorators';
 import {NgxsOnChanges, Selector, State} from '@ngxs/store';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Injectable} from '@angular/core';
 import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';

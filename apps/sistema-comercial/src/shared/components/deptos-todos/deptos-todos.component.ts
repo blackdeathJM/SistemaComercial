@@ -6,7 +6,7 @@ import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/
 import {AbstractControl, ControlValueAccessor, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {Empleado} from '#/libs/models/src/lib/admin/empleado/empleado';
+import {Empleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado';
 import {DeptoEliminarStore} from '#/apps/sistema-comercial/src/query/deptoEliminar.store';
 import {Select} from '@ngxs/store';
 

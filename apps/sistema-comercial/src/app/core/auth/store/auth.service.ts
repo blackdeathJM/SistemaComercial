@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {IAuth, ICambioContrasena} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Injectable({providedIn: 'root'})

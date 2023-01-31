@@ -2,8 +2,8 @@ import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/gr
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 import {IEmpleado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
-import {AuthDto} from './auth/auth.dto';
-import {ModificadoPorDto} from '../../common/common.dto';
+import {ModificadoPorDto} from '../../../common/common.dto';
+import {AuthDto} from '../../../admin/empleado/auth/auth.dto';
 
 @ObjectType('TelefonoType')
 @InputType('TelefonoInput')

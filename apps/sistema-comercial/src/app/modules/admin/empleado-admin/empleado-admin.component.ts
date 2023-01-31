@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';

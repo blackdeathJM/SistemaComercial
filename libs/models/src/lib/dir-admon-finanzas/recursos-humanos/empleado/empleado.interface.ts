@@ -1,6 +1,6 @@
-import { IModificado } from '../../common/common.interface';
-import {IAuth} from './auth/auth.interface';
-import {IDepto} from '../../dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
+import { IModificado } from '../../../common/common.interface';
+import {IAuth} from '@sistema-comercial/modelos/auth/auth.interface';
+import {IDepto} from '../deptos/depto.interface';
 
 export interface ITelefono
 {

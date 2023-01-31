@@ -7,7 +7,7 @@ import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {TOKEN} from '@s-auth/const';

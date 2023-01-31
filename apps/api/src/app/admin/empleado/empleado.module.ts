@@ -4,7 +4,7 @@ import {EmpleadoResolver} from './empleado.resolver';
 import {MongooseModule} from '@nestjs/mongoose';
 import {AuthModule} from './auth/auth.module';
 import {DeptosService} from '@api-dir-admon-finanzas/deptos.service';
-import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {DeptoDto, SCHEMA_DEPTO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.dto';
 
 @Module({

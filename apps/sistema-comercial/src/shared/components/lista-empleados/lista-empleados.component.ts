@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '
 import {CommonModule} from '@angular/common';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
 import {MatIconModule} from '@angular/material/icon';
