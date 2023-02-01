@@ -1,4 +1,4 @@
-mutation crearRoles($args: RolesInput!)
+mutation crearRoles($args: CrearRolInput!)
 {
     crearRoles(args: $args)
     {

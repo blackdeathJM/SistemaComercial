@@ -1,7 +1,6 @@
 import {compare, prop, required} from '@rxweb/reactive-form-validators';
 import {lowerCase, sanitize} from '@rxweb/sanitizers';
 import {IAuth} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
 
 @sanitize
 export class Auth implements IAuth
@@ -16,7 +15,7 @@ export class Auth implements IAuth
     @lowerCase()
     usuario: string;
     @prop()
-    role: object[] = defaultNavigation;
+    role: object[] = [];
     activo: boolean;
     estatus: 'En-linea';
     controles: string[] = [];

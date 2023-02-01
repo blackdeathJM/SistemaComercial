@@ -47,6 +47,11 @@ export type CambioContrasenaInput = {
   contrasena?: InputMaybe<Scalars['String']>;
 };
 
+export type CrearRolInput = {
+  idEmpleado?: InputMaybe<Scalars['ID']>;
+  roles?: InputMaybe<Array<Scalars['JSONObject']>>;
+};
+
 export type DatosSesionType = {
   __typename?: 'DatosSesionType';
   _id: Scalars['ID'];
@@ -301,7 +306,7 @@ export type MutationCrearEmpleadoArgs = {
 
 
 export type MutationCrearRolesArgs = {
-  args: RolesInput;
+  args: CrearRolInput;
 };
 
 
@@ -588,7 +593,7 @@ export type ActualizarAvatarMutation = { __typename?: 'Mutation', actualizarAvat
 export type FragRolesFragment = { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null };
 
 export type CrearRolesMutationVariables = Exact<{
-  args: RolesInput;
+  args: CrearRolInput;
 }>;
 
 
@@ -1007,7 +1012,7 @@ export const ActualizarAvatarDocument = gql`
     }
   }
 export const CrearRolesDocument = gql`
-    mutation crearRoles($args: RolesInput!) {
+    mutation crearRoles($args: CrearRolInput!) {
   crearRoles(args: $args) {
     ...fragRoles
   }

@@ -26,7 +26,7 @@ importers:
       '@angular/platform-browser': 15.1.2
       '@angular/platform-browser-dynamic': 15.1.2
       '@angular/router': 15.1.2
-      '@apollo/client': ^3.7.5
+      '@apollo/client': ^3.7.6
       '@apollo/server': ^4.3.2
       '@auth0/angular-jwt': ^5.1.2
       '@babel/cli': ^7.20.7
@@ -114,7 +114,7 @@ importers:
       class-validator: ^0.14.0
       cosmiconfig-toml-loader: ^1.0.0
       crypto-js: 4.1.1
-      cypress: ^12.4.1
+      cypress: ^12.5.0
       dotenv: ^16.0.3
       eslint: 8.33.0
       eslint-config-prettier: 8.6.0
@@ -170,7 +170,7 @@ importers:
       ts-morph: ^17.0.1
       ts-node: 10.9.1
       tslib: 2.5.0
-      turbo: ^1.7.0
+      turbo: ^1.7.1
       typescript: 4.9.5
       uuid: ^9.0.0
       webpack: ^5.75.0
@@ -191,7 +191,7 @@ importers:
       '@angular/platform-browser': 15.1.2_d5cqipbc22ng45bbz7rblks63q
       '@angular/platform-browser-dynamic': 15.1.2_nvxdb5l45salvpcyi4ujzyiawy
       '@angular/router': 15.1.2_2e65tvtyrwy7yijl6ersdz3qky
-      '@apollo/client': 3.7.5_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.6_o7paodxqbevdia6ixjcodtofcm
       '@apollo/server': 4.3.2_graphql@16.6.0
       '@auth0/angular-jwt': 5.1.2_@angular+common@15.1.2
       '@datorama/akita': 8.0.0_rxjs@7.8.0+tslib@2.5.0
@@ -219,10 +219,10 @@ importers:
       '@sweetalert2/ngx-sweetalert2': 12.1.0_bulmuavmlfo7dhynvebtv5mh4a
       '@sweetalert2/themes': 5.0.15_sweetalert2@11.7.1
       apexcharts: 3.36.3
-      apollo-angular: 4.2.0_iw6w6fxvapiujo656t4asbk3c4
+      apollo-angular: 4.2.0_mvc5icsqjxjgjekg6dylccabxa
       apollo-server-core: 3.11.1_graphql@16.6.0
       apollo-server-express: 3.11.1_5ha345eiak62qiwwva5z4dp6gu
-      apollo-upload-client: 17.0.0_cl266j5heg6bkjgofoa6a7jfyi
+      apollo-upload-client: 17.0.0_ba63dminijz7gavlx5csxhqyla
       autoprefixer: 10.4.13_postcss@8.4.21
       bcrypt: 5.1.0
       body-parser: 1.20.1
@@ -292,9 +292,9 @@ importers:
       '@nestjs/swagger': 6.1.4_4fhhxyztwhblafku3krlstrun4
       '@nestjs/testing': 9.2.1_wdbvfsxfdwzlwdfiyh2gynjl4m
       '@ngxs/devtools-plugin': 3.7.6_6zz6lp3gpv7uu5yedbjgkuxfgi
-      '@nrwl/angular': 15.6.3_icqqwudjxgtdhrysqt4zaqfy3y
+      '@nrwl/angular': 15.6.3_rrss4i7373b3andwml4ddcnjpa
       '@nrwl/cli': 15.6.3
-      '@nrwl/cypress': 15.6.3_h3lwoo3wfeoegtru62x46kumpa
+      '@nrwl/cypress': 15.6.3_spz2ai2okdo3vjq7hwzoa72viu
       '@nrwl/eslint-plugin-nx': 15.6.3_iik5ngrmivsmpcgpwwshsfwooq
       '@nrwl/jest': 15.6.3_myhpkkcou7qzd7aludm2sgqqoy
       '@nrwl/linter': 15.6.3_64ywuitnk7oxbiagfi6pjvvz3e
@@ -328,7 +328,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0_4vsywjlpuriuw3tl5oq6zy5a64
       chroma-js: 2.4.2
       cosmiconfig-toml-loader: 1.0.0
-      cypress: 12.4.1
+      cypress: 12.5.0
       eslint: 8.33.0
       eslint-config-prettier: 8.6.0_eslint@8.33.0
       eslint-plugin-import: 2.27.5_ufewo3pl5nnmz6lltvjrdi2hii
@@ -345,7 +345,7 @@ importers:
       ts-jest: 29.0.5_ecv55cdbauq6znr7ci2lzguwra
       ts-morph: 17.0.1
       ts-node: 10.9.1_bdgp3l2zgaopogaavxusmetvge
-      turbo: 1.7.0
+      turbo: 1.7.1
       typescript: 4.9.5
       webpack: 5.75.0
 
@@ -1068,8 +1068,8 @@ packages:
       graphql: 16.6.0
     dev: false
 
-  /@apollo/client/3.7.5_o7paodxqbevdia6ixjcodtofcm:
-    resolution: {integrity: sha512-HEAhX2n2Y8Y2BwRr0UdteT94OTM7pn64K5/rTk/oLIdg/h7R2d83LdsCGDxSH5sBiqDqlv9vou4xdyTxxRWj/g==}
+  /@apollo/client/3.7.6_o7paodxqbevdia6ixjcodtofcm:
+    resolution: {integrity: sha512-K0l8+wgcdVDjdgI8O2YuhX1CiQlavGuBp8HR/+PEbc2+jqM/BaVpL0g7YAuXrTW20np/MXHNRDxK20/ujF9hjA==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5
@@ -6879,7 +6879,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/15.6.3_icqqwudjxgtdhrysqt4zaqfy3y:
+  /@nrwl/angular/15.6.3_rrss4i7373b3andwml4ddcnjpa:
     resolution: {integrity: sha512-IHOwDe1T3E35BblBYaUAmQr6iti/HDEnIcHeSCbBcomrDPsMR1RSE1COSDv14dQI90nmU4Jx1eUWiEkoY0FVJA==}
     requiresBuild: true
     peerDependencies:
@@ -6890,7 +6890,7 @@ packages:
         optional: true
     dependencies:
       '@angular-devkit/schematics': 15.1.3_chokidar@3.5.3
-      '@nrwl/cypress': 15.6.3_h3lwoo3wfeoegtru62x46kumpa
+      '@nrwl/cypress': 15.6.3_spz2ai2okdo3vjq7hwzoa72viu
       '@nrwl/devkit': 15.6.3_nx@15.6.3+typescript@4.9.5
       '@nrwl/jest': 15.6.3_myhpkkcou7qzd7aludm2sgqqoy
       '@nrwl/linter': 15.6.3_64ywuitnk7oxbiagfi6pjvvz3e
@@ -6950,7 +6950,7 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/cypress/15.6.3_h3lwoo3wfeoegtru62x46kumpa:
+  /@nrwl/cypress/15.6.3_spz2ai2okdo3vjq7hwzoa72viu:
     resolution: {integrity: sha512-ZPQ60KTkEgCQaIhaoPICiACfufuE8klwkBSl3bbTL5d6QEYlpTb2M1IeHEYZP1aEKXJlC9Kb6al9lB87peNVkQ==}
     peerDependencies:
       cypress: '>= 3 < 13'
@@ -6962,7 +6962,7 @@ packages:
       '@nrwl/linter': 15.6.3_64ywuitnk7oxbiagfi6pjvvz3e
       '@nrwl/workspace': 15.6.3_ixt4l6ptf47gmhhuxcve5dmsda
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.9.5
-      cypress: 12.4.1
+      cypress: 12.5.0
       dotenv: 10.0.0
       semver: 7.3.4
     transitivePeerDependencies:
@@ -7577,7 +7577,7 @@ packages:
   /@types/apollo-upload-client/17.0.2_ouxcabus3txrhbd2fdoqq3qh3e:
     resolution: {integrity: sha512-NphAiBqzZv3iY8Cq+qWyi0QUFFzJ+nVd7QKI/iKV8RfILrpYDL69F/vlhjn4BNxKlmc3LxJHymcf3gFzLBwuZQ==}
     dependencies:
-      '@apollo/client': 3.7.5_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.6_o7paodxqbevdia6ixjcodtofcm
       '@types/extract-files': 8.1.1
       graphql: 16.6.0
     transitivePeerDependencies:
@@ -8683,7 +8683,7 @@ packages:
       svg.select.js: 3.0.1
     dev: false
 
-  /apollo-angular/4.2.0_iw6w6fxvapiujo656t4asbk3c4:
+  /apollo-angular/4.2.0_mvc5icsqjxjgjekg6dylccabxa:
     resolution: {integrity: sha512-P0kNcDnaAtV1Tu7YChY8/No+GS8B1Fsimo/Sx4WoH86n2xweQXzwmxAiNCDnmwn8GRduRP4AiotdeLpFxHPyvA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -8693,7 +8693,7 @@ packages:
       rxjs: ^6.0.0 || ^7.0.0
     dependencies:
       '@angular/core': 15.1.2_rxjs@7.8.0+zone.js@0.12.0
-      '@apollo/client': 3.7.5_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.6_o7paodxqbevdia6ixjcodtofcm
       graphql: 16.6.0
       rxjs: 7.8.0
       tslib: 2.5.0
@@ -8827,14 +8827,14 @@ packages:
       - encoding
     dev: false
 
-  /apollo-upload-client/17.0.0_cl266j5heg6bkjgofoa6a7jfyi:
+  /apollo-upload-client/17.0.0_ba63dminijz7gavlx5csxhqyla:
     resolution: {integrity: sha512-pue33bWVbdlXAGFPkgz53TTmxVMrKeQr0mdRcftNY+PoHIdbGZD0hoaXHvO6OePJAkFz7OiCFUf98p1G/9+Ykw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >= 16.0.0}
     peerDependencies:
       '@apollo/client': ^3.0.0
       graphql: 14 - 16
     dependencies:
-      '@apollo/client': 3.7.5_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.6_o7paodxqbevdia6ixjcodtofcm
       extract-files: 11.0.0
       graphql: 16.6.0
     dev: false
@@ -10301,8 +10301,8 @@ packages:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
     dev: true
 
-  /cypress/12.4.1:
-    resolution: {integrity: sha512-IFMPzc1RJ22Fac+YbdqywtpcuqZXqQJh+JqZDXn+A15zG/dw99njfv8f0bTvD+WAHhP118+xWG/VwilkFg1rnA==}
+  /cypress/12.5.0:
+    resolution: {integrity: sha512-CRo1DIr0LoCE3SNb/kJ0TZM9dIdiy7fNlRp/YoPfAv+XOKZV27LQ7zZUi4lMmHIEo3K0dAN5+tJ/8eZc/Jmbyg==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
@@ -12681,7 +12681,7 @@ packages:
       graphql: 16.6.0
       tslib: 2.5.0
     optionalDependencies:
-      '@apollo/client': 3.7.5_o7paodxqbevdia6ixjcodtofcm
+      '@apollo/client': 3.7.6_o7paodxqbevdia6ixjcodtofcm
     transitivePeerDependencies:
       - graphql-ws
       - react
@@ -18671,65 +18671,65 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /turbo-darwin-64/1.7.0:
-    resolution: {integrity: sha512-hSGAueSf5Ko8J67mpqjpt9FsP6ePn1nMcl7IVPoJq5dHsgX3anCP/BPlexJ502bNK+87DDyhQhJ/LPSJXKrSYQ==}
+  /turbo-darwin-64/1.7.1:
+    resolution: {integrity: sha512-H2txI1gkCQpav+5qGVxB4RzPTTqgDmzbXaJXbjYDR8cS0X/Oq5STea6fRTfumYR2x86Gr3co0V4fQfwILnfvYg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.7.0:
-    resolution: {integrity: sha512-BLLOW5W6VZxk5+0ZOj5AO1qjM0P5isIgjbEuyAl8lHZ4s9antUbY4CtFrspT32XxPTYoDl4UjviPMcSsbcl3WQ==}
+  /turbo-darwin-arm64/1.7.1:
+    resolution: {integrity: sha512-T7yLTMAdnwfaF9H3uBizztLld1aK/gYiNubpl4HCbMsE/aYEbITtNx1dAFQnjRiPHS4dNYK4gIKc9nnAsnfkxg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.7.0:
-    resolution: {integrity: sha512-aw2qxmfZa+kT87SB3GNUoFimqEPzTlzlRqhPgHuAAT6Uf0JHnmebPt4K+ZPtDNl5yfVmtB05bhHPqw+5QV97Yg==}
+  /turbo-linux-64/1.7.1:
+    resolution: {integrity: sha512-kQw+jEpEVUskfPy+7rMF5x6e9Za9AbdD9P7bSo1JuV+tZgUOaFc5iC9Zyj26qhc0Zzl4qZecZ9YccNbZKZ9yCQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.7.0:
-    resolution: {integrity: sha512-AJEx2jX+zO5fQtJpO3r6uhTabj4oSA5ZhB7zTs/rwu/XqoydsvStA4X8NDW4poTbOjF7DcSHizqwi04tSMzpJw==}
+  /turbo-linux-arm64/1.7.1:
+    resolution: {integrity: sha512-PLe0XBJ/YEmiQh+jDcmTRZlxVtkY0CerAu/AKE/c9hCnp6shYqG+peyyuCEzIssUCij2A5yhVd7SIOTQGDzFrQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.7.0:
-    resolution: {integrity: sha512-ewj7PPv2uxqv0r31hgnBa3E5qwUu7eyVRP5M1gB/TJXfSHduU79gbxpKCyxIZv2fL/N2/3U7EPOQPSZxBAoljA==}
+  /turbo-windows-64/1.7.1:
+    resolution: {integrity: sha512-70ndrkQomG4JlAAaflVL+Io1msItHiZUq/zf88Nk4z30QSqqC0Zl4rOpUPE3v1IYSO48bUabshySZa9/aTPHhw==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.7.0:
-    resolution: {integrity: sha512-LzjOUzveWkvTD0jP8DBMYiAnYemmydsvqxdSmsUapHHJkl6wKZIOQNSO7pxsy+9XM/1/+0f9Y9F9ZNl5lePTEA==}
+  /turbo-windows-arm64/1.7.1:
+    resolution: {integrity: sha512-344XY2SrugfHtIe06Vbi17yZ4SRkPvWghvO/gUgUkgSZN06oYj0SHN2+z8pnLkBTfgkt2zBm2cqFFpVFwa8F2A==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.7.0:
-    resolution: {integrity: sha512-cwympNwQNnQZ/TffBd8yT0i0O10Cf/hlxccCYgUcwhcGEb9rDjE5thDbHoHw1hlJQUF/5ua7ERJe7Zr0lNE/ww==}
+  /turbo/1.7.1:
+    resolution: {integrity: sha512-0ngDU5+2/wLuvTKpc2ZyDtO6aPeHTa6ASlQGySCx+lwSDiE4fCkRVvNINDtT1HgdO/bEo2CQkLoen/Qjf7wWiQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.7.0
-      turbo-darwin-arm64: 1.7.0
-      turbo-linux-64: 1.7.0
-      turbo-linux-arm64: 1.7.0
-      turbo-windows-64: 1.7.0
-      turbo-windows-arm64: 1.7.0
+      turbo-darwin-64: 1.7.1
+      turbo-darwin-arm64: 1.7.1
+      turbo-linux-64: 1.7.1
+      turbo-linux-arm64: 1.7.1
+      turbo-windows-64: 1.7.1
+      turbo-windows-arm64: 1.7.1
     dev: true
 
   /tweetnacl/0.14.5:

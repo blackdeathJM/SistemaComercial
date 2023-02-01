@@ -50,6 +50,7 @@ export class AuthService
         {
             return of(false);
         }
+
         if (isNotNil(this.stateAuth.snapshot))
         {
             return of(true);

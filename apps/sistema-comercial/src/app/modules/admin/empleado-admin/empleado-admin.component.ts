@@ -1,26 +1,24 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {debounceTime, Subscription, switchMap} from 'rxjs';
+import {debounceTime, Observable, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
-import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import {MatSidenavModule} from '@angular/material/sidenav';
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatListModule} from '@angular/material/list';
+import {Select} from '@ngxs/store';
+import {StateRoles} from '@s-core/auth/store/roles.store';
 
 @Component({
     standalone: true,
@@ -30,14 +28,11 @@ import {MatListModule} from '@angular/material/list';
             ReactiveFormsModule,
             RxReactiveFormsModule,
             MatInputModule,
-            MatDividerModule,
             MatButtonModule,
             MatIconModule,
-            MatSidenavModule,
             ImgDefectoPipe,
             DefaultValuePipeModule,
             NgxUiLoaderModule,
-            MatExpansionModule,
             MatCheckboxModule,
             FuseCardModule,
             MatListModule,
@@ -49,7 +44,7 @@ import {MatListModule} from '@angular/material/list';
 })
 export class EmpleadoAdminComponent implements OnInit, OnDestroy
 {
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @Select(StateRoles.roles) roles$: Observable<StateRoles>;
     ctrlBuscar: FormControl = new FormControl();
     ngxLoader = ngxLoaderEmp;
     sub = new Subscription();

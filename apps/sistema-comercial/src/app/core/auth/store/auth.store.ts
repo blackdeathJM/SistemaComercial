@@ -22,9 +22,4 @@ export class StateAuth extends NgxsImmutableDataRepository<IDatosSesion> impleme
     {
         return state;
     }
-
-    public ngxsOnInit(): void
-    {
-        console.log('NgxsOnInit');
-    }
 }

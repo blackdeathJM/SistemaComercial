@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {CrearRolDto, RolesAsigDto, RolesDto, RolesType} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
 import {Model} from 'mongoose';
@@ -14,6 +14,11 @@ export class RolesService
     {
         try
         {
+            const buscarIdEmpleado = await this.rolesAsig({idEmpleado: roles.idEmpleado});
+            if (!buscarIdEmpleado)
+            {
+                return null;
+            }
             return await this.roles.create(roles);
         } catch (e)
         {
