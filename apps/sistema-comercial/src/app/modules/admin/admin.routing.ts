@@ -12,7 +12,14 @@ export const adminRouting: Routes =
                 [
                     {
                         path: 'empleados-sesion',
-                        loadComponent: () => import('@s-admin/empleado-admin/empleado-admin.component').then(c => c.EmpleadoAdminComponent)
+                        loadComponent: () => import('@s-admin/empleado-admin/empleado-admin.component').then(c => c.EmpleadoAdminComponent),
+                        children:
+                            [
+                                {
+                                    path: 'lista-roles/:_id',
+                                    loadComponent: () => import('@s-admin/empleado-admin/lista-roles/lista-roles.component').then(c => c.ListaRolesComponent)
+                                }
+                            ]
                     }
                 ]
         }

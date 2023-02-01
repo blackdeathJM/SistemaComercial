@@ -1,53 +1,73 @@
-<article class="absolute inset-0 flex flex-auto flex-col p-4 overflow-hidden">
-    <section class="relative flex consultas">
-        <mat-form-field class="flex-auto">
-            <mat-label>Filtrar empleados</mat-label>
-            <input matInput [formControl]="ctrlBuscar" placeholder="Introduce el nombre de un empleado">
-        </mat-form-field>
-    </section>
-
-    <section class="relative overflow-y-auto pt-2" ngxUiLoaderBlurred>
-        <fuse-card class="flex flex-col flex-auto my-2 p-2" #fuseCard *ngFor="let empleado of entityEmpleado.entitiesArray$ | async">
-            <div class="flex items-center">
-                <span class="text-lg font-bold basis-1/5">{{empleado.nombreCompleto}}</span>
-                <span class="basis-1/4">{{empleado?.deptoEmpleado?.nombre | defaultValue: '---'}}</span>
-                <span class="basis-1/4">{{empleado?.puesto | defaultValue: '---'}}</span>
-                <span class="grow">{{empleado?.auth?.usuario | defaultValue: '---'}}</span>
-                <button mat-icon-button (click)="sesion(empleado)">
-                    <mat-icon color="primary" [svgIcon]="empleado.auth === null? 'heroicons_solid:identification': 'password'"></mat-icon>
-                </button>
+<mat-drawer-container class="w-full" (backdropClick)="backDropClick()">
+    <mat-drawer class="w-120" [opened]="abriPanel" mode="side" position="end">
+        <!-- Header -->
+        <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+            <!-- Background -->
+            <img class="absolute inset-0 object-cover w-full h-full" src="assets/images/fondos/fondoPerfilEmpleado.jpg" alt="">
+            <!-- Close button -->
+            <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
+                <a mat-icon-button [matTooltip]="'Cerrar'" (click)="abriPanel=false">
+                    <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                </a>
             </div>
+        </div>
 
-            <div class="mt-3 -mx-3 border-t-2">
-                <button class="px-3 mt-1" mat-button color="primary" (click)="fuseCard.expanded = !fuseCard.expanded">
-                    <span class="mr-1">Permisos</span>
-                    <mat-icon class="icon-size-5" *ngIf="!fuseCard.expanded" [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
-                    <mat-icon class="icon-size-5" *ngIf="fuseCard.expanded" [svgIcon]="'heroicons_solid:chevron-up'"></mat-icon>
-                </button>
+        <!-- Contact -->
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0" *ngIf="empleadoSeleccionado">
+            <div class="w-full max-w-3xl">
+                <!-- Avatar and actions -->
+                <div class="flex flex-auto items-end -mt-16">
+                    <!-- Avatar -->
+                    <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
+                        <img class="object-cover w-full h-full" [src]="empleadoSeleccionado?.avatar | imgDefecto">
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex items-center ml-auto mb-1">
+                        <button mat-stroked-button [disabled]="empleadoSeleccionado.auth !== null">
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
+                            <span class="ml-2">Asignar sesion</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div class="mt-3 text-xl truncate">{{empleadoSeleccionado.nombreCompleto}}</div>
+
+                <div class="flex flex-col mt-2 pt-2 border-t space-y-2">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
-            <ng-container fuseCardExpansion>
-                <ng-container *ngIf="empleado.auth !== null && empleado.auth.usuario !== 'administrador'">
-                    <section class="flex flex-auto flex-col">
-                        <mat-list>
-                            <mat-list-item *ngFor="let grupo of empleado.auth.roles">
-                                <div matListItemTitle class="flex flex-col flex-auto">
-                                    <span class="flex-auto border-b-2">{{grupo['title']}}</span>
-                                    <div class="flex flex-auto flex-col" matListItemLine *ngFor="let expandible of grupo.children">
-                                        <span class="flex-auto text-lg text-primary">{{expandible['title']}}</span>
-                                        <div class="flex flex-col flex-auto" matListItemLine *ngFor="let ruta of expandible.children">
-                                            <div class="ml-8 flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
-                                                <span>{{ruta['title']}}</span>
-                                                <mat-checkbox></mat-checkbox>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </mat-list-item>
-                        </mat-list>
-                    </section>
-                </ng-container>
-            </ng-container>
-        </fuse-card>
-        <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
-    </section>
-</article>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <article class="absolute inset-0 flex flex-auto flex-col p-4 overflow-hidden">
+            <section class="relative flex consultas">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Filtrar empleados</mat-label>
+                    <input matInput [formControl]="ctrlBuscar" placeholder="Introduce el nombre de un empleado">
+                </mat-form-field>
+            </section>
+
+            <section class="relative overflow-y-auto pt-2 bg-zinc-800" ngxUiLoaderBlurred>
+                <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b" *ngFor="let empleado of entityEmpleado.entitiesArray$ | async">
+                    <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                        <img class="object-cover w-full h-full" [src]="empleado?.avatar | imgDefecto" alt="Contact avatar"/>
+                    </div>
+                    <div class="min-w-0 ml-4 flex flex-auto items-center">
+                        <span class="text-lg font-bold basis-1/5">{{empleado.nombreCompleto}}</span>
+                        <span class="basis-1/4">{{empleado?.deptoEmpleado?.nombre | defaultValue: '---'}}</span>
+                        <span class="basis-1/4">{{empleado?.puesto | defaultValue: '---'}}</span>
+                        <span class="grow">{{empleado?.auth?.usuario | defaultValue: '---'}}</span>
+                        <a mat-icon-button (click)="listaRoles(empleado)">
+                            <mat-icon svgIcon="info" color="primary" matTooltip="Mostrar informacion de los roles para este usuario"></mat-icon>
+                        </a>
+                        <button mat-icon-button color="primary" [disabled]="empleado.auth === null">
+                            <mat-icon [svgIcon]="'password'"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
+            </section>
+        </article>
+    </mat-drawer-content>
+</mat-drawer-container>

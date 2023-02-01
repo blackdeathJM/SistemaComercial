@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
@@ -9,7 +9,7 @@ import {debounceTime, Observable, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MatDialog} from '@angular/material/dialog';
-import {RegistroSesionComponent} from '@s-admin/empleado-admin/components/registro-sesion/registro-sesion.component';
+import {RegistroSesionComponent} from '@s-admin/empleado-admin/registro-sesion/registro-sesion.component';
 import {MatButtonModule} from '@angular/material/button';
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
@@ -19,6 +19,9 @@ import {FuseCardModule} from '@s-fuse/card';
 import {MatListModule} from '@angular/material/list';
 import {Select} from '@ngxs/store';
 import {StateRoles} from '@s-core/auth/store/roles.store';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     standalone: true,
@@ -36,11 +39,14 @@ import {StateRoles} from '@s-core/auth/store/roles.store';
             MatCheckboxModule,
             FuseCardModule,
             MatListModule,
+            MatSidenavModule,
+            RouterOutlet,
+            RouterLink,
+            MatTooltipModule,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
-    styleUrls: ['./empleado-admin.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./empleado-admin.component.scss']
 })
 export class EmpleadoAdminComponent implements OnInit, OnDestroy
 {
@@ -49,8 +55,9 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     ngxLoader = ngxLoaderEmp;
     sub = new Subscription();
     abriPanel = false;
+    empleadoSeleccionado: IResolveEmpleado;
 
-    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog)
+    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute)
     {
     }
 
@@ -77,5 +84,17 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     {
         this.sub.unsubscribe();
         this.abriPanel = false;
+    }
+
+    listaRoles(empleado: IResolveEmpleado): void
+    {
+        this.empleadoSeleccionado = empleado;
+        this.router.navigate(['lista-roles', empleado._id], {relativeTo: this.activatedRoute}).then(() => this.abriPanel = true);
+
+    }
+
+    backDropClick(): void
+    {
+        console.log('backDropClick');
     }
 }

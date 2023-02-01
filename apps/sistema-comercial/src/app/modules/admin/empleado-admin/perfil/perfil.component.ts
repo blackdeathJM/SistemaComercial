@@ -11,14 +11,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from '@rxweb/reactive-form-validators';
 import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL} from '#/libs/datos/src';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
-import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
+import {GeneralService} from '@s-services/general.service';
 import {finalize} from 'rxjs';
 import {getDownloadURL} from '@angular/fire/storage';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {NgxToastService} from '@s-services/ngx-toast.service';
 
 @Component({
     selector: 'app-perfil',

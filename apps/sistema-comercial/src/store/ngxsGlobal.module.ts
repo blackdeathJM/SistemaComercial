@@ -8,12 +8,13 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.store';
 import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {StateRoles} from '@s-core/auth/store/roles.store';
 
 @NgModule({
     imports:
         [
             NgxsModule.forRoot(
-                [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion], {
+                [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion, StateRoles], {
                     developmentMode: !environment.production
                 }),
             NgxsDataPluginModule.forRoot([NGXS_DATA_STORAGE_PLUGIN, NGXS_DATA_STORAGE_CONTAINER]),

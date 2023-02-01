@@ -1,0 +1,20 @@
+<ng-container *ngIf="stateRoles.state$ | async as roles">
+    <section class="flex flex-auto flex-col">
+        <mat-list>
+            <mat-list-item *ngFor="let grupo of roles.roles">
+                <div matListItemTitle class="flex flex-col flex-auto">
+                    <span class="flex-auto border-b-2">{{grupo['title']}}</span>
+                    <div class="flex flex-auto flex-col" matListItemLine *ngFor="let expandible of grupo.children">
+                        <span class="flex-auto text-lg text-primary">{{expandible['title']}}</span>
+                        <div class="flex flex-col flex-auto" matListItemLine *ngFor="let ruta of expandible.children">
+                            <div class="ml-8 flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
+                                <span>{{ruta['title']}}</span>
+                                <mat-checkbox></mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </section>
+</ng-container>
