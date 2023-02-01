@@ -1,4 +1,4 @@
-import {Schema, SchemaFactory} from '@nestjs/mongoose';
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {ArgsType, Field, ID, InputType, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {GraphQLJSONObject} from 'graphql-scalars';
@@ -13,9 +13,11 @@ export class RolesDto implements IRoles
     @IsOptional()
     _id: string;
     @Field(() => ID, {nullable: true})
+    @Prop()
     @IsNotEmpty({message: 'El id del empleado es necesario'})
     idEmpleado: string;
     @Field(() => [GraphQLJSONObject], {nullable: true, defaultValue: []})
+    @Prop()
     @IsNotEmpty({message: 'Es necesario los roles'})
     roles: object[];
 }

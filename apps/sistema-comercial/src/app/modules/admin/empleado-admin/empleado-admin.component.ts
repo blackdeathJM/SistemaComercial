@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
@@ -52,9 +52,11 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     ngxLoader = ngxLoaderEmp;
     sub = new Subscription();
     abriPanel = false;
+    deshabilitar = false;
     empleadoSeleccionado: IResolveEmpleado;
 
-    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute)
+    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
+                private cdr: ChangeDetectorRef)
     {
     }
 
@@ -87,6 +89,10 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     crearSesion(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.patchState({empleado});
-        this.mdr.open(RegistroSesionComponent, {width: '40%'});
+        this.mdr.open(RegistroSesionComponent, {width: '40%'}).afterClosed().subscribe((res) =>
+        {
+            this.deshabilitar = res;
+            this.cdr.markForCheck();
+        });
     }
 }

@@ -15,10 +15,9 @@ export class Auth implements IAuth
     @lowerCase()
     usuario: string;
     @prop()
-    role: object[] = [];
+    roles: object[] = [];
     activo: boolean;
     estatus: 'En-linea';
     controles: string[] = [];
     guards: string[] = [];
-    roles: object[] = [];
 }

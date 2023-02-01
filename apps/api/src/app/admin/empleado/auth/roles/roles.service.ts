@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {CrearRolDto, RolesAsigDto, RolesDto, RolesType} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
 import {Model} from 'mongoose';
@@ -10,21 +10,27 @@ export class RolesService
     {
     }
 
-    async crearRoles(roles: CrearRolDto): Promise<RolesDto>
+    async crearRoles(args: CrearRolDto): Promise<RolesDto>
     {
         try
         {
-            const buscarIdEmpleado = await this.rolesAsig({idEmpleado: roles.idEmpleado});
-            if (!buscarIdEmpleado)
+            const buscarIdEmpleado = await this.rolesAsig({idEmpleado: args.idEmpleado});
+            if (buscarIdEmpleado)
             {
                 return null;
             }
-            return await this.roles.create(roles);
+
+            return await this.roles.create(args);
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
+
+    // async actRoles(args:):Promise<RolesDto>
+    // {
+    //
+    // }
 
     async rolesAsig(idEmpleado: RolesAsigDto): Promise<RolesDto>
     {

@@ -4,7 +4,7 @@ import {SingleExecutionResult} from '@apollo/client';
 import {finalize, Observable, tap} from 'rxjs';
 import {StateRoles} from '@s-core/auth/store/roles.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import {IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 @Injectable({providedIn: 'root'})
@@ -14,9 +14,9 @@ export class RolesService
     {
     }
 
-    crearRoles(idEmpleado: string, roles: object[]): Observable<SingleExecutionResult<CrearRolesMutation>>
+    crearRoles(args: TCrearRol): Observable<SingleExecutionResult<CrearRolesMutation>>
     {
-        return this.crearRolesGQL.mutate({args: {idEmpleado, roles}}).pipe(tap((res) =>
+        return this.crearRolesGQL.mutate({args}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
@@ -31,11 +31,8 @@ export class RolesService
         this.ngxUiLoaderService.startLoader(ngxLoader);
         return this.rolesAsigGQL.fetch({idEmpleado}).pipe(finalize(() => this.ngxUiLoaderService.stopLoader(ngxLoader)), tap((res) =>
         {
-            if (res.data)
-            {
-                const rolesEmpleado = $cast<IRoles>(res.data.rolesAsig);
-                this.stateRoles.setState(rolesEmpleado);
-            }
+            const rolesEmpleado = $cast<IRoles>(res.data.rolesAsig);
+            this.stateRoles.setState(rolesEmpleado);
         }));
     }
 }

@@ -9,13 +9,13 @@ export class RolesResolver
     {
     }
 
-    @Mutation(() => RolesDto)
+    @Mutation(() => RolesDto, {nullable: true})
     async crearRoles(@Args('args') args: CrearRolDto): Promise<RolesDto>
     {
         return await this.rolesService.crearRoles(args);
     }
 
-    @Query(() => RolesDto)
+    @Query(() => RolesDto, {nullable: true})
     async rolesAsig(@Args() args: RolesAsigDto): Promise<RolesDto>
     {
         return await this.rolesService.rolesAsig(args);

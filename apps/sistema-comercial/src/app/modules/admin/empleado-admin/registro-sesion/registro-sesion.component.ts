@@ -3,7 +3,7 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {ActualizarContrasenaAdminGQL, RegistroSesionGQL} from '#/libs/datos/src';
-import {finalize} from 'rxjs';
+import {concatMap, finalize} from 'rxjs';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
@@ -18,20 +18,15 @@ import {isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {Auth} from '@s-admin/empleado-admin/models/auth';
 import {AuthService} from '@s-core/auth/store/auth.service';
+import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
+import {RolesService} from '@s-core/auth/store/roles.service';
 
 @Component({
     standalone: true,
     imports:
         [
-            CommonModule,
-            MatDialogModule,
-            ReactiveFormsModule,
-            RxReactiveFormsModule,
-            MatFormFieldModule,
-            MatInputModule,
-            RegistrosComponent,
-            TrimDirective,
-            NgxTrimDirectiveModule,
+            CommonModule, MatDialogModule, ReactiveFormsModule, RxReactiveFormsModule, MatFormFieldModule, MatInputModule, RegistrosComponent, TrimDirective, NgxTrimDirectiveModule
         ],
     selector: 'app-registro-sesion',
     templateUrl: './registro-sesion.component.html',
@@ -44,7 +39,8 @@ export class RegistroSesionComponent implements OnInit
     soloLectura = false;
 
     constructor(private fb: RxFormBuilder, public mdr: MatDialogRef<RegistroSesionComponent>, private registroSesionGQL: RegistroSesionGQL, private ngxToastService: NgxToastService,
-                private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore, private authService: AuthService)
+                private actualizarPassGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore, private authService: AuthService,
+                private rolesService: RolesService)
     {
     }
 
@@ -96,10 +92,21 @@ export class RegistroSesionComponent implements OnInit
                     valorAnterior: [{}],
                     valorActual: [{}]
                 };
-            this.authService.registroSesion(this.entityEmpleado.snapshot.empleado._id, resto, modificadoPor).pipe(finalize(() =>
+            this.authService.registroSesion(this.entityEmpleado.snapshot.empleado._id, resto, modificadoPor).pipe(concatMap((res) =>
             {
-                this.cargandoDatos = false;
-                this.mdr.close();
+                if (isNotNil(res.data.registroSesion))
+                {
+                    const args: TCrearRol =
+                        {
+                            idEmpleado: res.data.registroSesion._id,
+                            roles: defaultNavigation
+                        };
+                    return this.rolesService.crearRoles(args).pipe(finalize(() =>
+                    {
+                        this.cargandoDatos = false;
+                        this.mdr.close(true);
+                    }));
+                }
             })).subscribe();
         }
     }

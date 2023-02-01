@@ -2,14 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {MatListModule} from '@angular/material/list';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import {RolesService} from '@s-core/auth/store/roles.service';
 import {StateRoles} from '@s-core/auth/store/roles.store';
-import {concatMap, finalize, Observable, Subscription} from 'rxjs';
-import {IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
-import {Select} from '@ngxs/store';
+import {concatMap, Subscription} from 'rxjs';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {SinDatosComponent} from "@s-shared/sin-datos/sin-datos.component";
+import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 
 @Component({
     selector: 'app-lista-roles',
@@ -20,7 +18,6 @@ import {SinDatosComponent} from "@s-shared/sin-datos/sin-datos.component";
 })
 export class ListaRolesComponent implements OnInit, OnDestroy
 {
-    // @Select(StateRoles.roles) roles$: Observable<IRoles>;
     ngxLoader: 'listaRoles';
     sub = new Subscription();
 
@@ -34,11 +31,17 @@ export class ListaRolesComponent implements OnInit, OnDestroy
         // this.activatedRoute.paramMap.subscribe(res => console.log(res));
 
         this.sub.add(this.activatedRoute.params.pipe(concatMap(res =>
-            this.rolesService.rolesAsig(res._id, this.ngxLoader))).pipe(finalize(() => console.log('Tambien finaliza'))).subscribe());
+            this.rolesService.rolesAsig(res._id, this.ngxLoader))).subscribe());
     }
 
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+    }
+
+    cambioChk(e: MatCheckboxChange, ruta: Element, grupo: object): void
+    {
+        ruta['acceso'] = e;
+        console.log('::::::::::', grupo);
     }
 }

@@ -10,7 +10,7 @@
                             <div class="flex flex-col flex-auto" matListItemLine *ngFor="let ruta of expandible.children">
                                 <div class="ml-8 flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
                                     <span>{{ruta['title']}}</span>
-                                    <mat-checkbox></mat-checkbox>
+                                    <mat-checkbox color="primary" (change)="cambioChk($event, ruta, grupo)"></mat-checkbox>
                                 </div>
                             </div>
                         </div>

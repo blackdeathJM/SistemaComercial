@@ -433,7 +433,7 @@ export type Query = {
   filtrarDeptos: Array<DeptoType>;
   filtrarEmpleados: Array<EmpleadoType>;
   notificaciones?: Maybe<Array<NotificacionType>>;
-  rolesAsig: RolesType;
+  rolesAsig?: Maybe<RolesType>;
 };
 
 
@@ -604,7 +604,7 @@ export type RolesAsigQueryVariables = Exact<{
 }>;
 
 
-export type RolesAsigQuery = { __typename?: 'Query', rolesAsig: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+export type RolesAsigQuery = { __typename?: 'Query', rolesAsig?: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } | null };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null };
 
