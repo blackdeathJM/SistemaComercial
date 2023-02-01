@@ -23,7 +23,7 @@
                     </div>
                     <!-- Actions -->
                     <div class="flex items-center ml-auto mb-1">
-                        <button mat-stroked-button [disabled]="empleadoSeleccionado.auth !== null">
+                        <button mat-stroked-button [disabled]="empleadoSeleccionado.auth !== null" (click)="crearSesion(empleadoSeleccionado)">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
                             <span class="ml-2">Asignar sesion</span>
                         </button>

@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {debounceTime, Observable, Subscription, switchMap} from 'rxjs';
+import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MatDialog} from '@angular/material/dialog';
@@ -17,8 +17,6 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatListModule} from '@angular/material/list';
-import {Select} from '@ngxs/store';
-import {StateRoles} from '@s-core/auth/store/roles.store';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -50,7 +48,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class EmpleadoAdminComponent implements OnInit, OnDestroy
 {
-    @Select(StateRoles.roles) roles$: Observable<StateRoles>;
     ctrlBuscar: FormControl = new FormControl();
     ngxLoader = ngxLoaderEmp;
     sub = new Subscription();
@@ -69,17 +66,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
-    sesion(empleado: IResolveEmpleado): void
-    {
-        this.entityEmpleado.patchState({empleado});
-        this.mdr.open(RegistroSesionComponent, {width: '40%'});
-    }
-
-    actDes(empleado: IResolveEmpleado): void
-    {
-
-    }
-
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
@@ -96,5 +82,11 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     backDropClick(): void
     {
         console.log('backDropClick');
+    }
+
+    crearSesion(empleado: IResolveEmpleado): void
+    {
+        this.entityEmpleado.patchState({empleado});
+        this.mdr.open(RegistroSesionComponent, {width: '40%'});
     }
 }

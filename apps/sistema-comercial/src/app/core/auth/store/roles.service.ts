@@ -5,12 +5,12 @@ import {finalize, Observable, tap} from 'rxjs';
 import {StateRoles} from '@s-core/auth/store/roles.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
-import {NgxToastService} from '@s-services/ngx-toast.service';
+import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 @Injectable({providedIn: 'root'})
 export class RolesService
 {
-    constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxToast: NgxToastService)
+    constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService)
     {
     }
 
@@ -26,9 +26,10 @@ export class RolesService
         }));
     }
 
-    rolesAsig(idEmpleado: string): Observable<SingleExecutionResult<RolesAsigQuery>>
+    rolesAsig(idEmpleado: string, ngxLoader: string): Observable<SingleExecutionResult<RolesAsigQuery>>
     {
-        return this.rolesAsigGQL.fetch({idEmpleado}).pipe(finalize(() => console.log('finaliza correctamente')), tap((res) =>
+        this.ngxUiLoaderService.startLoader(ngxLoader);
+        return this.rolesAsigGQL.fetch({idEmpleado}).pipe(finalize(() => this.ngxUiLoaderService.stopLoader(ngxLoader)), tap((res) =>
         {
             if (res.data)
             {
