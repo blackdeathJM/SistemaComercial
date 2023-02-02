@@ -21,17 +21,16 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
                 envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
-                installSubscriptionHandlers: true,
                 driver: ApolloDriver,
-                resolvers:
-                    {
-                        Upload: GraphQLUpload
-                    },
-                // eslint-disable-next-line @typescript-eslint/naming-convention
+                installSubscriptionHandlers: true,
                 subscriptions: {
                     'graphql-ws': true,
                     'subscriptions-transport-ws': true
                 },
+                resolvers:
+                    {
+                        Upload: GraphQLUpload
+                    },
                 autoSchemaFile: 'apps/api/schema.graphql',
                 cors: {origin: '*'},
                 buildSchemaOptions:

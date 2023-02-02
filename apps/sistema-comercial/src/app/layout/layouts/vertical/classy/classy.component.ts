@@ -6,7 +6,6 @@ import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Navegation} from '@s-core/navigation/navigation.types';
-import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 
 @Component({
@@ -16,14 +15,13 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
-    @Select(StateAuth.sesionActual)
     usuario$: Observable<IDatosSesion>;
     isScreenSmall: boolean;
     navigation: Navegation;
     imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: StateAuth,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }

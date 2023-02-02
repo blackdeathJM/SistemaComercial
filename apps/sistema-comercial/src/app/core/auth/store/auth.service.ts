@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ActualizarContrasenaAdminGQL, ActualizarContrasenaAdminMutation, LoginGQL, RegistroSesionGQL, RegistroSesionMutation} from '#/libs/datos/src';
+import {
+    ActualizarContrasenaAdminGQL, ActualizarContrasenaAdminMutation, LoginGQL, RegistroSesionGQL, RegistroSesionMutation, RolCambiadoGQL,
+    RolCambiadoSubscription
+} from '#/libs/datos/src';
 import {Observable, of, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {ILogin, ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
@@ -9,17 +12,18 @@ import {TOKEN} from '@s-auth/const';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {IAuth, ICambioContrasena} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {IAuth, ICambioContrasena, IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {SubscriptionResult} from 'apollo-angular';
 
 @Injectable({providedIn: 'root'})
 export class AuthService
 {
-    constructor(private jwtHelperService: JwtHelperService, private loginGQL: LoginGQL, private ngxToast: NgxToastService, private router: Router,
-                private stateAuth: StateAuth, private activatedRoute: ActivatedRoute, private actualizarContrasenaAdminGQL: ActualizarContrasenaAdminGQL,
-                private registroSesionGQL: RegistroSesionGQL, private entityEmpleado: EntityEmpleadoStore)
+    constructor(private jwtHelperService: JwtHelperService, private loginGQL: LoginGQL, private ngxToast: NgxToastService, private router: Router, private rolCambiadoGQL: RolCambiadoGQL,
+                private stateAuth: StateAuth, private activatedRoute: ActivatedRoute, private actPassGQL: ActualizarContrasenaAdminGQL, private registroSesionGQL: RegistroSesionGQL,
+                private entityEmpleado: EntityEmpleadoStore)
     {
     }
 
@@ -62,7 +66,7 @@ export class AuthService
 
     actualizarContrasena(datos: ICambioContrasena, modificadoPor: IModificado): Observable<SingleExecutionResult<ActualizarContrasenaAdminMutation>>
     {
-        return this.actualizarContrasenaAdminGQL.mutate({datos, modificadoPor}).pipe(tap((res) =>
+        return this.actPassGQL.mutate({datos, modificadoPor}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
@@ -80,6 +84,20 @@ export class AuthService
                 const changes = $cast<IResolveEmpleado>(res.data.registroSesion);
                 this.entityEmpleado.updateOne({id: changes._id, changes});
                 this.ngxToast.satisfactorioToast('La sesion fue asignada con exito', 'Asignacion de sesion');
+            }
+        }));
+    }
+
+    rolCambiado(_id: string): Observable<SubscriptionResult<RolCambiadoSubscription>>
+    {
+        return this.rolCambiadoGQL.subscribe({_id}).pipe(tap((res) =>
+        {
+            console.log('.....', res.data.rolCambiado.datosSesion);
+            if (isNotNil(res.data))
+            {
+                const rolCambiado = $cast<IDatosSesion>(res.data.rolCambiado.datosSesion);
+                this.stateAuth.setState(rolCambiado);
+                this.ngxToast.infoToast('Tus permisos fueron cambiados', 'Permisos');
             }
         }));
     }

@@ -2,21 +2,21 @@ import {Args, Context, Mutation, Resolver, Subscription} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
 import {UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from './guards/gql-auth.guard';
-import {PubSub} from 'graphql-subscriptions';
 import {EmpleadoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
-import {ILoginRespuesta, LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {LoginDto, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
+import {PubSub} from 'graphql-subscriptions';
+
+export const subRoles: PubSub = new PubSub();
 
 @Resolver(() => AuthDto)
 export class AuthResolver
 {
-    #pubSub: PubSub;
 
     constructor(private authService: AuthService)
     {
-        this.#pubSub = new PubSub();
     }
 
     @Mutation(() => EmpleadoDto)
@@ -47,8 +47,8 @@ export class AuthResolver
     @Subscription(() => LoginRespuestaDto, {
         filter: (payload, variables) => payload.datosSesion._id.toString() === variables._id, resolve: value => value
     })
-    rolCambiado(@Args('_id') _id: string): AsyncIterator<ILoginRespuesta>
+    rolCambiado(@Args('_id') _id: string): AsyncIterator<LoginRespuestaDto>
     {
-        return this.#pubSub.asyncIterator('rolCambiado');
+        return subRoles.asyncIterator('rolCambiado');
     }
 }

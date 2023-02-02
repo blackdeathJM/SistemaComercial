@@ -16,7 +16,7 @@
         </div>
     </ng-container>
     <!-- Navigation footer hook -->
-    <ng-container fuseVerticalNavigationFooter *ngIf="usuario$ | async as usuario">
+    <ng-container fuseVerticalNavigationFooter *ngIf="stateAuth.state$ | async as usuario">
         <!-- User -->
         <div class="flex items-center w-full px-6 py-8 border-t">
             <user></user>

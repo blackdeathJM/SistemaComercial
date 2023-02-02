@@ -78,25 +78,25 @@ export class AuthService
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
-    async permisosPrimerNivel(acceso: boolean, rol: string, idEmpleado: string): Promise<boolean>
+
+    async asigPermisos(acceso: boolean, rol: string, idEmpleado: string): Promise<EmpleadoDto>
     {
         try
         {
             if (acceso)
             {
-                const respuesta = await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).exec();
-                return !!respuesta._id;
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).exec();
             } else
             {
-                const respuesta = await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
-                return !!respuesta._id;
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
             }
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
-    private datosSesion(empleado: EmpleadoDto): ILoginRespuesta
+
+    datosSesion(empleado: EmpleadoDto): ILoginRespuesta
     {
         const datosSesion: IDatosSesion =
             {

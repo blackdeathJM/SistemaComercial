@@ -1,10 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewEncapsulation} from '@angular/core';
-import {Observable} from 'rxjs';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {RolCambiadoGQL} from '#/libs/datos/src';
-import {Select} from '@ngxs/store';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {AuthService} from '@s-core/auth/store/auth.service';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'user',
@@ -13,13 +10,19 @@ import {AuthService} from '@s-core/auth/store/auth.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user'
 })
-export class UserComponent
+export class UserComponent implements AfterViewInit, OnDestroy
 {
-    @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
+    // @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
+    sub = new Subscription();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private rolCambiado: RolCambiadoGQL, private authService: AuthService)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, public stateAuth: StateAuth)
     {
+    }
+
+    ngAfterViewInit(): void
+    {
+        this.sub.add(this.authService.rolCambiado(this.stateAuth.snapshot._id).subscribe());
     }
 
     updateUserStatus(status: string): void
@@ -40,5 +43,10 @@ export class UserComponent
     signOut(): void
     {
         this.authService.cerrarSesion();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

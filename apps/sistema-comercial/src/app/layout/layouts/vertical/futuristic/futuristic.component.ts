@@ -6,7 +6,6 @@ import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {Navegation} from '@s-core/navigation/navigation.types';
-import {Select} from '@ngxs/store';
 import {StateAuth} from '@s-core/auth/store/auth.store';
 
 @Component({
@@ -16,7 +15,6 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 })
 export class FuturisticLayoutComponent implements OnInit, OnDestroy
 {
-    @Select(StateAuth.sesionActual)
     usuario$: Observable<IDatosSesion>;
     isScreenSmall: boolean;
     navigation: Navegation;
@@ -25,7 +23,7 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy
     /**
      * Constructor
      */
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: StateAuth,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }

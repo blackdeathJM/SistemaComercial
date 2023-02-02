@@ -1,5 +1,5 @@
 <!-- Button -->
-<button mat-icon-button [matMenuTriggerFor]="userActions" *ngIf="usuario$ | async as usuario">
+<button mat-icon-button [matMenuTriggerFor]="userActions" *ngIf="stateAuth.state$ | async as usuario">
     <span class="relative">
         <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && usuario.avatar" [src]="usuario.avatar" alt="">
         <mat-icon *ngIf="!showAvatar || !usuario.avatar" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>

@@ -4,7 +4,7 @@
 <fuse-vertical-navigation class="dark:bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'"
                           [navigation]="navigation.default" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
-    <ng-container fuseVerticalNavigationContentHeader *ngIf="usuario$ | async as usuario">
+    <ng-container fuseVerticalNavigationContentHeader *ngIf="stateAuth.state$ | async as usuario">
         <div class="flex items-center w-full p-4 pl-6">
             <!-- Logo -->
             <div class="flex items-center justify-center">

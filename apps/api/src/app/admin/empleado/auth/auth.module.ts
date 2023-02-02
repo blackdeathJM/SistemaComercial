@@ -16,7 +16,9 @@ import {RolesResolver} from '@api-admin/roles/roles.resolver';
 @Module({
     imports:
         [
-            MongooseModule.forFeature([{name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}, {name: RolesDto.name, schema: SCHEMA_ROLES}]),
+            MongooseModule.forFeature([
+                {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}, {name: RolesDto.name, schema: SCHEMA_ROLES}
+            ]),
             PassportModule.register({defaultStrategy: 'jwt'}),
             JwtModule.registerAsync({
                 imports: [ConfigModule],
@@ -27,7 +29,7 @@ import {RolesResolver} from '@api-admin/roles/roles.resolver';
                 })
             }),
         ],
-    providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy, EmpleadoService, RolesService, RolesResolver]
+    providers: [AuthResolver, AuthService, LocalStrategy, JwtStrategy, EmpleadoService, RolesService, RolesResolver]
 })
 export class AuthModule
 {

@@ -4,6 +4,8 @@ fragment fragAuth on AuthType
     activo
     roles
     estatus
+    guards
+    controles
 }
 
 fragment fragDatosSesion on DatosSesionType

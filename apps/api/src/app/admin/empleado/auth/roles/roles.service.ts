@@ -3,6 +3,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {ActRolesDto, CrearRolDto, RolesAsigDto, RolesDto, RolesType} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
 import {Model} from 'mongoose';
 import {AuthService} from '@api-admin/auth.service';
+import {subRoles} from '@api-admin/auth.resolver';
 
 @Injectable()
 export class RolesService
@@ -38,7 +39,8 @@ export class RolesService
             // si la respuesta es satisfactoria comparamos el acceso que biene del cliente si es true lo agregamos al array y si es false lo sacamos del array
             if (respuesta._id)
             {
-                await this.authService.permisosPrimerNivel(role.acceso, role.idRutaSecundaria, respuesta.idEmpleado);
+                const empleado = await this.authService.asigPermisos(role.acceso, role.idRutaSecundaria, respuesta.idEmpleado);
+                await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
             }
             return true;
         } catch (e)
@@ -51,10 +53,14 @@ export class RolesService
     {
         try
         {
-            await this.roles.findByIdAndUpdate(role._id, {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].acceso': role.acceso}},
+            const resp = await this.roles.findByIdAndUpdate(role._id, {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].acceso': role.acceso}},
                 {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}]}).exec();
-
-            return true;
+            if (resp._id)
+            {
+                const empleado = await this.authService.asigPermisos(role.acceso, role.idRutaTreciaria, resp.idEmpleado);
+                await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
+                return true;
+            }
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
