@@ -1,6 +1,6 @@
 <article class="flex flex-col flex-auto" @zoomIn>
     <section class="acciones-en-cabecera -mx-1 -mt-2">
-        <button mat-raised-button color="primary" (click)="nvoEmpleado()">
+        <button *ngIf="stateAuth.snapshot.auth.controles.includes(btnAgregarNvo.title)" mat-raised-button color="primary" (click)="nvoEmpleado()">
             <mat-icon class="mr-5">add</mat-icon>
             Dar de alta nuevo empleado
         </button>

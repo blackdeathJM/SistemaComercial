@@ -1,8 +1,8 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {ArgsType, Field, ID, InputType, ObjectType, OmitType, PickType} from '@nestjs/graphql';
-import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 import {GraphQLJSONObject} from 'graphql-scalars';
-import {IRoles, TCrearRol, TRolesAsig} from './roles.interface';
+import {IActRoles, IRoles, TCrearRol, TRolesAsig} from './roles.interface';
 
 @InputType('RolesInput')
 @ObjectType('RolesType')
@@ -33,4 +33,22 @@ export class RolesAsigDto extends PickType(RolesDto, ['idEmpleado'], ArgsType) i
 @InputType('CrearRolInput')
 export class CrearRolDto extends OmitType(RolesDto, ['_id'], InputType) implements TCrearRol
 {
+}
+
+@InputType('ActRolesInput')
+export class ActRolesDto extends PickType(RolesDto, ['_id'], InputType) implements IActRoles
+{
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El id Grupo de rutas'})
+    idRutaPrincipal: string;
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El id del expandible'})
+    idRutaSecundaria: string;
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El id de la ruta'})
+    idRutaTreciaria: string;
+    @Field(() => Boolean, {nullable: true})
+    @IsBoolean({message: 'El valor debe ser boleano'})
+    @IsNotEmpty({message: 'El valor no puede estar vacio'})
+    acceso: boolean;
 }

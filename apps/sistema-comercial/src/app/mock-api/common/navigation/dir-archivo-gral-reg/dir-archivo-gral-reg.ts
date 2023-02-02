@@ -16,7 +16,7 @@ export const DIR_ARCHIVO_REG: FuseNavigationItem[] =
             badge: {},
             controles: [],
             disabled: false,
-            puedeAsigPermisos: true,
+            puedeAsigPermisos: false,
             acceso: true,
             children: [TRANSPARENCIA, REGULACION, JURIDICO]
         }

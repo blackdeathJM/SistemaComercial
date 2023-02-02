@@ -7,3 +7,11 @@ export interface IRoles
 
 export type TRolesAsig = Pick<IRoles, 'idEmpleado'>;
 export type TCrearRol = Omit<IRoles, '_id'>;
+
+export interface IActRoles extends Pick<IRoles, '_id'>
+{
+    idRutaPrincipal: string;
+    idRutaSecundaria: string;
+    idRutaTreciaria: string;
+    acceso: boolean;
+}

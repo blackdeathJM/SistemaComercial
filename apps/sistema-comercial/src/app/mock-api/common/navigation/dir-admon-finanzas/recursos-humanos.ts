@@ -1,4 +1,4 @@
-import {FuseNavigationItem} from '@s-fuse/navigation';
+import {FuseNavigationItem, IControl} from '@s-fuse/navigation';
 import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
 export enum RecursosHumanos
@@ -12,6 +12,12 @@ export enum RecursosHumanos
     prestamos = 'prestamos'
 }
 
+export const ctrlsRecursosHumanosAgregarNvoEmpleado: IControl =
+    {
+        id: 'btnAgregarNvoEmpleado',
+        title: 'Agregar Empleado',
+        activo: true
+    };
 export const RECURSOS_HUMANOS: FuseNavigationItem =
     {
         id: 'depto-recursos-humanos',
@@ -37,8 +43,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'departamentos'
                 },
                 {
@@ -51,8 +57,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
@@ -65,8 +71,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
@@ -79,8 +85,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
@@ -93,8 +99,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
@@ -107,8 +113,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 },
                 {
@@ -121,8 +127,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirAdmonFinanzas + 'empleados/prestamos'
                 }
             ]

@@ -4,7 +4,7 @@ export const REGULACION: FuseNavigationItem =
     {
         id: 'depto-regulacion',
         title: 'Regulacion',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:collection',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
@@ -12,5 +12,6 @@ export const REGULACION: FuseNavigationItem =
         controles: [],
         disabled: false,
         acceso: true,
-        puedeAsigPermisos: true,
+        puedeAsigPermisos: false,
+        children: []
     };

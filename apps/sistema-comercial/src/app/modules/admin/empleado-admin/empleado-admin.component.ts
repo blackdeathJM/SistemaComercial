@@ -20,6 +20,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {RolesService} from '@s-core/auth/store/roles.service';
+import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
 
 @Component({
     standalone: true,
@@ -56,7 +59,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     empleadoSeleccionado: IResolveEmpleado;
 
     constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-                private cdr: ChangeDetectorRef)
+                private cdr: ChangeDetectorRef, private rolesService: RolesService)
     {
     }
 
@@ -94,5 +97,15 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
             this.deshabilitar = res;
             this.cdr.markForCheck();
         });
+    }
+
+    sesionInicial(empleado: IResolveEmpleado): void
+    {
+        const args: TCrearRol =
+            {
+                idEmpleado: empleado._id,
+                roles: defaultNavigation
+            };
+        this.rolesService.crearRoles(args).subscribe();
     }
 }

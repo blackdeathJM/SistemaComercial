@@ -8,6 +8,7 @@ import {StateRoles} from '@s-core/auth/store/roles.store';
 import {concatMap, Subscription} from 'rxjs';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
+import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 
 @Component({
     selector: 'app-lista-roles',
@@ -39,8 +40,29 @@ export class ListaRolesComponent implements OnInit, OnDestroy
         this.sub.unsubscribe();
     }
 
-    cambioChk(e: MatCheckboxChange, ruta: Element, grupo: object): void
+    cambioPrimerNivel(e: MatCheckboxChange, grupo: object, expandible: Element, empleado: IRoles): void
     {
-        console.log('::::::::::', grupo);
+        const role: IActRoles =
+            {
+                _id: empleado._id,
+                idRutaPrincipal: grupo['id'],
+                idRutaSecundaria: expandible['id'],
+                idRutaTreciaria: 'no-aplica',
+                acceso: e.checked
+            };
+        this.rolesService.actPrimerNivel(role).subscribe();
+    }
+
+    cambioSegNivel(e: MatCheckboxChange, grupo: object, expandible: Element, ruta: Element, empleado: IRoles): void
+    {
+        const role: IActRoles =
+            {
+                _id: empleado._id,
+                idRutaPrincipal: grupo['id'],
+                idRutaSecundaria: expandible['id'],
+                idRutaTreciaria: ruta['id'],
+                acceso: e.checked
+            };
+        this.rolesService.actSegundoNivel(role).subscribe();
     }
 }

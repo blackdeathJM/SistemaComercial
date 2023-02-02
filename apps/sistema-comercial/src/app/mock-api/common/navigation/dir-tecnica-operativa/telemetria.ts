@@ -12,8 +12,8 @@ export const TELEMETRIA: FuseNavigationItem =
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
+        puedeAsigPermisos: false,
+        acceso: false,
         children:
             [
                 {
@@ -26,8 +26,8 @@ export const TELEMETRIA: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirTecnicaOperativa + 'telemetria/' + 'instalaciones'
                 },
                 {
@@ -40,8 +40,8 @@ export const TELEMETRIA: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirTecnicaOperativa + 'telemetria/' + 'motores'
                 },
                 {
@@ -54,8 +54,8 @@ export const TELEMETRIA: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirTecnicaOperativa + 'telemetria/' + 'bombas'
                 },
                 {
@@ -68,8 +68,8 @@ export const TELEMETRIA: FuseNavigationItem =
                     badge: {},
                     controles: [],
                     disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
+                    puedeAsigPermisos: false,
+                    acceso: false,
                     link: dirTecnicaOperativa + 'telemetria/' + 'cfe'
                 }
             ]

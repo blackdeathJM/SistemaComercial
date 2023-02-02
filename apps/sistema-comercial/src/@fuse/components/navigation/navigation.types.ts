@@ -16,7 +16,7 @@ export interface FuseNavigationItem
     oculto: boolean;
     componentes?: object[];
     acceso: boolean;
-    controles?: IControl[];
+    controles: IControl[];
     puedeAsigPermisos: boolean;
     active?: boolean;
     disabled?: boolean;
@@ -51,9 +51,10 @@ export interface FuseNavigationItem
     meta?: any;
 }
 
-interface IControl
+export interface IControl
 {
     id: string;
+    title: string;
     activo: boolean;
 }
 

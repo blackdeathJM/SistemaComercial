@@ -7,8 +7,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {fuseAnimations} from '@s-fuse/public-api';
-import {MatDialog} from "@angular/material/dialog";
-import {ModRegistroEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component";
+import {MatDialog} from '@angular/material/dialog';
+import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {ctrlsRecursosHumanosAgregarNvoEmpleado} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 
 @Component({
     selector: 'app-info-gral-empleado',
@@ -30,7 +32,9 @@ import {ModRegistroEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/mod-re
 })
 export class InfoGralEmpleadoComponent
 {
-    constructor(private mdr: MatDialog)
+    btnAgregarNvo = ctrlsRecursosHumanosAgregarNvoEmpleado;
+
+    constructor(private mdr: MatDialog, public stateAuth: StateAuth)
     {
     }
 

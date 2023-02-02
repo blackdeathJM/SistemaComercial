@@ -5,14 +5,14 @@ export const COMPRAS_SERVICIOS: FuseNavigationItem =
     {
         id: 'depto-comprasServicios',
         title: 'Compras y servicios',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'double_arrow',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
-        link: dirAdmonFinanzas + 'compras-servicios'
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };

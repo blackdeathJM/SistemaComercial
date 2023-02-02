@@ -13,3 +13,12 @@ query rolesAsig($idEmpleado: ID!)
         ...fragRoles
     }
 }
+mutation actPrimerNivel($role: ActRolesInput!)
+{
+    actPrimerNivel(role: $role)
+}
+
+mutation actSegundoNivel($role: ActRolesInput!)
+{
+    actSegundoNivel(role: $role)
+}

@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
-import {CrearRolesGQL, CrearRolesMutation, RolesAsigGQL, RolesAsigQuery} from '#/libs/datos/src';
+import {ActPrimerNivelGQL, ActPrimerNivelMutation, ActSegundoNivelGQL, ActSegundoNivelMutation, CrearRolesGQL, CrearRolesMutation, RolesAsigGQL, RolesAsigQuery} from '#/libs/datos/src';
 import {SingleExecutionResult} from '@apollo/client';
 import {finalize, Observable, tap} from 'rxjs';
 import {StateRoles} from '@s-core/auth/store/roles.store';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import {IActRoles, IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 @Injectable({providedIn: 'root'})
 export class RolesService
 {
-    constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService)
+    constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService,
+                private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL)
     {
     }
 
@@ -34,5 +35,15 @@ export class RolesService
             const rolesEmpleado = $cast<IRoles>(res.data.rolesAsig);
             this.stateRoles.setState(rolesEmpleado);
         }));
+    }
+
+    actPrimerNivel(role: IActRoles): Observable<SingleExecutionResult<ActPrimerNivelMutation>>
+    {
+        return this.actPrimerNivelGQL.mutate({role});
+    }
+
+    actSegundoNivel(role: IActRoles): Observable<SingleExecutionResult<ActSegundoNivelMutation>>
+    {
+        return this.actSegundoNivelGQL.mutate({role});
     }
 }

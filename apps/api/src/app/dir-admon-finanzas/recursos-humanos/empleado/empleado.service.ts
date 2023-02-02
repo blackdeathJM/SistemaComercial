@@ -63,6 +63,25 @@ export class EmpleadoService
         return null;
     }
 
+    async permisosPrimerNivel(acceso: boolean, rol: string, idEmpleado: string): Promise<boolean>
+    {
+        try
+        {
+            if (acceso)
+            {
+                const respuesta = await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).exec();
+                return !!respuesta._id;
+            } else
+            {
+                const respuesta = await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
+                return !!respuesta._id;
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
     async validarUsuarioActivo(_id: string): Promise<EmpleadoDto>
     {
         const empleado = await this.empleado.findById(_id).exec();

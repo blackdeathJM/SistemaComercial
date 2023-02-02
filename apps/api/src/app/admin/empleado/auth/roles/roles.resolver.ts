@@ -1,5 +1,5 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {CrearRolDto, RolesAsigDto, RolesDto} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
+import {ActRolesDto, CrearRolDto, RolesAsigDto, RolesDto} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
 import {RolesService} from '@api-admin/roles/roles.service';
 
 @Resolver(() => RolesDto)
@@ -13,6 +13,18 @@ export class RolesResolver
     async crearRoles(@Args('args') args: CrearRolDto): Promise<RolesDto>
     {
         return await this.rolesService.crearRoles(args);
+    }
+
+    @Mutation(() => Boolean)
+    async actPrimerNivel(@Args('role') role: ActRolesDto): Promise<boolean>
+    {
+        return await this.rolesService.actPrimerNivel(role);
+    }
+
+    @Mutation(() => Boolean)
+    async actSegundoNivel(@Args('role') role: ActRolesDto): Promise<boolean>
+    {
+        return this.rolesService.actSegundoNivel(role);
     }
 
     @Query(() => RolesDto, {nullable: true})

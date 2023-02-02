@@ -4,13 +4,14 @@ export const LEGAL_RURAL: FuseNavigationItem =
     {
         id: 'depto-legalRural',
         title: 'Legal Rural',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'assignment_late',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };

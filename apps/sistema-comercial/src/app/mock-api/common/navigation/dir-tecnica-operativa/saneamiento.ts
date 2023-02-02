@@ -4,13 +4,14 @@ export const SANEAMIENTO: FuseNavigationItem =
     {
         id: 'depto-saneamiento',
         title: 'Saneamiento',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'adjust',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };

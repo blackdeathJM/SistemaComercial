@@ -5,14 +5,14 @@ export const JURIDICO: FuseNavigationItem =
     {
         id: 'depto-juridico',
         title: 'Juridico',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:newspaper',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
+        puedeAsigPermisos: false,
+        acceso: false,
         link: dirArchivoRegulacion
     };

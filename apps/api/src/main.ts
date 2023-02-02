@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void>
     const configService = app.get(ConfigService);
     const PORT = configService.get('PORT');
     await app.listen(PORT);
-    Logger.log(`🚀 Application is running on: http://localhost:${PORT}`);
+    Logger.log(`🚀 Application is running on: http://localhost:${PORT}/graphql`);
 }
 
 bootstrap().then();

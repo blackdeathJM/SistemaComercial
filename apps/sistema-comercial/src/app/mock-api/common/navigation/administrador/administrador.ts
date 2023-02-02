@@ -13,7 +13,7 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             badge: {},
             controles: [],
             disabled: false,
-            puedeAsigPermisos: true,
+            puedeAsigPermisos: false,
             acceso: true,
             children: [ADMON_SESIONES]
         }

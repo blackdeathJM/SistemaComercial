@@ -16,7 +16,7 @@ export const DIR_TECNICA_OPERATIVA: FuseNavigationItem[] =
             badge: {},
             controles: [],
             disabled: false,
-            puedeAsigPermisos: true,
+            puedeAsigPermisos: false,
             acceso: true,
             children: [AMPLIACIONES_CONSTRUCCIONES, OPERACIONES, SANEAMIENTO, TELEMETRIA]
         }

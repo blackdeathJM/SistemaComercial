@@ -17,8 +17,8 @@ export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
             badge: {},
             controles: [],
             disabled: false,
-            puedeAsigPermisos: true,
-            acceso: true,
+            puedeAsigPermisos: false,
+            acceso: false,
             children: [RECURSOS_HUMANOS, CONTABILIDAD, EGRESOS, COMPRAS_SERVICIOS, ALMACEN]
         }
     ];

@@ -3,13 +3,14 @@ export const FINANCIERO_RURAL: FuseNavigationItem =
     {
         id: 'depto-financieroRural',
         title: 'Financiero Rural',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:cash',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };

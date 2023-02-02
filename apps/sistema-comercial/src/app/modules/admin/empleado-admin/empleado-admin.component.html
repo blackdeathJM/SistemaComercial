@@ -58,11 +58,14 @@
                         <span class="basis-1/4">{{empleado?.deptoEmpleado?.nombre | defaultValue: '---'}}</span>
                         <span class="basis-1/4">{{empleado?.puesto | defaultValue: '---'}}</span>
                         <span class="grow">{{empleado?.auth?.usuario | defaultValue: '---'}}</span>
-                        <a mat-icon-button (click)="listaRoles(empleado)">
+                        <button mat-icon-button (click)="listaRoles(empleado)">
                             <mat-icon svgIcon="info" color="primary" matTooltip="Mostrar informacion de los roles para este usuario"></mat-icon>
-                        </a>
+                        </button>
                         <button mat-icon-button color="primary" [disabled]="empleado.auth === null" (click)="crearSesion(empleado)">
                             <mat-icon [svgIcon]="'password'"></mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="sesionInicial(empleado)">
+                            <mat-icon [svgIcon]="'mat_solid:warning'"></mat-icon>
                         </button>
                     </div>
                 </div>

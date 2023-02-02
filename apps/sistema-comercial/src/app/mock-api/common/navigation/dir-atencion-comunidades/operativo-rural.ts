@@ -11,6 +11,7 @@ export const OPERATIVO_RURAL: FuseNavigationItem =
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };

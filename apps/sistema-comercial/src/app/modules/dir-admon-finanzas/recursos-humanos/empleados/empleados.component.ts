@@ -5,7 +5,6 @@ import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MenuEmpleadosComponent} from '@s-dirAdmonFinanzas/empleados/menu-empleados/menu-empleados.component';
 import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
 import {FuseCardModule} from '@s-fuse/card';
 import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
@@ -13,7 +12,6 @@ import {MatInputModule} from '@angular/material/input';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
 import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
-import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -33,7 +31,6 @@ import {fuseAnimations} from '@s-fuse/public-api';
             MatTabsModule,
             MatSidenavModule,
             RouterLink,
-            MenuEmpleadosComponent,
             ListaEmpleadosComponent,
             FuseCardModule,
             ConsultaEmpleadoComponent,

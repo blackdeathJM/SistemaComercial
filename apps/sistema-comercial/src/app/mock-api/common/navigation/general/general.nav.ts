@@ -13,7 +13,7 @@ export const GENERAL: FuseNavigationItem[] =
             badge: {},
             controles: [],
             disabled: false,
-            puedeAsigPermisos: true,
+            puedeAsigPermisos: false,
             acceso: true,
             children:
                 [
@@ -27,8 +27,8 @@ export const GENERAL: FuseNavigationItem[] =
                         badge: {},
                         controles: [],
                         disabled: false,
-                        puedeAsigPermisos: true,
-                        acceso: true,
+                        puedeAsigPermisos: false,
+                        acceso: false,
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
@@ -41,8 +41,8 @@ export const GENERAL: FuseNavigationItem[] =
                         badge: {},
                         controles: [],
                         disabled: false,
-                        puedeAsigPermisos: true,
-                        acceso: true,
+                        puedeAsigPermisos: false,
+                        acceso: false,
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
@@ -55,8 +55,8 @@ export const GENERAL: FuseNavigationItem[] =
                         badge: {},
                         controles: [],
                         disabled: false,
-                        puedeAsigPermisos: true,
-                        acceso: true,
+                        puedeAsigPermisos: false,
+                        acceso: false,
                         link: rutaGeneral + 'ordenes-atencion'
                     },
                     {
@@ -69,8 +69,8 @@ export const GENERAL: FuseNavigationItem[] =
                         badge: {},
                         controles: [],
                         disabled: false,
-                        puedeAsigPermisos: true,
-                        acceso: true,
+                        puedeAsigPermisos: false,
+                        acceso: false,
                         link: rutaGeneral + 'permisos'
                     }
                 ]

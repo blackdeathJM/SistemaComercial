@@ -5,14 +5,14 @@ export const TRANSPARENCIA: FuseNavigationItem =
     {
         id: 'depto-transparencia',
         title: 'Transparencia',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'heroicons_outline:document-report',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
+        puedeAsigPermisos: false,
+        acceso: false,
         link: dirArchivoRegulacion
     };

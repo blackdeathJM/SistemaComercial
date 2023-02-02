@@ -21,6 +21,14 @@ export type Scalars = {
   Upload: any;
 };
 
+export type ActRolesInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  acceso?: InputMaybe<Scalars['Boolean']>;
+  idRutaPrincipal?: InputMaybe<Scalars['String']>;
+  idRutaSecundaria?: InputMaybe<Scalars['String']>;
+  idRutaTreciaria?: InputMaybe<Scalars['String']>;
+};
+
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   contrasena?: InputMaybe<Scalars['String']>;
@@ -251,13 +259,15 @@ export type ModificadoPorType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  actPrimerNivel: Scalars['Boolean'];
+  actSegundoNivel: Scalars['Boolean'];
   actualizarAvatar: LoginRespuestaType;
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarPuesto: DeptoType;
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
-  crearRoles: RolesType;
+  crearRoles?: Maybe<RolesType>;
   docActFolio: DocumentoType;
   docFinalizar: DocumentoType;
   docRefFolio: Array<DocumentoType>;
@@ -270,6 +280,16 @@ export type Mutation = {
   regDoc: DocumentoType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
+};
+
+
+export type MutationActPrimerNivelArgs = {
+  role: ActRolesInput;
+};
+
+
+export type MutationActSegundoNivelArgs = {
+  role: ActRolesInput;
 };
 
 
@@ -597,7 +617,7 @@ export type CrearRolesMutationVariables = Exact<{
 }>;
 
 
-export type CrearRolesMutation = { __typename?: 'Mutation', crearRoles: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+export type CrearRolesMutation = { __typename?: 'Mutation', crearRoles?: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } | null };
 
 export type RolesAsigQueryVariables = Exact<{
   idEmpleado: Scalars['ID'];
@@ -605,6 +625,20 @@ export type RolesAsigQueryVariables = Exact<{
 
 
 export type RolesAsigQuery = { __typename?: 'Query', rolesAsig?: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } | null };
+
+export type ActPrimerNivelMutationVariables = Exact<{
+  role: ActRolesInput;
+}>;
+
+
+export type ActPrimerNivelMutation = { __typename?: 'Mutation', actPrimerNivel: boolean };
+
+export type ActSegundoNivelMutationVariables = Exact<{
+  role: ActRolesInput;
+}>;
+
+
+export type ActSegundoNivelMutation = { __typename?: 'Mutation', actSegundoNivel: boolean };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null };
 
@@ -1042,6 +1076,38 @@ export const RolesAsigDocument = gql`
   })
   export class RolesAsigGQL extends Apollo.Query<RolesAsigQuery, RolesAsigQueryVariables> {
     document = RolesAsigDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActPrimerNivelDocument = gql`
+    mutation actPrimerNivel($role: ActRolesInput!) {
+  actPrimerNivel(role: $role)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActPrimerNivelGQL extends Apollo.Mutation<ActPrimerNivelMutation, ActPrimerNivelMutationVariables> {
+    document = ActPrimerNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActSegundoNivelDocument = gql`
+    mutation actSegundoNivel($role: ActRolesInput!) {
+  actSegundoNivel(role: $role)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActSegundoNivelGQL extends Apollo.Mutation<ActSegundoNivelMutation, ActSegundoNivelMutationVariables> {
+    document = ActSegundoNivelDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

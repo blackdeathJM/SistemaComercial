@@ -5,14 +5,14 @@ export const CONTABILIDAD: FuseNavigationItem =
     {
         id: 'depto-contabilidad',
         title: 'Contabilidad',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'account_balance_wallet',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true,
-        link: dirAdmonFinanzas + 'contabilidad'
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };

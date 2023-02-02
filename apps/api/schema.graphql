@@ -214,7 +214,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1675312083
+  tiempo: Int = 1675336751
   titulo: String
   usarRouter: Boolean = false
 }
@@ -254,6 +254,8 @@ type Mutation {
   login(login: LoginInput!): LoginRespuestaType
   actualizarAvatar(_id: String!, url: String!): LoginRespuestaType!
   crearRoles(args: CrearRolInput!): RolesType
+  actPrimerNivel(role: ActRolesInput!): Boolean!
+  actSegundoNivel(role: ActRolesInput!): Boolean!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
@@ -283,6 +285,14 @@ input LoginInput {
 input CrearRolInput {
   idEmpleado: ID
   roles: [JSONObject!] = []
+}
+
+input ActRolesInput {
+  _id: ID
+  idRutaPrincipal: String
+  idRutaSecundaria: String
+  idRutaTreciaria: String
+  acceso: Boolean
 }
 
 input RegEmpleadoInput {

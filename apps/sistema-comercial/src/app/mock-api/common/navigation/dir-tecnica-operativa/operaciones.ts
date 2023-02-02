@@ -4,13 +4,14 @@ export const OPERACIONES: FuseNavigationItem =
     {
         id: 'depto-operaciones',
         title: 'Operaciones',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'blur_linear',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,
         badge: {},
         controles: [],
         disabled: false,
-        puedeAsigPermisos: true,
-        acceso: true
+        puedeAsigPermisos: false,
+        acceso: false,
+        children: []
     };
