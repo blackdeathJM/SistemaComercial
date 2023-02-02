@@ -41,7 +41,6 @@ export class ListaRolesComponent implements OnInit, OnDestroy
 
     cambioChk(e: MatCheckboxChange, ruta: Element, grupo: object): void
     {
-        ruta['acceso'] = e;
         console.log('::::::::::', grupo);
     }
 }

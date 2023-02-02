@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@angular-devkit/build-angular': 15.1.3
+      '@angular-devkit/build-angular': 15.1.4
       '@angular-eslint/eslint-plugin': 15.2.0
       '@angular-eslint/eslint-plugin-template': 15.2.0
       '@angular-eslint/template-parser': 15.2.0
@@ -13,7 +13,7 @@ importers:
       '@angular-ru/ngxs': 14.1.1
       '@angular/animations': ^15.1.2
       '@angular/cdk': ^15.1.2
-      '@angular/cli': 15.1.3
+      '@angular/cli': 15.1.4
       '@angular/common': 15.1.2
       '@angular/compiler': 15.1.2
       '@angular/compiler-cli': 15.1.2
@@ -126,7 +126,7 @@ importers:
       graphql: ^16.6.0
       graphql-scalars: ^1.20.1
       graphql-subscriptions: ^2.0.0
-      graphql-tools: ^8.3.16
+      graphql-tools: ^8.3.17
       graphql-upload-ts: ^2.0.5
       graphql-ws: ^5.11.3
       highlight.js: 11.7.0
@@ -170,7 +170,7 @@ importers:
       ts-morph: ^17.0.1
       ts-node: 10.9.1
       tslib: 2.5.0
-      turbo: ^1.7.1
+      turbo: ^1.7.2
       typescript: 4.9.5
       uuid: ^9.0.0
       webpack: ^5.75.0
@@ -235,7 +235,7 @@ importers:
       graphql: 16.6.0
       graphql-scalars: 1.20.1_graphql@16.6.0
       graphql-subscriptions: 2.0.0_graphql@16.6.0
-      graphql-tools: 8.3.16_4fknn4dp674dquu7po4xna34eu
+      graphql-tools: 8.3.17_4fknn4dp674dquu7po4xna34eu
       graphql-upload-ts: 2.0.5_graphql@16.6.0
       graphql-ws: 5.11.3_graphql@16.6.0
       highlight.js: 11.7.0
@@ -271,11 +271,11 @@ importers:
       uuid: 9.0.0
       zone.js: 0.12.0
     devDependencies:
-      '@angular-devkit/build-angular': 15.1.3_vhq5de7bnozbd5twp4pmcl46pm
+      '@angular-devkit/build-angular': 15.1.4_vhq5de7bnozbd5twp4pmcl46pm
       '@angular-eslint/eslint-plugin': 15.2.0_4vsywjlpuriuw3tl5oq6zy5a64
       '@angular-eslint/eslint-plugin-template': 15.2.0_4vsywjlpuriuw3tl5oq6zy5a64
       '@angular-eslint/template-parser': 15.2.0_4vsywjlpuriuw3tl5oq6zy5a64
-      '@angular/cli': 15.1.3
+      '@angular/cli': 15.1.4
       '@angular/compiler-cli': 15.1.2_qbb6prygfkdcmogcfoew4a7yfy
       '@angular/language-service': 15.1.2
       '@babel/cli': 7.20.7_@babel+core@7.20.12
@@ -336,7 +336,7 @@ importers:
       eslint-plugin-prefer-arrow: 1.2.3_eslint@8.33.0
       jasmine-core: 4.5.0
       jest: 29.4.1_zfha7dvnw4nti6zkbsmhmn6xo4
-      jest-preset-angular: 12.2.6_nmvakz733eapfwxgtobf7gswte
+      jest-preset-angular: 12.2.6_ejuajr4ubuu4bqspg5gjwejx3q
       lodash: 4.17.21
       nx: 15.6.3
       postcss: 8.4.21
@@ -345,7 +345,7 @@ importers:
       ts-jest: 29.0.5_ecv55cdbauq6znr7ci2lzguwra
       ts-morph: 17.0.1
       ts-node: 10.9.1_bdgp3l2zgaopogaavxusmetvge
-      turbo: 1.7.1
+      turbo: 1.7.2
       typescript: 4.9.5
       webpack: 5.75.0
 
@@ -359,28 +359,28 @@ packages:
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
 
-  /@angular-devkit/architect/0.1501.3:
-    resolution: {integrity: sha512-+hvesYUgChdAkBcWSO2pseIGBzRDAATyIw36UBwOmYkL7wM65TEXpspbo5ZIfU1M/l7X/lHzDXLTzCMfb0Qxbg==}
+  /@angular-devkit/architect/0.1501.4:
+    resolution: {integrity: sha512-PE0CqPaNzcz8yHEuJwqtKxYvXX9hgWWvC6hI2DWKtC+5WgJLAYJNEGofXQRc227Nj+YySEYUUo8Ja8SYl3lDxA==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
-      '@angular-devkit/core': 15.1.3
+      '@angular-devkit/core': 15.1.4
       rxjs: 6.6.7
     transitivePeerDependencies:
       - chokidar
     dev: true
 
-  /@angular-devkit/architect/0.1501.3_chokidar@3.5.3:
-    resolution: {integrity: sha512-+hvesYUgChdAkBcWSO2pseIGBzRDAATyIw36UBwOmYkL7wM65TEXpspbo5ZIfU1M/l7X/lHzDXLTzCMfb0Qxbg==}
+  /@angular-devkit/architect/0.1501.4_chokidar@3.5.3:
+    resolution: {integrity: sha512-PE0CqPaNzcz8yHEuJwqtKxYvXX9hgWWvC6hI2DWKtC+5WgJLAYJNEGofXQRc227Nj+YySEYUUo8Ja8SYl3lDxA==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
-      '@angular-devkit/core': 15.1.3_chokidar@3.5.3
+      '@angular-devkit/core': 15.1.4_chokidar@3.5.3
       rxjs: 6.6.7
     transitivePeerDependencies:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular/15.1.3_vhq5de7bnozbd5twp4pmcl46pm:
-    resolution: {integrity: sha512-QQfvpccShQldpMmuwgpZfbE6cNiNwff2aAY1YGswU9DBpeoz4YWeW4e8ss2j/Mxn5RXo7cbzWkhbm1xXTFY1FA==}
+  /@angular-devkit/build-angular/15.1.4_vhq5de7bnozbd5twp4pmcl46pm:
+    resolution: {integrity: sha512-+vubHYyQn8HJ+uJQndr8xFlX6C7y1kdnzTiKgx6QFvA5sd/IhXXzsnDd1wFer1lCrZ+1qgfhG9HI/RL3cBeKrA==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
       '@angular/compiler-cli': ^15.0.0
@@ -409,9 +409,9 @@ packages:
         optional: true
     dependencies:
       '@ampproject/remapping': 2.2.0
-      '@angular-devkit/architect': 0.1501.3_chokidar@3.5.3
-      '@angular-devkit/build-webpack': 0.1501.3_oc46zsvsns3nh7f43oasdmifbu
-      '@angular-devkit/core': 15.1.3_chokidar@3.5.3
+      '@angular-devkit/architect': 0.1501.4_chokidar@3.5.3
+      '@angular-devkit/build-webpack': 0.1501.4_oc46zsvsns3nh7f43oasdmifbu
+      '@angular-devkit/core': 15.1.4_chokidar@3.5.3
       '@angular/compiler-cli': 15.1.2_qbb6prygfkdcmogcfoew4a7yfy
       '@babel/core': 7.20.12
       '@babel/generator': 7.20.7
@@ -423,7 +423,7 @@ packages:
       '@babel/runtime': 7.20.7
       '@babel/template': 7.20.7
       '@discoveryjs/json-ext': 0.5.7
-      '@ngtools/webpack': 15.1.3_bjue2ethgri63kwe4dwyrlafsm
+      '@ngtools/webpack': 15.1.4_bjue2ethgri63kwe4dwyrlafsm
       ansi-colors: 4.1.3
       autoprefixer: 10.4.13_postcss@8.4.21
       babel-loader: 9.1.2_la66t7xldg4uecmyawueag5wkm
@@ -487,14 +487,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@angular-devkit/build-webpack/0.1501.3_oc46zsvsns3nh7f43oasdmifbu:
-    resolution: {integrity: sha512-ZsgbTFf1I9hAf4FvNxBJphF95Hw9QchCaWQdQXY+2mqQuPP70uK1Kd/TzNCfx5lyNFHMI9oWpCg2QLrAdwqJnA==}
+  /@angular-devkit/build-webpack/0.1501.4_oc46zsvsns3nh7f43oasdmifbu:
+    resolution: {integrity: sha512-rJ7KTBDW0UHgVJjQ23qJfGun+pDX3ZG2z0OtsskdsOI62SAvW1cVLuS50ICTcWW6gtcDO0R/6Q1RLbaV1JHZ5A==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
       webpack: ^5.30.0
       webpack-dev-server: ^4.0.0
     dependencies:
-      '@angular-devkit/architect': 0.1501.3_chokidar@3.5.3
+      '@angular-devkit/architect': 0.1501.4_chokidar@3.5.3
       rxjs: 6.6.7
       webpack: 5.75.0_esbuild@0.16.17
       webpack-dev-server: 4.11.1_webpack@5.75.0
@@ -551,8 +551,25 @@ packages:
       source-map: 0.7.4
     dev: true
 
-  /@angular-devkit/core/15.1.3:
+  /@angular-devkit/core/15.1.3_chokidar@3.5.3:
     resolution: {integrity: sha512-biuS+DceyZEqcE/cLvndtslqn3Q6uCmJ0RLpACikH6ESYorvk+A91H0ofuGue6HB/2CUN/F+mPSr7sWVI1W9sA==}
+    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
+    peerDependencies:
+      chokidar: ^3.5.2
+    peerDependenciesMeta:
+      chokidar:
+        optional: true
+    dependencies:
+      ajv: 8.12.0
+      ajv-formats: 2.1.1
+      chokidar: 3.5.3
+      jsonc-parser: 3.2.0
+      rxjs: 6.6.7
+      source-map: 0.7.4
+    dev: true
+
+  /@angular-devkit/core/15.1.4:
+    resolution: {integrity: sha512-PW5MRmd9DHJR4FaXchwQtj9pXnsghSTnwRvfZeCRNYgU2sv0DKyTV+YTSJB+kNXnoPNG1Je6amDEkiXecpspXg==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
       chokidar: ^3.5.2
@@ -567,8 +584,8 @@ packages:
       source-map: 0.7.4
     dev: true
 
-  /@angular-devkit/core/15.1.3_chokidar@3.5.3:
-    resolution: {integrity: sha512-biuS+DceyZEqcE/cLvndtslqn3Q6uCmJ0RLpACikH6ESYorvk+A91H0ofuGue6HB/2CUN/F+mPSr7sWVI1W9sA==}
+  /@angular-devkit/core/15.1.4_chokidar@3.5.3:
+    resolution: {integrity: sha512-PW5MRmd9DHJR4FaXchwQtj9pXnsghSTnwRvfZeCRNYgU2sv0DKyTV+YTSJB+kNXnoPNG1Je6amDEkiXecpspXg==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
       chokidar: ^3.5.2
@@ -638,11 +655,11 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/schematics/15.1.3:
+  /@angular-devkit/schematics/15.1.3_chokidar@3.5.3:
     resolution: {integrity: sha512-IXZ56/5uFnHqnLq+80JhmFx5mflyW8LgS/8Tr2l5DYVA71Fh3b1q+vGrEZB1X2zPoFeDOGAxv3Fi+kmjcz1GZg==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
-      '@angular-devkit/core': 15.1.3
+      '@angular-devkit/core': 15.1.3_chokidar@3.5.3
       jsonc-parser: 3.2.0
       magic-string: 0.27.0
       ora: 5.4.1
@@ -651,11 +668,11 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/schematics/15.1.3_chokidar@3.5.3:
-    resolution: {integrity: sha512-IXZ56/5uFnHqnLq+80JhmFx5mflyW8LgS/8Tr2l5DYVA71Fh3b1q+vGrEZB1X2zPoFeDOGAxv3Fi+kmjcz1GZg==}
+  /@angular-devkit/schematics/15.1.4:
+    resolution: {integrity: sha512-jpddxo9Qd2yRQ1t9FLhAx5S+luz6HkyhDytq0LFKbxf9ikf1J4oy9riPBFl4pRmrNARWcHZ6GbD20/Ky8PjmXQ==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
-      '@angular-devkit/core': 15.1.3_chokidar@3.5.3
+      '@angular-devkit/core': 15.1.4
       jsonc-parser: 3.2.0
       magic-string: 0.27.0
       ora: 5.4.1
@@ -781,15 +798,15 @@ packages:
       parse5: 7.1.2
     dev: false
 
-  /@angular/cli/15.1.3:
-    resolution: {integrity: sha512-gNVvyvkGZ1zKiDdWjPqCLst8iHcB1C4B2nXrr3B+/YAd1G/y87VI1aBKFlK9ulG4tkwktog5uQaut7xs48IsEQ==}
+  /@angular/cli/15.1.4:
+    resolution: {integrity: sha512-ebZiI4arb9wtOUMmTyUvjgDovmwpY8hmGLbkKZiEmAX8+2gbl4e97M+zd0SICZDU8bu5VcpoP6Q3Qb6vVjab9A==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     hasBin: true
     dependencies:
-      '@angular-devkit/architect': 0.1501.3
-      '@angular-devkit/core': 15.1.3
-      '@angular-devkit/schematics': 15.1.3
-      '@schematics/angular': 15.1.3
+      '@angular-devkit/architect': 0.1501.4
+      '@angular-devkit/core': 15.1.4
+      '@angular-devkit/schematics': 15.1.4
+      '@schematics/angular': 15.1.4
       '@yarnpkg/lockfile': 1.1.0
       ansi-colors: 4.1.3
       ini: 3.0.1
@@ -4861,6 +4878,17 @@ packages:
       '@graphql-tools/utils': 9.1.4_graphql@16.6.0
       graphql: 16.6.0
       tslib: 2.5.0
+    dev: true
+
+  /@graphql-tools/merge/8.3.17_graphql@16.6.0:
+    resolution: {integrity: sha512-CLzz49lc6BavPhH9gPRm0sJeNA7kC/tF/jLUTQsyef6xj82Jw3rqIJ9PE+bk1cqPCOG01WLOfquBu445OMDO2g==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      '@graphql-tools/utils': 9.2.0_graphql@16.6.0
+      graphql: 16.6.0
+      tslib: 2.5.0
+    dev: false
 
   /@graphql-tools/merge/8.3.1_graphql@16.6.0:
     resolution: {integrity: sha512-BMm99mqdNZbEYeTPK3it9r9S6rsZsQKtlqJsSBknAclXq2pGEfOxjcIZi+kBSkHZKPKCRrYDd5vY0+rUmIHVLg==}
@@ -5007,6 +5035,19 @@ packages:
       graphql: 16.6.0
       tslib: 2.5.0
       value-or-promise: 1.0.12
+    dev: true
+
+  /@graphql-tools/schema/9.0.15_graphql@16.6.0:
+    resolution: {integrity: sha512-p2DbpkOBcsi+yCEjwoS+r4pJ5z+3JjlJdhbPkCwC4q8lGf5r93dVYrExOrqGKTU5kxLXI/mxabSxcunjNIsDIg==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      '@graphql-tools/merge': 8.3.17_graphql@16.6.0
+      '@graphql-tools/utils': 9.2.0_graphql@16.6.0
+      graphql: 16.6.0
+      tslib: 2.5.0
+      value-or-promise: 1.0.12
+    dev: false
 
   /@graphql-tools/schema/9.0.4_graphql@16.6.0:
     resolution: {integrity: sha512-B/b8ukjs18fq+/s7p97P8L1VMrwapYc3N2KvdG/uNThSazRRn8GsBK0Nr+FH+mVKiUfb4Dno79e3SumZVoHuOQ==}
@@ -5096,6 +5137,16 @@ packages:
     dependencies:
       graphql: 16.6.0
       tslib: 2.5.0
+
+  /@graphql-tools/utils/9.2.0_graphql@16.6.0:
+    resolution: {integrity: sha512-s3lEG1iYkyYEnKCWrIFECX3XH2wmZvbg6Ir3udCvIDynq+ydaO7JQXobclpPtwSJtjlS353haF//6V7mnBQ4bg==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
+      graphql: 16.6.0
+      tslib: 2.5.0
+    dev: false
 
   /@graphql-tools/wrap/9.2.23_graphql@16.6.0:
     resolution: {integrity: sha512-R+ar8lHdSnRQtfvkwQMOkBRlYLcBPdmFzZPiAj+tL9Nii4VNr4Oub37jcHiPBvRZSdKa9FHcKq5kKSQcbg1xuQ==}
@@ -6691,8 +6742,8 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@ngtools/webpack/15.1.3_bjue2ethgri63kwe4dwyrlafsm:
-    resolution: {integrity: sha512-xbV74ulf5BwIA61jASjKxzS0gzD6CQQkqPXDRo8I1tpDMQpEKFKWivw+1Joy6Anm62DWR4xuMEhnj5kjKWemgw==}
+  /@ngtools/webpack/15.1.4_bjue2ethgri63kwe4dwyrlafsm:
+    resolution: {integrity: sha512-IvKXK8AvPlLkP99Uf0RL1EHlcsXNQd86II9HsLjupUtmFC/pPuDWrRFMP9bjWUMh2ZeYpgUeEAbcCH3doSrdIA==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
       '@angular/compiler-cli': ^15.0.0
@@ -7436,23 +7487,23 @@ packages:
       - chokidar
     dev: false
 
-  /@schematics/angular/15.1.3:
-    resolution: {integrity: sha512-jCJ0Nq/FpoMnA63rPAhRWQJFVbS+K8NpdTHZ/7l4wx9iFtIH7khCdbp3QYMJSwZh5pEiw/NO7ouxsWo5YgapYQ==}
-    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
-    dependencies:
-      '@angular-devkit/core': 15.1.3
-      '@angular-devkit/schematics': 15.1.3
-      jsonc-parser: 3.2.0
-    transitivePeerDependencies:
-      - chokidar
-    dev: true
-
   /@schematics/angular/15.1.3_chokidar@3.5.3:
     resolution: {integrity: sha512-jCJ0Nq/FpoMnA63rPAhRWQJFVbS+K8NpdTHZ/7l4wx9iFtIH7khCdbp3QYMJSwZh5pEiw/NO7ouxsWo5YgapYQ==}
     engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     dependencies:
       '@angular-devkit/core': 15.1.3_chokidar@3.5.3
       '@angular-devkit/schematics': 15.1.3_chokidar@3.5.3
+      jsonc-parser: 3.2.0
+    transitivePeerDependencies:
+      - chokidar
+    dev: true
+
+  /@schematics/angular/15.1.4:
+    resolution: {integrity: sha512-4SV8dDGZeSvts01b8y2W6FmpDD0dQhBlGMhMJKC/tUnhfNKfYCs2VKtMBsIc3ZiGP2yoA3+nUiMmtS6hEkXYHw==}
+    engines: {node: ^14.20.0 || ^16.13.0 || >=18.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
+    dependencies:
+      '@angular-devkit/core': 15.1.4
+      '@angular-devkit/schematics': 15.1.4
       jsonc-parser: 3.2.0
     transitivePeerDependencies:
       - chokidar
@@ -12671,12 +12722,12 @@ packages:
       graphql: 16.6.0
       tslib: 2.5.0
 
-  /graphql-tools/8.3.16_4fknn4dp674dquu7po4xna34eu:
-    resolution: {integrity: sha512-D9um1OPTYyM8bWTyODo5fQ0EREsuACYdPTvmw+UY0Cbb7OVxBB0jXaxqXq7WCPvNPH61lf/upFVYfwntzcNGUw==}
+  /graphql-tools/8.3.17_4fknn4dp674dquu7po4xna34eu:
+    resolution: {integrity: sha512-nB8RE/LDjREea85D4s48dO0XyAiJJ9hIxMNRixnyaLxATdVIqrZDxyGT+jgusrLp1wDKTzBSshmHkqmaAyk7PA==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      '@graphql-tools/schema': 9.0.14_graphql@16.6.0
+      '@graphql-tools/schema': 9.0.15_graphql@16.6.0
       graphql: 16.6.0
       tslib: 2.5.0
     optionalDependencies:
@@ -14005,7 +14056,7 @@ packages:
       jest-resolve: 29.4.1
     dev: true
 
-  /jest-preset-angular/12.2.6_nmvakz733eapfwxgtobf7gswte:
+  /jest-preset-angular/12.2.6_ejuajr4ubuu4bqspg5gjwejx3q:
     resolution: {integrity: sha512-h5xazwr6Q4ZgQ/Bpcko2bJ6EnvSn3ek4cujhjK4+EPoB/27g0UzEiyNdlqTFa4m4uNjrqWRTSX+rHmWyPMg5PQ==}
     engines: {node: ^14.15.0 || >=16.10.0}
     peerDependencies:
@@ -14016,7 +14067,7 @@ packages:
       jest: ^28.0.0
       typescript: '>=4.2'
     dependencies:
-      '@angular-devkit/build-angular': 15.1.3_vhq5de7bnozbd5twp4pmcl46pm
+      '@angular-devkit/build-angular': 15.1.4_vhq5de7bnozbd5twp4pmcl46pm
       '@angular/compiler-cli': 15.1.2_qbb6prygfkdcmogcfoew4a7yfy
       '@angular/core': 15.1.2_rxjs@7.8.0+zone.js@0.12.0
       '@angular/platform-browser-dynamic': 15.1.2_nvxdb5l45salvpcyi4ujzyiawy
@@ -18679,65 +18730,65 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /turbo-darwin-64/1.7.1:
-    resolution: {integrity: sha512-H2txI1gkCQpav+5qGVxB4RzPTTqgDmzbXaJXbjYDR8cS0X/Oq5STea6fRTfumYR2x86Gr3co0V4fQfwILnfvYg==}
+  /turbo-darwin-64/1.7.2:
+    resolution: {integrity: sha512-Sml3WR8MSu80W+gS8SnoKNImcDOlIX7zlvezzds65mW11yGniIFfZ18aKWGOm92Nj2SvXCQ2+UmyGghbFaHNmQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.7.1:
-    resolution: {integrity: sha512-T7yLTMAdnwfaF9H3uBizztLld1aK/gYiNubpl4HCbMsE/aYEbITtNx1dAFQnjRiPHS4dNYK4gIKc9nnAsnfkxg==}
+  /turbo-darwin-arm64/1.7.2:
+    resolution: {integrity: sha512-JnlgGLScboUJGJxvmSsF+5xkImEDTMPg2FHzX4n8AMB9az9ZlPQAMtc+xu4p6Xp9eaykKiV2RG81YS3H0fxDLA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.7.1:
-    resolution: {integrity: sha512-kQw+jEpEVUskfPy+7rMF5x6e9Za9AbdD9P7bSo1JuV+tZgUOaFc5iC9Zyj26qhc0Zzl4qZecZ9YccNbZKZ9yCQ==}
+  /turbo-linux-64/1.7.2:
+    resolution: {integrity: sha512-vbLJw6ovG+lpiPqxniscBjljKJ2jbsHuKp8uK4j/wqgp68wAVKeAZW77GGDAUgDb88XH6Kvhh2hcizL+iWduww==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.7.1:
-    resolution: {integrity: sha512-PLe0XBJ/YEmiQh+jDcmTRZlxVtkY0CerAu/AKE/c9hCnp6shYqG+peyyuCEzIssUCij2A5yhVd7SIOTQGDzFrQ==}
+  /turbo-linux-arm64/1.7.2:
+    resolution: {integrity: sha512-zLnuS8WdHonKL74KqOopOH/leBOWumlVGF8/8hldbDPq0mwY+6myRR5/5LdveB51rkG4UJh/sQ94xV67tjBoyw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.7.1:
-    resolution: {integrity: sha512-70ndrkQomG4JlAAaflVL+Io1msItHiZUq/zf88Nk4z30QSqqC0Zl4rOpUPE3v1IYSO48bUabshySZa9/aTPHhw==}
+  /turbo-windows-64/1.7.2:
+    resolution: {integrity: sha512-oE5PMoXjmR09okvVzteFb6FjA6yo+nMsacsgKH2yLNq4sOrVo9tG98JkRurOv5+L6ZQ3yGXPxWHiqeH7hLkAVQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.7.1:
-    resolution: {integrity: sha512-344XY2SrugfHtIe06Vbi17yZ4SRkPvWghvO/gUgUkgSZN06oYj0SHN2+z8pnLkBTfgkt2zBm2cqFFpVFwa8F2A==}
+  /turbo-windows-arm64/1.7.2:
+    resolution: {integrity: sha512-mdTUJk23acRv5qxA/yEstYhM1VFenVE3FDrssxGRFq7S80smtCGK1xUd4BEDDzDlVXOqBohmM5jRh9516rcjPQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.7.1:
-    resolution: {integrity: sha512-0ngDU5+2/wLuvTKpc2ZyDtO6aPeHTa6ASlQGySCx+lwSDiE4fCkRVvNINDtT1HgdO/bEo2CQkLoen/Qjf7wWiQ==}
+  /turbo/1.7.2:
+    resolution: {integrity: sha512-YR/x3GZEx0C1RV6Yvuw/HB1Ixx3upM6ZTTa4WqKz9WtLWN8u2g+u2h5KpG5YtjCS3wl/8zVXgHf2WiMK6KIghg==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.7.1
-      turbo-darwin-arm64: 1.7.1
-      turbo-linux-64: 1.7.1
-      turbo-linux-arm64: 1.7.1
-      turbo-windows-64: 1.7.1
-      turbo-windows-arm64: 1.7.1
+      turbo-darwin-64: 1.7.2
+      turbo-darwin-arm64: 1.7.2
+      turbo-linux-64: 1.7.2
+      turbo-linux-arm64: 1.7.2
+      turbo-windows-64: 1.7.2
+      turbo-windows-arm64: 1.7.2
     dev: true
 
   /tweetnacl/0.14.5:

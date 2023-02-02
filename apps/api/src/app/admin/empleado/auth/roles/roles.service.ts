@@ -27,9 +27,21 @@ export class RolesService
         }
     }
 
-    // async actRoles(args:):Promise<RolesDto>
+    // async actRoles(args: any): Promise<RolesDto>
     // {
+    //     try
+    //     {
+    //         if (true)
+    //         {
+    //             await this.roles.findByIdAndUpdate('', {$set:{'roles'}}).exec();
+    //             return null
+    //         } else
+    //         {
+    //         }
+    //     } catch (e)
+    //     {
     //
+    //     }
     // }
 
     async rolesAsig(idEmpleado: RolesAsigDto): Promise<RolesDto>
