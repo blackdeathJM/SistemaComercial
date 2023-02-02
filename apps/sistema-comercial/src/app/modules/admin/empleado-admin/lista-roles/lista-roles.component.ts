@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {MatListModule} from '@angular/material/list';
 import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import {RolesService} from '@s-core/auth/store/roles.service';
 import {StateRoles} from '@s-core/auth/store/roles.store';
-import {concatMap, Subscription} from 'rxjs';
+import {concatMap, finalize, Subscription} from 'rxjs';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
@@ -15,14 +15,16 @@ import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles
     standalone: true,
     imports: [CommonModule, MatListModule, MatCheckboxModule, NgxUiLoaderModule, SinDatosComponent],
     templateUrl: './lista-roles.component.html',
-    styleUrls: ['./lista-roles.component.scss']
+    styleUrls: ['./lista-roles.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListaRolesComponent implements OnInit, OnDestroy
 {
     ngxLoader: 'listaRoles';
     sub = new Subscription();
+    deshabilitarLista = false;
 
-    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles)
+    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles, private cdr: ChangeDetectorRef)
     {
     }
 
@@ -42,6 +44,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
 
     cambioPrimerNivel(e: MatCheckboxChange, grupo: object, expandible: Element, empleado: IRoles): void
     {
+        this.deshabilitarLista = true;
         const role: IActRoles =
             {
                 _id: empleado._id,
@@ -50,11 +53,16 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 idRutaTreciaria: 'no-aplica',
                 acceso: e.checked
             };
-        this.rolesService.actPrimerNivel(role).subscribe();
+        this.rolesService.actPrimerNivel(role).pipe(finalize(() =>
+        {
+            this.deshabilitarLista = false;
+            this.cdr.detectChanges();
+        })).subscribe();
     }
 
     cambioSegNivel(e: MatCheckboxChange, grupo: object, expandible: Element, ruta: Element, empleado: IRoles): void
     {
+        this.deshabilitarLista = true;
         const role: IActRoles =
             {
                 _id: empleado._id,
@@ -63,6 +71,10 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 idRutaTreciaria: ruta['id'],
                 acceso: e.checked
             };
-        this.rolesService.actSegundoNivel(role).subscribe();
+        this.rolesService.actSegundoNivel(role).pipe(finalize(() =>
+        {
+            this.deshabilitarLista = false;
+            this.cdr.detectChanges();
+        })).subscribe();
     }
 }

@@ -1,15 +1,16 @@
 import {FuseNavigationItem, IControl} from '@s-fuse/navigation';
 import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
-export enum RecursosHumanos
+export enum GuardRecursosHumanos
 {
     deptos = 'departamentos',
-    empleados = 'empleados',
+    infoGralEmpleados = 'infoGralEmpleados',
     imss = 'imss',
     nomina = 'nomina',
     retardos = 'retardos',
     fondoDeAhoro = 'fondoDeAhoro',
-    prestamos = 'prestamos'
+    prestamos = 'prestamos',
+    recursosHumanos = 'recursosHumanos'
 }
 
 export const ctrlsRecursosHumanosAgregarNvoEmpleado: IControl =
@@ -20,7 +21,7 @@ export const ctrlsRecursosHumanosAgregarNvoEmpleado: IControl =
     };
 export const RECURSOS_HUMANOS: FuseNavigationItem =
     {
-        id: 'depto-recursos-humanos',
+        id: GuardRecursosHumanos.recursosHumanos,
         title: 'Recursos humanos',
         type: 'collapsable',
         icon: 'people',
@@ -34,7 +35,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
         children:
             [
                 {
-                    id: RecursosHumanos.deptos,
+                    id: GuardRecursosHumanos.deptos,
                     title: 'Departamentos',
                     type: 'basic',
                     icon: 'bento',
@@ -48,7 +49,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'departamentos'
                 },
                 {
-                    id: RecursosHumanos.empleados,
+                    id: GuardRecursosHumanos.infoGralEmpleados,
                     title: 'Info. gral empleados',
                     type: 'basic',
                     icon: 'badge',
@@ -62,7 +63,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/info-general'
                 },
                 {
-                    id: RecursosHumanos.imss,
+                    id: GuardRecursosHumanos.imss,
                     title: 'Imss',
                     type: 'basic',
                     icon: 'featured_play_list',
@@ -76,7 +77,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/imss'
                 },
                 {
-                    id: RecursosHumanos.nomina,
+                    id: GuardRecursosHumanos.nomina,
                     title: 'Nomina',
                     type: 'basic',
                     icon: 'account_balance_wallet',
@@ -90,7 +91,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
-                    id: RecursosHumanos.retardos,
+                    id: GuardRecursosHumanos.retardos,
                     title: 'Retardos',
                     type: 'basic',
                     icon: 'rule',
@@ -104,7 +105,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/retardos'
                 },
                 {
-                    id: RecursosHumanos.fondoDeAhoro,
+                    id: GuardRecursosHumanos.fondoDeAhoro,
                     title: 'Fondo de ahorro',
                     type: 'basic',
                     icon: 'savings',
@@ -118,7 +119,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/fondo-de-ahorro'
                 },
                 {
-                    id: RecursosHumanos.prestamos,
+                    id: GuardRecursosHumanos.prestamos,
                     title: 'Prestamos',
                     type: 'basic',
                     icon: 'paid',

@@ -4,6 +4,8 @@ import {v4 as uuidv4} from 'uuid';
 import {deleteObject, ref, Storage, uploadBytesResumable, UploadTask} from '@angular/fire/storage';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {Observable, ReplaySubject} from 'rxjs';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {Constantes} from '@s-shared/constantes';
 
 export interface IObjFecha
 {
@@ -23,7 +25,7 @@ export class GeneralService
 
     // private porcentaje: Subject<number> = new Subject<number>();
 
-    constructor(private storage: Storage, private ngxToastService: NgxToastService)
+    constructor(private storage: Storage, private ngxToast: NgxToastService, private stateAuth: StateAuth)
     {
     }
 
@@ -75,7 +77,7 @@ export class GeneralService
         subirDoc.on('state_changed', (snapshot) =>
         {
             this.porcentaje.next((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        }, err => this.ngxToastService.errorToast(err.message, 'Error al subir el archivo'));
+        }, err => this.ngxToast.errorToast(err.message, 'Error al subir el archivo'));
         return subirDoc;
     }
 
@@ -92,7 +94,23 @@ export class GeneralService
             await deleteObject(refDocEliminar);
         } catch (e)
         {
-            this.ngxToastService.errorToast(e.message, 'Error al tratar de eliminar archivo');
+            this.ngxToast.errorToast(e.message, 'Error al tratar de eliminar archivo');
         }
+
+    }
+
+    accesoARuta(role: string): boolean
+    {
+
+        // if (this.stateAuth.snapshot.auth.usuario === Constantes.admin)
+        // {
+        //     return true;
+        // }
+        if (!this.stateAuth.snapshot.auth.guards.includes(role))
+        {
+            this.ngxToast.alertaToast('No tienes permisos para acceder a esta ruta', 'Permiso denegado');
+            return false;
+        }
+        return true;
     }
 }

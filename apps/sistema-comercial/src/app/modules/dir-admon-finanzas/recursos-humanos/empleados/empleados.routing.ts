@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import {EmpleadosComponent} from '@s-dirAdmonFinanzas/empleados/empleados.component';
-import {InfoGralEmpleadoGuard} from '@s-dirAdmonFinanzas/empleados/info-gral-empleado/info-gral-empleado.guard';
+import {InfoGralEmpleadoGuard} from '@s-dirAdmonFinanzas/guards/info-gral-empleado.guard';
 
 export const empleadosRouting: Routes =
     [

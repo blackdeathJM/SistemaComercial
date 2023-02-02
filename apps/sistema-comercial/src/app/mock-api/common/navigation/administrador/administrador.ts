@@ -1,10 +1,16 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {ADMON_SESIONES} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/administrador/admon-sesiones';
+import {rutaBaseAdministrador} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
+
+export enum Administrador
+{
+    rutaAdminSesion = 'rutaAdminSesion',
+    dirAdministrador = 'dir-administrador'
+}
 
 export const ADMINISTRADOR: FuseNavigationItem[] =
     [
         {
-            id: 'dir-adminitrador',
+            id: Administrador.dirAdministrador,
             title: 'ADMINISTRADOR',
             type: 'group',
             icon: 'feather:settings',
@@ -15,7 +21,23 @@ export const ADMINISTRADOR: FuseNavigationItem[] =
             disabled: false,
             puedeAsigPermisos: false,
             acceso: true,
-            children: [ADMON_SESIONES]
+            children:
+                [
+                    {
+                        id: Administrador.rutaAdminSesion,
+                        title: 'Admon. sesiones',
+                        type: 'basic',
+                        icon: 'manage_accounts',
+                        oculto: false,
+                        hidden: (item: FuseNavigationItem): boolean => item.oculto,
+                        badge: {},
+                        controles: [],
+                        disabled: false,
+                        puedeAsigPermisos: false,
+                        acceso: false,
+                        link: rutaBaseAdministrador + 'empleados-sesion'
+                    }
+                ]
         }
     ];
 export const ADMINISTRADOR_C: FuseNavigationItem[] = [];

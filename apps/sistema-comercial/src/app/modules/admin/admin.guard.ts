@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {StateAuth} from '@s-core/auth/store/auth.store';
@@ -7,7 +7,7 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 @Injectable({
     providedIn: 'root'
 })
-export class AdminGuard implements CanActivate, CanLoad
+export class AdminGuard implements CanActivate
 {
     constructor(private ngxToastService: NgxToastService, private stateAuth: StateAuth)
     {
@@ -22,10 +22,5 @@ export class AdminGuard implements CanActivate, CanLoad
 
         this.ngxToastService.alertaToast('No tienes permiso para acceder a esta ruta', 'Acceso denegado');
         return false;
-    }
-
-    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-    {
-        return true;
     }
 }

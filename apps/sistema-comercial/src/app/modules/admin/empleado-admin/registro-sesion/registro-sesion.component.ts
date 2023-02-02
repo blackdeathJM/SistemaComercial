@@ -104,7 +104,7 @@ export class RegistroSesionComponent implements OnInit
                     return this.rolesService.crearRoles(args).pipe(finalize(() =>
                     {
                         this.cargandoDatos = false;
-                        this.mdr.close(true);
+                        this.mdr.close();
                     }));
                 }
             })).subscribe();

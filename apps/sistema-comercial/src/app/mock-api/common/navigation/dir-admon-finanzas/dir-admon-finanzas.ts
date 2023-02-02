@@ -1,9 +1,9 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {RECURSOS_HUMANOS} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 import {CONTABILIDAD} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/contabilidad';
 import {EGRESOS} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/egresos';
 import {COMPRAS_SERVICIOS} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/compras-servicios';
 import {ALMACEN} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/almacen';
+import {RECURSOS_HUMANOS} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 
 export const DIR_ADMON_FINANZAS: FuseNavigationItem[] =
     [

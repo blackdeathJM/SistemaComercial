@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -44,6 +44,7 @@ import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/commo
             RouterOutlet,
             RouterLink,
             MatTooltipModule,
+            FormsModule,
         ],
     selector: 'app-empleado-admin',
     templateUrl: './empleado-admin.component.html',
@@ -59,13 +60,12 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     empleadoSeleccionado: IResolveEmpleado;
 
     constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-                private cdr: ChangeDetectorRef, private rolesService: RolesService)
+                private rolesService: RolesService)
     {
     }
 
     ngOnInit(): void
     {
-        //TODO: buscar como implemetar los observables con buenas practicas
         this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
             this.empleadoService.filtrarEmpleados(res, this.ngxLoader))).subscribe());
         this.empleadoService.empleados(this.ngxLoader).subscribe();
@@ -92,11 +92,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     crearSesion(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.patchState({empleado});
-        this.mdr.open(RegistroSesionComponent, {width: '40%'}).afterClosed().subscribe((res) =>
-        {
-            this.deshabilitar = res;
-            this.cdr.markForCheck();
-        });
+        this.mdr.open(RegistroSesionComponent, {width: '40%'});
     }
 
     sesionInicial(empleado: IResolveEmpleado): void
