@@ -2,12 +2,12 @@ import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {ActRolesDto, CrearRolDto, RolesAsigDto, RolesDto, RolesType} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
 import {Model} from 'mongoose';
-import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
+import {AuthService} from '@api-admin/auth.service';
 
 @Injectable()
 export class RolesService
 {
-    constructor(@InjectModel(RolesDto.name) private roles: Model<RolesType>, private empleadoService: EmpleadoService)
+    constructor(@InjectModel(RolesDto.name) private roles: Model<RolesType>, private authService: AuthService)
     {
     }
 
@@ -38,7 +38,7 @@ export class RolesService
             // si la respuesta es satisfactoria comparamos el acceso que biene del cliente si es true lo agregamos al array y si es false lo sacamos del array
             if (respuesta._id)
             {
-                await this.empleadoService.permisosPrimerNivel(role.acceso, role.idRutaSecundaria, respuesta.idEmpleado);
+                await this.authService.permisosPrimerNivel(role.acceso, role.idRutaSecundaria, respuesta.idEmpleado);
             }
             return true;
         } catch (e)

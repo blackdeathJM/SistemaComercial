@@ -62,20 +62,6 @@ export class AuthService
         }
     }
 
-    // async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
-    // {
-    //     const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
-    //         arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
-    //     });
-    //
-    //     if (!empleado)
-    //     {
-    //         throw new NotFoundException({message: 'El usuario no fue encontrado'});
-    //     }
-    //     await this.modificadoPor(_id, modificadoPor);
-    //     return empleado;
-    // }
-
     login(empleado: any): LoginRespuestaDto
     {
         return this.datosSesion(empleado);
@@ -92,7 +78,24 @@ export class AuthService
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
-
+    async permisosPrimerNivel(acceso: boolean, rol: string, idEmpleado: string): Promise<boolean>
+    {
+        try
+        {
+            if (acceso)
+            {
+                const respuesta = await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).exec();
+                return !!respuesta._id;
+            } else
+            {
+                const respuesta = await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
+                return !!respuesta._id;
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
     private datosSesion(empleado: EmpleadoDto): ILoginRespuesta
     {
         const datosSesion: IDatosSesion =

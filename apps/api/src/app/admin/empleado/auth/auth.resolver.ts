@@ -43,13 +43,6 @@ export class AuthResolver
     {
         return await this.authService.actualizarAvatar(_id, url);
     }
-    // @Mutation(() => EmpleadoDto)
-    // async actualizarRol(@Args('_id') _id: string, @Args('rol') rol: RolDto, @Args('modificadoPor') modificadoPor: ModificadoDto): Promise<IEmpleado | NotFoundException>
-    // {
-    //     const rolCambiado = await this.authService.actualizarRol(_id, rol, modificadoPor);
-    //     await this.#pubSub.publish('rolCambiado', this.authService.login(rolCambiado));
-    //     return rolCambiado;
-    // }
 
     @Subscription(() => LoginRespuestaDto, {
         filter: (payload, variables) => payload.datosSesion._id.toString() === variables._id, resolve: value => value
