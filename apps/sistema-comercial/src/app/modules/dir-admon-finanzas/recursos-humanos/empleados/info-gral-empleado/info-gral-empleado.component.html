@@ -1,36 +1,36 @@
-<article class="flex flex-col flex-auto" @zoomIn>
+<article class="flex flex-col flex-auto">
     <section class="acciones-en-cabecera -mx-1 -mt-2">
-        <button *ngIf="stateAuth.snapshot.auth.controles.includes(btnAgregarNvo.title)" mat-raised-button color="primary" (click)="nvoEmpleado()">
-            <mat-icon class="mr-5">add</mat-icon>
+        <button mat-raised-button color="primary" (click)="nvoEmpleado()">
+            <mat-icon svgIcon="add"></mat-icon>
             Dar de alta nuevo empleado
         </button>
     </section>
-    <section class="flex-auto my-4 tarjeta-mat">
+    <section class="flex-auto my-4 tarjeta-mat" *ngIf="empleado$ | async as empleado" @zoomIn>
         <mat-card class="bg-gray-300 dark:bg-gray-800">
             <mat-card-header class="tarjeta-mat-cabecera border-b-cyan-500">
                 <span class="text-xl">Informacion personal</span>
             </mat-card-header>
             <mat-card-content>
                 <div class="flex flex-auto gap-4 p-4">
-                    <div class="basis-10 border-r-2">
-                        <div class="avatar-letra w-36 h-36 mr-4">B</div>
+                    <div class="basis-10 border-r-2 flex-auto">
+                        <img class="avatar w-36 h-36 rounded-full" [src]="empleado?.avatar | imgDefecto">
                     </div>
                     <div class="flex-grow">
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                            <span class="text-end text-secondary border-b-2">Nombre completo</span>
-                            <span class="lg:col-span-3 border-b-2">Juanito perez Gonzalez</span>
+                            <span class="text-end text-secondary border-b-2">Nombre</span>
+                            <span class="lg:col-span-3 border-b-2">{{empleado.nombreCompleto}}</span>
                             <span class="text-end text-secondary border-b-2">Calle</span>
-                            <span class="border-b-2">Nombre de la calle</span>
+                            <span class="border-b-2">{{empleado.calle | defaultValue:'---'}}</span>
                             <span class="text-end text-secondary border-b-2">Colonia</span>
-                            <span class="border-b-2">Nombre colonia</span>
+                            <span class="border-b-2">{{empleado.colonia | defaultValue:'---'}}</span>
                             <span class="text-end text-secondary border-b-2">Email</span>
-                            <span class="border-b-2">correoEjemplo@Gmail.com</span>
+                            <span class="border-b-2">{{empleado.correo | defaultValue:'---'}}</span>
                             <span class="text-end text-secondary border-b-2">Telefono</span>
-                            <span class="border-b-2">4181813113</span>
+                            <span class="border-b-2" *ngFor="let tel of empleado.telefono">{{tel.numero}}</span>
                             <span class="text-end text-secondary border-b-2">Departamento</span>
-                            <span class="border-b-2">Area tecnica</span>
+                            <span class="border-b-2">{{empleado.deptoEmpleado.nombre}}</span>
                             <span class="text-end text-secondary border-b-2">Fecha de ingreso</span>
-                            <span class="border-b-2">23/06/2011</span>
+                            <span class="border-b-2">{{empleado.fechaIngreso | convertirTimestamUnix | defaultValue:'---'}}</span>
                         </div>
                     </div>
                 </div>

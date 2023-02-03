@@ -1,8 +1,8 @@
 import {StateRepository} from '@angular-ru/ngxs/decorators';
-import {NgxsOnChanges, Selector, State} from '@ngxs/store';
+import {Selector, State} from '@ngxs/store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Injectable} from '@angular/core';
-import {createEntityCollections, EntityCollections, EntityIdType} from '@angular-ru/cdk/entity';
+import {createEntityCollections, EntityCollections} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 
 export interface IEmpleadoSelect
@@ -21,11 +21,6 @@ export interface IEmpleadoSelect
 export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, string, IEmpleadoSelect>
 {
     public primaryKey = '_id';
-
-    constructor()
-    {
-        super();
-    }
 
     @Selector()
     public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, string, IEmpleadoSelect>): IResolveEmpleado

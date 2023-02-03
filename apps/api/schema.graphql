@@ -39,6 +39,7 @@ type PuestoType {
   isr: Float
   puesto: String
   sueldo: Float
+  activo: Boolean
 }
 
 type EmpleadoType {
@@ -153,6 +154,7 @@ input PuestoInput {
   isr: Float
   puesto: String
   sueldo: Float = 0
+  activo: Boolean = true
 }
 
 input EmpleadoInput {
@@ -214,7 +216,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1675418538
+  tiempo: Int = 1675425988
   titulo: String
   usarRouter: Boolean = false
 }

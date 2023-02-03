@@ -1,0 +1,8 @@
+fragment fragPuesto on PuestoType
+{
+    puesto
+    activo
+    fechaAsignacion
+    isr
+    sueldo
+}

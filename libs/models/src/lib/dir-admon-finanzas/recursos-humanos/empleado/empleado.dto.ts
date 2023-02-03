@@ -29,6 +29,9 @@ export class PuestoDto implements IPuesto
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsNotEmpty({message: 'El sueldo es necesario'})
     sueldo: number;
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    @IsBoolean({message: 'El valor debe ser un booleano'})
+    activo: boolean;
 }
 
 export class SeguroSocialDto implements ISeguroSocial

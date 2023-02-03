@@ -11,12 +11,11 @@ import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-
 import {MatInputModule} from '@angular/material/input';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
-import {DrawerService} from '@s-shared/plantillas/drawer/drawer.service';
-import {MatDialog} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {fuseAnimations} from '@s-fuse/public-api';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 
 
 @Component({
@@ -49,7 +48,7 @@ export class EmpleadosComponent implements OnInit
     ngxLoader = 'loaderGralInfo';
 
 
-    constructor(private empleadoService: EmpleadoService, private drawerService: DrawerService, private mdr: MatDialog, public entityEmpleado: EntityEmpleadoStore)
+    constructor(private empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore)
     {
     }
 
@@ -59,9 +58,13 @@ export class EmpleadosComponent implements OnInit
     }
 
 
-    trackByFn(index: number, item: any): any
+    trackByFn(index: number, item: IResolveEmpleado): string | number
     {
-        return item.id || index;
+        return item._id || index;
     }
 
+    seleccionarEmpleado(empleado: IResolveEmpleado): void
+    {
+        this.entityEmpleado.patchState({empleado});
+    }
 }

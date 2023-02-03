@@ -13,6 +13,7 @@ export interface IPuesto
     sueldo: number;
     isr: number;
     fechaAsignacion: number;
+    activo: boolean;
 }
 
 export interface ISeguroSocial

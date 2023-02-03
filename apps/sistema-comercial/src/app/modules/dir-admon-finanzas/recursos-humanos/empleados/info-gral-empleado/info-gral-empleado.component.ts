@@ -10,7 +10,13 @@ import {fuseAnimations} from '@s-fuse/public-api';
 import {MatDialog} from '@angular/material/dialog';
 import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
 import {StateAuth} from '@s-core/auth/store/auth.store';
-import {ctrlsRecursosHumanosAgregarNvoEmpleado} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
+import {Select} from '@ngxs/store';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {Observable} from 'rxjs';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
+import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
+import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 
 @Component({
     selector: 'app-info-gral-empleado',
@@ -23,7 +29,10 @@ import {ctrlsRecursosHumanosAgregarNvoEmpleado} from '#/apps/sistema-comercial/s
             FuseCardModule,
             MatFormFieldModule,
             MatInputModule,
-            MatIconModule
+            MatIconModule,
+            ImgDefectoPipe,
+            DefaultValuePipeModule,
+            ConvertirTimestamUnixPipe
         ],
     templateUrl: './info-gral-empleado.component.html',
     styleUrls: ['./info-gral-empleado.component.scss'],
@@ -32,7 +41,7 @@ import {ctrlsRecursosHumanosAgregarNvoEmpleado} from '#/apps/sistema-comercial/s
 })
 export class InfoGralEmpleadoComponent
 {
-    btnAgregarNvo = ctrlsRecursosHumanosAgregarNvoEmpleado;
+    @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
 
     constructor(private mdr: MatDialog, public stateAuth: StateAuth)
     {
