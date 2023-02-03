@@ -1,10 +1,23 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
 import {rutaGeneral} from '../constantes/rutas';
 
+export enum GuardsGeneral
+{
+    general = 'general',
+    documentos = 'documentos',
+    misResguardos = 'misResguardos',
+    ordenesAtencion = 'ordenesDeAtencion'
+}
+
+export enum CtrlsGeneral
+{
+    agregarNvoDoc = 'agregarNvoDoc'
+}
+
 export const GENERAL: FuseNavigationItem[] =
     [
         {
-            id: 'general',
+            id: GuardsGeneral.general,
             title: 'GENERAL',
             type: 'group',
             icon: '6_ft_apart',
@@ -18,21 +31,28 @@ export const GENERAL: FuseNavigationItem[] =
             children:
                 [
                     {
-                        id: 'documentos',
+                        id: GuardsGeneral.documentos,
                         title: 'Mis documentos',
                         type: 'basic',
                         icon: 'feather:folder',
                         oculto: false,
                         hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
-                        controles: [],
+                        controles:
+                            [
+                                {
+                                    id: CtrlsGeneral.agregarNvoDoc,
+                                    title: 'Agregar nvo documento',
+                                    activo: false
+                                }
+                            ],
                         disabled: false,
                         puedeAsigPermisos: false,
                         acceso: false,
                         link: rutaGeneral + 'mis-documentos'
                     },
                     {
-                        id: 'misResguardos',
+                        id: GuardsGeneral.misResguardos,
                         title: 'Mis resguardos',
                         type: 'basic',
                         icon: 'feather:archive',
@@ -46,7 +66,7 @@ export const GENERAL: FuseNavigationItem[] =
                         link: rutaGeneral + 'mis-resguardos'
                     },
                     {
-                        id: 'ordenesDeAtencion',
+                        id: GuardsGeneral.ordenesAtencion,
                         title: 'Ordenes de atencion',
                         type: 'basic',
                         icon: 'feather:file-text',

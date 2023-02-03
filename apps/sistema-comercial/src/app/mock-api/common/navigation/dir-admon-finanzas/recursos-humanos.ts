@@ -1,4 +1,4 @@
-import {FuseNavigationItem, IControl} from '@s-fuse/navigation';
+import {FuseNavigationItem} from '@s-fuse/navigation';
 import {dirAdmonFinanzas} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
 export enum GuardRecursosHumanos
@@ -10,15 +10,15 @@ export enum GuardRecursosHumanos
     retardos = 'retardos',
     fondoDeAhoro = 'fondoDeAhoro',
     prestamos = 'prestamos',
-    recursosHumanos = 'recursosHumanos'
+    recursosHumanos = 'recursosHumanos',
+    puesto = 'puesto'
 }
 
-export const ctrlsRecursosHumanosAgregarNvoEmpleado: IControl =
-    {
-        id: 'btnAgregarNvoEmpleado',
-        title: 'Agregar Empleado',
-        activo: true
-    };
+export enum CtrlRecursosHumanos
+{
+    agregarNvoEmpleado = 'agregarNvo'
+}
+
 export const RECURSOS_HUMANOS: FuseNavigationItem =
     {
         id: GuardRecursosHumanos.recursosHumanos,
@@ -56,11 +56,32 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     oculto: false,
                     hidden: (item: FuseNavigationItem): boolean => item.oculto,
                     badge: {},
-                    controles: [],
+                    controles:
+                        [
+                            {
+                                id: CtrlRecursosHumanos.agregarNvoEmpleado,
+                                title: 'Agregar nuevo empleado',
+                                activo: false
+                            }
+                        ],
                     disabled: false,
                     puedeAsigPermisos: false,
                     acceso: false,
                     link: dirAdmonFinanzas + 'empleados/info-general'
+                },
+                {
+                    id: GuardRecursosHumanos.puesto,
+                    title: 'Puesto',
+                    type: 'basic',
+                    icon: 'bento',
+                    oculto: false,
+                    hidden: (item: FuseNavigationItem): boolean => item.oculto,
+                    badge: {},
+                    controles: [],
+                    disabled: false,
+                    puedeAsigPermisos: false,
+                    acceso: false,
+                    link: dirAdmonFinanzas + 'departamentos'
                 },
                 {
                     id: GuardRecursosHumanos.imss,

@@ -4,7 +4,7 @@ export const PLANEACION: FuseNavigationItem =
     {
         id: 'depto-planeacion',
         title: 'Planeacion',
-        type: 'basic',
+        type: 'collapsable',
         icon: 'feather:calendar',
         oculto: false,
         hidden: (item: FuseNavigationItem): boolean => item.oculto,

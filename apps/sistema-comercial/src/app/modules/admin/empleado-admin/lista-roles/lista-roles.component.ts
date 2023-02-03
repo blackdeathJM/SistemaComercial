@@ -9,11 +9,12 @@ import {concatMap, finalize, Subscription} from 'rxjs';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
     selector: 'app-lista-roles',
     standalone: true,
-    imports: [CommonModule, MatListModule, MatCheckboxModule, NgxUiLoaderModule, SinDatosComponent],
+    imports: [CommonModule, MatListModule, MatCheckboxModule, NgxUiLoaderModule, SinDatosComponent, MatTooltipModule],
     templateUrl: './lista-roles.component.html',
     styleUrls: ['./lista-roles.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -6,6 +6,12 @@ export enum GuardCtrlPatrimonial
     bajasActivos = 'ctrlBajaActivos'
 }
 
+export enum CtrlPatrimonial
+{
+    regNvoActivo = 'regNvoActivo',
+    elementoPrueba = 'elementoPrueba'
+}
+
 export const CTRL_PATRIMONIAL: FuseNavigationItem =
     {
         id: GuardCtrlPatrimonial.ctrlPatrimonial,
@@ -28,7 +34,19 @@ export const CTRL_PATRIMONIAL: FuseNavigationItem =
                 oculto: false,
                 hidden: (item: FuseNavigationItem): boolean => item.oculto,
                 badge: {},
-                controles: [],
+                controles:
+                    [
+                        {
+                            id: CtrlPatrimonial.regNvoActivo,
+                            title: 'Registrar nuevo activo',
+                            activo: false
+                        },
+                        {
+                            id: CtrlPatrimonial.elementoPrueba,
+                            title: 'Elemento de prueba',
+                            activo: false
+                        }
+                    ],
                 disabled: false,
                 puedeAsigPermisos: false,
                 acceso: false,
