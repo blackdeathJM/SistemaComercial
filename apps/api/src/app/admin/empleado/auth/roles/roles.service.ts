@@ -67,6 +67,26 @@ export class RolesService
         }
     }
 
+    async actTercerNivel(role: ActRolesDto): Promise<boolean>
+    {
+        try
+        {
+            const resp = await this.roles.findByIdAndUpdate(role._id,
+                {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].acceso': role.acceso}},
+                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}, {'subRuta.id': role.idRutaCuarta}]});
+            if (resp._id)
+            {
+                const empleado = await this.authService.asigPermisos(role.acceso, role.idRutaCuarta, resp.idEmpleado);
+                await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
+                return true;
+            }
+            return true;
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
     async rolesAsig(idEmpleado: RolesAsigDto): Promise<RolesDto>
     {
         try

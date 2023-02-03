@@ -45,8 +45,11 @@ export class ActRolesDto extends PickType(RolesDto, ['_id'], InputType) implemen
     @IsNotEmpty({message: 'El id del expandible'})
     idRutaSecundaria: string;
     @Field(() => String, {nullable: true})
-    @IsNotEmpty({message: 'El id de la ruta'})
+    @IsNotEmpty({message: 'El id de la ruta tercer nivel'})
     idRutaTreciaria: string;
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El id de la ruta cuarto nivel'})
+    idRutaCuarta: string;
     @Field(() => Boolean, {nullable: true})
     @IsBoolean({message: 'El valor debe ser boleano'})
     @IsNotEmpty({message: 'El valor no puede estar vacio'})

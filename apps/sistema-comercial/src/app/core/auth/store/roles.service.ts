@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActPrimerNivelGQL, ActPrimerNivelMutation, ActSegundoNivelGQL, ActSegundoNivelMutation, CrearRolesGQL, CrearRolesMutation, RolesAsigGQL, RolesAsigQuery} from '#/libs/datos/src';
+import {ActPrimerNivelGQL, ActPrimerNivelMutation, ActSegundoNivelGQL, ActSegundoNivelMutation, ActTercerNivelGQL, ActTercerNivelMutation, CrearRolesGQL, CrearRolesMutation, RolesAsigGQL, RolesAsigQuery} from '#/libs/datos/src';
 import {SingleExecutionResult} from '@apollo/client';
 import {finalize, Observable, tap} from 'rxjs';
 import {StateRoles} from '@s-core/auth/store/roles.store';
@@ -11,7 +11,7 @@ import {NgxUiLoaderService} from 'ngx-ui-loader';
 export class RolesService
 {
     constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService,
-                private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL)
+                private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL, private actTercerNivelGQL: ActTercerNivelGQL)
     {
     }
 
@@ -45,5 +45,10 @@ export class RolesService
     actSegundoNivel(role: IActRoles): Observable<SingleExecutionResult<ActSegundoNivelMutation>>
     {
         return this.actSegundoNivelGQL.mutate({role});
+    }
+
+    actTercerNivel(role: IActRoles): Observable<SingleExecutionResult<ActTercerNivelMutation>>
+    {
+        return this.actTercerNivelGQL.mutate({role});
     }
 }

@@ -51,6 +51,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 idRutaPrincipal: grupo['id'],
                 idRutaSecundaria: expandible['id'],
                 idRutaTreciaria: 'no-aplica',
+                idRutaCuarta: 'no-aplica',
                 acceso: e.checked
             };
         this.rolesService.actPrimerNivel(role).pipe(finalize(() =>
@@ -69,9 +70,29 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 idRutaPrincipal: grupo['id'],
                 idRutaSecundaria: expandible['id'],
                 idRutaTreciaria: ruta['id'],
+                idRutaCuarta: 'no-aplica',
                 acceso: e.checked
             };
         this.rolesService.actSegundoNivel(role).pipe(finalize(() =>
+        {
+            this.deshabilitarLista = false;
+            this.cdr.detectChanges();
+        })).subscribe();
+    }
+
+    cambioTercerNivel(e: MatCheckboxChange, grupo: object, expandible: Element, ruta: Element, subRuta: Element, empleado: IRoles): void
+    {
+        this.deshabilitarLista = true;
+        const role: IActRoles =
+            {
+                _id: empleado._id,
+                idRutaPrincipal: grupo['id'],
+                idRutaSecundaria: expandible['id'],
+                idRutaTreciaria: ruta['id'],
+                idRutaCuarta: subRuta['id'],
+                acceso: e.checked
+            };
+        this.rolesService.actTercerNivel(role).pipe(finalize(() =>
         {
             this.deshabilitarLista = false;
             this.cdr.detectChanges();

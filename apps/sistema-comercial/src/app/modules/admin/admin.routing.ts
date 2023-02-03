@@ -1,6 +1,5 @@
 import {Routes} from '@angular/router';
 import {AdminComponent} from '@s-admin/admin.component';
-import {EmpleadoAdminGuard} from '@s-admin/empleado-admin/empleado-admin.guard';
 
 export const adminRouting: Routes =
     [
@@ -12,7 +11,7 @@ export const adminRouting: Routes =
                     {
                         path: 'empleados-sesion',
                         loadComponent: () => import('@s-admin/empleado-admin/empleado-admin.component').then(c => c.EmpleadoAdminComponent),
-                        canActivate: [EmpleadoAdminGuard],
+                        canActivate: [],
                         children:
                             [
                                 {

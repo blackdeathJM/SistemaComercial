@@ -27,6 +27,12 @@ export class RolesResolver
         return this.rolesService.actSegundoNivel(role);
     }
 
+    @Mutation(() => Boolean)
+    async actTercerNivel(@Args('role') role: ActRolesDto): Promise<boolean>
+    {
+        return await this.rolesService.actTercerNivel(role);
+    }
+
     @Query(() => RolesDto, {nullable: true})
     async rolesAsig(@Args() args: RolesAsigDto): Promise<RolesDto>
     {

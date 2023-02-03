@@ -3,18 +3,24 @@
         <ng-container *ngIf="empleado; else noHayDatos">
             <mat-list [disabled]="deshabilitarLista">
                 <mat-list-item *ngFor="let grupo of empleado.roles">
-                    <div matListItemTitle class="flex flex-col flex-auto">
-                        <span class="flex-auto border-b-2 text-primary">{{grupo['title']}}</span>
-                        <div class="flex flex-auto flex-col" matListItemLine *ngFor="let expandible of grupo.children">
-                            <div class="flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
+                    <div matListItemTitle class="flex flex-col flex-auto" matListItemLine>
+                        <span class="flex-auto border-b-2 text-primary" matListItemLine>{{grupo['title']}}</span>
+                        <div class="flex flex-auto flex-col" *ngFor="let expandible of grupo.children" matListItemLine>
+                            <div class="flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900" matListItemLine>
                                 <span class="flex-auto text-lg">{{expandible['title']}}</span>
                                 <mat-checkbox color="primary" [checked]="expandible['acceso']" (change)="cambioPrimerNivel($event, grupo, expandible, empleado)" *ngIf="expandible['type'] === 'basic'"
                                               [disabled]="deshabilitarLista"></mat-checkbox>
                             </div>
-                            <div class="flex flex-col flex-auto" matListItemLine *ngFor="let ruta of expandible.children">
-                                <div class="ml-8 flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
+                            <div class="flex flex-col flex-auto" *ngFor="let ruta of expandible.children" matListItemLine>
+                                <div class="ml-4 flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900">
                                     <span>{{ruta['title']}}</span>
-                                    <mat-checkbox [disabled]="deshabilitarLista" color="primary" [checked]="ruta['acceso']" (change)="cambioSegNivel($event, grupo, expandible, ruta, empleado)"></mat-checkbox>
+                                    <mat-checkbox [disabled]="deshabilitarLista" color="primary" [checked]="ruta['acceso']" (change)="cambioSegNivel($event, grupo, expandible, ruta, empleado)"
+                                                  *ngIf="ruta['type'] === 'basic'"></mat-checkbox>
+                                </div>
+
+                                <div class="flex flex-auto items-center justify-between hover:bg-gray-300 dark:hover:bg-gray-900" *ngFor="let subRuta of ruta['children']" matListItemLine>
+                                    <span class="ml-8 flex-auto">{{subRuta['title']}}</span>
+                                    <mat-checkbox [disabled]="deshabilitarLista" color="primary" [checked]="subRuta['acceso']" (change)="cambioTercerNivel($event, grupo, expandible, ruta,subRuta, empleado)"></mat-checkbox>
                                 </div>
                             </div>
                         </div>

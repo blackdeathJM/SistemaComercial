@@ -22,3 +22,7 @@ mutation actSegundoNivel($role: ActRolesInput!)
 {
     actSegundoNivel(role: $role)
 }
+mutation actTercerNivel($role: ActRolesInput!)
+{
+    actTercerNivel(role: $role)
+}

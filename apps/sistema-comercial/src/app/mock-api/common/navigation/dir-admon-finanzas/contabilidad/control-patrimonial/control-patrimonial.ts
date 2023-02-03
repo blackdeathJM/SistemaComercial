@@ -2,13 +2,13 @@ import {FuseNavigationItem} from '@s-fuse/navigation';
 
 export enum GuardCtrlPatrimonial
 {
-    activos = 'ctrlActivos',
+    ctrlPatrimonial = 'ctrlPatrimonial',
     bajasActivos = 'ctrlBajaActivos'
 }
 
 export const CTRL_PATRIMONIAL: FuseNavigationItem =
     {
-        id: GuardCtrlPatrimonial.activos,
+        id: GuardCtrlPatrimonial.ctrlPatrimonial,
         title: 'Ctrl patrimonial',
         type: 'collapsable',
         icon: 'book-info',
@@ -22,7 +22,7 @@ export const CTRL_PATRIMONIAL: FuseNavigationItem =
         children: [
             {
                 id: GuardCtrlPatrimonial.bajasActivos,
-                title: 'Activos',
+                title: 'Baja activos',
                 type: 'basic',
                 icon: 'account_balance_wallet',
                 oculto: false,
