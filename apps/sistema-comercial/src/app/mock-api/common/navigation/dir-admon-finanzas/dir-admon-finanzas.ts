@@ -1,5 +1,5 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
-import {CONTABILIDAD} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/contabilidad';
+import {CONTABILIDAD} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/contabilidad/contabilidad';
 import {EGRESOS} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/egresos';
 import {COMPRAS_SERVICIOS} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/compras-servicios';
 import {ALMACEN} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/almacen';
