@@ -51,4 +51,10 @@ export class AuthResolver
     {
         return subRoles.asyncIterator('rolCambiado');
     }
+
+    @Mutation(() => Boolean)
+    async valoresDefecto(): Promise<boolean>
+    {
+        return await this.authService.valoresDefecto();
+    }
 }

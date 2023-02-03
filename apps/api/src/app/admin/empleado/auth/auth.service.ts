@@ -96,6 +96,18 @@ export class AuthService
         }
     }
 
+    async valoresDefecto(): Promise<boolean>
+    {
+        try
+        {
+            const res = await this.empleado.updateMany({auth: {$ne: null}}, {$set: {'auth.guards': [], 'auth.controles': [], 'auth.roles': null}}).exec();
+            return res.acknowledged;
+        } catch (e)
+        {
+            console.log(e.codeName);
+        }
+    }
+
     datosSesion(empleado: EmpleadoDto): ILoginRespuesta
     {
         const datosSesion: IDatosSesion =
