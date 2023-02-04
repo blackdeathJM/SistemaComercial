@@ -54,4 +54,7 @@ export class ActRolesDto extends PickType(RolesDto, ['_id'], InputType) implemen
     @IsBoolean({message: 'El valor debe ser boleano'})
     @IsNotEmpty({message: 'El valor no puede estar vacio'})
     acceso: boolean;
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    @IsBoolean({message: 'El valor debe ser un booleano'})
+    puedeAsigPermisos: boolean;
 }

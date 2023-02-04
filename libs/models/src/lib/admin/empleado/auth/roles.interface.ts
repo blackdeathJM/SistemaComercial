@@ -15,4 +15,5 @@ export interface IActRoles extends Pick<IRoles, '_id'>
     idRutaTreciaria: string;
     idRutaCuarta: string;
     acceso: boolean;
+    puedeAsigPermisos: boolean;
 }

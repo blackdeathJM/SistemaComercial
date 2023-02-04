@@ -3,63 +3,72 @@
         <ng-container *ngIf="empleado; else noHayDatos">
             <mat-list [disabled]="deshabilitarLista">
                 <mat-list-item *ngFor="let grupo of empleado.roles">
-                    <div class="text-primary border-b-2 text-lg" matListItemLine>{{grupo['title']}}</div>
+                    <div class="text-primary text-lg" matListItemLine>{{grupo['title']}}</div>
                     <!--Nivel de grupo-->
-                    <div class="flex flex-auto flex-col border-b-2" *ngFor="let exp of grupo['children']">
-
+                    <div class="ml-2 flex flex-auto flex-col" *ngFor="let exp of grupo['children']">
                         <div class="flex flex-auto items-center justify-between" matListItemLine>
-                            <span class="flex-auto">{{exp['title']}}</span>
-                            <mat-checkbox [checked]="exp['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="exp['type'] === 'basic'" matTooltip="Acceso a ruta">
+                            <span class="flex-0 mr-2">{{exp['title']}}</span>
+                            <div class="flex-auto border-b-2"></div>
+
+                            <mat-checkbox [checked]="exp['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="exp['type'] === 'basic'" matTooltip="Acceso a ruta"
+                                          (change)="cambioPrimerNivel(grupo, exp, empleado)">
                             </mat-checkbox>
+
                             <ng-container>
-                                <mat-checkbox [checked]="exp['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="exp['type'] === 'basic'" matTooltip="Puede asignar permisos">
+                                <mat-checkbox [checked]="exp['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="exp['type'] === 'basic'" matTooltip="Puede asignar permisos"
+                                              (change)="cambioPrimerNivel(grupo, exp, empleado)">
                                 </mat-checkbox>
                             </ng-container>
                         </div>
-                        <!--                            Permisos a controles-->
-                        <div class="flex flex-col flex-auto" *ngFor="let ctrlNivel1 of exp['controles']">
-                            <div class="ml-2 flex flex-auto items-center justify-between" matListItemLine>
-                                <span class="flex-auto text-secondary">{{ctrlNivel1['title']}}</span>
-                                <mat-checkbox [checked]="ctrlNivel1['activo']"></mat-checkbox>
+                        <!--Permisos a controles-->
+                        <div class="ml-2 flex flex-col flex-auto" *ngFor="let ctrlNivel1 of exp['controles']">
+                            <div class="flex flex-auto items-center justify-between" matListItemLine>
+                                <span class="flex-0 text-secondary mr-2">{{ctrlNivel1['title']}}</span>
+                                <div class="flex-auto border-b-2"></div>
+                                <mat-checkbox [checked]="ctrlNivel1['activo']" color="primary" matTooltip="Acciones de la ruta"></mat-checkbox>
                             </div>
                         </div>
 
-
                         <!--Segundo nivel-->
-                        <div class="flex flex-col flex-auto border-b-2" *ngFor="let expRuta of exp['children']">
-                            <div class="ml-2 flex flex-auto items-center justify-between" matListItemLine>
-                                <span class="flex-auto">{{expRuta['title']}}</span>
-                                <mat-checkbox [checked]="expRuta['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="expRuta['type'] === 'basic'">
+                        <div class="ml-4 flex flex-col flex-auto" *ngFor="let expRuta of exp['children']">
+                            <div class="flex flex-auto items-center justify-between" matListItemLine>
+                                <span class="flex-0 mr-2">{{expRuta['title']}}</span>
+                                <div class="flex-auto border-b-2"></div>
+                                <mat-checkbox [checked]="expRuta['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="expRuta['type'] === 'basic'"
+                                              matTooltip="Acceso a ruta">
                                 </mat-checkbox>
                                 <ng-container>
-                                    <mat-checkbox [checked]="expRuta['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="expRuta['type'] === 'basic'">
+                                    <mat-checkbox [checked]="expRuta['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="expRuta['type'] === 'basic'"
+                                                  matTooltip="Puede asignar permiso">
                                     </mat-checkbox>
                                 </ng-container>
                             </div>
                             <!--Permiso controles segundo nivel-->
-                            <div class="flex flex-col flex-auto" *ngFor="let ctrlNivel2 of expRuta['controles']">
-                                <div class="ml-2 flex flex-auto items-center justify-between" matListItemLine>
+                            <div class="ml-2 flex flex-col flex-auto" *ngFor="let ctrlNivel2 of expRuta['controles']">
+                                <div class="flex flex-auto items-center justify-between" matListItemLine>
                                     <span class="flex-auto text-secondary">{{ctrlNivel2['title']}}</span>
                                     <mat-checkbox [checked]="ctrlNivel2['activo']"></mat-checkbox>
                                 </div>
                             </div>
 
-                            <!--                            Tercer nivel-->
-                            <div class="flex flex-col flex-auto border-b-2" *ngFor="let subRuta of expRuta['children']">
-                                <div class="ml-2 flex flex-auto items-center justify-between" matListItemLine>
-                                    <span class="flex-auto">{{subRuta['title']}}</span>
+                            <!--Tercer nivel-->
+                            <div class="ml-4 flex flex-col flex-auto" *ngFor="let subRuta of expRuta['children']">
+                                <div class="flex flex-auto items-center justify-between" matListItemLine>
+                                    <span class="flex-0 mr-2">{{subRuta['title']}}</span>
+                                    <div class="flex-auto border-b-2"></div>
                                     <mat-checkbox [checked]="subRuta['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="subRuta['type'] === 'basic'">
                                     </mat-checkbox>
                                     <ng-container>
-                                        <mat-checkbox [checked]="subRuta['puedeAsigPermisos']" color="primary" [disabled]="deshabilitarLista" *ngIf="subRuta['type'] === 'basic'">
+                                        <mat-checkbox [checked]="subRuta['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="subRuta['type'] === 'basic'">
                                         </mat-checkbox>
                                     </ng-container>
                                 </div>
 
-                                <div class="flex flex-col flex-auto" *ngFor="let ctrlNivel3 of expRuta['controles']">
-                                    <div class="ml-2 flex flex-auto items-center justify-between" matListItemLine>
-                                        <span class="flex-auto text-secondary">{{ctrlNivel3['title']}}</span>
-                                        <mat-checkbox [checked]="ctrlNivel3['activo']"></mat-checkbox>
+                                <div class="ml-2 flex flex-col flex-auto" *ngFor="let ctrlNivel3 of subRuta['controles']">
+                                    <div class="flex flex-auto items-center justify-between" matListItemLine>
+                                        <span class="flex-0 mr-2 text-secondary">{{ctrlNivel3['title']}}</span>
+                                        <div class="flex-auto border-b-2"></div>
+                                        <mat-checkbox [checked]="ctrlNivel3['activo']" color="primary" matTooltip="Acciones de la ruta"></mat-checkbox>
                                     </div>
                                 </div>
                             </div>

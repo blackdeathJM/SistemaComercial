@@ -28,6 +28,7 @@ export type ActRolesInput = {
   idRutaPrincipal?: InputMaybe<Scalars['String']>;
   idRutaSecundaria?: InputMaybe<Scalars['String']>;
   idRutaTreciaria?: InputMaybe<Scalars['String']>;
+  puedeAsigPermisos?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type AuthInput = {

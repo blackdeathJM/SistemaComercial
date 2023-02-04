@@ -216,7 +216,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1675441177
+  tiempo: Int = 1675506698
   titulo: String
   usarRouter: Boolean = false
 }
@@ -298,6 +298,7 @@ input ActRolesInput {
   idRutaTreciaria: String
   idRutaCuarta: String
   acceso: Boolean
+  puedeAsigPermisos: Boolean = false
 }
 
 input RegEmpleadoInput {

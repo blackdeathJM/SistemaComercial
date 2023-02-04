@@ -34,8 +34,9 @@ export class RolesService
         try
         {
             // Actualizamos la lista de roles que se encuentra en la collecion Roles
-            const respuesta = await this.roles.findByIdAndUpdate(role._id, {$set: {'roles.$[role].children.$[rutaSec].acceso': role.acceso}},
-                {arrayFilters: [{'role.id': role.idRutaPrincipal}, {'rutaSec.id': role.idRutaSecundaria}]}).exec();
+            const respuesta = await this.roles.findByIdAndUpdate(role._id,
+                {$set: {'roles.$[grupo].children.$[rutaSec].acceso': role.acceso, 'roles.$[grupo].children.$[rutaSec].puedeAsigPermisos': role.puedeAsigPermisos}},
+                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'rutaSec.id': role.idRutaSecundaria}]}).exec();
             // si la respuesta es satisfactoria comparamos el acceso que biene del cliente si es true lo agregamos al array y si es false lo sacamos del array
             if (respuesta._id)
             {
@@ -53,7 +54,8 @@ export class RolesService
     {
         try
         {
-            const resp = await this.roles.findByIdAndUpdate(role._id, {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].acceso': role.acceso}},
+            const resp = await this.roles.findByIdAndUpdate(role._id,
+                {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].acceso': role.acceso, 'roles.$[grupo].children.$[exp].children.$[ruta].puedeAsigPermisos': role.puedeAsigPermisos}},
                 {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}]}).exec();
             if (resp._id)
             {
@@ -72,7 +74,7 @@ export class RolesService
         try
         {
             const resp = await this.roles.findByIdAndUpdate(role._id,
-                {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].acceso': role.acceso}},
+                {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].acceso': role.acceso, 'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].puedeAsigPermisos': role.puedeAsigPermisos}},
                 {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}, {'subRuta.id': role.idRutaCuarta}]});
             if (resp._id)
             {
