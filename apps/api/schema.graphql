@@ -216,7 +216,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1675506698
+  tiempo: Int = 1675595691
   titulo: String
   usarRouter: Boolean = false
 }
@@ -257,9 +257,9 @@ type Mutation {
   actualizarAvatar(_id: String!, url: String!): LoginRespuestaType!
   valoresDefecto: Boolean!
   crearRoles(args: CrearRolInput!): RolesType
-  actPrimerNivel(role: ActRolesInput!): Boolean!
-  actSegundoNivel(role: ActRolesInput!): Boolean!
-  actTercerNivel(role: ActRolesInput!): Boolean!
+  actPrimerNivel(role: ActRolesInput!): RolesType!
+  actSegundoNivel(role: ActRolesInput!): RolesType!
+  actTercerNivel(role: ActRolesInput!): RolesType!
   crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
@@ -299,6 +299,8 @@ input ActRolesInput {
   idRutaCuarta: String
   acceso: Boolean
   puedeAsigPermisos: Boolean = false
+  idCtrl: String
+  accesoCtrl: Boolean = true
 }
 
 input RegEmpleadoInput {

@@ -15,20 +15,20 @@ export class RolesResolver
         return await this.rolesService.crearRoles(args);
     }
 
-    @Mutation(() => Boolean)
-    async actPrimerNivel(@Args('role') role: ActRolesDto): Promise<boolean>
+    @Mutation(() => RolesDto)
+    async actPrimerNivel(@Args('role') role: ActRolesDto): Promise<RolesDto>
     {
         return await this.rolesService.actPrimerNivel(role);
     }
 
-    @Mutation(() => Boolean)
-    async actSegundoNivel(@Args('role') role: ActRolesDto): Promise<boolean>
+    @Mutation(() => RolesDto)
+    async actSegundoNivel(@Args('role') role: ActRolesDto): Promise<RolesDto>
     {
         return this.rolesService.actSegundoNivel(role);
     }
 
-    @Mutation(() => Boolean)
-    async actTercerNivel(@Args('role') role: ActRolesDto): Promise<boolean>
+    @Mutation(() => RolesDto)
+    async actTercerNivel(@Args('role') role: ActRolesDto): Promise<RolesDto>
     {
         return await this.rolesService.actTercerNivel(role);
     }

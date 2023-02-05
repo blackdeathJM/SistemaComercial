@@ -81,7 +81,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     disabled: false,
                     puedeAsigPermisos: false,
                     acceso: false,
-                    link: dirAdmonFinanzas + 'departamentos'
+                    link: dirAdmonFinanzas + 'puesto'
                 },
                 {
                     id: GuardRecursosHumanos.imss,

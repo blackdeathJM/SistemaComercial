@@ -96,6 +96,11 @@ export class AuthService
         }
     }
 
+    async asigCtrls(acceso: boolean, ctrl: string, idEmpleado: string): Promise<EmpleadoDto>
+    {
+
+    }
+
     async valoresDefecto(): Promise<boolean>
     {
         try

@@ -40,6 +40,11 @@ export const empleadosRouting: Routes =
                         canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.fondoDeAhoro)],
                         loadComponent: () => import('@s-dirAdmonFinanzas/empleados/prestamos/prestamos.component').then(c => c.PrestamosComponent)
                     }
+                    // {
+                    //     path: 'puesto',
+                    //     canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.puesto)],
+                    //     loadComponent: () => import('@s-dirAdmonFinanzas/empleados/')
+                    // }
                 ]
         }
     ];

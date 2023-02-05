@@ -261,9 +261,9 @@ export type ModificadoPorType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  actPrimerNivel: Scalars['Boolean'];
-  actSegundoNivel: Scalars['Boolean'];
-  actTercerNivel: Scalars['Boolean'];
+  actPrimerNivel: RolesType;
+  actSegundoNivel: RolesType;
+  actTercerNivel: RolesType;
   actualizarAvatar: LoginRespuestaType;
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
@@ -642,21 +642,21 @@ export type ActPrimerNivelMutationVariables = Exact<{
 }>;
 
 
-export type ActPrimerNivelMutation = { __typename?: 'Mutation', actPrimerNivel: boolean };
+export type ActPrimerNivelMutation = { __typename?: 'Mutation', actPrimerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
 export type ActSegundoNivelMutationVariables = Exact<{
   role: ActRolesInput;
 }>;
 
 
-export type ActSegundoNivelMutation = { __typename?: 'Mutation', actSegundoNivel: boolean };
+export type ActSegundoNivelMutation = { __typename?: 'Mutation', actSegundoNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
 export type ActTercerNivelMutationVariables = Exact<{
   role: ActRolesInput;
 }>;
 
 
-export type ActTercerNivelMutation = { __typename?: 'Mutation', actTercerNivel: boolean };
+export type ActTercerNivelMutation = { __typename?: 'Mutation', actTercerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null };
 
@@ -1114,9 +1114,11 @@ export const RolesAsigDocument = gql`
   }
 export const ActPrimerNivelDocument = gql`
     mutation actPrimerNivel($role: ActRolesInput!) {
-  actPrimerNivel(role: $role)
+  actPrimerNivel(role: $role) {
+    ...fragRoles
+  }
 }
-    `;
+    ${FragRolesFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -1130,9 +1132,11 @@ export const ActPrimerNivelDocument = gql`
   }
 export const ActSegundoNivelDocument = gql`
     mutation actSegundoNivel($role: ActRolesInput!) {
-  actSegundoNivel(role: $role)
+  actSegundoNivel(role: $role) {
+    ...fragRoles
+  }
 }
-    `;
+    ${FragRolesFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -1146,9 +1150,11 @@ export const ActSegundoNivelDocument = gql`
   }
 export const ActTercerNivelDocument = gql`
     mutation actTercerNivel($role: ActRolesInput!) {
-  actTercerNivel(role: $role)
+  actTercerNivel(role: $role) {
+    ...fragRoles
+  }
 }
-    `;
+    ${FragRolesFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

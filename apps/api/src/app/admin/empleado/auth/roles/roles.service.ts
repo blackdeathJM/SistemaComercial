@@ -29,60 +29,82 @@ export class RolesService
         }
     }
 
-    async actPrimerNivel(role: ActRolesDto): Promise<boolean>
+    async actPrimerNivel(role: ActRolesDto): Promise<RolesDto>
     {
         try
         {
             // Actualizamos la lista de roles que se encuentra en la collecion Roles
             const respuesta = await this.roles.findByIdAndUpdate(role._id,
                 {$set: {'roles.$[grupo].children.$[rutaSec].acceso': role.acceso, 'roles.$[grupo].children.$[rutaSec].puedeAsigPermisos': role.puedeAsigPermisos}},
-                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'rutaSec.id': role.idRutaSecundaria}]}).exec();
+                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'rutaSec.id': role.idRutaSecundaria}], new: true}).exec();
             // si la respuesta es satisfactoria comparamos el acceso que biene del cliente si es true lo agregamos al array y si es false lo sacamos del array
             if (respuesta._id)
             {
                 const empleado = await this.authService.asigPermisos(role.acceso, role.idRutaSecundaria, respuesta.idEmpleado);
                 await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
             }
-            return true;
+            return respuesta;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
-    async actSegundoNivel(role: ActRolesDto): Promise<boolean>
+    async actCtrlPrimerNivel(ctrl: ActRolesDto): Promise<RolesDto>
+    {
+        try
+        {
+            const respuesta = await this.roles.findByIdAndUpdate(ctrl._id, {$set: {'roles.$[grupo].children.$[rutaSec].controles.$[ctrl].acceso': ctrl.accesoCtrl}},
+                {arrayFilters: [{'grupo.id': ctrl.idRutaPrincipal}, {'rutaSec.id': ctrl.idRutaSecundaria}, {'ctrl.id': ctrl.idCtrl}]}).exec();
+            if (!respuesta._id)
+            {
+                return null;
+            }
+            const empleado = await this.authService.asigPermisos()
+            return respuesta;
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async actSegundoNivel(role: ActRolesDto): Promise<RolesDto>
     {
         try
         {
             const resp = await this.roles.findByIdAndUpdate(role._id,
                 {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].acceso': role.acceso, 'roles.$[grupo].children.$[exp].children.$[ruta].puedeAsigPermisos': role.puedeAsigPermisos}},
-                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}]}).exec();
+                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}], new: true}).exec();
             if (resp._id)
             {
                 const empleado = await this.authService.asigPermisos(role.acceso, role.idRutaTreciaria, resp.idEmpleado);
                 await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
-                return true;
             }
+            return resp;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
-    async actTercerNivel(role: ActRolesDto): Promise<boolean>
+    async actTercerNivel(role: ActRolesDto): Promise<RolesDto>
     {
         try
         {
             const resp = await this.roles.findByIdAndUpdate(role._id,
-                {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].acceso': role.acceso, 'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].puedeAsigPermisos': role.puedeAsigPermisos}},
-                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}, {'subRuta.id': role.idRutaCuarta}]});
+                {
+                    $set: {
+                        'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].acceso': role.acceso,
+                        'roles.$[grupo].children.$[exp].children.$[ruta].children.$[subRuta].puedeAsigPermisos': role.puedeAsigPermisos
+                    }
+                },
+                {arrayFilters: [{'grupo.id': role.idRutaPrincipal}, {'exp.id': role.idRutaSecundaria}, {'ruta.id': role.idRutaTreciaria}, {'subRuta.id': role.idRutaCuarta}], new: true});
             if (resp._id)
             {
                 const empleado = await this.authService.asigPermisos(role.acceso, role.idRutaCuarta, resp.idEmpleado);
                 await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
-                return true;
             }
-            return true;
+            return resp;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});

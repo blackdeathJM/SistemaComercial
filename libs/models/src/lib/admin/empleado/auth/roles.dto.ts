@@ -57,4 +57,10 @@ export class ActRolesDto extends PickType(RolesDto, ['_id'], InputType) implemen
     @Field(() => Boolean, {nullable: true, defaultValue: false})
     @IsBoolean({message: 'El valor debe ser un booleano'})
     puedeAsigPermisos: boolean;
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el id del control'})
+    idCtrl: string;
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    @IsBoolean({message: 'El valor del ctrl es booleano'})
+    accesoCtrl: boolean;
 }

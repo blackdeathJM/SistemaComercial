@@ -39,16 +39,37 @@ export class RolesService
 
     actPrimerNivel(role: IActRoles): Observable<SingleExecutionResult<ActPrimerNivelMutation>>
     {
-        return this.actPrimerNivelGQL.mutate({role});
+        return this.actPrimerNivelGQL.mutate({role}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const roles = $cast<IRoles>(res.data.actPrimerNivel);
+                this.stateRoles.setState(roles);
+            }
+        }));
     }
 
     actSegundoNivel(role: IActRoles): Observable<SingleExecutionResult<ActSegundoNivelMutation>>
     {
-        return this.actSegundoNivelGQL.mutate({role});
+        return this.actSegundoNivelGQL.mutate({role}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const roles = $cast<IRoles>(res.data.actSegundoNivel);
+                this.stateRoles.setState(roles);
+            }
+        }));
     }
 
     actTercerNivel(role: IActRoles): Observable<SingleExecutionResult<ActTercerNivelMutation>>
     {
-        return this.actTercerNivelGQL.mutate({role});
+        return this.actTercerNivelGQL.mutate({role}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const roles = $cast<IRoles>(res.data.actTercerNivel);
+                this.stateRoles.setState(roles);
+            }
+        }));
     }
 }

@@ -11,6 +11,7 @@ query filtrarDeptos($nombre: String!)
         ...fragDeptos
     }
 }
+
 mutation crearDepto($input: DeptoInput!)
 {
     crearDepto(input: $input)
