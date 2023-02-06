@@ -60,7 +60,8 @@ export class RolesService
             {
                 return null;
             }
-            const empleado = await this.authService.asigPermisos()
+            const empleado = await this.authService.asigCtrls(ctrl._id, ctrl.idCtrl, ctrl.accesoCtrl);
+            await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
             return respuesta;
         } catch (e)
         {
@@ -81,6 +82,19 @@ export class RolesService
                 await subRoles.publish('rolCambiado', this.authService.datosSesion(empleado));
             }
             return resp;
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async actCtrlSegundoNivel(ctrl: ActRolesDto): Promise<RolesDto>
+    {
+        try
+        {
+            const resp = await this.roles.findByIdAndUpdate(ctrl._id,
+                {$set: {'roles.$[grupo].children.$[exp].children.$[ruta].controles.$[ctrl].acesso': ctrl.accesoCtrl}},
+                {arrayFilters: [{'grupo.id': ctrl.idRutaPrincipal}, {'exp.id': ctrl.idRutaSecundaria}]}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});

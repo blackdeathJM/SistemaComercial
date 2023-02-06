@@ -96,9 +96,21 @@ export class AuthService
         }
     }
 
-    async asigCtrls(acceso: boolean, ctrl: string, idEmpleado: string): Promise<EmpleadoDto>
+    async asigCtrls(idEmpleado: string, ctrl: string, acceso: boolean): Promise<EmpleadoDto>
     {
-
+        try
+        {
+            if (acceso)
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.controles': ctrl}}).exec();
+            } else
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.controles': ctrl}}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
     }
 
     async valoresDefecto(): Promise<boolean>
