@@ -14,7 +14,6 @@ export class DeptosService
     {
         try
         {
-            // await this.depto.updateMany({}, {$set: {puestos: []}}).exec();
             return await this.depto.find().exec();
         } catch (e)
         {

@@ -23,6 +23,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {RolesService} from '@s-core/auth/store/roles.service';
 import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
+import {StateRoles} from '@s-core/auth/store/roles.store';
+import {updateArray} from '@angular-ru/cdk/array';
 
 @Component({
     standalone: true,
@@ -60,7 +62,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     empleadoSeleccionado: IResolveEmpleado;
 
     constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-                private rolesService: RolesService)
+                private rolesService: RolesService, private stateRoles: StateRoles)
     {
     }
 
@@ -100,7 +102,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         const args: TCrearRol =
             {
                 idEmpleado: empleado._id,
-                roles: defaultNavigation
+                roles: this.stateRoles.snapshot !== null ? updateArray(this.stateRoles.snapshot.roles, defaultNavigation) : defaultNavigation
             };
         this.rolesService.crearRoles(args).subscribe();
     }

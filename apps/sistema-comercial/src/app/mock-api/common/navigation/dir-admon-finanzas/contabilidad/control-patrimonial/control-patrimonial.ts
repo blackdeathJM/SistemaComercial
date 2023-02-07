@@ -8,8 +8,9 @@ export enum GuardCtrlPatrimonial
 
 export enum CtrlPatrimonial
 {
-    regNvoActivo = 'regNvoActivo',
-    elementoPrueba = 'elementoPrueba'
+    regNvoActivo = 'Registrar nvo activo',
+    elementoPrueba = 'Elemento prueba',
+    crearRevision = 'Crear revision'
 }
 
 export const CTRL_PATRIMONIAL: FuseNavigationItem =
@@ -44,6 +45,11 @@ export const CTRL_PATRIMONIAL: FuseNavigationItem =
                         {
                             id: CtrlPatrimonial.elementoPrueba,
                             title: 'Elemento de prueba',
+                            activo: false
+                        },
+                        {
+                            id: CtrlPatrimonial.crearRevision,
+                            title: 'Crear Revision',
                             activo: false
                         }
                     ],

@@ -39,79 +39,45 @@ export class ListaRolesComponent implements OnInit, OnDestroy
             this.rolesService.rolesAsig(res._id, this.ngxLoader))).subscribe());
     }
 
-    cambioPrimerNivel(e: MatCheckboxChange, grupo: object, exp: Element, empleado: IRoles, acceso: boolean): void
+    actCtrl(e: MatCheckboxChange, grupo: string, exp: string, expRuta: string, subRuta: string, empleado: IRoles, ctrls: Element, nivel: number): void
     {
         this.deshabilitarLista = true;
-        const role: IActRoles =
+        const ctrl: IActRoles =
             {
                 _id: empleado._id,
-                idRutaPrincipal: grupo['id'],
-                idRutaSecundaria: exp['id'],
-                idRutaTreciaria: 'no-aplica',
-                idRutaCuarta: 'no-aplica',
-                acceso: false,
-                puedeAsigPermisos: false,
-                idCtrl: 'no-aplica',
-                accesoCtrl: true
+                idRutaPrincipal: grupo,
+                idRutaSecundaria: exp,
+                idRutaTreciaria: expRuta,
+                idRutaCuarta: subRuta,
+                idCtrl: ctrls['id'],
+                accesoCtrl: e.checked,
+                acceso: true,
+                puedeAsigPermisos: false
             };
-        if (acceso)
+        switch (nivel)
         {
-            role.acceso = e.checked;
-            role.puedeAsigPermisos = exp['puedeAsigPermisos'];
-        } else
-        {
-            role.acceso = exp['acceso'];
-            role.puedeAsigPermisos = e.checked;
+            case 1:
+                this.rolesService.actCtrlPrimerNivel(ctrl).pipe(finalize(() => this.deshabilitarLista = false)).subscribe();
+                break;
+            case 2:
+                this.rolesService.actCtrlSegundoNivel(ctrl).pipe(finalize(() => this.deshabilitarLista = false)).subscribe();
+                break;
+            case 3:
+                this.rolesService.actCtrlTercerNivel(ctrl).pipe(finalize(() => this.deshabilitarLista = false)).subscribe();
+                break;
         }
-        this.rolesService.actPrimerNivel(role).pipe(finalize(() =>
-        {
-            this.deshabilitarLista = false;
-            this.cdr.detectChanges();
-        })).subscribe();
     }
 
-    cambioSegNivel(e: MatCheckboxChange, grupo: object, exp: Element, ruta: Element, empleado: IRoles, esAcceso: boolean): void
+    actRutas(e: MatCheckboxChange, grupo: string, exp: string, expRuta: string, subRuta: string, empleado: IRoles, esAcceso: boolean, nivel: number): void
     {
         this.deshabilitarLista = true;
         const role: IActRoles =
             {
                 _id: empleado._id,
-                idRutaPrincipal: grupo['id'],
-                idRutaSecundaria: exp['id'],
-                idRutaTreciaria: ruta['id'],
-                idRutaCuarta: 'no-aplica',
-                acceso: false,
-                puedeAsigPermisos: false,
-                idCtrl: 'no-aplica',
-                accesoCtrl: true
-            };
-
-        if (esAcceso)
-        {
-            role.acceso = e.checked;
-            role.puedeAsigPermisos = ruta['puedeAsigPermisos'];
-        } else
-        {
-            role.acceso = ruta['acceso'];
-            role.puedeAsigPermisos = e.checked;
-        }
-        this.rolesService.actSegundoNivel(role).pipe(finalize(() =>
-        {
-            this.deshabilitarLista = false;
-            this.cdr.detectChanges();
-        })).subscribe();
-    }
-
-    cambioTercerNivel(e: MatCheckboxChange, grupo: object, exp: any, expRuta: any, subRuta: any, empleado: IRoles, esAcceso: boolean): void
-    {
-        this.deshabilitarLista = true;
-        const role: IActRoles =
-            {
-                _id: empleado._id,
-                idRutaPrincipal: grupo['id'],
-                idRutaSecundaria: exp['id'],
-                idRutaTreciaria: expRuta['id'],
-                idRutaCuarta: subRuta['id'],
+                idRutaPrincipal: grupo,
+                idRutaSecundaria: exp,
+                idRutaTreciaria: expRuta,
+                idRutaCuarta: subRuta,
                 acceso: false,
                 puedeAsigPermisos: false,
                 idCtrl: 'no-aplica',
@@ -127,11 +93,30 @@ export class ListaRolesComponent implements OnInit, OnDestroy
             role.puedeAsigPermisos = e.checked;
         }
 
-        this.rolesService.actTercerNivel(role).pipe(finalize(() =>
+        switch (nivel)
         {
-            this.deshabilitarLista = false;
-            this.cdr.detectChanges();
-        })).subscribe();
+            case 1:
+                this.rolesService.actPrimerNivel(role).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
+                break;
+            case 2:
+                this.rolesService.actSegundoNivel(role).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
+                break;
+            case 3:
+                this.rolesService.actTercerNivel(role).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
+                break;
+        }
     }
 
     ngOnDestroy(): void

@@ -1,5 +1,18 @@
 import {Injectable} from '@angular/core';
-import {ActPrimerNivelGQL, ActPrimerNivelMutation, ActSegundoNivelGQL, ActSegundoNivelMutation, ActTercerNivelGQL, ActTercerNivelMutation, CrearRolesGQL, CrearRolesMutation, RolesAsigGQL, RolesAsigQuery} from '#/libs/datos/src';
+import {
+    ActCtrlPrimerNivelGQL,
+    ActCtrlPrimerNivelMutation, ActCtrlSegundoNivelGQL, ActCtrlSegundoNivelMutation, ActCtrlTercerNivelGQL, ActCtrlTercerNivelMutation,
+    ActPrimerNivelGQL,
+    ActPrimerNivelMutation,
+    ActSegundoNivelGQL,
+    ActSegundoNivelMutation,
+    ActTercerNivelGQL,
+    ActTercerNivelMutation,
+    CrearRolesGQL,
+    CrearRolesMutation,
+    RolesAsigGQL,
+    RolesAsigQuery
+} from '#/libs/datos/src';
 import {SingleExecutionResult} from '@apollo/client';
 import {finalize, Observable, tap} from 'rxjs';
 import {StateRoles} from '@s-core/auth/store/roles.store';
@@ -11,7 +24,8 @@ import {NgxUiLoaderService} from 'ngx-ui-loader';
 export class RolesService
 {
     constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService,
-                private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL, private actTercerNivelGQL: ActTercerNivelGQL)
+                private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL, private actTercerNivelGQL: ActTercerNivelGQL, private actCtrlPrimerNivelGQL: ActCtrlPrimerNivelGQL,
+                private actCtrlSegundoNivelGQL: ActCtrlSegundoNivelGQL, private actCtrlTercerNivelGQL: ActCtrlTercerNivelGQL)
     {
     }
 
@@ -49,6 +63,18 @@ export class RolesService
         }));
     }
 
+    actCtrlPrimerNivel(ctrl: IActRoles): Observable<SingleExecutionResult<ActCtrlPrimerNivelMutation>>
+    {
+        return this.actCtrlPrimerNivelGQL.mutate({ctrl}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const ctrls = $cast<IRoles>(res.data.actCtrlPrimerNivel);
+                this.stateRoles.setState(ctrls);
+            }
+        }));
+    }
+
     actSegundoNivel(role: IActRoles): Observable<SingleExecutionResult<ActSegundoNivelMutation>>
     {
         return this.actSegundoNivelGQL.mutate({role}).pipe(tap((res) =>
@@ -61,6 +87,18 @@ export class RolesService
         }));
     }
 
+    actCtrlSegundoNivel(ctrl: IActRoles): Observable<SingleExecutionResult<ActCtrlSegundoNivelMutation>>
+    {
+        return this.actCtrlSegundoNivelGQL.mutate({ctrl}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const ctrls = $cast<IRoles>(res.data.actCtrlSegundoNivel);
+                this.stateRoles.setState(ctrls);
+            }
+        }));
+    }
+
     actTercerNivel(role: IActRoles): Observable<SingleExecutionResult<ActTercerNivelMutation>>
     {
         return this.actTercerNivelGQL.mutate({role}).pipe(tap((res) =>
@@ -69,6 +107,18 @@ export class RolesService
             {
                 const roles = $cast<IRoles>(res.data.actTercerNivel);
                 this.stateRoles.setState(roles);
+            }
+        }));
+    }
+
+    actCtrlTercerNivel(ctrl: IActRoles): Observable<SingleExecutionResult<ActCtrlTercerNivelMutation>>
+    {
+        return this.actCtrlTercerNivelGQL.mutate({ctrl}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const ctrls = $cast<IRoles>(res.data.actCtrlTercerNivel);
+                this.stateRoles.setState(ctrls);
             }
         }));
     }

@@ -24,6 +24,8 @@ export type Scalars = {
 export type ActRolesInput = {
   _id?: InputMaybe<Scalars['ID']>;
   acceso?: InputMaybe<Scalars['Boolean']>;
+  accesoCtrl?: InputMaybe<Scalars['Boolean']>;
+  idCtrl?: InputMaybe<Scalars['String']>;
   idRutaCuarta?: InputMaybe<Scalars['String']>;
   idRutaPrincipal?: InputMaybe<Scalars['String']>;
   idRutaSecundaria?: InputMaybe<Scalars['String']>;
@@ -261,6 +263,9 @@ export type ModificadoPorType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  actCtrlPrimerNivel: RolesType;
+  actCtrlSegundoNivel: RolesType;
+  actCtrlTercerNivel: RolesType;
   actPrimerNivel: RolesType;
   actSegundoNivel: RolesType;
   actTercerNivel: RolesType;
@@ -284,6 +289,21 @@ export type Mutation = {
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
   valoresDefecto: Scalars['Boolean'];
+};
+
+
+export type MutationActCtrlPrimerNivelArgs = {
+  ctrl: ActRolesInput;
+};
+
+
+export type MutationActCtrlSegundoNivelArgs = {
+  ctrl: ActRolesInput;
+};
+
+
+export type MutationActCtrlTercerNivelArgs = {
+  ctrl: ActRolesInput;
 };
 
 
@@ -644,6 +664,13 @@ export type ActPrimerNivelMutationVariables = Exact<{
 
 export type ActPrimerNivelMutation = { __typename?: 'Mutation', actPrimerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
+export type ActCtrlPrimerNivelMutationVariables = Exact<{
+  ctrl: ActRolesInput;
+}>;
+
+
+export type ActCtrlPrimerNivelMutation = { __typename?: 'Mutation', actCtrlPrimerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+
 export type ActSegundoNivelMutationVariables = Exact<{
   role: ActRolesInput;
 }>;
@@ -651,12 +678,26 @@ export type ActSegundoNivelMutationVariables = Exact<{
 
 export type ActSegundoNivelMutation = { __typename?: 'Mutation', actSegundoNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
+export type ActCtrlSegundoNivelMutationVariables = Exact<{
+  ctrl: ActRolesInput;
+}>;
+
+
+export type ActCtrlSegundoNivelMutation = { __typename?: 'Mutation', actCtrlSegundoNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+
 export type ActTercerNivelMutationVariables = Exact<{
   role: ActRolesInput;
 }>;
 
 
 export type ActTercerNivelMutation = { __typename?: 'Mutation', actTercerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+
+export type ActCtrlTercerNivelMutationVariables = Exact<{
+  ctrl: ActRolesInput;
+}>;
+
+
+export type ActCtrlTercerNivelMutation = { __typename?: 'Mutation', actCtrlTercerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null };
 
@@ -1130,6 +1171,24 @@ export const ActPrimerNivelDocument = gql`
       super(apollo);
     }
   }
+export const ActCtrlPrimerNivelDocument = gql`
+    mutation actCtrlPrimerNivel($ctrl: ActRolesInput!) {
+  actCtrlPrimerNivel(ctrl: $ctrl) {
+    ...fragRoles
+  }
+}
+    ${FragRolesFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActCtrlPrimerNivelGQL extends Apollo.Mutation<ActCtrlPrimerNivelMutation, ActCtrlPrimerNivelMutationVariables> {
+    document = ActCtrlPrimerNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const ActSegundoNivelDocument = gql`
     mutation actSegundoNivel($role: ActRolesInput!) {
   actSegundoNivel(role: $role) {
@@ -1148,6 +1207,24 @@ export const ActSegundoNivelDocument = gql`
       super(apollo);
     }
   }
+export const ActCtrlSegundoNivelDocument = gql`
+    mutation actCtrlSegundoNivel($ctrl: ActRolesInput!) {
+  actCtrlSegundoNivel(ctrl: $ctrl) {
+    ...fragRoles
+  }
+}
+    ${FragRolesFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActCtrlSegundoNivelGQL extends Apollo.Mutation<ActCtrlSegundoNivelMutation, ActCtrlSegundoNivelMutationVariables> {
+    document = ActCtrlSegundoNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const ActTercerNivelDocument = gql`
     mutation actTercerNivel($role: ActRolesInput!) {
   actTercerNivel(role: $role) {
@@ -1161,6 +1238,24 @@ export const ActTercerNivelDocument = gql`
   })
   export class ActTercerNivelGQL extends Apollo.Mutation<ActTercerNivelMutation, ActTercerNivelMutationVariables> {
     document = ActTercerNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActCtrlTercerNivelDocument = gql`
+    mutation actCtrlTercerNivel($ctrl: ActRolesInput!) {
+  actCtrlTercerNivel(ctrl: $ctrl) {
+    ...fragRoles
+  }
+}
+    ${FragRolesFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActCtrlTercerNivelGQL extends Apollo.Mutation<ActCtrlTercerNivelMutation, ActCtrlTercerNivelMutationVariables> {
+    document = ActCtrlTercerNivelDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

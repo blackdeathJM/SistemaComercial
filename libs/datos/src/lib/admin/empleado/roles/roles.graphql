@@ -20,7 +20,13 @@ mutation actPrimerNivel($role: ActRolesInput!)
         ...fragRoles
     }
 }
-
+mutation actCtrlPrimerNivel($ctrl: ActRolesInput!)
+{
+    actCtrlPrimerNivel(ctrl: $ctrl)
+    {
+        ...fragRoles
+    }
+}
 mutation actSegundoNivel($role: ActRolesInput!)
 {
     actSegundoNivel(role: $role)
@@ -28,9 +34,23 @@ mutation actSegundoNivel($role: ActRolesInput!)
         ...fragRoles
     }
 }
+mutation actCtrlSegundoNivel($ctrl: ActRolesInput!)
+{
+    actCtrlSegundoNivel(ctrl: $ctrl)
+    {
+        ...fragRoles
+    }
+}
 mutation actTercerNivel($role: ActRolesInput!)
 {
     actTercerNivel(role: $role)
+    {
+        ...fragRoles
+    }
+}
+mutation actCtrlTercerNivel($ctrl: ActRolesInput!)
+{
+    actCtrlTercerNivel(ctrl: $ctrl)
     {
         ...fragRoles
     }

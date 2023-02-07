@@ -16,7 +16,8 @@ export enum GuardRecursosHumanos
 
 export enum CtrlRecursosHumanos
 {
-    agregarNvoEmpleado = 'agregarNvo'
+    agregarNvoEmpleado = 'agregarNvo',
+    editarInfo = 'editarInfo'
 }
 
 export const RECURSOS_HUMANOS: FuseNavigationItem =
@@ -61,6 +62,11 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                             {
                                 id: CtrlRecursosHumanos.agregarNvoEmpleado,
                                 title: 'Agregar nuevo empleado',
+                                activo: false
+                            },
+                            {
+                                id: CtrlRecursosHumanos.editarInfo,
+                                title: 'Editar informacion empleado',
                                 activo: false
                             }
                         ],

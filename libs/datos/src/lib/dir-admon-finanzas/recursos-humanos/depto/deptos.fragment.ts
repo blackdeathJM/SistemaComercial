@@ -6,5 +6,6 @@ export const FRAG_DEPTOS = gql`
         _id
         nombre
         centroGestor
+        puestos
     }
 `;
