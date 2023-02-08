@@ -51,11 +51,10 @@ export class ActRolesDto extends PickType(RolesDto, ['_id'], InputType) implemen
     @IsNotEmpty({message: 'El id de la ruta cuarto nivel'})
     idRutaCuarta: string;
     @Field(() => Boolean, {nullable: true})
-    @IsBoolean({message: 'El valor debe ser boleano'})
-    @IsNotEmpty({message: 'El valor no puede estar vacio'})
+    @IsBoolean({message: 'El acceso debe ser un valor booleano'})
     acceso: boolean;
     @Field(() => Boolean, {nullable: true, defaultValue: false})
-    @IsBoolean({message: 'El valor debe ser un booleano'})
+    @IsBoolean({message: 'El valor puede asignar permisos debe ser booleano'})
     puedeAsigPermisos: boolean;
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el id del control'})

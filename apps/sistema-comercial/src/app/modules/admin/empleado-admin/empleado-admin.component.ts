@@ -23,8 +23,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {RolesService} from '@s-core/auth/store/roles.service';
 import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
-import {StateRoles} from '@s-core/auth/store/roles.store';
-import {updateArray} from '@angular-ru/cdk/array';
 
 @Component({
     standalone: true,
@@ -62,7 +60,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     empleadoSeleccionado: IResolveEmpleado;
 
     constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-                private rolesService: RolesService, private stateRoles: StateRoles)
+                private rolesService: RolesService)
     {
     }
 
@@ -71,12 +69,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
             this.empleadoService.filtrarEmpleados(res, this.ngxLoader))).subscribe());
         this.empleadoService.empleados(this.ngxLoader).subscribe();
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
-        this.abriPanel = false;
     }
 
     listaRoles(empleado: IResolveEmpleado): void
@@ -102,8 +94,14 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
         const args: TCrearRol =
             {
                 idEmpleado: empleado._id,
-                roles: this.stateRoles.snapshot !== null ? updateArray(this.stateRoles.snapshot.roles, defaultNavigation) : defaultNavigation
+                roles: defaultNavigation
             };
         this.rolesService.crearRoles(args).subscribe();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
+        this.abriPanel = false;
     }
 }

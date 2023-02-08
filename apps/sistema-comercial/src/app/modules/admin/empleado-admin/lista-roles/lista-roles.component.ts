@@ -11,13 +11,15 @@ import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 
 @Component({
     selector: 'app-lista-roles',
     standalone: true,
     imports:
         [
-            CommonModule, MatListModule, MatCheckboxModule, NgxUiLoaderModule, SinDatosComponent, MatTooltipModule, ReactiveFormsModule, FormsModule
+            CommonModule, MatListModule, MatCheckboxModule, NgxUiLoaderModule, SinDatosComponent, MatTooltipModule, ReactiveFormsModule, FormsModule, NavegacionPipe
         ],
     templateUrl: './lista-roles.component.html',
     styleUrls: ['./lista-roles.component.scss'],
@@ -29,7 +31,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
     sub = new Subscription();
     deshabilitarLista = false;
 
-    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles, private cdr: ChangeDetectorRef)
+    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles, private cdr: ChangeDetectorRef, public stateAuth: StateAuth)
     {
     }
 
@@ -39,19 +41,19 @@ export class ListaRolesComponent implements OnInit, OnDestroy
             this.rolesService.rolesAsig(res._id, this.ngxLoader))).subscribe());
     }
 
-    actCtrl(e: MatCheckboxChange, grupo: string, exp: string, expRuta: string, subRuta: string, empleado: IRoles, ctrls: Element, nivel: number): void
+    actCtrl(e: MatCheckboxChange, grupo: object, exp: Element, expRuta: Element, subRuta: Element, empleado: IRoles, ctrls: Element, nivel: number): void
     {
         this.deshabilitarLista = true;
         const ctrl: IActRoles =
             {
                 _id: empleado._id,
-                idRutaPrincipal: grupo,
-                idRutaSecundaria: exp,
-                idRutaTreciaria: expRuta,
-                idRutaCuarta: subRuta,
+                idRutaPrincipal: grupo !== null ? grupo['id'] : 'no-aplica',
+                idRutaSecundaria: exp !== null ? exp['id'] : 'no-aplica',
+                idRutaTreciaria: expRuta !== null ? expRuta['id'] : 'no-aplica',
+                idRutaCuarta: subRuta !== null ? subRuta['id'] : 'no-aplica',
                 idCtrl: ctrls['id'],
                 accesoCtrl: e.checked,
-                acceso: true,
+                acceso: false,
                 puedeAsigPermisos: false
             };
         switch (nivel)
@@ -68,34 +70,35 @@ export class ListaRolesComponent implements OnInit, OnDestroy
         }
     }
 
-    actRutas(e: MatCheckboxChange, grupo: string, exp: string, expRuta: string, subRuta: string, empleado: IRoles, esAcceso: boolean, nivel: number): void
+    actRutas(e: MatCheckboxChange, grupo: object, exp: Element, expRuta: Element, subRuta: Element, empleado: IRoles, esAcceso: boolean, nivel: number): void
     {
         this.deshabilitarLista = true;
         const role: IActRoles =
             {
                 _id: empleado._id,
-                idRutaPrincipal: grupo,
-                idRutaSecundaria: exp,
-                idRutaTreciaria: expRuta,
-                idRutaCuarta: subRuta,
+                idRutaPrincipal: grupo !== null ? grupo['id'] : 'no-aplica',
+                idRutaSecundaria: exp !== null ? exp['id'] : 'no-aplica',
+                idRutaTreciaria: expRuta !== null ? expRuta['id'] : 'no-aplica',
+                idRutaCuarta: subRuta !== null ? subRuta['id'] : 'no-aplica',
                 acceso: false,
                 puedeAsigPermisos: false,
                 idCtrl: 'no-aplica',
-                accesoCtrl: true
+                accesoCtrl: false
             };
-        if (esAcceso)
-        {
-            role.acceso = e.checked;
-            role.puedeAsigPermisos = subRuta['puedeAsigPermisos'];
-        } else
-        {
-            role.acceso = subRuta['acceso'];
-            role.puedeAsigPermisos = e.checked;
-        }
 
         switch (nivel)
         {
             case 1:
+                if (esAcceso)
+                {
+                    role.acceso = e.checked;
+                    role.puedeAsigPermisos = exp['puedeAsigPermisos'];
+                } else
+                {
+                    role.acceso = exp['acceso'];
+                    role.puedeAsigPermisos = e.checked;
+                }
+                console.log('++++', role);
                 this.rolesService.actPrimerNivel(role).pipe(finalize(() =>
                 {
                     this.deshabilitarLista = false;
@@ -103,6 +106,15 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 })).subscribe();
                 break;
             case 2:
+                if (esAcceso)
+                {
+                    role.acceso = e.checked;
+                    role.puedeAsigPermisos = expRuta['puedeAsigPermisos'];
+                } else
+                {
+                    role.acceso = expRuta['acceso'];
+                    role.puedeAsigPermisos = e.checked;
+                }
                 this.rolesService.actSegundoNivel(role).pipe(finalize(() =>
                 {
                     this.deshabilitarLista = false;
@@ -110,6 +122,16 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 })).subscribe();
                 break;
             case 3:
+                if (esAcceso)
+                {
+                    role.acceso = e.checked;
+                    role.puedeAsigPermisos = subRuta['puedeAsigPermisos'];
+                } else
+                {
+                    role.acceso = subRuta['acceso'];
+                    role.puedeAsigPermisos = e.checked;
+                }
+
                 this.rolesService.actTercerNivel(role).pipe(finalize(() =>
                 {
                     this.deshabilitarLista = false;

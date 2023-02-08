@@ -10,12 +10,13 @@
                             <span class="flex-0 mr-2">{{exp['title']}}</span>
                             <div class="flex-auto border-b-2"></div>
 
-                            <mat-checkbox [checked]="exp['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="exp['type'] === 'basic'" matTooltip="Acceso a ruta"
-                                          (change)="actRutas($event, grupo['id'], exp['id'],'no-aplica','no-aplica', empleado, true, 1)">
+                            <mat-checkbox [checked]="exp['acceso']" color="primary" [disabled]="deshabilitarLista || (stateAuth.snapshot.auth.guards | navegacionPermiso: 'nose')"
+                                          *ngIf="exp['type'] === 'basic'" matTooltip="Acceso a ruta"
+                                          (change)="actRutas($event, grupo, exp,null,null, empleado, true, 1)">
                             </mat-checkbox>
 
                             <mat-checkbox [checked]="exp['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="exp['type'] === 'basic'" matTooltip="Puede asignar permisos"
-                                          (change)="actRutas($event, grupo['id'], exp['id'],'no-aplica','no-aplica', empleado, true, 1)">
+                                          (change)="actRutas($event, grupo, exp,null,null, empleado, false, 1)">
                             </mat-checkbox>
                         </div>
                         <!--Permisos a controles-->
@@ -24,7 +25,7 @@
                                 <span class="flex-0 text-secondary mr-2">{{ctrlNivel1['title']}}</span>
                                 <div class="flex-auto border-b-2"></div>
                                 <mat-checkbox [checked]="ctrlNivel1['activo']" color="primary" [disabled]="deshabilitarLista" matTooltip="Acciones de la ruta"
-                                              (change)="actCtrl($event, grupo['id'], exp['id'], 'no-aplica', 'no-aplica', empleado, ctrlNivel1, 1)"></mat-checkbox>
+                                              (change)="actCtrl($event, grupo, exp, null, null, empleado, ctrlNivel1, 1)"></mat-checkbox>
                             </div>
                         </div>
 
@@ -35,10 +36,10 @@
                                 <div class="flex-auto border-b-2"></div>
 
                                 <mat-checkbox [checked]="expRuta['acceso']" color="primary" [disabled]="deshabilitarLista" *ngIf="expRuta['type'] === 'basic'" matTooltip="Acceso a ruta"
-                                              (change)="actRutas($event, grupo['id'], exp['id'], expRuta['id'],'no-aplica', empleado, true, 2)">
+                                              (change)="actRutas($event, grupo, exp, expRuta,null, empleado, true, 2)">
                                 </mat-checkbox>
                                 <mat-checkbox [checked]="expRuta['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista" *ngIf="expRuta['type'] === 'basic'" matTooltip="Puede asignar permiso"
-                                              (change)="actRutas($event, grupo['id'], exp['id'], expRuta['id'],'no-aplica', empleado, true, 2)">
+                                              (change)="actRutas($event, grupo, exp, expRuta,null, empleado, false, 2)">
                                 </mat-checkbox>
                             </div>
                             <!--Permiso controles segundo nivel-->
@@ -46,7 +47,7 @@
                                 <div class="flex flex-auto items-center justify-between" matListItemLine>
                                     <span class="flex-auto text-secondary">{{ctrlNivel2['title']}}</span>
                                     <mat-checkbox [checked]="ctrlNivel2['activo']" [disabled]="deshabilitarLista" matTooltip="Acciones de la ruta"
-                                                  (change)="actCtrl($event, grupo['id'], exp['id'], expRuta['id'], 'no-aplica', empleado, ctrlNivel2, 2)"></mat-checkbox>
+                                                  (change)="actCtrl($event, grupo, exp, expRuta, null, empleado, ctrlNivel2, 2)"></mat-checkbox>
                                 </div>
                             </div>
 
@@ -55,13 +56,13 @@
                                 <div class="flex flex-auto items-center justify-between" matListItemLine>
                                     <span class="flex-0 mr-2">{{subRuta['title']}}</span>
                                     <div class="flex-auto border-b-2"></div>
-                                    <mat-checkbox [checked]="subRuta['acceso']" color="primary" [disabled]="deshabilitarLista || subRuta['puedeAsigPermisos']"
+                                    <mat-checkbox [checked]="subRuta['acceso']" color="primary" [disabled]="deshabilitarLista"
                                                   *ngIf="subRuta['type'] === 'basic'" matTooltip="Acceso a ruta"
-                                                  (change)="actRutas($event, grupo['id'], exp['id'], expRuta['id'], subRuta['id'], empleado,true, 3)">
+                                                  (change)="actRutas($event, grupo, exp, expRuta, subRuta, empleado,true, 3)">
                                     </mat-checkbox>
-                                    <mat-checkbox [checked]="subRuta['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista || subRuta['puedeAsigPermisos']"
+                                    <mat-checkbox [checked]="subRuta['puedeAsigPermisos']" color="warn" [disabled]="deshabilitarLista"
                                                   *ngIf="subRuta['type'] === 'basic'" matTooltip="Puede asignar permisos"
-                                                  (change)="actRutas($event, grupo['id'], exp['id'], expRuta['id'], subRuta['id'], empleado, false, 3)">
+                                                  (change)="actRutas($event, grupo, exp, expRuta, subRuta, empleado, false, 3)">
                                     </mat-checkbox>
                                 </div>
 
@@ -70,7 +71,7 @@
                                         <span class="flex-0 mr-2 text-secondary">{{ctrlNivel3['title']}}</span>
                                         <div class="flex-auto border-b-2"></div>
                                         <mat-checkbox [checked]="ctrlNivel3['activo']" color="primary" matTooltip="Acciones de la ruta" [disabled]="deshabilitarLista"
-                                                      (change)="actCtrl($event, grupo['id'], exp['id'], expRuta['id'], subRuta['id'], empleado, ctrlNivel3, 3)"></mat-checkbox>
+                                                      (change)="actCtrl($event, grupo, exp, expRuta, subRuta, empleado, ctrlNivel3, 3)"></mat-checkbox>
                                     </div>
                                 </div>
                             </div>

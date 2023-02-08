@@ -79,7 +79,7 @@ export class AuthService
         }
     }
 
-    async asigPermisos(acceso: boolean, rol: string, idEmpleado: string): Promise<EmpleadoDto>
+    async permisoRuta(acceso: boolean, rol: string, idEmpleado: string): Promise<EmpleadoDto>
     {
         try
         {
@@ -89,6 +89,23 @@ export class AuthService
             } else
             {
                 return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async puedeAsigPermisos(idEmpleado: string, permiso: string, puedeAsigPermiso: boolean): Promise<EmpleadoDto>
+    {
+        try
+        {
+            if (puedeAsigPermiso)
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.asigPermisos': permiso}}).exec();
+            } else
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.asigPermisos': permiso}}).exec();
             }
         } catch (e)
         {
