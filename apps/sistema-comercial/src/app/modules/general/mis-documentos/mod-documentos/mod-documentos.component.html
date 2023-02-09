@@ -1,7 +1,7 @@
 <div class="relative flex flex-col w-full">
     <form [formGroup]="formDocs" enctype="multipart/form-data" autocomplete="off">
         <div class="flex flex-col">
-            <div class="flex gap-3">
+            <div class="flex gap-4">
                 <mat-form-field class="flex-auto">
                     <mat-label>Identificador del documento</mat-label>
                     <input matInput type="text" formControlName="identificadorDoc"/>
@@ -22,7 +22,7 @@
                 <mat-form-field class="flex-auto">
                     <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
                     <mat-select multiple formControlName="usuarios">
-                        <mat-option *ngFor="let empleado of empleadosSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                        <mat-option *ngFor="let empleado of entityEmpleado.entitiesArray$ | async" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
                     </mat-select>
                     <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
                 </mat-form-field>
@@ -64,7 +64,7 @@
                 </mat-form-field>
                 <mat-checkbox class="flex-shrink" color="primary" [checked]="false" formControlName="esInterno">Es interno?</mat-checkbox>
             </div>
-            <mat-progress-bar [value]="porcentaje" mode="determinate" color="primary"></mat-progress-bar>
+            <mat-progress-bar [value]="porcentaje" mode="determinate" color="primary" *ngIf="mostrarProgreso"></mat-progress-bar>
         </div>
     </form>
     <app-registros (registro)="reg(true)" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="formDocs.invalid || cargando"></app-registros>

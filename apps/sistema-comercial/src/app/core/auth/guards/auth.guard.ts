@@ -1,52 +1,37 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
+import {CanMatch, Route, Router, UrlSegment, UrlTree} from '@angular/router';
 import {Observable, of, switchMap} from 'rxjs';
-import {AuthService} from '#/apps/sistema-comercial/src/app/core/auth/auth.service';
-import {NavigationService} from '#/apps/sistema-comercial/src/app/core/navigation/navigation.service';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
+export class AuthGuard implements CanMatch
 {
-    constructor(private _authService: AuthService, private _router: Router, private navegacionService: NavigationService)
+    constructor(private router: Router, private stateAuth: StateAuth, private authService: AuthService)
     {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
+    canMatch(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-        const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-        return this._check(redirectUrl);
+        return this.checar(segments);
     }
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    private checar(segments: UrlSegment[]): Observable<boolean | UrlTree>
     {
-        const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-        return this._check(redirectUrl);
-    }
-
-    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
-    {
-        return this._check('/');
-    }
-
-    private _check(redirectURL: string): Observable<boolean>
-    {
-        // Check the authentication status
-        return this._authService.check()
-            .pipe(switchMap((authenticated) =>
+        return this.authService.validarSesion().pipe(switchMap((autenticado) =>
+        {
+            // Si no esta autenticado
+            if (!autenticado)
             {
+                const redirectURL = `/${segments.join('/')}`;
+                const urlTree = this.router.parseUrl(`sign-in?redirectURL=${redirectURL}`);
+                return of(urlTree);
+            }
 
-                // Si el usuario no esta atenticado
-                if (!authenticated)
-                {
-                    // Redirige a la pagina de login
-                    this._router.navigate(['sign-in'], {queryParams: {redirectURL}}).then();
-
-                    // Prevent the access
-                    return of(false);
-                }
-                return of(true);
-            }));
+            // Se permite el acceso
+            return of(true);
+        }));
     }
 }

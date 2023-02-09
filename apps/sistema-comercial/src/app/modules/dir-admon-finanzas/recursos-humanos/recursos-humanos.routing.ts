@@ -1,18 +1,23 @@
 import {Routes} from '@angular/router';
 import {RecursosHumanosComponent} from '@s-dirAdmonFinanzas/recursos-humanos.component';
-import {RecursosHumanosGuard} from '@s-dirAdmonFinanzas/recursos-humanos.guard';
+import {permisoRuta} from '@s-services/match.service';
+import {GuardRecursosHumanos} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 
 export const recursosHumanosRouting: Routes =
     [
         {
             path: '',
             component: RecursosHumanosComponent,
-            canActivate: [RecursosHumanosGuard],
             children:
                 [
                     {
                         path: 'empleados',
-                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/empleados.component').then(e => e.EmpleadosComponent)
+                        loadChildren: () => import('@s-dirAdmonFinanzas/empleados/empleados.routing').then(e => e.empleadosRouting)
+                    },
+                    {
+                        path: 'departamentos',
+                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.deptos)],
+                        loadComponent: () => import('@s-dirAdmonFinanzas/departamento/departamento.component').then(c => c.DepartamentoComponent)
                     }
                 ]
         }

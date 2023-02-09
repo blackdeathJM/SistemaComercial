@@ -1,0 +1,33 @@
+<mat-card class="mx-auto my-8 w-2/4 h-fit border-solid">
+    <mat-card-content class="flex flex-col">
+        <div class="flex basis-full mx-auto">
+            <img class="avatar w-36 h-36" [src]="srcImagen" alt="">
+        </div>
+        <mat-form-field class="flex-auto mt-4">
+            <ngx-mat-file-input (change)="cambioImagen($event)"></ngx-mat-file-input>
+            <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="cambiarImagen()" [disabled]="deshabilitar">
+            <mat-icon svgIcon="save" class="mr-2"></mat-icon>
+            Cambiar imagen
+        </button>
+        <form [formGroup]="formCambioContrasena">
+            <div class="flex flex-col">
+                <mat-form-field>
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput formControlName="txtContrasena" type="password">
+                    <mat-error>{{formCambioContrasena.controls.txtContrasena['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Confirmar contrasena</mat-label>
+                    <input matInput formControlName="txtConfContrasena" type="password">
+                    <mat-error>{{formCambioContrasena.controls.txtConfContrasena['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="cambiarContrasena()" [disabled]="formCambioContrasena.invalid">
+                    <mat-icon svgIcon="save" class="mr-2"></mat-icon>
+                    Cambiar contraseña
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

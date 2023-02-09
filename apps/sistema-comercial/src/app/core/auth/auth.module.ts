@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {JwtHelperService} from '@auth0/angular-jwt';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     imports:

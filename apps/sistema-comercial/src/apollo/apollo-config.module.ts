@@ -27,7 +27,7 @@ export class ApolloConfigModule
                 graphQLErrors.map((value) =>
                 {
                     this.ngxToast.error(value.message, 'Error en el servidor',
-                        {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 20000});
+                        {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 3000});
                     // console.log(value.extensions['response']['message']);
                 });
             }

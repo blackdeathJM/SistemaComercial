@@ -1,0 +1,28 @@
+<div class="flex flex-col">
+    <div class="flex flex-wrap gap-4 items-center">
+        <mat-form-field class="flex-auto">
+            <mat-label>Busqueda general</mat-label>
+            <input matInput id="busquedaGralDoc" placeholder="puedes buscar por asunto, dependencia, año, proceso, seguimiento" [formControl]="txtBuscar">
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+            <mat-label>Selecciona un rango de fechas</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [formGroup]="formBuscarFechas">
+                <input matStartDate placeholder="Fecha de inicio" formControlName="fechaInicio">
+                <input matEndDate placeholder="Fecha fin" formControlName="fechaFin">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker (closed)="consultaFechasUsuario()"></mat-date-range-picker>
+        </mat-form-field>
+        <button class="flex-auto" id="btnPendientesDoc" mat-raised-button color="primary" (click)="proceso('pendiente')">
+            <mat-icon svgIcon="pending_actions"></mat-icon>
+            <span class="ml-2 mr-1">Pendientes</span>
+        </button>
+        <button class="flex-auto" id="btnTerminadosDoc" mat-raised-button color="primary" (click)="proceso('terminado')">
+            <mat-icon svgIcon="fact_check"></mat-icon>
+            <span class="ml-2 mr-1">Terminados</span>
+        </button>
+    </div>
+    <div class="flex flex-auto gap-4">
+        <mat-checkbox class="my-4" color="primary" [checked]="false" [formControl]="chkBuscar">Utilizar los filtros para buscar los enviados por mi</mat-checkbox>
+    </div>
+</div>

@@ -1,6 +1,0 @@
-fragment fragDeptos on DeptoType
-{
-    _id
-    nombre
-    centroGestor
-}

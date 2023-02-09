@@ -1,0 +1,30 @@
+<ng-container *ngIf="entityEmpleado.entitiesArray.length > 0; else sinDatos">
+    <div class="relative flex-auto flex flex-col m-4" ngxUiLoaderBlurred>
+        <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async; trackBy: trackByFn">
+            <a class="z-20 flex items-center py-5 px-8 cursor-pointer border-b hover:bg-amber-100 dark:hover:bg-gray-800" (click)="seleccionarEmpleado(empleado)">
+                <div class="flex flex-0 items-center justify-center w-10 h-10">
+                    <ng-container *ngIf="empleado?.avatar">
+                        <img class="avatar w-10 h-10" [src]="empleado?.avatar" alt="Avatar"/>
+                    </ng-container>
+                    <ng-container *ngIf="!empleado.avatar">
+                        <div class="avatar-letra w-10 h-10">
+                            {{empleado?.nombreCompleto?.charAt(0)}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="min-w-0 ml-4">
+                    <div class="font-medium leading-5 truncate">
+                        {{ empleado?.nombreCompleto }}
+                    </div>
+                    <div class="leading-5 truncate text-secondary text-amber-800">
+                        puesto
+                    </div>
+                </div>
+            </a>
+        </ng-container>
+    </div>
+</ng-container>
+<ngx-ui-loader [loaderId]="loaderEmp"></ngx-ui-loader>
+<ng-template #sinDatos>
+    <app-sin-datos></app-sin-datos>
+</ng-template>

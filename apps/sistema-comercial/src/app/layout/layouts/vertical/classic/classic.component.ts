@@ -41,14 +41,6 @@ export class ClassicLayoutComponent implements OnInit, OnDestroy
     {
         return new Date().getFullYear();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to navigation data
@@ -78,15 +70,6 @@ export class ClassicLayoutComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
     toggleNavigation(name: string): void
     {
         // Get the navigation

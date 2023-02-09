@@ -2,8 +2,10 @@ fragment fragAuth on AuthType
 {
     usuario
     activo
-    role
+    roles
     estatus
+    guards
+    controles
 }
 
 fragment fragDatosSesion on DatosSesionType

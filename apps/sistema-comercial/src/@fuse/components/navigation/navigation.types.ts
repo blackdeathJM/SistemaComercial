@@ -13,10 +13,11 @@ export interface FuseNavigationItem
         | 'group'
         | 'spacer';
     hidden?: (item: FuseNavigationItem) => boolean;
-    oculto?: boolean;
-    activo: boolean;
+    oculto: boolean;
     componentes?: object[];
-    controles?: IControl[];
+    acceso: boolean;
+    controles: IControl[];
+    puedeAsigPermisos: boolean;
     active?: boolean;
     disabled?: boolean;
     tooltip?: string;
@@ -50,9 +51,10 @@ export interface FuseNavigationItem
     meta?: any;
 }
 
-interface IControl
+export interface IControl
 {
     id: string;
+    title: string;
     activo: boolean;
 }
 

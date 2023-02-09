@@ -1,53 +1,36 @@
-<div class="flex flex-col flex-auto min-w-0">
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
-        <div class="flex-1 min-w-0">
-            <!-- Title -->
-            <div class="mt-2">
-                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Panel de busqueda
-                </h2>
+<mat-drawer-container class="w-full">
+    <mat-drawer class="w-80" opened="true" autoFocus="false" mode="side" position="start">
+        <div class="flex flex-col border-b-2 my-2">
+            <mat-form-field class="mx-4">
+                <input matInput type="text">
+            </mat-form-field>
+
+            <mat-form-field class="mx-4">
+                <mat-select>
+                    <mat-option value="option1">Opcion 1</mat-option>
+                    <mat-option value="option2">Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col flex-auto mt-2">
+            <div class="overflow-y-auto flex-auto" ngxUiLoaderBlurred>
+                <ng-container *ngFor="let empleado of entityEmpleado.entitiesArray$ | async; trackBy: trackByFn">
+                    <div class="flex flex-auto basis-full justify-between py-2 border-b-2 odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary pl-1">
+                        <a class="leading-relaxed cursor-pointer" (click)="seleccionarEmpleado(empleado)">{{empleado.nombreCompleto}}</a>
+                        <div>
+                            <mat-icon svgIcon="warning" class="icon-size-4 text-red-500"></mat-icon>
+                            <mat-icon svgIcon="info" class="text-blue-500 icon-size-4"></mat-icon>
+                            <mat-icon svgIcon="circle" class="text-green-600 icon-size-4"></mat-icon>
+                        </div>
+                    </div>
+                </ng-container>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </div>
         </div>
-        <!-- Actions -->
-        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
-            <button mat-raised-button color="primary" (click)="registroEmpleado()">
-                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'mat_outline:person_add'"></mat-icon>
-                Registrar nuevo empleado
-            </button>
-            <button class="ml-3" mat-flat-button [color]="'accent'">
-                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_solid:link'"></mat-icon>
-                Otra accion
-            </button>
-        </div>
-    </div>
 
-    <!-- Main -->
-    <div class="flex-auto pt-6 sm:px-4 sm:pb-4">
-        <!-- Tabs -->
-        <mat-tab-group [animationDuration]="'0'">
-            <!-- Tab #1 -->
-            <mat-tab label="Lista empleados">
-                <!-- TAB CONTENT GOES HERE -->
-                <div class="flex justify-center h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    <div class="mt-52 text-4xl font-bold text-hint">Informacion</div>
-                </div>
-            </mat-tab>
-            <!-- Tab #2 -->
-            <mat-tab label="Informacion seguro">
-                <!-- TAB CONTENT GOES HERE -->
-                <div class="flex justify-center h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    <div class="mt-52 text-4xl font-bold text-hint">Informacion seguro</div>
-                </div>
-            </mat-tab>
-
-            <!-- Tab #3 -->
-            <mat-tab label="Otra informacion">
-                <!-- TAB CONTENT GOES HERE -->
-                <div class="flex justify-center h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
-                    <div class="mt-52 text-4xl font-bold text-hint">Otra informacion</div>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
-</div>
+    </mat-drawer>
+    <mat-drawer-content class="p-4">
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

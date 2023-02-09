@@ -1,7 +1,13 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IAuth} from './auth.interface';
-import {GraphQLJSON} from 'graphql-scalars';
+import {IAsigRoles, IAuth, IGuards} from './auth.interface';
+import {GraphQLJSONObject} from 'graphql-scalars';
+
+export class GuardsDto implements IGuards
+{
+    id: string;
+    puedeAsigPermisos: boolean;
+}
 
 @ObjectType('AuthType')
 @InputType('AuthInput')
@@ -13,14 +19,28 @@ export class AuthDto implements IAuth
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'El usuario es necesario'})
     usuario: string;
-    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: null})
-    @IsOptional()
-    role: object[];
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsBoolean({message: 'Activo debe ser booleano'})
     @IsOptional()
     activo: boolean;
+    @Field(() => [GraphQLJSONObject], {nullable: true})
+    @IsNotEmpty({message: 'Es necesario los roles a administrar'})
+    roles: object[];
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @IsOptional()
+    guards: string[];
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @IsOptional()
+    controles: string[];
     @Field(() => String, {nullable: true, defaultValue: 'En-linea'})
     @IsNotEmpty({message: 'El valor del estatus es necesario'})
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
+}
+
+@InputType('AsigRolesInput')
+export class AsigRolesDto implements IAsigRoles
+{
+    @Field(() => [GraphQLJSONObject], {nullable: true})
+    @IsNotEmpty({message: 'Requerido'})
+    roles: object[];
 }

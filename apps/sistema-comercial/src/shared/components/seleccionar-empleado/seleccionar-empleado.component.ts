@@ -1,12 +1,9 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import {EmpleadosSesionGQL} from '#/libs/datos/src';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {Subscription, tap} from 'rxjs';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -27,40 +24,26 @@ import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
         }
     ]
 })
-export class SeleccionarEmpleadoComponent implements OnInit, ControlValueAccessor
+export class SeleccionarEmpleadoComponent implements ControlValueAccessor
 {
     @Input() multiple: boolean = false;
-    empleados: IResolveEmpleado[];
-    sub: Subscription = new Subscription();
     valor: any;
     cambio: (v: any) => void;
     tocado: () => void;
     estaDeshabilitado: boolean;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL)
+    constructor(public entityEmpleado: EntityEmpleadoStore)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.empleadosSesionGQL.watch({}, {notifyOnNetworkStatusChange: true}).valueChanges.pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                this.empleados = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
-            }
-        })).subscribe();
     }
 
     writeValue(obj: any): void
     {
-        console.log('valor', obj, typeof obj);
         this.valor = obj;
     }
 
     registerOnChange(fn: any): void
     {
-        console.log('cambio', fn);
+
         this.cambio = fn;
     }
 

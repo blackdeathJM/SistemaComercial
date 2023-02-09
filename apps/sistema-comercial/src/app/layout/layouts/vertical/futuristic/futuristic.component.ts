@@ -1,29 +1,29 @@
-import {AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject, takeUntil} from 'rxjs';
+import {Observable, Subject, takeUntil} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {Navegation} from '@s-core/navigation/navigation.types';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 
 @Component({
     selector: 'futuristic-layout',
     templateUrl: './futuristic.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FuturisticLayoutComponent implements OnInit, OnDestroy, AfterContentInit
+export class FuturisticLayoutComponent implements OnInit, OnDestroy
 {
+    usuario$: Observable<IDatosSesion>;
     isScreenSmall: boolean;
     navigation: Navegation;
-    user: IDatosSesion;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
      */
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: StateAuth,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }
@@ -52,11 +52,6 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy, AfterConten
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
-    }
-
-    ngAfterContentInit(): void
-    {
-        this.user = STATE_DATOS_SESION();
     }
 
     /**

@@ -1,0 +1,45 @@
+<section class="flex-auto my-4" [@zoomIn]="'*'">
+    <mat-card class="bg-gray-300 dark:bg-gray-800">
+        <mat-card-header class="tarjeta-mat-cabecera border-b-orange-500">
+            <span class="text-xl">Prestamos - (2023)</span>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="grid grid-cols-10 gap-4 py-2">
+                <b class="col-span-full text-2xl text-green-800 text-center border-b-2">$20,000</b>
+                <span class="text-end text-secondary border-b-2">De</span>
+                <span class="border-b-2">5/02/2023</span>
+                <span class="text-end text-secondary border-b-2">Hasta</span>
+                <span class="border-b-2">17/12/2023</span>
+                <span class="text-end text-secondary border-b-2">Dias</span>
+                <span class="border-b-2">315</span>
+                <span class="text-end text-secondary border-b-2">% Cat</span>
+                <span class="border-b-2">22.50%</span>
+                <span class="text-end text-secondary border-b-2">.5%</span>
+                <span class="border-b-2">23</span>
+                <b class="col-span-full text-2xl text-green-800 text-center border-b-2">Pagos</b>
+                <div class="col-span-full">
+                    <table mat-table [dataSource]="data">
+                        <ng-container [matColumnDef]="column" *ngFor="let column of columns">
+                            <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+                            <td mat-cell *matCellDef="let elemento">{{elemento[column]}}</td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnasAMostrar"></tr>
+                    </table>
+                </div>
+                <b class="col-span-full text-2xl text-green-800 text-center border-b-2">Total a recuperar</b>
+                <span class="text-end text-secondary border-b-2 col-start-7">Interes</span>
+                <span class="border-b-2">$0,000.00</span>
+                <span class="text-end text-secondary border-b-2">Descuento</span>
+                <span class="border-b-2">$000.00</span>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="tarjeta-mat-acciones border-t-orange-500">
+            <div class="flex flex-row-reverse flex-auto">
+                <button mat-raised-button color="primary">
+                    Acciones
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</section>

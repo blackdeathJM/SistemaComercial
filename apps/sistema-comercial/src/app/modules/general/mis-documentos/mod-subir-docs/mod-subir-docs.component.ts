@@ -1,23 +1,22 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule, NgIf} from '@angular/common';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {MatIconModule} from '@angular/material/icon';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
-import {IDocumento, IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Archivos} from '#/libs/models/src/lib/general/documentos/documento';
-import {deleteObject, getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
-import {SubirDocsGQL} from '#/libs/datos/src';
-import {tap} from 'rxjs';
-import {unionBy} from 'lodash-es';
-import {DisableControlModule} from '@angular-ru/cdk/directives';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
-import {GeneralService} from '#/apps/sistema-comercial/src/app/services/general.service';
-import {STATE_DOCS} from '@s-general/general.state';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
+import {getDownloadURL} from '@angular/fire/storage';
+import {finalize, startWith, Subscription} from 'rxjs';
+import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
+import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
+import {checkValueIsFilled} from '@angular-ru/cdk/utils';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -32,27 +31,38 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toa
             RegistrosComponent,
             ReactiveFormsModule,
             RxReactiveFormsModule,
-            DisableControlModule
+            MatDialogModule,
+            NgIf,
+            MatProgressBarModule,
         ],
     templateUrl: './mod-subir-docs.component.html',
-    styleUrls: ['./mod-subir-docs.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./mod-subir-docs.component.scss']
 })
-export class ModSubirDocsComponent implements OnInit
+export class ModSubirDocsComponent implements OnInit, OnDestroy
 {
     formDocsArchivo: FormGroup;
     cargando = false;
     advertencia: string = '';
+    porcentaje: number = 0;
+    subs: Subscription = new Subscription();
+    mostrarProgreso: boolean = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: IDocumento, private fb: RxFormBuilder, private mdr: MatDialogRef<ModSubirDocsComponent>, private ngxService: NgxToastService,
-                private storage: Storage, private subirDocsGQL: SubirDocsGQL)
+    constructor(private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxToast: NgxToastService, private misDocumentosService: MisDocumentosService,
+                private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth, public entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
 
     ngOnInit(): void
     {
         this.formDocsArchivo = this.fb.formGroup(new Archivos());
-        if (this.data.enviadoPor !== STATE_DATOS_SESION()._id)
+
+        this.subs.add(this.generalServices.progreso().pipe(startWith(0)).subscribe((r) =>
+        {
+            this.porcentaje = r;
+            this.cdr.detectChanges();
+        }));
+
+        if (this.entityMisDocumentos.snapshot.documento.enviadoPor !== this.stateAuth.snapshot._id)
         {
             this.formDocsArchivo.get('docArchivo').disable();
             this.advertencia = 'Este documento solo puede ser modificado por la persona que lo subio';
@@ -62,86 +72,89 @@ export class ModSubirDocsComponent implements OnInit
     async reemplazar(esRemoto: boolean): Promise<void>
     {
         const {docArchivo, acuseArchivo} = this.formDocsArchivo.value;
+
         if (!docArchivo && !acuseArchivo)
         {
-            this.ngxService.alertaToast('No se ha seleccionado ningun archivo', 'Reemplazo de archivos');
+            this.ngxToast.alertaToast('No se ha seleccionado ningun archivo', 'Reemplazo de archivos');
             return;
         }
 
         this.cargando = true;
         this.formDocsArchivo.disable();
+
         let docUrl: string = null;
         let acuseUrl: string = null;
-        let filesDocUrl = null;
-        let filesAcuseUrl = null;
-        const carpeta = 'documentos';
+        let docArch: File[] = null;
+        let acuseArch: File[] = null;
         if (esRemoto)
         {
             if (docArchivo)
             {
+                if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.docUrl))
+                {
+                    await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.docUrl);
+                }
                 try
                 {
-                    if (this.data.docUrl)
-                    {
-                        const eliminarDocUrl = ref(this.storage, this.data.docUrl);
-                        deleteObject(eliminarDocUrl).then().catch(err => this.ngxService.errorToast(`Ocurrio un error: ${err}`, 'Eliminar doc'));
-                    }
-                    const docRef = ref(this.storage, GeneralService.rutaGuardar(this.data.tipoDoc, docArchivo._files[0].name, carpeta));
-                    const subirDoc = await uploadBytes(docRef, docArchivo._files[0]);
-                    docUrl = await getDownloadURL(subirDoc.ref);
+                    this.mostrarProgreso = true;
+                    const ruta = GeneralService.rutaGuardar(this.entityMisDocumentos.snapshot.documento.tipoDoc, docArchivo._files[0].name, 'documentos');
+                    const doc = await this.generalServices.subirFirebase(docArchivo._files[0], ruta);
+                    docUrl = await getDownloadURL(doc.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(`Ocurrio un error inesperado${e}`, 'Reemplazo de docs');
+                    this.ngxToast.errorToast(e.message, 'Error al obtener url del documento');
+                    this.dRef.close();
                 }
             }
-
             if (acuseArchivo)
             {
+                if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.acuseUrl))
+                {
+                    try
+                    {
+                        await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.acuseUrl);
+                    } catch (e)
+                    {
+                        this.ngxToast.errorToast(e, 'Ocurrio un error al tratar de eminar el documento');
+                    }
+                }
                 try
                 {
-                    if (this.data.acuseUrl)
-                    {
-                        const eliminarAcuse = ref(this.storage, this.data.acuseUrl);
-                        deleteObject(eliminarAcuse).then().catch(err => this.ngxService.errorToast(`Error al tratar de eliminar acuse: ${err}`, 'Eliminar acuse'));
-                    }
-                    const acuseRef = ref(this.storage, GeneralService.rutaGuardar(this.data.tipoDoc, acuseArchivo._files[0].name, carpeta));
-                    const acuseSubir = await uploadBytes(acuseRef, acuseArchivo.files[0]);
-                    acuseUrl = await getDownloadURL(acuseSubir.ref);
+                    this.mostrarProgreso = true;
+                    const ruta = GeneralService.rutaGuardar(this.entityMisDocumentos.snapshot.documento.tipoDoc, acuseArchivo._files[0].name, 'documentos');
+                    const acuse = await this.generalServices.subirFirebase(acuseArchivo._files[0], ruta);
+                    acuseUrl = await getDownloadURL(acuse.ref);
                 } catch (e)
                 {
-                    this.ngxService.errorToast(`Ocurrio un error inesperado: ${e}`, 'Reemplazar Acuse');
+                    this.ngxToast.errorToast(e.message, 'Error al obtener la url');
+                    this.dRef.close();
                 }
             }
         } else
         {
             if (docArchivo)
             {
-                filesDocUrl = docArchivo._files;
+                docArch = docArchivo._files;
             }
             if (acuseArchivo)
             {
-                filesAcuseUrl = acuseArchivo._files;
+                acuseArch = acuseArchivo._files;
             }
         }
         const actDocs =
             {
-                _id: this.data._id,
+                _id: this.entityMisDocumentos.snapshot.documento._id,
                 docUrl,
                 acuseUrl,
             };
-
-        this.subirDocsGQL.mutate({args: actDocs, files: {file: filesDocUrl, carpeta}, filesAcuse: {file: filesAcuseUrl, carpeta}}).pipe(tap((res) =>
+        this.misDocumentosService.subirDocs(actDocs, docArch, acuseArch).pipe(finalize(() =>
         {
-            if (res.data)
-            {
-                unionBy(STATE_DOCS(), res.data.subirDocs as IResolveDocumento);
-                this.ngxService.satisfactorioToast('La subida de archivos se realizo con exito', 'Subida de archivos');
-                this.mdr.close(res.data.subirDocs);
-            }
             this.cargando = false;
             this.formDocsArchivo.enable();
+            this.dRef.close();
         })).subscribe();
     }
+
 
     cancelar(): void
     {
@@ -149,6 +162,11 @@ export class ModSubirDocsComponent implements OnInit
         {
             return;
         }
-        this.mdr.close();
+        this.dRef.close();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.subs.unsubscribe();
     }
 }

@@ -1,4 +1,3 @@
-<h2 mat-dialog-title>Dar de alta nuevos empleados</h2>
 <mat-dialog-content>
     <form [formGroup]="formEmpleado">
         <div class="flex flex-col gap-2">
@@ -24,7 +23,7 @@
                 <input type="text" matInput formControlName="correo" trim>
                 <mat-error>{{formEmpleado.controls.correo['errorMessage']}}</mat-error>
             </mat-form-field>
-            <div class="relative flex flex-auto items-center gap-2">
+            <div class="flex flex-auto items-center gap-2">
                 <mat-form-field class="flex-auto">
                     <mat-label>Fecha de ingreso</mat-label>
                     <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="fechaIngreso" readonly>
@@ -33,10 +32,14 @@
                     <mat-error>{{formEmpleado.controls.fechaIngreso['errorMessage']}}</mat-error>
                 </mat-form-field>
                 <mat-form-field class="flex-auto">
-                    <mat-label>Selecciona un departamento</mat-label>
+                    <mat-label>departamento</mat-label>
                     <mat-select formControlName="deptoId">
-                        <mat-option *ngFor="let depto of stateDeptos" [value]="depto._id">{{depto.nombre}}</mat-option>
+                        <mat-option *ngFor="let depto of entityDepto.entitiesArray$ | async" [value]="depto._id">{{depto.nombre}}</mat-option>
                     </mat-select>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Puesto</mat-label>
+                    <input matInput>
                 </mat-form-field>
             </div>
             <section class="flex items-center flex-row-reverse">
@@ -57,4 +60,4 @@
         </div>
     </form>
 </mat-dialog-content>
-<app-registros (registro)="regEmpleado()" (cancelar)="cerrar()" [deshabilitar]="formEmpleado.invalid || cargando" [cargando]="cargando"></app-registros>
+<app-registros (registro)="regEmpleado()" (cancelar)="mdr.closeAll()" [deshabilitar]="formEmpleado.invalid || cargando" [cargando]="cargando"></app-registros>

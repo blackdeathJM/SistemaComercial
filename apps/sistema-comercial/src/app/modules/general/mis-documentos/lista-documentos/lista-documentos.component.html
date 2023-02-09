@@ -1,0 +1,51 @@
+<div class="flex flex-col mx-4">
+    <table mat-table [dataSource]="dataSource" class="bg-gray-300 dark:bg-gray-800">
+        <ng-container matColumnDef="nombreCompleto">
+            <th *matHeaderCellDef>Doc. creado por</th>
+            <td *matCellDef="let doc">{{doc.resolveEmpleado.nombreCompleto}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="asunto">
+            <th *matHeaderCellDef>Asunto</th>
+            <td *matCellDef="let doc">{{doc.asunto}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="identificadorDoc">
+            <th *matHeaderCellDef>Identificador</th>
+            <td *matCellDef="let doc">{{doc.identificadorDoc}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dependencia">
+            <th *matHeaderCellDef>Dependencia</th>
+            <td *matCellDef="let doc">{{doc.dependencia}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="usuarios">
+            <th *matHeaderCellDef>Enviado a</th>
+            <td *matCellDef="let doc">
+                <div class="flex flex-0 items-center py-2">
+                    <ng-container *ngFor="let usuarioEnviado of doc.resolveEmpleadoEnviado">
+                        <img class="avatar w-10 h-10" [src]="usuarioEnviado?.avatar" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="usuarioEnviado.avatar" alt="avatar">
+                        <div class="avatar-letra w-10 h-10" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="!usuarioEnviado.avatar">
+                            {{usuarioEnviado?.nombreCompleto.charAt(0)}}
+                        </div>
+                    </ng-container>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proceso">
+            <th *matHeaderCellDef>Estatus</th>
+            <td *matCellDef="let doc">
+                <mat-icon [ngClass]="doc.proceso === 'pendiente'? 'text-red-700': 'text-green-700'" [svgIcon]="doc.proceso === 'pendiente'? 'warning': 'done'"></mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnasMostrar" class="border-b-2"></tr>
+        <tr mat-row class="cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" (click)="seleccionarDoc(row)" *matRowDef="let row; columns: columnasMostrar"></tr>
+    </table>
+    <div class="mt-4">
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    </div>
+    <ngx-ui-loader [loaderId]="loaderListaDocs"></ngx-ui-loader>
+</div>

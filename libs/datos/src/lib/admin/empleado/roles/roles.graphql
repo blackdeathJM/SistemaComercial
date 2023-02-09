@@ -1,0 +1,57 @@
+mutation crearRoles($args: CrearRolInput!)
+{
+    crearRoles(args: $args)
+    {
+        ...fragRoles
+    }
+}
+
+query rolesAsig($idEmpleado: ID!)
+{
+    rolesAsig(idEmpleado: $idEmpleado)
+    {
+        ...fragRoles
+    }
+}
+mutation actPrimerNivel($role: ActRolesInput!)
+{
+    actPrimerNivel(role: $role)
+    {
+        ...fragRoles
+    }
+}
+mutation actCtrlPrimerNivel($ctrl: ActRolesInput!)
+{
+    actCtrlPrimerNivel(ctrl: $ctrl)
+    {
+        ...fragRoles
+    }
+}
+mutation actSegundoNivel($role: ActRolesInput!)
+{
+    actSegundoNivel(role: $role)
+    {
+        ...fragRoles
+    }
+}
+mutation actCtrlSegundoNivel($ctrl: ActRolesInput!)
+{
+    actCtrlSegundoNivel(ctrl: $ctrl)
+    {
+        ...fragRoles
+    }
+}
+mutation actTercerNivel($role: ActRolesInput!)
+{
+    actTercerNivel(role: $role)
+    {
+        ...fragRoles
+    }
+}
+mutation actCtrlTercerNivel($ctrl: ActRolesInput!)
+{
+    actCtrlTercerNivel(ctrl: $ctrl)
+    {
+        ...fragRoles
+    }
+}

@@ -12,7 +12,7 @@
         "strictPropertyInitialization": false,
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "types": ["node"],
+        "types": ["node", "ES2022"],
         "importHelpers": true,
         "target": "ES2022",
         "useDefineForClassFields": false,

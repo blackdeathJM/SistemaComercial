@@ -1,0 +1,35 @@
+query Departamentos
+{
+    deptos {
+        ...fragDeptos
+    }
+}
+query filtrarDeptos($nombre: String!)
+{
+    filtrarDeptos(nombre: $nombre)
+    {
+        ...fragDeptos
+    }
+}
+
+mutation crearDepto($input: DeptoInput!)
+{
+    crearDepto(input: $input)
+    {
+        ...fragDeptos
+    }
+}
+mutation actualizarDepto($input: DeptoInput!)
+{
+    actualizarDepto(input: $input)
+    {
+        ...fragDeptos
+    }
+}
+mutation agregarPuesto($puesto: PuestoDeptoInput!)
+{
+    agregarPuesto(puesto: $puesto)
+    {
+        ...fragDeptos
+    }
+}

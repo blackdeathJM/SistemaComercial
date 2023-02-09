@@ -64,7 +64,7 @@ export class FuseNavigationService
     }
 
     /**
-     * Get navigation from storage by key
+     * Get navigation from store by key
      *
      * @param key
      */
@@ -74,7 +74,7 @@ export class FuseNavigationService
     }
 
     /**
-     * Delete the navigation from the storage
+     * Delete the navigation from the store
      *
      * @param key
      */
@@ -86,7 +86,7 @@ export class FuseNavigationService
             console.warn(`Navigation with the key '${key}' does not exist in the store.`);
         }
 
-        // Delete from the storage
+        // Delete from the store
         this._navigationStore.delete(key);
     }
 

@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
-import {Navegation} from "@s-core/navigation/navigation.types";
+import {Navegation} from '@s-core/navigation/navigation.types';
 
 @Component({
     selector     : 'enterprise-layout',
@@ -30,25 +30,11 @@ export class EnterpriseLayoutComponent implements OnInit, OnDestroy
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for current year
-     */
     get currentYear(): number
     {
         return new Date().getFullYear();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to navigation data
@@ -78,15 +64,6 @@ export class EnterpriseLayoutComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
     toggleNavigation(name: string): void
     {
         // Get the navigation

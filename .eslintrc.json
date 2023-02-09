@@ -70,7 +70,7 @@
                     "error",
                     {
                         "ignorePattern": "^import |^export | implements",
-                        "code": 250
+                        "code": 300
                     }
                 ],
                 "no-underscore-dangle": "off",

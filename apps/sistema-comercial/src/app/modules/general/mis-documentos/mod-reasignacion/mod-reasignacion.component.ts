@@ -1,21 +1,20 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {IResolveEmpleado} from '#/libs/models/src/lib/admin/empleado/empleado.interface';
-import {EmpleadosSesionGQL, ReasignarUsuarioGQL} from '#/libs/datos/src';
-import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
-import {tap} from 'rxjs';
-import {unionBy} from 'lodash-es';
+import {finalize} from 'rxjs';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_EMPLEADOS} from '@s-admin/empleado.state';
-import {STATE_DOCS} from '@s-general/general.state';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
+import {isNotNil} from '@angular-ru/cdk/utils';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 
 @Component({
     selector: 'app-mod-reasignacion',
@@ -36,50 +35,42 @@ import {STATE_DOCS} from '@s-general/general.state';
     styleUrls: ['./mod-reasignacion.component.sass'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModReasignacionComponent implements OnInit
+export class ModReasignacionComponent implements OnInit, AfterContentInit
 {
-    empleados: IResolveEmpleado[];
-    selecEmpleado: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
+    formSelect: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
     cargando: boolean = false;
 
-    constructor(private empleadosSesionGQL: EmpleadosSesionGQL, @Inject(MAT_DIALOG_DATA) private data: IResolveDocumento, private dRef: MatDialogRef<ModReasignacionComponent>,
-                private reasignacionUsuarioGQL: ReasignarUsuarioGQL, private ngxToastService: NgxToastService)
+    constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService,
+                private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EntityEmpleadoStore, private empleadoService: EmpleadoService)
     {
     }
 
     ngOnInit(): void
     {
-        this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        // Asignamos los empleados que ya se les haya asignado algún documento para establecer de nuevo la asignacion
+        this.empleadoService.empleadosConSesion().subscribe();
+    }
+
+    ngAfterContentInit(): void
+    {
+        if (isNotNil(this.entityMisDocumentos.snapshot.documento))
         {
-            if (res.data)
-            {
-                this.selecEmpleado.setValue(this.data.usuarios);
-                this.empleados = STATE_EMPLEADOS(res.data.empleadosSesion as IResolveEmpleado[]);
-            }
-        })).subscribe();
+            this.formSelect.setValue(this.entityMisDocumentos.snapshot.documento.usuarios);
+        }
     }
 
     cambiarUsuarios(): void
     {
-        if (this.selecEmpleado.value.length === 0)
+        if (this.formSelect.value.length === 0)
         {
-            this.ngxToastService.alertaToast('Debes tener seleccionado por lo menos un usuario', 'Seleccion de usuarios');
+            this.ngxToast.alertaToast('Debes tener seleccionado por lo menos un usuario', 'Seleccion de usuarios');
             return;
         }
         this.cargando = true;
-        this.reasignacionUsuarioGQL.mutate({usuarios: {_id: this.data._id, usuarios: this.selecEmpleado.value}}).pipe(tap((res) =>
+        this.misDocumentosService.reasignacionUsuarios(this.entityMisDocumentos.snapshot.documento._id, this.formSelect.value).pipe(finalize(() =>
         {
-            this.cargando = res.loading;
-            if (res.data)
-            {
-                unionBy(STATE_DOCS(), res.data.reasignarUsuario as IResolveDocumento);
-                this.dRef.close(res.data.reasignarUsuario);
-            }
+            this.cargando = false;
+            this.dRef.close();
         })).subscribe();
-    }
-
-    cerrar(): void
-    {
-        this.dRef.close(null);
     }
 }

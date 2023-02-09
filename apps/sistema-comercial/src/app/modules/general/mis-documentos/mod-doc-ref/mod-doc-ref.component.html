@@ -1,22 +1,20 @@
-<h2 mat-dialog-title>Referenciar documentos a folio</h2>
-<mat-dialog-content>
-    <div class="flex">
-<!--        <mat-form-field class="flex-auto">-->
-<!--            <mat-chip-list #chipList>-->
-<!--                <mat-chip *ngFor="let ref of referencias" [selectable]="selectable" [removable]="removable" (removed)="remove(ref)">-->
-<!--                    {{ref}}-->
-<!--                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
-<!--                </mat-chip>-->
-<!--                <input placeholder="Referencia" #entradaRef [formControl]="refCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-<!--                       [matChipInputAddOnBlur]="addOnBlur"-->
-<!--                       (matChipInputTokenEnd)="add($event)">-->
-<!--            </mat-chip-list>-->
-<!--            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
-<!--                <mat-option *ngFor="let ref of refFiltrados | async" [value]="ref">-->
-<!--                    {{ref}}-->
-<!--                </mat-option>-->
-<!--            </mat-autocomplete>-->
-<!--        </mat-form-field>-->
-    </div>
-</mat-dialog-content>
-<app-registros (registro)="asignar()" (cancelar)="cerrar()" [cargando]="cargando" [deshabilitar]="cargando"></app-registros>
+<div class="flex flex-col">
+    <mat-form-field>
+        <mat-chip-grid #chipGrid>
+            <mat-chip-row *ngFor="let ref of referencias" (removed)="remove(ref)">
+                {{ref}}
+                <button matChipRemove [attr.aria-label]="'remove' + ref">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            <input placeholder="Referencia" #entradaRef [formControl]="refCtrl" [matChipInputFor]="chipGrid" [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   (matChipInputTokenEnd)="add($event)"/>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let ref of refFiltrados | async" [value]="ref">
+                    {{ref}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-chip-grid>
+    </mat-form-field>
+    <app-registros (registro)="asignar()" (cancelar)="dRef.close()" [cargando]="cargando" [deshabilitar]="cargando"></app-registros>
+</div>

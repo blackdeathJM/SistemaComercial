@@ -1,55 +1,24 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree} from '@angular/router';
+import {CanMatch, Route, Router, UrlSegment, UrlTree} from '@angular/router';
 import {Observable, of, switchMap} from 'rxjs';
-import {AuthService} from '@s-core/auth/auth.service';
+import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad
+export class NoAuthGuard implements CanMatch
 {
-    constructor(
-        private _authService: AuthService,
-        private _router: Router
-    )
+    constructor(private _router: Router, private authService: AuthService)
     {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
+    canMatch(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-        return this._check();
+        return this.checar();
     }
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    private checar(): Observable<boolean>
     {
-        return this._check();
-    }
-
-    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
-    {
-        return this._check();
-    }
-
-    private _check(): Observable<boolean>
-    {
-        // Check the authentication status
-        return this._authService.check()
-                   .pipe(
-                       switchMap((authenticated) => {
-
-                           // If the user is authenticated...
-                           if ( authenticated )
-                           {
-                               // Redirect to the root
-                               this._router.navigate(['']).then();
-
-                               // Prevent the access
-                               return of(false);
-                           }
-
-                           // Allow the access
-                           return of(true);
-                       })
-                   );
+        return this.authService.validarSesion().pipe(switchMap(autenticado => of(!autenticado)));
     }
 }

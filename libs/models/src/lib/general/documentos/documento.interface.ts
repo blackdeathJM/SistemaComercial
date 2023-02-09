@@ -1,4 +1,4 @@
-import {IEmpleado} from '../../admin/empleado/empleado.interface';
+import {IEmpleado} from '../../dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 
 export interface IDocumento
 {

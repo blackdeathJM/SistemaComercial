@@ -22,9 +22,6 @@ export class AuthSignUpComponent implements OnInit
     signUpForm: FormGroup;
     showAlert: boolean = false;
 
-    /**
-     * Constructor
-     */
     constructor(
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
@@ -32,14 +29,6 @@ export class AuthSignUpComponent implements OnInit
     )
     {
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Create the form
@@ -52,14 +41,6 @@ export class AuthSignUpComponent implements OnInit
             }
         );
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Sign up
-     */
     signUp(): void
     {
         // Do nothing if the form is invalid
@@ -80,7 +61,7 @@ export class AuthSignUpComponent implements OnInit
                 (response) => {
 
                     // Navigate to the confirmation required page
-                    this._router.navigateByUrl('/confirmation-required');
+                    this._router.navigateByUrl('/confirmation-required').then();
                 },
                 (response) => {
 

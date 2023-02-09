@@ -1,13 +1,12 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/admin/empleado/empleado.dto';
+import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {AuthDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.dto';
-import {IEmpleado} from '#api/libs/models/src/lib/admin/empleado/empleado.interface';
 import {CambioContrsenaDto} from '#api/libs/models/src/lib/admin/empleado/auth/auth.input.dto';
-import {ILoginRespuesta} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {ILoginRespuesta, LoginRespuestaDto} from '#api/libs/models/src/lib/admin/empleado/auth/login.dto';
 import {IDatosSesion} from '#api/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {ModificadoPorDto} from '#api/libs/models/src/lib/common/common.dto';
 
@@ -20,65 +19,130 @@ export class AuthService
     {
     }
 
-    async asignarAuth(_id: string, auth: AuthDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
+    async registroSesion(_id: string, auth: AuthDto, modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
     {
         const contrasena = auth.contrasena;
         auth.contrasena = await bcrypt.hash(contrasena, this.salt);
-        const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {auth}, $push: {modificadoPor}}, {returnOriginal: false, runValidators: true}).exec();
-        if (!empleado)
+        try
         {
-            throw new NotFoundException('No se pudo asignar una sesion por que el usuario no fue encontrado');
+            return await this.empleado.findByIdAndUpdate(_id, {$set: {auth}, $push: {modificadoPor}}, {returnOriginal: false, runValidators: true}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
         }
-        return empleado;
     }
 
-    async actualizarContrasenaAdmin(datos: CambioContrsenaDto, modificadoPor: ModificadoPorDto): Promise<IEmpleado>
+    async actualizarContrasenaAdmin(datos: CambioContrsenaDto, modificadoPor: ModificadoPorDto): Promise<EmpleadoDto>
     {
         const nvaContrasena = await bcrypt.hash(datos.contrasena, this.salt);
-
-        const empleado = await this.empleado.findByIdAndUpdate(datos._id,
-            {$set: {'auth.contrasena': nvaContrasena}, $push: {modificadoPor}}, {returnOriginal: false}).exec();
-        if (!empleado)
+        try
         {
-            throw new NotFoundException('No se encontro registro para actualizar la contrasena');
+            return await this.empleado.findByIdAndUpdate(datos._id,
+                {$set: {'auth.contrasena': nvaContrasena}, $push: {modificadoPor}}, {returnOriginal: false}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
         }
-
-        return empleado;
     }
 
     async validarUsuario(username: string, password: string): Promise<EmpleadoDto>
     {
-        const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
-        if (empleado)
+        try
         {
+            const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
             const validar = await bcrypt.compare(password, empleado.auth.contrasena);
             if (validar)
             {
                 delete empleado.auth.contrasena;
                 return empleado;
             }
-        } else
+        } catch (e)
         {
-            throw new NotFoundException({message: 'Usuario o contrasena no correctas'});
+            throw new InternalServerErrorException({message: e.codeName});
         }
-        return null;
     }
 
-    // async actualizarRol(_id: string, rol: RolDto, modificadoPor: ModificadoDto): Promise<IEmpleado>
-    // {
-    //     const empleado = await this.empleado.findByIdAndUpdate(_id, {$set: {'auth.rol.$[i].tipoAcceso': rol.tipoAcceso, 'auth.rol.$[i].oculto': rol.oculto}}, {
-    //         arrayFilters: [{'i.id': {$eq: rol.id}}], returnOriginal: false
-    //     });
-    //
-    //     if (!empleado)
-    //     {
-    //         throw new NotFoundException({message: 'El usuario no fue encontrado'});
-    //     }
-    //     await this.modificadoPor(_id, modificadoPor);
-    //     return empleado;
-    // }
+    login(empleado: any): LoginRespuestaDto
+    {
+        return this.datosSesion(empleado);
+    }
 
-    login(empleado: any): ILoginRespuesta
+    async actualizarAvatar(_id: string, url: string): Promise<LoginRespuestaDto>
+    {
+        try
+        {
+            const rutaImg = await this.empleado.findByIdAndUpdate(_id, {$set: {avatar: url}}, {new: true}).exec();
+            return this.datosSesion(rutaImg);
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async permisoRuta(acceso: boolean, rol: string, idEmpleado: string): Promise<EmpleadoDto>
+    {
+        try
+        {
+            if (acceso)
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).exec();
+            } else
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async puedeAsigPermisos(idEmpleado: string, permiso: string, puedeAsigPermiso: boolean): Promise<EmpleadoDto>
+    {
+        try
+        {
+            if (puedeAsigPermiso)
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.asigPermisos': permiso}}).exec();
+            } else
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.asigPermisos': permiso}}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async asigCtrls(idEmpleado: string, ctrl: string, acceso: boolean): Promise<EmpleadoDto>
+    {
+        try
+        {
+            if (acceso)
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.controles': ctrl}}).exec();
+            } else
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.controles': ctrl}}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async valoresDefecto(): Promise<boolean>
+    {
+        try
+        {
+            const res = await this.empleado.updateMany({auth: {$ne: null}}, {$set: {'auth.guards': [], 'auth.controles': [], 'auth.roles': null}}).exec();
+            return res.acknowledged;
+        } catch (e)
+        {
+            console.log(e.codeName);
+        }
+    }
+
+    datosSesion(empleado: EmpleadoDto): ILoginRespuesta
     {
         const datosSesion: IDatosSesion =
             {

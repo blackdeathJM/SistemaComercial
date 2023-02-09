@@ -1,18 +1,18 @@
-import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
-import { Layout } from './layout.types';
-import { FuseConfigService } from '@s-fuse/config';
-import { FuseMediaWatcherService } from '@s-fuse/media-watcher';
-import { FusePlatformService } from '@s-fuse/platform/platform.service';
-import { FUSE_VERSION } from '../../@fuse/version';
+import {Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {combineLatest, filter, map, Subject, takeUntil} from 'rxjs';
+import {Layout} from './layout.types';
+import {FuseConfigService} from '@s-fuse/config';
+import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
+import {FusePlatformService} from '@s-fuse/platform/platform.service';
+import {FUSE_VERSION} from '../../@fuse/version';
 import {AppConfig} from '@s-core/config/app.config';
 
 @Component({
-    selector     : 'layout',
-    templateUrl  : './layout.component.html',
-    styleUrls    : ['./layout.component.scss'],
+    selector: 'layout',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class LayoutComponent implements OnInit, OnDestroy
@@ -23,9 +23,6 @@ export class LayoutComponent implements OnInit, OnDestroy
     theme: string;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
     constructor(
         private _activatedRoute: ActivatedRoute,
         @Inject(DOCUMENT) private _document: any,
@@ -38,13 +35,6 @@ export class LayoutComponent implements OnInit, OnDestroy
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Set the theme and scheme based on the configuration
@@ -53,15 +43,16 @@ export class LayoutComponent implements OnInit, OnDestroy
             this._fuseMediaWatcherService.onMediaQueryChange$(['(prefers-color-scheme: dark)', '(prefers-color-scheme: light)'])
         ]).pipe(
             takeUntil(this._unsubscribeAll),
-            map(([config, mql]) => {
+            map(([config, mql]) =>
+            {
 
                 const options = {
                     scheme: config.scheme,
-                    theme : config.theme
+                    theme: config.theme
                 };
 
                 // If the scheme is set to 'auto'...
-                if ( config.scheme === 'auto' )
+                if (config.scheme === 'auto')
                 {
                     // Decide the scheme using the media query
                     options.scheme = mql.breakpoints['(prefers-color-scheme: dark)'] ? 'dark' : 'light';
@@ -69,7 +60,8 @@ export class LayoutComponent implements OnInit, OnDestroy
 
                 return options;
             })
-        ).subscribe((options) => {
+        ).subscribe((options) =>
+        {
 
             // Store the options
             this.scheme = options.scheme;
@@ -83,7 +75,8 @@ export class LayoutComponent implements OnInit, OnDestroy
         // Subscribe to config changes
         this._fuseConfigService.config$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config: AppConfig) => {
+            .subscribe((config: AppConfig) =>
+            {
 
                 // Store the config
                 this.config = config;
@@ -96,7 +89,8 @@ export class LayoutComponent implements OnInit, OnDestroy
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             takeUntil(this._unsubscribeAll)
-        ).subscribe(() => {
+        ).subscribe(() =>
+        {
 
             // Update the layout
             this._updateLayout();
@@ -109,9 +103,6 @@ export class LayoutComponent implements OnInit, OnDestroy
         this._renderer2.addClass(this._document.body, this._fusePlatformService.osName);
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -119,58 +110,31 @@ export class LayoutComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Update the selected layout
-     */
     private _updateLayout(): void
     {
-        // Get the current activated route
         let route = this._activatedRoute;
-        while ( route.firstChild )
+        while (route.firstChild)
         {
             route = route.firstChild;
         }
 
-        // 1. Set the layout from the config
         this.layout = this.config.layout;
 
-        // 2. Get the query parameter from the current route and
-        // set the layout and save the layout to the config
         const layoutFromQueryParam = (route.snapshot.queryParamMap.get('layout') as Layout);
-        if ( layoutFromQueryParam )
+        if (layoutFromQueryParam)
         {
             this.layout = layoutFromQueryParam;
-            if ( this.config )
+            if (this.config)
             {
                 this.config.layout = layoutFromQueryParam;
             }
         }
 
-        // 3. Iterate through the paths and change the layout as we find
-        // a config for it.
-        //
-        // The reason we do this is that there might be empty grouping
-        // paths or componentless routes along the path. Because of that,
-        // we cannot just assume that the layout configuration will be
-        // in the last path's config or in the first path's config.
-        //
-        // So, we get all the paths that matched starting from root all
-        // the way to the current activated route, walk through them one
-        // by one and change the layout as we find the layout config. This
-        // way, layout configuration can live anywhere within the path and
-        // we won't miss it.
-        //
-        // Also, this will allow overriding the layout in any time so we
-        // can have different layouts for different routes.
         const paths = route.pathFromRoot;
-        paths.forEach((path) => {
-
+        paths.forEach((path) =>
+        {
             // Check if there is a 'layout' data
-            if ( path.routeConfig && path.routeConfig.data && path.routeConfig.data.layout )
+            if (path.routeConfig && path.routeConfig.data && path.routeConfig.data.layout)
             {
                 // Set the layout
                 this.layout = path.routeConfig.data.layout;
@@ -178,11 +142,6 @@ export class LayoutComponent implements OnInit, OnDestroy
         });
     }
 
-    /**
-     * Update the selected scheme
-     *
-     * @private
-     */
     private _updateScheme(): void
     {
         // Remove class names for all schemes
@@ -192,16 +151,12 @@ export class LayoutComponent implements OnInit, OnDestroy
         this._document.body.classList.add(this.scheme);
     }
 
-    /**
-     * Update the selected theme
-     *
-     * @private
-     */
     private _updateTheme(): void
     {
         // Find the class name for the previously selected theme and remove it
-        this._document.body.classList.forEach((className: string) => {
-            if ( className.startsWith('theme-') )
+        this._document.body.classList.forEach((className: string) =>
+        {
+            if (className.startsWith('theme-'))
             {
                 this._document.body.classList.remove(className, className.split('-')[1]);
             }

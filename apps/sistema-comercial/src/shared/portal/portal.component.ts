@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Portal, PortalService} from '@s-app/services/portal.service';
 import {PortalModule} from '@angular/cdk/portal';
 import {CommonModule} from '@angular/common';
+import {Portal, PortalService} from '#/apps/sistema-comercial/src/services/portal.service';
 
 @Component({
     standalone: true,

@@ -2,14 +2,28 @@ import {ConflictException, Injectable, InternalServerErrorException} from '@nest
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {
-    DocActFolioDto, DocFolioDto, DocReasignarUsuarioDto, DocRefFolioDto, DocRegDto, DocsBusquedaGralDto, DocsFechasDto, DocsRefDto, DocsSubirDto,
-    DocsUsuarioProcesoDto, DocumentoDto, DocumentoType
+    DocActFolioDto,
+    DocFolioDto,
+    DocReasignarUsuarioDto,
+    DocRefFolioDto,
+    DocRegDto,
+    DocsBusquedaGralDto,
+    DocsFechasDto,
+    DocsRefDto,
+    DocsSubirDto,
+    DocsUsuarioProcesoDto,
+    DocumentoDto,
+    DocumentoType
 } from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {SubirArchivosService} from '#api/apps/api/src/app/upload/subir-archivos.service';
 import {UploadDto} from '#api/libs/models/src/lib/upload/upload.dto';
-import {DeptosService} from '@api-admin/deptos.service';
 import {IDocumento} from '#api/libs/models/src/lib/general/documentos/documento.interface';
 import {AppService} from '#api/apps/api/src/app/app.service';
+import {INotificacion} from '#api/libs/models/src/lib/general/notificacion/notificacion.interface';
+import {subNotificacion} from '@api-general/notificaciones/notificacion.resolver';
+import {NotificacionService} from '@api-general/notificaciones/notificacion.service';
+import {DeptosService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/deptos/deptos.service';
+
 
 @Injectable()
 export class DocumentosService
@@ -17,15 +31,16 @@ export class DocumentosService
     #ano = new Date().getFullYear();
     #mes = new Date().getMonth() + 1;
 
-    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService)
+    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService,
+                private notificacionService: NotificacionService)
     {
     }
 
-// Filtrar los documentos por usuario y por ano
+// Filtrar los documentos por usuario
     async docsUsuarioProceso(datos: DocsUsuarioProcesoDto): Promise<DocumentoDto[]>
     {
         const tipoBusqueda: Record<string, string> = {};
-        const consulta = {proceso: datos.proceso, ano: this.#ano};
+        const consulta = {proceso: datos.proceso};
         if (datos.esEnviadoPor)
         {
             tipoBusqueda['enviadoPor'] = datos.enviadoPor;
@@ -48,6 +63,7 @@ export class DocumentosService
     {
         const fechas = {fechaRecepcion: {$gte: args.fechaInicial, $lte: args.fechaFinal}};
         const usuarioEnviadoPor: Record<string, string> = {};
+
         if (args.esEnviadoPor)
         {
             usuarioEnviadoPor['enviadoPor'] = args.enviadoPor;
@@ -84,8 +100,7 @@ export class DocumentosService
                         {identificadorDoc: {$regex: args.consulta, $options: 'i'}},
                         {asunto: {$regex: args.consulta, $options: 'i'}},
                         {dependencia: {$regex: args.consulta, $options: 'i'}},
-                        {tipoDoc: {$regex: args.consulta, $options: 'i'}}
-                    ]
+                        {tipoDoc: {$regex: args.consulta, $options: 'i'}}]
             }).exec();
         } catch (e)
         {
@@ -115,7 +130,26 @@ export class DocumentosService
         {
             try
             {
-                return await this.documento.create(datos);
+                const registro = await this.documento.create(datos);
+
+                registro.usuarios.map(async (usuario) =>
+                {
+                    const notificacion: INotificacion =
+                        {
+                            imagen: null,
+                            leido: false,
+                            link: '/sistema-comercial/general/mis-documentos',
+                            icono: 'heroicons_outline:document-text',
+                            tiempo: AppService.fechaHoraActual(),
+                            titulo: `Nuevo ${registro.tipoDoc}`,
+                            usarRouter: true,
+                            descripcion: registro.asunto,
+                            idUsuario: usuario
+                        };
+                    const notRegistrado = await this.notificacionService.regNot(notificacion);
+                    await subNotificacion.publish('notificar', notRegistrado);
+                });
+                return registro;
             } catch (e)
             {
                 throw new ConflictException({message: e.codeName});
@@ -142,11 +176,12 @@ export class DocumentosService
         try
         {
             const {_id, folio, ref, usuarioFolio} = entradas;
+            //buscamos el documento por el seguimiento y actualizamos los campos dando por finalizado el documento
             await ref.map(async (seguimiento) =>
             {
                 try
                 {
-                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio}},
+                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio, proceso: 'terminado'}},
                         {new: true}).exec();
                     if (docsAsignados)
                     {
@@ -157,12 +192,13 @@ export class DocumentosService
                     throw new ConflictException({message: e});
                 }
             });
+            // Buscamos el documento principal y seteamos el arreglo de referencias
             const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {new: true}).exec();
             docsAsig.push(docFolioPrincipal);
             return docsAsig;
         } catch (e)
         {
-
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
@@ -203,7 +239,7 @@ export class DocumentosService
             return reasignacionUsuarios;
         } catch (e)
         {
-
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
@@ -246,7 +282,7 @@ export class DocumentosService
             return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${this.#mes}-${this.#ano}`;
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 

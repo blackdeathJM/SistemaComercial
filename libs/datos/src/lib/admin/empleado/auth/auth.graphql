@@ -1,6 +1,6 @@
-mutation asignarAuth($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!)
+mutation registroSesion($_id: String!, $auth: AuthInput!, $modificadoPor: ModificadoPorInput!)
 {
-    asignarAuth(_id: $_id, auth: $auth, modificadoPor: $modificadoPor)
+    registroSesion(_id: $_id, auth: $auth, modificadoPor: $modificadoPor)
     {
         ...fragEmpleado
         auth
@@ -44,6 +44,17 @@ mutation login($login: LoginInput!)
     {
         token
         datosSesion {
+            ...fragDatosSesion
+        }
+    }
+}
+mutation actualizarAvatar($_id: String!, $url: String!)
+{
+    actualizarAvatar(_id: $_id, url: $url)
+    {
+        token
+        datosSesion
+        {
             ...fragDatosSesion
         }
     }

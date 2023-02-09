@@ -1,8 +1,6 @@
 import {Routes} from '@angular/router';
 import {GeneralComponent} from '@s-general/general.component';
-import {MisDocumentosComponent} from '@s-general/mis-documentos.component';
-import {MisResguardosComponent} from '@s-general/mis-resguardos.component';
-import {OrdenesAtencionComponent} from '@s-general/ordenes-atencion.component';
+
 export const generalRouting: Routes =
     [
         {
@@ -12,15 +10,19 @@ export const generalRouting: Routes =
                 [
                     {
                         path: 'mis-documentos',
-                        component: MisDocumentosComponent
+                        loadComponent: () => import('@s-general/mis-documentos/mis-documentos.component').then(c => c.MisDocumentosComponent)
                     },
                     {
                         path: 'mis-resguardos',
-                        component: MisResguardosComponent
+                        loadComponent: () => import('@s-general/mis-resguardos/mis-resguardos.component').then(c => c.MisResguardosComponent)
                     },
                     {
                         path: 'ordenes-atencion',
-                        component: OrdenesAtencionComponent
+                        loadComponent: () => import('@s-general/ordenes-atencion/ordenes-atencion.component').then(c => c.OrdenesAtencionComponent)
+                    },
+                    {
+                        path: 'permisos',
+                        loadComponent: () => import('@s-general/sesion/sesion.component').then(c => c.SesionComponent)
                     }
                 ]
         }

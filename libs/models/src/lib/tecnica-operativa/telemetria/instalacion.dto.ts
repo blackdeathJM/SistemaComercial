@@ -1,5 +1,4 @@
 import {IBomba, IInstalacion, ILectura, IMedidor, IMotor, IRecibosCfe} from './instalacion.interface';
-import {OmitType} from '@nestjs/graphql';
 
 export class InstalacionDto implements IInstalacion
 {

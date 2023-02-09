@@ -17,38 +17,18 @@ export class CenteredLayoutComponent implements OnInit, OnDestroy
     isScreenSmall: boolean;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
-        private _navigationService: NavigationService,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+    // eslint-disable-next-line max-len
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, private _fuseMediaWatcherService: FuseMediaWatcherService,
+                private _fuseNavigationService: FuseNavigationService
     )
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for current year
-     */
     get currentYear(): number
     {
         return new Date().getFullYear();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to navigation data
@@ -80,15 +60,6 @@ export class CenteredLayoutComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
     toggleNavigation(name: string): void
     {
         // Get the navigation

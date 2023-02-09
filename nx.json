@@ -41,10 +41,6 @@
         },
         "@nrwl/angular:component": {
             "style": "scss"
-        },
-        "@nrwl/angular:library": {
-            "linter": "eslint",
-            "unitTestRunner": "jest"
         }
     },
     "defaultProject": "sistema-comercial"

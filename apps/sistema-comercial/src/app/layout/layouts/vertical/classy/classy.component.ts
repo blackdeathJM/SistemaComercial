@@ -1,53 +1,36 @@
-import {AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject, takeUntil} from 'rxjs';
+import {Observable, Subject, takeUntil} from 'rxjs';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
 import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
 import {Navegation} from '@s-core/navigation/navigation.types';
+import {StateAuth} from '@s-core/auth/store/auth.store';
 
 @Component({
     selector: 'classy-layout',
     templateUrl: './classy.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentInit
+export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
+    usuario$: Observable<IDatosSesion>;
     isScreenSmall: boolean;
     navigation: Navegation;
-    user: IDatosSesion;
     imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: StateAuth,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for current year
-     */
     get currentYear(): number
     {
         return new Date().getFullYear();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         // Subscribe to navigation data
@@ -55,6 +38,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navegation) =>
             {
+                console.log('navegacion', navigation);
                 this.navigation = navigation;
             });
 
@@ -69,14 +53,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
             });
     }
 
-    ngAfterContentInit(): void
-    {
-        this.user = STATE_DATOS_SESION();
-    }
-
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -84,15 +60,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy, AfterContentIni
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle navigation
-     *
-     * @param name
-     */
     toggleNavigation(name: string): void
     {
         // Get the navigation

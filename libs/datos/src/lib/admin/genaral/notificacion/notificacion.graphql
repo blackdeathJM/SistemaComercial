@@ -1,0 +1,27 @@
+query notificaciones($idUsuario: String!)
+{
+    notificaciones(idUsuario: $idUsuario)
+    {
+        ...fragNotificacion
+    }
+}
+
+subscription notificar($idUsuario: String!)
+{
+    notificar(idUsuario: $idUsuario)
+    {
+        ...fragNotificacion
+    }
+}
+mutation eliminarNot($_id: String!)
+{
+    eliminarNot(_id: $_id)
+    {
+        ...fragNotificacion
+    }
+}
+
+mutation eliminarTodos($idUsuario: String!)
+{
+    eliminarTodos(idUsuario: $idUsuario)
+}

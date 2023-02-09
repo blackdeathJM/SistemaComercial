@@ -29,6 +29,7 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version/*"
             ],
+            "@s-services/*": ["apps/sistema-comercial/src/services/*"],
             "@s-core/*": [
                 "apps/sistema-comercial/src/app/core/*",
                 "apps/sistema-comercial/src/app/auth/*",
@@ -65,6 +66,7 @@
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/*",
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/telemetria/*"
             ],
+            "@s-error/*": ["apps/sistema-comercial/src/app/modules/error/*"],
             "@s-general/*": [
                 "apps/sistema-comercial/src/app/modules/general/*",
                 "apps/sistema-comercial/src/app/modules/general/mis-documentos/*",

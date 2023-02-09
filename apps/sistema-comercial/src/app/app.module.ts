@@ -5,7 +5,6 @@ import {ExtraOptions, PreloadAllModules, RouterModule} from '@angular/router';
 import {MarkdownModule} from 'ngx-markdown';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
@@ -14,7 +13,7 @@ import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';
-import {provideStorage, getStorage} from '@angular/fire/storage';
+import {getStorage, provideStorage} from '@angular/fire/storage';
 import {LuxonModule} from 'luxon-angular';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatLuxonDateModule} from '@angular/material-luxon-adapter';
@@ -28,6 +27,11 @@ import {appConfig} from '@s-core/config/app.config';
 import {mockApiServices} from '#/apps/sistema-comercial/src/app/mock-api';
 import {CoreModule} from '@s-core/core.module';
 import {LayoutModule} from '@s-layout/layout.module';
+import {NgxsGlobalModule} from '#/apps/sistema-comercial/src/store/ngxsGlobal.module';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {configLoader} from '@s-core/configLoader';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {PaginacionEs} from '@s-core/paginacion-es';
 
 const routerConfig: ExtraOptions =
     {
@@ -55,6 +59,7 @@ const routerConfig: ExtraOptions =
             LuxonModule,
             ReactiveFormsModule,
             BrowserAnimationsModule,
+            NgxsGlobalModule,
             RouterModule.forRoot(appRoutes, routerConfig),
 
             // Fuse, FuseConfig & FuseMockAPI
@@ -71,8 +76,8 @@ const routerConfig: ExtraOptions =
             // 3rd party modules that require global configuration via forRoot
             MarkdownModule.forRoot({}),
             ApolloConfigModule,
-            NgxSkeletonLoaderModule.forRoot(),
             SweetAlert2Module.forRoot(),
+            NgxUiLoaderModule.forRoot(configLoader),
             ToastrModule.forRoot(),
             NgxTrimDirectiveModule,
             MatLuxonDateModule,
@@ -80,7 +85,11 @@ const routerConfig: ExtraOptions =
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
         ],
-    providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-MX'}],
+    providers:
+        [
+            {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
+            {provide: MatPaginatorIntl, useClass: PaginacionEs}
+        ],
     bootstrap:
         [
             AppComponent

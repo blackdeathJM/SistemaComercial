@@ -1,0 +1,22 @@
+<mat-dialog-content>
+    <form *ngIf="formAuth" [formGroup]="formAuth" autocomplete="off">
+        <div class="flex flex-col">
+            <mat-form-field>
+                <mat-label>Asigna un usuario para iniciar sesion</mat-label>
+                <input matInput type="text" formControlName="usuario" trim [readonly]="soloLectura">
+                <mat-error>{{formAuth.controls.usuario['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Asigna una contrasena</mat-label>
+                <input matInput type="password" formControlName="contrasena">
+                <mat-error>{{formAuth.controls.contrasena['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Confirma la contrasena asignada</mat-label>
+                <input matInput type="password" formControlName="confirmContrasena">
+                <mat-error>{{formAuth.controls.confirmContrasena['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<app-registros (registro)="registrar()" (cancelar)="mdr.close()" [cargando]="cargandoDatos" [deshabilitar]="formAuth.invalid || cargandoDatos"></app-registros>

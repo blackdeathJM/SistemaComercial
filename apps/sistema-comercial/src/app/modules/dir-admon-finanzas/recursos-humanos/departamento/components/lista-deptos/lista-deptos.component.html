@@ -1,0 +1,30 @@
+<ng-container *ngIf="(entityDepto.entitiesArray$ | async) as deptos">
+    <fuse-card class="flex flex-col p-4 mt-4" #fuseCard *ngFor="let depto of deptos; trackBy: trackByFn">
+        <div class="flex flex-auto px-4 border-b-2 justify-between">
+            <div class="text-lg font-bold">{{depto.nombre}}</div>
+            <div>
+                <button mat-icon-button color="warn" matTooltip="Editar nombre del departamento" (click)="editar(depto)">
+                    <mat-icon svgIcon="edit"></mat-icon>
+                </button>
+                <button mat-icon-button color="primary" matTooltip="Editar nombre del departamento" (click)="nuevoPuesto(depto)">
+                    <mat-icon svgIcon="add"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="mt-3 -mx-3">
+            <button class="px-3" mat-button color="primary" (click)="fuseCard.expanded = !fuseCard.expanded">
+                <span class="mr-1">Puestos</span>
+                <mat-icon class="icon-size-5" *ngIf="!fuseCard.expanded" [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+                <mat-icon class="icon-size-5" *ngIf="fuseCard.expanded" [svgIcon]="'heroicons_solid:chevron-up'"></mat-icon>
+            </button>
+        </div>
+
+        <!-- Expansion -->
+        <ng-container fuseCardExpansion>
+            <mat-list role="list" *ngIf="depto.puestos.length > 0 && depto.puestos !== undefined">
+                <mat-list-item role="listitem" *ngFor="let puesto of depto.puestos">{{puesto}}</mat-list-item>
+            </mat-list>
+        </ng-container>
+    </fuse-card>
+    <ngx-ui-loader [loaderId]="idLoader"></ngx-ui-loader>
+</ng-container>

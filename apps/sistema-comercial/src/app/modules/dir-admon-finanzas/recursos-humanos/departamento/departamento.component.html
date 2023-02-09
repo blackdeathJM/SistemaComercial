@@ -1,0 +1,12 @@
+<article class="flex flex-col flex-auto p-4">
+    <section class="acciones-en-cabecera -mx-1 -mt-2 justify-between">
+        <button mat-flat-button color="primary" (click)="registro()">
+            <mat-icon svgIcon="add" class="mr-4"></mat-icon>
+            Registrar nuevo depto
+        </button>
+        <mat-form-field class="flex-initial w-100">
+            <input matInput [formControl]="controlBuscar" placeholder="Filtrar departamentos">
+        </mat-form-field>
+    </section>
+    <app-lista-deptos></app-lista-deptos>
+</article>

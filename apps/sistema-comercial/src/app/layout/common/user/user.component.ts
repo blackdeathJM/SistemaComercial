@@ -1,12 +1,7 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {BooleanInput} from '@angular/cdk/coercion';
-import {Subscription, tap} from 'rxjs';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {RolCambiadoGQL} from '#/libs/datos/src';
-import {AuthService} from '@s-core/auth/auth.service';
-import {NgxToastService} from '#/apps/sistema-comercial/src/app/services/ngx-toast.service';
-import {STATE_DATOS_SESION} from '@s-core/auth/auth.state';
-import {TOKEN} from '@s-auth/const';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {AuthService} from '@s-core/auth/store/auth.service';
+import {StateAuth} from '@s-core/auth/store/auth.store';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'user',
@@ -15,37 +10,19 @@ import {TOKEN} from '@s-auth/const';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user'
 })
-export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
+export class UserComponent implements AfterViewInit, OnDestroy
 {
-    /* eslint-disable @typescript-eslint/naming-convention */
-    static ngAcceptInputType_showAvatar: BooleanInput;
-    /* eslint-enable @typescript-eslint/naming-convention */
-
+    // @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
-    user: IDatosSesion;
-    subs: Subscription = new Subscription();
+    sub = new Subscription();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private rolCambiado: RolCambiadoGQL,
-                private ngxToatService: NgxToastService)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, public stateAuth: StateAuth)
     {
-    }
-
-    ngAfterContentInit(): void
-    {
-        this.user = STATE_DATOS_SESION();
     }
 
     ngAfterViewInit(): void
     {
-        this.subs.add(this.rolCambiado.subscribe({_id: STATE_DATOS_SESION()._id}).pipe(tap((res) =>
-        {
-            if (res.data)
-            {
-                localStorage.setItem(TOKEN, res.data.rolCambiado.token);
-                STATE_DATOS_SESION(res.data.rolCambiado.datosSesion as IDatosSesion);
-                this.ngxToatService.infoToast('Se han cambiado tus permisos', 'Permisos');
-            }
-        })).subscribe());
+        this.sub.add(this.authService.rolCambiado(this.stateAuth.snapshot._id).subscribe());
     }
 
     updateUserStatus(status: string): void
@@ -65,11 +42,11 @@ export class UserComponent implements OnDestroy, AfterContentInit, AfterViewInit
 
     signOut(): void
     {
-        this.authService.signOut();
+        this.authService.cerrarSesion();
     }
 
     ngOnDestroy(): void
     {
-
+        this.sub.unsubscribe();
     }
 }

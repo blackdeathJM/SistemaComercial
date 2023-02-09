@@ -1,0 +1,145 @@
+<article class="flex flex-col flex-auto">
+    <section class="acciones-en-cabecera -mx-1 -mt-2">
+        <button mat-raised-button color="primary" (click)="nvoEmpleado()">
+            <mat-icon svgIcon="add"></mat-icon>
+            Dar de alta nuevo empleado
+        </button>
+    </section>
+    <section class="flex-auto my-4 tarjeta-mat" *ngIf="empleado$ | async as empleado" @zoomIn>
+        <mat-card class="bg-gray-300 dark:bg-gray-800">
+            <mat-card-header class="tarjeta-mat-cabecera border-b-cyan-500">
+                <span class="text-xl">Informacion personal</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="flex flex-auto gap-4 p-4">
+                    <div class="basis-10 border-r-2 flex-auto">
+                        <img class="avatar w-36 h-36 rounded-full" [src]="empleado?.avatar | imgDefecto">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <span class="text-end text-secondary border-b-2">Nombre</span>
+                            <span class="lg:col-span-3 border-b-2">{{empleado.nombreCompleto}}</span>
+                            <span class="text-end text-secondary border-b-2">Calle</span>
+                            <span class="border-b-2">{{empleado.calle | defaultValue:'---'}}</span>
+                            <span class="text-end text-secondary border-b-2">Colonia</span>
+                            <span class="border-b-2">{{empleado.colonia | defaultValue:'---'}}</span>
+                            <span class="text-end text-secondary border-b-2">Email</span>
+                            <span class="border-b-2">{{empleado.correo | defaultValue:'---'}}</span>
+                            <span class="text-end text-secondary border-b-2">Telefono</span>
+                            <span class="border-b-2" *ngFor="let tel of empleado.telefono">{{tel.numero}}</span>
+                            <span class="text-end text-secondary border-b-2">Departamento</span>
+                            <span class="border-b-2">{{empleado.deptoEmpleado.nombre}}</span>
+                            <span class="text-end text-secondary border-b-2">Fecha de ingreso</span>
+                            <span class="border-b-2">{{empleado.fechaIngreso | convertirTimestamUnix | defaultValue:'---'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-cyan-500">
+                <div class="flex flex-row-reverse flex-auto">
+                    <button mat-raised-button color="primary">
+                        <mat-icon class="mr-5" svgIcon="edit"></mat-icon>
+                        Editar informacion
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="flex-auto my-4 tarjeta-mat">
+        <mat-card class="bg-gray-300 dark:bg-gray-800">
+            <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
+                <span class="text-xl">Informacion puesto</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="grid grid-cols-6 gap-4 py-4">
+                    <span class="text-end text-secondary border-b-2">Departamento</span>
+                    <span class="border-b-2">info departamento</span>
+                    <span class="text-end text-secondary border-b-2">puesto</span>
+                    <span class="border-b-2">info puesto</span>
+                    <span class="text-end text-secondary border-b-2">Fecha asignacion</span>
+                    <span class="border-b-2">13/06/2011</span>
+
+                    <span class="text-end text-secondary border-b-2 col-start-3">sueldo</span>
+                    <span class="border-b-2 text-right">000.00</span>
+                    <span class="text-end text-secondary border-b-2">ISR</span>
+                    <span class="border-b-2 text-right">00.00</span>
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+                <div class="flex flex-row-reverse flex-auto gap-4">
+                    <button mat-raised-button color="primary">
+                        <mat-icon class="mr-5" svgIcon="contacts"></mat-icon>
+                        Reasignacion de puesto
+                    </button>
+                    <button mat-raised-button color="primary">
+                        <mat-icon class="mr-5" svgIcon="attach_money"></mat-icon>
+                        modificar sueldo
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+
+    <section class="flex-auto tarjeta-mat">
+        <mat-card class="bg-gray-300 dark:bg-gray-800">
+            <mat-card-header class="tarjeta-mat-cabecera border-b-pink-400">
+                <span class="text-xl">Concentrado de entradas y salidas</span>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="grid grid-cols-4 gap-4 py-2 items-center">
+                    <div class="justify-self-end">
+                        Con sueldo
+                    </div>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <div class="justify-self-end">
+                        Sin sueldo
+                    </div>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+
+
+                    <div class="justify-self-end">
+                        Vacaciones 1er
+                    </div>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+                    <div class="justify-self-end">2do periodo</div>
+                    <mat-form-field>
+                        <input matInput>
+                    </mat-form-field>
+
+                </div>
+            </mat-card-content>
+            <mat-card-footer class="m-2 content-center">
+                <span class="p-4 text-lg w-full">2023</span>
+            </mat-card-footer>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-pink-400">
+                <div class="flex flex-row-reverse flex-auto">
+                    <button mat-raised-button color="primary">
+                        <mat-icon class="mr-5" svgIcon="save"></mat-icon>
+                        Guardar cambios
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+</article>

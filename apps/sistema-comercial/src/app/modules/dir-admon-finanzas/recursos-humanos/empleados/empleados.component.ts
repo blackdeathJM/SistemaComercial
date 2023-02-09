@@ -1,11 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
-import {RouterLinkWithHref} from '@angular/router';
+import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
-import {MatDialog} from '@angular/material/dialog';
-import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
+import {FuseCardModule} from '@s-fuse/card';
+import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
+import {MatInputModule} from '@angular/material/input';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {DrawerComponent} from '@s-shared/plantillas/drawer/drawer.component';
+import {MatSelectModule} from '@angular/material/select';
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+
 
 @Component({
     selector: 'app-empleados',
@@ -16,24 +27,44 @@ import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-re
             MatIconModule,
             RouterLinkWithHref,
             MatButtonModule,
-            MatTabsModule
+            MatTabsModule,
+            MatSidenavModule,
+            RouterLink,
+            ListaEmpleadosComponent,
+            FuseCardModule,
+            ConsultaEmpleadoComponent,
+            RouterOutlet,
+            MatInputModule,
+            DrawerComponent,
+            MatSelectModule,
+            NgxUiLoaderModule,
         ],
     templateUrl: './empleados.component.html',
-    styleUrls: ['./empleados.component.scss']
+    styleUrls: ['./empleados.component.scss'],
+    animations: fuseAnimations
 })
 export class EmpleadosComponent implements OnInit
 {
+    ngxLoader = 'loaderGralInfo';
 
-    constructor(private mdr: MatDialog)
+
+    constructor(private empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore)
     {
     }
 
     ngOnInit(): void
     {
+        this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
-    registroEmpleado(): void
+
+    trackByFn(index: number, item: IResolveEmpleado): string | number
     {
-        this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
+        return item._id || index;
+    }
+
+    seleccionarEmpleado(empleado: IResolveEmpleado): void
+    {
+        this.entityEmpleado.patchState({empleado});
     }
 }

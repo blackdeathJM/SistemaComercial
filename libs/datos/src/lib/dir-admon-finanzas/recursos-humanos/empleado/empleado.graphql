@@ -1,0 +1,57 @@
+query empleados
+{
+    empleados
+    {
+        ...fragEmpleado
+        auth
+        {
+            ...fragAuth
+        }
+        deptoEmpleado
+        {
+            ...fragDeptos
+        }
+        telefono {
+            ...fragTelefono
+        }
+        modificadoPor {
+            ...fragModificadoPor
+        }
+    }
+}
+
+query empleadosSesion
+{
+    empleadosSesion {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}
+query filtrarEmpleados($consulta: String!)
+{
+    filtrarEmpleados(consulta: $consulta)
+    {
+        ...fragEmpleado
+        auth {
+            ...fragAuth
+        }
+        deptoEmpleado {
+            ...fragDeptos
+        }
+    }
+}
+mutation crearEmpleado($empleadoDatos: RegEmpleadoInput!)
+{
+    crearEmpleado(empleadoDatos: $empleadoDatos)
+    {
+        ...fragEmpleado
+        telefono {
+            ...fragTelefono
+        }
+    }
+}

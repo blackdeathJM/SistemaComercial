@@ -1,14 +1,16 @@
 <!-- Notifications toggle -->
-<button mat-icon-button (click)="openPanel()" #notificationsOrigin>
-    <ng-container *ngIf="unreadCount > 0">
+<ng-container *ngIf="entityNotificacion.sinLeer$ | async as sinLeer">
+    <button mat-icon-button (click)="openPanel()" #notificationsOrigin>
+        <ng-container *ngIf="sinLeer > 0">
         <span class="absolute top-0 right-0 left-0 flex items-center justify-center h-3">
             <span class="flex items-center justify-center shrink-0 min-w-4 h-4 px-1 ml-4 mt-2.5 rounded-full bg-teal-600 text-indigo-50 text-xs font-medium">
-                {{unreadCount}}
+                {{sinLeer}}
             </span>
         </span>
-    </ng-container>
-    <mat-icon [svgIcon]="'heroicons_outline:bell'"></mat-icon>
-</button>
+        </ng-container>
+        <mat-icon [svgIcon]="'heroicons_outline:bell'"></mat-icon>
+    </button>
+</ng-container>
 
 <!-- Notifications panel -->
 <ng-template #notificationsPanel>
@@ -22,8 +24,8 @@
             </div>
             <div class="text-lg font-medium leading-10">Notificaciones</div>
             <div class="ml-auto">
-                <button mat-icon-button [matTooltip]="'Mark all as read'" [disabled]="unreadCount === 0" (click)="markAllAsRead()">
-                    <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:mail-open'"></mat-icon>
+                <button mat-icon-button [matTooltip]="'Eliminar todas las notificaciones'" [disabled]="this.entityNotificacion.entitiesArray.length === 0" (click)="eliminarTodas()">
+                    <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                 </button>
             </div>
         </div>
@@ -31,18 +33,19 @@
         <!-- Content -->
         <div class="relative flex flex-col flex-auto sm:max-h-120 divide-y overflow-y-auto bg-card">
             <!-- Notifications -->
-            <ng-container *ngFor="let notification of notifications; trackBy: trackByFn">
-                <div class="flex group hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5" [ngClass]="{'unread': !notification.read}">
+
+            <ng-container *ngFor="let notification of (entityNotificacion.entitiesArray$ | async) as notificaciones; trackBy: trackByFn">
+                <div class="flex group hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5" [ngClass]="{'leido': !notification.leido}">
                     <!-- Notification with a link -->
                     <ng-container *ngIf="notification.link">
                         <!-- Normal links -->
-                        <ng-container *ngIf="!notification.useRouter">
+                        <ng-container *ngIf="!notification.usarRouter">
                             <a class="flex flex-auto py-5 pl-6 cursor-pointer" [href]="notification.link">
                                 <ng-container *ngTemplateOutlet="notificationContent"></ng-container>
                             </a>
                         </ng-container>
                         <!-- Router links -->
-                        <ng-container *ngIf="notification.useRouter">
+                        <ng-container *ngIf="notification.usarRouter">
                             <a class="flex flex-auto py-5 pl-6 cursor-pointer" [routerLink]="notification.link">
                                 <ng-container *ngTemplateOutlet="notificationContent"></ng-container>
                             </a>
@@ -58,12 +61,12 @@
                     <!-- Actions -->
                     <div class="relative flex flex-col my-5 mr-6 ml-2">
                         <!-- Indicator -->
-                        <button class="w-6 h-6 min-h-6" mat-icon-button (click)="toggleRead(notification)" [matTooltip]="notification.read ? 'Mark as unread' : 'Mark as read'">
+                        <button class="w-6 h-6 min-h-6" mat-icon-button>
                             <span class="w-2 h-2 rounded-full"
-                                  [ngClass]="{'bg-gray-400 dark:bg-gray-500 sm:opacity-0 sm:group-hover:opacity-100': notification.read, 'bg-primary': !notification.read}"></span>
+                                  [ngClass]="{'bg-gray-400 dark:bg-gray-500 sm:opacity-0 sm:group-hover:opacity-100': notification.leido, 'bg-primary': !notification.leido}"></span>
                         </button>
                         <!-- Remove -->
-                        <button class="w-6 h-6 min-h-6 sm:opacity-0 sm:group-hover:opacity-100" mat-icon-button (click)="delete(notification)" [matTooltip]="'Remove'">
+                        <button class="w-6 h-6 min-h-6 sm:opacity-0 sm:group-hover:opacity-100" mat-icon-button (click)="eliminar(notification)" [matTooltip]="'Eliminar'">
                             <mat-icon class="icon-size-4" [svgIcon]="'heroicons_solid:x'"></mat-icon>
                         </button>
                     </div>
@@ -72,32 +75,32 @@
                 <!-- Notification content template -->
                 <ng-template #notificationContent>
                     <!-- Icon -->
-                    <ng-container *ngIf="notification.icon && !notification.image">
+                    <ng-container *ngIf="notification.icono && !notification.imagen">
                         <div class="flex shrink-0 items-center justify-center w-8 h-8 mr-4 rounded-full bg-gray-100 dark:bg-gray-700">
-                            <mat-icon class="icon-size-5" [svgIcon]="notification.icon"></mat-icon>
+                            <mat-icon class="icon-size-5" [svgIcon]="notification.icono"></mat-icon>
                         </div>
                     </ng-container>
                     <!-- Image -->
-                    <ng-container *ngIf="notification.image">
-                        <img class="shrink-0 w-8 h-8 mr-4 rounded-full overflow-hidden object-cover object-center" [src]="notification.image" [alt]="'Notification image'">
+                    <ng-container *ngIf="notification.imagen">
+                        <img class="shrink-0 w-8 h-8 mr-4 rounded-full overflow-hidden object-cover object-center" [src]="notification.imagen" [alt]="">
                     </ng-container>
                     <!-- Title, description & time -->
                     <div class="flex flex-col flex-auto">
-                        <ng-container *ngIf="notification.title">
-                            <div class="font-semibold line-clamp-1" [innerHTML]="notification.title"></div>
+                        <ng-container *ngIf="notification.titulo">
+                            <div class="font-semibold line-clamp-1" [innerHTML]="notification.titulo"></div>
                         </ng-container>
-                        <ng-container *ngIf="notification.description">
-                            <div class="line-clamp-2" [innerHTML]="notification.description"></div>
+                        <ng-container *ngIf="notification.descripcion">
+                            <div class="line-clamp-2" [innerHTML]="notification.descripcion"></div>
                         </ng-container>
                         <div class="mt-2 text-sm leading-none text-secondary">
-                            {{notification.time | date:'MMM dd, h:mm a'}}
+                            {{notification.tiempo | convertirTimestamUnix}}
                         </div>
                     </div>
                 </ng-template>
             </ng-container>
 
             <!-- No notifications -->
-            <ng-container *ngIf="!notifications || !notifications.length">
+            <ng-container *ngIf="!entityNotificacion.entitiesArray || !entityNotificacion.entitiesArray.length">
                 <div class="flex flex-col flex-auto items-center justify-center sm:justify-start py-12 px-8">
                     <div class="flex flex-0 items-center justify-center w-14 h-14 rounded-full bg-primary-100 dark:bg-primary-600">
                         <mat-icon class="text-primary-700 dark:text-primary-50" [svgIcon]="'heroicons_outline:bell'"></mat-icon>
