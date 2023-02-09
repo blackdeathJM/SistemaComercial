@@ -22,6 +22,7 @@ type AuthType {
   roles: [JSONObject!]
   guards: [String!]
   controles: [String!]
+  asigPermisos: [String!]
   estatus: String
 }
 
@@ -142,6 +143,7 @@ input AuthInput {
   roles: [JSONObject!]
   guards: [String!] = []
   controles: [String!] = []
+  asigPermisos: [String!] = []
   estatus: String = "En-linea"
 }
 
@@ -216,7 +218,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1675863239
+  tiempo: Int = 1675945980
   titulo: String
   usarRouter: Boolean = false
 }

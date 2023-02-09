@@ -20,4 +20,5 @@ export class Auth implements IAuth
     estatus: 'En-linea';
     controles: string[] = [];
     guards: string[] = [];
+    asigPermisos: string[] = [];
 }
