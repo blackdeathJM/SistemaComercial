@@ -35,6 +35,7 @@ export type ActRolesInput = {
 
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
+  asigPermisos?: InputMaybe<Array<Scalars['String']>>;
   contrasena?: InputMaybe<Scalars['String']>;
   controles?: InputMaybe<Array<Scalars['String']>>;
   estatus?: InputMaybe<Scalars['String']>;
@@ -46,6 +47,7 @@ export type AuthInput = {
 export type AuthType = {
   __typename?: 'AuthType';
   activo?: Maybe<Scalars['Boolean']>;
+  asigPermisos?: Maybe<Array<Scalars['String']>>;
   contrasena?: Maybe<Scalars['String']>;
   controles?: Maybe<Array<Scalars['String']>>;
   estatus?: Maybe<Scalars['String']>;
@@ -273,6 +275,9 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarPuesto: DeptoType;
+  asigPermisoPrimerNivel: RolesType;
+  asigPermisoSegNivel: RolesType;
+  asigPermisoTercerNivel: RolesType;
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
   crearRoles?: Maybe<RolesType>;
@@ -341,6 +346,21 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationAgregarPuestoArgs = {
   puesto: PuestoDeptoInput;
+};
+
+
+export type MutationAsigPermisoPrimerNivelArgs = {
+  asig: ActRolesInput;
+};
+
+
+export type MutationAsigPermisoSegNivelArgs = {
+  asig: ActRolesInput;
+};
+
+
+export type MutationAsigPermisoTercerNivelArgs = {
+  asig: ActRolesInput;
 };
 
 
@@ -698,6 +718,27 @@ export type ActCtrlTercerNivelMutationVariables = Exact<{
 
 
 export type ActCtrlTercerNivelMutation = { __typename?: 'Mutation', actCtrlTercerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+
+export type AsigPermisoPrimerNivelMutationVariables = Exact<{
+  asig: ActRolesInput;
+}>;
+
+
+export type AsigPermisoPrimerNivelMutation = { __typename?: 'Mutation', asigPermisoPrimerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+
+export type AsigPermisoSegNivelMutationVariables = Exact<{
+  asig: ActRolesInput;
+}>;
+
+
+export type AsigPermisoSegNivelMutation = { __typename?: 'Mutation', asigPermisoSegNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
+
+export type AsigPermisoTercerNivelMutationVariables = Exact<{
+  asig: ActRolesInput;
+}>;
+
+
+export type AsigPermisoTercerNivelMutation = { __typename?: 'Mutation', asigPermisoTercerNivel: { __typename?: 'RolesType', _id?: string | null, idEmpleado?: string | null, roles?: Array<any> | null } };
 
 export type FragDocFragment = { __typename?: 'DocumentoType', _id?: string | null, identificadorDoc?: string | null, seguimiento: string, folio?: string | null, tipoDoc?: string | null, esInterno?: boolean | null, dependencia?: string | null, comentario?: string | null, asunto?: string | null, docUrl?: string | null, acuseUrl?: string | null, fechaRecepcion?: number | null, fechaLimiteEntrega?: number | null, fechaTerminado?: number | null, proceso?: string | null, usuarioFolio?: string | null, enviadoPor?: string | null, ano?: number | null, ref?: Array<string> | null, usuarios?: Array<string> | null, esRef?: boolean | null };
 
@@ -1256,6 +1297,60 @@ export const ActCtrlTercerNivelDocument = gql`
   })
   export class ActCtrlTercerNivelGQL extends Apollo.Mutation<ActCtrlTercerNivelMutation, ActCtrlTercerNivelMutationVariables> {
     document = ActCtrlTercerNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AsigPermisoPrimerNivelDocument = gql`
+    mutation asigPermisoPrimerNivel($asig: ActRolesInput!) {
+  asigPermisoPrimerNivel(asig: $asig) {
+    ...fragRoles
+  }
+}
+    ${FragRolesFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AsigPermisoPrimerNivelGQL extends Apollo.Mutation<AsigPermisoPrimerNivelMutation, AsigPermisoPrimerNivelMutationVariables> {
+    document = AsigPermisoPrimerNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AsigPermisoSegNivelDocument = gql`
+    mutation asigPermisoSegNivel($asig: ActRolesInput!) {
+  asigPermisoSegNivel(asig: $asig) {
+    ...fragRoles
+  }
+}
+    ${FragRolesFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AsigPermisoSegNivelGQL extends Apollo.Mutation<AsigPermisoSegNivelMutation, AsigPermisoSegNivelMutationVariables> {
+    document = AsigPermisoSegNivelDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AsigPermisoTercerNivelDocument = gql`
+    mutation asigPermisoTercerNivel($asig: ActRolesInput!) {
+  asigPermisoTercerNivel(asig: $asig) {
+    ...fragRoles
+  }
+}
+    ${FragRolesFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AsigPermisoTercerNivelGQL extends Apollo.Mutation<AsigPermisoTercerNivelMutation, AsigPermisoTercerNivelMutationVariables> {
+    document = AsigPermisoTercerNivelDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

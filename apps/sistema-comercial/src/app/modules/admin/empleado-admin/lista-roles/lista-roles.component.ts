@@ -59,18 +59,71 @@ export class ListaRolesComponent implements OnInit, OnDestroy
         switch (nivel)
         {
             case 1:
-                this.rolesService.actCtrlPrimerNivel(ctrl).pipe(finalize(() => this.deshabilitarLista = false)).subscribe();
+                this.rolesService.actCtrlPrimerNivel(ctrl).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
                 break;
             case 2:
-                this.rolesService.actCtrlSegundoNivel(ctrl).pipe(finalize(() => this.deshabilitarLista = false)).subscribe();
+                this.rolesService.actCtrlSegundoNivel(ctrl).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
                 break;
             case 3:
-                this.rolesService.actCtrlTercerNivel(ctrl).pipe(finalize(() => this.deshabilitarLista = false)).subscribe();
+                this.rolesService.actCtrlTercerNivel(ctrl).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
                 break;
         }
     }
 
-    actRutas(e: MatCheckboxChange, grupo: object, exp: Element, expRuta: Element, subRuta: Element, empleado: IRoles, esAcceso: boolean, nivel: number): void
+    actAsigPermiso(e: MatCheckboxChange, grupo: object, exp: Element, expRuta: Element, subRuta: Element, empleado: IRoles, nivel: number): void
+    {
+        this.deshabilitarLista = true;
+        const asig: IActRoles =
+            {
+                _id: empleado._id,
+                idRutaPrincipal: grupo !== null ? grupo['id'] : 'no-aplica',
+                idRutaSecundaria: exp !== null ? exp['id'] : 'no-aplica',
+                idRutaTreciaria: expRuta !== null ? expRuta['id'] : 'no-aplica',
+                idRutaCuarta: subRuta !== null ? subRuta['id'] : 'no-aplica',
+                idCtrl: 'no-aplica',
+                accesoCtrl: false,
+                acceso: e.checked,
+                puedeAsigPermisos: false
+            };
+        switch (nivel)
+        {
+            case 1:
+                this.rolesService.asiPermisoPrimerNivel(asig).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
+                break;
+            case 2:
+                this.rolesService.asiPermisoSegundoNivel(asig).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
+                break;
+            case 3:
+                this.rolesService.asiPermisoTercerNivel(asig).pipe(finalize(() =>
+                {
+                    this.deshabilitarLista = false;
+                    this.cdr.detectChanges();
+                })).subscribe();
+                break;
+        }
+    }
+
+    actRutas(e: MatCheckboxChange, grupo: object, exp: Element, expRuta: Element, subRuta: Element, empleado: IRoles, nivel: number): void
     {
         this.deshabilitarLista = true;
         const role: IActRoles =
@@ -80,7 +133,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 idRutaSecundaria: exp !== null ? exp['id'] : 'no-aplica',
                 idRutaTreciaria: expRuta !== null ? expRuta['id'] : 'no-aplica',
                 idRutaCuarta: subRuta !== null ? subRuta['id'] : 'no-aplica',
-                acceso: false,
+                acceso: e.checked,
                 puedeAsigPermisos: false,
                 idCtrl: 'no-aplica',
                 accesoCtrl: false
@@ -89,16 +142,6 @@ export class ListaRolesComponent implements OnInit, OnDestroy
         switch (nivel)
         {
             case 1:
-                if (esAcceso)
-                {
-                    role.acceso = e.checked;
-                    role.puedeAsigPermisos = exp['puedeAsigPermisos'];
-                } else
-                {
-                    role.acceso = exp['acceso'];
-                    role.puedeAsigPermisos = e.checked;
-                }
-                console.log('++++', role);
                 this.rolesService.actPrimerNivel(role).pipe(finalize(() =>
                 {
                     this.deshabilitarLista = false;
@@ -106,15 +149,6 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 })).subscribe();
                 break;
             case 2:
-                if (esAcceso)
-                {
-                    role.acceso = e.checked;
-                    role.puedeAsigPermisos = expRuta['puedeAsigPermisos'];
-                } else
-                {
-                    role.acceso = expRuta['acceso'];
-                    role.puedeAsigPermisos = e.checked;
-                }
                 this.rolesService.actSegundoNivel(role).pipe(finalize(() =>
                 {
                     this.deshabilitarLista = false;
@@ -122,16 +156,6 @@ export class ListaRolesComponent implements OnInit, OnDestroy
                 })).subscribe();
                 break;
             case 3:
-                if (esAcceso)
-                {
-                    role.acceso = e.checked;
-                    role.puedeAsigPermisos = subRuta['puedeAsigPermisos'];
-                } else
-                {
-                    role.acceso = subRuta['acceso'];
-                    role.puedeAsigPermisos = e.checked;
-                }
-
                 this.rolesService.actTercerNivel(role).pipe(finalize(() =>
                 {
                     this.deshabilitarLista = false;
