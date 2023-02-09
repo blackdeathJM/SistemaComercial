@@ -1,7 +1,13 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IAsigRoles, IAuth} from './auth.interface';
+import {IAsigRoles, IAuth, IGuards} from './auth.interface';
 import {GraphQLJSONObject} from 'graphql-scalars';
+
+export class GuardsDto implements IGuards
+{
+    id: string;
+    puedeAsigPermisos: boolean;
+}
 
 @ObjectType('AuthType')
 @InputType('AuthInput')
