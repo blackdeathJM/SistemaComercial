@@ -35,7 +35,7 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
                 cors: {origin: '*'},
                 buildSchemaOptions:
                     {
-                        dateScalarMode: 'timestamp',
+                        dateScalarMode: 'isoDate',
                     },
                 playground: false,
                 context: ({req}) => ({req}),
