@@ -79,68 +79,56 @@ export class AuthService
         }
     }
 
-    async permisoRuta(acceso: boolean, rol: string, idEmpleado: string, sesion: ClientSession): Promise<EmpleadoDto>
+    async permisoRuta(acceso: boolean, rol: string, idEmpleado: string, session: ClientSession): Promise<EmpleadoDto>
     {
         try
         {
             if (acceso)
             {
-                const buscarDuplicado = await this.empleado.findOne({'_id': idEmpleado, 'auth.guards': rol}).exec();
-                if (buscarDuplicado)
-                {
-                    return buscarDuplicado;
-                }
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).session(sesion).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).session(session).exec();
             } else
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).session(session).exec();
             }
         } catch (e)
         {
+            await session.abortTransaction();
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
-    async asigCtrls(idEmpleado: string, ctrl: string, acceso: boolean): Promise<EmpleadoDto>
+    async asigCtrls(idEmpleado: string, ctrl: string, acceso: boolean, session: ClientSession): Promise<EmpleadoDto>
     {
         try
         {
             if (acceso)
             {
-                const buscarDuplicado = await this.empleado.findOne({'_id': idEmpleado, 'auth.controles': ctrl}).exec();
-                if (buscarDuplicado)
-                {
-                    return buscarDuplicado;
-                }
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.controles': ctrl}}, {new: true}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.controles': ctrl}}, {new: true}).session(session).exec();
             } else
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.controles': ctrl}}, {new: true}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.controles': ctrl}}, {new: true}).session(session).exec();
             }
         } catch (e)
         {
+            await session.abortTransaction();
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
-    async asigPermisos(idEmpleado: string, permiso: string, acceso: boolean): Promise<EmpleadoDto>
+    async asigPermisos(idEmpleado: string, permiso: string, acceso: boolean, session: ClientSession): Promise<EmpleadoDto>
     {
         try
         {
             if (acceso)
             {
-                const buscarDuplicado = await this.empleado.findOne({'_id': idEmpleado, 'auth.asigPermisos': permiso}).exec();
-                if (buscarDuplicado)
-                {
-                    return buscarDuplicado;
-                }
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.asigPermisos': permiso}}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.asigPermisos': permiso}}, {new: true}).session(session).exec();
             } else
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.asigPermisos': permiso}}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.asigPermisos': permiso}}, {new: true}).session(session).exec();
             }
         } catch (e)
         {
+            await session.abortTransaction();
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
@@ -153,7 +141,7 @@ export class AuthService
             return res.acknowledged;
         } catch (e)
         {
-            console.log(e.codeName);
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
