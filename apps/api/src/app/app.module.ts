@@ -23,6 +23,12 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
                 installSubscriptionHandlers: true,
+                // definitions: {
+                //     customScalarTypeMapping:
+                //         {
+                //             DateTime: Date
+                //         }
+                // },
                 subscriptions: {
                     'graphql-ws': true,
                     'subscriptions-transport-ws': true

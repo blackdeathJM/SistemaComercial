@@ -23,6 +23,8 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.s
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
 import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {EntityEmpleadoStore} from "@s-dirAdmonFinanzas/empleados/store/entity-empleado.store";
+import {isNotNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -62,7 +64,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
     constructor(private fb: RxFormBuilder, public mdr: MatDialog, private stateAuth: StateAuth, private ngxToast: NgxToastService, public entityDepto: EntityDeptoStore,
-                private deptoService: DeptoService, private empleadoService: EmpleadoService)
+                private deptoService: DeptoService, private empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore)
     {
     }
 
@@ -84,6 +86,10 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
+        if (isNotNil(this.entityEmpleado.snapshot.empleado))
+        {
+            this.formEmpleado.patchValue(this.entityEmpleado.snapshot.empleado);
+        }
     }
 
     ngAfterContentInit(): void

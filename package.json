@@ -171,7 +171,7 @@
         "chroma-js": "2.4.2",
         "cosmiconfig-toml-loader": "^1.0.0",
         "cypress": "^12.5.1",
-        "eslint": "8.33.0",
+        "eslint": "8.34.0",
         "eslint-config-prettier": "8.6.0",
         "eslint-plugin-import": "2.27.5",
         "eslint-plugin-jsdoc": "39.8.0",

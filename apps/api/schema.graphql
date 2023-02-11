@@ -128,6 +128,106 @@ type DeptoType {
   puestos: [String!]
 }
 
+type BombaType {
+  activo: Boolean
+  diametro: Float
+  eficiencia: Float
+  evidenciaInst: [String!]
+  evidenciaRetiro: [String!]
+  fechaInstalacion: Date
+  fechaRetiro: Date
+  id: Int
+  lts: Float
+  marca: String
+  model: String
+  motivoRet: String
+  noImpulsores: Int
+  noSerie: String
+  observaciones: String
+  rpm: Int
+}
+
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+type InstalacionType {
+  activo: Boolean
+  diamAdeme: Float
+  diamCol: Float
+  diamPerforacion: Float
+  direccion: String
+  longCol: Float
+  nombre: String
+  profPozo: Float
+  tipoInstalacion: String
+}
+
+type MedidorType {
+  activo: Boolean
+  fechaInstalacion: Date
+  fechaRetiro: Date
+  lectura: [LecturaType!]
+  medidor: String
+  reciboCfe: [RecibosType!]
+  servicio: String
+}
+
+type LecturaType {
+  lectura: Float
+  mes: Meses
+}
+
+enum Meses {
+  Enero
+  Febrero
+  Marzo
+  Abril
+  Mayo
+  Junio
+  Julio
+  Agosto
+  Septiembre
+  Octubre
+  Noviembre
+  Diciembre
+}
+
+type RecibosType {
+  costoKw: Float
+  fecha: Date
+  imgRecibo: String
+  lectura: Float
+  pago: Float
+}
+
+type MotorType {
+  activo: Boolean
+  amperaje: Float
+  evidenciaInst: [String!]
+  evidenciaRetiro: [String!]
+  factPotencia: Float
+  fechaInstalacion: Date
+  fechaRetiro: Date
+  hp: Float
+  id: Int
+  marca: String
+  model: String
+  motivoRet: String
+  noSerie: String
+  observaciones: String
+  voltaje: Float
+}
+
+type TelemetriaType {
+  _id: ID
+  bombas: [BombaType!]
+  instalacion: InstalacionType
+  medidores: [MedidorType!]
+  motores: [MotorType!]
+}
+
 input ModificadoPorInput {
   accion: String
   fecha: Int = 0
@@ -218,7 +318,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676049679
+  tiempo: Int = 1676112950
   titulo: String
   usarRouter: Boolean = false
 }
@@ -228,6 +328,86 @@ input DeptoInput {
   nombre: String
   centroGestor: String
   puestos: [String!] = []
+}
+
+input BombaInput {
+  activo: Boolean = true
+  diametro: Float = 0
+  eficiencia: Float = 0
+  evidenciaInst: [String!] = []
+  evidenciaRetiro: [String!] = []
+  fechaInstalacion: Date
+  fechaRetiro: Date = null
+  id: Int = 0
+  lts: Float = 0
+  marca: String = null
+  model: String = null
+  motivoRet: String = null
+  noImpulsores: Int = null
+  noSerie: String = null
+  observaciones: String = null
+  rpm: Int = null
+}
+
+input InstalacionInput {
+  activo: Boolean
+  diamAdeme: Float = 0
+  diamCol: Float = 0
+  diamPerforacion: Float = 0
+  direccion: String = null
+  longCol: Float = 0
+  nombre: String = null
+  profPozo: Float = 0
+  tipoInstalacion: String = null
+}
+
+input MedidorInput {
+  activo: Boolean = false
+  fechaInstalacion: Date = null
+  fechaRetiro: Date = null
+  lectura: [LecturaInput!] = []
+  medidor: String = null
+  reciboCfe: [RecibosInput!] = []
+  servicio: String = null
+}
+
+input LecturaInput {
+  lectura: Float = 0
+  mes: Meses = null
+}
+
+input RecibosInput {
+  costoKw: Float = 0
+  fecha: Date = null
+  imgRecibo: String = null
+  lectura: Float = 0
+  pago: Float = 0
+}
+
+input MotorInput {
+  activo: Boolean = false
+  amperaje: Float = 0
+  evidenciaInst: [String!] = []
+  evidenciaRetiro: [String!] = []
+  factPotencia: Float = 0
+  fechaInstalacion: Date = null
+  fechaRetiro: Date = null
+  hp: Float = 0
+  id: Int = 0
+  marca: String = null
+  model: String = null
+  motivoRet: String = null
+  noSerie: String = null
+  observaciones: String = null
+  voltaje: Float = 0
+}
+
+input TelemetriaInput {
+  _id: ID
+  bombas: [BombaInput!] = []
+  instalacion: InstalacionInput = null
+  medidores: [MedidorInput!] = []
+  motores: [MotorInput!] = []
 }
 
 type Query {
@@ -250,6 +430,7 @@ type Query {
     usuario: ID
   ): [DocumentoType!]!
   notificaciones(idUsuario: String!): [NotificacionType!]
+  instalaciones: [TelemetriaType!]!
 }
 
 type Mutation {
@@ -282,6 +463,7 @@ type Mutation {
   docRefFolio(entradas: DocRefFolioInput!): [DocumentoType!]!
   eliminarNot(_id: String!): NotificacionType!
   eliminarTodos(idUsuario: String!): Int!
+  regInstalacion(datos: RegInstalacionInput!): TelemetriaType!
 }
 
 input CambioContrasenaInput {
@@ -394,6 +576,13 @@ input DocRefFolioInput {
   folio: String = null
   ref: [String!] = []
   usuarioFolio: String = null
+}
+
+input RegInstalacionInput {
+  bombas: [BombaInput!] = []
+  instalacion: InstalacionInput = null
+  medidores: [MedidorInput!] = []
+  motores: [MotorInput!] = []
 }
 
 type Subscription {

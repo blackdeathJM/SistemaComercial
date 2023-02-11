@@ -7,11 +7,12 @@ export enum GuardRecursosHumanos
     infoGralEmpleados = 'infoGralEmpleados',
     imss = 'imss',
     nomina = 'nomina',
-    retardos = 'retardos',
+    entradasSalidasRetardos = 'entradasSalidasRetardos',
     fondoDeAhoro = 'fondoDeAhoro',
     prestamos = 'prestamos',
     recursosHumanos = 'recursosHumanos',
-    puesto = 'puesto'
+    puesto = 'puesto',
+    concentrado = 'concentrado'
 }
 
 export enum CtrlRecursosHumanos
@@ -87,7 +88,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     disabled: false,
                     puedeAsigPermisos: false,
                     acceso: false,
-                    link: dirAdmonFinanzas + 'puesto'
+                    link: dirAdmonFinanzas + 'empleados/puesto'
                 },
                 {
                     id: GuardRecursosHumanos.imss,
@@ -118,8 +119,8 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     link: dirAdmonFinanzas + 'empleados/nomina'
                 },
                 {
-                    id: GuardRecursosHumanos.retardos,
-                    title: 'Retardos',
+                    id: GuardRecursosHumanos.entradasSalidasRetardos,
+                    title: 'Ctrl. Entradas salidas',
                     type: 'basic',
                     icon: 'rule',
                     oculto: false,
@@ -129,7 +130,7 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     disabled: false,
                     puedeAsigPermisos: false,
                     acceso: false,
-                    link: dirAdmonFinanzas + 'empleados/retardos'
+                    link: dirAdmonFinanzas + 'empleados/entradas-salidas'
                 },
                 {
                     id: GuardRecursosHumanos.fondoDeAhoro,
@@ -158,6 +159,20 @@ export const RECURSOS_HUMANOS: FuseNavigationItem =
                     puedeAsigPermisos: false,
                     acceso: false,
                     link: dirAdmonFinanzas + 'empleados/prestamos'
+                },
+                {
+                    id: GuardRecursosHumanos.concentrado,
+                    title: 'Concentrado',
+                    type: 'basic',
+                    icon: 'heroicons_outline:user-group',
+                    oculto: false,
+                    hidden: (item: FuseNavigationItem): boolean => item.oculto,
+                    badge: {},
+                    controles: [],
+                    disabled: false,
+                    puedeAsigPermisos: false,
+                    acceso: false,
+                    link: dirAdmonFinanzas + 'empleados/concentrado'
                 }
             ]
     };

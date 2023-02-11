@@ -30,8 +30,6 @@ export class RegistrosComponent
 
     _cargando: boolean = false;
     _deshabilitar: boolean = false;
-    _deshabilitarCerrar: boolean = false;
-
     @Input() set cargando(v: boolean)
     {
         this._cargando = v;

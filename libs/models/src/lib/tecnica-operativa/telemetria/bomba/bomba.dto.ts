@@ -1,6 +1,7 @@
 import {IBomba} from './bomba.interface';
 import {Field, Float, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {GraphQLDate} from 'graphql-scalars';
 
 @ObjectType('BombaType')
 @InputType('BombaInput')
@@ -21,10 +22,10 @@ export class BombaDto implements IBomba
     @Field(() => [String], {nullable: true, defaultValue: []})
     @IsOptional()
     evidenciaRetiro: string[];
-    @Field(() => Date, {nullable: true})
+    @Field(() => GraphQLDate, {nullable: true})
     @IsNotEmpty({message: 'La fecha de instalacion es requerida'})
     fechaInstalacion: Date;
-    @Field(() => Date, {nullable: true, defaultValue: null})
+    @Field(() => GraphQLDate, {nullable: true, defaultValue: null})
     @IsOptional()
     fechaRetiro: Date;
     @Field(() => Int, {nullable: true, defaultValue: 0})

@@ -1,63 +1,57 @@
-<mat-dialog-content>
-    <form [formGroup]="formEmpleado">
-        <div class="flex flex-col gap-2">
-            <mat-form-field>
-                <mat-label>Nombre completo</mat-label>
-                <input type="text" matInput formControlName="nombreCompleto" appCapitalizar>
-                <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>
+<form [formGroup]="formEmpleado">
+    <div class="flex flex-col gap-2">
+        <mat-form-field>
+            <mat-label>Nombre completo</mat-label>
+            <input type="text" matInput formControlName="nombreCompleto" appCapitalizar>
+            <mat-error>{{formEmpleado.controls.nombreCompleto['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <div class="flex flex-space-between gap-2">
+            <mat-form-field class="flex-auto">
+                <mat-label>Calle</mat-label>
+                <input type="text" matInput formControlName="calle" appCapitalizar>
+                <mat-error>{{formEmpleado.controls.calle['errorMessage']}}</mat-error>
             </mat-form-field>
-            <div class="flex flex-space-between gap-2">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Calle</mat-label>
-                    <input type="text" matInput formControlName="calle" appCapitalizar>
-                    <mat-error>{{formEmpleado.controls.calle['errorMessage']}}</mat-error>
-                </mat-form-field>
-                <mat-form-field class="flex-1">
-                    <mat-label>Colonia</mat-label>
-                    <input type="text" matInput formControlName="colonia" appCapitalizar>
-                    <mat-error>{{formEmpleado.controls.colonia['errorMessage']}}</mat-error>
-                </mat-form-field>
-            </div>
-            <mat-form-field>
-                <mat-label>Correo</mat-label>
-                <input type="text" matInput formControlName="correo" trim>
-                <mat-error>{{formEmpleado.controls.correo['errorMessage']}}</mat-error>
+            <mat-form-field class="flex-1">
+                <mat-label>Colonia</mat-label>
+                <input type="text" matInput formControlName="colonia" appCapitalizar>
+                <mat-error>{{formEmpleado.controls.colonia['errorMessage']}}</mat-error>
             </mat-form-field>
-            <div class="flex flex-auto items-center gap-2">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Fecha de ingreso</mat-label>
-                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="fechaIngreso" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error>{{formEmpleado.controls.fechaIngreso['errorMessage']}}</mat-error>
-                </mat-form-field>
-                <mat-form-field class="flex-auto">
-                    <mat-label>departamento</mat-label>
-                    <mat-select formControlName="deptoId">
-                        <mat-option *ngFor="let depto of entityDepto.entitiesArray$ | async" [value]="depto._id">{{depto.nombre}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="flex-auto">
-                    <mat-label>Puesto</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            <section class="flex items-center flex-row-reverse">
-                <div class="flex items-center" [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
-                    <mat-form-field class="flex-auto ml-2">
-                        <mat-label>Telefono</mat-label>
-                        <input type="text" matInput formControlName="numero">
-                        <mat-error>{{formEmpleado.controls.telefono['controls'][i]['errorMessage']}}</mat-error>
-                    </mat-form-field>
-                    <button mat-icon-button color="warn" (click)="eliminarTel(i)" matTooltip="Elimina este telefono del formulario">
-                        <mat-icon svgIcon="heroicons_outline:minus-circle"></mat-icon>
-                    </button>
-                </div>
-                <button class="flex-none" mat-icon-button color="primary" (click)="agregarTel()" matTooltip="Agrega un nuevo campo para telefono">
-                    <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
-                </button>
-            </section>
         </div>
-    </form>
-</mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Correo</mat-label>
+            <input type="text" matInput formControlName="correo" trim>
+            <mat-error>{{formEmpleado.controls.correo['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <div class="flex flex-auto items-center gap-2">
+            <mat-form-field class="flex-auto">
+                <mat-label>Fecha de ingreso</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fechaIngreso" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>{{formEmpleado.controls.fechaIngreso['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Departamento</mat-label>
+                <mat-select formControlName="deptoId">
+                    <mat-option *ngFor="let depto of entityDepto.entitiesArray$ | async" [value]="depto._id">{{depto.nombre}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <section class="flex items-center flex-row-reverse">
+            <div class="flex items-center" [formGroup]="tel" *ngFor="let tel of formEmpleado.get('telefono')['controls']; let i=index">
+                <mat-form-field class="flex-auto ml-2">
+                    <mat-label>Telefono</mat-label>
+                    <input type="text" matInput formControlName="numero">
+                    <mat-error>{{formEmpleado.controls.telefono['controls'][i]['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <button mat-icon-button color="warn" (click)="eliminarTel(i)" matTooltip="Elimina este telefono del formulario">
+                    <mat-icon svgIcon="heroicons_outline:minus-circle"></mat-icon>
+                </button>
+            </div>
+            <button class="flex-none" mat-icon-button color="primary" (click)="agregarTel()" matTooltip="Agrega un nuevo campo para telefono">
+                <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+            </button>
+        </section>
+    </div>
+</form>
 <app-registros (registro)="regEmpleado()" (cancelar)="mdr.closeAll()" [deshabilitar]="formEmpleado.invalid || cargando" [cargando]="cargando"></app-registros>

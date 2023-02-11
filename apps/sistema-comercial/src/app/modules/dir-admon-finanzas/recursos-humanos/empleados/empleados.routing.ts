@@ -16,6 +16,11 @@ export const empleadosRouting: Routes =
                         loadComponent: () => import('@s-dirAdmonFinanzas/empleados/info-gral-empleado/info-gral-empleado.component').then(c => c.InfoGralEmpleadoComponent)
                     },
                     {
+                        path: 'puesto',
+                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.puesto)],
+                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/puesto-empleado/puesto-empleado.component').then(c => c.PuestoEmpleadoComponent)
+                    },
+                    {
                         path: 'imss',
                         canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.imss)],
                         loadComponent: () => import('@s-dirAdmonFinanzas/empleados/imss/imss.component').then(c => c.ImssComponent)
@@ -26,9 +31,9 @@ export const empleadosRouting: Routes =
                         loadComponent: () => import('@s-dirAdmonFinanzas/empleados/nomina/nomina.component').then(c => c.NominaComponent)
                     },
                     {
-                        path: 'retardos',
-                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.retardos)],
-                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/ctrl-retardos/ctrl-retardos.component').then(c => c.CtrlRetardosComponent)
+                        path: 'entradas-salidas',
+                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.entradasSalidasRetardos)],
+                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/ctrl-entradas-salidas-retardos/ctrl-entradas-salidas-retardos.component').then(c => c.CtrlEntradasSalidasRetardosComponent)
                     },
                     {
                         path: 'fondo-de-ahorro',
@@ -40,11 +45,6 @@ export const empleadosRouting: Routes =
                         canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.fondoDeAhoro)],
                         loadComponent: () => import('@s-dirAdmonFinanzas/empleados/prestamos/prestamos.component').then(c => c.PrestamosComponent)
                     }
-                    // {
-                    //     path: 'puesto',
-                    //     canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.puesto)],
-                    //     loadComponent: () => import('@s-dirAdmonFinanzas/empleados/')
-                    // }
                 ]
         }
     ];

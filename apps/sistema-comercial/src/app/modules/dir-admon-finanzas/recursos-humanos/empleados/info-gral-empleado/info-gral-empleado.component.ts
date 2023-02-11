@@ -17,6 +17,8 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recurso
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
+import {CtrlRecursosHumanos} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
+import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 
 @Component({
     selector: 'app-info-gral-empleado',
@@ -32,7 +34,8 @@ import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/
             MatIconModule,
             ImgDefectoPipe,
             DefaultValuePipeModule,
-            ConvertirTimestamUnixPipe
+            ConvertirTimestamUnixPipe,
+            NavegacionPipe
         ],
     templateUrl: './info-gral-empleado.component.html',
     styleUrls: ['./info-gral-empleado.component.scss'],
@@ -41,14 +44,16 @@ import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/
 })
 export class InfoGralEmpleadoComponent
 {
+    idCtrl = CtrlRecursosHumanos.agregarNvoEmpleado;
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
 
-    constructor(private mdr: MatDialog, public stateAuth: StateAuth)
+    constructor(private mdr: MatDialog, public stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore)
     {
     }
 
     nvoEmpleado(): void
     {
+        this.entityEmpleado.patchState({empleado: null});
         this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
     }
 }

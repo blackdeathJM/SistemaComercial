@@ -1,10 +1,6 @@
 import {ITelemetria} from './telemetria.interface';
-import {IBomba} from './bomba/bomba.interface';
-import {IInstalacion} from './instalacion/instalacion.interface';
-import {IMedidor} from './medidor/medidor.interface';
-import {IMotor} from './motor/motor.interface';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
+import {Field, ID, InputType, ObjectType, OmitType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {BombaDto} from './bomba/bomba.dto';
 import {InstalacionDto} from './instalacion/instalacion.dto';
@@ -39,3 +35,9 @@ export class TelemetriaDto implements ITelemetria
 
 export type TelemetriaType = TelemetriaDto & Document;
 export const SCHEMA_TELEMETRIA = SchemaFactory.createForClass(TelemetriaDto);
+
+@InputType('RegInstalacionInput')
+export class RegInstalacionDto extends OmitType(TelemetriaDto, ['_id'], InputType)
+{
+
+}
