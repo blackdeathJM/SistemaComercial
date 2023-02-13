@@ -5,7 +5,6 @@ import {RouterLink, RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {ListaEmpleadosComponent} from '@s-shared/components/lista-empleados/lista-empleados.component';
 import {FuseCardModule} from '@s-fuse/card';
 import {ConsultaEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/consulta-empleado/consulta-empleado.component';
 import {MatInputModule} from '@angular/material/input';
@@ -16,7 +15,7 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {MatCardModule} from "@angular/material/card";
+import {MatCardModule} from '@angular/material/card';
 
 
 @Component({
@@ -31,7 +30,6 @@ import {MatCardModule} from "@angular/material/card";
             MatTabsModule,
             MatSidenavModule,
             RouterLink,
-            ListaEmpleadosComponent,
             FuseCardModule,
             ConsultaEmpleadoComponent,
             RouterOutlet,
