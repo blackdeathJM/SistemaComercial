@@ -25,10 +25,7 @@
             <td *matCellDef="let doc">
                 <div class="flex flex-0 items-center py-2">
                     <ng-container *ngFor="let usuarioEnviado of doc.resolveEmpleadoEnviado">
-                        <img class="avatar w-10 h-10" [src]="usuarioEnviado?.avatar" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="usuarioEnviado.avatar" alt="avatar">
-                        <div class="avatar-letra w-10 h-10" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="!usuarioEnviado.avatar">
-                            {{usuarioEnviado?.nombreCompleto.charAt(0)}}
-                        </div>
+                        <img class="avatar w-10 h-10" [src]="usuarioEnviado?.avatar | imgDefecto" [matTooltip]="usuarioEnviado?.nombreCompleto" alt="avatar">
                     </ng-container>
                 </div>
             </td>

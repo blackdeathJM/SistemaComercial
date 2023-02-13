@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>Seleccionar depto</mat-label>
+    <mat-select (blur)="onTouchCb?.()">
+        <mat-option *ngFor="let depto of entityDepto.entitiesArray$ | async" [value]="depto._id">{{depto.nombre}}</mat-option>
+    </mat-select>
+</mat-form-field>

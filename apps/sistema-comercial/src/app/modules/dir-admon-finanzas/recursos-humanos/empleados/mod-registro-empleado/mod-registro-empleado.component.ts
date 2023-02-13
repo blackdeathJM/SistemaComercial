@@ -12,7 +12,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TRegEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {DeptosTodosComponent} from '@s-shared/components/deptos-todos/deptos-todos.component';
 import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
@@ -23,8 +22,8 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.s
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
 import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
-import {EntityEmpleadoStore} from "@s-dirAdmonFinanzas/empleados/store/entity-empleado.store";
-import {isNotNil} from "@angular-ru/cdk/utils";
+import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {isNotNil} from '@angular-ru/cdk/utils';
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -42,7 +41,6 @@ import {isNotNil} from "@angular-ru/cdk/utils";
             MatButtonModule,
             MatIconModule,
             MatTooltipModule,
-            DeptosTodosComponent,
             MatSelectModule,
             CapitalizarDirective,
             NgxTrimDirectiveModule
