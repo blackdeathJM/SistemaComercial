@@ -23,7 +23,7 @@ export class ListaEmpleadosComponent implements OnInit
     empleados: IResolveEmpleado[];
     loaderEmp = ngxLoaderEmp;
 
-    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService, private ngxLoader: NgxUiLoaderService)
+    constructor(public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService)
     {
     }
 

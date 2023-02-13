@@ -17,7 +17,6 @@ export interface IObjFecha
 })
 export class GeneralService
 {
-    private static ano = new Date().getFullYear();
     private static mes = new Date().toLocaleString('es-mx', {month: 'long'});
     private porcentaje: ReplaySubject<number> = new ReplaySubject<number>();
 
@@ -54,7 +53,7 @@ export class GeneralService
 
     static nombreArchivo(nombreActual: string): string
     {
-        return this.ano + '-' + uuidv4() + '.' + nombreActual.split('.').pop();
+        return new Date().getFullYear() + '-' + uuidv4() + '.' + nombreActual.split('.').pop();
     }
 
     static rutaGuardar(tipoDoc: string, nombreArchivo: string, carpeta: string): string
@@ -64,7 +63,7 @@ export class GeneralService
             return `SIMAPAS/perfil/${this.nombreArchivo(nombreArchivo)}`;
         } else
         {
-            return `SIMAPAS/${carpeta}/${tipoDoc}/${this.ano}/${this.mes}/${this.nombreArchivo(nombreArchivo)}`;
+            return `SIMAPAS/${carpeta}/${tipoDoc}/${new Date().getFullYear()}/${this.mes}/${this.nombreArchivo(nombreArchivo)}`;
         }
     }
 

@@ -44,16 +44,10 @@ import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.
 })
 export class InfoGralEmpleadoComponent
 {
-    idCtrl = CtrlRecursosHumanos.agregarNvoEmpleado;
     @Select(EntityEmpleadoStore.empleado) empleado$: Observable<IResolveEmpleado>;
+    idCtrl = CtrlRecursosHumanos.agregarNvoEmpleado;
 
     constructor(private mdr: MatDialog, public stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore)
     {
-    }
-
-    nvoEmpleado(): void
-    {
-        this.entityEmpleado.patchState({empleado: null});
-        this.mdr.open(ModRegistroEmpleadoComponent, {data: null, width: '45%'});
     }
 }

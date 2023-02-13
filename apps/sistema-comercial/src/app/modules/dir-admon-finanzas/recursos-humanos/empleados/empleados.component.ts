@@ -16,6 +16,7 @@ import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-em
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {MatCardModule} from "@angular/material/card";
 
 
 @Component({
@@ -38,6 +39,7 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recurso
             DrawerComponent,
             MatSelectModule,
             NgxUiLoaderModule,
+            MatCardModule,
         ],
     templateUrl: './empleados.component.html',
     styleUrls: ['./empleados.component.scss'],

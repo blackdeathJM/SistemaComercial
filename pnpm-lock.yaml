@@ -93,7 +93,7 @@ specifiers:
   '@types/node': 18.13.0
   '@types/passport-jwt': ^3.0.8
   '@types/passport-local': ^1.0.35
-  '@types/react': ^18.0.27
+  '@types/react': ^18.0.28
   '@typescript-eslint/eslint-plugin': 5.51.0
   '@typescript-eslint/parser': 5.51.0
   apexcharts: 3.37.0
@@ -114,7 +114,7 @@ specifiers:
   eslint: 8.34.0
   eslint-config-prettier: 8.6.0
   eslint-plugin-import: 2.27.5
-  eslint-plugin-jsdoc: 39.8.0
+  eslint-plugin-jsdoc: 40.0.0
   eslint-plugin-prefer-arrow: 1.2.3
   express: ^4.18.2
   fs-extra: ^11.1.0
@@ -316,7 +316,7 @@ devDependencies:
   '@types/node': 18.13.0
   '@types/passport-jwt': 3.0.8
   '@types/passport-local': 1.0.35
-  '@types/react': 18.0.27
+  '@types/react': 18.0.28
   '@typescript-eslint/eslint-plugin': 5.51.0_z4swst3wuuqk4hlme4ajzslgh4
   '@typescript-eslint/parser': 5.51.0_7kw3g6rralp5ps6mg3uyzz6azm
   chroma-js: 2.4.2
@@ -325,7 +325,7 @@ devDependencies:
   eslint: 8.34.0
   eslint-config-prettier: 8.6.0_eslint@8.34.0
   eslint-plugin-import: 2.27.5_62tsymtiqxebhmxuag4hg3gx2m
-  eslint-plugin-jsdoc: 39.8.0_eslint@8.34.0
+  eslint-plugin-jsdoc: 40.0.0_eslint@8.34.0
   eslint-plugin-prefer-arrow: 1.2.3_eslint@8.34.0
   jasmine-core: 4.5.0
   jest: 29.4.2_ucpl6toqp57nqodtp3vxxi6g5a
@@ -7968,8 +7968,8 @@ packages:
   /@types/range-parser/1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
 
-  /@types/react/18.0.27:
-    resolution: {integrity: sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==}
+  /@types/react/18.0.28:
+    resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -11631,8 +11631,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsdoc/39.8.0_eslint@8.34.0:
-    resolution: {integrity: sha512-ZwGmk0jJoJD/NILeDRBKrpq/PCgddUdATjeU5JGTqTzKsOWfeaHOnaAwZjuOh7T8EB4hSoZ/9pR4+Qns2ldQVg==}
+  /eslint-plugin-jsdoc/40.0.0_eslint@8.34.0:
+    resolution: {integrity: sha512-LOPyIu1vAVvGPkye3ci0moj0iNf3f8bmin6do2DYDj+77NRXWnkmhKRy8swWsatUs3mB5jYPWPUsFg9pyfEiyA==}
     engines: {node: ^14 || ^16 || ^17 || ^18 || ^19}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
