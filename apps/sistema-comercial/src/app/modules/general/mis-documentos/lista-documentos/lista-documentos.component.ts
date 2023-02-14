@@ -41,11 +41,6 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
     {
     }
 
-    // @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator)
-    // {
-    //     this.dataSource.paginator = paginator;
-    // }
-
     ngOnInit(): void
     {
         this.sub.add(this.misDocsService.docUsuarioProceso('pendiente', false).subscribe());

@@ -9,4 +9,4 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./recursos-humanos-concentrados.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecursosHumanosConcentradosComponent {}
+export default class RecursosHumanosConcentradosComponent {}

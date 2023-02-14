@@ -1,11 +1,13 @@
 {
+    "name": "sistema-comercial",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
     "sourceRoot": "apps/sistema-comercial/src",
     "prefix": "app",
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:browser",
-            "outputs": [ "{options.outputPath}" ],
+            "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/apps/sistema-comercial",
                 "index": "apps/sistema-comercial/src/index.html",
@@ -32,7 +34,7 @@
                     }
                 ],
                 "stylePreprocessorOptions": {
-                    "includePaths": [ "apps/sistema-comercial/src/@fuse/styles" ]
+                    "includePaths": ["apps/sistema-comercial/src/@fuse/styles"]
                 },
                 "styles": [
                     "apps/sistema-comercial/src/@fuse/styles/tailwind.scss",
@@ -44,7 +46,7 @@
                     "node_modules/ngx-toastr/toastr.css",
                     "node_modules/ngx-lightbox/lightbox.css"
                 ],
-                "scripts": [ ]
+                "scripts": []
             },
             "configurations": {
                 "production": {
@@ -113,8 +115,8 @@
                     "apps/sistema-comercial/src/favicon-32x32.png",
                     "apps/sistema-comercial/src/assets"
                 ],
-                "styles": [ "apps/sistema-comercial/src/styles/styles.scss" ],
-                "scripts": [ ]
+                "styles": ["apps/sistema-comercial/src/styles/styles.scss"],
+                "scripts": []
             }
         },
         "lint": {

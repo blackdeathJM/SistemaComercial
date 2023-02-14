@@ -1,0 +1,58 @@
+<article class="flex flex-auto flex-col">
+    <mat-card class="bg-gray-300 dark:bg-gray-800">
+        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-300">
+            <div class="flex flex-auto items-center gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Buscar empleado</mat-label>
+                    <input matInput placeholder="Buscar empleado por nombre">
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Filtrar por departamento</mat-label>
+                    <mat-select placeholder="Buscar por departamento">
+                        <mat-option *ngFor="let depto of entityDepto.entitiesArray$ | async" [value]="depto._id">{{depto.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button color="primary" [id]="agregarNuevo" (click)="nvoEmpleado()" [disabled]="agregarNuevo | navegacionPermiso: 'ctrl'">
+                    <mat-icon svgIcon="add"></mat-icon>
+                    Agregar nuevo empleado
+                </button>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex flex-auto flex-col mt-4">
+                <mat-table [dataSource]="dataSource" ngxUiLoaderBlurred>
+                    <ng-container matColumnDef="avatar">
+                        <mat-header-cell *matHeaderCellDef class="w-12">Avatar</mat-header-cell>
+                        <mat-cell *matCellDef="let fila"><img class="avatar w-10 h-10" [src]="fila['avatar'] | imgDefecto" alt=""></mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="nombreCompleto">
+                        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                        <mat-cell *matCellDef="let fila">{{fila['nombreCompleto']}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="nombre">
+                        <mat-header-cell *matHeaderCellDef>Departamento</mat-header-cell>
+                        <mat-cell *matCellDef="let fila">{{fila['deptoEmpleado']['nombre']}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="puesto">
+                        <mat-header-cell *matHeaderCellDef>Puesto</mat-header-cell>
+                        <mat-cell *matCellDef="let fila">{{fila['puesto'] | defaultValue: '---'}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="correo">
+                        <mat-header-cell *matHeaderCellDef>Correo</mat-header-cell>
+                        <mat-cell *matCellDef="let fila">{{fila['correo'] | defaultValue: '---'}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="activo">
+                        <mat-header-cell *matHeaderCellDef>Activo</mat-header-cell>
+                        <mat-cell *matCellDef="let fila">
+                            <mat-icon [ngClass]="fila['activo'] === true? 'text-green-400': 'text-red-400'" svgIcon="{{fila['activo'] === true? 'mat_solid:circle' : 'mat_solid:block'}}"></mat-icon>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="columnasAMostrar" class="border-b-4"></mat-header-row>
+                    <mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: columnasAMostrar" (click)="seleccionar(row)"></mat-row>
+                </mat-table>
+                <mat-paginator class="flex-auto bg-zinc-800 mt-2" [pageSize]="5" [pageSizeOptions]="[5,10,15,20,25,100]"></mat-paginator>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</article>

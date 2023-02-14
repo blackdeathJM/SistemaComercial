@@ -1,13 +1,5 @@
-<mat-drawer-container class="w-full">
-    <mat-drawer>
-    </mat-drawer>
-    <mat-drawer-content class="p-4">
-        <article class="flex flex-auto flex-col">
-            <mat-card class="bg-gray-300 dark:bg-gray-800">
-                <mat-card-header class="tarjeta-mat-cabecera border-b-rose-300"><span class="text-xl">Empleados</span></mat-card-header>
-                <mat-card-content></mat-card-content>
-            </mat-card>
-        </article>
-        <router-outlet></router-outlet>
-    </mat-drawer-content>
-</mat-drawer-container>
+<article class="flex flex-col flex-auto p-8">
+    <app-lista-empleados class="flex-auto"></app-lista-empleados>
+
+    <router-outlet class="flex-auto"></router-outlet>
+</article>

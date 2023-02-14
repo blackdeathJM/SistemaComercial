@@ -42,8 +42,13 @@ export const empleadosRouting: Routes =
                     },
                     {
                         path: 'prestamos',
-                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.fondoDeAhoro)],
+                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.prestamos)],
                         loadComponent: () => import('@s-dirAdmonFinanzas/empleados/prestamos/prestamos.component').then(c => c.PrestamosComponent)
+                    },
+                    {
+                        path: 'concentrado',
+                        canActivate: [(): boolean => permisoRuta(GuardRecursosHumanos.concentrado)],
+                        loadComponent: () => import('@s-dirAdmonFinanzas/empleados/recursos-humanos-concentrados/recursos-humanos-concentrados.component')
                     }
                 ]
         }

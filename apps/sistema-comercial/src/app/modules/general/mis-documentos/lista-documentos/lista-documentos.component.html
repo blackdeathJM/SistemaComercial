@@ -39,7 +39,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnasMostrar" class="border-b-2"></tr>
-        <tr mat-row class="cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" (click)="seleccionarDoc(row)" *matRowDef="let row; columns: columnasMostrar"></tr>
+        <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: columnasMostrar" (click)="seleccionarDoc(row)"></tr>
     </table>
     <div class="mt-4">
         <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>

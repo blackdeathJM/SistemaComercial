@@ -37,3 +37,7 @@
 .tarjeta-mat-acciones {
     @apply border-t-2 bg-gray-400 dark:bg-gray-700 rounded-b-lg max-h-22
 }
+.alternar-filas-tabla
+{
+    @apply cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700
+}
