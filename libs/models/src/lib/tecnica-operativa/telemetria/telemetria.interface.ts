@@ -11,3 +11,5 @@ export interface ITelemetria
     motores: IMotor[];
     medidores: IMedidor[];
 }
+
+export type TRegInstalacion = Omit<ITelemetria, '_id'>;

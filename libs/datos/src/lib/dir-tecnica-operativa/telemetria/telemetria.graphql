@@ -1,0 +1,19 @@
+mutation regInstalacion($datos: RegInstalacionInput!)
+{
+    regInstalacion(datos: $datos)
+    {
+        _id
+        instalacion {
+            ...fragInstalacion
+        }
+        medidores {
+            ...fragMedidores
+        }
+        bombas {
+            ...fragBomba
+        }
+        motores {
+            ...fragMotor
+        }
+    }
+}

@@ -1,6 +1,11 @@
 import {FuseNavigationItem} from '@s-fuse/navigation';
 import {dirTecnicaOperativa} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/constantes/rutas';
 
+export enum CtrlTelemetria
+{
+    ctrlNvaInstalacion = 'nvaInstalacion'
+}
+
 export const TELEMETRIA: FuseNavigationItem =
     {
         id: 'depto-telemetria',

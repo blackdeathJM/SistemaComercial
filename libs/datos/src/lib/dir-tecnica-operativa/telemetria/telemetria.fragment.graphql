@@ -1,0 +1,12 @@
+fragment fragInstalacion on InstalacionType
+{
+    activo
+    diamAdeme
+    diamCol
+    diamPerforacion
+    direccion
+    longCol
+    nombre
+    profPozo
+    tipoInstalacion
+}

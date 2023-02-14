@@ -1,0 +1,19 @@
+fragment fragBomba on BombaType
+{
+    activo
+    id
+    diametro
+    eficiencia
+    evidenciaInst
+    evidenciaRetiro
+    fechaInstalacion
+    fechaRetiro
+    lts
+    marca
+    model
+    motivoRet
+    noImpulsores
+    noSerie
+    observaciones
+    rpm
+}

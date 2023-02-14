@@ -1,4 +1,4 @@
-import {ITelemetria} from './telemetria.interface';
+import {ITelemetria, TRegInstalacion} from './telemetria.interface';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Field, ID, InputType, ObjectType, OmitType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
@@ -37,7 +37,7 @@ export type TelemetriaType = TelemetriaDto & Document;
 export const SCHEMA_TELEMETRIA = SchemaFactory.createForClass(TelemetriaDto);
 
 @InputType('RegInstalacionInput')
-export class RegInstalacionDto extends OmitType(TelemetriaDto, ['_id'], InputType)
+export class RegInstalacionDto extends OmitType(TelemetriaDto, ['_id'], InputType) implements TRegInstalacion
 {
 
 }

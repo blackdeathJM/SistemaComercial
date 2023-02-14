@@ -1,0 +1,19 @@
+fragment fragMotor on MotorType
+{
+    observaciones
+    noSerie
+    motivoRet
+    model
+    marca
+    fechaRetiro
+    fechaInstalacion
+    evidenciaRetiro
+    evidenciaInst
+    voltaje
+    motivoRet
+    activo
+    id
+    hp
+    factPotencia
+    amperaje
+}

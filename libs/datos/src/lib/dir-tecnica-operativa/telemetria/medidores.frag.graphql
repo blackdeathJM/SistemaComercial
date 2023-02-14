@@ -1,0 +1,19 @@
+fragment fragMedidores on MedidorType
+{
+    activo
+    fechaInstalacion
+    fechaRetiro
+    lectura {
+        lectura
+        mes
+    }
+    medidor
+    reciboCfe {
+        lectura
+        costoKw
+        fecha
+        imgRecibo
+        pago
+    }
+    servicio
+}

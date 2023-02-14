@@ -13,6 +13,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  Date: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
@@ -54,6 +56,45 @@ export type AuthType = {
   guards?: Maybe<Array<Scalars['String']>>;
   roles?: Maybe<Array<Scalars['JSONObject']>>;
   usuario?: Maybe<Scalars['String']>;
+};
+
+export type BombaInput = {
+  activo?: InputMaybe<Scalars['Boolean']>;
+  diametro?: InputMaybe<Scalars['Float']>;
+  eficiencia?: InputMaybe<Scalars['Float']>;
+  evidenciaInst?: InputMaybe<Array<Scalars['String']>>;
+  evidenciaRetiro?: InputMaybe<Array<Scalars['String']>>;
+  fechaInstalacion?: InputMaybe<Scalars['Date']>;
+  fechaRetiro?: InputMaybe<Scalars['Date']>;
+  id?: InputMaybe<Scalars['Int']>;
+  lts?: InputMaybe<Scalars['Float']>;
+  marca?: InputMaybe<Scalars['String']>;
+  model?: InputMaybe<Scalars['String']>;
+  motivoRet?: InputMaybe<Scalars['String']>;
+  noImpulsores?: InputMaybe<Scalars['Int']>;
+  noSerie?: InputMaybe<Scalars['String']>;
+  observaciones?: InputMaybe<Scalars['String']>;
+  rpm?: InputMaybe<Scalars['Int']>;
+};
+
+export type BombaType = {
+  __typename?: 'BombaType';
+  activo?: Maybe<Scalars['Boolean']>;
+  diametro?: Maybe<Scalars['Float']>;
+  eficiencia?: Maybe<Scalars['Float']>;
+  evidenciaInst?: Maybe<Array<Scalars['String']>>;
+  evidenciaRetiro?: Maybe<Array<Scalars['String']>>;
+  fechaInstalacion?: Maybe<Scalars['Date']>;
+  fechaRetiro?: Maybe<Scalars['Date']>;
+  id?: Maybe<Scalars['Int']>;
+  lts?: Maybe<Scalars['Float']>;
+  marca?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  motivoRet?: Maybe<Scalars['String']>;
+  noImpulsores?: Maybe<Scalars['Int']>;
+  noSerie?: Maybe<Scalars['String']>;
+  observaciones?: Maybe<Scalars['String']>;
+  rpm?: Maybe<Scalars['Int']>;
 };
 
 export type CambioContrasenaInput = {
@@ -235,6 +276,42 @@ export type EmpleadoType = {
   telefono?: Maybe<Array<TelefonoType>>;
 };
 
+export type InstalacionInput = {
+  activo?: InputMaybe<Scalars['Boolean']>;
+  diamAdeme?: InputMaybe<Scalars['Float']>;
+  diamCol?: InputMaybe<Scalars['Float']>;
+  diamPerforacion?: InputMaybe<Scalars['Float']>;
+  direccion?: InputMaybe<Scalars['String']>;
+  longCol?: InputMaybe<Scalars['Float']>;
+  nombre?: InputMaybe<Scalars['String']>;
+  profPozo?: InputMaybe<Scalars['Float']>;
+  tipoInstalacion?: InputMaybe<Scalars['String']>;
+};
+
+export type InstalacionType = {
+  __typename?: 'InstalacionType';
+  activo?: Maybe<Scalars['Boolean']>;
+  diamAdeme?: Maybe<Scalars['Float']>;
+  diamCol?: Maybe<Scalars['Float']>;
+  diamPerforacion?: Maybe<Scalars['Float']>;
+  direccion?: Maybe<Scalars['String']>;
+  longCol?: Maybe<Scalars['Float']>;
+  nombre?: Maybe<Scalars['String']>;
+  profPozo?: Maybe<Scalars['Float']>;
+  tipoInstalacion?: Maybe<Scalars['String']>;
+};
+
+export type LecturaInput = {
+  lectura?: InputMaybe<Scalars['Float']>;
+  mes?: InputMaybe<Meses>;
+};
+
+export type LecturaType = {
+  __typename?: 'LecturaType';
+  lectura?: Maybe<Scalars['Float']>;
+  mes?: Maybe<Meses>;
+};
+
 export type LoginInput = {
   contrasena?: InputMaybe<Scalars['String']>;
   usuario?: InputMaybe<Scalars['String']>;
@@ -245,6 +322,42 @@ export type LoginRespuestaType = {
   datosSesion: DatosSesionType;
   token: Scalars['String'];
 };
+
+export type MedidorInput = {
+  activo?: InputMaybe<Scalars['Boolean']>;
+  fechaInstalacion?: InputMaybe<Scalars['Date']>;
+  fechaRetiro?: InputMaybe<Scalars['Date']>;
+  lectura?: InputMaybe<Array<LecturaInput>>;
+  medidor?: InputMaybe<Scalars['String']>;
+  reciboCfe?: InputMaybe<Array<RecibosInput>>;
+  servicio?: InputMaybe<Scalars['String']>;
+};
+
+export type MedidorType = {
+  __typename?: 'MedidorType';
+  activo?: Maybe<Scalars['Boolean']>;
+  fechaInstalacion?: Maybe<Scalars['Date']>;
+  fechaRetiro?: Maybe<Scalars['Date']>;
+  lectura?: Maybe<Array<LecturaType>>;
+  medidor?: Maybe<Scalars['String']>;
+  reciboCfe?: Maybe<Array<RecibosType>>;
+  servicio?: Maybe<Scalars['String']>;
+};
+
+export enum Meses {
+  Abril = 'Abril',
+  Agosto = 'Agosto',
+  Diciembre = 'Diciembre',
+  Enero = 'Enero',
+  Febrero = 'Febrero',
+  Julio = 'Julio',
+  Junio = 'Junio',
+  Marzo = 'Marzo',
+  Mayo = 'Mayo',
+  Noviembre = 'Noviembre',
+  Octubre = 'Octubre',
+  Septiembre = 'Septiembre'
+}
 
 export type ModificadoPorInput = {
   accion?: InputMaybe<Scalars['String']>;
@@ -261,6 +374,43 @@ export type ModificadoPorType = {
   usuario?: Maybe<Scalars['String']>;
   valorActual?: Maybe<Array<Scalars['JSON']>>;
   valorAnterior?: Maybe<Array<Scalars['JSON']>>;
+};
+
+export type MotorInput = {
+  activo?: InputMaybe<Scalars['Boolean']>;
+  amperaje?: InputMaybe<Scalars['Float']>;
+  evidenciaInst?: InputMaybe<Array<Scalars['String']>>;
+  evidenciaRetiro?: InputMaybe<Array<Scalars['String']>>;
+  factPotencia?: InputMaybe<Scalars['Float']>;
+  fechaInstalacion?: InputMaybe<Scalars['Date']>;
+  fechaRetiro?: InputMaybe<Scalars['Date']>;
+  hp?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['Int']>;
+  marca?: InputMaybe<Scalars['String']>;
+  model?: InputMaybe<Scalars['String']>;
+  motivoRet?: InputMaybe<Scalars['String']>;
+  noSerie?: InputMaybe<Scalars['String']>;
+  observaciones?: InputMaybe<Scalars['String']>;
+  voltaje?: InputMaybe<Scalars['Float']>;
+};
+
+export type MotorType = {
+  __typename?: 'MotorType';
+  activo?: Maybe<Scalars['Boolean']>;
+  amperaje?: Maybe<Scalars['Float']>;
+  evidenciaInst?: Maybe<Array<Scalars['String']>>;
+  evidenciaRetiro?: Maybe<Array<Scalars['String']>>;
+  factPotencia?: Maybe<Scalars['Float']>;
+  fechaInstalacion?: Maybe<Scalars['Date']>;
+  fechaRetiro?: Maybe<Scalars['Date']>;
+  hp?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Int']>;
+  marca?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  motivoRet?: Maybe<Scalars['String']>;
+  noSerie?: Maybe<Scalars['String']>;
+  observaciones?: Maybe<Scalars['String']>;
+  voltaje?: Maybe<Scalars['Float']>;
 };
 
 export type Mutation = {
@@ -291,6 +441,7 @@ export type Mutation = {
   login?: Maybe<LoginRespuestaType>;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
+  regInstalacion: TelemetriaType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
   valoresDefecto: Scalars['Boolean'];
@@ -430,6 +581,11 @@ export type MutationRegDocArgs = {
 };
 
 
+export type MutationRegInstalacionArgs = {
+  datos: RegInstalacionInput;
+};
+
+
 export type MutationRegistroSesionArgs = {
   _id: Scalars['String'];
   auth: AuthInput;
@@ -503,6 +659,7 @@ export type Query = {
   empleadosSesion: Array<EmpleadoType>;
   filtrarDeptos: Array<DeptoType>;
   filtrarEmpleados: Array<EmpleadoType>;
+  instalaciones: Array<TelemetriaType>;
   notificaciones?: Maybe<Array<NotificacionType>>;
   rolesAsig?: Maybe<RolesType>;
 };
@@ -558,6 +715,23 @@ export type QueryRolesAsigArgs = {
   idEmpleado?: InputMaybe<Scalars['ID']>;
 };
 
+export type RecibosInput = {
+  costoKw?: InputMaybe<Scalars['Float']>;
+  fecha?: InputMaybe<Scalars['Date']>;
+  imgRecibo?: InputMaybe<Scalars['String']>;
+  lectura?: InputMaybe<Scalars['Float']>;
+  pago?: InputMaybe<Scalars['Float']>;
+};
+
+export type RecibosType = {
+  __typename?: 'RecibosType';
+  costoKw?: Maybe<Scalars['Float']>;
+  fecha?: Maybe<Scalars['Date']>;
+  imgRecibo?: Maybe<Scalars['String']>;
+  lectura?: Maybe<Scalars['Float']>;
+  pago?: Maybe<Scalars['Float']>;
+};
+
 export type RegEmpleadoInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   avatar?: InputMaybe<Scalars['String']>;
@@ -570,6 +744,13 @@ export type RegEmpleadoInput = {
   nombreCompleto?: InputMaybe<Scalars['String']>;
   puesto?: InputMaybe<Array<PuestoInput>>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
+};
+
+export type RegInstalacionInput = {
+  bombas?: InputMaybe<Array<BombaInput>>;
+  instalacion?: InputMaybe<InstalacionInput>;
+  medidores?: InputMaybe<Array<MedidorInput>>;
+  motores?: InputMaybe<Array<MotorInput>>;
 };
 
 export type RolesInput = {
@@ -608,6 +789,23 @@ export type TelefonoInput = {
 export type TelefonoType = {
   __typename?: 'TelefonoType';
   numero?: Maybe<Scalars['String']>;
+};
+
+export type TelemetriaInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  bombas?: InputMaybe<Array<BombaInput>>;
+  instalacion?: InputMaybe<InstalacionInput>;
+  medidores?: InputMaybe<Array<MedidorInput>>;
+  motores?: InputMaybe<Array<MotorInput>>;
+};
+
+export type TelemetriaType = {
+  __typename?: 'TelemetriaType';
+  _id?: Maybe<Scalars['ID']>;
+  bombas?: Maybe<Array<BombaType>>;
+  instalacion?: Maybe<InstalacionType>;
+  medidores?: Maybe<Array<MedidorType>>;
+  motores?: Maybe<Array<MotorType>>;
 };
 
 export type UploadInput = {
@@ -930,6 +1128,21 @@ export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { 
 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
 
+export type FragBombaFragment = { __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null };
+
+export type FragMedidoresFragment = { __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null };
+
+export type FragMotorFragment = { __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null };
+
+export type FragInstalacionFragment = { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null };
+
+export type RegInstalacionMutationVariables = Exact<{
+  datos: RegInstalacionInput;
+}>;
+
+
+export type RegInstalacionMutation = { __typename?: 'Mutation', regInstalacion: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
+
 export const FragAuthFragmentDoc = gql`
     fragment fragAuth on AuthType {
   usuario
@@ -1041,6 +1254,79 @@ export const FragPuestoFragmentDoc = gql`
   fechaAsignacion
   isr
   sueldo
+}
+    `;
+export const FragBombaFragmentDoc = gql`
+    fragment fragBomba on BombaType {
+  activo
+  id
+  diametro
+  eficiencia
+  evidenciaInst
+  evidenciaRetiro
+  fechaInstalacion
+  fechaRetiro
+  lts
+  marca
+  model
+  motivoRet
+  noImpulsores
+  noSerie
+  observaciones
+  rpm
+}
+    `;
+export const FragMedidoresFragmentDoc = gql`
+    fragment fragMedidores on MedidorType {
+  activo
+  fechaInstalacion
+  fechaRetiro
+  lectura {
+    lectura
+    mes
+  }
+  medidor
+  reciboCfe {
+    lectura
+    costoKw
+    fecha
+    imgRecibo
+    pago
+  }
+  servicio
+}
+    `;
+export const FragMotorFragmentDoc = gql`
+    fragment fragMotor on MotorType {
+  observaciones
+  noSerie
+  motivoRet
+  model
+  marca
+  fechaRetiro
+  fechaInstalacion
+  evidenciaRetiro
+  evidenciaInst
+  voltaje
+  motivoRet
+  activo
+  id
+  hp
+  factPotencia
+  amperaje
+}
+    `;
+export const FragInstalacionFragmentDoc = gql`
+    fragment fragInstalacion on InstalacionType {
+  activo
+  diamAdeme
+  diamCol
+  diamPerforacion
+  direccion
+  longCol
+  nombre
+  profPozo
+  tipoInstalacion
 }
     `;
 export const RegistroSesionDocument = gql`
@@ -1941,6 +2227,39 @@ ${FragTelefonoFragmentDoc}`;
   })
   export class CrearEmpleadoGQL extends Apollo.Mutation<CrearEmpleadoMutation, CrearEmpleadoMutationVariables> {
     document = CrearEmpleadoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegInstalacionDocument = gql`
+    mutation regInstalacion($datos: RegInstalacionInput!) {
+  regInstalacion(datos: $datos) {
+    _id
+    instalacion {
+      ...fragInstalacion
+    }
+    medidores {
+      ...fragMedidores
+    }
+    bombas {
+      ...fragBomba
+    }
+    motores {
+      ...fragMotor
+    }
+  }
+}
+    ${FragInstalacionFragmentDoc}
+${FragMedidoresFragmentDoc}
+${FragBombaFragmentDoc}
+${FragMotorFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RegInstalacionGQL extends Apollo.Mutation<RegInstalacionMutation, RegInstalacionMutationVariables> {
+    document = RegInstalacionDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

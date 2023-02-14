@@ -9,7 +9,7 @@ export default {
             stringifyContentPathRegex: '\\.(html|svg)$',
         },
     },
-    coverageDirectory: '../../coverage/apps/prueba',
+    coverageDirectory: '../../coverage/apps/sistema-comercial',
     transform: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',

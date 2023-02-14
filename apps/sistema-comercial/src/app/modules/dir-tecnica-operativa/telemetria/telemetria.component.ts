@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {EntityTelemetria} from "@s-dir-tecnica-operativa/store/telemetria.entity";
 
 @Component({
     selector: 'app-telemetria',
@@ -21,7 +22,7 @@ export class TelemetriaComponent
 {
     ngxLoader = 'ngxLoaderInstalaciones';
 
-    constructor()
+    constructor(public entityTelemetria: EntityTelemetria)
     {
     }
 }
