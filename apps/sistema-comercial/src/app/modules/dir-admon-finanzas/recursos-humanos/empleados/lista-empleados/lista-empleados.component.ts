@@ -53,12 +53,6 @@ export class ListaEmpleadosComponent implements OnInit, AfterViewInit, OnDestroy
             this.dataSource.paginator = this.paginacion;
         }));
     }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
-    }
-
     seleccionar(empleado: IResolveEmpleado): void
     {
         this.entityEmpleado.patchState({empleado});
@@ -68,4 +62,9 @@ export class ListaEmpleadosComponent implements OnInit, AfterViewInit, OnDestroy
     {
 
     }
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
+    }
+
 }

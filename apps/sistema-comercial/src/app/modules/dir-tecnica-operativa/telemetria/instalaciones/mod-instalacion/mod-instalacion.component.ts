@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
@@ -10,6 +10,7 @@ import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validat
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TRegInstalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 import {Instalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria';
+import {finalize} from 'rxjs';
 
 @Component({
     selector: 'app-mod-instalacion',
@@ -22,8 +23,10 @@ import {Instalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/te
 export class ModInstalacionComponent implements OnInit
 {
     formInstalacion: FormGroup;
+    cargando = false;
 
-    constructor(private entityTelemetria: EntityTelemetria, public mdr: MatDialogRef<ModInstalacionComponent>, private telemetriaService: TelemetriaService, private fb: RxFormBuilder)
+    constructor(private entityTelemetria: EntityTelemetria, public mdr: MatDialogRef<ModInstalacionComponent>, private telemetriaService: TelemetriaService, private fb: RxFormBuilder,
+                @Inject(MAT_DIALOG_DATA) private esActualizacion: boolean)
     {
 
     }
@@ -31,15 +34,37 @@ export class ModInstalacionComponent implements OnInit
     ngOnInit(): void
     {
         this.formInstalacion = this.fb.formGroup(new Instalacion());
-        this.entityTelemetria.state$.subscribe(res => console.log(res));
+        if (this.esActualizacion)
+        {
+            this.formInstalacion.patchValue(this.entityTelemetria.snapshot.instalacion);
+        }
     }
 
     regInstalacion(): void
     {
+        this.cargando = true;
+        this.formInstalacion.disable();
         const inst: TRegInstalacion =
             {
-                instalacion: this.formInstalacion.value
+                instalacion: {
+                    tipoInstalacion: this.formInstalacion.get('tipoInstalacion').value,
+                    diamAdeme: parseFloat(this.formInstalacion.get('diamAdeme').value),
+                    diamCol: parseFloat(this.formInstalacion.get('diamCol').value),
+                    longCol: parseFloat(this.formInstalacion.get('longCol').value),
+                    nombre: this.formInstalacion.get('nombre').value,
+                    direccion: this.formInstalacion.get('direccion').value,
+                    profPozo: parseFloat(this.formInstalacion.get('profPozo').value),
+                    diamPerforacion: parseFloat(this.formInstalacion.get('diamPerforacion').value),
+                    activo: true
+                }
             };
-        this.telemetriaService.regInstalacion(inst).subscribe();
+
+
+        this.telemetriaService.regInstalacion(inst).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.formInstalacion.enable();
+            this.mdr.close();
+        })).subscribe();
     }
 }

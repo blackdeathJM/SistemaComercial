@@ -23,11 +23,6 @@ export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto
 {
     public override primaryKey = '_id';
 
-    constructor()
-    {
-        super();
-    }
-
     @Selector()
     public static depto(stateDepto: EntityCollections<IDepto, string, IDeptoSelect>): IDepto
     {

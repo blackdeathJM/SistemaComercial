@@ -1,28 +1,44 @@
 import {sanitize, toFloat} from '@rxweb/sanitizers';
 import {IInstalacion} from './instalacion/instalacion.interface';
-import {greaterThan, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {notEmpty, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 
 @sanitize
 export class Instalacion implements IInstalacion
 {
     @prop({defaultValue: true})
     activo: boolean;
+
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, persistZero: true, message: 'El valor debe ser numerico'})
+    @notEmpty({message: 'El valor no puede ser vacio'})
     @toFloat()
-    @required({message: 'Es requerido'})
-    diamAdeme: number = 0;
-    @greaterThan({message: 'El valor deb ser mayor a cero si es un pozo', conditionalExpression: x => x.tipoInstalacion === 'Pozo', value: 0})
+    diamAdeme: number = 0.00;
+
     @numeric({message: 'El valor debe ser numerico', acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, persistZero: true})
-    diamCol: number = 0;
-    @required({message: 'Si la instalacion es pozo es necesario colocar este dato', conditionalExpression: x => x.tipoInstalacion === 'Pozo'})
-    diamPerforacion: number = 0;
+    @notEmpty({message: 'El valor no puede ser vacio'})
+    @toFloat()
+    diamCol: number = 0.00;
+
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, persistZero: true, message: 'Es necesario un valor numerico'})
+    @notEmpty({message: 'El valor no puede ser vacio'})
+    @toFloat()
+    diamPerforacion: number = 0.00;
+
     @required({message: 'Es necesario colocar una direccion'})
     direccion: string;
-    @required({message: 'Si la instalacion es pozo es necesario colocar este dato', conditionalExpression: x => x.tipoInstalacion === 'Pozo'})
-    longCol: number = 0;
-    @required({message: 'El nombre de la instalacion es requerido'})
+
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, persistZero: true, message: 'Es necesario un valor numerico'})
+    @notEmpty({message: 'El valor no puede ser vacio'})
+    @toFloat()
+    longCol: number = 0.00;
+
+    @required({message: 'Es necesario asignar un nombre para la instalacion'})
     nombre: string;
-    @required({message: 'Si la instalacion es pozo es necesario colocar este dato', conditionalExpression: x => x.tipoInstalacion === 'Pozo'})
-    profPozo: number = 0;
-    @required({message: 'Selecciona el tipo de instalacion que es'})
+
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, persistZero: true})
+    @notEmpty({message: 'El valor no puede ser vacio'})
+    @toFloat()
+    profPozo: number = 0.00;
+
+    @required({message: 'Es necesario escoger un tipo de instalacion'})
     tipoInstalacion: 'Pozo' | 'Tanque';
 }

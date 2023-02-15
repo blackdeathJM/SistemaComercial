@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
@@ -9,6 +9,7 @@ import {CtrlTelemetria} from '#/apps/sistema-comercial/src/app/mock-api/common/n
 import {MatDialog} from '@angular/material/dialog';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {ModInstalacionComponent} from '@s-dir-tecnica-operativa/instalaciones/mod-instalacion/mod-instalacion.component';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 @Component({
     selector: 'app-detalle-instalacion',
@@ -16,23 +17,24 @@ import {ModInstalacionComponent} from '@s-dir-tecnica-operativa/instalaciones/mo
     imports: [CommonModule, MatDividerModule, MatCardModule, MatButtonModule, MatIconModule, NavegacionPipe],
     templateUrl: './detalle-instalacion.component.html',
     styleUrls: ['./detalle-instalacion.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DetalleInstalacionComponent implements OnInit
+export class DetalleInstalacionComponent
 {
     ctrlNvaInstalacion: CtrlTelemetria.ctrlNvaInstalacion;
 
-    constructor(private mdf: MatDialog, private entityTelemetria: EntityTelemetria)
-    {
-    }
-
-    ngOnInit(): void
+    constructor(private mdf: MatDialog, public entityTelemetria: EntityTelemetria)
     {
     }
 
     nvaInstalacion(): void
     {
-        this.entityTelemetria.patchState({instalacion: null});
-        this.mdf.open(ModInstalacionComponent, {width: '40%', hasBackdrop: false});
+        this.mdf.open(ModInstalacionComponent, {width: '40%', hasBackdrop: true, disableClose: true, data: false});
+    }
+
+    editarInfo(): void
+    {
+        this.mdf.open(ModInstalacionComponent, {width: '40%', hasBackdrop: true, disableClose: true, data: true});
     }
 }

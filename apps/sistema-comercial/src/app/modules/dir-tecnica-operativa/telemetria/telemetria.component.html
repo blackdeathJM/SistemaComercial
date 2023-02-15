@@ -2,10 +2,11 @@
     <mat-drawer class="w-80" opened="true" autoFocus="false" mode="side" position="start">
         <div class="flex flex-col flex-auto mt-2">
             <div class="overflow-y-auto flex-auto" ngxUiLoaderBlurred>
-                <ng-container>
+                <ng-container *ngIf="entityTelemetria.entitiesArray$ | async as inst">
                     <div class="flex flex-auto flex-col border-b-2 pl-1">
-                        <span class="leading-relaxed cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary py-2"
-                              *ngFor="let telemetria of entityTelemetria.entitiesArray$ | async">{{telemetria.instalacion.nombre}}</span>
+                        <mat-selection-list multiple="false" color="primary">
+                            <mat-list-option class="border-b-2" *ngFor="let instalacion of inst" (selectedChange)="seleccionarInstalacion(instalacion)">{{instalacion.instalacion.nombre}}</mat-list-option>
+                        </mat-selection-list>
                     </div>
                 </ng-container>
                 <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>

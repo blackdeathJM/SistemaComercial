@@ -1,0 +1,22 @@
+<section class="flex-auto">
+    <mat-card class="bg-gray-300 dark:bg-gray-800">
+        <mat-card-header class="tarjeta-mat-cabecera border-b-fuchsia-600">
+            <span class="text-lg">Lista de motores que se han instalado</span>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex flex-auto flex-col mt-4">
+                <table mat-table>
+                    <ng-container matColumnDef="nombreCompleto">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let fila">{{fila['marca']}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnasMostrar" class="border-b-4"></tr>
+                    <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: columnasMostrar" (click)="seleccionar(row)"></tr>
+                </table>
+                <mat-paginator class="flex-auto bg-zinc-800 mt-2" [pageSize]="5" [pageSizeOptions]="[5,10,15,20,25,100]"></mat-paginator>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</section>
