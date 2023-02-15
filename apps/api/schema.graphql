@@ -318,7 +318,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676380782
+  tiempo: Int = 1676393839
   titulo: String
   usarRouter: Boolean = false
 }
@@ -579,10 +579,7 @@ input DocRefFolioInput {
 }
 
 input RegInstalacionInput {
-  bombas: [BombaInput!] = []
   instalacion: InstalacionInput = null
-  medidores: [MedidorInput!] = []
-  motores: [MotorInput!] = []
 }
 
 type Subscription {

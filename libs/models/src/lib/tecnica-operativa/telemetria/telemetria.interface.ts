@@ -12,4 +12,4 @@ export interface ITelemetria
     medidores: IMedidor[];
 }
 
-export type TRegInstalacion = Omit<ITelemetria, '_id'>;
+export type TRegInstalacion = Pick<ITelemetria, 'instalacion'>;

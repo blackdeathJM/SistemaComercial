@@ -18,9 +18,5 @@ export interface ITelemetriaSelect
 })
 export class EntityTelemetria extends NgxsDataEntityCollectionsRepository<ITelemetria, string, ITelemetriaSelect>
 {
-    @Selector()
-    public static instalacion(stateInstalacion: EntityCollections<ITelemetria, string, ITelemetriaSelect>): ITelemetria
-    {
-        return stateInstalacion.instalacion;
-    }
+
 }

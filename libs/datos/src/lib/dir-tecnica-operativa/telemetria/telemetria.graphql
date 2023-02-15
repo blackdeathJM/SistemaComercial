@@ -1,3 +1,21 @@
+query instalaciones
+{
+    instalaciones {
+        _id
+        instalacion {
+            ...fragInstalacion
+        }
+        bombas {
+            ...fragBomba
+        }
+        motores {
+            ...fragMotor
+        }
+        medidores {
+            ...fragMedidores
+        }
+    }
+}
 mutation regInstalacion($datos: RegInstalacionInput!)
 {
     regInstalacion(datos: $datos)

@@ -1136,6 +1136,11 @@ export type FragMotorFragment = { __typename?: 'MotorType', observaciones?: stri
 
 export type FragInstalacionFragment = { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null };
 
+export type InstalacionesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InstalacionesQuery = { __typename?: 'Query', instalaciones: Array<{ __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null }> };
+
 export type RegInstalacionMutationVariables = Exact<{
   datos: RegInstalacionInput;
 }>;
@@ -2227,6 +2232,39 @@ ${FragTelefonoFragmentDoc}`;
   })
   export class CrearEmpleadoGQL extends Apollo.Mutation<CrearEmpleadoMutation, CrearEmpleadoMutationVariables> {
     document = CrearEmpleadoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const InstalacionesDocument = gql`
+    query instalaciones {
+  instalaciones {
+    _id
+    instalacion {
+      ...fragInstalacion
+    }
+    bombas {
+      ...fragBomba
+    }
+    motores {
+      ...fragMotor
+    }
+    medidores {
+      ...fragMedidores
+    }
+  }
+}
+    ${FragInstalacionFragmentDoc}
+${FragBombaFragmentDoc}
+${FragMotorFragmentDoc}
+${FragMedidoresFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class InstalacionesGQL extends Apollo.Query<InstalacionesQuery, InstalacionesQueryVariables> {
+    document = InstalacionesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
