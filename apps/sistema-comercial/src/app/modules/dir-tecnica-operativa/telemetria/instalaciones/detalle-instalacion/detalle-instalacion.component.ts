@@ -23,6 +23,7 @@ import {fuseAnimations} from '@s-fuse/public-api';
 export class DetalleInstalacionComponent
 {
     ctrlNvaInstalacion: CtrlTelemetria.ctrlNvaInstalacion;
+    ctrlEditarInstalacion: CtrlTelemetria.ctrlEditarInstalacion;
 
     constructor(private mdf: MatDialog, public entityTelemetria: EntityTelemetria)
     {

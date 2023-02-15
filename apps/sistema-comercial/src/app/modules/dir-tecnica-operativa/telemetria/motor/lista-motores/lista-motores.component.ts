@@ -19,8 +19,8 @@ import {Subscription} from 'rxjs';
 export class ListaMotoresComponent implements OnInit, OnDestroy
 {
     @ViewChild(MatPaginator, {static: true}) paginacion: MatPaginator;
-    dataSource: MatTableDataSource<IMotor[]>;
-    columnasMostrar = ['marca'];
+    dataSource: MatTableDataSource<IMotor>;
+    columnasMostrar = ['fechaInstalacion'];
     ngxLoader = 'ngxLoader';
     sub = new Subscription();
 
@@ -32,11 +32,12 @@ export class ListaMotoresComponent implements OnInit, OnDestroy
     {
         this.sub.add(this.entityTelemetria.state$.subscribe((res) =>
         {
-            const respuesta = res.instalacion.motores;
+            this.dataSource.data = res.instalacion.motores;
+            this.dataSource.paginator = this.paginacion;
         }));
     }
 
-    seleccionar(row): void
+    seleccionar(motor: IMotor): void
     {
 
     }

@@ -35,3 +35,60 @@ mutation regInstalacion($datos: RegInstalacionInput!)
         }
     }
 }
+mutation actInst($args:ActInstInput!)
+{
+    actInst(args: $args)
+    {
+        _id,
+        instalacion {
+            ...fragInstalacion
+        }
+        medidores {
+            ...fragMedidores
+        }
+        bombas {
+            ...fragBomba
+        }
+        motores {
+            ...fragMotor
+        }
+    }
+}
+mutation agregarMotor($args: AgregarMotorInput!)
+{
+    agregarMotor(args: $args)
+    {
+        _id
+        instalacion {
+            ...fragInstalacion
+        }
+        medidores {
+            ...fragMedidores
+        }
+        motores {
+            ...fragMotor
+        }
+        bombas {
+            ...fragBomba
+        }
+    }
+}
+mutation agregarBomba($args: AgregarBombaInput!)
+{
+    agregarBomba(args: $args)
+    {
+        _id
+        instalacion {
+            ...fragInstalacion
+        }
+        medidores {
+            ...fragMedidores
+        }
+        motores {
+            ...fragMotor
+        }
+        bombas {
+            ...fragBomba
+        }
+    }
+}

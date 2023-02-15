@@ -43,13 +43,13 @@
             </mat-card-content>
             <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
                 <div class="flex items-center justify-between flex-auto">
-                    <button mat-raised-button color="primary" (click)="nvoMotor()">
+                    <button mat-raised-button color="primary" (click)="nvoMotor()" [id]="agregarMotor" [disabled]="agregarMotor | navegacionPermiso: 'ctrl'">
                         <mat-icon>add</mat-icon>
                         Dar de alta un nuevo motor
                     </button>
-                    <button mat-raised-button color="accent">
+                    <button mat-raised-button color="accent" [id]="editarMotor" [disabled]="editarMotor | navegacionPermiso: 'ctrl'">
                         <mat-icon svgIcon="edit"></mat-icon>
-                        Editar informacion
+                        Agregar evidencia
                     </button>
                 </div>
             </mat-card-actions>

@@ -23,6 +23,11 @@ export type Scalars = {
   Upload: any;
 };
 
+export type ActInstInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  instalacion?: InputMaybe<InstalacionInput>;
+};
+
 export type ActRolesInput = {
   _id?: InputMaybe<Scalars['ID']>;
   acceso?: InputMaybe<Scalars['Boolean']>;
@@ -33,6 +38,16 @@ export type ActRolesInput = {
   idRutaSecundaria?: InputMaybe<Scalars['String']>;
   idRutaTreciaria?: InputMaybe<Scalars['String']>;
   puedeAsigPermisos?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AgregarBombaInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  bombas?: InputMaybe<Array<BombaInput>>;
+};
+
+export type AgregarMotorInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  motores?: InputMaybe<Array<MotorInput>>;
 };
 
 export type AuthInput = {
@@ -418,12 +433,15 @@ export type Mutation = {
   actCtrlPrimerNivel: RolesType;
   actCtrlSegundoNivel: RolesType;
   actCtrlTercerNivel: RolesType;
+  actInst: TelemetriaType;
   actPrimerNivel: RolesType;
   actSegundoNivel: RolesType;
   actTercerNivel: RolesType;
   actualizarAvatar: LoginRespuestaType;
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
+  agregarBomba: TelemetriaType;
+  agregarMotor: TelemetriaType;
   agregarPuesto: DeptoType;
   asigPermisoPrimerNivel: RolesType;
   asigPermisoSegNivel: RolesType;
@@ -463,6 +481,11 @@ export type MutationActCtrlTercerNivelArgs = {
 };
 
 
+export type MutationActInstArgs = {
+  args: ActInstInput;
+};
+
+
 export type MutationActPrimerNivelArgs = {
   role: ActRolesInput;
 };
@@ -492,6 +515,16 @@ export type MutationActualizarContrasenaAdminArgs = {
 
 export type MutationActualizarDeptoArgs = {
   input: DeptoInput;
+};
+
+
+export type MutationAgregarBombaArgs = {
+  args: AgregarBombaInput;
+};
+
+
+export type MutationAgregarMotorArgs = {
+  args: AgregarMotorInput;
 };
 
 
@@ -747,10 +780,7 @@ export type RegEmpleadoInput = {
 };
 
 export type RegInstalacionInput = {
-  bombas?: InputMaybe<Array<BombaInput>>;
   instalacion?: InputMaybe<InstalacionInput>;
-  medidores?: InputMaybe<Array<MedidorInput>>;
-  motores?: InputMaybe<Array<MotorInput>>;
 };
 
 export type RolesInput = {
@@ -1147,6 +1177,27 @@ export type RegInstalacionMutationVariables = Exact<{
 
 
 export type RegInstalacionMutation = { __typename?: 'Mutation', regInstalacion: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
+
+export type ActInstMutationVariables = Exact<{
+  args: ActInstInput;
+}>;
+
+
+export type ActInstMutation = { __typename?: 'Mutation', actInst: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
+
+export type AgregarMotorMutationVariables = Exact<{
+  args: AgregarMotorInput;
+}>;
+
+
+export type AgregarMotorMutation = { __typename?: 'Mutation', agregarMotor: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null } };
+
+export type AgregarBombaMutationVariables = Exact<{
+  args: AgregarBombaInput;
+}>;
+
+
+export type AgregarBombaMutation = { __typename?: 'Mutation', agregarBomba: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null } };
 
 export const FragAuthFragmentDoc = gql`
     fragment fragAuth on AuthType {
@@ -2298,6 +2349,105 @@ ${FragMotorFragmentDoc}`;
   })
   export class RegInstalacionGQL extends Apollo.Mutation<RegInstalacionMutation, RegInstalacionMutationVariables> {
     document = RegInstalacionDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActInstDocument = gql`
+    mutation actInst($args: ActInstInput!) {
+  actInst(args: $args) {
+    _id
+    instalacion {
+      ...fragInstalacion
+    }
+    medidores {
+      ...fragMedidores
+    }
+    bombas {
+      ...fragBomba
+    }
+    motores {
+      ...fragMotor
+    }
+  }
+}
+    ${FragInstalacionFragmentDoc}
+${FragMedidoresFragmentDoc}
+${FragBombaFragmentDoc}
+${FragMotorFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActInstGQL extends Apollo.Mutation<ActInstMutation, ActInstMutationVariables> {
+    document = ActInstDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AgregarMotorDocument = gql`
+    mutation agregarMotor($args: AgregarMotorInput!) {
+  agregarMotor(args: $args) {
+    _id
+    instalacion {
+      ...fragInstalacion
+    }
+    medidores {
+      ...fragMedidores
+    }
+    motores {
+      ...fragMotor
+    }
+    bombas {
+      ...fragBomba
+    }
+  }
+}
+    ${FragInstalacionFragmentDoc}
+${FragMedidoresFragmentDoc}
+${FragMotorFragmentDoc}
+${FragBombaFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AgregarMotorGQL extends Apollo.Mutation<AgregarMotorMutation, AgregarMotorMutationVariables> {
+    document = AgregarMotorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AgregarBombaDocument = gql`
+    mutation agregarBomba($args: AgregarBombaInput!) {
+  agregarBomba(args: $args) {
+    _id
+    instalacion {
+      ...fragInstalacion
+    }
+    medidores {
+      ...fragMedidores
+    }
+    motores {
+      ...fragMotor
+    }
+    bombas {
+      ...fragBomba
+    }
+  }
+}
+    ${FragInstalacionFragmentDoc}
+${FragMedidoresFragmentDoc}
+${FragMotorFragmentDoc}
+${FragBombaFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AgregarBombaGQL extends Apollo.Mutation<AgregarBombaMutation, AgregarBombaMutationVariables> {
+    document = AgregarBombaDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

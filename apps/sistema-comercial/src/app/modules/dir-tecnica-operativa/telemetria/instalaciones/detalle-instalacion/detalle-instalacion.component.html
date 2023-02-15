@@ -30,7 +30,7 @@
                             Dar de alta nueva instalacion
                         </button>
 
-                        <button mat-raised-button color="accent" (click)="editarInfo()">
+                        <button mat-raised-button color="accent" (click)="editarInfo()" [id]="ctrlEditarInstalacion" [disabled]="ctrlEditarInstalacion | navegacionPermiso: 'ctrl'">
                             <mat-icon class="mr-5" svgIcon="edit"></mat-icon>
                             Editar informacion
                         </button>

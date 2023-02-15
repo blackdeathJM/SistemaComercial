@@ -1,4 +1,4 @@
-import {ITelemetria, TRegInstalacion} from './telemetria.interface';
+import {ITelemetria, TActInst, TAgregarBomba, TAgregarMotor, TRegInstalacion} from './telemetria.interface';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Field, ID, InputType, ObjectType, OmitType, PickType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
@@ -38,6 +38,24 @@ export const SCHEMA_TELEMETRIA = SchemaFactory.createForClass(TelemetriaDto);
 
 @InputType('RegInstalacionInput')
 export class RegInstalacionDto extends PickType(TelemetriaDto, ['instalacion'], InputType) implements TRegInstalacion
+{
+
+}
+
+@InputType('AgregarMotorInput')
+export class AgregarMotorDto extends PickType(TelemetriaDto, ['_id', 'motores'], InputType) implements TAgregarMotor
+{
+
+}
+
+@InputType('AgregarBombaInput')
+export class AgregarBombaDto extends PickType(TelemetriaDto, ['_id', 'bombas'], InputType) implements TAgregarBomba
+{
+
+}
+
+@InputType('ActInstInput')
+export class ActInstDto extends PickType(TelemetriaDto, ['_id', 'instalacion']) implements TActInst
 {
 
 }

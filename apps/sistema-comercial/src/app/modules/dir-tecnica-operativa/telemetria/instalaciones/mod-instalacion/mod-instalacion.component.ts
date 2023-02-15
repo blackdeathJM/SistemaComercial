@@ -8,14 +8,16 @@ import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity
 import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TRegInstalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
+import {TActInst, TRegInstalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 import {Instalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria';
 import {finalize} from 'rxjs';
+import {CapitalizarDirective} from "@s-directives/capitalizar.directive";
+import {$cast} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-mod-instalacion',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, MatInputModule, MatSelectModule, RegistrosComponent, ReactiveFormsModule, RxReactiveFormsModule],
+    imports: [CommonModule, MatDialogModule, MatInputModule, MatSelectModule, RegistrosComponent, ReactiveFormsModule, RxReactiveFormsModule, CapitalizarDirective],
     templateUrl: './mod-instalacion.component.html',
     styleUrls: ['./mod-instalacion.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,7 +38,7 @@ export class ModInstalacionComponent implements OnInit
         this.formInstalacion = this.fb.formGroup(new Instalacion());
         if (this.esActualizacion)
         {
-            this.formInstalacion.patchValue(this.entityTelemetria.snapshot.instalacion);
+            this.formInstalacion.patchValue(this.entityTelemetria.snapshot.instalacion.instalacion);
         }
     }
 
@@ -59,12 +61,27 @@ export class ModInstalacionComponent implements OnInit
                 }
             };
 
-
-        this.telemetriaService.regInstalacion(inst).pipe(finalize(() =>
+        if (this.esActualizacion)
         {
-            this.cargando = false;
-            this.formInstalacion.enable();
-            this.mdr.close();
-        })).subscribe();
+            const args: TActInst =
+                {
+                    _id: this.entityTelemetria.snapshot.instalacion._id,
+                    ...inst
+                };
+            this.telemetriaService.actInst(args).pipe(finalize(() =>
+            {
+                this.cargando = false;
+                this.formInstalacion.enable();
+                this.mdr.close();
+            })).subscribe();
+        } else
+        {
+            this.telemetriaService.regInstalacion(inst).pipe(finalize(() =>
+            {
+                this.cargando = false;
+                this.formInstalacion.enable();
+                this.mdr.close();
+            })).subscribe();
+        }
     }
 }

@@ -3,7 +3,7 @@
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Nombre de la instalacion</mat-label>
-                <input matInput formControlName="nombre">
+                <input matInput formControlName="nombre" appCapitalizar>
                 <mat-error>{{formInstalacion.controls.nombre['errorMessage']}}</mat-error>
             </mat-form-field>
             <mat-form-field class="basis-40">
@@ -17,7 +17,7 @@
         </div>
         <mat-form-field class="flex-auto">
             <mat-label>Direccion</mat-label>
-            <input matInput formControlName="direccion">
+            <input matInput formControlName="direccion" appCapitalizar>
             <mat-error>{{formInstalacion.controls.direccion['errorMessage']}}</mat-error>
         </mat-form-field>
         <div class="flex flex-auto gap-4">
@@ -49,4 +49,4 @@
         </div>
     </div>
 </form>
-<app-registros (cancelar)="mdr.close()" (registro)="regInstalacion()" [deshabilitar]="formInstalacion.invalid"></app-registros>
+<app-registros (cancelar)="mdr.close()" (registro)="regInstalacion()" [cargando]="cargando" [deshabilitar]="formInstalacion.invalid || cargando"></app-registros>

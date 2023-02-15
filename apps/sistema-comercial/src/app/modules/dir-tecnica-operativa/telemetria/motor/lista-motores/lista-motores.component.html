@@ -5,9 +5,9 @@
         </mat-card-header>
         <mat-card-content>
             <div class="flex flex-auto flex-col mt-4">
-                <table mat-table>
-                    <ng-container matColumnDef="nombreCompleto">
-                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="fechaInstalacion">
+                        <th mat-header-cell *matHeaderCellDef>Fecha de instalacion</th>
                         <td mat-cell *matCellDef="let fila">{{fila['marca']}}</td>
                     </ng-container>
 

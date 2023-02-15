@@ -3,7 +3,10 @@ import {dirTecnicaOperativa} from '#/apps/sistema-comercial/src/app/mock-api/com
 
 export enum CtrlTelemetria
 {
-    ctrlNvaInstalacion = 'nvaInstalacion'
+    ctrlNvaInstalacion = 'nvaInstalacion',
+    ctrlEditarInstalacion = 'editarInstalacion',
+    ctrlAgregarMotor = 'agregarMotor',
+    ctrlEditarMotor = 'editarMotor'
 }
 
 export const TELEMETRIA: FuseNavigationItem =

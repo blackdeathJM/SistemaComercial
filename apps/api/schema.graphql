@@ -318,7 +318,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676449671
+  tiempo: Int = 1676477656
   titulo: String
   usarRouter: Boolean = false
 }
@@ -464,6 +464,9 @@ type Mutation {
   eliminarNot(_id: String!): NotificacionType!
   eliminarTodos(idUsuario: String!): Int!
   regInstalacion(datos: RegInstalacionInput!): TelemetriaType!
+  actInst(args: ActInstInput!): TelemetriaType!
+  agregarMotor(args: AgregarMotorInput!): TelemetriaType!
+  agregarBomba(args: AgregarBombaInput!): TelemetriaType!
 }
 
 input CambioContrasenaInput {
@@ -580,6 +583,21 @@ input DocRefFolioInput {
 
 input RegInstalacionInput {
   instalacion: InstalacionInput = null
+}
+
+input ActInstInput {
+  _id: ID
+  instalacion: InstalacionInput = null
+}
+
+input AgregarMotorInput {
+  _id: ID
+  motores: [MotorInput!] = []
+}
+
+input AgregarBombaInput {
+  _id: ID
+  bombas: [BombaInput!] = []
 }
 
 type Subscription {
