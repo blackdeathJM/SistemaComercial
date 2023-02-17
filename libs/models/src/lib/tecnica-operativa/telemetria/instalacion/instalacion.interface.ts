@@ -1,3 +1,5 @@
+import {IMedicion} from '../comun.interface';
+
 export interface IInstalacion
 {
     nombre: string;
@@ -9,12 +11,12 @@ export interface IInstalacion
     longCol: number;
     activo: boolean;
     tipoInstalacion: 'Pozo' | 'Tanque';
-    niveles: INivel[]
+    nivelDinamico: IMedicion[];
+    nivelEstatico: IMedicion[];
 }
 
-export interface INivel
+export interface ITomarMedicion extends IMedicion
 {
-    fechaMedicion: Date;
-    nivelDinamico: number;
-    nivelEstatico: number;
+    _id: string;
+    esDinamico: boolean;
 }

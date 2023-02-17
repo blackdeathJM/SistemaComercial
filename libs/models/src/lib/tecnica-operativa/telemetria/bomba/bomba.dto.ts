@@ -39,7 +39,7 @@ export class BombaDto implements IBomba
     marca: string;
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsNotEmpty({message: 'Es necesario colocar el modelo de la bomba'})
-    model: string;
+    modelo: string;
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsNotEmpty({message: 'Es necesario colocar el motivo de retiro de la bomba'})
     motivoRet: string;

@@ -1,7 +1,8 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {ActInstDto, AgregarBombaDto, AgregarMotorDto, RegInstalacionDto, TelemetriaDto, TelemetriaType} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.dto';
+import {ActInstDto, AgregarBombaDto, AgregarMotorDto, RegInstalacionDto, TelemetriaDto, TelemetriaType, unionTele} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.dto';
 import {Model} from 'mongoose';
+import {TomarMedicionDto} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/instalacion/instalacion.dto';
 
 @Injectable()
 export class TelemetriaService
@@ -17,7 +18,67 @@ export class TelemetriaService
             return await this.telemetria.find().exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e.codeName});
+            throw new InternalServerErrorException({message: e});
+        }
+    }
+
+    async crearRegLectura(args: TomarMedicionDto): Promise<typeof unionTele>
+    {
+        const {_id, esDinamico, ...resto} = args;
+        try
+        {
+            if (esDinamico)
+            {
+                const buscarNivelDinamico = await this.telemetria.findOne({_id, 'instalacion.nivelDinamico': {$elemMatch: {ano: resto.ano}}});
+                if (buscarNivelDinamico)
+                {
+                    return {
+                        exito: false,
+                        error: 'El valor ya ha sido inicializado'
+                    };
+                }
+                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelDinamico': resto}}).exec();
+            } else
+            {
+                const buscarNivelEstatico = await this.telemetria.findOne({_id, 'instalacion.nivelEstatico': {$elemMatch: {ano: resto.ano}}});
+                if (buscarNivelEstatico)
+                {
+                    return {
+                        exito: false,
+                        error: 'El valor ya ha sido inicializado'
+                    };
+                }
+                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelEstatico': resto}}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
+        }
+    }
+
+    async actLectura(args: TomarMedicionDto): Promise<typeof unionTele>
+    {
+        const {_id, esDinamico, ...resto} = args;
+        try
+        {
+            if (esDinamico)
+            {
+                const nivelDinamico = await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelDinamico': resto}}, {new: true}).exec();
+                return {
+                    exito: true,
+                    ...nivelDinamico
+                };
+            } else
+            {
+                const nivelEstatico = await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelEstatico': resto}}, {new: true}).exec();
+                return {
+                    exito: true,
+                    ...nivelEstatico
+                };
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
         }
     }
 
@@ -28,7 +89,7 @@ export class TelemetriaService
             return await this.telemetria.findByIdAndUpdate(args._id, {$set: {instalacion: args.instalacion}}, {new: true}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e.codeName});
+            throw new InternalServerErrorException({message: e});
         }
     }
 
@@ -39,7 +100,7 @@ export class TelemetriaService
             return await this.telemetria.findByIdAndUpdate(args._id, {$push: {motores: args.motores}}, {new: true}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e.codeName});
+            throw new InternalServerErrorException({message: e});
         }
     }
 
@@ -50,18 +111,18 @@ export class TelemetriaService
             return await this.telemetria.findByIdAndUpdate(args._id, {$push: {bombas: args.bombas}}, {new: true}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e.codeName});
+            throw new InternalServerErrorException({message: e});
         }
     }
 
-    async regInstalacion(reg: RegInstalacionDto): Promise<TelemetriaDto>
+    async regInstalacion(reg: RegInstalacionDto): Promise<typeof unionTele>
     {
         try
         {
-            return await this.telemetria.create({...reg});
+            return await this.telemetria.create(reg);
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e.codeName});
+            throw new InternalServerErrorException({message: e});
         }
     }
 }

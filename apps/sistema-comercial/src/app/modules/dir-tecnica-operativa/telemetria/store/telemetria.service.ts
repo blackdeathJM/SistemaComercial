@@ -34,8 +34,11 @@ export class TelemetriaService
     {
         return this.regInstalacionGQL.mutate({datos}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            console.log('====', res.data.regInstalacion.__typename);
+            console.log('*+*+*+', res.data.__typename);
+            if (res.data.regInstalacion.__typename !== 'ErroresType')
             {
+                console.log('si entra aqui');
                 const changes = $cast<ITelemetria>(res.data.regInstalacion);
                 this.entityTelemetria.setOne(changes);
                 this.ngxToast.satisfactorioToast('La instalacion fue registrada con exito', 'Registro de instalaciones');

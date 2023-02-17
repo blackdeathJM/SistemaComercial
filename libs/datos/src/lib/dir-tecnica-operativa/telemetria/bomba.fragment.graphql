@@ -10,7 +10,7 @@ fragment fragBomba on BombaType
     fechaRetiro
     lts
     marca
-    model
+    modelo
     motivoRet
     noImpulsores
     noSerie

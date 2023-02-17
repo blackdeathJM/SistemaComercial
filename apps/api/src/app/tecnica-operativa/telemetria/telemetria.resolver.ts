@@ -1,6 +1,7 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {ActInstDto, AgregarBombaDto, AgregarMotorDto, RegInstalacionDto, TelemetriaDto} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.dto';
+import {ActInstDto, AgregarBombaDto, AgregarMotorDto, RegInstalacionDto, TelemetriaDto, unionTele} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.dto';
 import {TelemetriaService} from '#api/apps/api/src/app/tecnica-operativa/telemetria/telemetria.service';
+import {TomarMedicionDto} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/instalacion/instalacion.dto';
 
 @Resolver(() => TelemetriaDto)
 export class TelemetriaResolver
@@ -15,8 +16,20 @@ export class TelemetriaResolver
         return await this.telemetriaService.instalaciones();
     }
 
-    @Mutation(() => TelemetriaDto)
-    async regInstalacion(@Args('datos') datos: RegInstalacionDto): Promise<TelemetriaDto>
+    @Mutation(() => unionTele)
+    async crearRegLectura(@Args('args') args: TomarMedicionDto): Promise<typeof unionTele>
+    {
+        return await this.telemetriaService.crearRegLectura(args);
+    }
+
+    @Mutation(() => unionTele)
+    async actLectura(@Args('args') args: TomarMedicionDto): Promise<typeof unionTele>
+    {
+        return await this.telemetriaService.actLectura(args);
+    }
+
+    @Mutation(() => unionTele)
+    async regInstalacion(@Args('datos') datos: RegInstalacionDto): Promise<typeof unionTele>
     {
         return this.telemetriaService.regInstalacion(datos);
     }

@@ -3,7 +3,7 @@ fragment fragMotor on MotorType
     observaciones
     noSerie
     motivoRet
-    model
+    modelo
     marca
     fechaRetiro
     fechaInstalacion

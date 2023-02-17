@@ -12,3 +12,20 @@ export interface IComunBombaMotor
     observaciones: string;
     activo: boolean;
 }
+
+export interface IMedicion
+{
+    ano: number;
+    enero: number;
+    febrero: number;
+    marzo: number;
+    abril: number;
+    mayo: number;
+    junio: number;
+    julio: number;
+    agosto: number;
+    septiembre: number;
+    octubre: number;
+    noviembre: number;
+    diciembre: number;
+}

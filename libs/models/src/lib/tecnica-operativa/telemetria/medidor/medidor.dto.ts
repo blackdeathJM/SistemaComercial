@@ -1,9 +1,9 @@
-import {ILectura, IMedidor, IRecibosCfe, Meses} from './medidor.interface';
-import {Field, Float, InputType, ObjectType, registerEnumType} from '@nestjs/graphql';
+import {IMedidor, IRecibosCfe} from './medidor.interface';
+import {Field, Float, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {GraphQLDate} from 'graphql-scalars';
 
-registerEnumType(Meses, {name: 'Meses'});
+// registerEnumType(Meses, {name: 'Meses'});
 
 @ObjectType('MedidorType')
 @InputType('MedidorInput')
@@ -18,9 +18,6 @@ export class MedidorDto implements IMedidor
     @Field(() => GraphQLDate, {nullable: true, defaultValue: null})
     @IsOptional()
     fechaRetiro: Date;
-    @Field(() => [LecturaDto], {nullable: true, defaultValue: []})
-    @IsOptional()
-    lectura: LecturaDto[];
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     medidor: string;
@@ -32,23 +29,13 @@ export class MedidorDto implements IMedidor
     servicio: string;
 }
 
-@ObjectType('LecturaType')
-@InputType('LecturaInput')
-export class LecturaDto implements ILectura
-{
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
-    lectura: number;
-    @Field(() => Meses, {nullable: true, defaultValue: null})
-    @IsNotEmpty({message: 'Es necesario colocar el mes'})
-    mes: Meses;
-
-}
-
 @ObjectType('RecibosType')
 @InputType('RecibosInput')
 export class RecibosDto implements IRecibosCfe
 {
+    @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
+    @IsNotEmpty({message: 'El año es necesario'})
+    ano: number;
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
     costoKw: number;
@@ -58,9 +45,14 @@ export class RecibosDto implements IRecibosCfe
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     imgRecibo: string;
+
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
-    lectura: number;
+    lecturaRecibo: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
+    lecturaMedidor: number;
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
     pago: number;

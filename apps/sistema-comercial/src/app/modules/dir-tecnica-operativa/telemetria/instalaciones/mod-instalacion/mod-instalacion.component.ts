@@ -11,8 +11,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TActInst, TRegInstalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 import {Instalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria';
 import {finalize} from 'rxjs';
-import {CapitalizarDirective} from "@s-directives/capitalizar.directive";
-import {$cast} from "@angular-ru/cdk/utils";
+import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 
 @Component({
     selector: 'app-mod-instalacion',
@@ -57,7 +56,9 @@ export class ModInstalacionComponent implements OnInit
                     direccion: this.formInstalacion.get('direccion').value,
                     profPozo: parseFloat(this.formInstalacion.get('profPozo').value),
                     diamPerforacion: parseFloat(this.formInstalacion.get('diamPerforacion').value),
-                    activo: true
+                    activo: true,
+                    nivelDinamico: [],
+                    nivelEstatico: []
                 }
             };
 

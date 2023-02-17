@@ -39,7 +39,7 @@ export class MotorDto implements IMotor
     marca: string;
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsNotEmpty({message: 'Es necesario asignar un modelo'})
-    model: string;
+    modelo: string;
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     motivoRet: string;

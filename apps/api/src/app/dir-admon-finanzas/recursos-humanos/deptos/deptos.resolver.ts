@@ -1,8 +1,6 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {DeptosService} from './deptos.service';
 import {DeptoDto, RegPuestoDto} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.dto';
-import {ErroresDto} from "#api/libs/models/src/lib/errors/errores.dto";
-import {Error} from "mongoose";
 
 @Resolver(() => DeptoDto)
 export class DeptosResolver

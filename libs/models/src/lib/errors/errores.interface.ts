@@ -1,6 +1,5 @@
-export interface IErroresApi
+export interface IErrores
 {
-    data: object;
-    errors: string[];
+    error: string;
     exito: boolean;
 }

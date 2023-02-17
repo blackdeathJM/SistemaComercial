@@ -1,11 +1,12 @@
 import {ITelemetria, TActInst, TAgregarBomba, TAgregarMotor, TRegInstalacion} from './telemetria.interface';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Field, ID, InputType, ObjectType, OmitType, PickType} from '@nestjs/graphql';
+import {createUnionType, Field, ID, InputType, ObjectType, PickType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {BombaDto} from './bomba/bomba.dto';
 import {InstalacionDto} from './instalacion/instalacion.dto';
 import {MedidorDto} from './medidor/medidor.dto';
 import {MotorDto} from './motor/motor.dto';
+import {ErroresDto} from '../../errors/errores.dto';
 
 @InputType('TelemetriaInput')
 @ObjectType('TelemetriaType')
@@ -35,6 +36,23 @@ export class TelemetriaDto implements ITelemetria
 
 export type TelemetriaType = TelemetriaDto & Document;
 export const SCHEMA_TELEMETRIA = SchemaFactory.createForClass(TelemetriaDto);
+
+export const unionTele = createUnionType({
+    name: 'UnionTele',
+    types: () => [TelemetriaDto, ErroresDto] as const,
+    resolveType: (value) =>
+    {
+        if (value._id)
+        {
+            return TelemetriaDto;
+        }
+        if (value.error)
+        {
+            return ErroresDto;
+        }
+        return null;
+    }
+});
 
 @InputType('RegInstalacionInput')
 export class RegInstalacionDto extends PickType(TelemetriaDto, ['instalacion'], InputType) implements TRegInstalacion

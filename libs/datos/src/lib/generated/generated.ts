@@ -84,7 +84,7 @@ export type BombaInput = {
   id?: InputMaybe<Scalars['Int']>;
   lts?: InputMaybe<Scalars['Float']>;
   marca?: InputMaybe<Scalars['String']>;
-  model?: InputMaybe<Scalars['String']>;
+  modelo?: InputMaybe<Scalars['String']>;
   motivoRet?: InputMaybe<Scalars['String']>;
   noImpulsores?: InputMaybe<Scalars['Int']>;
   noSerie?: InputMaybe<Scalars['String']>;
@@ -104,7 +104,7 @@ export type BombaType = {
   id?: Maybe<Scalars['Int']>;
   lts?: Maybe<Scalars['Float']>;
   marca?: Maybe<Scalars['String']>;
-  model?: Maybe<Scalars['String']>;
+  modelo?: Maybe<Scalars['String']>;
   motivoRet?: Maybe<Scalars['String']>;
   noImpulsores?: Maybe<Scalars['Int']>;
   noSerie?: Maybe<Scalars['String']>;
@@ -291,6 +291,12 @@ export type EmpleadoType = {
   telefono?: Maybe<Array<TelefonoType>>;
 };
 
+export type ErroresType = {
+  __typename?: 'ErroresType';
+  error?: Maybe<Scalars['String']>;
+  exito?: Maybe<Scalars['Boolean']>;
+};
+
 export type InstalacionInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   diamAdeme?: InputMaybe<Scalars['Float']>;
@@ -298,6 +304,8 @@ export type InstalacionInput = {
   diamPerforacion?: InputMaybe<Scalars['Float']>;
   direccion?: InputMaybe<Scalars['String']>;
   longCol?: InputMaybe<Scalars['Float']>;
+  nivelDinamico?: InputMaybe<Array<NivelInput>>;
+  nivelEstatico?: InputMaybe<Array<NivelInput>>;
   nombre?: InputMaybe<Scalars['String']>;
   profPozo?: InputMaybe<Scalars['Float']>;
   tipoInstalacion?: InputMaybe<Scalars['String']>;
@@ -311,20 +319,11 @@ export type InstalacionType = {
   diamPerforacion?: Maybe<Scalars['Float']>;
   direccion?: Maybe<Scalars['String']>;
   longCol?: Maybe<Scalars['Float']>;
+  nivelDinamico?: Maybe<Array<NivelType>>;
+  nivelEstatico?: Maybe<Array<NivelType>>;
   nombre?: Maybe<Scalars['String']>;
   profPozo?: Maybe<Scalars['Float']>;
   tipoInstalacion?: Maybe<Scalars['String']>;
-};
-
-export type LecturaInput = {
-  lectura?: InputMaybe<Scalars['Float']>;
-  mes?: InputMaybe<Meses>;
-};
-
-export type LecturaType = {
-  __typename?: 'LecturaType';
-  lectura?: Maybe<Scalars['Float']>;
-  mes?: Maybe<Meses>;
 };
 
 export type LoginInput = {
@@ -342,7 +341,6 @@ export type MedidorInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   fechaInstalacion?: InputMaybe<Scalars['Date']>;
   fechaRetiro?: InputMaybe<Scalars['Date']>;
-  lectura?: InputMaybe<Array<LecturaInput>>;
   medidor?: InputMaybe<Scalars['String']>;
   reciboCfe?: InputMaybe<Array<RecibosInput>>;
   servicio?: InputMaybe<Scalars['String']>;
@@ -353,26 +351,10 @@ export type MedidorType = {
   activo?: Maybe<Scalars['Boolean']>;
   fechaInstalacion?: Maybe<Scalars['Date']>;
   fechaRetiro?: Maybe<Scalars['Date']>;
-  lectura?: Maybe<Array<LecturaType>>;
   medidor?: Maybe<Scalars['String']>;
   reciboCfe?: Maybe<Array<RecibosType>>;
   servicio?: Maybe<Scalars['String']>;
 };
-
-export enum Meses {
-  Abril = 'Abril',
-  Agosto = 'Agosto',
-  Diciembre = 'Diciembre',
-  Enero = 'Enero',
-  Febrero = 'Febrero',
-  Julio = 'Julio',
-  Junio = 'Junio',
-  Marzo = 'Marzo',
-  Mayo = 'Mayo',
-  Noviembre = 'Noviembre',
-  Octubre = 'Octubre',
-  Septiembre = 'Septiembre'
-}
 
 export type ModificadoPorInput = {
   accion?: InputMaybe<Scalars['String']>;
@@ -402,7 +384,7 @@ export type MotorInput = {
   hp?: InputMaybe<Scalars['Float']>;
   id?: InputMaybe<Scalars['Int']>;
   marca?: InputMaybe<Scalars['String']>;
-  model?: InputMaybe<Scalars['String']>;
+  modelo?: InputMaybe<Scalars['String']>;
   motivoRet?: InputMaybe<Scalars['String']>;
   noSerie?: InputMaybe<Scalars['String']>;
   observaciones?: InputMaybe<Scalars['String']>;
@@ -421,7 +403,7 @@ export type MotorType = {
   hp?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Int']>;
   marca?: Maybe<Scalars['String']>;
-  model?: Maybe<Scalars['String']>;
+  modelo?: Maybe<Scalars['String']>;
   motivoRet?: Maybe<Scalars['String']>;
   noSerie?: Maybe<Scalars['String']>;
   observaciones?: Maybe<Scalars['String']>;
@@ -434,6 +416,7 @@ export type Mutation = {
   actCtrlSegundoNivel: RolesType;
   actCtrlTercerNivel: RolesType;
   actInst: TelemetriaType;
+  actLectura: UnionTele;
   actPrimerNivel: RolesType;
   actSegundoNivel: RolesType;
   actTercerNivel: RolesType;
@@ -448,6 +431,7 @@ export type Mutation = {
   asigPermisoTercerNivel: RolesType;
   crearDepto: DeptoType;
   crearEmpleado: EmpleadoType;
+  crearRegLectura: UnionTele;
   crearRoles?: Maybe<RolesType>;
   docActFolio: DocumentoType;
   docFinalizar: DocumentoType;
@@ -459,7 +443,7 @@ export type Mutation = {
   login?: Maybe<LoginRespuestaType>;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
-  regInstalacion: TelemetriaType;
+  regInstalacion: UnionTele;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
   valoresDefecto: Scalars['Boolean'];
@@ -483,6 +467,11 @@ export type MutationActCtrlTercerNivelArgs = {
 
 export type MutationActInstArgs = {
   args: ActInstInput;
+};
+
+
+export type MutationActLecturaArgs = {
+  args: TomarMedicionInput;
 };
 
 
@@ -558,6 +547,11 @@ export type MutationCrearEmpleadoArgs = {
 };
 
 
+export type MutationCrearRegLecturaArgs = {
+  args: TomarMedicionInput;
+};
+
+
 export type MutationCrearRolesArgs = {
   args: CrearRolInput;
 };
@@ -630,6 +624,39 @@ export type MutationSubirDocsArgs = {
   args?: InputMaybe<DocsSubirInput>;
   files?: InputMaybe<UploadInput>;
   filesAcuse?: InputMaybe<UploadInput>;
+};
+
+export type NivelInput = {
+  abril?: InputMaybe<Scalars['Float']>;
+  agosto?: InputMaybe<Scalars['Float']>;
+  ano?: InputMaybe<Scalars['Int']>;
+  diciembre?: InputMaybe<Scalars['Float']>;
+  enero?: InputMaybe<Scalars['Float']>;
+  febrero?: InputMaybe<Scalars['Float']>;
+  julio?: InputMaybe<Scalars['Float']>;
+  junio?: InputMaybe<Scalars['Float']>;
+  marzo?: InputMaybe<Scalars['Float']>;
+  mayo?: InputMaybe<Scalars['Float']>;
+  noviembre?: InputMaybe<Scalars['Float']>;
+  octubre?: InputMaybe<Scalars['Float']>;
+  septiembre?: InputMaybe<Scalars['Float']>;
+};
+
+export type NivelType = {
+  __typename?: 'NivelType';
+  abril?: Maybe<Scalars['Float']>;
+  agosto?: Maybe<Scalars['Float']>;
+  ano?: Maybe<Scalars['Int']>;
+  diciembre?: Maybe<Scalars['Float']>;
+  enero?: Maybe<Scalars['Float']>;
+  febrero?: Maybe<Scalars['Float']>;
+  julio?: Maybe<Scalars['Float']>;
+  junio?: Maybe<Scalars['Float']>;
+  marzo?: Maybe<Scalars['Float']>;
+  mayo?: Maybe<Scalars['Float']>;
+  noviembre?: Maybe<Scalars['Float']>;
+  octubre?: Maybe<Scalars['Float']>;
+  septiembre?: Maybe<Scalars['Float']>;
 };
 
 export type NotificacionInput = {
@@ -749,19 +776,23 @@ export type QueryRolesAsigArgs = {
 };
 
 export type RecibosInput = {
+  ano?: InputMaybe<Scalars['Int']>;
   costoKw?: InputMaybe<Scalars['Float']>;
   fecha?: InputMaybe<Scalars['Date']>;
   imgRecibo?: InputMaybe<Scalars['String']>;
-  lectura?: InputMaybe<Scalars['Float']>;
+  lecturaMedidor?: InputMaybe<Scalars['Float']>;
+  lecturaRecibo?: InputMaybe<Scalars['Float']>;
   pago?: InputMaybe<Scalars['Float']>;
 };
 
 export type RecibosType = {
   __typename?: 'RecibosType';
+  ano?: Maybe<Scalars['Int']>;
   costoKw?: Maybe<Scalars['Float']>;
   fecha?: Maybe<Scalars['Date']>;
   imgRecibo?: Maybe<Scalars['String']>;
-  lectura?: Maybe<Scalars['Float']>;
+  lecturaMedidor?: Maybe<Scalars['Float']>;
+  lecturaRecibo?: Maybe<Scalars['Float']>;
   pago?: Maybe<Scalars['Float']>;
 };
 
@@ -837,6 +868,26 @@ export type TelemetriaType = {
   medidores?: Maybe<Array<MedidorType>>;
   motores?: Maybe<Array<MotorType>>;
 };
+
+export type TomarMedicionInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  abril?: InputMaybe<Scalars['Float']>;
+  agosto?: InputMaybe<Scalars['Float']>;
+  ano?: InputMaybe<Scalars['Int']>;
+  diciembre?: InputMaybe<Scalars['Float']>;
+  enero?: InputMaybe<Scalars['Float']>;
+  esDinamico?: InputMaybe<Scalars['Boolean']>;
+  febrero?: InputMaybe<Scalars['Float']>;
+  julio?: InputMaybe<Scalars['Float']>;
+  junio?: InputMaybe<Scalars['Float']>;
+  marzo?: InputMaybe<Scalars['Float']>;
+  mayo?: InputMaybe<Scalars['Float']>;
+  noviembre?: InputMaybe<Scalars['Float']>;
+  octubre?: InputMaybe<Scalars['Float']>;
+  septiembre?: InputMaybe<Scalars['Float']>;
+};
+
+export type UnionTele = ErroresType | TelemetriaType;
 
 export type UploadInput = {
   carpeta?: InputMaybe<Scalars['String']>;
@@ -1158,46 +1209,50 @@ export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { 
 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
 
-export type FragBombaFragment = { __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null };
+export type FragBombaFragment = { __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, modelo?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null };
 
-export type FragMedidoresFragment = { __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null };
+export type FragMedidoresFragment = { __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, reciboCfe?: Array<{ __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null }> | null };
 
-export type FragMotorFragment = { __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null };
+export type FragReciboFragment = { __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null };
+
+export type FragMotorFragment = { __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, modelo?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null };
 
 export type FragInstalacionFragment = { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null };
 
 export type InstalacionesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InstalacionesQuery = { __typename?: 'Query', instalaciones: Array<{ __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null }> };
+export type InstalacionesQuery = { __typename?: 'Query', instalaciones: Array<{ __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, modelo?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, modelo?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, reciboCfe?: Array<{ __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null }> | null }> | null }> };
 
 export type RegInstalacionMutationVariables = Exact<{
   datos: RegInstalacionInput;
 }>;
 
 
-export type RegInstalacionMutation = { __typename?: 'Mutation', regInstalacion: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
+export type RegInstalacionMutation = { __typename?: 'Mutation', regInstalacion: { __typename?: 'ErroresType', error?: string | null, exito?: boolean | null } | { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, reciboCfe?: Array<{ __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, modelo?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, modelo?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
 
 export type ActInstMutationVariables = Exact<{
   args: ActInstInput;
 }>;
 
 
-export type ActInstMutation = { __typename?: 'Mutation', actInst: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
+export type ActInstMutation = { __typename?: 'Mutation', actInst: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, reciboCfe?: Array<{ __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null }> | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, modelo?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, modelo?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null } };
 
 export type AgregarMotorMutationVariables = Exact<{
   args: AgregarMotorInput;
 }>;
 
 
-export type AgregarMotorMutation = { __typename?: 'Mutation', agregarMotor: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null } };
+export type AgregarMotorMutation = { __typename?: 'Mutation', agregarMotor: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, reciboCfe?: Array<{ __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null }> | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, modelo?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, modelo?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null } };
 
 export type AgregarBombaMutationVariables = Exact<{
   args: AgregarBombaInput;
 }>;
 
 
-export type AgregarBombaMutation = { __typename?: 'Mutation', agregarBomba: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, lectura?: Array<{ __typename?: 'LecturaType', lectura?: number | null, mes?: Meses | null }> | null, reciboCfe?: Array<{ __typename?: 'RecibosType', lectura?: number | null, costoKw?: number | null, fecha?: any | null, imgRecibo?: string | null, pago?: number | null }> | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, model?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, model?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null } };
+export type AgregarBombaMutation = { __typename?: 'Mutation', agregarBomba: { __typename?: 'TelemetriaType', _id?: string | null, instalacion?: { __typename?: 'InstalacionType', activo?: boolean | null, diamAdeme?: number | null, diamCol?: number | null, diamPerforacion?: number | null, direccion?: string | null, longCol?: number | null, nombre?: string | null, profPozo?: number | null, tipoInstalacion?: string | null } | null, medidores?: Array<{ __typename?: 'MedidorType', activo?: boolean | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, medidor?: string | null, servicio?: string | null, reciboCfe?: Array<{ __typename?: 'RecibosType', pago?: number | null, imgRecibo?: string | null, fecha?: any | null, costoKw?: number | null, ano?: number | null, lecturaMedidor?: number | null, lecturaRecibo?: number | null }> | null }> | null, motores?: Array<{ __typename?: 'MotorType', observaciones?: string | null, noSerie?: string | null, motivoRet?: string | null, modelo?: string | null, marca?: string | null, fechaRetiro?: any | null, fechaInstalacion?: any | null, evidenciaRetiro?: Array<string> | null, evidenciaInst?: Array<string> | null, voltaje?: number | null, activo?: boolean | null, id?: number | null, hp?: number | null, factPotencia?: number | null, amperaje?: number | null }> | null, bombas?: Array<{ __typename?: 'BombaType', activo?: boolean | null, id?: number | null, diametro?: number | null, eficiencia?: number | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, lts?: number | null, marca?: string | null, modelo?: string | null, motivoRet?: string | null, noImpulsores?: number | null, noSerie?: string | null, observaciones?: string | null, rpm?: number | null }> | null } };
+
+export type FragErroresFragment = { __typename?: 'ErroresType', error?: string | null, exito?: boolean | null };
 
 export const FragAuthFragmentDoc = gql`
     fragment fragAuth on AuthType {
@@ -1324,7 +1379,7 @@ export const FragBombaFragmentDoc = gql`
   fechaRetiro
   lts
   marca
-  model
+  modelo
   motivoRet
   noImpulsores
   noSerie
@@ -1332,32 +1387,35 @@ export const FragBombaFragmentDoc = gql`
   rpm
 }
     `;
+export const FragReciboFragmentDoc = gql`
+    fragment fragRecibo on RecibosType {
+  pago
+  imgRecibo
+  fecha
+  costoKw
+  ano
+  lecturaMedidor
+  lecturaRecibo
+}
+    `;
 export const FragMedidoresFragmentDoc = gql`
     fragment fragMedidores on MedidorType {
   activo
   fechaInstalacion
   fechaRetiro
-  lectura {
-    lectura
-    mes
-  }
   medidor
-  reciboCfe {
-    lectura
-    costoKw
-    fecha
-    imgRecibo
-    pago
-  }
   servicio
+  reciboCfe {
+    ...fragRecibo
+  }
 }
-    `;
+    ${FragReciboFragmentDoc}`;
 export const FragMotorFragmentDoc = gql`
     fragment fragMotor on MotorType {
   observaciones
   noSerie
   motivoRet
-  model
+  modelo
   marca
   fechaRetiro
   fechaInstalacion
@@ -1383,6 +1441,12 @@ export const FragInstalacionFragmentDoc = gql`
   nombre
   profPozo
   tipoInstalacion
+}
+    `;
+export const FragErroresFragmentDoc = gql`
+    fragment fragErrores on ErroresType {
+  error
+  exito
 }
     `;
 export const RegistroSesionDocument = gql`
@@ -2324,25 +2388,31 @@ ${FragMedidoresFragmentDoc}`;
 export const RegInstalacionDocument = gql`
     mutation regInstalacion($datos: RegInstalacionInput!) {
   regInstalacion(datos: $datos) {
-    _id
-    instalacion {
-      ...fragInstalacion
+    ... on TelemetriaType {
+      _id
+      instalacion {
+        ...fragInstalacion
+      }
+      medidores {
+        ...fragMedidores
+      }
+      bombas {
+        ...fragBomba
+      }
+      motores {
+        ...fragMotor
+      }
     }
-    medidores {
-      ...fragMedidores
-    }
-    bombas {
-      ...fragBomba
-    }
-    motores {
-      ...fragMotor
+    ... on ErroresType {
+      ...fragErrores
     }
   }
 }
     ${FragInstalacionFragmentDoc}
 ${FragMedidoresFragmentDoc}
 ${FragBombaFragmentDoc}
-${FragMotorFragmentDoc}`;
+${FragMotorFragmentDoc}
+${FragErroresFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
