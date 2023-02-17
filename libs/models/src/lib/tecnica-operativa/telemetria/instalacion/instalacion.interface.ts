@@ -9,4 +9,12 @@ export interface IInstalacion
     longCol: number;
     activo: boolean;
     tipoInstalacion: 'Pozo' | 'Tanque';
+    niveles: INivel[]
+}
+
+export interface INivel
+{
+    fechaMedicion: Date;
+    nivelDinamico: number;
+    nivelEstatico: number;
 }

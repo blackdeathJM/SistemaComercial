@@ -2,7 +2,7 @@ export interface IComunBombaMotor
 {
     id: number;
     noSerie: string;
-    model: string;
+    modelo: string;
     fechaInstalacion: Date;
     fechaRetiro: Date;
     evidenciaInst: string[];
