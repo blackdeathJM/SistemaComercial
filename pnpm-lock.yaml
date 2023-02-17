@@ -113,7 +113,7 @@ specifiers:
   class-validator: ^0.14.0
   cosmiconfig-toml-loader: ^1.0.0
   crypto-js: 4.1.1
-  cypress: ^12.5.1
+  cypress: ^12.6.0
   dotenv: ^16.0.3
   eslint: 8.34.0
   eslint-config-prettier: 8.6.0
@@ -162,7 +162,7 @@ specifiers:
   react: ^18.2.0
   reflect-metadata: ^0.1.13
   rxjs: 7.8.0
-  sweetalert2: ^11.7.1
+  sweetalert2: ^11.7.2
   tailwindcss: 3.2.7
   ts-jest: 29.0.5
   ts-morph: ^17.0.1
@@ -213,8 +213,8 @@ dependencies:
   '@rxweb/reactive-dynamic-forms': 0.0.6
   '@rxweb/reactive-form-validators': 13.0.0
   '@rxweb/sanitizers': 0.0.1
-  '@sweetalert2/ngx-sweetalert2': 12.1.0_hlppusas5mirgche5rcrndxe3i
-  '@sweetalert2/themes': 5.0.15_sweetalert2@11.7.1
+  '@sweetalert2/ngx-sweetalert2': 12.1.0_sm4ay45afk6ilm4k6iebzdk4ou
+  '@sweetalert2/themes': 5.0.15_sweetalert2@11.7.2
   apexcharts: 3.37.0
   apollo-angular: 4.2.1_qhiocutedskf4wogy5v4z3zrgi
   apollo-server-core: 3.11.1_graphql@16.6.0
@@ -263,7 +263,7 @@ dependencies:
   react: 18.2.0
   reflect-metadata: 0.1.13
   rxjs: 7.8.0
-  sweetalert2: 11.7.1
+  sweetalert2: 11.7.2
   tslib: 2.5.0
   uuid: 9.0.0
   zone.js: 0.12.0
@@ -291,9 +291,9 @@ devDependencies:
   '@nestjs/swagger': 6.2.1_ldzmua2hsw2tga2e42i6lmmdty
   '@nestjs/testing': 9.3.9_yqmogfxzeu633isbftgaoi4ho4
   '@ngxs/devtools-plugin': 3.7.6_dovti63svktuq4fp62nx2de5nq
-  '@nrwl/angular': 15.7.1_fhdx62khjvfvhjmg4p245ria6e
+  '@nrwl/angular': 15.7.1_3qrcpni52rssht6bk3o6wt2hxm
   '@nrwl/cli': 15.7.1
-  '@nrwl/cypress': 15.7.1_2c6gqa2kb7vkmetm6bai4uazmu
+  '@nrwl/cypress': 15.7.1_e7uv62xnxll7mv6d3ezs3pvjny
   '@nrwl/eslint-plugin-nx': 15.7.1_4g2aujda77ww5scx75lws5eqxa
   '@nrwl/jest': 15.7.1_eblaldjhv6bqwp45ik7zk723lu
   '@nrwl/linter': 15.7.1_ygqxsns4ysks242fpwaznhgj3i
@@ -329,7 +329,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
   chroma-js: 2.4.2
   cosmiconfig-toml-loader: 1.0.0
-  cypress: 12.5.1
+  cypress: 12.6.0
   eslint: 8.34.0
   eslint-config-prettier: 8.6.0_eslint@8.34.0
   eslint-plugin-import: 2.27.5_mcvs2y73sfmcxqzpjj5lr7a2m4
@@ -6831,7 +6831,7 @@ packages:
       - supports-color
     dev: true
 
-  /@nrwl/angular/15.7.1_fhdx62khjvfvhjmg4p245ria6e:
+  /@nrwl/angular/15.7.1_3qrcpni52rssht6bk3o6wt2hxm:
     resolution: {integrity: sha512-2Pik7fCK/VdyiFMJhKvCGTIqZUYDJNQP+S4p93Y9f9uhcImz24zvaxbmmNgXoPreP4n6tSH9wqTaZDIE5coSAw==}
     peerDependencies:
       '@angular-devkit/build-angular': '>= 14.0.0 < 16.0.0'
@@ -6847,7 +6847,7 @@ packages:
       '@angular-devkit/build-angular': 15.1.6_dcuvshwkiienbx6ukg4iku2ioq
       '@angular-devkit/core': 15.1.6
       '@angular-devkit/schematics': 15.1.6
-      '@nrwl/cypress': 15.7.1_2c6gqa2kb7vkmetm6bai4uazmu
+      '@nrwl/cypress': 15.7.1_e7uv62xnxll7mv6d3ezs3pvjny
       '@nrwl/devkit': 15.7.1_nx@15.7.1+typescript@4.9.5
       '@nrwl/jest': 15.7.1_eblaldjhv6bqwp45ik7zk723lu
       '@nrwl/linter': 15.7.1_ygqxsns4ysks242fpwaznhgj3i
@@ -6907,7 +6907,7 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/cypress/15.7.1_2c6gqa2kb7vkmetm6bai4uazmu:
+  /@nrwl/cypress/15.7.1_e7uv62xnxll7mv6d3ezs3pvjny:
     resolution: {integrity: sha512-Tpc7kwar9HZ42PCtzGD+N0ZX0UHAG8erT85yO6lTQc2pgtx8WzSd5oc0n38QerKbrhJCIZrNyaDQ9aJOKRMOiA==}
     peerDependencies:
       cypress: '>= 3 < 13'
@@ -6919,7 +6919,7 @@ packages:
       '@nrwl/linter': 15.7.1_ygqxsns4ysks242fpwaznhgj3i
       '@nrwl/workspace': 15.7.1_ztlnmuobvwn63gpuifwwrjpt4i
       '@phenomnomnominal/tsquery': 4.1.1_typescript@4.9.5
-      cypress: 12.5.1
+      cypress: 12.6.0
       dotenv: 10.0.0
       semver: 7.3.4
     transitivePeerDependencies:
@@ -7498,7 +7498,7 @@ packages:
       '@sinonjs/commons': 1.8.5
     dev: true
 
-  /@sweetalert2/ngx-sweetalert2/12.1.0_hlppusas5mirgche5rcrndxe3i:
+  /@sweetalert2/ngx-sweetalert2/12.1.0_sm4ay45afk6ilm4k6iebzdk4ou:
     resolution: {integrity: sha512-jECRdLhdw7dsEDv22uJHVbsgQEQVOY64BPRicTfKzEqsIyLwbl3kHh24lCg3UFlD2zLFuqRHrROohU9Wz7q74Q==}
     peerDependencies:
       '@angular/common': ^14.0.0 || ^15.0.0
@@ -7507,16 +7507,16 @@ packages:
     dependencies:
       '@angular/common': 15.1.5_bj7gay3f2iqhd2jhj4xbvfa7uq
       '@angular/core': 15.1.5_rxjs@7.8.0+zone.js@0.12.0
-      sweetalert2: 11.7.1
+      sweetalert2: 11.7.2
       tslib: 2.5.0
     dev: false
 
-  /@sweetalert2/themes/5.0.15_sweetalert2@11.7.1:
+  /@sweetalert2/themes/5.0.15_sweetalert2@11.7.2:
     resolution: {integrity: sha512-uGU7CynpjRc3cllTqZEvXiZTpfQ6MN4faG+Tf0VFW81bLysCQm00iHS3NJLZx5STRfxpM5SzqeVXpAzJyTG/WA==}
     peerDependencies:
       sweetalert2: ^11.0.0
     dependencies:
-      sweetalert2: 11.7.1
+      sweetalert2: 11.7.2
     dev: false
 
   /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.2.7:
@@ -10260,8 +10260,8 @@ packages:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
     dev: true
 
-  /cypress/12.5.1:
-    resolution: {integrity: sha512-ZmCmJ3lsyeOpBfh410m5+AO2CO1AxAzFBt7k6/uVbNcrNZje1vdiwYTpj2ksPKg9mjr9lR6V8tmlDNMvr4H/YQ==}
+  /cypress/12.6.0:
+    resolution: {integrity: sha512-WdHSVaS1lumSd5XpVTslZd8ui9GIGphrzvXq9+3DtVhqjRZC5M70gu5SW/Y/SLPq3D1wiXGZoHC6HJ7ESVE2lw==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
@@ -18198,8 +18198,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /sweetalert2/11.7.1:
-    resolution: {integrity: sha512-+1bnkbqBl64FnZmi3g4SzAi4F3pL3S2jF1YQvrysv4GbgizfeFqGkJopxR3FnV/eJm6w2SQ2oAmCxSIBjgP/ag==}
+  /sweetalert2/11.7.2:
+    resolution: {integrity: sha512-atPjDa3fv/4xwZpiAt7FZUgAhR5VAASiLP2hu7HUeVDXx+v4/9nD1W0u8xal1e9f2/qGh0DwTxPXPV9XoZIBvg==}
     dev: false
 
   /symbol-observable/1.2.0:
