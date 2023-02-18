@@ -15,7 +15,7 @@ export interface IInstalacion
     nivelEstatico: IMedicion[];
 }
 
-export interface ITomarMedicion extends IMedicion
+export interface ITomarMedicion extends Partial<IMedicion>
 {
     _id: string;
     esDinamico: boolean;

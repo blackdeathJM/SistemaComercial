@@ -162,11 +162,11 @@ type InstalacionType {
   nombre: String
   profPozo: Float
   tipoInstalacion: String
-  nivelDinamico: [NivelType!]
-  nivelEstatico: [NivelType!]
+  nivelDinamico: [MedicionType!]
+  nivelEstatico: [MedicionType!]
 }
 
-type NivelType {
+type MedicionType {
   ano: Int
   abril: Float
   agosto: Float
@@ -317,7 +317,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676653120
+  tiempo: Int = 1676718510
   titulo: String
   usarRouter: Boolean = false
 }
@@ -349,7 +349,7 @@ input BombaInput {
 }
 
 input InstalacionInput {
-  activo: Boolean
+  activo: Boolean = true
   diamAdeme: Float = 0
   diamCol: Float = 0
   diamPerforacion: Float = 0
@@ -358,11 +358,11 @@ input InstalacionInput {
   nombre: String = null
   profPozo: Float = 0
   tipoInstalacion: String = null
-  nivelDinamico: [NivelInput!] = []
-  nivelEstatico: [NivelInput!] = []
+  nivelDinamico: [MedicionInput!] = []
+  nivelEstatico: [MedicionInput!] = []
 }
 
-input NivelInput {
+input MedicionInput {
   ano: Int = 2023
   abril: Float = 0
   agosto: Float = 0
@@ -477,7 +477,7 @@ type Mutation {
   eliminarNot(_id: String!): NotificacionType!
   eliminarTodos(idUsuario: String!): Int!
   crearRegLectura(args: TomarMedicionInput!): UnionTele!
-  actLectura(args: TomarMedicionInput!): UnionTele!
+  actLectura(args: TomarMedicionInput!): TelemetriaType!
   regInstalacion(datos: RegInstalacionInput!): UnionTele!
   actInst(args: ActInstInput!): TelemetriaType!
   agregarMotor(args: AgregarMotorInput!): TelemetriaType!

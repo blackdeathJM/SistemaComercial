@@ -6,7 +6,9 @@ export enum CtrlTelemetria
     ctrlNvaInstalacion = 'nvaInstalacion',
     ctrlEditarInstalacion = 'editarInstalacion',
     ctrlAgregarMotor = 'agregarMotor',
-    ctrlEditarMotor = 'editarMotor'
+    ctrlEditarMotor = 'editarMotor',
+    ctrlNvaMedicionDin = 'nvaMedicionDin',
+    ctrlNvaMedicionEst = 'nvaMedicionEst'
 }
 
 export const TELEMETRIA: FuseNavigationItem =

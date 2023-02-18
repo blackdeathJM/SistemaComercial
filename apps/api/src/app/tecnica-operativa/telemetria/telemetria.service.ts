@@ -37,7 +37,7 @@ export class TelemetriaService
                         error: 'El valor ya ha sido inicializado'
                     };
                 }
-                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelDinamico': resto}}).exec();
+                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelDinamico': resto}}, {new: true}).exec();
             } else
             {
                 const buscarNivelEstatico = await this.telemetria.findOne({_id, 'instalacion.nivelEstatico': {$elemMatch: {ano: resto.ano}}});
@@ -48,7 +48,7 @@ export class TelemetriaService
                         error: 'El valor ya ha sido inicializado'
                     };
                 }
-                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelEstatico': resto}}).exec();
+                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelEstatico': resto}}, {new: true}).exec();
             }
         } catch (e)
         {
@@ -56,25 +56,17 @@ export class TelemetriaService
         }
     }
 
-    async actLectura(args: TomarMedicionDto): Promise<typeof unionTele>
+    async actLectura(args: TomarMedicionDto): Promise<TelemetriaDto>
     {
         const {_id, esDinamico, ...resto} = args;
         try
         {
             if (esDinamico)
             {
-                const nivelDinamico = await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelDinamico': resto}}, {new: true}).exec();
-                return {
-                    exito: true,
-                    ...nivelDinamico
-                };
+                return await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelDinamico': resto}}, {new: true}).exec();
             } else
             {
-                const nivelEstatico = await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelEstatico': resto}}, {new: true}).exec();
-                return {
-                    exito: true,
-                    ...nivelEstatico
-                };
+                return await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelEstatico': resto}}, {new: true}).exec();
             }
         } catch (e)
         {
@@ -125,4 +117,5 @@ export class TelemetriaService
             throw new InternalServerErrorException({message: e});
         }
     }
+
 }

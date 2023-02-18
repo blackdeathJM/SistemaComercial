@@ -99,3 +99,48 @@ mutation agregarBomba($args: AgregarBombaInput!)
         }
     }
 }
+mutation crearRegLectura($args: TomarMedicionInput!)
+{
+    crearRegLectura(args: $args)
+    {
+        ...on TelemetriaType
+        {
+            _id
+            instalacion {
+                ...fragInstalacion
+            }
+            medidores {
+                ...fragMedidores
+            }
+            motores {
+                ...fragMotor
+            }
+            bombas {
+                ...fragBomba
+            }
+        }
+        ...on ErroresType
+        {
+            ...fragErrores
+        }
+    }
+}
+mutation actLectura($args: TomarMedicionInput!)
+{
+    actLectura(args: $args)
+    {
+        _id
+        instalacion {
+            ...fragInstalacion
+        }
+        medidores {
+            ...fragMedidores
+        }
+        motores {
+            ...fragMotor
+        }
+        bombas {
+            ...fragBomba
+        }
+    }
+}

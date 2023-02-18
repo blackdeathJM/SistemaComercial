@@ -7,29 +7,45 @@
 
                 </mat-card-header>
                 <mat-card-content>
-                    <div class="grid grid-cols-8 gap-4 p-3">
-                        <div class="text-secondary">Instalacion:</div>
-                        <p class="col-span-3">{{inst.instalacion.instalacion.nombre}}</p>
-                        <div class="text-secondary">Direccion:</div>
-                        <p class="col-span-3">{{inst.instalacion.instalacion.direccion}}</p>
+                    <section class="flex flex-col flex-auto">
+                        <div class="grid grid-cols-8 gap-4 p-3">
+                            <div class="text-secondary">Instalacion:</div>
+                            <p class="col-span-3">{{inst.instalacion.instalacion.nombre}}</p>
+                            <div class="text-secondary">Direccion:</div>
+                            <p class="col-span-3">{{inst.instalacion.instalacion.direccion}}</p>
 
-                        <div class="text-secondary">Profundidad:</div>
-                        <p>{{inst.instalacion.instalacion.profPozo}}</p>
-                        <div class="text-secondary">Ademe:</div>
-                        <p>{{inst.instalacion.instalacion.diamAdeme}}</p>
-                        <div class="text-secondary">Diam Columna:</div>
-                        <p>{{inst.instalacion.instalacion.diamCol}}</p>
-                        <div class="text-secondary">Long Columna:</div>
-                        <p>{{inst.instalacion.instalacion.longCol}}</p>
-                    </div>
+                            <div class="text-secondary">Profundidad:</div>
+                            <p>{{inst.instalacion.instalacion.profPozo}}</p>
+                            <div class="text-secondary">Ademe:</div>
+                            <p>{{inst.instalacion.instalacion.diamAdeme}}</p>
+                            <div class="text-secondary">Diam Columna:</div>
+                            <p>{{inst.instalacion.instalacion.diamCol}}</p>
+                            <div class="text-secondary">Long Columna:</div>
+                            <p>{{inst.instalacion.instalacion.longCol}}</p>
+                        </div>
+                        <mat-divider class="my-4 border-2 border-yellow-400"></mat-divider>
+
+                        <fuse-alert [appearance]="'soft'" [type]="'basic'" [showIcon]="false" class="my-2">
+                            <span class="text-xl">Lista de mediciones dinamicas de los pozos</span>
+                        </fuse-alert>
+                        <app-lista-mediciones-dinamica-estatica [dataSource]="dataSourceDinamico"></app-lista-mediciones-dinamica-estatica>
+                        <mat-divider class="my-4 border-2 border-yellow-400"></mat-divider>
+                        <fuse-alert [appearance]="'soft'" [type]="'basic'" [showIcon]="false" class="my-2">
+                            <span class="text-xl">Lista de mediciones estaticas de los pozos</span>
+                        </fuse-alert>
+                        <app-lista-mediciones-dinamica-estatica class="mb-4" [dataSource]="dataSourceEstatico"></app-lista-mediciones-dinamica-estatica>
+                    </section>
                 </mat-card-content>
                 <mat-card-actions class="tarjeta-mat-acciones border-t-yellow-400">
                     <div class="flex flex-auto items-center justify-between">
-                        <button mat-raised-button color="primary" >
-                            <mat-icon class="mr-5">add</mat-icon>
-                            Agregar nuevas mediciones
+                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, true)" [id]="ctrlNvaMedicionDin" [disabled]="ctrlNvaMedicionDin | navegacionPermiso: 'ctrl'">
+                            <mat-icon>add</mat-icon>
+                            Inicializar medicion dinamica
                         </button>
-
+                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, false)" [id]="ctrlNvaMedicionEst" [disabled]="ctrlNvaMedicionEst | navegacionPermiso: 'ctrl'">
+                            <mat-icon>add</mat-icon>
+                            Inicializar medicion estatica
+                        </button>
                         <button mat-raised-button color="accent" (click)="editarInfo()" [id]="ctrlEditarInstalacion" [disabled]="ctrlEditarInstalacion | navegacionPermiso: 'ctrl'">
                             <mat-icon class="mr-5" svgIcon="edit"></mat-icon>
                             Editar informacion

@@ -22,8 +22,8 @@ export class TelemetriaResolver
         return await this.telemetriaService.crearRegLectura(args);
     }
 
-    @Mutation(() => unionTele)
-    async actLectura(@Args('args') args: TomarMedicionDto): Promise<typeof unionTele>
+    @Mutation(() => TelemetriaDto)
+    async actLectura(@Args('args') args: TomarMedicionDto): Promise<TelemetriaDto>
     {
         return await this.telemetriaService.actLectura(args);
     }

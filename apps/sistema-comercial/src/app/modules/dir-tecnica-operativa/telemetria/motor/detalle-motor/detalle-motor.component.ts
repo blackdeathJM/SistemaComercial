@@ -10,12 +10,13 @@ import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.
 import {MatDialog} from '@angular/material/dialog';
 import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
-import {ModMotorComponent} from "@s-dir-tecnica-operativa/motor/mod-motor/mod-motor.component";
+import {ModMotorComponent} from '@s-dir-tecnica-operativa/motor/mod-motor/mod-motor.component';
+import {ListaMedicionesDinamicaEstaticaComponent} from '@s-dir-tecnica-operativa/instalaciones/lista-mediciones-dinamica-estatica/lista-mediciones-dinamica-estatica.component';
 
 @Component({
     selector: 'app-detalle-motor',
     standalone: true,
-    imports: [CommonModule, MatDividerModule, MatCardModule, MatButtonModule, MatIconModule, ListaMotoresComponent, NavegacionPipe],
+    imports: [CommonModule, MatDividerModule, MatCardModule, MatButtonModule, MatIconModule, ListaMotoresComponent, NavegacionPipe, ListaMedicionesDinamicaEstaticaComponent],
     templateUrl: './detalle-motor.component.html',
     styleUrls: ['./detalle-motor.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,7 +1,7 @@
 import {sanitize, toFloat} from '@rxweb/sanitizers';
 import {IInstalacion} from './instalacion/instalacion.interface';
 import {notEmpty, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
-import {IMedicion} from "./comun.interface";
+import {IMedicion} from './comun.interface';
 
 @sanitize
 export class Instalacion implements IInstalacion

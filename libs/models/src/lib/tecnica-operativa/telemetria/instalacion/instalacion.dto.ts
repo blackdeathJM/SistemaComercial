@@ -7,7 +7,7 @@ import {IInstalacion, ITomarMedicion} from './instalacion.interface';
 @ObjectType('InstalacionType')
 export class InstalacionDto implements IInstalacion
 {
-    @Field(() => Boolean, {nullable: true})
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsBoolean({message: 'El valor activo debe ser un booleano'})
     activo: boolean;
 
@@ -52,12 +52,12 @@ export class InstalacionDto implements IInstalacion
     nivelEstatico: MedicionDto[];
 }
 
-@ObjectType('NivelType')
-@InputType('NivelInput')
+@ObjectType('MedicionType')
+@InputType('MedicionInput')
 export class MedicionDto implements IMedicion
 {
     @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
-    @IsNotEmpty({message: 'Es necesario el año'})
+    @IsOptional({message: 'Es necesario el año'})
     ano: number;
 
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
