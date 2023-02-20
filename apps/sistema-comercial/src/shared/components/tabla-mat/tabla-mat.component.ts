@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {ITabla} from '@s-shared/components/tabla-mat/tabla-interface';
 import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
 
@@ -15,11 +15,12 @@ import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pip
 })
 export class TablaMatComponent
 {
-    origenDatos: any = [];
+    origenDatos: MatTableDataSource<any>;
     columnasAMostrar: string[] = [];
     columnasTabla: ITabla[] = [];
     datosOrigen: any;
-    @Input() set datos(data: any)
+
+    @Input() set datos(data: MatTableDataSource<any>)
     {
         this.origenDatos = data;
     }

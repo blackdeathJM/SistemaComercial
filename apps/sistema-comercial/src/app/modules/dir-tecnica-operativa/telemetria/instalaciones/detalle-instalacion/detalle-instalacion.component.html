@@ -9,31 +9,33 @@
                 <mat-card-content>
                     <section class="flex flex-col flex-auto">
                         <div class="grid grid-cols-8 gap-4 p-3">
-                            <div class="text-secondary">Instalacion:</div>
-                            <p class="col-span-3">{{inst.instalacion.instalacion.nombre}}</p>
-                            <div class="text-secondary">Direccion:</div>
-                            <p class="col-span-3">{{inst.instalacion.instalacion.direccion}}</p>
+                            <span class="detalle-span">Instalacion:</span>
+                            <span>{{inst.instalacion.instalacion.nombre}}</span>
+                            <span class="detalle-span">Direccion:</span>
+                            <span class="col-span-3">{{inst.instalacion.instalacion.direccion}}</span>
+                            <span class="detalle-span">Tipo:</span>
+                            <span>{{inst.instalacion.instalacion.tipoInstalacion}}</span>
 
-                            <div class="text-secondary">Profundidad:</div>
-                            <p>{{inst.instalacion.instalacion.profPozo}}</p>
-                            <div class="text-secondary">Ademe:</div>
-                            <p>{{inst.instalacion.instalacion.diamAdeme}}</p>
-                            <div class="text-secondary">Diam Columna:</div>
-                            <p>{{inst.instalacion.instalacion.diamCol}}</p>
-                            <div class="text-secondary">Long Columna:</div>
-                            <p>{{inst.instalacion.instalacion.longCol}}</p>
+                            <span class="detalle-span">Profundidad:</span>
+                            <span>{{inst.instalacion.instalacion.profPozo}}</span>
+                            <span class="detalle-span">Ademe:</span>
+                            <span>{{inst.instalacion.instalacion.diamAdeme}}</span>
+                            <span class="detalle-span">Diam Columna:</span>
+                            <span>{{inst.instalacion.instalacion.diamCol}}</span>
+                            <span class="detalle-span">Long Columna:</span>
+                            <span>{{inst.instalacion.instalacion.longCol}}</span>
                         </div>
                         <mat-divider class="my-4 border-2 border-yellow-400"></mat-divider>
 
-                        <fuse-alert [appearance]="'soft'" [type]="'basic'" [showIcon]="false" class="my-2">
+                        <fuse-alert [appearance]="'border'" [type]="'accent'" [showIcon]="false" class="my-2">
                             <span class="text-xl">Lista de mediciones dinamicas de los pozos</span>
                         </fuse-alert>
-                        <app-lista-mediciones-dinamica-estatica [dataSource]="dataSourceDinamico"></app-lista-mediciones-dinamica-estatica>
+                        <app-lista-mediciones-dinamica-estatica [dataSource]="dataSourceDinamico" (fila)="filaSelec($event, 'nivelDinamico')"></app-lista-mediciones-dinamica-estatica>
                         <mat-divider class="my-4 border-2 border-yellow-400"></mat-divider>
-                        <fuse-alert [appearance]="'soft'" [type]="'basic'" [showIcon]="false" class="my-2">
+                        <fuse-alert [appearance]="'border'" [type]="'basic'" [showIcon]="false" class="my-2">
                             <span class="text-xl">Lista de mediciones estaticas de los pozos</span>
                         </fuse-alert>
-                        <app-lista-mediciones-dinamica-estatica class="mb-4" [dataSource]="dataSourceEstatico"></app-lista-mediciones-dinamica-estatica>
+                        <app-lista-mediciones-dinamica-estatica class="mb-4" [dataSource]="dataSourceEstatico" (fila)="filaSelec($event, 'nivelEstatico')"></app-lista-mediciones-dinamica-estatica>
                     </section>
                 </mat-card-content>
                 <mat-card-actions class="tarjeta-mat-acciones border-t-yellow-400">

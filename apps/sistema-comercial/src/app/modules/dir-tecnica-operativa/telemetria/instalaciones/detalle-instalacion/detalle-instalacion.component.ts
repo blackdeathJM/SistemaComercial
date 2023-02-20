@@ -17,7 +17,15 @@ import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {IMedicion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/comun.interface';
 import {FuseAlertModule} from '@s-fuse/alert';
+import {ModNivelDinEstComponent} from '@s-dir-tecnica-operativa/instalaciones/mod-nivel-din-est/mod-nivel-din-est.component';
+import {isNotNil} from '@angular-ru/cdk/utils';
 
+export interface IMedicionDinamicoEstatico
+{
+    indice: number;
+    _id: string;
+    tipoMedicion: string;
+}
 @Component({
     selector: 'app-detalle-instalacion',
     standalone: true,
@@ -34,6 +42,7 @@ export class DetalleInstalacionComponent implements OnInit, OnDestroy
     ctrlNvaMedicionEst = CtrlTelemetria.ctrlNvaMedicionEst;
     dataSourceDinamico = new MatTableDataSource<IMedicion>([]);
     dataSourceEstatico = new MatTableDataSource<IMedicion>([]);
+    _id: string;
     sub = new Subscription();
 
     constructor(private mdf: MatDialog, public entityTelemetria: EntityTelemetria, private telemetriaService: TelemetriaService)
@@ -44,8 +53,12 @@ export class DetalleInstalacionComponent implements OnInit, OnDestroy
     {
         this.sub.add(this.entityTelemetria.state$.subscribe((res) =>
         {
-            this.dataSourceDinamico.data = res.instalacion.instalacion.nivelDinamico;
-            this.dataSourceEstatico.data = res.instalacion.instalacion.nivelEstatico;
+            if (isNotNil(res.instalacion))
+            {
+                this._id = res.instalacion._id;
+                this.dataSourceDinamico.data = res.instalacion.instalacion.nivelDinamico;
+                this.dataSourceEstatico.data = res.instalacion.instalacion.nivelEstatico;
+            }
         }));
     }
 
@@ -62,6 +75,18 @@ export class DetalleInstalacionComponent implements OnInit, OnDestroy
                 esDinamico
             };
         this.telemetriaService.crearRegLectura(args).subscribe();
+    }
+
+    filaSelec(e: [IMedicion, number], tipoMedicion: string): void
+    {
+        const data: IMedicionDinamicoEstatico =
+            {
+                _id: this._id,
+                tipoMedicion,
+                indice: e[1],
+            };
+
+        this.mdf.open(ModNivelDinEstComponent, {width: '60%', data});
     }
 
     ngOnDestroy(): void

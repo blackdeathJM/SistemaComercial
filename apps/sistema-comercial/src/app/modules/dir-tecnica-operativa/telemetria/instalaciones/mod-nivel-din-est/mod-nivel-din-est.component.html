@@ -1,0 +1,70 @@
+<section class="flex flex-col flex-auto">
+        <span class="flex-auto text-xl text-secondary border-b-2 mb-4">
+            {{this.ano}}
+        </span>
+    <form [formGroup]="formNiveles">
+        <div class="flex flex-auto gap-4">
+            <mat-form-field>
+                <mat-label>Enero</mat-label>
+                <input matInput formControlName="enero" class="text-right" [deshabilitar]="formNiveles.controls.enero.value === 0">
+                <mat-error>{{formNiveles.controls.enero['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Febrero</mat-label>
+                <input matInput formControlName="febrero" class="text-right">
+                <mat-error>{{formNiveles.controls.febrero['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Marzo</mat-label>
+                <input matInput formControlName="marzo" class="text-right">
+                <mat-error>{{formNiveles.controls.marzo['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Abril</mat-label>
+                <input matInput formControlName="abril" class="text-right">
+                <mat-error>{{formNiveles.controls.abril['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Mayo</mat-label>
+                <input matInput formControlName="mayo" class="text-right">
+                <mat-error>{{formNiveles.controls.mayo['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Junio</mat-label>
+                <input matInput formControlName="junio" class="text-right">
+                <mat-error>{{formNiveles.controls.junio['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Julio</mat-label>
+                <input matInput formControlName="julio" class="text-right">
+                <mat-error>{{formNiveles.controls.julio['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Agosto</mat-label>
+                <input matInput formControlName="agosto" class="text-right">
+                <mat-error>{{formNiveles.controls.agosto['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Septiembre</mat-label>
+                <input matInput formControlName="septiembre" class="text-right">
+                <mat-error>{{formNiveles.controls.septiembre['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Octubre</mat-label>
+                <input matInput formControlName="octubre" class="text-right">
+                <mat-error>{{formNiveles.controls.octubre['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Noviembre</mat-label>
+                <input matInput formControlName="noviembre" class="text-right">
+                <mat-error>{{formNiveles.controls.noviembre['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Diciembre</mat-label>
+                <input matInput formControlName="diciembre" class="text-right">
+                <mat-error>{{formNiveles.controls.diciembre['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</section>
+<app-registros [deshabilitar]="formNiveles.invalid || cargando" [cargando]="cargando" (registro)="reg()"></app-registros>

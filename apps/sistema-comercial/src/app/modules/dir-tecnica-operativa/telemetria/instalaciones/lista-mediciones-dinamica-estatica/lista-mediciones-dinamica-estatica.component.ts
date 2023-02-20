@@ -7,6 +7,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {Meses} from '#/libs/models/src/lib/tecnica-operativa/telemetria/medicion';
+import {toArray} from 'lodash-es';
 
 @Component({
     selector: 'app-lista-mediciones-dinamica-estatica',
@@ -21,12 +23,13 @@ export class ListaMedicionesDinamicaEstaticaComponent
 {
     // @ViewChild(MatPaginator, {static: true}) paginador: MatPaginator;
     @Input() dataSource: MatTableDataSource<IMedicion>;
-    @Output() fila = new EventEmitter<IMedicion>();
-    columnasMostrar = ['ano', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'accion'];
+    @Output() fila = new EventEmitter<[any, number]>();
+    // columnasMostrar = ['ano', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'accion'];
+    columnasMostrar = toArray(Meses);
     sub = new Subscription();
 
-    enviarMedicion(fila): void
+    enviarMedicion(fila: any, i: number): void
     {
-        this.fila.emit(fila);
+        this.fila.emit([fila, i]);
     }
 }
