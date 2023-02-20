@@ -8,8 +8,6 @@ import {ListaMotoresComponent} from '@s-dir-tecnica-operativa/motor/lista-motore
 import {CtrlTelemetria} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-tecnica-operativa/telemetria';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 import {MatDialog} from '@angular/material/dialog';
-import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {ModMotorComponent} from '@s-dir-tecnica-operativa/motor/mod-motor/mod-motor.component';
 import {ListaMedicionesDinamicaEstaticaComponent} from '@s-dir-tecnica-operativa/instalaciones/lista-mediciones-dinamica-estatica/lista-mediciones-dinamica-estatica.component';
 
@@ -26,7 +24,7 @@ export class DetalleMotorComponent
     agregarMotor: CtrlTelemetria.ctrlAgregarMotor;
     editarMotor: CtrlTelemetria.ctrlEditarMotor;
 
-    constructor(private mdr: MatDialog, private telemetriaService: TelemetriaService, public entityTelemetria: EntityTelemetria)
+    constructor(private mdr: MatDialog)
     {
     }
 
