@@ -85,6 +85,7 @@ export class TelemetriaService
             {
                 const changes = $cast<ITelemetria>(res.data.actLectura);
                 this.entityTelemetria.updateOne({id: changes._id, changes});
+                this.ngxToast.satisfactorioToast('Medicion actualizada con exito', 'Nivel dinamico - Nivel estatico');
             }
         }));
     }

@@ -3,6 +3,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {ActInstDto, AgregarBombaDto, AgregarMotorDto, RegInstalacionDto, TelemetriaDto, TelemetriaType, unionTele} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.dto';
 import {Model} from 'mongoose';
 import {TomarMedicionDto} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/instalacion/instalacion.dto';
+import {AppService} from '#api/apps/api/src/app/app.service';
 
 @Injectable()
 export class TelemetriaService
@@ -24,50 +25,37 @@ export class TelemetriaService
 
     async crearRegLectura(args: TomarMedicionDto): Promise<typeof unionTele>
     {
-        const {_id, esDinamico, ...resto} = args;
+        const {_id, tipoNivel, ...resto} = args;
+        const buscar = {_id, [tipoNivel]: {$elemMatch: {ano: resto.ano}}};
+        const actualizacion = {[tipoNivel]: resto};
         try
         {
-            if (esDinamico)
+            //Realizamos una consulta para buscar algún registro que ya se haya inicializado y no tener registros duplicados pertenencientes al mismo año, ya que
+            //al crear el registro se crea se crean todos los campos y solo se actualizan
+            const reg = await this.telemetria.findOne(buscar).exec();
+            if (reg)
             {
-                const buscarNivelDinamico = await this.telemetria.findOne({_id, 'instalacion.nivelDinamico': {$elemMatch: {ano: resto.ano}}});
-                if (buscarNivelDinamico)
-                {
-                    return {
-                        exito: false,
-                        error: 'El valor ya ha sido inicializado'
-                    };
-                }
-                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelDinamico': resto}}, {new: true}).exec();
-            } else
-            {
-                const buscarNivelEstatico = await this.telemetria.findOne({_id, 'instalacion.nivelEstatico': {$elemMatch: {ano: resto.ano}}});
-                if (buscarNivelEstatico)
-                {
-                    return {
-                        exito: false,
-                        error: 'El valor ya ha sido inicializado'
-                    };
-                }
-                return await this.telemetria.findByIdAndUpdate(_id, {$push: {'instalacion.nivelEstatico': resto}}, {new: true}).exec();
+                return {
+                    exito: false,
+                    error: 'El valor ya ha sido inicializado'
+                };
             }
+            //Los registros nuevos de niveles se van asignando a un arreglo donde se estaran manejando por año y solo se iran agregando si el arreglo no tiene ano
+            //diferente
+            return await this.telemetria.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true}).exec();
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            throw  new InternalServerErrorException({message: e});
         }
     }
 
     async actLectura(args: TomarMedicionDto): Promise<TelemetriaDto>
     {
-        const {_id, esDinamico, ...resto} = args;
+        const {_id, tipoNivel, ...resto} = args;
         try
         {
-            if (esDinamico)
-            {
-                return await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelDinamico': resto}}, {new: true}).exec();
-            } else
-            {
-                return await this.telemetria.findByIdAndUpdate(_id, {$set: {'instalacion.nivelEstatico': resto}}, {new: true}).exec();
-            }
+            return await this.telemetria.findOneAndUpdate({_id, [tipoNivel]: {$elemMatch: {ano: resto.ano}}},
+                {$set: {[tipoNivel + '.$']: resto}}, {new: true}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

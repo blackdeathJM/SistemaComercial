@@ -104,7 +104,7 @@ export class TomarMedicionDto extends MedicionDto implements ITomarMedicion
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id de la instalacion es necesario'})
     _id: string;
-    @Field(() => Boolean, {nullable: true, defaultValue: true})
-    @IsBoolean({message: 'El valor debe ser booleano'})
-    esDinamico: boolean;
+    @Field(() => String, {nullable: true, defaultValue: 'instalacion.nivelDinamico'})
+    @IsNotEmpty({message: 'Coloca el tipo de nivel'})
+    tipoNivel: 'instalacion.nivelDinamico' | 'instalacion.nivelEstatico';
 }

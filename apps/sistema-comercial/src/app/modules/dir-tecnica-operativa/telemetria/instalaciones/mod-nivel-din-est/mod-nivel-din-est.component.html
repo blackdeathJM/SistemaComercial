@@ -6,7 +6,7 @@
         <div class="flex flex-auto gap-4">
             <mat-form-field>
                 <mat-label>Enero</mat-label>
-                <input matInput formControlName="enero" class="text-right" [deshabilitar]="formNiveles.controls.enero.value === 0">
+                <input matInput formControlName="enero" class="text-right">
                 <mat-error>{{formNiveles.controls.enero['errorMessage']}}</mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -67,4 +67,4 @@
         </div>
     </form>
 </section>
-<app-registros [deshabilitar]="formNiveles.invalid || cargando" [cargando]="cargando" (registro)="reg()"></app-registros>
+<app-registros [deshabilitar]="formNiveles.invalid || cargando" [cargando]="cargando" (registro)="reg()" (cancelar)="mdr.close()"></app-registros>

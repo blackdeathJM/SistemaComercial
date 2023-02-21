@@ -317,7 +317,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676854929
+  tiempo: Int = 1676941050
   titulo: String
   usarRouter: Boolean = false
 }
@@ -618,7 +618,7 @@ input TomarMedicionInput {
   octubre: Float = 0
   septiembre: Float = 0
   _id: ID
-  esDinamico: Boolean = true
+  tipoNivel: String = "instalacion.nivelDinamico"
 }
 
 input RegInstalacionInput {

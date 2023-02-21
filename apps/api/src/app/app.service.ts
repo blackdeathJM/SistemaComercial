@@ -9,7 +9,7 @@ export class AppService
         return DateTime.utc({locale: 'es-MX'}).toUnixInteger();
     }
 
-    static nvaPropiedad(propiedad: string, value: string): object
+    static nvaPropiedad(propiedad: string, value: any): object
     {
         const obj = {};
         Object.defineProperty(obj, value, {

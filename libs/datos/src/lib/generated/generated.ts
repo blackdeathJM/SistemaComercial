@@ -876,7 +876,6 @@ export type TomarMedicionInput = {
   ano?: InputMaybe<Scalars['Int']>;
   diciembre?: InputMaybe<Scalars['Float']>;
   enero?: InputMaybe<Scalars['Float']>;
-  esDinamico?: InputMaybe<Scalars['Boolean']>;
   febrero?: InputMaybe<Scalars['Float']>;
   julio?: InputMaybe<Scalars['Float']>;
   junio?: InputMaybe<Scalars['Float']>;
@@ -885,6 +884,7 @@ export type TomarMedicionInput = {
   noviembre?: InputMaybe<Scalars['Float']>;
   octubre?: InputMaybe<Scalars['Float']>;
   septiembre?: InputMaybe<Scalars['Float']>;
+  tipoNivel?: InputMaybe<Scalars['String']>;
 };
 
 export type UnionTele = ErroresType | TelemetriaType;

@@ -18,5 +18,5 @@ export interface IInstalacion
 export interface ITomarMedicion extends Partial<IMedicion>
 {
     _id: string;
-    esDinamico: boolean;
+    tipoNivel: 'instalacion.nivelDinamico' | 'instalacion.nivelEstatico';
 }

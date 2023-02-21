@@ -24,8 +24,9 @@ export interface IMedicionDinamicoEstatico
 {
     indice: number;
     _id: string;
-    tipoMedicion: string;
+    tipoMedicion: 'instalacion.nivelDinamico' | 'instalacion.nivelEstatico';
 }
+
 @Component({
     selector: 'app-detalle-instalacion',
     standalone: true,
@@ -67,17 +68,17 @@ export class DetalleInstalacionComponent implements OnInit, OnDestroy
         this.mdf.open(ModInstalacionComponent, {width: '40%', hasBackdrop: true, disableClose: true, data: true});
     }
 
-    agregarNvaMedicion(_id: string, esDinamico: boolean): void
+    agregarNvaMedicion(_id: string, tipoNivel: 'instalacion.nivelDinamico' | 'instalacion.nivelEstatico'): void
     {
         const args: ITomarMedicion =
             {
                 _id,
-                esDinamico
+                tipoNivel
             };
         this.telemetriaService.crearRegLectura(args).subscribe();
     }
 
-    filaSelec(e: [IMedicion, number], tipoMedicion: string): void
+    filaSelec(e: [IMedicion, number], tipoMedicion: 'instalacion.nivelDinamico' | 'instalacion.nivelEstatico'): void
     {
         const data: IMedicionDinamicoEstatico =
             {

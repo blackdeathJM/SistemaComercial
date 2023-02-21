@@ -30,21 +30,21 @@
                         <fuse-alert [appearance]="'border'" [type]="'accent'" [showIcon]="false" class="my-2">
                             <span class="text-xl">Lista de mediciones dinamicas de los pozos</span>
                         </fuse-alert>
-                        <app-lista-mediciones-dinamica-estatica [dataSource]="dataSourceDinamico" (fila)="filaSelec($event, 'nivelDinamico')"></app-lista-mediciones-dinamica-estatica>
+                        <app-lista-mediciones-dinamica-estatica [dataSource]="dataSourceDinamico" (fila)="filaSelec($event, 'instalacion.nivelDinamico')"></app-lista-mediciones-dinamica-estatica>
                         <mat-divider class="my-4 border-2 border-yellow-400"></mat-divider>
                         <fuse-alert [appearance]="'border'" [type]="'basic'" [showIcon]="false" class="my-2">
                             <span class="text-xl">Lista de mediciones estaticas de los pozos</span>
                         </fuse-alert>
-                        <app-lista-mediciones-dinamica-estatica class="mb-4" [dataSource]="dataSourceEstatico" (fila)="filaSelec($event, 'nivelEstatico')"></app-lista-mediciones-dinamica-estatica>
+                        <app-lista-mediciones-dinamica-estatica class="mb-4" [dataSource]="dataSourceEstatico" (fila)="filaSelec($event, 'instalacion.nivelEstatico')"></app-lista-mediciones-dinamica-estatica>
                     </section>
                 </mat-card-content>
                 <mat-card-actions class="tarjeta-mat-acciones border-t-yellow-400">
                     <div class="flex flex-auto items-center justify-between">
-                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, true)" [id]="ctrlNvaMedicionDin" [disabled]="ctrlNvaMedicionDin | navegacionPermiso: 'ctrl'">
+                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, 'instalacion.nivelDinamico')" [id]="ctrlNvaMedicionDin" [disabled]="ctrlNvaMedicionDin | navegacionPermiso: 'ctrl'">
                             <mat-icon>add</mat-icon>
                             Inicializar medicion dinamica
                         </button>
-                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, false)" [id]="ctrlNvaMedicionEst" [disabled]="ctrlNvaMedicionEst | navegacionPermiso: 'ctrl'">
+                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, 'instalacion.nivelEstatico')" [id]="ctrlNvaMedicionEst" [disabled]="ctrlNvaMedicionEst | navegacionPermiso: 'ctrl'">
                             <mat-icon>add</mat-icon>
                             Inicializar medicion estatica
                         </button>
