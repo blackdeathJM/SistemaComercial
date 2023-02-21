@@ -3,7 +3,6 @@ import {InjectModel} from '@nestjs/mongoose';
 import {ActInstDto, AgregarBombaDto, AgregarMotorDto, RegInstalacionDto, TelemetriaDto, TelemetriaType, unionTele} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.dto';
 import {Model} from 'mongoose';
 import {TomarMedicionDto} from '#api/libs/models/src/lib/tecnica-operativa/telemetria/instalacion/instalacion.dto';
-import {AppService} from '#api/apps/api/src/app/app.service';
 
 @Injectable()
 export class TelemetriaService
@@ -41,14 +40,12 @@ export class TelemetriaService
                 };
             }
             //Los registros nuevos de niveles se van asignando a un arreglo donde se estaran manejando por año y solo se iran agregando si el arreglo no tiene ano
-            //diferente
             return await this.telemetria.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true}).exec();
         } catch (e)
         {
             throw  new InternalServerErrorException({message: e});
         }
     }
-
     async actLectura(args: TomarMedicionDto): Promise<TelemetriaDto>
     {
         const {_id, tipoNivel, ...resto} = args;
