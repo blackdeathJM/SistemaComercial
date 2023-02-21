@@ -46,6 +46,7 @@ export class TelemetriaService
             throw  new InternalServerErrorException({message: e});
         }
     }
+
     async actLectura(args: TomarMedicionDto): Promise<TelemetriaDto>
     {
         const {_id, tipoNivel, ...resto} = args;
@@ -74,7 +75,8 @@ export class TelemetriaService
     {
         try
         {
-            return await this.telemetria.findByIdAndUpdate(args._id, {$push: {motores: args.motores}}, {new: true}).exec();
+            console.log(args);
+            return await this.telemetria.findByIdAndUpdate(args._id, {$push: {motores: args.motor}}, {new: true}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});
@@ -85,7 +87,7 @@ export class TelemetriaService
     {
         try
         {
-            return await this.telemetria.findByIdAndUpdate(args._id, {$push: {bombas: args.bombas}}, {new: true}).exec();
+            return await this.telemetria.findByIdAndUpdate(args._id, {$push: {bombas: args.bomba}}, {new: true}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

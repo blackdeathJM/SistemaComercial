@@ -6,12 +6,6 @@ import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories
 import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {ActualizarDeptoGQL, CrearDeptoGQL, DepartamentosGQL} from '#/libs/datos/src';
 import {$cast} from '@angular-ru/cdk/utils';
-
-export interface IDeptoSelect
-{
-    depto: IDepto;
-}
-
 @StateRepository()
 @State({
     name: 'deptos',
@@ -21,7 +15,7 @@ export interface IDeptoSelect
     }
 })
 @Injectable()
-export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto, string, IDeptoSelect>
+export class EntityDeptoStore extends NgxsDataEntityCollectionsRepository<IDepto, string>
 {
     public override primaryKey = '_id';
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL)

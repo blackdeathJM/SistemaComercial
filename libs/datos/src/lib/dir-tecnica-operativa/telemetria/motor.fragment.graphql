@@ -12,7 +12,6 @@ fragment fragMotor on MotorType
     voltaje
     motivoRet
     activo
-    id
     hp
     factPotencia
     amperaje

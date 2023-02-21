@@ -13,6 +13,16 @@ export interface ITelemetria
 }
 
 export type TRegInstalacion = Pick<ITelemetria, 'instalacion'>;
-export type TAgregarMotor = Pick<ITelemetria, 'motores' | '_id'>;
-export type TAgregarBomba = Pick<ITelemetria, 'bombas' | '_id'>;
+
+export interface IAgregarMotor
+{
+    _id: string,
+    motor: IMotor
+};
+
+export interface IAgregarBomba
+{
+    _id: string;
+    bomba: IBomba
+};
 export type TActInst = Pick<ITelemetria, '_id' | 'instalacion'>;

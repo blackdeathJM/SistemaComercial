@@ -75,14 +75,14 @@ export class AuthService
         }));
     }
 
-    registroSesion(_id: string, auth: IAuth, modificadoPor: IModificado): Observable<SingleExecutionResult<RegistroSesionMutation>>
+    registroSesion(id: string, auth: IAuth, modificadoPor: IModificado): Observable<SingleExecutionResult<RegistroSesionMutation>>
     {
-        return this.registroSesionGQL.mutate({_id, auth, modificadoPor}).pipe(tap((res) =>
+        return this.registroSesionGQL.mutate({_id: id, auth, modificadoPor}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveEmpleado>(res.data.registroSesion);
-                this.entityEmpleado.updateOne({id: changes._id, changes});
+                const {_id, ...changes} = $cast<IResolveEmpleado>(res.data.registroSesion);
+                this.entityEmpleado.updateOne({id: _id, changes});
                 this.ngxToast.satisfactorioToast('La sesion fue asignada con exito', 'Asignacion de sesion');
             }
         }));
@@ -92,7 +92,6 @@ export class AuthService
     {
         return this.rolCambiadoGQL.subscribe({_id}).pipe(tap((res) =>
         {
-            console.log('.....', res.data.rolCambiado.datosSesion);
             if (isNotNil(res.data))
             {
                 const rolCambiado = $cast<IDatosSesion>(res.data.rolCambiado.datosSesion);

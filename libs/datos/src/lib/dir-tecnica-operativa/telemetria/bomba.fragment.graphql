@@ -1,7 +1,6 @@
 fragment fragBomba on BombaType
 {
     activo
-    id
     diametro
     eficiencia
     evidenciaInst

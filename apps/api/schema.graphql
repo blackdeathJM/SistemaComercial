@@ -134,9 +134,8 @@ type BombaType {
   eficiencia: Float
   evidenciaInst: [String!]
   evidenciaRetiro: [String!]
-  fechaInstalacion: Date
-  fechaRetiro: Date
-  id: Int
+  fechaInstalacion: DateTime
+  fechaRetiro: DateTime
   lts: Float
   marca: String
   modelo: String
@@ -145,12 +144,14 @@ type BombaType {
   noSerie: String
   observaciones: String
   rpm: Int
+  descripcion: String
+  causasBaja: String
 }
 
 """
-A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
-scalar Date
+scalar DateTime
 
 type InstalacionType {
   activo: Boolean
@@ -191,6 +192,11 @@ type MedidorType {
   servicio: String
 }
 
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
 type RecibosType {
   ano: Int
   costoKw: Float
@@ -207,16 +213,18 @@ type MotorType {
   evidenciaInst: [String!]
   evidenciaRetiro: [String!]
   factPotencia: Float
-  fechaInstalacion: Date
-  fechaRetiro: Date
+  fechaInstalacion: DateTime
+  fechaRetiro: DateTime
   hp: Float
-  id: Int
   marca: String
   modelo: String
   motivoRet: String
   noSerie: String
   observaciones: String
   voltaje: Float
+  descripcion: String
+  causasBaja: String
+  eficiencia: Float
 }
 
 type TelemetriaType {
@@ -317,7 +325,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676959101
+  tiempo: Int = 1676988157
   titulo: String
   usarRouter: Boolean = false
 }
@@ -335,9 +343,8 @@ input BombaInput {
   eficiencia: Float = 0
   evidenciaInst: [String!] = []
   evidenciaRetiro: [String!] = []
-  fechaInstalacion: Date
-  fechaRetiro: Date = null
-  id: Int = 0
+  fechaInstalacion: DateTime
+  fechaRetiro: DateTime = null
   lts: Float = 0
   marca: String = null
   modelo: String = null
@@ -346,6 +353,8 @@ input BombaInput {
   noSerie: String = null
   observaciones: String = null
   rpm: Int = null
+  descripcion: String = null
+  causasBaja: String = null
 }
 
 input InstalacionInput {
@@ -403,16 +412,18 @@ input MotorInput {
   evidenciaInst: [String!] = []
   evidenciaRetiro: [String!] = []
   factPotencia: Float = 0
-  fechaInstalacion: Date = null
-  fechaRetiro: Date = null
+  fechaInstalacion: DateTime = null
+  fechaRetiro: DateTime = null
   hp: Float = 0
-  id: Int = 0
   marca: String = null
   modelo: String = null
   motivoRet: String = null
   noSerie: String = null
   observaciones: String = null
   voltaje: Float = 0
+  descripcion: String = null
+  causasBaja: String = null
+  eficiencia: Float = 0
 }
 
 input TelemetriaInput {
@@ -632,12 +643,12 @@ input ActInstInput {
 
 input AgregarMotorInput {
   _id: ID
-  motores: [MotorInput!] = []
+  motor: MotorInput
 }
 
 input AgregarBombaInput {
   _id: ID
-  bombas: [BombaInput!] = []
+  bomba: BombaInput
 }
 
 type Subscription {

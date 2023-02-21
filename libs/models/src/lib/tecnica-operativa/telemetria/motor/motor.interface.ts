@@ -6,4 +6,5 @@ export interface IMotor extends IComunBombaMotor
     voltaje: number;
     amperaje: number;
     factPotencia: number;
+    eficiencia: number;
 }

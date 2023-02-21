@@ -1,6 +1,5 @@
 export interface IComunBombaMotor
 {
-    id: number;
     noSerie: string;
     modelo: string;
     fechaInstalacion: Date;
@@ -10,6 +9,8 @@ export interface IComunBombaMotor
     marca: string;
     motivoRet: string;
     observaciones: string;
+    descripcion: string;
+    causasBaja: string;
     activo: boolean;
 }
 

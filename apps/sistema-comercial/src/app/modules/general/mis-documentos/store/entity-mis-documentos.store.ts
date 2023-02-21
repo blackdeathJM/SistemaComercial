@@ -1,4 +1,4 @@
-import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
+import {StateRepository} from '@angular-ru/ngxs/decorators';
 import {Selector, State} from '@ngxs/store';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {Injectable} from '@angular/core';
@@ -26,16 +26,6 @@ export class EntityMisDocumentosStore extends NgxsDataEntityCollectionsRepositor
     public static documento(stateDoc: EntityCollections<IResolveDocumento, EntityIdType, IDocSeleccionar>): IResolveDocumento
     {
         return stateDoc.documento;
-    }
-
-    @DataAction()
-    filtrar(proceso: string): void
-    {
-        const estado = this.getState();
-        const filtro = this.entitiesArray.filter(v => v.proceso === proceso);
-        this.setAll(filtro);
-        console.log('estado', estado);
-        console.log('filtro', filtro);
     }
 
     // @DataAction()

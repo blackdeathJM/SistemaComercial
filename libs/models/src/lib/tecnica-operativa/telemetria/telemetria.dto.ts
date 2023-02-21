@@ -1,4 +1,4 @@
-import {ITelemetria, TActInst, TAgregarBomba, TAgregarMotor, TRegInstalacion} from './telemetria.interface';
+import {ITelemetria, TActInst, IAgregarBomba, IAgregarMotor, TRegInstalacion} from './telemetria.interface';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {createUnionType, Field, ID, InputType, ObjectType, PickType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
@@ -7,6 +7,8 @@ import {InstalacionDto} from './instalacion/instalacion.dto';
 import {MedidorDto} from './medidor/medidor.dto';
 import {MotorDto} from './motor/motor.dto';
 import {ErroresDto} from '../../errors/errores.dto';
+import {IMotor} from './motor/motor.interface';
+import {IBomba} from './bomba/bomba.interface';
 
 @InputType('TelemetriaInput')
 @ObjectType('TelemetriaType')
@@ -61,15 +63,19 @@ export class RegInstalacionDto extends PickType(TelemetriaDto, ['instalacion'], 
 }
 
 @InputType('AgregarMotorInput')
-export class AgregarMotorDto extends PickType(TelemetriaDto, ['_id', 'motores'], InputType) implements TAgregarMotor
+export class AgregarMotorDto extends PickType(TelemetriaDto, ['_id'], InputType) implements IAgregarMotor
 {
-
+    @Field(() => MotorDto, {nullable: true})
+    @IsNotEmpty({message: 'La informacion del motor es importante'})
+    motor: MotorDto;
 }
 
 @InputType('AgregarBombaInput')
-export class AgregarBombaDto extends PickType(TelemetriaDto, ['_id', 'bombas'], InputType) implements TAgregarBomba
+export class AgregarBombaDto extends PickType(TelemetriaDto, ['_id'], InputType) implements IAgregarBomba
 {
-
+    @Field(() => BombaDto, {nullable: true})
+    @IsNotEmpty({message: 'La informacion de la bomba es necesaria'})
+    bomba: BombaDto;
 }
 
 @InputType('ActInstInput')

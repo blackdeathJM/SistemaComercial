@@ -1,12 +1,13 @@
 import {IBomba} from './bomba.interface';
 import {Field, Float, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
-import {GraphQLDate} from 'graphql-scalars';
+import {GraphQLDate, GraphQLDateTime} from 'graphql-scalars';
 
 @ObjectType('BombaType')
 @InputType('BombaInput')
 export class BombaDto implements IBomba
 {
+
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @IsBoolean({message: 'El valor activo debe ser un valor boolean'})
     activo: boolean;
@@ -22,15 +23,12 @@ export class BombaDto implements IBomba
     @Field(() => [String], {nullable: true, defaultValue: []})
     @IsOptional()
     evidenciaRetiro: string[];
-    @Field(() => GraphQLDate, {nullable: true})
+    @Field(() => GraphQLDateTime, {nullable: true})
     @IsNotEmpty({message: 'La fecha de instalacion es requerida'})
     fechaInstalacion: Date;
-    @Field(() => GraphQLDate, {nullable: true, defaultValue: null})
+    @Field(() => GraphQLDateTime, {nullable: true, defaultValue: null})
     @IsOptional()
     fechaRetiro: Date;
-    @Field(() => Int, {nullable: true, defaultValue: 0})
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 0})
-    id: number;
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
     lts: number;
@@ -56,4 +54,12 @@ export class BombaDto implements IBomba
     @Field(() => Int, {nullable: true, defaultValue: null})
     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 0})
     rpm: number;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    descripcion: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsNotEmpty({message: 'La causa de baja es requerida'})
+    causasBaja: string;
 }

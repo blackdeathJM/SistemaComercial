@@ -53,7 +53,7 @@ export class DeptoService
             if (isNotNil(res.data))
             {
                 const depto = $cast<IDepto>(res.data.crearDepto);
-                this.entityDepto.addOne(depto);
+                this.entityDepto.setOne(depto);
                 this.ngxToast.satisfactorioToast('El departamento ser registro con exito', 'Nuevo departamento');
             }
         }));
@@ -65,8 +65,8 @@ export class DeptoService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IDepto>(res.data.actualizarDepto);
-                this.entityDepto.updateOne({id: changes._id, changes});
+                const {_id, ...changes} = $cast<IDepto>(res.data.actualizarDepto);
+                this.entityDepto.updateOne({id: _id, changes});
                 this.ngxToast.satisfactorioToast('El Departamento se actualizo con exito', 'Actualizar departamento');
             }
         }));
@@ -78,8 +78,8 @@ export class DeptoService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IDepto>(res.data.agregarPuesto);
-                this.entityDepto.updateOne({id: changes._id, changes});
+                const {_id, ...changes} = $cast<IDepto>(res.data.agregarPuesto);
+                this.entityDepto.updateOne({id: _id, changes});
                 this.ngxToast.satisfactorioToast('El puesto se a agregado correctamente', 'Agregar nuevo puesto');
             }
         }));

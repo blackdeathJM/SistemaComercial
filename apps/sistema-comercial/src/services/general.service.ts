@@ -43,6 +43,10 @@ export class GeneralService
         // return DateTime.utc(fecha.year, fecha.month + 1, fecha.date, new Date().getHours(), new Date().getMinutes(), {locale: 'es-MX'}).toUnixInteger();
         return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
+    static convertirIsoDate(fecha: IObjFecha): void
+    {
+        const fechas = DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toISODate();
+    }
 
     static fechaHoraActual(): number
     {
