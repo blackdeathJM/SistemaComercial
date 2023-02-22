@@ -10,7 +10,6 @@ export interface IComunBombaMotor
     motivoRet: string;
     observaciones: string;
     descripcion: string;
-    causasBaja: string;
     activo: boolean;
 }
 

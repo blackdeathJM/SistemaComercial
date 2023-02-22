@@ -5,6 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {ListaMotoresComponent} from '@s-dir-tecnica-operativa/motor/lista-motores/lista-motores.component';
+import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 
 @Component({
     selector: 'app-detalle-motor',
@@ -16,4 +17,7 @@ import {ListaMotoresComponent} from '@s-dir-tecnica-operativa/motor/lista-motore
 })
 export class DetalleMotorComponent
 {
+    constructor(public entityTelemetria: EntityTelemetria)
+    {
+    }
 }

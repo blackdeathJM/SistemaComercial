@@ -58,8 +58,4 @@ export class BombaDto implements IBomba
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     descripcion: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsNotEmpty({message: 'La causa de baja es requerida'})
-    causasBaja: string;
 }

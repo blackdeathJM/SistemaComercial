@@ -1,58 +1,59 @@
 <article class="flex flex-col flex-auto p-4">
     <app-lista-motores class="flex-auto"></app-lista-motores>
+    <ng-container *ngIf="entityTelemetria.state$ | async as instalacion">
+        <section class="flex-auto mt-8">
+            <mat-card class="bg-gray-300 dark:bg-gray-800">
+                <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500">
+                    <span class="text-lg font-medium">Motor {{instalacion.instalacion.motores[0]}}</span>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="grid grid-cols-6 gap-4 p-3">
+                        <span class="detalle-span">serie:</span>
+                        <span class="border-b-2">XALDO5253LDOR</span>
+                        <span class="detalle-span">Marca:</span>
+                        <span class="border-b-2">DLLSOLD -- adasde</span>
+                        <span class="detalle-span">Modelo:</span>
+                        <span class="border-b-2">MODELO-MOTOR</span>
 
-    <section class="flex-auto mt-8">
-        <mat-card class="bg-gray-300 dark:bg-gray-800">
-            <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500">
-                <span class="text-lg font-medium">Motor (Colocar el nombre de la instalacion)</span>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="grid grid-cols-6 gap-4 p-3">
-                    <span class="detalle-span">serie:</span>
-                    <span class="border-b-2">XALDO5253LDOR</span>
-                    <span class="detalle-span">Marca:</span>
-                    <span class="border-b-2">DLLSOLD -- adasde</span>
-                    <span class="detalle-span">Modelo:</span>
-                    <span class="border-b-2">MODELO-MOTOR</span>
+                        <span class="detalle-span">Amperaje:</span>
+                        <span class="border-b-2">356</span>
+                        <span class="detalle-span">Voltaje:</span>
+                        <span class="border-b-2">dESd</span>
+                        <span class="detalle-span">Fact potencia:</span>
+                        <span class="border-b-2">100</span>
 
-                    <span class="detalle-span">Amperaje:</span>
-                    <span class="border-b-2">356</span>
-                    <span class="detalle-span">Voltaje:</span>
-                    <span class="border-b-2">dESd</span>
-                    <span class="detalle-span">Fact potencia:</span>
-                    <span class="border-b-2">100</span>
+                        <span class="detalle-span col-start-3">Hp:</span>
+                        <span class="border-b-2">356</span>
+                        <span class="detalle-span">Eficiencia:</span>
+                        <span class="border-b-2">dESd</span>
 
-                    <span class="detalle-span col-start-3">Hp:</span>
-                    <span class="border-b-2">356</span>
-                    <span class="detalle-span">Eficiencia:</span>
-                    <span class="border-b-2">dESd</span>
+                        <span class="detalle-span col-start-3">Fecha instalacion:</span>
+                        <span class="border-b-2">13/06/2021</span>
+                        <span class="detalle-span">Fecha retiro:</span>
+                        <span class="border-b-2">19/09/2023</span>
 
-                    <span class="detalle-span col-start-3">Fecha instalacion:</span>
-                    <span class="border-b-2">13/06/2021</span>
-                    <span class="detalle-span">Fecha retiro:</span>
-                    <span class="border-b-2">19/09/2023</span>
+                        <span class="detalle-span">Descripcion:</span>
+                        <span class="col-span-5 border-b-2">asdf dasfa asera dasfasdf aesera</span>
 
-                    <span class="detalle-span">Descripcion:</span>
-                    <span class="col-span-5 border-b-2">asdf dasfa asera dasfasdf aesera</span>
-
-                    <span class="detalle-span">Observaciones:</span>
-                    <span class="col-span-5 border-b-2">asdf dasfa asera dasfasdf aesera afasd adfe</span>
-                    <span class="text-md col-span-full border-b-2 text-start text-amber-900 dark:text-amber-400">EVIDENCIA INSTALACION</span>
-                    <span class="text-md col-span-full border-b-2 text-start text-amber-900 dark:text-amber-400">EVIDENCIA BAJA</span>
-                </div>
-            </mat-card-content>
-            <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
-                <div class="flex items-center justify-between flex-auto">
-                    <button mat-raised-button color="primary">
-                        <mat-icon>add</mat-icon>
-                        Alguna Accion
-                    </button>
-                    <button mat-raised-button color="accent">
-                        <mat-icon svgIcon="edit"></mat-icon>
-                        Agregar evidencia
-                    </button>
-                </div>
-            </mat-card-actions>
-        </mat-card>
-    </section>
+                        <span class="detalle-span">Observaciones:</span>
+                        <span class="col-span-5 border-b-2">asdf dasfa asera dasfasdf aesera afasd adfe</span>
+                        <span class="text-md col-span-full border-b-2 text-start text-amber-900 dark:text-amber-400">EVIDENCIA INSTALACION</span>
+                        <span class="text-md col-span-full border-b-2 text-start text-amber-900 dark:text-amber-400">EVIDENCIA BAJA</span>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
+                    <div class="flex items-center justify-between flex-auto">
+                        <button mat-raised-button color="primary">
+                            <mat-icon>add</mat-icon>
+                            Alguna Accion
+                        </button>
+                        <button mat-raised-button color="accent">
+                            <mat-icon svgIcon="edit"></mat-icon>
+                            Agregar evidencia
+                        </button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </section>
+    </ng-container>
 </article>

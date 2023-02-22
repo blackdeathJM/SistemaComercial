@@ -1,18 +1,19 @@
 fragment fragBomba on BombaType
 {
-    activo
-    diametro
-    eficiencia
-    evidenciaInst
-    evidenciaRetiro
+    noSerie
+    modelo
     fechaInstalacion
     fechaRetiro
-    lts
+    evidenciaInst
+    evidenciaRetiro
     marca
-    modelo
     motivoRet
-    noImpulsores
-    noSerie
     observaciones
+    descripcion
+    activo
+    noImpulsores
     rpm
+    diametro
+    lts
+    eficiencia
 }

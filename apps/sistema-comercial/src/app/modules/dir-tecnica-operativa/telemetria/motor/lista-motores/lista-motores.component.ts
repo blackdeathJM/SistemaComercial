@@ -11,8 +11,9 @@ import {CtrlTelemetria} from '#/apps/sistema-comercial/src/app/mock-api/common/n
 import {MatDialog} from '@angular/material/dialog';
 import {ModMotorComponent} from '@s-dir-tecnica-operativa/motor/mod-motor/mod-motor.component';
 import {MatIconModule} from '@angular/material/icon';
-import {isNil} from "@angular-ru/cdk/utils";
-import {NgxToastService} from "@s-services/ngx-toast.service";
+import {isNil} from '@angular-ru/cdk/utils';
+import {NgxToastService} from '@s-services/ngx-toast.service';
+import {ITelemetria} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 
 @Component({
     selector: 'app-lista-motores',
@@ -33,12 +34,6 @@ export class ListaMotoresComponent implements OnInit
 
     ngOnInit(): void
     {
-
-    }
-
-    seleccionar(motor: IMotor): void
-    {
-
     }
 
     nvoMotor(): void
@@ -49,5 +44,15 @@ export class ListaMotoresComponent implements OnInit
             return;
         }
         this.mdr.open(ModMotorComponent, {width: '40%', data: false, hasBackdrop: false});
+    }
+
+    motorSelect(inst: ITelemetria, i: number): void
+    {
+        this.entityTelemetria.seleccionarInst(inst._id);
+    }
+
+    trackByFn(index: number): number
+    {
+        return index;
     }
 }

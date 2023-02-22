@@ -1,18 +1,19 @@
 fragment fragMotor on MotorType
 {
-    observaciones
     noSerie
-    motivoRet
     modelo
-    marca
-    fechaRetiro
     fechaInstalacion
-    evidenciaRetiro
+    fechaRetiro
     evidenciaInst
-    voltaje
+    evidenciaRetiro
+    marca
     motivoRet
+    observaciones
+    descripcion
     activo
     hp
-    factPotencia
+    voltaje
     amperaje
+    factPotencia
+    eficiencia
 }

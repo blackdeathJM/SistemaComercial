@@ -12,7 +12,6 @@ import {Motor} from '#/libs/models/src/lib/tecnica-operativa/telemetria/motor/mo
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {IAgregarMotor} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 import {finalize} from 'rxjs';
-import {DateTime} from "luxon";
 
 @Component({
     selector: 'app-mod-motor',
@@ -39,7 +38,7 @@ export class ModMotorComponent implements OnInit
 
     registro(): void
     {
-        // this.cargando = true;
+        this.cargando = true;
         const fechaInst = this.formMotor.get('fechaInstalacion').value;
         const mediciones = ['amperaje', 'eficiencia', 'factPotencia', 'hp', 'voltaje'];
         const args: IAgregarMotor =
@@ -62,6 +61,5 @@ export class ModMotorComponent implements OnInit
             this.formMotor.enable();
             this.mdr.close();
         })).subscribe();
-
     }
 }

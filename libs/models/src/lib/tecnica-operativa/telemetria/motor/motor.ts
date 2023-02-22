@@ -14,9 +14,6 @@ export class Motor implements IMotor
     amperaje: number = 0;
 
     @prop()
-    causasBaja: string = null;
-
-    @prop()
     descripcion: string = null;
     @prop()
     evidenciaInst: string[] = [];

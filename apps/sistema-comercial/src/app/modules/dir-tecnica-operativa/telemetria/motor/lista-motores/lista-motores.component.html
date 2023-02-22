@@ -7,7 +7,8 @@
             <div class="flex flex-auto flex-col mt-4">
                 <ng-container *ngIf="entityTelemetria.state$ | async as inst">
                     <mat-selection-list multiple="false">
-                        <mat-list-option class="border-b-2" *ngFor="let motor of inst?.instalacion?.motores">
+                        <mat-list-option class="border-b-2" *ngFor="let motor of inst?.instalacion?.motores;let i=index; trackBy:trackByFn" color="primary"
+                                         (selectedChange)="motorSelect(inst.instalacion, i)">
                             <div class="flex flex-auto gap-8">
                                 <span>{{motor?.marca}}</span>
                                 <span>{{motor?.descripcion}}</span>

@@ -10,7 +10,9 @@
                 <ng-container *ngIf="entityTelemetria.entitiesArray$ | async as inst">
                     <div class="flex flex-auto flex-col pl-1">
                         <mat-selection-list multiple="false" color="primary">
-                            <mat-list-option class="border-b-2" *ngFor="let instalacion of inst" (selectedChange)="seleccionarInstalacion(instalacion)">{{instalacion.instalacion.nombre}}</mat-list-option>
+                            <mat-list-option class="border-b-2" *ngFor="let instalacion of inst" (selectedChange)="seleccionarInstalacion(instalacion)">
+                                {{instalacion.instalacion.nombre}}
+                            </mat-list-option>
                         </mat-selection-list>
                     </div>
                 </ng-container>

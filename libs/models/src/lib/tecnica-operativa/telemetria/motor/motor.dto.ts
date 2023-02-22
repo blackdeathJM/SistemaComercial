@@ -67,10 +67,6 @@ export class MotorDto implements IMotor
     @IsOptional()
     descripcion: string;
 
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    causasBaja: string;
-
     @Field(() => Float, {nullable: true, defaultValue: 0})
     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
     eficiencia: number;

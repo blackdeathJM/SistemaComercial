@@ -75,7 +75,6 @@ export class TelemetriaService
     {
         try
         {
-            console.log(args);
             return await this.telemetria.findByIdAndUpdate(args._id, {$push: {motores: args.motor}}, {new: true}).exec();
         } catch (e)
         {
