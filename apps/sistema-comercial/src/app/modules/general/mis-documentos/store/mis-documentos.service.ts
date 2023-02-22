@@ -114,12 +114,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.docFinalizar);
-                const documento = {...changes};
-                const {_id, ...cambios} = changes;
-
-                this.entityMisDocumentos.updateOne({id: _id, changes: cambios});
-                this.entityMisDocumentos.patchState({documento});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.docFinalizar);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('El documento ha finalizado con exito', 'Finalizar documentos');
             }
         }));
@@ -131,11 +128,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.docActFolio);
-                const documento = {...changes};
-                const {_id, ...cambios} = changes;
-                this.entityMisDocumentos.updateOne({id: _id, changes: cambios});
-                this.entityMisDocumentos.patchState({documento});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.docActFolio);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('Folio generado con exito', 'Generar folio');
             }
         }));
@@ -147,11 +142,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.subirDocs);
-                const documento = {...changes};
-                const {_id, ...cambios} = changes;
-                this.entityMisDocumentos.updateOne({id: _id, changes: cambios});
-                this.entityMisDocumentos.patchState({documento});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.subirDocs);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('El documento se ha subido con exito', 'Subir documentos');
             }
         }));
@@ -163,11 +156,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.reasignarUsuario);
-                const documento = {...changes};
-                const {_id, ...cambios} = changes;
-                this.entityMisDocumentos.updateOne({id: _id, changes: cambios});
-                this.entityMisDocumentos.patchState({documento});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.reasignarUsuario);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('La reasignacion se ha realizado con exito', 'Reasignacion de usuarios');
             }
         }));
@@ -191,11 +182,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.docRefFolio);
-                const documento = {...changes};
-                const {_id, ...cambios} = changes;
-                this.entityMisDocumentos.updateOne({id: _id, changes: cambios});
-                this.entityMisDocumentos.patchState({documento});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.docRefFolio);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('La referencia se creo correctamente', 'Referenciar folio');
             }
         }));
