@@ -4,3 +4,4 @@ export const dirAdmonFinanzas = '/sistema-comercial/dir-admon-finanzas/recursos-
 export const dirComercial = '/sistema-comercial/dir-comercial/';
 export const dirTecnicaOperativa = '/sistema-comercial/dir-tecnica-operativa/';
 export const dirArchivoRegulacion = '/sistema-comercial/dir-archivo-regulacion/';
+export const dirGeneral = '/sistema-comercial/dir-general/';

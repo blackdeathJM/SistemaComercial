@@ -1,8 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {IMotor} from '#/libs/models/src/lib/tecnica-operativa/telemetria/motor/motor.interface';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,8 +24,10 @@ import {ITelemetria} from '#/libs/models/src/lib/tecnica-operativa/telemetria/te
 })
 export class ListaMotoresComponent implements OnInit
 {
+    @Output() indiceMotor = new EventEmitter<number>();
     ngxLoader = 'ngxLoader';
     agregarMotor: CtrlTelemetria.ctrlAgregarMotor;
+
 
     constructor(public entityTelemetria: EntityTelemetria, private mdr: MatDialog, private ngxToast: NgxToastService)
     {
@@ -48,6 +49,7 @@ export class ListaMotoresComponent implements OnInit
 
     motorSelect(inst: ITelemetria, i: number): void
     {
+        this.indiceMotor.emit(i);
         this.entityTelemetria.seleccionarInst(inst._id);
     }
 

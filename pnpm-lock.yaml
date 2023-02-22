@@ -140,7 +140,7 @@ specifiers:
   luxon: ^3.2.1
   luxon-angular: ^6.0.0
   marked: ^4.2.12
-  mongoose: ^6.9.2
+  mongoose: ^6.9.3
   nest-access-control: ^2.2.0
   ng-apexcharts: 1.7.4
   ngx-image-cropper: ^6.3.2
@@ -200,7 +200,7 @@ dependencies:
   '@nestjs/event-emitter': 1.4.1_shbtxdxgogsm4p64bg2toeylku
   '@nestjs/graphql': 10.2.0_neqsyrtn5qk37n4fdpym5gzwom
   '@nestjs/jwt': 10.0.2_@nestjs+common@9.3.9
-  '@nestjs/mongoose': 9.2.1_5eablghbhvj6tunqdl55vuncby
+  '@nestjs/mongoose': 9.2.1_x4ljt2qnmx3gohfhkrkczky72i
   '@nestjs/passport': 9.0.3_v3ijvyhfbmibt6kvwmic262qla
   '@nestjs/platform-express': 9.3.9_77foi4w27ghy47yutmnzv7krjy
   '@nestjs/serve-static': 3.0.1_dcetm4e66hqs4g5rr6xumywjy4
@@ -245,7 +245,7 @@ dependencies:
   luxon: 3.2.1
   luxon-angular: 6.0.0_xunz3cayb5jivhidwcpclgfusq
   marked: 4.2.12
-  mongoose: 6.9.2
+  mongoose: 6.9.3
   nest-access-control: 2.2.0_@nestjs+graphql@10.2.0
   ng-apexcharts: 1.7.4_ytrtcrqdd4gouun3axbyhfe6gi
   ngx-image-cropper: 6.3.2_yc3im5flbqmgh4wnppeqecgnvq
@@ -7405,7 +7405,7 @@ packages:
       class-validator: 0.14.0
       reflect-metadata: 0.1.13
 
-  /@nestjs/mongoose/9.2.1_5eablghbhvj6tunqdl55vuncby:
+  /@nestjs/mongoose/9.2.1_x4ljt2qnmx3gohfhkrkczky72i:
     resolution: {integrity: sha512-tMK5kKFjQnNVhqJDw1wa352z+VsODOFznTn74xSzrziof03qS+O6rLU4q1kMx0B4AmFbADf03GOdpvBc9bMWqw==}
     peerDependencies:
       '@nestjs/common': ^8.0.0 || ^9.0.0
@@ -7416,7 +7416,7 @@ packages:
     dependencies:
       '@nestjs/common': 9.3.9_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/core': 9.3.9_q6agyr4hwia55oswpsa7zjxcpm
-      mongoose: 6.9.2
+      mongoose: 6.9.3
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
     dev: false
@@ -16422,8 +16422,8 @@ packages:
       - aws-crt
     dev: false
 
-  /mongoose/6.9.2:
-    resolution: {integrity: sha512-Yb9rWJhYm+7Yf839QuKx2dXcclbA0GAMxtdDiaedHsOQU+y28cD/8gKYp1wTwwyAjKesqaGfLG4ez7D9lKpwBw==}
+  /mongoose/6.9.3:
+    resolution: {integrity: sha512-WiuqEXblyd6NLASmTsdgkA3hEndf8CJ8qEEVt7QjSvyImNATn5J7mbPbbZMgFz2MvkPHnpqSbfjyxFoYSdTZOg==}
     engines: {node: '>=12.0.0'}
     dependencies:
       bson: 4.7.0

@@ -1,4 +1,4 @@
-import {Computed, StateRepository} from '@angular-ru/ngxs/decorators';
+import {StateRepository, DataAction} from '@angular-ru/ngxs/decorators';
 import {State} from '@ngxs/store';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {createEntityCollections} from '@angular-ru/cdk/entity';
@@ -20,7 +20,7 @@ export class EntityTelemetria extends NgxsDataEntityCollectionsRepository<ITelem
 {
     public override primaryKey = '_id';
 
-    @Computed()
+    @DataAction({subscribeRequired: false})
     seleccionarInst(id: string): void
     {
         const instalacion = this.selectOne(id);

@@ -23,6 +23,10 @@ export const generalRouting: Routes =
                     {
                         path: 'permisos',
                         loadComponent: () => import('@s-general/sesion/sesion.component').then(c => c.SesionComponent)
+                    },
+                    {
+                        path: 'pbr',
+                        loadComponent: () => import('@s-general/pbr/pbr.component')
                     }
                 ]
         }

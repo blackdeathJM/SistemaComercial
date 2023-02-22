@@ -222,7 +222,6 @@ type MotorType {
   observaciones: String
   voltaje: Float
   descripcion: String
-  causasBaja: String
   eficiencia: Float
 }
 
@@ -324,7 +323,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1676988157
+  tiempo: Int = 1677088656
   titulo: String
   usarRouter: Boolean = false
 }
@@ -353,7 +352,6 @@ input BombaInput {
   observaciones: String = null
   rpm: Int = null
   descripcion: String = null
-  causasBaja: String = null
 }
 
 input InstalacionInput {
@@ -421,7 +419,6 @@ input MotorInput {
   observaciones: String = null
   voltaje: Float = 0
   descripcion: String = null
-  causasBaja: String = null
   eficiencia: Float = 0
 }
 
