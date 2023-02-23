@@ -1513,7 +1513,7 @@ ${FragDeptosFragmentDoc}`;
   })
   export class RegistroSesionGQL extends Apollo.Mutation<RegistroSesionMutation, RegistroSesionMutationVariables> {
     document = RegistroSesionDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1539,7 +1539,7 @@ ${FragDeptosFragmentDoc}`;
   })
   export class ActualizarContrasenaAdminGQL extends Apollo.Mutation<ActualizarContrasenaAdminMutation, ActualizarContrasenaAdminMutationVariables> {
     document = ActualizarContrasenaAdminDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1560,7 +1560,7 @@ export const RolCambiadoDocument = gql`
   })
   export class RolCambiadoGQL extends Apollo.Subscription<RolCambiadoSubscription, RolCambiadoSubscriptionVariables> {
     document = RolCambiadoDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1581,7 +1581,7 @@ export const LoginDocument = gql`
   })
   export class LoginGQL extends Apollo.Mutation<LoginMutation, LoginMutationVariables> {
     document = LoginDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1602,7 +1602,7 @@ export const ActualizarAvatarDocument = gql`
   })
   export class ActualizarAvatarGQL extends Apollo.Mutation<ActualizarAvatarMutation, ActualizarAvatarMutationVariables> {
     document = ActualizarAvatarDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1620,7 +1620,7 @@ export const CrearRolesDocument = gql`
   })
   export class CrearRolesGQL extends Apollo.Mutation<CrearRolesMutation, CrearRolesMutationVariables> {
     document = CrearRolesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1638,7 +1638,7 @@ export const RolesAsigDocument = gql`
   })
   export class RolesAsigGQL extends Apollo.Query<RolesAsigQuery, RolesAsigQueryVariables> {
     document = RolesAsigDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1656,7 +1656,7 @@ export const ActPrimerNivelDocument = gql`
   })
   export class ActPrimerNivelGQL extends Apollo.Mutation<ActPrimerNivelMutation, ActPrimerNivelMutationVariables> {
     document = ActPrimerNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1674,7 +1674,7 @@ export const ActCtrlPrimerNivelDocument = gql`
   })
   export class ActCtrlPrimerNivelGQL extends Apollo.Mutation<ActCtrlPrimerNivelMutation, ActCtrlPrimerNivelMutationVariables> {
     document = ActCtrlPrimerNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1692,7 +1692,7 @@ export const ActSegundoNivelDocument = gql`
   })
   export class ActSegundoNivelGQL extends Apollo.Mutation<ActSegundoNivelMutation, ActSegundoNivelMutationVariables> {
     document = ActSegundoNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1710,7 +1710,7 @@ export const ActCtrlSegundoNivelDocument = gql`
   })
   export class ActCtrlSegundoNivelGQL extends Apollo.Mutation<ActCtrlSegundoNivelMutation, ActCtrlSegundoNivelMutationVariables> {
     document = ActCtrlSegundoNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1728,7 +1728,7 @@ export const ActTercerNivelDocument = gql`
   })
   export class ActTercerNivelGQL extends Apollo.Mutation<ActTercerNivelMutation, ActTercerNivelMutationVariables> {
     document = ActTercerNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1746,7 +1746,7 @@ export const ActCtrlTercerNivelDocument = gql`
   })
   export class ActCtrlTercerNivelGQL extends Apollo.Mutation<ActCtrlTercerNivelMutation, ActCtrlTercerNivelMutationVariables> {
     document = ActCtrlTercerNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1764,7 +1764,7 @@ export const AsigPermisoPrimerNivelDocument = gql`
   })
   export class AsigPermisoPrimerNivelGQL extends Apollo.Mutation<AsigPermisoPrimerNivelMutation, AsigPermisoPrimerNivelMutationVariables> {
     document = AsigPermisoPrimerNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1782,7 +1782,7 @@ export const AsigPermisoSegNivelDocument = gql`
   })
   export class AsigPermisoSegNivelGQL extends Apollo.Mutation<AsigPermisoSegNivelMutation, AsigPermisoSegNivelMutationVariables> {
     document = AsigPermisoSegNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1800,7 +1800,7 @@ export const AsigPermisoTercerNivelDocument = gql`
   })
   export class AsigPermisoTercerNivelGQL extends Apollo.Mutation<AsigPermisoTercerNivelMutation, AsigPermisoTercerNivelMutationVariables> {
     document = AsigPermisoTercerNivelDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1829,7 +1829,7 @@ export const RegDocDocument = gql`
   })
   export class RegDocGQL extends Apollo.Mutation<RegDocMutation, RegDocMutationVariables> {
     document = RegDocDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1858,7 +1858,7 @@ export const SubirDocsDocument = gql`
   })
   export class SubirDocsGQL extends Apollo.Mutation<SubirDocsMutation, SubirDocsMutationVariables> {
     document = SubirDocsDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1892,7 +1892,7 @@ export const DocsUsuarioProcesoDocument = gql`
   })
   export class DocsUsuarioProcesoGQL extends Apollo.Query<DocsUsuarioProcesoQuery, DocsUsuarioProcesoQueryVariables> {
     document = DocsUsuarioProcesoDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1908,7 +1908,7 @@ export const GenFolioSinRegDocument = gql`
   })
   export class GenFolioSinRegGQL extends Apollo.Mutation<GenFolioSinRegMutation, GenFolioSinRegMutationVariables> {
     document = GenFolioSinRegDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1937,7 +1937,7 @@ export const DocActFolioDocument = gql`
   })
   export class DocActFolioGQL extends Apollo.Mutation<DocActFolioMutation, DocActFolioMutationVariables> {
     document = DocActFolioDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1966,7 +1966,7 @@ export const DocFinalizarDocument = gql`
   })
   export class DocFinalizarGQL extends Apollo.Mutation<DocFinalizarMutation, DocFinalizarMutationVariables> {
     document = DocFinalizarDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1995,7 +1995,7 @@ export const ReasignarUsuarioDocument = gql`
   })
   export class ReasignarUsuarioGQL extends Apollo.Mutation<ReasignarUsuarioMutation, ReasignarUsuarioMutationVariables> {
     document = ReasignarUsuarioDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2030,7 +2030,7 @@ export const DocsFechasDocument = gql`
   })
   export class DocsFechasGQL extends Apollo.Query<DocsFechasQuery, DocsFechasQueryVariables> {
     document = DocsFechasDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2064,7 +2064,7 @@ export const DocsBusquedaGralDocument = gql`
   })
   export class DocsBusquedaGralGQL extends Apollo.Query<DocsBusquedaGralQuery, DocsBusquedaGralQueryVariables> {
     document = DocsBusquedaGralDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2093,7 +2093,7 @@ export const DocsRefDocument = gql`
   })
   export class DocsRefGQL extends Apollo.Query<DocsRefQuery, DocsRefQueryVariables> {
     document = DocsRefDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2122,7 +2122,7 @@ export const DocRefFolioDocument = gql`
   })
   export class DocRefFolioGQL extends Apollo.Mutation<DocRefFolioMutation, DocRefFolioMutationVariables> {
     document = DocRefFolioDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2140,7 +2140,7 @@ export const NotificacionesDocument = gql`
   })
   export class NotificacionesGQL extends Apollo.Query<NotificacionesQuery, NotificacionesQueryVariables> {
     document = NotificacionesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2158,7 +2158,7 @@ export const NotificarDocument = gql`
   })
   export class NotificarGQL extends Apollo.Subscription<NotificarSubscription, NotificarSubscriptionVariables> {
     document = NotificarDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2176,7 +2176,7 @@ export const EliminarNotDocument = gql`
   })
   export class EliminarNotGQL extends Apollo.Mutation<EliminarNotMutation, EliminarNotMutationVariables> {
     document = EliminarNotDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2192,7 +2192,7 @@ export const EliminarTodosDocument = gql`
   })
   export class EliminarTodosGQL extends Apollo.Mutation<EliminarTodosMutation, EliminarTodosMutationVariables> {
     document = EliminarTodosDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2210,7 +2210,7 @@ export const DepartamentosDocument = gql`
   })
   export class DepartamentosGQL extends Apollo.Query<DepartamentosQuery, DepartamentosQueryVariables> {
     document = DepartamentosDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2228,7 +2228,7 @@ export const FiltrarDeptosDocument = gql`
   })
   export class FiltrarDeptosGQL extends Apollo.Query<FiltrarDeptosQuery, FiltrarDeptosQueryVariables> {
     document = FiltrarDeptosDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2246,7 +2246,7 @@ export const CrearDeptoDocument = gql`
   })
   export class CrearDeptoGQL extends Apollo.Mutation<CrearDeptoMutation, CrearDeptoMutationVariables> {
     document = CrearDeptoDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2264,7 +2264,7 @@ export const ActualizarDeptoDocument = gql`
   })
   export class ActualizarDeptoGQL extends Apollo.Mutation<ActualizarDeptoMutation, ActualizarDeptoMutationVariables> {
     document = ActualizarDeptoDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2282,7 +2282,7 @@ export const AgregarPuestoDocument = gql`
   })
   export class AgregarPuestoGQL extends Apollo.Mutation<AgregarPuestoMutation, AgregarPuestoMutationVariables> {
     document = AgregarPuestoDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2316,7 +2316,7 @@ ${FragModificadoPorFragmentDoc}`;
   })
   export class EmpleadosGQL extends Apollo.Query<EmpleadosQuery, EmpleadosQueryVariables> {
     document = EmpleadosDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2342,7 +2342,7 @@ ${FragDeptosFragmentDoc}`;
   })
   export class EmpleadosSesionGQL extends Apollo.Query<EmpleadosSesionQuery, EmpleadosSesionQueryVariables> {
     document = EmpleadosSesionDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2368,7 +2368,7 @@ ${FragDeptosFragmentDoc}`;
   })
   export class FiltrarEmpleadosGQL extends Apollo.Query<FiltrarEmpleadosQuery, FiltrarEmpleadosQueryVariables> {
     document = FiltrarEmpleadosDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2390,7 +2390,7 @@ ${FragTelefonoFragmentDoc}`;
   })
   export class CrearEmpleadoGQL extends Apollo.Mutation<CrearEmpleadoMutation, CrearEmpleadoMutationVariables> {
     document = CrearEmpleadoDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2423,7 +2423,7 @@ ${FragMedidoresFragmentDoc}`;
   })
   export class InstalacionesGQL extends Apollo.Query<InstalacionesQuery, InstalacionesQueryVariables> {
     document = InstalacionesDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2462,7 +2462,7 @@ ${FragErroresFragmentDoc}`;
   })
   export class RegInstalacionGQL extends Apollo.Mutation<RegInstalacionMutation, RegInstalacionMutationVariables> {
     document = RegInstalacionDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2495,7 +2495,7 @@ ${FragMotorFragmentDoc}`;
   })
   export class ActInstGQL extends Apollo.Mutation<ActInstMutation, ActInstMutationVariables> {
     document = ActInstDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2528,7 +2528,7 @@ ${FragBombaFragmentDoc}`;
   })
   export class AgregarMotorGQL extends Apollo.Mutation<AgregarMotorMutation, AgregarMotorMutationVariables> {
     document = AgregarMotorDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2561,7 +2561,7 @@ ${FragBombaFragmentDoc}`;
   })
   export class AgregarBombaGQL extends Apollo.Mutation<AgregarBombaMutation, AgregarBombaMutationVariables> {
     document = AgregarBombaDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2600,7 +2600,7 @@ ${FragErroresFragmentDoc}`;
   })
   export class CrearRegLecturaGQL extends Apollo.Mutation<CrearRegLecturaMutation, CrearRegLecturaMutationVariables> {
     document = CrearRegLecturaDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -2633,7 +2633,7 @@ ${FragBombaFragmentDoc}`;
   })
   export class ActLecturaGQL extends Apollo.Mutation<ActLecturaMutation, ActLecturaMutationVariables> {
     document = ActLecturaDocument;
-
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
