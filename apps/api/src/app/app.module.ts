@@ -13,6 +13,7 @@ import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
+import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.module';
 
 @Module({
     imports:
@@ -23,12 +24,6 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
                 installSubscriptionHandlers: true,
-                // definitions: {
-                //     customScalarTypeMapping:
-                //         {
-                //             DateTime: Date
-                //         }
-                // },
                 subscriptions: {
                     'graphql-ws': true,
                     'subscriptions-transport-ws': true
@@ -60,6 +55,7 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
                     }
                 )
             }),
+            DirGeneralModule,
             SubirArchivoModule,
             AdminModule,
             DirAdmonFinanzasModule,

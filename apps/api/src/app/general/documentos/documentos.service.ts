@@ -28,9 +28,6 @@ import {DeptosService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-h
 @Injectable()
 export class DocumentosService
 {
-    // #ano = new Date().getFullYear();
-    // #mes = new Date().getMonth() + 1;
-
     constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService,
                 private notificacionService: NotificacionService)
     {

@@ -13,16 +13,19 @@ export class DeptoDto implements IDepto
     @Field(() => ID, {nullable: true})
     @IsOptional()
     _id?: string;
+
     @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre del departamento es requerido'})
     nombre: string;
+
     @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario asignar un centro gestor'})
     @Length(3, 4, {message: 'El centro gestor tiene que tener como minimo y maximo 3 caracteres'})
     @IsUppercase({message: 'El centro gestor debe estar en mayusculas'})
     centroGestor: string;
+
     @Field(() => [String], {nullable: true, defaultValue: []})
     @Prop()
     @IsOptional()

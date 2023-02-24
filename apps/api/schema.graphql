@@ -233,6 +233,87 @@ type TelemetriaType {
   motores: [MotorType!]
 }
 
+type EjercicioType {
+  abril: Float
+  agosto: Float
+  ano: Int
+  diciembre: Float
+  ejercicio: Float
+  enero: Float
+  febrero: Float
+  julio: Float
+  junio: Float
+  marzo: Float
+  mayo: Float
+  noviembre: Float
+  octubre: Float
+  septiembre: Float
+  trimestre: [TrimestreType!]
+}
+
+type TrimestreType {
+  trimestre: String
+  valor: Float
+}
+
+type PbrType {
+  ano: Int
+  _id: ID
+  claveVariable: String
+  dato: String
+  descripcion: String
+  ejercicion: EjercicioType
+  unidad: String
+}
+
+type AvanceType {
+  periodo: String
+  valor: Float
+}
+
+type CaracteristicasType {
+  dimension: String
+  tipo: String
+}
+
+type ParamSemType {
+  amarillo: Float
+  rojo: Float
+  verde: Float
+}
+
+type LineaBaseType {
+  ano: Int
+  valor: Float
+}
+
+type MirType {
+  _id: ID!
+  ano: Int
+  avance: [AvanceType!]
+  caracteriticas: CaracteristicasType
+  centroGestor: String
+  frecuenciaMedicion: String
+  idIndicador: String
+  lineaBase: LineaBaseType
+  meta: Float
+  metodoCalculo: String
+  metodoDeVerificacion: String
+  nivel: String
+  nombreDelIndicador: String
+  parametroDeSemaforizacion: ParamSemType
+  programaFinanciacion: String
+  resumenNarrativo: String
+  sentidoDelIndicador: AscDesc
+  supuestos: String
+  unidadDeMedida: String
+}
+
+enum AscDesc {
+  ascendente
+  descendente
+}
+
 input ModificadoPorInput {
   accion: String
   fecha: Int = 0
@@ -323,7 +404,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1677150100
+  tiempo: Int = 1677186594
   titulo: String
   usarRouter: Boolean = false
 }
@@ -430,7 +511,86 @@ input TelemetriaInput {
   motores: [MotorInput!] = []
 }
 
+input EjercicioInput {
+  abril: Float = 0
+  agosto: Float = 0
+  ano: Int = 2023
+  diciembre: Float = 0
+  ejercicio: Float = 0
+  enero: Float = 0
+  febrero: Float = 0
+  julio: Float = 0
+  junio: Float = 0
+  marzo: Float = 0
+  mayo: Float = 0
+  noviembre: Float = 0
+  octubre: Float = 0
+  septiembre: Float = 0
+  trimestre: [TrimestreInput!] = []
+}
+
+input TrimestreInput {
+  trimestre: String = null
+  valor: Float = 0
+}
+
+input PbrInput {
+  ano: Int = 2023
+  _id: ID
+  claveVariable: String = null
+  dato: String = null
+  descripcion: String = null
+  ejercicion: EjercicioInput = null
+  unidad: String = null
+}
+
+input AvanceInput {
+  periodo: String = null
+  valor: Float = 0
+}
+
+input CaracteristicasInput {
+  dimension: String = null
+  tipo: String = null
+}
+
+input ParamSemInput {
+  amarillo: Float = 0
+  rojo: Float = 0
+  verde: Float = 0
+}
+
+input LineaBaseInput {
+  ano: Int = 2023
+  valor: Float = 0
+}
+
+input MirInput {
+  _id: ID!
+  ano: Int = 2023
+  avance: [AvanceInput!] = []
+  caracteriticas: CaracteristicasInput = null
+  centroGestor: String = null
+  frecuenciaMedicion: String = null
+  idIndicador: String = null
+  lineaBase: LineaBaseInput = null
+  meta: Float = 0
+  metodoCalculo: String = null
+  metodoDeVerificacion: String = null
+  nivel: String = null
+  nombreDelIndicador: String = "true"
+  parametroDeSemaforizacion: ParamSemInput = null
+  programaFinanciacion: String = null
+  resumenNarrativo: String = "true"
+  sentidoDelIndicador: AscDesc = ascendente
+  supuestos: String = null
+  unidadDeMedida: String = null
+}
+
 type Query {
+  """Obtener todos los pbr Por ano"""
+  pbrs(ano: Int = 2023): [PbrType!]
+  mirs(ano: Int = 2023): MirType
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -454,6 +614,7 @@ type Query {
 }
 
 type Mutation {
+  agregarMir(input: agregarMirInput!): MirType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -489,6 +650,27 @@ type Mutation {
   actInst(args: ActInstInput!): TelemetriaType!
   agregarMotor(args: AgregarMotorInput!): TelemetriaType!
   agregarBomba(args: AgregarBombaInput!): TelemetriaType!
+}
+
+input agregarMirInput {
+  ano: Int = 2023
+  avance: [AvanceInput!] = []
+  caracteriticas: CaracteristicasInput = null
+  centroGestor: String = null
+  frecuenciaMedicion: String = null
+  idIndicador: String = null
+  lineaBase: LineaBaseInput = null
+  meta: Float = 0
+  metodoCalculo: String = null
+  metodoDeVerificacion: String = null
+  nivel: String = null
+  nombreDelIndicador: String = "true"
+  parametroDeSemaforizacion: ParamSemInput = null
+  programaFinanciacion: String = null
+  resumenNarrativo: String = "true"
+  sentidoDelIndicador: AscDesc = ascendente
+  supuestos: String = null
+  unidadDeMedida: String = null
 }
 
 input CambioContrasenaInput {

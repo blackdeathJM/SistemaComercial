@@ -1,1 +1,34 @@
-<p>mir works!</p>
+<article class="flex flex-col flex-auto px-2">
+    <section class="flex-auto items-center justify-between consultas">
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-aut">
+                <mat-label>Introduce el año</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-select>
+                    <mat-option>opcion</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-auto gap-4">
+            <button mat-raised-button class="flex-auto" color="primary">
+                <mat-icon svgIcon="mat_solid:developer_board"></mat-icon>
+                Generar nuevo PBR
+            </button>
+            <button mat-raised-button class="flex-auto" color="primary">
+                <mat-icon svgIcon="mat_solid:developer_board"></mat-icon>
+                Inicializar PBR
+            </button>
+            <button mat-raised-button class="flex-auto" color="primary">
+                <mat-icon svgIcon="mat_solid:developer_board"></mat-icon>
+                Generar nuevo MIR
+            </button>
+            <button mat-raised-button class="flex-auto" color="primary">
+                <mat-icon svgIcon="mat_solid:developer_board"></mat-icon>
+                Inicializar MIR
+            </button>
+        </div>
+    </section>
+    <app-mod-mir></app-mod-mir>
+</article>
