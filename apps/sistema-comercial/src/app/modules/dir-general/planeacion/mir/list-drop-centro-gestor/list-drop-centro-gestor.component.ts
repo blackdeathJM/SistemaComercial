@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
-import {makeVar, ReactiveVar} from '@apollo/client';
-import {isNotNil} from "@angular-ru/cdk/utils";
-import {MatInputModule} from "@angular/material/input";
-import {MatListModule} from "@angular/material/list";
+import {makeVar} from '@apollo/client';
+import {isNotNil} from '@angular-ru/cdk/utils';
+import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
 
 export const SELEC_CENTRO_GESTOR = makeVar<string>(null);
 
