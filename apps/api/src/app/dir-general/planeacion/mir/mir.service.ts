@@ -3,10 +3,14 @@ import {InjectModel} from '@nestjs/mongoose';
 import {MirDto, MirType} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {Model} from 'mongoose';
 import {ObtenerMirsDto, AgregarMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
+import fs from 'fs-extra';
+import {join} from 'path';
 
 @Injectable()
 export class MirService
 {
+    #archivo = join(__dirname, '/assets/centroGestor.txt');
+
     constructor(@InjectModel(MirDto.name) private mir: Model<MirType>)
     {
     }

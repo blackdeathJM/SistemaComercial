@@ -1,0 +1,16 @@
+<section class="flex flex-auto gap-8">
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Nombre del centro gestor</mat-label>
+                <input matInput [formControl]="ctrlCentroGestor">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-selection-list multiple="false" class="flex-auto overflow-y-scroll h-80" color="primary">
+            <mat-list-option *ngFor="let centro of centrosGestores" [value]="centro" class="border-b-2">{{centro}}</mat-list-option>
+        </mat-selection-list>
+    </div>
+</section>

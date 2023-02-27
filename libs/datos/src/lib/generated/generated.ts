@@ -52,6 +52,11 @@ export type AgregarMotorInput = {
   motor?: InputMaybe<MotorInput>;
 };
 
+export enum AscDesc {
+  Ascendente = 'ascendente',
+  Descendente = 'descendente'
+}
+
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   asigPermisos?: InputMaybe<Array<Scalars['String']>>;
@@ -73,6 +78,17 @@ export type AuthType = {
   guards?: Maybe<Array<Scalars['String']>>;
   roles?: Maybe<Array<Scalars['JSONObject']>>;
   usuario?: Maybe<Scalars['String']>;
+};
+
+export type AvanceInput = {
+  periodo?: InputMaybe<Scalars['String']>;
+  valor?: InputMaybe<Scalars['Float']>;
+};
+
+export type AvanceType = {
+  __typename?: 'AvanceType';
+  periodo?: Maybe<Scalars['String']>;
+  valor?: Maybe<Scalars['Float']>;
 };
 
 export type BombaInput = {
@@ -117,6 +133,17 @@ export type BombaType = {
 export type CambioContrasenaInput = {
   _id?: InputMaybe<Scalars['ID']>;
   contrasena?: InputMaybe<Scalars['String']>;
+};
+
+export type CaracteristicasInput = {
+  dimension?: InputMaybe<Scalars['String']>;
+  tipo?: InputMaybe<Scalars['String']>;
+};
+
+export type CaracteristicasType = {
+  __typename?: 'CaracteristicasType';
+  dimension?: Maybe<Scalars['String']>;
+  tipo?: Maybe<Scalars['String']>;
 };
 
 export type CrearRolInput = {
@@ -256,6 +283,43 @@ export type DocumentoType = {
   usuarios?: Maybe<Array<Scalars['String']>>;
 };
 
+export type EjercicioInput = {
+  abril?: InputMaybe<Scalars['Float']>;
+  agosto?: InputMaybe<Scalars['Float']>;
+  ano?: InputMaybe<Scalars['Int']>;
+  diciembre?: InputMaybe<Scalars['Float']>;
+  ejercicio?: InputMaybe<Scalars['Float']>;
+  enero?: InputMaybe<Scalars['Float']>;
+  febrero?: InputMaybe<Scalars['Float']>;
+  julio?: InputMaybe<Scalars['Float']>;
+  junio?: InputMaybe<Scalars['Float']>;
+  marzo?: InputMaybe<Scalars['Float']>;
+  mayo?: InputMaybe<Scalars['Float']>;
+  noviembre?: InputMaybe<Scalars['Float']>;
+  octubre?: InputMaybe<Scalars['Float']>;
+  septiembre?: InputMaybe<Scalars['Float']>;
+  trimestre?: InputMaybe<Array<TrimestreInput>>;
+};
+
+export type EjercicioType = {
+  __typename?: 'EjercicioType';
+  abril?: Maybe<Scalars['Float']>;
+  agosto?: Maybe<Scalars['Float']>;
+  ano?: Maybe<Scalars['Int']>;
+  diciembre?: Maybe<Scalars['Float']>;
+  ejercicio?: Maybe<Scalars['Float']>;
+  enero?: Maybe<Scalars['Float']>;
+  febrero?: Maybe<Scalars['Float']>;
+  julio?: Maybe<Scalars['Float']>;
+  junio?: Maybe<Scalars['Float']>;
+  marzo?: Maybe<Scalars['Float']>;
+  mayo?: Maybe<Scalars['Float']>;
+  noviembre?: Maybe<Scalars['Float']>;
+  octubre?: Maybe<Scalars['Float']>;
+  septiembre?: Maybe<Scalars['Float']>;
+  trimestre?: Maybe<Array<TrimestreType>>;
+};
+
 export type EmpleadoInput = {
   _id?: InputMaybe<Scalars['ID']>;
   activo?: InputMaybe<Scalars['Boolean']>;
@@ -328,6 +392,17 @@ export type InstalacionType = {
   tipoInstalacion?: Maybe<Scalars['String']>;
 };
 
+export type LineaBaseInput = {
+  ano?: InputMaybe<Scalars['Int']>;
+  valor?: InputMaybe<Scalars['Float']>;
+};
+
+export type LineaBaseType = {
+  __typename?: 'LineaBaseType';
+  ano?: Maybe<Scalars['Int']>;
+  valor?: Maybe<Scalars['Float']>;
+};
+
 export type LoginInput = {
   contrasena?: InputMaybe<Scalars['String']>;
   usuario?: InputMaybe<Scalars['String']>;
@@ -389,6 +464,51 @@ export type MedidorType = {
   medidor?: Maybe<Scalars['String']>;
   reciboCfe?: Maybe<Array<RecibosType>>;
   servicio?: Maybe<Scalars['String']>;
+};
+
+export type MirInput = {
+  _id: Scalars['ID'];
+  ano?: InputMaybe<Scalars['Int']>;
+  avance?: InputMaybe<Array<AvanceInput>>;
+  caracteriticas?: InputMaybe<CaracteristicasInput>;
+  centroGestor?: InputMaybe<Scalars['String']>;
+  frecuenciaMedicion?: InputMaybe<Scalars['String']>;
+  idIndicador?: InputMaybe<Scalars['String']>;
+  lineaBase?: InputMaybe<LineaBaseInput>;
+  meta?: InputMaybe<Scalars['Float']>;
+  metodoCalculo?: InputMaybe<Scalars['String']>;
+  metodoDeVerificacion?: InputMaybe<Scalars['String']>;
+  nivel?: InputMaybe<Scalars['String']>;
+  nombreDelIndicador?: InputMaybe<Scalars['String']>;
+  parametroDeSemaforizacion?: InputMaybe<ParamSemInput>;
+  programaFinanciacion?: InputMaybe<Scalars['String']>;
+  resumenNarrativo?: InputMaybe<Scalars['String']>;
+  sentidoDelIndicador?: InputMaybe<AscDesc>;
+  supuestos?: InputMaybe<Scalars['String']>;
+  unidadDeMedida?: InputMaybe<Scalars['String']>;
+};
+
+export type MirType = {
+  __typename?: 'MirType';
+  _id: Scalars['ID'];
+  ano?: Maybe<Scalars['Int']>;
+  avance?: Maybe<Array<AvanceType>>;
+  caracteriticas?: Maybe<CaracteristicasType>;
+  centroGestor?: Maybe<Scalars['String']>;
+  frecuenciaMedicion?: Maybe<Scalars['String']>;
+  idIndicador?: Maybe<Scalars['String']>;
+  lineaBase?: Maybe<LineaBaseType>;
+  meta?: Maybe<Scalars['Float']>;
+  metodoCalculo?: Maybe<Scalars['String']>;
+  metodoDeVerificacion?: Maybe<Scalars['String']>;
+  nivel?: Maybe<Scalars['String']>;
+  nombreDelIndicador?: Maybe<Scalars['String']>;
+  parametroDeSemaforizacion?: Maybe<ParamSemType>;
+  programaFinanciacion?: Maybe<Scalars['String']>;
+  resumenNarrativo?: Maybe<Scalars['String']>;
+  sentidoDelIndicador?: Maybe<AscDesc>;
+  supuestos?: Maybe<Scalars['String']>;
+  unidadDeMedida?: Maybe<Scalars['String']>;
 };
 
 export type ModificadoPorInput = {
@@ -461,6 +581,8 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarBomba: TelemetriaType;
+  agregarCentroGestor?: Maybe<Array<Scalars['String']>>;
+  agregarMir: MirType;
   agregarMotor: TelemetriaType;
   agregarPuesto: DeptoType;
   asigPermisoPrimerNivel: RolesType;
@@ -546,6 +668,16 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationAgregarBombaArgs = {
   args: AgregarBombaInput;
+};
+
+
+export type MutationAgregarCentroGestorArgs = {
+  args: Scalars['String'];
+};
+
+
+export type MutationAgregarMirArgs = {
+  input: AgregarMirInput;
 };
 
 
@@ -690,6 +822,40 @@ export type NotificacionType = {
   usarRouter?: Maybe<Scalars['Boolean']>;
 };
 
+export type ParamSemInput = {
+  amarillo?: InputMaybe<Scalars['Float']>;
+  rojo?: InputMaybe<Scalars['Float']>;
+  verde?: InputMaybe<Scalars['Float']>;
+};
+
+export type ParamSemType = {
+  __typename?: 'ParamSemType';
+  amarillo?: Maybe<Scalars['Float']>;
+  rojo?: Maybe<Scalars['Float']>;
+  verde?: Maybe<Scalars['Float']>;
+};
+
+export type PbrInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  ano?: InputMaybe<Scalars['Int']>;
+  claveVariable?: InputMaybe<Scalars['String']>;
+  dato?: InputMaybe<Scalars['String']>;
+  descripcion?: InputMaybe<Scalars['String']>;
+  ejercicion?: InputMaybe<EjercicioInput>;
+  unidad?: InputMaybe<Scalars['String']>;
+};
+
+export type PbrType = {
+  __typename?: 'PbrType';
+  _id?: Maybe<Scalars['ID']>;
+  ano?: Maybe<Scalars['Int']>;
+  claveVariable?: Maybe<Scalars['String']>;
+  dato?: Maybe<Scalars['String']>;
+  descripcion?: Maybe<Scalars['String']>;
+  ejercicion?: Maybe<EjercicioType>;
+  unidad?: Maybe<Scalars['String']>;
+};
+
 export type PuestoDeptoInput = {
   _id?: InputMaybe<Scalars['ID']>;
   puesto?: InputMaybe<Scalars['String']>;
@@ -714,6 +880,7 @@ export type PuestoType = {
 
 export type Query = {
   __typename?: 'Query';
+  centrosGestores?: Maybe<Array<Scalars['String']>>;
   deptos: Array<DeptoType>;
   docsBusquedaGral: Array<DocumentoType>;
   docsFechas: Array<DocumentoType>;
@@ -724,7 +891,10 @@ export type Query = {
   filtrarDeptos: Array<DeptoType>;
   filtrarEmpleados: Array<EmpleadoType>;
   instalaciones: Array<TelemetriaType>;
+  mirs?: Maybe<MirType>;
   notificaciones?: Maybe<Array<NotificacionType>>;
+  /** Obtener todos los pbr Por ano */
+  pbrs?: Maybe<Array<PbrType>>;
   rolesAsig?: Maybe<RolesType>;
 };
 
@@ -770,8 +940,18 @@ export type QueryFiltrarEmpleadosArgs = {
 };
 
 
+export type QueryMirsArgs = {
+  ano?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryNotificacionesArgs = {
   idUsuario: Scalars['String'];
+};
+
+
+export type QueryPbrsArgs = {
+  ano?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -891,6 +1071,17 @@ export type TomarMedicionInput = {
   tipoNivel?: InputMaybe<Scalars['String']>;
 };
 
+export type TrimestreInput = {
+  trimestre?: InputMaybe<Scalars['String']>;
+  valor?: InputMaybe<Scalars['Float']>;
+};
+
+export type TrimestreType = {
+  __typename?: 'TrimestreType';
+  trimestre?: Maybe<Scalars['String']>;
+  valor?: Maybe<Scalars['Float']>;
+};
+
 export type UnionTele = ErroresType | TelemetriaType;
 
 export type UploadInput = {
@@ -899,6 +1090,27 @@ export type UploadInput = {
   file?: InputMaybe<Array<Scalars['Upload']>>;
   /** Es la url A eliminar en caso de que sea remplazar o eliminar el archivo */
   url?: InputMaybe<Scalars['String']>;
+};
+
+export type AgregarMirInput = {
+  ano?: InputMaybe<Scalars['Int']>;
+  avance?: InputMaybe<Array<AvanceInput>>;
+  caracteriticas?: InputMaybe<CaracteristicasInput>;
+  centroGestor?: InputMaybe<Scalars['String']>;
+  frecuenciaMedicion?: InputMaybe<Scalars['String']>;
+  idIndicador?: InputMaybe<Scalars['String']>;
+  lineaBase?: InputMaybe<LineaBaseInput>;
+  meta?: InputMaybe<Scalars['Float']>;
+  metodoCalculo?: InputMaybe<Scalars['String']>;
+  metodoDeVerificacion?: InputMaybe<Scalars['String']>;
+  nivel?: InputMaybe<Scalars['String']>;
+  nombreDelIndicador?: InputMaybe<Scalars['String']>;
+  parametroDeSemaforizacion?: InputMaybe<ParamSemInput>;
+  programaFinanciacion?: InputMaybe<Scalars['String']>;
+  resumenNarrativo?: InputMaybe<Scalars['String']>;
+  sentidoDelIndicador?: InputMaybe<AscDesc>;
+  supuestos?: InputMaybe<Scalars['String']>;
+  unidadDeMedida?: InputMaybe<Scalars['String']>;
 };
 
 export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, roles?: Array<any> | null, estatus?: string | null, guards?: Array<string> | null, controles?: Array<string> | null };
@@ -1212,6 +1424,18 @@ export type CrearEmpleadoMutationVariables = Exact<{
 export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { __typename?: 'EmpleadoType', _id?: string | null, avatar?: string | null, nombreCompleto?: string | null, calle?: string | null, colonia?: string | null, fechaIngreso?: number | null, fechaBaja?: number | null, activo?: boolean | null, correo?: string | null, deptoId?: string | null, telefono?: Array<{ __typename?: 'TelefonoType', numero?: string | null }> | null } };
 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
+
+export type AgregarCentroGestorMutationVariables = Exact<{
+  args: Scalars['String'];
+}>;
+
+
+export type AgregarCentroGestorMutation = { __typename?: 'Mutation', agregarCentroGestor?: Array<string> | null };
+
+export type CentrosGestoresQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CentrosGestoresQuery = { __typename?: 'Query', centrosGestores?: Array<string> | null };
 
 export type FragBombaFragment = { __typename?: 'BombaType', noSerie?: string | null, modelo?: string | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, marca?: string | null, motivoRet?: string | null, observaciones?: string | null, descripcion?: string | null, activo?: boolean | null, noImpulsores?: number | null, rpm?: number | null, diametro?: number | null, lts?: number | null, eficiencia?: number | null };
 
@@ -2390,6 +2614,38 @@ ${FragTelefonoFragmentDoc}`;
   })
   export class CrearEmpleadoGQL extends Apollo.Mutation<CrearEmpleadoMutation, CrearEmpleadoMutationVariables> {
     document = CrearEmpleadoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AgregarCentroGestorDocument = gql`
+    mutation agregarCentroGestor($args: String!) {
+  agregarCentroGestor(args: $args)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AgregarCentroGestorGQL extends Apollo.Mutation<AgregarCentroGestorMutation, AgregarCentroGestorMutationVariables> {
+    document = AgregarCentroGestorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CentrosGestoresDocument = gql`
+    query centrosGestores {
+  centrosGestores
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CentrosGestoresGQL extends Apollo.Query<CentrosGestoresQuery, CentrosGestoresQueryVariables> {
+    document = CentrosGestoresDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

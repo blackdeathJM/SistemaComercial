@@ -1,0 +1,8 @@
+mutation agregarCentroGestor($args: String!)
+{
+    agregarCentroGestor(args: $args)
+}
+query centrosGestores
+{
+    centrosGestores
+}

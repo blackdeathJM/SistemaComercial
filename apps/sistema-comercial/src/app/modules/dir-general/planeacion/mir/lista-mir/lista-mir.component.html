@@ -1,10 +1,16 @@
 <table mat-table>
-    <ng-container>
-        <th *matHeaderCellDef></th>
+    <ng-container matColumnDef="id">
+        <th *matHeaderCellDef>ID</th>
         <td *matCellDef="let fila"></td>
     </ng-container>
-
-
+    <ng-container matColumnDef="nivel">
+        <th *matHeaderCellDef>Nivel</th>
+        <td *matCellDef="let fila"></td>
+    </ng-container>
+    <ng-container matColumnDef="program">
+        <th *matHeaderCellDef matTooltip="Programa de financiacion">Prog. Fin</th>
+        <td *matCellDef="let fila"></td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnasMostrar"></tr>
     <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: columnasMostrar"></tr>
 </table>

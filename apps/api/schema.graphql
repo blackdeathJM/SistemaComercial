@@ -404,7 +404,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1677186594
+  tiempo: Int = 1677463626
   titulo: String
   usarRouter: Boolean = false
 }
@@ -591,6 +591,7 @@ type Query {
   """Obtener todos los pbr Por ano"""
   pbrs(ano: Int = 2023): [PbrType!]
   mirs(ano: Int = 2023): MirType
+  centrosGestores: [String!]
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -615,6 +616,7 @@ type Query {
 
 type Mutation {
   agregarMir(input: agregarMirInput!): MirType!
+  agregarCentroGestor(args: String!): String
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
