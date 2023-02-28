@@ -36,7 +36,7 @@ export class SeleccionService
             }
             if (!input.variableOrigen.includes('sinDatos'))
             {
-                Object.assign(actualizacion, {variableOrigen: input.variableOrigen});
+                Object.assign(actualizacion, {variableOrigen: input.variableOrigen.pop()});
             }
             if (input._id !== '')
             {

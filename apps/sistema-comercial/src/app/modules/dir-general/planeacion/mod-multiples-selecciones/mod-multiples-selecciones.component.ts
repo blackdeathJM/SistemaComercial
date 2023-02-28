@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
@@ -11,7 +11,8 @@ import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 import {ListDropSeleccionComponent} from '@s-dir-general/mir/list-drop-seleccion/list-drop-seleccion.component';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
-import {finalize} from 'rxjs';
+import {finalize, Subscription} from 'rxjs';
+import {isNotNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-mod-multiples-selecciones',
@@ -21,15 +22,32 @@ import {finalize} from 'rxjs';
     styleUrls: ['./mod-multiples-selecciones.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModMultiplesSeleccionesComponent
+export class ModMultiplesSeleccionesComponent implements OnInit
 {
     ctrlCentroGestor = new FormControl('');
     ctrlUnidad = new FormControl('');
     ctrlVariable = new FormControl('');
+    sub = new Subscription();
+    centrosGestores: string[] = [];
+    unidades: string[] = [];
+    variableOrigen: string[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) private data: boolean, private mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService,
+    constructor(@Inject(MAT_DIALOG_DATA) private data: boolean, public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService,
                 private seleccionStore: SeleccionStore)
     {
+    }
+
+    ngOnInit(): void
+    {
+        this.sub.add(this.seleccionStore.state$.subscribe((res) =>
+        {
+            if (isNotNil(res))
+            {
+                this.centrosGestores = res.centroGestor;
+                this.unidades = res.unidad;
+                this.variableOrigen = res.variableOrigen;
+            }
+        }));
     }
 
     agregarCentroGestor(): void

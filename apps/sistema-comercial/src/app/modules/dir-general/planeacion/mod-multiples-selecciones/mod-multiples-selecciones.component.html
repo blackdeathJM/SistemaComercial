@@ -1,5 +1,4 @@
 <section class="flex flex-auto gap-8">
-
     <div class="flex flex-auto flex-col">
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
@@ -10,7 +9,9 @@
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
-        <app-list-drop-seleccion esLista="true" tipoArreglo="centroGestor"></app-list-drop-seleccion>
+        <mat-list class="h-80 border-2">
+            <mat-list-item class="border-b-2" *ngFor="let centro of centrosGestores">{{centro}}</mat-list-item>
+        </mat-list>
     </div>
 
     <div class="flex flex-auto flex-col">
@@ -23,7 +24,9 @@
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
-<!--        <app-list-drop-seleccion esLista="true" tipoArreglo="unidad"></app-list-drop-seleccion>-->
+        <mat-list class="h-80 border-2">
+            <mat-list-item class="border-b-2" *ngFor="let centro of unidades">{{centro}}</mat-list-item>
+        </mat-list>
     </div>
 
 
@@ -37,6 +40,14 @@
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
-<!--        <app-list-drop-seleccion [esLista]="true" tipoArreglo="variable"></app-list-drop-seleccion>-->
+        <mat-list class="h-80 border-2">
+            <mat-list-item class="border-b-2" *ngFor="let centro of variableOrigen">{{centro}}</mat-list-item>
+        </mat-list>
     </div>
 </section>
+<div class="flex flex-col flex-auto">
+    <button mat-raised-button class="flex-auto" color="warn" (click)="mdr.close()">
+        <mat-icon svgIcon="cancel"></mat-icon>
+        Cancelar
+    </button>
+</div>

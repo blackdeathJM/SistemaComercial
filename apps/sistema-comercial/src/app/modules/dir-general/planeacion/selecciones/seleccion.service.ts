@@ -29,7 +29,6 @@ export class SeleccionService
     {
         return this.centrosGestoresGQL.fetch().pipe(tap((res) =>
         {
-            console.log('*****', res);
             if (isNotNil(res.data))
             {
                 const seleccion = $cast<SeleccionType>(res.data.centrosGestores);

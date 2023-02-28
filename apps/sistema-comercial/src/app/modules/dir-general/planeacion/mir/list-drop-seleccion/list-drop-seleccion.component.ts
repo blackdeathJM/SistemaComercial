@@ -1,11 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {isNotNil} from '@angular-ru/cdk/utils';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {Subscription} from 'rxjs';
@@ -18,7 +17,7 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./list-drop-seleccion.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListDropSeleccionComponent implements OnInit, AfterViewInit
+export class ListDropSeleccionComponent implements OnInit
 {
     @Input() esLista = false;
     @Input() tipoArreglo: 'centroGestor' | 'unidad' | 'variable';
@@ -30,11 +29,6 @@ export class ListDropSeleccionComponent implements OnInit, AfterViewInit
     }
 
     ngOnInit(): void
-    {
-        this.seleccionService.centrosGestores().subscribe();
-    }
-
-    ngAfterViewInit(): void
     {
         this.sub.add(this.seleccionStore.state$.subscribe((res) =>
         {

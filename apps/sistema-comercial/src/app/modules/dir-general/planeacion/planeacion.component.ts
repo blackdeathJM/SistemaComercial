@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
+import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 
 @Component({
     selector: 'app-planeacion',
@@ -10,4 +11,14 @@ import {RouterOutlet} from '@angular/router';
     styleUrls: ['./planeacion.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlaneacionComponent {}
+export class PlaneacionComponent implements OnInit
+{
+    constructor(private seleccionService: SeleccionService)
+    {
+    }
+
+    ngOnInit(): void
+    {
+        this.seleccionService.centrosGestores().subscribe();
+    }
+}

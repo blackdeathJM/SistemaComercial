@@ -3,7 +3,6 @@
         <mat-list-option *ngFor="let valor of arreglos" [value]="valor">{{valor}}</mat-list-option>
     </mat-list>
 </ng-container>
-
 <ng-container *ngIf="!esLista">
     <mat-select (change)="seleccion($event)" class="flex-auto overflow-y-auto h-80" (valueChange)="seleccion($event)">
         <mat-option class="border-b-2" *ngFor="let valor of arreglos" [value]="valor">{{valor}}</mat-option>
