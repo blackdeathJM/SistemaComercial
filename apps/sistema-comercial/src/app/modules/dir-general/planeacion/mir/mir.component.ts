@@ -9,9 +9,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialog} from '@angular/material/dialog';
 import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
-import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
-import {FormsModule} from "@angular/forms";
-import {MatOptionSelectionChange} from "@angular/material/core";
+import {FormsModule} from '@angular/forms';
+import {MatOptionSelectionChange} from '@angular/material/core';
 
 @Component({
     selector: 'app-mir',
@@ -21,24 +20,14 @@ import {MatOptionSelectionChange} from "@angular/material/core";
     styleUrls: ['./mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class MirComponent implements OnInit
+export default class MirComponent
 {
     centrosGestores: string[] = [];
 
-    constructor(public mdr: MatDialog, private planeacionService: PlaneacionService)
+    constructor(public mdr: MatDialog)
     {
     }
 
-    ngOnInit(): void
-    {
-        this.planeacionService.centrosGestores().subscribe((res) =>
-        {
-            if (res.data.centrosGestores.length > 0)
-            {
-                this.centrosGestores = res.data.centrosGestores;
-            }
-        });
-    }
 
     regSelecciones(): void
     {

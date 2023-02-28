@@ -1,8 +1,21 @@
-mutation agregarCentroGestor($args: String!)
+mutation agregarCentroGestor($input: SeleccionInput)
 {
-    agregarCentroGestor(args: $args)
+    agregarCentroGestor(input: $input)
+    {
+        ...fragSeleccion
+    }
 }
+
 query centrosGestores
 {
-    centrosGestores
+    centrosGestores {
+        ...fragSeleccion
+    }
+}
+fragment fragSeleccion on SeleccionType
+{
+    variableOrigen
+    unidad
+    centroGestor
+    _id
 }

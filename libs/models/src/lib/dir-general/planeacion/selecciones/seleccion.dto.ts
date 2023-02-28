@@ -1,5 +1,5 @@
 import {ISeleccion} from './seleccion.interface';
-import {Field, InputType, ObjectType, PickType} from '@nestjs/graphql';
+import {Field, ID, InputType, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsOptional} from 'class-validator';
 
@@ -8,16 +8,27 @@ import {IsOptional} from 'class-validator';
 @Schema({collection: 'PlaneacionSelecciones'})
 export class SeleccionDto implements ISeleccion
 {
-    @Field(() => String, {nullable: true, defaultValue: []})
-    @Prop({unique: true})
+    @Field(() => ID, {nullable: true})
+    @IsOptional()
+    _id: string;
+
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
     @IsOptional()
     centroGestor: string[];
+
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    unidad: string[];
+
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    variableOrigen: string[];
 }
 
-export type SeleccionType = SeleccionDto & Document;
+export type SeleccionType = SeleccionDto;
 export const SCHEMA_SELECCION = SchemaFactory.createForClass(SeleccionDto);
 
-@InputType('AgregarCentroGestorInput')
-export class AgregarCentroGestorDto extends PickType(SeleccionDto, ['centroGestor'], InputType)
-{
-}
+export type TAgregarSeleccion = Omit<SeleccionType, | '_id'>;

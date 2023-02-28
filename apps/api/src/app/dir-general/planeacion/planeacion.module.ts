@@ -7,6 +7,8 @@ import {MirService} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.s
 import {PbrResolver} from '#api/apps/api/src/app/dir-general/planeacion/pbr/pbr.resolver';
 import {MirResolver} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.resolver';
 import {SCHEMA_SELECCION, SeleccionDto} from '#api/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
+import {SeleccionResolver} from '#api/apps/api/src/app/dir-general/planeacion/selecciones/seleccion.resolver';
+import {SeleccionService} from '#api/apps/api/src/app/dir-general/planeacion/selecciones/seleccion.service';
 
 @Module({
     imports:
@@ -17,7 +19,7 @@ import {SCHEMA_SELECCION, SeleccionDto} from '#api/libs/models/src/lib/dir-gener
                 {name: SeleccionDto.name, schema: SCHEMA_SELECCION}
             ])
         ],
-    providers: [PbrService, MirService, PbrResolver, MirResolver]
+    providers: [PbrService, MirService, PbrResolver, MirResolver, SeleccionService, SeleccionResolver]
 })
 export class PlaneacionModule
 {

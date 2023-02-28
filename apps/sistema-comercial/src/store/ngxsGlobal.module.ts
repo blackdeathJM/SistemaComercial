@@ -10,12 +10,14 @@ import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.sto
 import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 import {StateRoles} from '@s-core/auth/store/roles.store';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
+import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 
 @NgModule({
     imports:
         [
             NgxsModule.forRoot(
-                [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion, StateRoles, EntityTelemetria], {
+                [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion, StateRoles, EntityTelemetria,
+                SeleccionStore], {
                     developmentMode: !environment.production
                 }),
             NgxsDataPluginModule.forRoot([NGXS_DATA_STORAGE_PLUGIN, NGXS_DATA_STORAGE_CONTAINER]),

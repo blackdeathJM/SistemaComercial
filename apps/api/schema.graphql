@@ -314,6 +314,13 @@ enum AscDesc {
   descendente
 }
 
+type SeleccionType {
+  _id: ID
+  centroGestor: [String!]
+  unidad: [String!]
+  variableOrigen: [String!]
+}
+
 input ModificadoPorInput {
   accion: String
   fecha: Int = 0
@@ -404,7 +411,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1677463626
+  tiempo: Int = 1677545931
   titulo: String
   usarRouter: Boolean = false
 }
@@ -587,11 +594,18 @@ input MirInput {
   unidadDeMedida: String = null
 }
 
+input SeleccionInput {
+  _id: ID
+  centroGestor: [String!] = []
+  unidad: [String!] = []
+  variableOrigen: [String!] = []
+}
+
 type Query {
   """Obtener todos los pbr Por ano"""
   pbrs(ano: Int = 2023): [PbrType!]
   mirs(ano: Int = 2023): MirType
-  centrosGestores: [String!]
+  centrosGestores: SeleccionType
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -616,7 +630,7 @@ type Query {
 
 type Mutation {
   agregarMir(input: agregarMirInput!): MirType!
-  agregarCentroGestor(args: String!): String
+  agregarCentroGestor(input: SeleccionInput): SeleccionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType

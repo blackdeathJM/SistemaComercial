@@ -581,7 +581,7 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarBomba: TelemetriaType;
-  agregarCentroGestor?: Maybe<Array<Scalars['String']>>;
+  agregarCentroGestor: SeleccionType;
   agregarMir: MirType;
   agregarMotor: TelemetriaType;
   agregarPuesto: DeptoType;
@@ -672,7 +672,7 @@ export type MutationAgregarBombaArgs = {
 
 
 export type MutationAgregarCentroGestorArgs = {
-  args: Scalars['String'];
+  input?: InputMaybe<SeleccionInput>;
 };
 
 
@@ -880,7 +880,7 @@ export type PuestoType = {
 
 export type Query = {
   __typename?: 'Query';
-  centrosGestores?: Maybe<Array<Scalars['String']>>;
+  centrosGestores?: Maybe<SeleccionType>;
   deptos: Array<DeptoType>;
   docsBusquedaGral: Array<DocumentoType>;
   docsFechas: Array<DocumentoType>;
@@ -1009,6 +1009,21 @@ export type RolesType = {
   _id?: Maybe<Scalars['ID']>;
   idEmpleado?: Maybe<Scalars['ID']>;
   roles?: Maybe<Array<Scalars['JSONObject']>>;
+};
+
+export type SeleccionInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  centroGestor?: InputMaybe<Array<Scalars['String']>>;
+  unidad?: InputMaybe<Array<Scalars['String']>>;
+  variableOrigen?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type SeleccionType = {
+  __typename?: 'SeleccionType';
+  _id?: Maybe<Scalars['ID']>;
+  centroGestor?: Maybe<Array<Scalars['String']>>;
+  unidad?: Maybe<Array<Scalars['String']>>;
+  variableOrigen?: Maybe<Array<Scalars['String']>>;
 };
 
 export type Subscription = {
@@ -1426,16 +1441,18 @@ export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
 
 export type AgregarCentroGestorMutationVariables = Exact<{
-  args: Scalars['String'];
+  input?: InputMaybe<SeleccionInput>;
 }>;
 
 
-export type AgregarCentroGestorMutation = { __typename?: 'Mutation', agregarCentroGestor?: Array<string> | null };
+export type AgregarCentroGestorMutation = { __typename?: 'Mutation', agregarCentroGestor: { __typename?: 'SeleccionType', variableOrigen?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } };
 
 export type CentrosGestoresQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CentrosGestoresQuery = { __typename?: 'Query', centrosGestores?: Array<string> | null };
+export type CentrosGestoresQuery = { __typename?: 'Query', centrosGestores?: { __typename?: 'SeleccionType', variableOrigen?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } | null };
+
+export type FragSeleccionFragment = { __typename?: 'SeleccionType', variableOrigen?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null };
 
 export type FragBombaFragment = { __typename?: 'BombaType', noSerie?: string | null, modelo?: string | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, marca?: string | null, motivoRet?: string | null, observaciones?: string | null, descripcion?: string | null, activo?: boolean | null, noImpulsores?: number | null, rpm?: number | null, diametro?: number | null, lts?: number | null, eficiencia?: number | null };
 
@@ -1609,6 +1626,14 @@ export const FragPuestoFragmentDoc = gql`
   fechaAsignacion
   isr
   sueldo
+}
+    `;
+export const FragSeleccionFragmentDoc = gql`
+    fragment fragSeleccion on SeleccionType {
+  variableOrigen
+  unidad
+  centroGestor
+  _id
 }
     `;
 export const FragBombaFragmentDoc = gql`
@@ -2620,10 +2645,12 @@ ${FragTelefonoFragmentDoc}`;
     }
   }
 export const AgregarCentroGestorDocument = gql`
-    mutation agregarCentroGestor($args: String!) {
-  agregarCentroGestor(args: $args)
+    mutation agregarCentroGestor($input: SeleccionInput) {
+  agregarCentroGestor(input: $input) {
+    ...fragSeleccion
+  }
 }
-    `;
+    ${FragSeleccionFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -2637,9 +2664,11 @@ export const AgregarCentroGestorDocument = gql`
   }
 export const CentrosGestoresDocument = gql`
     query centrosGestores {
-  centrosGestores
+  centrosGestores {
+    ...fragSeleccion
+  }
 }
-    `;
+    ${FragSeleccionFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
