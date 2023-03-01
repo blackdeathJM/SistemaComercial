@@ -1,61 +1,77 @@
-<form>
+<form [formGroup]="formMir">
     <section class="p-4 flex flex-col flex-auto gap-2">
         <mat-form-field>
-            <mat-label>Id ind</mat-label>
-            <input matInput>
+            <mat-label>Indicador</mat-label>
+            <input matInput formControlName="idIndicador">
+            <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nivel</mat-label>
-            <input matInput>
+            <input matInput formControlName="nivel">
+            <mat-error>{{formMir.controls.nivel['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Programa financiacion</mat-label>
-            <input matInput>
+            <textarea matInput formControlName="programaFinanciacion"></textarea>
+            <mat-error>{{formMir.controls.programaFinanciacion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Resume narrativo</mat-label>
-            <input matInput>
+            <textarea matInput formControlName="resumenNarrativo"></textarea>
+            <mat-error>{{formMir.controls.resumenNarrativo['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <mat-select>
+            <mat-label>Centro gestor</mat-label>
+            <mat-select formControlName="centroGestor">
                 <mat-option *ngFor="let centroGestor of centrosGestores" [value]="centroGestor">{{centroGestor}}</mat-option>
             </mat-select>
+            <mat-error>{{formMir.controls.centroGestor['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nombre del indicador</mat-label>
-            <input matInput>
+            <textarea matInput formControlName="nombreDelIndicador"></textarea>
+            <mat-error>{{formMir.controls.nombreDelIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tipo</mat-label>
-            <input matInput>
+            <input matInput formControlName="tipo">
+            <mat-error>{{formMir.controls.tipo['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Dimension</mat-label>
-            <input matInput>
+            <input matInput formControlName="dimension">
+            <mat-error>{{formMir.controls.dimension['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Metodo de calculo</mat-label>
-            <input matInput>
+            <input matInput formControlName="metodoCalculo">
+            <mat-error>{{formMir.controls.metodoCalculo['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Medios de Verificacion</mat-label>
-            <input matInput>
+            <textarea matInput formControlName="mediosDeVerificacion"></textarea>
+            <mat-error>{{formMir.controls.mediosDeVerificacion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Supuestos</mat-label>
-            <input matInput>
+            <textarea matInput formControlName="supuestos"></textarea>
+            <mat-error>{{formMir.controls.supuestos['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <mat-select>
+            <mat-label>Unidad de medida</mat-label>
+            <mat-select formControlName="unidadDeMedida">
                 <mat-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</mat-option>
             </mat-select>
+            <mat-error>{{formMir.controls.unidadDeMedida['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Frecuencia de medicion</mat-label>
-            <input matInput>
+            <input matInput formControlName="frecuenciaMedicion">
+            <mat-error>{{formMir.controls.frecuenciaMedicion['errorMessage']}}</mat-error>
         </mat-form-field>
     </section>
 </form>
+
 <mat-toolbar>
     <div class="flex flex-auto items-center gap-4">
         <button mat-raised-button class="flex-auto" color="warn" (click)="cerrar()">

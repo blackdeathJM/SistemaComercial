@@ -17,7 +17,7 @@ export interface IMir
     tipo: string;
     dimension: string;
     metodoCalculo: string;
-    metodoDeVerificacion: string;
+    mediosDeVerificacion: string;
     supuestos: string;
     unidadDeMedida: string;
     frecuenciaMedicion: string;

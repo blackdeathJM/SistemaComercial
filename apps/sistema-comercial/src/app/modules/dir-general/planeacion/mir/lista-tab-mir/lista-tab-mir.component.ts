@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
+import {ModAvancesComponent} from '@s-dir-general/mir/mod-avances/mod-avances.component';
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -14,4 +16,14 @@ import {MatIconModule} from '@angular/material/icon';
     styleUrls: ['./lista-tab-mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListaTabMirComponent {}
+export class ListaTabMirComponent
+{
+    constructor(private mdr: MatDialog)
+    {
+    }
+
+    regAvances(): void
+    {
+        this.mdr.open(ModAvancesComponent, {width: '45%'});
+    }
+}

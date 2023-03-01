@@ -278,7 +278,7 @@ type MirType {
   lineaBaseValor: Int
   meta: Float
   metodoCalculo: String
-  metodoDeVerificacion: String
+  mediosDeVerificacion: String
   nivel: String
   nombreDelIndicador: String
   semefVerde: Int
@@ -398,7 +398,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1677663564
+  tiempo: Int = 1677701460
   titulo: String
   usarRouter: Boolean = false
 }
@@ -550,7 +550,7 @@ input MirInput {
   lineaBaseValor: Int = 0
   meta: Float = 0
   metodoCalculo: String = null
-  metodoDeVerificacion: String = null
+  mediosDeVerificacion: String = null
   nivel: String = null
   nombreDelIndicador: String = "true"
   semefVerde: Int = 0
@@ -578,7 +578,6 @@ input SeleccionInput {
 type Query {
   """Obtener todos los pbr Por ano"""
   pbrs(ano: Int = 2023): [PbrType!]
-  mirs(ano: Int = 2023): MirType
   mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
   mirsPorAno(ano: Int = 2023): [MirType!]
   centrosGestores: SeleccionType
@@ -655,7 +654,7 @@ input agregarMirInput {
   lineaBaseValor: Int = 0
   meta: Float = 0
   metodoCalculo: String = null
-  metodoDeVerificacion: String = null
+  mediosDeVerificacion: String = null
   nivel: String = null
   nombreDelIndicador: String = "true"
   semefVerde: Int = 0

@@ -101,7 +101,7 @@ export class MirDto implements IMir
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsNotEmpty({message: 'El metodo de verificacion es necesario'})
-    metodoDeVerificacion: string;
+    mediosDeVerificacion: string;
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()

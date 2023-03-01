@@ -9,7 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialog} from '@angular/material/dialog';
 import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
@@ -17,12 +17,13 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaMirComponent} from '@s-dir-general/mir/lista-mir/lista-mir.component';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
+import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 
 @Component({
     selector: 'app-mir',
     standalone: true,
     imports: [CommonModule, ModMirComponent, MatTableModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, FormsModule, MatToolbarModule,
-        MatButtonToggleModule, MatSidenavModule, ListaMirComponent, ListaTabMirComponent],
+        MatButtonToggleModule, MatSidenavModule, ListaMirComponent, ListaTabMirComponent, RxReactiveFormsModule, ReactiveFormsModule],
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']
 })

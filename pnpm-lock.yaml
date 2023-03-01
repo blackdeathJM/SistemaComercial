@@ -122,7 +122,7 @@ specifiers:
   eslint-plugin-prefer-arrow: 1.2.3
   express: ^4.18.2
   fs-extra: ^11.1.0
-  glob: ^9.0.2
+  glob: ^9.1.0
   graphql: ^16.6.0
   graphql-scalars: ^1.20.1
   graphql-subscriptions: ^2.0.0
@@ -204,7 +204,7 @@ dependencies:
   '@nestjs/passport': 9.0.3_v3ijvyhfbmibt6kvwmic262qla
   '@nestjs/platform-express': 9.3.9_77foi4w27ghy47yutmnzv7krjy
   '@nestjs/serve-static': 3.0.1_dcetm4e66hqs4g5rr6xumywjy4
-  '@ngneat/transloco': 4.2.5_ykooui4kfsbsqkzvzox7ublnaa
+  '@ngneat/transloco': 4.2.5_scqypeornroeiqfocyhhssnx5m
   '@ngxs/form-plugin': 3.7.6_67kocernubr7prhwkugjnahj7m
   '@ngxs/logger-plugin': 3.7.6_vckzc3jnd5t5zbnctqmaoj3ngy
   '@ngxs/router-plugin': 3.7.6_7jktex5jypcuioyhyyz5wcqlky
@@ -230,7 +230,7 @@ dependencies:
   dotenv: 16.0.3
   express: 4.18.2
   fs-extra: 11.1.0
-  glob: 9.0.2
+  glob: 9.1.0
   graphql: 16.6.0
   graphql-scalars: 1.20.1_graphql@16.6.0
   graphql-subscriptions: 2.0.0_graphql@16.6.0
@@ -6760,7 +6760,7 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@ngneat/transloco/4.2.5_ykooui4kfsbsqkzvzox7ublnaa:
+  /@ngneat/transloco/4.2.5_scqypeornroeiqfocyhhssnx5m:
     resolution: {integrity: sha512-z2FTqXgTb/1xE7Zc0Oe6sTrzte94tzrUhjaZWiGhiqszAF4gfPHuL7Tbc5rgZcucFGPct9XYNVETJ8hSVWqDJg==}
     peerDependencies:
       '@angular/core': '>=13.0.0'
@@ -6772,7 +6772,7 @@ packages:
       '@ngneat/transloco-utils': 3.0.4
       flat: 5.0.2
       fs-extra: 11.1.0
-      glob: 9.0.2
+      glob: 9.1.0
       lodash.kebabcase: 4.1.1
       ora: 5.4.1
       replace-in-file: 6.3.5
@@ -12798,12 +12798,12 @@ packages:
       once: 1.4.0
     dev: true
 
-  /glob/9.0.2:
-    resolution: {integrity: sha512-s6v83yj/qsUHZTp4d1Pq9HkB2tROINGxXhKYspF0kGvVqPlEPrUo4WDnSffO1611xYvkuK3mgoo86mdulYCX4A==}
+  /glob/9.1.0:
+    resolution: {integrity: sha512-bAnZn/xYN7o43Y97vDipnunJtQOOhJAyt7/zt1HrzFgtIrol4eJTUn8Kd74B1cMyOBuzWUMvBr2F178h0UQuUw==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       fs.realpath: 1.0.0
-      minimatch: 7.3.0
+      minimatch: 7.4.1
       minipass: 4.2.4
       path-scurry: 1.5.0
     dev: false
@@ -15527,8 +15527,8 @@ packages:
       brace-expansion: 2.0.1
     dev: true
 
-  /minimatch/7.3.0:
-    resolution: {integrity: sha512-WaMDuhKa7a6zKiwplR1AOz+zGvJba24k5VU1Cy6NhEguavT2YRlHxuINUgTas4wiS6fwBpYq4TcA1XIECSntyw==}
+  /minimatch/7.4.1:
+    resolution: {integrity: sha512-Oz1iPEP+MGl7KS3SciLsLLcuZ7VsBfb7Qrz/jYt/s/sYAv272P26HSLz2f77Y6hzTKXiBi6g765fqpEDNc5fJw==}
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1

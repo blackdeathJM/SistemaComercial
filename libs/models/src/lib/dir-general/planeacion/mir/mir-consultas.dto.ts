@@ -2,14 +2,6 @@ import {ArgsType, PickType, InputType, OmitType} from '@nestjs/graphql';
 import {MirDto} from './mir.dto';
 
 @ArgsType()
-export class ObtenerMirsDto extends PickType(MirDto, ['ano'], ArgsType)
-{
-
-}
-
-export type TObtenerMirs = ObtenerMirsDto;
-
-@ArgsType()
 export class MirsPorAnoDto extends PickType(MirDto, ['ano'], ArgsType)
 {
 

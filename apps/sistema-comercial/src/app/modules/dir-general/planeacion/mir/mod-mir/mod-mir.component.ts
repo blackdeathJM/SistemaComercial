@@ -9,7 +9,8 @@ import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {Subscription} from 'rxjs';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir';
 
 @Component({
     selector: 'app-mod-mir',
@@ -25,6 +26,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     centrosGestores: string[] = [];
     unidades: string[] = [];
     variablesOrigen: string[] = [];
+    formMir: FormGroup;
     sub = new Subscription();
 
     constructor(private seleccionStore: SeleccionStore, private fb: RxFormBuilder)
@@ -33,6 +35,7 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
+        this.formMir = this.fb.formGroup(new Mir());
         this.sub.add(this.seleccionStore.state$.subscribe((res) =>
         {
             if (isNotNil(res))
@@ -46,7 +49,7 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     regMir(): void
     {
-
+        console.log('****', this.formMir.value);
     }
 
     cerrar(): void
