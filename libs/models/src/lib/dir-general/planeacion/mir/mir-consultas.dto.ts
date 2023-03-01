@@ -7,7 +7,23 @@ export class ObtenerMirsDto extends PickType(MirDto, ['ano'], ArgsType)
 
 }
 
-export type TObtenerMirs = ObtenerMirsDto & Document;
+export type TObtenerMirs = ObtenerMirsDto;
+
+@ArgsType()
+export class MirsPorAnoDto extends PickType(MirDto, ['ano'], ArgsType)
+{
+
+}
+
+export type TMirsPorAno = MirsPorAnoDto;
+
+@ArgsType()
+export class MirsPorCentroGestorDto extends PickType(MirDto, ['centroGestor', 'ano'], ArgsType)
+{
+
+}
+
+export type TMirsPorCentroGestor = MirsPorCentroGestorDto;
 
 @InputType('agregarMirInput')
 export class AgregarMirDto extends OmitType(MirDto, ['_id'], InputType)

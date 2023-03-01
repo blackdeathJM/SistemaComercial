@@ -411,7 +411,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1677561508
+  tiempo: Int = 1677641835
   titulo: String
   usarRouter: Boolean = false
 }
@@ -605,6 +605,8 @@ type Query {
   """Obtener todos los pbr Por ano"""
   pbrs(ano: Int = 2023): [PbrType!]
   mirs(ano: Int = 2023): MirType
+  mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
+  mirsPorAno(ano: Int = 2023): [MirType!]
   centrosGestores: SeleccionType
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!

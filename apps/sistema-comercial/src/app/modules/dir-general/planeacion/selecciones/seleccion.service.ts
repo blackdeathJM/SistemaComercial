@@ -20,7 +20,7 @@ export class SeleccionService
             if (isNotNil(res.data))
             {
                 const seleccion = $cast<SeleccionType>(res.data.agregarCentroGestor);
-                this.seleccionStore.setState(seleccion);
+                this.seleccionStore.patchState(seleccion);
             }
         }));
     }

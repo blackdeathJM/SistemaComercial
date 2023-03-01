@@ -1,28 +1,29 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {CdkScrollable} from '@angular/cdk/overlay';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 import {ListDropSeleccionComponent} from '@s-dir-general/mir/list-drop-seleccion/list-drop-seleccion.component';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 import {finalize, Subscription} from 'rxjs';
-import {isNotNil} from "@angular-ru/cdk/utils";
+import {isNotNil} from '@angular-ru/cdk/utils';
+import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 
 @Component({
     selector: 'app-mod-multiples-selecciones',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatListModule, CdkScrollable, MatButtonModule, MatIconModule, ReactiveFormsModule, ListDropSeleccionComponent],
+    imports: [CommonModule, MatInputModule, MatListModule, CdkScrollable, MatButtonModule, MatIconModule, ReactiveFormsModule, ListDropSeleccionComponent, CapitalizarDirective],
     templateUrl: './mod-multiples-selecciones.component.html',
     styleUrls: ['./mod-multiples-selecciones.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModMultiplesSeleccionesComponent implements OnInit
+export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
 {
     ctrlCentroGestor = new FormControl('');
     ctrlUnidad = new FormControl('');
@@ -32,7 +33,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit
     unidades: string[] = [];
     variableOrigen: string[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) private data: boolean, public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService,
+    constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService,
                 private seleccionStore: SeleccionStore)
     {
     }
@@ -66,5 +67,10 @@ export class ModMultiplesSeleccionesComponent implements OnInit
             this.ctrlVariable.setValue('');
             this.ctrlUnidad.setValue('');
         })).subscribe();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

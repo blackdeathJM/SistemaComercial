@@ -3,13 +3,13 @@
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Centro gestor</mat-label>
-                <input matInput [formControl]="ctrlCentroGestor">
+                <input matInput [formControl]="ctrlCentroGestor" appCapitalizar>
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
-        <mat-list class="h-80 border-2">
+        <mat-list class="h-80 border-2 overflow-y-scroll">
             <mat-list-item class="border-b-2" *ngFor="let centro of centrosGestores">{{centro}}</mat-list-item>
         </mat-list>
     </div>
@@ -24,7 +24,7 @@
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
-        <mat-list class="h-80 border-2">
+        <mat-list class="h-80 border-2 overflow-y-scroll">
             <mat-list-item class="border-b-2" *ngFor="let centro of unidades">{{centro}}</mat-list-item>
         </mat-list>
     </div>
@@ -40,14 +40,14 @@
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
-        <mat-list class="h-80 border-2">
+        <mat-list class="h-80 border-2 overflow-y-scroll">
             <mat-list-item class="border-b-2" *ngFor="let centro of variableOrigen">{{centro}}</mat-list-item>
         </mat-list>
     </div>
 </section>
-<div class="flex flex-col flex-auto">
+<div class="flex flex-col flex-auto mt-4">
     <button mat-raised-button class="flex-auto" color="warn" (click)="mdr.close()">
-        <mat-icon svgIcon="cancel"></mat-icon>
-        Cancelar
+        <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+        Cerrar
     </button>
 </div>

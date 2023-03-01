@@ -1,47 +1,48 @@
-<article class="flex flex-col flex-auto py-4">
-    <div class="consultas">
-        <div class="flex flex-auto justify-between items-center gap-8">
-            <mat-form-field class="flex-auto">
-                <mat-label>Filtrar por año</mat-label>
-                <input matInput>
-            </mat-form-field>
-            <mat-form-field class="flex-auto">
-                <mat-label>Filtra por direccion</mat-label>
-                <mat-select (valueChange)="cambio($event)">
-                    <mat-option [value]="centro" *ngFor="let centro of centrosGestores">{{centro}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button mat-raised-button>
-                <mat-icon>add</mat-icon>
-                Registrar MIR
-            </button>
-            <button mat-raised-button>
-                <mat-icon>add</mat-icon>
-                Registrar MIR
-            </button>
-            <button mat-raised-button>
-                <mat-icon>add</mat-icon>
-                Registrar MIR
-            </button>
-            <button mat-raised-button>
-                <mat-icon>add</mat-icon>
-                Registrar MIR
-            </button>
-            <button mat-raised-button (click)="regSelecciones()">
-                <mat-icon>add</mat-icon>
-                Agregar selecciones
-            </button>
-        </div>
-    </div>
-    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4">
-        <mat-card-header class="tarjeta-mat-cabecera border-b-orange-300">
-            <span class="text-xl">MIR</span>
-        </mat-card-header>
-        <mat-card-content>
+<mat-drawer-container class="w-full">
+    <mat-drawer class="w-80" [opened]="abrirPanel" mode="over" autoFocus="true" position="end">
+        <ng-container *ngIf="abrirPanel">
+            <app-mod-mir (panel)="abrirPanel=false"></app-mod-mir>
+        </ng-container>
+    </mat-drawer>
+    <mat-drawer-content>
+        <article class="flex flex-col flex-auto">
+            <mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
+                <mat-form-field class="flex-auto mt-5">
+                    <input matInput placeholder="Introduce un año para filtrar" (keyup.enter)="buscarPorAno()" [(ngModel)]="buscarAno">
+                </mat-form-field>
+                <ng-container *ngIf="seleccionStore.state$ | async as centros">
+                    <mat-form-field class="flex-auto mt-5">
+                        <mat-select (valueChange)="buscarPorCentroGestor($event)" placeholder="Filtrar por centro gestor">
+                            <mat-option *ngFor="let centro of centros.centroGestor" [value]="centro">{{centro}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ng-container>
+                <mat-button-toggle-group>
+                    <mat-button-toggle (click)="regSeleccion()" value="bold">
+                        <mat-icon svgIcon="add"></mat-icon>
+                        Agregar lista de opciones
+                    </mat-button-toggle>
+                    <mat-button-toggle>
+                        <mat-icon svgIcon="heroicons_outline:collection"></mat-icon>
+                        Inicializar nuevo mir
+                    </mat-button-toggle>
+                    <mat-button-toggle (click)="abrirPanel = true">
+                        <mat-icon svgIcon="add"></mat-icon>
+                        Agregar elemento al formato MIR
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
 
-        </mat-card-content>
-        <mat-card-actions class="tarjeta-mat-acciones border-t-orange-300">
+            </mat-toolbar>
+            <mat-card class="bg-gray-300 dark:bg-gray-800 m-4">
+                <mat-card-header class="tarjeta-mat-cabecera border-b-orange-300">
+                    <span class="text-xl">MIR</span>
+                </mat-card-header>
+                <mat-card-content>
+                </mat-card-content>
+                <mat-card-actions class="tarjeta-mat-acciones border-t-orange-300">
 
-        </mat-card-actions>
-    </mat-card>
-</article>
+                </mat-card-actions>
+            </mat-card>
+        </article>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -42,7 +42,7 @@ export class SeleccionService
             {
                 _id = input._id;
             }
-            return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion});
+            return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true});
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

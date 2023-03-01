@@ -1,10 +1,14 @@
-<ng-container *ngIf="esLista">
-    <mat-list class="flex-auto" (change)="seleccion($event)">
-        <mat-list-option *ngFor="let valor of arreglos" [value]="valor">{{valor}}</mat-list-option>
-    </mat-list>
-</ng-container>
-<ng-container *ngIf="!esLista">
-    <mat-select (change)="seleccion($event)" class="flex-auto overflow-y-auto h-80" (valueChange)="seleccion($event)">
-        <mat-option class="border-b-2" *ngFor="let valor of arreglos" [value]="valor">{{valor}}</mat-option>
-    </mat-select>
-</ng-container>
+<div class="relative flex flex-col flex-auto">
+    <ng-container *ngIf="esLista">
+        <mat-selection-list class="flex-auto h-80 border-2 overflow-y-scroll" (change)="seleccion($event)">
+            <mat-list-option class="border-b-2" *ngFor="let valor of arreglos" [value]="valor">{{valor}}</mat-list-option>
+        </mat-selection-list>
+    </ng-container>
+    <ng-container *ngIf="!esLista" class="flex-auto">
+        <mat-form-field>
+            <mat-select (change)="seleccion($event)" class="flex-auto h-80" (valueChange)="seleccion($event)">
+                <mat-option class="border-b-2" *ngFor="let valor of arreglos" [value]="valor">{{valor}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+</div>

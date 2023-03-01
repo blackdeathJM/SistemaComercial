@@ -1,5 +1,5 @@
 <form>
-    <section class="flex flex-auto gap-2">
+    <section class="p-4 flex flex-col flex-auto gap-2">
         <mat-form-field>
             <mat-label>Id ind</mat-label>
             <input matInput>
@@ -20,9 +20,17 @@
             <mat-label>Centro gestor</mat-label>
             <input matInput>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Nombre del ind</mat-label>
-            <input matInput>
-        </mat-form-field>
     </section>
 </form>
+<mat-toolbar>
+    <div class="flex flex-auto items-center gap-4">
+        <button mat-raised-button class="flex-auto" color="warn">
+            <mat-icon svgIcon="mat_outline:close"></mat-icon>
+            Cerrar
+        </button>
+        <button mat-raised-button class="flex-auto" color="primary" (click)="cerrar()">
+            <mat-icon svgIcon="mat_outline:save"></mat-icon>
+            Añadir registro
+        </button>
+    </div>
+</mat-toolbar>
