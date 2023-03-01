@@ -266,47 +266,34 @@ type PbrType {
   unidad: String
 }
 
-type AvanceType {
-  periodo: String
-  valor: Float
-}
-
-type CaracteristicasType {
-  dimension: String
-  tipo: String
-}
-
-type ParamSemType {
-  amarillo: Float
-  rojo: Float
-  verde: Float
-}
-
-type LineaBaseType {
-  ano: Int
-  valor: Float
-}
-
 type MirType {
   _id: ID!
   ano: Int
-  avance: [AvanceType!]
-  caracteriticas: CaracteristicasType
+  tipo: String
+  dimension: String
   centroGestor: String
   frecuenciaMedicion: String
   idIndicador: String
-  lineaBase: LineaBaseType
+  lineaBaseAno: Int
+  lineaBaseValor: Int
   meta: Float
   metodoCalculo: String
   metodoDeVerificacion: String
   nivel: String
   nombreDelIndicador: String
-  parametroDeSemaforizacion: ParamSemType
+  semefVerde: Int
+  semefAmarillo: Int
+  semefRojo: Int
   programaFinanciacion: String
   resumenNarrativo: String
   sentidoDelIndicador: AscDesc
   supuestos: String
   unidadDeMedida: String
+  avanceTrim1: Float
+  avanceTrim2: Float
+  avanceTrim3: Float
+  avanceTrim4: Float
+  avanceAnual: Float
 }
 
 enum AscDesc {
@@ -411,7 +398,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1677641835
+  tiempo: Int = 1677663564
   titulo: String
   usarRouter: Boolean = false
 }
@@ -551,47 +538,34 @@ input PbrInput {
   unidad: String = null
 }
 
-input AvanceInput {
-  periodo: String = null
-  valor: Float = 0
-}
-
-input CaracteristicasInput {
-  dimension: String = null
-  tipo: String = null
-}
-
-input ParamSemInput {
-  amarillo: Float = 0
-  rojo: Float = 0
-  verde: Float = 0
-}
-
-input LineaBaseInput {
-  ano: Int = 2023
-  valor: Float = 0
-}
-
 input MirInput {
   _id: ID!
   ano: Int = 2023
-  avance: [AvanceInput!] = []
-  caracteriticas: CaracteristicasInput = null
+  tipo: String = null
+  dimension: String = null
   centroGestor: String = null
   frecuenciaMedicion: String = null
   idIndicador: String = null
-  lineaBase: LineaBaseInput = null
+  lineaBaseAno: Int = 0
+  lineaBaseValor: Int = 0
   meta: Float = 0
   metodoCalculo: String = null
   metodoDeVerificacion: String = null
   nivel: String = null
   nombreDelIndicador: String = "true"
-  parametroDeSemaforizacion: ParamSemInput = null
+  semefVerde: Int = 0
+  semefAmarillo: Int = 0
+  semefRojo: Int = 0
   programaFinanciacion: String = null
   resumenNarrativo: String = "true"
   sentidoDelIndicador: AscDesc = ascendente
   supuestos: String = null
   unidadDeMedida: String = null
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
+  avanceAnual: Float = 0
 }
 
 input SeleccionInput {
@@ -672,23 +646,31 @@ type Mutation {
 
 input agregarMirInput {
   ano: Int = 2023
-  avance: [AvanceInput!] = []
-  caracteriticas: CaracteristicasInput = null
+  tipo: String = null
+  dimension: String = null
   centroGestor: String = null
   frecuenciaMedicion: String = null
   idIndicador: String = null
-  lineaBase: LineaBaseInput = null
+  lineaBaseAno: Int = 0
+  lineaBaseValor: Int = 0
   meta: Float = 0
   metodoCalculo: String = null
   metodoDeVerificacion: String = null
   nivel: String = null
   nombreDelIndicador: String = "true"
-  parametroDeSemaforizacion: ParamSemInput = null
+  semefVerde: Int = 0
+  semefAmarillo: Int = 0
+  semefRojo: Int = 0
   programaFinanciacion: String = null
   resumenNarrativo: String = "true"
   sentidoDelIndicador: AscDesc = ascendente
   supuestos: String = null
   unidadDeMedida: String = null
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
+  avanceAnual: Float = 0
 }
 
 input CambioContrasenaInput {

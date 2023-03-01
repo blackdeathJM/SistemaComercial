@@ -42,7 +42,6 @@
     @apply cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700
 }
 
-.detalle-span
-{
-   @apply text-end text-secondary border-b-2
+.detalle-span {
+    @apply text-end text-secondary border-b-2
 }

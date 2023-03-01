@@ -9,7 +9,7 @@
             <input matInput>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Prog. Fin</mat-label>
+            <mat-label>Programa financiacion</mat-label>
             <input matInput>
         </mat-form-field>
         <mat-form-field>
@@ -17,18 +17,52 @@
             <input matInput>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Centro gestor</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let centroGestor of centrosGestores" [value]="centroGestor">{{centroGestor}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nombre del indicador</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Tipo</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Dimension</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Metodo de calculo</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Medios de Verificacion</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Supuestos</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select>
+                <mat-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Frecuencia de medicion</mat-label>
             <input matInput>
         </mat-form-field>
     </section>
 </form>
 <mat-toolbar>
     <div class="flex flex-auto items-center gap-4">
-        <button mat-raised-button class="flex-auto" color="warn">
+        <button mat-raised-button class="flex-auto" color="warn" (click)="cerrar()">
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="cerrar()">
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
             Añadir registro
         </button>

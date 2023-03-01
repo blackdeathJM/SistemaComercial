@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatTableModule} from '@angular/material/table';
@@ -14,16 +14,17 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {ListaMirComponent} from '@s-dir-general/mir/lista-mir/lista-mir.component';
+import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 
 @Component({
     selector: 'app-mir',
     standalone: true,
     imports: [CommonModule, ModMirComponent, MatTableModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, FormsModule, MatToolbarModule,
-        MatButtonToggleModule, MatSidenavModule],
+        MatButtonToggleModule, MatSidenavModule, ListaMirComponent, ListaTabMirComponent],
     templateUrl: './mir.component.html',
-    styleUrls: ['./mir.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./mir.component.scss']
 })
 export default class MirComponent
 {
@@ -53,5 +54,10 @@ export default class MirComponent
             this.ngxToast.alertaToast('Introduce un año a cuatro digitos', 'Valor numerico requerido');
             return;
         }
+    }
+
+    cerrarPanel(): void
+    {
+        this.abrirPanel = false;
     }
 }

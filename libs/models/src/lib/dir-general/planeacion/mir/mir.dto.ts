@@ -1,71 +1,42 @@
-import {IMir, IAvance, ICaracterisitca, IParamSem, ILineaBase, AscDesc} from './mir.interface';
+import {IMir, AscDesc} from './mir.interface';
 import {Field, ID, Int, Float, registerEnumType, ObjectType, InputType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
 
 registerEnumType(AscDesc, {name: 'AscDesc'});
 
-@ObjectType('AvanceType')
-@InputType('AvanceInput')
-export class AvanceDto implements IAvance
-{
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    periodo: string;
+// @ObjectType('AvanceType')
+// @InputType('AvanceInput')
+// export class AvanceDto implements IAvance
+// {
+//     @Field(() => String, {nullable: true, defaultValue: null})
+//     @IsOptional()
+//     periodo: string;
+//
+//     @Field(() => Float, {nullable: true, defaultValue: 0.00})
+//     @IsOptional()
+//     valor: number;
+// }
 
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    valor: number;
-}
-
-@ObjectType('CaracteristicasType')
-@InputType('CaracteristicasInput')
-export class CaracterisitcaDto implements ICaracterisitca
-{
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsNotEmpty({message: 'La dimension es necesaria'})
-    dimension: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsNotEmpty({message: 'El tipo es necesario'})
-    tipo: string;
-
-}
-
-@ObjectType('ParamSemType')
-@InputType('ParamSemInput')
-export class ParamSemDto implements IParamSem
-{
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
-    amarillo: number;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
-    rojo: number;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
-    verde: number;
-}
-
-@ObjectType('LineaBaseType')
-@InputType('LineaBaseInput')
-export class LineaBaseDto implements ILineaBase
-{
-    @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 0})
-    @IsNotEmpty({message: 'El ano de linea base no puede estar vacio'})
-    ano: number;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
-    @IsNotEmpty({message: 'El valor de linea base no puede estar vacio'})
-    valor: number;
-}
+// @ObjectType('ParamSemType')
+// @InputType('ParamSemInput')
+// export class ParamSemDto implements IParamSem
+// {
+//     @Field(() => Float, {nullable: true, defaultValue: 0.00})
+//     @IsOptional()
+//     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
+//     amarillo: number;
+//
+//     @Field(() => Float, {nullable: true, defaultValue: 0.00})
+//     @IsOptional()
+//     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
+//     rojo: number;
+//
+//     @Field(() => Float, {nullable: true, defaultValue: 0.00})
+//     @IsOptional()
+//     @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2})
+//     verde: number;
+// }
 
 @ObjectType('MirType')
 @InputType('MirInput')
@@ -81,15 +52,15 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'El año es requerido'})
     ano: number;
 
-    @Field(() => [AvanceDto], {nullable: true, defaultValue: []})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
-    @IsOptional()
-    avance: AvanceDto[];
+    @IsNotEmpty({message: 'El tipo es requerido'})
+    tipo: string;
 
-    @Field(() => CaracterisitcaDto, {nullable: true, defaultValue: null})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
-    @IsNotEmpty({message: 'Las caracteristicas son requeridas'})
-    caracteriticas: CaracterisitcaDto;
+    @IsNotEmpty({message: 'La dimension es requerida'})
+    dimension: string;
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
@@ -106,10 +77,15 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'El id del indicador es requerido'})
     idIndicador: string;
 
-    @Field(() => LineaBaseDto, {nullable: true, defaultValue: null})
+    @Field(() => Int, {nullable: true, defaultValue: 0})
     @Prop()
-    @IsNotEmpty({message: 'La linea base es requerida'})
-    lineaBase: LineaBaseDto;
+    @IsNotEmpty({message: 'La linea base del año es requerida'})
+    lineaBaseAno: number;
+
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Prop()
+    @IsNotEmpty({message: 'El valor de la linea base es requerido'})
+    lineaBaseValor: number;
 
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @Prop()
@@ -137,10 +113,23 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'El nombre del indicador es necesario'})
     nombreDelIndicador: string;
 
-    @Field(() => ParamSemDto, {nullable: true, defaultValue: null})
+    @Field(() => Int, {nullable: true, defaultValue: 0})
     @Prop()
-    @IsNotEmpty({message: 'Es necesario colocar un parametro de semaforizacion'})
-    parametroDeSemaforizacion: ParamSemDto;
+    @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
+    @IsOptional()
+    semefVerde: number;
+
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Prop()
+    @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
+    @IsOptional()
+    semefAmarillo: number;
+
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Prop()
+    @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
+    @IsOptional()
+    semefRojo: number;
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
@@ -166,6 +155,36 @@ export class MirDto implements IMir
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar una unidad de medida'})
     unidadDeMedida: string;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @Prop()
+    @IsNumber({allowNaN: false, allowInfinity: false})
+    @IsOptional()
+    avanceTrim1: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @Prop()
+    @IsNumber({allowNaN: false, allowInfinity: false})
+    @IsOptional()
+    avanceTrim2: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @Prop()
+    @IsNumber({allowNaN: false, allowInfinity: false})
+    @IsOptional()
+    avanceTrim3: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @Prop()
+    @IsNumber({allowNaN: false, allowInfinity: false})
+    @IsOptional()
+    avanceTrim4: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @Prop()
+    @IsNumber({allowNaN: false, allowInfinity: false})
+    @IsOptional()
+    avanceAnual: number;
 }
 
 

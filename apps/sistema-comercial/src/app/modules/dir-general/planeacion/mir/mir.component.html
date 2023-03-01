@@ -1,8 +1,6 @@
 <mat-drawer-container class="w-full">
-    <mat-drawer class="w-80" [opened]="abrirPanel" mode="over" autoFocus="true" position="end">
-        <ng-container *ngIf="abrirPanel">
-            <app-mod-mir (panel)="abrirPanel=false"></app-mod-mir>
-        </ng-container>
+    <mat-drawer class="w-96" [opened]="abrirPanel" mode="side" autoFocus="true" position="end">
+        <app-mod-mir (panel)="cerrarPanel()"></app-mod-mir>
     </mat-drawer>
     <mat-drawer-content>
         <article class="flex flex-col flex-auto">
@@ -31,18 +29,22 @@
                         Agregar elemento al formato MIR
                     </mat-button-toggle>
                 </mat-button-toggle-group>
-
             </mat-toolbar>
-            <mat-card class="bg-gray-300 dark:bg-gray-800 m-4">
-                <mat-card-header class="tarjeta-mat-cabecera border-b-orange-300">
-                    <span class="text-xl">MIR</span>
-                </mat-card-header>
-                <mat-card-content>
-                </mat-card-content>
-                <mat-card-actions class="tarjeta-mat-acciones border-t-orange-300">
 
-                </mat-card-actions>
-            </mat-card>
+<!--            <mat-card class="bg-gray-300 dark:bg-gray-800 m-4">-->
+<!--                <mat-card-header class="tarjeta-mat-cabecera border-b-orange-300">-->
+<!--                    <span class="text-xl">MIR</span>-->
+<!--                </mat-card-header>-->
+<!--                <mat-card-content>-->
+<!--                    <section class="flex flex-auto flex-col">-->
+<!--                        <app-lista-mir class="flex-auto"></app-lista-mir>-->
+<!--                    </section>-->
+<!--                </mat-card-content>-->
+<!--                <mat-card-actions class="tarjeta-mat-acciones border-t-orange-300">-->
+<!--                </mat-card-actions>-->
+<!--            </mat-card>-->
+
+            <app-lista-tab-mir></app-lista-tab-mir>
         </article>
     </mat-drawer-content>
 </mat-drawer-container>
