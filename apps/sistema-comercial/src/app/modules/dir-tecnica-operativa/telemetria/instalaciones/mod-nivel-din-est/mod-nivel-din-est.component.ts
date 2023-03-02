@@ -69,16 +69,13 @@ export class ModNivelDinEstComponent implements OnInit, AfterViewInit
         const args: ITomarMedicion =
             {
                 _id: this.data._id,
-
                 tipoNivel: this.data.tipoMedicion,
-
                 ano: this.ano,
-
                 ...this.meses.reduce((acc, mes) =>
                 {
                     acc[mes] = parseFloat(this.formNiveles.get(mes).value);
                     return acc;
-                }, {})
+                }, {}),
             };
         this.cargando = true;
         this.formNiveles.disable();

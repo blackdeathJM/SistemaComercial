@@ -2,7 +2,7 @@ import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {MirDto, MirType} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {Model} from 'mongoose';
-import {AgregarMirDto, MirsPorCentroGestorDto, MirsPorAnoDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
+import {MirsPorCentroGestorDto, MirsPorAnoDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 
 @Injectable()
 export class MirService
@@ -12,7 +12,7 @@ export class MirService
     constructor(@InjectModel(MirDto.name) private mir: Model<MirType>)
     {
     }
-    async agregarMir(input: AgregarMirDto): Promise<MirDto>
+    async agregarMir(input: MirDto): Promise<MirDto>
     {
         try
         {

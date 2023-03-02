@@ -52,11 +52,6 @@ export type AgregarMotorInput = {
   motor?: InputMaybe<MotorInput>;
 };
 
-export enum AscDesc {
-  Ascendente = 'ascendente',
-  Descendente = 'descendente'
-}
-
 export type AuthInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   asigPermisos?: InputMaybe<Array<Scalars['String']>>;
@@ -78,17 +73,6 @@ export type AuthType = {
   guards?: Maybe<Array<Scalars['String']>>;
   roles?: Maybe<Array<Scalars['JSONObject']>>;
   usuario?: Maybe<Scalars['String']>;
-};
-
-export type AvanceInput = {
-  periodo?: InputMaybe<Scalars['String']>;
-  valor?: InputMaybe<Scalars['Float']>;
-};
-
-export type AvanceType = {
-  __typename?: 'AvanceType';
-  periodo?: Maybe<Scalars['String']>;
-  valor?: Maybe<Scalars['Float']>;
 };
 
 export type BombaInput = {
@@ -133,17 +117,6 @@ export type BombaType = {
 export type CambioContrasenaInput = {
   _id?: InputMaybe<Scalars['ID']>;
   contrasena?: InputMaybe<Scalars['String']>;
-};
-
-export type CaracteristicasInput = {
-  dimension?: InputMaybe<Scalars['String']>;
-  tipo?: InputMaybe<Scalars['String']>;
-};
-
-export type CaracteristicasType = {
-  __typename?: 'CaracteristicasType';
-  dimension?: Maybe<Scalars['String']>;
-  tipo?: Maybe<Scalars['String']>;
 };
 
 export type CrearRolInput = {
@@ -392,17 +365,6 @@ export type InstalacionType = {
   tipoInstalacion?: Maybe<Scalars['String']>;
 };
 
-export type LineaBaseInput = {
-  ano?: InputMaybe<Scalars['Int']>;
-  valor?: InputMaybe<Scalars['Float']>;
-};
-
-export type LineaBaseType = {
-  __typename?: 'LineaBaseType';
-  ano?: Maybe<Scalars['Int']>;
-  valor?: Maybe<Scalars['Float']>;
-};
-
 export type LoginInput = {
   contrasena?: InputMaybe<Scalars['String']>;
   usuario?: InputMaybe<Scalars['String']>;
@@ -469,22 +431,30 @@ export type MedidorType = {
 export type MirInput = {
   _id: Scalars['ID'];
   ano?: InputMaybe<Scalars['Int']>;
-  avance?: InputMaybe<Array<AvanceInput>>;
-  caracteriticas?: InputMaybe<CaracteristicasInput>;
+  avanceAnual?: InputMaybe<Scalars['Float']>;
+  avanceTrim1?: InputMaybe<Scalars['Float']>;
+  avanceTrim2?: InputMaybe<Scalars['Float']>;
+  avanceTrim3?: InputMaybe<Scalars['Float']>;
+  avanceTrim4?: InputMaybe<Scalars['Float']>;
   centroGestor?: InputMaybe<Scalars['String']>;
+  dimension?: InputMaybe<Scalars['String']>;
   frecuenciaMedicion?: InputMaybe<Scalars['String']>;
   idIndicador?: InputMaybe<Scalars['String']>;
-  lineaBase?: InputMaybe<LineaBaseInput>;
+  lineaBaseAno?: InputMaybe<Scalars['Int']>;
+  lineaBaseValor?: InputMaybe<Scalars['Float']>;
+  mediosDeVerificacion?: InputMaybe<Scalars['String']>;
   meta?: InputMaybe<Scalars['Float']>;
   metodoCalculo?: InputMaybe<Scalars['String']>;
-  metodoDeVerificacion?: InputMaybe<Scalars['String']>;
   nivel?: InputMaybe<Scalars['String']>;
   nombreDelIndicador?: InputMaybe<Scalars['String']>;
-  parametroDeSemaforizacion?: InputMaybe<ParamSemInput>;
   programaFinanciacion?: InputMaybe<Scalars['String']>;
   resumenNarrativo?: InputMaybe<Scalars['String']>;
-  sentidoDelIndicador?: InputMaybe<AscDesc>;
+  semefAmarillo?: InputMaybe<Scalars['Float']>;
+  semefRojo?: InputMaybe<Scalars['Float']>;
+  semefVerde?: InputMaybe<Scalars['Float']>;
+  sentidoDelIndicador?: InputMaybe<Scalars['String']>;
   supuestos?: InputMaybe<Scalars['String']>;
+  tipo?: InputMaybe<Scalars['String']>;
   unidadDeMedida?: InputMaybe<Scalars['String']>;
 };
 
@@ -492,22 +462,30 @@ export type MirType = {
   __typename?: 'MirType';
   _id: Scalars['ID'];
   ano?: Maybe<Scalars['Int']>;
-  avance?: Maybe<Array<AvanceType>>;
-  caracteriticas?: Maybe<CaracteristicasType>;
+  avanceAnual?: Maybe<Scalars['Float']>;
+  avanceTrim1?: Maybe<Scalars['Float']>;
+  avanceTrim2?: Maybe<Scalars['Float']>;
+  avanceTrim3?: Maybe<Scalars['Float']>;
+  avanceTrim4?: Maybe<Scalars['Float']>;
   centroGestor?: Maybe<Scalars['String']>;
+  dimension?: Maybe<Scalars['String']>;
   frecuenciaMedicion?: Maybe<Scalars['String']>;
   idIndicador?: Maybe<Scalars['String']>;
-  lineaBase?: Maybe<LineaBaseType>;
+  lineaBaseAno?: Maybe<Scalars['Int']>;
+  lineaBaseValor?: Maybe<Scalars['Float']>;
+  mediosDeVerificacion?: Maybe<Scalars['String']>;
   meta?: Maybe<Scalars['Float']>;
   metodoCalculo?: Maybe<Scalars['String']>;
-  metodoDeVerificacion?: Maybe<Scalars['String']>;
   nivel?: Maybe<Scalars['String']>;
   nombreDelIndicador?: Maybe<Scalars['String']>;
-  parametroDeSemaforizacion?: Maybe<ParamSemType>;
   programaFinanciacion?: Maybe<Scalars['String']>;
   resumenNarrativo?: Maybe<Scalars['String']>;
-  sentidoDelIndicador?: Maybe<AscDesc>;
+  semefAmarillo?: Maybe<Scalars['Float']>;
+  semefRojo?: Maybe<Scalars['Float']>;
+  semefVerde?: Maybe<Scalars['Float']>;
+  sentidoDelIndicador?: Maybe<Scalars['String']>;
   supuestos?: Maybe<Scalars['String']>;
+  tipo?: Maybe<Scalars['String']>;
   unidadDeMedida?: Maybe<Scalars['String']>;
 };
 
@@ -677,7 +655,7 @@ export type MutationAgregarCentroGestorArgs = {
 
 
 export type MutationAgregarMirArgs = {
-  input: AgregarMirInput;
+  input: MirInput;
 };
 
 
@@ -822,19 +800,6 @@ export type NotificacionType = {
   usarRouter?: Maybe<Scalars['Boolean']>;
 };
 
-export type ParamSemInput = {
-  amarillo?: InputMaybe<Scalars['Float']>;
-  rojo?: InputMaybe<Scalars['Float']>;
-  verde?: InputMaybe<Scalars['Float']>;
-};
-
-export type ParamSemType = {
-  __typename?: 'ParamSemType';
-  amarillo?: Maybe<Scalars['Float']>;
-  rojo?: Maybe<Scalars['Float']>;
-  verde?: Maybe<Scalars['Float']>;
-};
-
 export type PbrInput = {
   _id?: InputMaybe<Scalars['ID']>;
   ano?: InputMaybe<Scalars['Int']>;
@@ -891,7 +856,8 @@ export type Query = {
   filtrarDeptos: Array<DeptoType>;
   filtrarEmpleados: Array<EmpleadoType>;
   instalaciones: Array<TelemetriaType>;
-  mirs?: Maybe<MirType>;
+  mirsPorAno?: Maybe<Array<MirType>>;
+  mirsPorCentroGestor?: Maybe<Array<MirType>>;
   notificaciones?: Maybe<Array<NotificacionType>>;
   /** Obtener todos los pbr Por ano */
   pbrs?: Maybe<Array<PbrType>>;
@@ -940,8 +906,14 @@ export type QueryFiltrarEmpleadosArgs = {
 };
 
 
-export type QueryMirsArgs = {
+export type QueryMirsPorAnoArgs = {
   ano?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryMirsPorCentroGestorArgs = {
+  ano?: InputMaybe<Scalars['Int']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1105,27 +1077,6 @@ export type UploadInput = {
   file?: InputMaybe<Array<Scalars['Upload']>>;
   /** Es la url A eliminar en caso de que sea remplazar o eliminar el archivo */
   url?: InputMaybe<Scalars['String']>;
-};
-
-export type AgregarMirInput = {
-  ano?: InputMaybe<Scalars['Int']>;
-  avance?: InputMaybe<Array<AvanceInput>>;
-  caracteriticas?: InputMaybe<CaracteristicasInput>;
-  centroGestor?: InputMaybe<Scalars['String']>;
-  frecuenciaMedicion?: InputMaybe<Scalars['String']>;
-  idIndicador?: InputMaybe<Scalars['String']>;
-  lineaBase?: InputMaybe<LineaBaseInput>;
-  meta?: InputMaybe<Scalars['Float']>;
-  metodoCalculo?: InputMaybe<Scalars['String']>;
-  metodoDeVerificacion?: InputMaybe<Scalars['String']>;
-  nivel?: InputMaybe<Scalars['String']>;
-  nombreDelIndicador?: InputMaybe<Scalars['String']>;
-  parametroDeSemaforizacion?: InputMaybe<ParamSemInput>;
-  programaFinanciacion?: InputMaybe<Scalars['String']>;
-  resumenNarrativo?: InputMaybe<Scalars['String']>;
-  sentidoDelIndicador?: InputMaybe<AscDesc>;
-  supuestos?: InputMaybe<Scalars['String']>;
-  unidadDeMedida?: InputMaybe<Scalars['String']>;
 };
 
 export type FragAuthFragment = { __typename?: 'AuthType', usuario?: string | null, activo?: boolean | null, roles?: Array<any> | null, estatus?: string | null, guards?: Array<string> | null, controles?: Array<string> | null };
@@ -1440,6 +1391,30 @@ export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { 
 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
 
+export type FragMirFragment = { __typename?: 'MirType', _id: string, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null };
+
+export type AgregarMirMutationVariables = Exact<{
+  input: MirInput;
+}>;
+
+
+export type AgregarMirMutation = { __typename?: 'Mutation', agregarMir: { __typename?: 'MirType', _id: string, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
+
+export type MirsPorAnoQueryVariables = Exact<{
+  ano?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type MirsPorAnoQuery = { __typename?: 'Query', mirsPorAno?: Array<{ __typename?: 'MirType', _id: string, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
+
+export type MirsPorCentroGestorQueryVariables = Exact<{
+  ano?: InputMaybe<Scalars['Int']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type MirsPorCentroGestorQuery = { __typename?: 'Query', mirsPorCentroGestor?: Array<{ __typename?: 'MirType', _id: string, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
+
 export type AgregarCentroGestorMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
 }>;
@@ -1626,6 +1601,37 @@ export const FragPuestoFragmentDoc = gql`
   fechaAsignacion
   isr
   sueldo
+}
+    `;
+export const FragMirFragmentDoc = gql`
+    fragment fragMir on MirType {
+  _id
+  ano
+  idIndicador
+  nivel
+  programaFinanciacion
+  resumenNarrativo
+  centroGestor
+  nombreDelIndicador
+  tipo
+  dimension
+  metodoCalculo
+  mediosDeVerificacion
+  supuestos
+  unidadDeMedida
+  frecuenciaMedicion
+  lineaBaseAno
+  lineaBaseValor
+  meta
+  sentidoDelIndicador
+  semefVerde
+  semefAmarillo
+  semefRojo
+  avanceTrim1
+  avanceTrim2
+  avanceTrim3
+  avanceTrim4
+  avanceAnual
 }
     `;
 export const FragSeleccionFragmentDoc = gql`
@@ -2639,6 +2645,60 @@ ${FragTelefonoFragmentDoc}`;
   })
   export class CrearEmpleadoGQL extends Apollo.Mutation<CrearEmpleadoMutation, CrearEmpleadoMutationVariables> {
     document = CrearEmpleadoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AgregarMirDocument = gql`
+    mutation agregarMir($input: MirInput!) {
+  agregarMir(input: $input) {
+    ...fragMir
+  }
+}
+    ${FragMirFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AgregarMirGQL extends Apollo.Mutation<AgregarMirMutation, AgregarMirMutationVariables> {
+    document = AgregarMirDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const MirsPorAnoDocument = gql`
+    query mirsPorAno($ano: Int) {
+  mirsPorAno(ano: $ano) {
+    ...fragMir
+  }
+}
+    ${FragMirFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class MirsPorAnoGQL extends Apollo.Query<MirsPorAnoQuery, MirsPorAnoQueryVariables> {
+    document = MirsPorAnoDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const MirsPorCentroGestorDocument = gql`
+    query mirsPorCentroGestor($ano: Int, $centroGestor: String) {
+  mirsPorCentroGestor(ano: $ano, centroGestor: $centroGestor) {
+    ...fragMir
+  }
+}
+    ${FragMirFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class MirsPorCentroGestorGQL extends Apollo.Query<MirsPorCentroGestorQuery, MirsPorCentroGestorQueryVariables> {
+    document = MirsPorCentroGestorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

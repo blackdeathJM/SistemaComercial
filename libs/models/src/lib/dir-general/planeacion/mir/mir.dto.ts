@@ -3,7 +3,7 @@ import {Field, ID, Int, Float, registerEnumType, ObjectType, InputType} from '@n
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
 
-registerEnumType(AscDesc, {name: 'AscDesc'});
+// registerEnumType(AscDesc, {name: 'AscDesc'});
 
 // @ObjectType('AvanceType')
 // @InputType('AvanceInput')
@@ -82,7 +82,7 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'La linea base del año es requerida'})
     lineaBaseAno: number;
 
-    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Field(() => Float, {nullable: true, defaultValue: 0})
     @Prop()
     @IsNotEmpty({message: 'El valor de la linea base es requerido'})
     lineaBaseValor: number;
@@ -113,19 +113,19 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'El nombre del indicador es necesario'})
     nombreDelIndicador: string;
 
-    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Field(() => Float, {nullable: true, defaultValue: 0})
     @Prop()
     @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
     @IsOptional()
     semefVerde: number;
 
-    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Field(() => Float, {nullable: true, defaultValue: 0})
     @Prop()
     @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
     @IsOptional()
     semefAmarillo: number;
 
-    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @Field(() => Float, {nullable: true, defaultValue: 0})
     @Prop()
     @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
     @IsOptional()
@@ -141,10 +141,10 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'Es necesario el resumen narrativo'})
     resumenNarrativo: string;
 
-    @Field(() => AscDesc, {nullable: true, defaultValue: AscDesc.ascendente})
-    @Prop({type: String})
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
     @IsNotEmpty({message: 'Tienes que colocar el sentido del indicador Ascendente o Descendente'})
-    sentidoDelIndicador: AscDesc;
+    sentidoDelIndicador: string;
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
@@ -188,5 +188,5 @@ export class MirDto implements IMir
 }
 
 
-export type MirType = MirDto & Document;
+export type MirType = MirDto;
 export const SCHEMA_MIR = SchemaFactory.createForClass(MirDto);

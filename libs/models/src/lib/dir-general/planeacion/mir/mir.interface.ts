@@ -24,7 +24,7 @@ export interface IMir
     lineaBaseAno: number;
     lineaBaseValor: number
     meta: number;
-    sentidoDelIndicador: AscDesc;
+    sentidoDelIndicador: string;
     semefVerde: number;
     semefAmarillo: number;
     semefRojo: number;

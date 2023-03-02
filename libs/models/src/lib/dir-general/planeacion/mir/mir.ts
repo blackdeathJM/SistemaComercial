@@ -1,11 +1,14 @@
-import {AscDesc, IMir} from './mir.interface';
-import {numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {IMir} from './mir.interface';
+import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 
 export class Mir implements IMir
 {
     _id: string;
 
-    @prop({defaultValue: new Date().getFullYear()})
+    @required()
+    @numeric({message: 'El año es requerido', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
+    @maxNumber({message: 'El valor maximo es 2050', value: 2050})
+    @minNumber({message: 'Solo puedes resgistrar desde el 2020', value: 2020})
     ano: number;
 
     @prop({defaultValue: 0.00})
@@ -13,7 +16,7 @@ export class Mir implements IMir
 
     @prop({defaultValue: 0.00})
     @numeric({message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    avanceTrim1: number = 0;
+    avanceTrim1: number;
 
     @prop({defaultValue: 0.00})
     @numeric({message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
@@ -39,8 +42,7 @@ export class Mir implements IMir
     @required({message: 'Asigna un identificador'})
     idIndicador: string;
 
-    @prop({defaultValue: 2022})
-    @numeric({message: 'La linea base para año debe ser un numero', allowDecimal: true, acceptValue: NumericValueType.Both})
+    @prop({defaultValue: 0})
     lineaBaseAno: number;
 
     @prop({defaultValue: 0.00})
@@ -65,6 +67,7 @@ export class Mir implements IMir
 
     @required({message: 'Es necesario el programa de financiacion'})
     programaFinanciacion: string;
+
     @required({message: 'Es necesario el resumen narrativo'})
     resumenNarrativo: string;
 
@@ -80,8 +83,8 @@ export class Mir implements IMir
     @numeric({message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     semefVerde: number = 0;
 
-    @prop({defaultValue: 0.00})
-    sentidoDelIndicador: AscDesc;
+    @required({message: 'Selecciona el sentido del indicador'})
+    sentidoDelIndicador: string;
 
     @required({message: 'Es necesario colocar un supuesto'})
     supuestos: string;

@@ -11,6 +11,8 @@ import {isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir';
+import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {AscDesc} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Component({
     selector: 'app-mod-mir',
@@ -27,6 +29,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     unidades: string[] = [];
     variablesOrigen: string[] = [];
     formMir: FormGroup;
+    sentidoIndicador = Object.values(AscDesc);
     sub = new Subscription();
 
     constructor(private seleccionStore: SeleccionStore, private fb: RxFormBuilder)
@@ -36,6 +39,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.formMir = this.fb.formGroup(new Mir());
+        this.formMir.get('ano').setValue(new Date().getFullYear());
         this.sub.add(this.seleccionStore.state$.subscribe((res) =>
         {
             if (isNotNil(res))
@@ -49,7 +53,21 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     regMir(): void
     {
-        console.log('****', this.formMir.value);
+        const {ano, avanceAnual, avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4, lineaBaseValor, meta, semefAmarillo, semefRojo, semefVerde, ...resto} = this.formMir.value;
+        const input: MirType =
+            {
+                ano: +ano,
+                avanceAnual: +avanceAnual,
+                avanceTrim1: +avanceTrim1,
+                avanceTrim2: +avanceTrim2,
+                avanceTrim3: +avanceTrim3,
+                lineaBaseValor: +lineaBaseValor,
+                meta: +meta,
+                semefAmarillo: +semefAmarillo,
+                semefRojo: +semefRojo,
+                semefVerde: +semefVerde,
+                ...resto
+            };
     }
 
     cerrar(): void

@@ -16,11 +16,3 @@ export class MirsPorCentroGestorDto extends PickType(MirDto, ['centroGestor', 'a
 }
 
 export type TMirsPorCentroGestor = MirsPorCentroGestorDto;
-
-@InputType('agregarMirInput')
-export class AgregarMirDto extends OmitType(MirDto, ['_id'], InputType)
-{
-
-}
-
-export type TAgregarMir = AgregarMirDto;

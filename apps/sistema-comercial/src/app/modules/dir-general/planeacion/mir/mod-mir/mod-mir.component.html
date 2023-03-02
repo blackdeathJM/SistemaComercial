@@ -1,6 +1,11 @@
 <form [formGroup]="formMir">
     <section class="p-4 flex flex-col flex-auto gap-2">
         <mat-form-field>
+            <mat-label>año</mat-label>
+            <input matInput formControlName="ano">
+            <mat-error>{{formMir.controls.ano['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
             <mat-label>Indicador</mat-label>
             <input matInput formControlName="idIndicador">
             <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
@@ -68,6 +73,13 @@
             <mat-label>Frecuencia de medicion</mat-label>
             <input matInput formControlName="frecuenciaMedicion">
             <mat-error>{{formMir.controls.frecuenciaMedicion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Sentido del indicador</mat-label>
+            <mat-select formControlName="sentidoDelIndicador">
+                <mat-option *ngFor="let sentido of sentidoIndicador" [value]="sentido">{{sentido}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.sentidoDelIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
     </section>
 </form>
