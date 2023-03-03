@@ -18,12 +18,16 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaMirComponent} from '@s-dir-general/mir/lista-mir/lista-mir.component';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
+import {MirService} from '@s-dir-general/mir/store/mir.service';
+import {TMirsPorAno} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 
 @Component({
     selector: 'app-mir',
     standalone: true,
     imports: [CommonModule, ModMirComponent, MatTableModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, FormsModule, MatToolbarModule,
         MatButtonToggleModule, MatSidenavModule, ListaMirComponent, ListaTabMirComponent, RxReactiveFormsModule, ReactiveFormsModule],
+    providers: [MirService],
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']
 })
@@ -32,7 +36,8 @@ export default class MirComponent
     buscarAno: number;
     abrirPanel = false;
 
-    constructor(public mdr: MatDialog, public seleccionStore: SeleccionStore, private ngxToast: NgxToastService)
+    constructor(public mdr: MatDialog, public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, private entityMir: EntityMir,
+                private mirService: MirService)
     {
     }
 
@@ -55,6 +60,11 @@ export default class MirComponent
             this.ngxToast.alertaToast('Introduce un año a cuatro digitos', 'Valor numerico requerido');
             return;
         }
+        const actMir: TMirsPorAno =
+            {
+                ano
+            };
+        this.mirService.mirsPorAno(actMir).subscribe();
     }
 
     cerrarPanel(): void

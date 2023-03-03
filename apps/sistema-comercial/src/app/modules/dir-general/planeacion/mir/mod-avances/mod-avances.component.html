@@ -1,54 +1,56 @@
-<article class="flex flex-auto flex-col">
-    <fieldset class="flex flex-auto gap-4 border-2 p-4">
-        <legend>LINEA BASE</legend>
-        <mat-form-field class="flex-auto">
-            <mat-label>Tipo</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Valor</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Meta</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </fieldset>
+<form [formGroup]="formModAvances">
+    <article class="flex flex-auto flex-col">
+        <fieldset class="flex flex-auto gap-4 border-2 p-4">
+            <legend>LINEA BASE</legend>
+            <mat-form-field class="flex-auto">
+                <mat-label>Año</mat-label>
+                <input matInput formControlName="lineaBaseAno">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="lineaBaseValor">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Meta</mat-label>
+                <input matInput formControlName="meta">
+            </mat-form-field>
+        </fieldset>
 
-    <fieldset class="flex flex-auto gap-4 border-2 p-4 mt-2">
-        <legend>SEMAFORIZACION</legend>
-        <mat-form-field class="flex-auto">
-            <mat-label>Semaforo verde</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Semaforo amarillo</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Semaforo rojo</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </fieldset>
+        <fieldset class="flex flex-auto gap-4 border-2 p-4 mt-2">
+            <legend>SEMAFORIZACION</legend>
+            <mat-form-field class="flex-auto">
+                <mat-label>Semaforo verde</mat-label>
+                <input matInput formControlName="semefVerde">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Semaforo amarillo</mat-label>
+                <input matInput formControlName="semefAmarillo">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Semaforo rojo</mat-label>
+                <input matInput formControlName="semefRojo">
+            </mat-form-field>
+        </fieldset>
 
-    <fieldset class="flex flex-auto gap-4 border-2 p-4 mt-2 mb-4">
-        <legend>AVANCES TRIMESTRE</legend>
-        <mat-form-field class="flex-auto">
-            <mat-label>Trimestre 1</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Trimestre 2</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Trimestre 3</mat-label>
-            <input matInput>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-label>Trimestre 4</mat-label>
-            <input matInput>
-        </mat-form-field>
-    </fieldset>
-    <app-registros></app-registros>
-</article>
+        <fieldset class="flex flex-auto gap-4 border-2 p-4 mt-2 mb-4">
+            <legend>AVANCES TRIMESTRE</legend>
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 1</mat-label>
+                <input matInput formControlName="avanceTrim1">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 2</mat-label>
+                <input matInput formControlName="avanceTrim2">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 3</mat-label>
+                <input matInput formControlName="avanceTrim3">
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 4</mat-label>
+                <input matInput formControlName="avanceTrim4">
+            </mat-form-field>
+        </fieldset>
+        <app-registros></app-registros>
+    </article>
+</form>

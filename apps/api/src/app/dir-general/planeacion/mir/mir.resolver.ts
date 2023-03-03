@@ -1,7 +1,7 @@
 import {Resolver, Query, Args, Mutation} from '@nestjs/graphql';
 import {MirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {MirService} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.service';
-import {MirsPorCentroGestorDto, MirsPorAnoDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
+import {MirsPorCentroGestorDto, MirsPorAnoDto, MirsActAvancesDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 
 @Resolver(() => MirDto)
 export class MirResolver
@@ -26,5 +26,11 @@ export class MirResolver
     async agregarMir(@Args('input') input: MirDto): Promise<MirDto>
     {
         return await this.mirService.agregarMir(input);
+    }
+
+    @Mutation(() => MirDto)
+    async mirsActAvances(@Args('input') input: MirsActAvancesDto): Promise<MirDto>
+    {
+        return await this.mirService.mirsActAvances(input);
     }
 }

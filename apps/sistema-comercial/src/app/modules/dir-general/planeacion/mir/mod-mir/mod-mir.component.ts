@@ -12,12 +12,14 @@ import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir';
 import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {AscDesc} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import {MirService} from '@s-dir-general/mir/store/mir.service';
 
 @Component({
     selector: 'app-mod-mir',
     standalone: true,
     imports: [CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule],
+    providers: [MirService],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -32,7 +34,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     sentidoIndicador = Object.values(AscDesc);
     sub = new Subscription();
 
-    constructor(private seleccionStore: SeleccionStore, private fb: RxFormBuilder)
+    constructor(private seleccionStore: SeleccionStore, private fb: RxFormBuilder, private mirService: MirService)
     {
     }
 
@@ -56,7 +58,7 @@ export class ModMirComponent implements OnInit, OnDestroy
         const {ano, avanceAnual, avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4, lineaBaseValor, meta, semefAmarillo, semefRojo, semefVerde, ...resto} = this.formMir.value;
         const input: MirType =
             {
-                ano: +ano,
+                ano: parseInt(ano, 10),
                 avanceAnual: +avanceAnual,
                 avanceTrim1: +avanceTrim1,
                 avanceTrim2: +avanceTrim2,
@@ -68,6 +70,8 @@ export class ModMirComponent implements OnInit, OnDestroy
                 semefVerde: +semefVerde,
                 ...resto
             };
+
+        this.mirService.agregarMir(input).subscribe();
     }
 
     cerrar(): void

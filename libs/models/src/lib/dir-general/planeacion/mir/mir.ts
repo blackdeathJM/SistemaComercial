@@ -3,6 +3,7 @@ import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@
 
 export class Mir implements IMir
 {
+    @prop({defaultValue: null})
     _id: string;
 
     @required()

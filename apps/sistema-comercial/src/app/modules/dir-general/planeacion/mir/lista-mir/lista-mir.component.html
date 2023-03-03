@@ -1,173 +1,146 @@
-<section class="flex flex-auto flex-col">
-    <table mat-table>
-        <ng-container matColumnDef="idIdentificador">
-            <th *matHeaderCellDef>ID</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="ano">
-            <th *matHeaderCellDef>Año</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="nivel">
-            <th *matHeaderCellDef>Nivel</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="programaFinanciacion">
-            <th *matHeaderCellDef>Programa financiacion</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="resumenNarrativo">
-            <th *matHeaderCellDef>Resumen narrativo</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="nombreDelIndicador">
-            <th *matHeaderCellDef>Nombre del indicador</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="tipo">
-            <th *matHeaderCellDef>Tipo</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="dimension">
-            <th *matHeaderCellDef>Dimension</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="colMostrarPrimer"></tr>
-        <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: colMostrarPrimer"></tr>
-    </table>
-    <mat-divider class="my-4 border-2"></mat-divider>
-    <table mat-table>
-        <ng-container matColumnDef="idIdentificador">
-            <th *matHeaderCellDef>ID</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="metodoCalculo">
-            <th *matHeaderCellDef>Metodo de calculo</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="metodoDeVerificacion">
-            <th *matHeaderCellDef>Metodo de verificacion</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="supuestos">
-            <th *matHeaderCellDef>Supuestos</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="unidadDeMedida">
-            <th *matHeaderCellDef>U. Medida</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="frecuenciaMedicion">
-            <th *matHeaderCellDef>Frecuencia de medicion</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="sentidoDelIndicador">
-            <th *matHeaderCellDef>Sen. Ind</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="colMostrar"></tr>
-        <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: colMostrar"></tr>
-    </table>
+<mat-card class="bg-gray-300 dark:bg-gray-800 m-4">
+    <mat-card-header class="tarjeta-mat-cabecera border-b-orange-300">
+        <span class="text-xl">MIR</span>
+    </mat-card-header>
+    <mat-card-content>
+        <section class="flex flex-auto flex-col">
+            <table class="table-auto" mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="idIndicador">
+                    <th *matHeaderCellDef>ID</th>
+                    <td *matCellDef="let fila">{{fila['idIndicador']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="ano">
+                    <th *matHeaderCellDef>Año</th>
+                    <td *matCellDef="let fila">{{fila['ano']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="nivel">
+                    <th *matHeaderCellDef>Nivel</th>
+                    <td *matCellDef="let fila">{{fila['nivel']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="programaFinanciacion">
+                    <th *matHeaderCellDef>Programa financiacion</th>
+                    <td *matCellDef="let fila">{{fila['programaFinanciacion']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="resumenNarrativo">
+                    <th *matHeaderCellDef>Resumen narrativo</th>
+                    <td *matCellDef="let fila">{{fila['resumenNarrativo']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="nombreDelIndicador">
+                    <th *matHeaderCellDef>Nombre del indicador</th>
+                    <td *matCellDef="let fila">{{fila['nombreDelIndicador']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="tipo">
+                    <th *matHeaderCellDef>Tipo</th>
+                    <td *matCellDef="let fila">{{fila['tipo']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="dimension">
+                    <th *matHeaderCellDef>Dimension</th>
+                    <td *matCellDef="let fila">{{fila['dimension']}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colMostrarPrimer" class="bg-zinc-400 dark:bg-zinc-900 text-left"></tr>
+                <tr mat-row class="cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" *matRowDef="let row; columns: colMostrarPrimer"></tr>
+            </table>
+            <mat-divider class="my-4 border-2"></mat-divider>
 
-    <mat-divider class="my-4 border-2"></mat-divider>
-    <table mat-table>
-        <ng-container matColumnDef="idIdentificador">
-            <th *matHeaderCellDef>ID</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="centroGestor">
-            <th *matHeaderCellDef>Centro Gestor</th>
-            <td *matCellDef="let fila"></td>
-        </ng-container>
-        <ng-container matColumnDef="lineaBaseAno">
-            <th *matHeaderCellDef>B.Año</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="LineaBaseValor">
-            <th *matHeaderCellDef>B.Valor</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="meta">
-            <th *matHeaderCellDef>meta</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="semefVerde">
-            <th *matHeaderCellDef>S. Verde</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="semefAmarillo">
-            <th *matHeaderCellDef>S. Amarillo</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="semefRojo">
-            <th *matHeaderCellDef>S. Rojo</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="avanceTrim1">
-            <th *matHeaderCellDef>A.Trim1</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="avanceTrim2">
-            <th *matHeaderCellDef>A.Trim2</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="avanceTrim3">
-            <th *matHeaderCellDef>A.Trim2</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="avanceTrim4">
-            <th *matHeaderCellDef>A.Trim4</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="avanceAnual">
-            <th *matHeaderCellDef>A. Anual</th>
-            <td *matCellDef="let fila">
-                <mat-form-field>
-                    <input matInput>
-                </mat-form-field>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="colMostrarAcc"></tr>
-        <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: colMostrarAcc"></tr>
-    </table>
-</section>
+
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="idIndicador">
+                    <th *matHeaderCellDef>ID</th>
+                    <td *matCellDef="let fila">{{fila['idIndicador']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="metodoCalculo">
+                    <th *matHeaderCellDef>Metodo de calculo</th>
+                    <td *matCellDef="let fila">{{fila['metodoCalculo']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="mediosDeVerificacion">
+                    <th *matHeaderCellDef>Medios de verificacion</th>
+                    <td *matCellDef="let fila">{{fila['mediosDeVerificacion']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="supuestos">
+                    <th *matHeaderCellDef>Supuestos</th>
+                    <td *matCellDef="let fila">{{fila['supuestos']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="unidadDeMedida">
+                    <th *matHeaderCellDef>U. Medida</th>
+                    <td *matCellDef="let fila">{{fila['unidadDeMedida']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="frecuenciaMedicion">
+                    <th *matHeaderCellDef>Frecuencia de medicion</th>
+                    <td *matCellDef="let fila">{{fila['frecuenciaMedicion']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="sentidoDelIndicador">
+                    <th *matHeaderCellDef>Sen. Ind</th>
+                    <td *matCellDef="let fila">{{fila['sentidoDelIndicador']}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colMostrar" class="bg-zinc-400 dark:bg-zinc-900 text-left"></tr>
+                <tr mat-row class="cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" *matRowDef="let row; columns: colMostrar"></tr>
+            </table>
+
+            <mat-divider class="my-4 border-2"></mat-divider>
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="idIndicador">
+                    <th *matHeaderCellDef>ID</th>
+                    <td *matCellDef="let fila">{{fila['idIndicador']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="centroGestor">
+                    <th *matHeaderCellDef>Centro Gestor</th>
+                    <td *matCellDef="let fila">{{fila['centroGestor']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="lineaBaseAno">
+                    <th *matHeaderCellDef>B.Año</th>
+                    <td *matCellDef="let fila">{{fila['lineaBaseAno']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="LineaBaseValor">
+                    <th *matHeaderCellDef>B.Valor</th>
+                    <td *matCellDef="let fila">{{fila['LineaBaseValor']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="meta">
+                    <th *matHeaderCellDef>meta</th>
+                    <td *matCellDef="let fila">{{fila['meta']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="semefVerde">
+                    <th *matHeaderCellDef>S. Verde</th>
+                    <td *matCellDef="let fila">{{fila['semefVerde']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="semefAmarillo">
+                    <th *matHeaderCellDef>S. Amarillo</th>
+                    <td *matCellDef="let fila">{{fila['semefAmarillo']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="semefRojo">
+                    <th *matHeaderCellDef>S. Rojo</th>
+                    <td *matCellDef="let fila">{{fila['semefRojo']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="avanceTrim1">
+                    <th *matHeaderCellDef>A.Trim1</th>
+                    <td *matCellDef="let fila">{{fila['avanceTrim1']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="avanceTrim2">
+                    <th *matHeaderCellDef>A.Trim2</th>
+                    <td *matCellDef="let fila">{{fila['avanceTrim2']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="avanceTrim3">
+                    <th *matHeaderCellDef>A.Trim2</th>
+                    <td *matCellDef="let fila">{{fila['avanceTrim3']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="avanceTrim4">
+                    <th *matHeaderCellDef>A.Trim4</th>
+                    <td *matCellDef="let fila">{{fila['avanceTrim4']}}</td>
+                </ng-container>
+                <ng-container matColumnDef="avanceAnual">
+                    <th *matHeaderCellDef>A. Anual</th>
+                    <td *matCellDef="let fila">{{fila['avanceAnual']}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colMostrarAcc" class="bg-zinc-400 dark:bg-zinc-900 text-left"></tr>
+                <tr mat-row class="cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" *matRowDef="let row; columns: colMostrarAcc"></tr>
+            </table>
+        </section>
+    </mat-card-content>
+    <mat-card-actions class="tarjeta-mat-acciones border-t-orange-300">
+        <div class="flex flex-auto">
+            <button mat-raised-button color="primary" class="flex-auto">
+                <mat-icon svgIcon="add"></mat-icon>
+                Registrar avances
+            </button>
+        </div>
+    </mat-card-actions>
+</mat-card>

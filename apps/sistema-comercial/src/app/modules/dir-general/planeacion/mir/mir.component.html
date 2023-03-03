@@ -26,24 +26,16 @@
                     </mat-button-toggle>
                     <mat-button-toggle (click)="abrirPanel = true">
                         <mat-icon svgIcon="add"></mat-icon>
-                        Agregar elemento al formato MIR
+                        Nvo elemento MIR
+                    </mat-button-toggle>
+                    <mat-button-toggle>
+                        <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                        Imprimir
                     </mat-button-toggle>
                 </mat-button-toggle-group>
             </mat-toolbar>
 
-            <!--            <mat-card class="bg-gray-300 dark:bg-gray-800 m-4">-->
-            <!--                <mat-card-header class="tarjeta-mat-cabecera border-b-orange-300">-->
-            <!--                    <span class="text-xl">MIR</span>-->
-            <!--                </mat-card-header>-->
-            <!--                <mat-card-content>-->
-            <!--                    <section class="flex flex-auto flex-col">-->
-            <!--                        <app-lista-mir class="flex-auto"></app-lista-mir>-->
-            <!--                    </section>-->
-            <!--                </mat-card-content>-->
-            <!--                <mat-card-actions class="tarjeta-mat-acciones border-t-orange-300">-->
-            <!--                </mat-card-actions>-->
-            <!--            </mat-card>-->
-
+            <app-lista-mir class="flex-auto"></app-lista-mir>
             <app-lista-tab-mir></app-lista-tab-mir>
         </article>
     </mat-drawer-content>

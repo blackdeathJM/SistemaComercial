@@ -19,3 +19,10 @@ query mirsPorCentroGestor($ano: Int, $centroGestor: String)
         ...fragMir
     }
 }
+mutation mirsActAvances($input: MirsActAvancesInput!)
+{
+    mirsActAvances(input: $input)
+    {
+        ...fragMir
+    }
+}

@@ -2,7 +2,7 @@ import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {MirDto, MirType} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {Model} from 'mongoose';
-import {MirsPorCentroGestorDto, MirsPorAnoDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
+import {MirsPorCentroGestorDto, MirsPorAnoDto, MirsActAvancesDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 
 @Injectable()
 export class MirService
@@ -12,6 +12,7 @@ export class MirService
     constructor(@InjectModel(MirDto.name) private mir: Model<MirType>)
     {
     }
+
     async agregarMir(input: MirDto): Promise<MirDto>
     {
         try
@@ -22,6 +23,7 @@ export class MirService
             throw new InternalServerErrorException({message: e});
         }
     }
+
     async mirsPorAno(args: MirsPorAnoDto): Promise<MirDto[]>
     {
         try
@@ -38,6 +40,18 @@ export class MirService
         try
         {
             return await this.mir.find({ano: args.ano, centroGestor: args.centroGestor}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
+        }
+    }
+
+    async mirsActAvances(input: MirsActAvancesDto): Promise<MirDto>
+    {
+        const {_id, ...resto} = input;
+        try
+        {
+            return await this.mir.findByIdAndUpdate(_id, {$set: {...resto}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

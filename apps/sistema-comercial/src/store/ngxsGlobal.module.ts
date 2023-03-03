@@ -11,13 +11,14 @@ import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-de
 import {StateRoles} from '@s-core/auth/store/roles.store';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
+import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 
 @NgModule({
     imports:
         [
             NgxsModule.forRoot(
                 [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion, StateRoles, EntityTelemetria,
-                SeleccionStore], {
+                SeleccionStore, EntityMir], {
                     developmentMode: !environment.production
                 }),
             NgxsDataPluginModule.forRoot([NGXS_DATA_STORAGE_PLUGIN, NGXS_DATA_STORAGE_CONTAINER]),

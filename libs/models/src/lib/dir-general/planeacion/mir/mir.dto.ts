@@ -43,7 +43,7 @@ import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
 @Schema({collection: 'Mir'})
 export class MirDto implements IMir
 {
-    @Field(() => ID)
+    @Field(() => ID, {nullable: true})
     @IsOptional()
     _id: string;
 
