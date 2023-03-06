@@ -248,12 +248,6 @@ type EjercicioType {
   noviembre: Float
   octubre: Float
   septiembre: Float
-  trimestre: [TrimestreType!]
-}
-
-type TrimestreType {
-  trimestre: String
-  valor: Float
 }
 
 type PbrType {
@@ -262,7 +256,7 @@ type PbrType {
   claveVariable: String
   dato: String
   descripcion: String
-  ejercicion: EjercicioType
+  ejercicio: EjercicioType
   unidad: String
 }
 
@@ -393,7 +387,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1678047752
+  tiempo: Int = 1678088159
   titulo: String
   usarRouter: Boolean = false
 }
@@ -515,12 +509,6 @@ input EjercicioInput {
   noviembre: Float = 0
   octubre: Float = 0
   septiembre: Float = 0
-  trimestre: [TrimestreInput!] = []
-}
-
-input TrimestreInput {
-  trimestre: String = null
-  valor: Float = 0
 }
 
 input PbrInput {
@@ -529,7 +517,7 @@ input PbrInput {
   claveVariable: String = null
   dato: String = null
   descripcion: String = null
-  ejercicion: EjercicioInput = null
+  ejercicio: EjercicioInput = null
   unidad: String = null
 }
 

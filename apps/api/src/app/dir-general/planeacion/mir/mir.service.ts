@@ -20,10 +20,10 @@ export class MirService
             return await this.mir.create(input);
         } catch (e)
         {
-            // if (e.code === 11000)
-            // {
-            //     throw new ConflictException({message: 'El idenficador esta duplicado'});
-            // }
+            if (e.code === 11000)
+            {
+                throw new ConflictException({message: 'El idenficador esta duplicado'});
+            }
             throw new HttpException('Datos duplicados',11000, {description: 'Datos duplicados'});
         }
     }

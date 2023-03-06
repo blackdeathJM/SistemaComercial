@@ -21,4 +21,14 @@ export class PbrComponent
     constructor()
     {
     }
+
+    filtrarPorAno(e: number): void
+    {
+
+    }
+
+    filtrarCentroGestor(e: [string, number]): void
+    {
+
+    }
 }

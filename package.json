@@ -80,7 +80,7 @@
         "graphql-subscriptions": "^2.0.0",
         "graphql-tools": "^8.3.18",
         "graphql-upload-ts": "^2.0.5",
-        "graphql-ws": "^5.11.3",
+        "graphql-ws": "^5.12.0",
         "highlight.js": "11.7.0",
         "js-yaml": "^4.1.0",
         "jsonwebtoken": "^9.0.0",

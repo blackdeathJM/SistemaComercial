@@ -1,4 +1,4 @@
-import {IPbr, IEjercicio, ITrimestre} from './pbr.interface';
+import {IPbr, IEjercicio} from './pbr.interface';
 import {ObjectType, InputType, Field, ID, Float, Int} from '@nestjs/graphql';
 import {Schema, Prop, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional, IsNumber} from 'class-validator';
@@ -77,25 +77,12 @@ export class EjercicioDto implements IEjercicio
     @IsOptional()
     @IsNumber()
     septiembre: number;
+    total: number;
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number;
 
-    @Field(() => [TrimestreDto], {nullable: true, defaultValue: []})
-    @IsOptional()
-    @IsNumber()
-    trimestre: TrimestreDto[];
-
-}
-
-@ObjectType('TrimestreType')
-@InputType('TrimestreInput')
-export class TrimestreDto implements ITrimestre
-{
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    trimestre: string;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsNumber()
-    valor: number;
 }
 
 @ObjectType('PbrType')
@@ -127,7 +114,7 @@ export class PbrDto implements IPbr
     @Field(() => EjercicioDto, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
-    ejercicion: EjercicioDto;
+    ejercicio: EjercicioDto;
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()

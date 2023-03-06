@@ -3,7 +3,7 @@
         <app-mod-pbr (panel)="abrirPanel=false"></app-mod-pbr>
     </mat-drawer>
     <mat-drawer-content>
-        <app-acciones-mir-pbr>
+        <app-acciones-mir-pbr [buscarPorEmpleado]="true" (filtrarPorAno)="filtrarPorAno($event)" (filtrarCentroGestor)="filtrarCentroGestor($event)">
             <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle>
