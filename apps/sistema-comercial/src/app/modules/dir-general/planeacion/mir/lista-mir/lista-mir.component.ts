@@ -7,9 +7,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
     selector: 'app-lista-mir',
@@ -34,7 +34,7 @@ export class ListaMirComponent implements OnInit
 
     ngOnInit(): void
     {
-        this.entityMir.entitiesArray$.subscribe((res) =>
+        this.entityMir.entitiesArray$.subscribe((res: MirType[]) =>
         {
             this.dataSource.data = res;
         });

@@ -6,7 +6,7 @@ export enum AscDesc
 
 export interface IMir
 {
-    _id: string;
+    _id?: string;
     ano: number;
     idIndicador: string;
     nivel: string;

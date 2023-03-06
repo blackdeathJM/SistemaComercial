@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'app-mod-pbr',
@@ -9,4 +9,11 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./mod-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModPbrComponent {}
+export class ModPbrComponent
+{
+    @Output() panel = new EventEmitter<boolean>();
+
+    constructor()
+    {
+    }
+}

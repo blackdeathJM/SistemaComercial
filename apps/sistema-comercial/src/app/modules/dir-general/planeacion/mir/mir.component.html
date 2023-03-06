@@ -3,18 +3,8 @@
         <app-mod-mir (panel)="cerrarPanel()"></app-mod-mir>
     </mat-drawer>
     <mat-drawer-content>
-        <article class="flex flex-col flex-auto">
-            <mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
-                <mat-form-field class="flex-auto mt-5">
-                    <input matInput placeholder="Introduce un año para filtrar" (keyup.enter)="buscarPorAno()" [(ngModel)]="buscarAno">
-                </mat-form-field>
-                <ng-container *ngIf="seleccionStore.state$ | async as centros">
-                    <mat-form-field class="flex-auto mt-5">
-                        <mat-select (valueChange)="buscarPorCentroGestor($event)" placeholder="Filtrar por centro gestor">
-                            <mat-option *ngFor="let centro of centros.centroGestor" [value]="centro">{{centro}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ng-container>
+        <app-acciones-mir-pbr (filtrarPorAno)="buscarPorAno($event)" (filtrarCentroGestor)="filtrarCentroGestor($event)" [buscarPorEmpleado]="true">
+            <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle (click)="regSeleccion()" value="bold">
                         <mat-icon svgIcon="add"></mat-icon>
@@ -33,8 +23,9 @@
                         Imprimir
                     </mat-button-toggle>
                 </mat-button-toggle-group>
-            </mat-toolbar>
-
+            </ng-container>
+        </app-acciones-mir-pbr>
+        <article class="flex flex-col flex-auto">
             <app-lista-mir class="flex-auto"></app-lista-mir>
             <app-lista-tab-mir></app-lista-tab-mir>
         </article>

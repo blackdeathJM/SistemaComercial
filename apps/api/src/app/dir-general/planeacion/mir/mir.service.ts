@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {ConflictException, HttpException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {MirDto, MirType} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {Model} from 'mongoose';
@@ -20,7 +20,11 @@ export class MirService
             return await this.mir.create(input);
         } catch (e)
         {
-            throw new InternalServerErrorException({message: e});
+            // if (e.code === 11000)
+            // {
+            //     throw new ConflictException({message: 'El idenficador esta duplicado'});
+            // }
+            throw new HttpException('Datos duplicados',11000, {description: 'Datos duplicados'});
         }
     }
 

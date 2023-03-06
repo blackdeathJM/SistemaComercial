@@ -26,7 +26,7 @@ export const generalRouting: Routes =
                     },
                     {
                         path: 'pbr',
-                        loadComponent: () => import('@s-general/pbr/pbr.component')
+                        loadComponent: () => import('@s-general/pbr-usuario/pbr-usuario.component')
                     }
                 ]
         }

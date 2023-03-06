@@ -3,9 +3,6 @@ import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@
 
 export class Mir implements IMir
 {
-    @prop({defaultValue: null})
-    _id: string;
-
     @required()
     @numeric({message: 'El año es requerido', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
     @maxNumber({message: 'El valor maximo es 2050', value: 2050})

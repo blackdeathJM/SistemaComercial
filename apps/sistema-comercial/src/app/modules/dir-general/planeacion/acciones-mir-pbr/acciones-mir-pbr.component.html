@@ -1,0 +1,22 @@
+<mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
+    <mat-form-field class="basis-26 mt-5">
+        <input matInput placeholder="Introduce un año para filtrar" (keyup.enter)="buscarPorAno()" [(ngModel)]="buscarAno">
+    </mat-form-field>
+    <ng-container *ngIf="seleccionStore.state$ | async as centros">
+        <mat-form-field class="flex-auto mt-5">
+            <mat-select (valueChange)="buscarPorCentroGestor($event)" placeholder="Filtrar por centro gestor">
+                <mat-option *ngFor="let centro of centros.centroGestor; trackBy: trackByCentroGestor" [value]="centro">{{centro}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="buscarPorEmpleado">
+        <mat-form-field class="flex-auto mt-5" *ngIf="entityEmpleado.entitiesArray$ | async as empleados">
+            <mat-select>
+                <mat-option *ngFor="let empleado of empleados; trackBy: trackByEmpleado" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+    <ng-content select="[acciones]">
+
+    </ng-content>
+</mat-toolbar>

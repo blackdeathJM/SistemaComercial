@@ -1,5 +1,5 @@
-import {IMir, AscDesc} from './mir.interface';
-import {Field, ID, Int, Float, registerEnumType, ObjectType, InputType} from '@nestjs/graphql';
+import {IMir} from './mir.interface';
+import {Field, ID, Int, Float, ObjectType, InputType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
 

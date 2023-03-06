@@ -7,7 +7,6 @@ import {WebSocketLink} from '@apollo/client/link/ws';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {createUploadLink} from 'apollo-upload-client';
 import {environment} from '@s-environments/environment';
-import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {setContext} from '@apollo/client/link/context';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -17,7 +16,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 })
 export class ApolloConfigModule
 {
-    constructor(apollo: Apollo, private ngxToast: ToastrService, private jwtHelperService: JwtHelperService)
+    constructor(apollo: Apollo, private jwtHelperService: JwtHelperService)
     {
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
@@ -26,9 +25,7 @@ export class ApolloConfigModule
             {
                 graphQLErrors.map((value) =>
                 {
-                    this.ngxToast.error(value.message, 'Error en el servidor',
-                        {progressBar: true, closeButton: true, progressAnimation: 'increasing', timeOut: 3000});
-                    // console.log(value.extensions['response']['message']);
+                    console.log(value);
                 });
             }
 

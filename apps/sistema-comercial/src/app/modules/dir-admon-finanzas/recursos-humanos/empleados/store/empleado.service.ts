@@ -81,7 +81,7 @@ export class EmpleadoService
 
     empleadosConSesion(): Observable<SingleExecutionResult>
     {
-        return this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        return this.empleadosSesionGQL.fetch().pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
@@ -94,7 +94,7 @@ export class EmpleadoService
     filtrarEmpleados(consulta: string, loader: string): Observable<SingleExecutionResult<FiltrarEmpleadosQuery>>
     {
         this.ngxLoader.startLoader(loader);
-        return this.filtrarEmpleadosGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
+        return this.filtrarEmpleadosGQL.fetch({consulta}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {

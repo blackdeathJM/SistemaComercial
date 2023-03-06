@@ -1,1 +1,25 @@
-<p>pbr works!</p>
+<mat-drawer-container class="w-full">
+    <mat-drawer>
+        <app-mod-pbr (panel)="abrirPanel=false"></app-mod-pbr>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-acciones-mir-pbr>
+            <ng-container acciones>
+                <mat-button-toggle-group>
+                    <mat-button-toggle>
+                        <mat-icon svgIcon="heroicons_outline:collection"></mat-icon>
+                        Inicializar nuevo PBR
+                    </mat-button-toggle>
+                    <mat-button-toggle (click)="abrirPanel = true">
+                        <mat-icon svgIcon="add"></mat-icon>
+                        Nvo elemento PBR
+                    </mat-button-toggle>
+                    <mat-button-toggle>
+                        <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                        Imprimir
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </ng-container>
+        </app-acciones-mir-pbr>
+    </mat-drawer-content>
+</mat-drawer-container>

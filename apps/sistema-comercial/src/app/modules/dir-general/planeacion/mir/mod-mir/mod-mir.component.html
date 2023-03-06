@@ -86,11 +86,11 @@
 
 <mat-toolbar>
     <div class="flex flex-auto items-center gap-4">
-        <button mat-raised-button class="flex-auto" color="warn" (click)="cerrar()">
+        <button mat-raised-button class="flex-auto" color="warn" (click)="cerrar()" [disabled]="cargando">
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()">
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()" [disabled]="formMir.invalid || cargando">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
             Añadir registro
         </button>

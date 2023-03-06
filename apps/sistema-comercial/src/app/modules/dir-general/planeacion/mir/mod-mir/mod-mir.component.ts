@@ -6,11 +6,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
-import {Subscription} from 'rxjs';
+import {finalize, Subscription} from 'rxjs';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir';
+import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
 import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
@@ -33,6 +33,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     formMir: FormGroup;
     sentidoIndicador = Object.values(AscDesc);
     sub = new Subscription();
+    cargando = false;
 
     constructor(private seleccionStore: SeleccionStore, private fb: RxFormBuilder, private mirService: MirService)
     {
@@ -55,7 +56,9 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     regMir(): void
     {
+        this.cargando = true;
         const {ano, avanceAnual, avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4, lineaBaseValor, meta, semefAmarillo, semefRojo, semefVerde, ...resto} = this.formMir.value;
+
         const input: MirType =
             {
                 ano: parseInt(ano, 10),
@@ -71,7 +74,10 @@ export class ModMirComponent implements OnInit, OnDestroy
                 ...resto
             };
 
-        this.mirService.agregarMir(input).subscribe();
+        this.mirService.agregarMir(input).pipe(finalize(() =>
+        {
+            this.cargando = false;
+        })).subscribe();
     }
 
     cerrar(): void
