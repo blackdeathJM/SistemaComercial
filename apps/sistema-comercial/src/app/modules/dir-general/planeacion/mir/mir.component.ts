@@ -12,7 +12,6 @@ import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-sel
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaMirComponent} from '@s-dir-general/mir/lista-mir/lista-mir.component';
@@ -22,7 +21,6 @@ import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
-import {CentrosGestoresGQL} from "#/libs/datos/src";
 
 @Component({
     selector: 'app-mir',
@@ -35,7 +33,6 @@ import {CentrosGestoresGQL} from "#/libs/datos/src";
 })
 export default class MirComponent
 {
-    buscarAno: number = new Date().getFullYear();
     abrirPanel = false;
 
     constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private entityMir: EntityMir, private mirService: MirService)

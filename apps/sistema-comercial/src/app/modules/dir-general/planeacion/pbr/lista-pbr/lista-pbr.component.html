@@ -1,1 +1,67 @@
-<p>lista-pbr works!</p>
+<mat-card class="bg-gray-300 dark:bg-gray-800 m-4">
+    <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR</span></mat-card-header>
+    <mat-card-content>
+        <mat-tab-group>
+            <mat-tab>
+                <div class="flex flex-col flex-auto">
+                    <div class="grid grid-cols-10 gap-4">
+                        <span class="detalle-span">Origen variable</span>
+                        <span class="border-b-2">---------------</span>
+                        <span class="detalle-span">Clave variable</span>
+                        <span class="border-b-2">==============</span>
+                        <span class="detalle-span">Unidad</span>
+                        <span class="border-b-2">=========</span>
+                        <span class="detalle-span">Dato</span>
+                        <span class="border-b-2 col-span-3">============================</span>
+                        <span class="text-center text-amber-700 text-xl col-span-full border-b-2">Descripcion</span>
+                        <span class="border-b-2 col-span-full">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+                    </div>
+                    <div class="grid grid-cols-8 gap-4 mt-4">
+                        <span class="detalle-span">Enero</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Febrero</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Marzo</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Trimestre 1</span>
+                        <span class="border-b-2">0.00</span>
+
+                        <span class="detalle-span">Abril</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Mayo</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Junio</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Trimestre 2</span>
+                        <span class="border-b-2">0.00</span>
+
+                        <span class="detalle-span">Julio</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Agosto</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Septiembre</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Trimestre 3</span>
+                        <span class="border-b-2">0.00</span>
+
+                        <span class="detalle-span">Octubre</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Noviembre</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Diciembre</span>
+                        <span class="border-b-2">0.00</span>
+                        <span class="detalle-span">Trimestre 4</span>
+                        <span class="border-b-2">0.00</span>
+
+                        <span class="detalle-span col-start-7">Total</span>
+                        <span class="border-b-2">{{visible}}</span>
+                    </div>
+                    <button mat-raised-button color="primary" class="flex-auto mt-4" *ngIf="visible" (click)="regAvances()">
+                        <mat-icon svgIcon="edit"></mat-icon>
+                        Registrar avances
+                    </button>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

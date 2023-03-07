@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -18,7 +18,7 @@ import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.serv
     styleUrls: ['./acciones-mir-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccionesMirPbrComponent implements OnInit, AfterContentInit
+export class AccionesMirPbrComponent
 {
     @Output() filtrarPorAno = new EventEmitter<number>();
     @Output() filtrarCentroGestor = new EventEmitter<[string, number]>();
@@ -26,18 +26,6 @@ export class AccionesMirPbrComponent implements OnInit, AfterContentInit
     buscarAno: number = new Date().getFullYear();
 
     constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService)
-    {
-    }
-
-    ngOnInit(): void
-    {
-        if (this.buscarPorEmpleado)
-        {
-            this.empleadoService.empleadosConSesion().subscribe();
-        }
-    }
-
-    ngAfterContentInit(): void
     {
     }
 

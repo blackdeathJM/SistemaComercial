@@ -56,11 +56,13 @@ export class EmpleadoService
 
     async buscarEmpleadoPorId(_id: string): Promise<EmpleadoDto>
     {
-        if (_id)
+        try
         {
             return await this.empleado.findById(_id).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException({message: e});
         }
-        return null;
     }
 
     async validarUsuarioActivo(_id: string): Promise<EmpleadoDto>

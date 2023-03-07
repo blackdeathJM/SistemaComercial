@@ -5,11 +5,13 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ModPbrComponent} from '@s-dir-general/pbr/mod-pbr/mod-pbr.component';
+import {MatListModule} from "@angular/material/list";
+import {ListaPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-pbr.component";
 
 @Component({
     selector: 'app-pbr',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent],
+    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule, ListaPbrComponent],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

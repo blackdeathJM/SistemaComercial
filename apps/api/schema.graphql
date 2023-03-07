@@ -234,11 +234,10 @@ type TelemetriaType {
 }
 
 type EjercicioType {
+  ano: Int
   abril: Float
   agosto: Float
-  ano: Int
   diciembre: Float
-  ejercicio: Float
   enero: Float
   febrero: Float
   julio: Float
@@ -248,16 +247,25 @@ type EjercicioType {
   noviembre: Float
   octubre: Float
   septiembre: Float
+  total: Float
+  trim1: Float
+  trim2: Float
+  trim3: Float
+  trim4: Float
 }
 
 type PbrType {
-  ano: Int
   _id: ID
+  ano: Int
   claveVariable: String
+  variableOrigen: String
   dato: String
   descripcion: String
   ejercicio: EjercicioType
   unidad: String
+  idEmpleado: String
+  centroGestor: String
+  resPbrEmpleado: EmpleadoType!
 }
 
 type MirType {
@@ -387,7 +395,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1678088159
+  tiempo: Int = 1678156574
   titulo: String
   usarRouter: Boolean = false
 }
@@ -495,11 +503,10 @@ input TelemetriaInput {
 }
 
 input EjercicioInput {
+  ano: Int = 2023
   abril: Float = 0
   agosto: Float = 0
-  ano: Int = 2023
   diciembre: Float = 0
-  ejercicio: Float = 0
   enero: Float = 0
   febrero: Float = 0
   julio: Float = 0
@@ -509,16 +516,25 @@ input EjercicioInput {
   noviembre: Float = 0
   octubre: Float = 0
   septiembre: Float = 0
+  total: Float = 0
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
 }
 
 input PbrInput {
-  ano: Int = 2023
   _id: ID
+  ano: Int = 2023
   claveVariable: String = null
+  variableOrigen: String = null
   dato: String = null
   descripcion: String = null
-  ejercicio: EjercicioInput = null
+  ejercicio: EjercicioInput
   unidad: String = null
+  idEmpleado: String = null
+  centroGestor: String = null
+  resPbrEmpleado: EmpleadoInput!
 }
 
 input MirInput {
@@ -560,7 +576,7 @@ input SeleccionInput {
 
 type Query {
   """Obtener todos los pbr Por ano"""
-  pbrs(ano: Int = 2023): [PbrType!]
+  pbrs(ano: Int = 2023, centroGestor: String = null): [PbrType!]
   mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
   mirsPorAno(ano: Int = 2023): [MirType!]
   centrosGestores: SeleccionType
@@ -587,6 +603,7 @@ type Query {
 }
 
 type Mutation {
+  regPbr(input: RegPbrInput!): PbrType!
   agregarMir(input: MirInput!): MirType!
   mirsActAvances(input: MirsActAvancesInput!): MirType!
   agregarCentroGestor(input: SeleccionInput): SeleccionType!
@@ -625,6 +642,17 @@ type Mutation {
   actInst(args: ActInstInput!): TelemetriaType!
   agregarMotor(args: AgregarMotorInput!): TelemetriaType!
   agregarBomba(args: AgregarBombaInput!): TelemetriaType!
+}
+
+input RegPbrInput {
+  ano: Int = 2023
+  claveVariable: String = null
+  variableOrigen: String = null
+  dato: String = null
+  descripcion: String = null
+  unidad: String = null
+  idEmpleado: String = null
+  centroGestor: String = null
 }
 
 input MirsActAvancesInput {

@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
+import {forkJoin} from 'rxjs';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 
 @Component({
     selector: 'app-planeacion',
@@ -13,12 +15,12 @@ import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 })
 export class PlaneacionComponent implements OnInit
 {
-    constructor(private seleccionService: SeleccionService)
+    constructor(private seleccionService: SeleccionService, private empleadoService: EmpleadoService)
     {
     }
 
     ngOnInit(): void
     {
-        this.seleccionService.centrosGestores().subscribe();
+        forkJoin([this.seleccionService.centrosGestores(), this.empleadoService.empleadosConSesion()]).subscribe();
     }
 }

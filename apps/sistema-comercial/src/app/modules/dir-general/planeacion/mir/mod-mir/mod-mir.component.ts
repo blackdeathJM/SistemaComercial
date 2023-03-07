@@ -77,6 +77,14 @@ export class ModMirComponent implements OnInit, OnDestroy
         this.mirService.agregarMir(input).pipe(finalize(() =>
         {
             this.cargando = false;
+            Object.keys(this.formMir.controls).forEach((ctrlNombre) =>
+            {
+                const ctrl = this.formMir.get(ctrlNombre);
+                if (ctrlNombre !== 'centroGestor')
+                {
+                    ctrl.reset();
+                }
+            });
         })).subscribe();
     }
 

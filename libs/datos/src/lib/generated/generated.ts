@@ -261,7 +261,6 @@ export type EjercicioInput = {
   agosto?: InputMaybe<Scalars['Float']>;
   ano?: InputMaybe<Scalars['Int']>;
   diciembre?: InputMaybe<Scalars['Float']>;
-  ejercicio?: InputMaybe<Scalars['Float']>;
   enero?: InputMaybe<Scalars['Float']>;
   febrero?: InputMaybe<Scalars['Float']>;
   julio?: InputMaybe<Scalars['Float']>;
@@ -271,7 +270,11 @@ export type EjercicioInput = {
   noviembre?: InputMaybe<Scalars['Float']>;
   octubre?: InputMaybe<Scalars['Float']>;
   septiembre?: InputMaybe<Scalars['Float']>;
-  trimestre?: InputMaybe<Array<TrimestreInput>>;
+  total?: InputMaybe<Scalars['Float']>;
+  trim1?: InputMaybe<Scalars['Float']>;
+  trim2?: InputMaybe<Scalars['Float']>;
+  trim3?: InputMaybe<Scalars['Float']>;
+  trim4?: InputMaybe<Scalars['Float']>;
 };
 
 export type EjercicioType = {
@@ -280,7 +283,6 @@ export type EjercicioType = {
   agosto?: Maybe<Scalars['Float']>;
   ano?: Maybe<Scalars['Int']>;
   diciembre?: Maybe<Scalars['Float']>;
-  ejercicio?: Maybe<Scalars['Float']>;
   enero?: Maybe<Scalars['Float']>;
   febrero?: Maybe<Scalars['Float']>;
   julio?: Maybe<Scalars['Float']>;
@@ -290,7 +292,11 @@ export type EjercicioType = {
   noviembre?: Maybe<Scalars['Float']>;
   octubre?: Maybe<Scalars['Float']>;
   septiembre?: Maybe<Scalars['Float']>;
-  trimestre?: Maybe<Array<TrimestreType>>;
+  total?: Maybe<Scalars['Float']>;
+  trim1?: Maybe<Scalars['Float']>;
+  trim2?: Maybe<Scalars['Float']>;
+  trim3?: Maybe<Scalars['Float']>;
+  trim4?: Maybe<Scalars['Float']>;
 };
 
 export type EmpleadoInput = {
@@ -596,6 +602,7 @@ export type Mutation = {
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
   regInstalacion: UnionTele;
+  regPbr: PbrType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
   valoresDefecto: Scalars['Boolean'];
@@ -780,6 +787,11 @@ export type MutationRegInstalacionArgs = {
 };
 
 
+export type MutationRegPbrArgs = {
+  input: RegPbrInput;
+};
+
+
 export type MutationRegistroSesionArgs = {
   _id: Scalars['String'];
   auth: AuthInput;
@@ -823,22 +835,30 @@ export type NotificacionType = {
 export type PbrInput = {
   _id?: InputMaybe<Scalars['ID']>;
   ano?: InputMaybe<Scalars['Int']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
   claveVariable?: InputMaybe<Scalars['String']>;
   dato?: InputMaybe<Scalars['String']>;
   descripcion?: InputMaybe<Scalars['String']>;
-  ejercicion?: InputMaybe<EjercicioInput>;
+  ejercicio?: InputMaybe<EjercicioInput>;
+  idEmpleado?: InputMaybe<Scalars['String']>;
+  resPbrEmpleado: EmpleadoInput;
   unidad?: InputMaybe<Scalars['String']>;
+  variableOrigen?: InputMaybe<Scalars['String']>;
 };
 
 export type PbrType = {
   __typename?: 'PbrType';
   _id?: Maybe<Scalars['ID']>;
   ano?: Maybe<Scalars['Int']>;
+  centroGestor?: Maybe<Scalars['String']>;
   claveVariable?: Maybe<Scalars['String']>;
   dato?: Maybe<Scalars['String']>;
   descripcion?: Maybe<Scalars['String']>;
-  ejercicion?: Maybe<EjercicioType>;
+  ejercicio?: Maybe<EjercicioType>;
+  idEmpleado?: Maybe<Scalars['String']>;
+  resPbrEmpleado: EmpleadoType;
   unidad?: Maybe<Scalars['String']>;
+  variableOrigen?: Maybe<Scalars['String']>;
 };
 
 export type PuestoDeptoInput = {
@@ -944,6 +964,7 @@ export type QueryNotificacionesArgs = {
 
 export type QueryPbrsArgs = {
   ano?: InputMaybe<Scalars['Int']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -988,6 +1009,17 @@ export type RegEmpleadoInput = {
 
 export type RegInstalacionInput = {
   instalacion?: InputMaybe<InstalacionInput>;
+};
+
+export type RegPbrInput = {
+  ano?: InputMaybe<Scalars['Int']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
+  claveVariable?: InputMaybe<Scalars['String']>;
+  dato?: InputMaybe<Scalars['String']>;
+  descripcion?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['String']>;
+  unidad?: InputMaybe<Scalars['String']>;
+  variableOrigen?: InputMaybe<Scalars['String']>;
 };
 
 export type RolesInput = {
@@ -1076,17 +1108,6 @@ export type TomarMedicionInput = {
   octubre?: InputMaybe<Scalars['Float']>;
   septiembre?: InputMaybe<Scalars['Float']>;
   tipoNivel?: InputMaybe<Scalars['String']>;
-};
-
-export type TrimestreInput = {
-  trimestre?: InputMaybe<Scalars['String']>;
-  valor?: InputMaybe<Scalars['Float']>;
-};
-
-export type TrimestreType = {
-  __typename?: 'TrimestreType';
-  trimestre?: Maybe<Scalars['String']>;
-  valor?: Maybe<Scalars['Float']>;
 };
 
 export type UnionTele = ErroresType | TelemetriaType;
@@ -1442,6 +1463,23 @@ export type MirsActAvancesMutationVariables = Exact<{
 
 export type MirsActAvancesMutation = { __typename?: 'Mutation', mirsActAvances: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
 
+export type FragPbrFragment = { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null };
+
+export type RegPbrMutationVariables = Exact<{
+  input: RegPbrInput;
+}>;
+
+
+export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null } };
+
+export type PbrsQueryVariables = Exact<{
+  ano: Scalars['Int'];
+  centroGestor: Scalars['String'];
+}>;
+
+
+export type PbrsQuery = { __typename?: 'Query', pbrs?: Array<{ __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null }> | null };
+
 export type AgregarCentroGestorMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
 }>;
@@ -1659,6 +1697,37 @@ export const FragMirFragmentDoc = gql`
   avanceTrim3
   avanceTrim4
   avanceAnual
+}
+    `;
+export const FragPbrFragmentDoc = gql`
+    fragment fragPbr on PbrType {
+  ano
+  _id
+  claveVariable
+  variableOrigen
+  dato
+  unidad
+  descripcion
+  ejercicio {
+    ano
+    enero
+    febrero
+    marzo
+    abril
+    mayo
+    junio
+    julio
+    agosto
+    septiembre
+    octubre
+    noviembre
+    diciembre
+    trim1
+    trim2
+    trim3
+    trim4
+    total
+  }
 }
     `;
 export const FragSeleccionFragmentDoc = gql`
@@ -2744,6 +2813,50 @@ export const MirsActAvancesDocument = gql`
   })
   export class MirsActAvancesGQL extends Apollo.Mutation<MirsActAvancesMutation, MirsActAvancesMutationVariables> {
     document = MirsActAvancesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegPbrDocument = gql`
+    mutation regPbr($input: RegPbrInput!) {
+  regPbr(input: $input) {
+    ...fragPbr
+    resPbrEmpleado {
+      nombreCompleto
+      avatar
+    }
+  }
+}
+    ${FragPbrFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RegPbrGQL extends Apollo.Mutation<RegPbrMutation, RegPbrMutationVariables> {
+    document = RegPbrDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const PbrsDocument = gql`
+    query pbrs($ano: Int!, $centroGestor: String!) {
+  pbrs(ano: $ano, centroGestor: $centroGestor) {
+    ...fragPbr
+    resPbrEmpleado {
+      nombreCompleto
+      avatar
+    }
+  }
+}
+    ${FragPbrFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PbrsGQL extends Apollo.Query<PbrsQuery, PbrsQueryVariables> {
+    document = PbrsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
