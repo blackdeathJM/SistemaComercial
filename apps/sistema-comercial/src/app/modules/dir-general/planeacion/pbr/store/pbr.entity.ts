@@ -2,6 +2,7 @@ import {IResPbrEmpleado} from '#/libs/models/src/lib/dir-general/planeacion/pbr-
 import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
 import {State} from '@ngxs/store';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
+import {createEntityCollections} from '@angular-ru/cdk/entity';
 
 export interface IPbrSeleccion
 {
@@ -10,7 +11,11 @@ export interface IPbrSeleccion
 
 @StateRepository()
 @State({
-    name: 'Pbr'
+    name: 'Pbr',
+    defaults: {
+        ...createEntityCollections(),
+        pbr: null
+    }
 })
 export class EntityPbr extends NgxsDataEntityCollectionsRepository<IResPbrEmpleado, string, IPbrSeleccion>
 {

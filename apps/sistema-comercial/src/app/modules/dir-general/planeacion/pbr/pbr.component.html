@@ -4,7 +4,7 @@
     </mat-drawer>
     <mat-drawer-content>
         <section class="flex flex-col flex-auto">
-            <app-acciones-mir-pbr [buscarPorEmpleado]="true" (filtrarPorAno)="filtrarPorAno($event)" (filtrarCentroGestor)="filtrarCentroGestor($event)">
+            <app-acciones-mir-pbr [habEmpleado]="true" [habCentroGestor]="true" (porCentroGestor)="filtrarCentroGestor($event)">
                 <ng-container acciones>
                     <mat-button-toggle-group>
                         <mat-button-toggle>
@@ -24,7 +24,9 @@
             </app-acciones-mir-pbr>
 
             <ng-container>
-                <app-lista-pbr></app-lista-pbr>
+                <article class="flex flex-auto flex-col">
+                    <app-lista-pbr></app-lista-pbr>
+                </article>
             </ng-container>
         </section>
 

@@ -5,13 +5,16 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ModPbrComponent} from '@s-dir-general/pbr/mod-pbr/mod-pbr.component';
-import {MatListModule} from "@angular/material/list";
-import {ListaPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-pbr.component";
+import {MatListModule} from '@angular/material/list';
+import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.component';
+import {PbrService} from '@s-dir-general/pbr/store/pbr.service';
+import {TPbrs} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr-consultas.dto';
 
 @Component({
     selector: 'app-pbr',
     standalone: true,
     imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule, ListaPbrComponent],
+    providers: [PbrService],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,17 +23,18 @@ export class PbrComponent
 {
     abrirPanel = false;
 
-    constructor()
+    constructor(private pbrService: PbrService)
     {
-    }
-
-    filtrarPorAno(e: number): void
-    {
-
     }
 
     filtrarCentroGestor(e: [string, number]): void
     {
-
+        const args: TPbrs =
+            {
+                centroGestor: e[0],
+                ano: e[1],
+                idEmpleado: 'noAplica'
+            };
+        this.pbrService.pbrs(args).subscribe();
     }
 }

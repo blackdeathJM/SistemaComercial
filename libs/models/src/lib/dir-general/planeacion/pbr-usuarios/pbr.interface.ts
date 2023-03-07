@@ -23,7 +23,7 @@ export interface IEjercicio extends IMeses
     total: number;
 }
 
-export interface IResPbrEmpleado
+export interface IResPbrEmpleado extends IPbr
 {
     resPbrEmpleado: IEmpleado;
 }

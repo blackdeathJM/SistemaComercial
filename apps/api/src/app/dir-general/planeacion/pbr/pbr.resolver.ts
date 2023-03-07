@@ -12,7 +12,7 @@ export class PbrResolver
     {
     }
 
-    @Query(() => [PbrDto], {nullable: true, description: 'Obtener todos los pbr Por ano'})
+    @Query(() => [PbrDto], {nullable: true})
     async pbrs(@Args() args: PbrsDto): Promise<PbrDto[]>
     {
         return this.pbrService.pbrs(args);

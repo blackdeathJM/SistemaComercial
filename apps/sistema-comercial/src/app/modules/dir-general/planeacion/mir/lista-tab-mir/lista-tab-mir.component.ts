@@ -11,6 +11,7 @@ import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {loaderMirs, MirService} from '@s-dir-general/mir/store/mir.service';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {IMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import {fuseAnimations} from '@s-fuse/public-api';
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -19,19 +20,15 @@ import {IMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interfa
     providers: [MirService],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListaTabMirComponent implements OnInit
+export class ListaTabMirComponent
 {
     loader = loaderMirs;
 
     constructor(private mdr: MatDialog, public entityMir: EntityMir, private mirService: MirService)
     {
-    }
-
-    ngOnInit(): void
-    {
-
     }
 
     trackByFn(index: number, elemento: IMir): string | number

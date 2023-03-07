@@ -3,7 +3,7 @@
         <app-mod-mir (panel)="cerrarPanel()"></app-mod-mir>
     </mat-drawer>
     <mat-drawer-content>
-        <app-acciones-mir-pbr (filtrarPorAno)="buscarPorAno($event)" (filtrarCentroGestor)="filtrarCentroGestor($event)" [buscarPorEmpleado]="false">
+        <app-acciones-mir-pbr (porAno)="buscarPorAno($event)" (porCentroGestor)="filtrarCentroGestor($event)" [habEmpleado]="false" [habCentroGestor]="true">
             <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle (click)="regSeleccion()" value="bold">

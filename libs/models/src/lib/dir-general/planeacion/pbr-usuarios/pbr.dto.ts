@@ -135,7 +135,7 @@ export class PbrDto implements IPbr
     descripcion: string;
 
     @Field(() => EjercicioDto, {nullable: true})
-    @Prop({select: false})
+    @Prop()
     @IsOptional()
     ejercicio: EjercicioDto;
 
@@ -144,7 +144,7 @@ export class PbrDto implements IPbr
     @IsNotEmpty({message: 'Es necesaria la unidad de medida'})
     unidad: string;
 
-    @Field(() => String, {nullable: true, defaultValue: null})
+    @Field(() => ID, {nullable: true, defaultValue: null})
     @Prop()
     @IsNotEmpty({message: 'El id del empleado es requerido'})
     idEmpleado: string;

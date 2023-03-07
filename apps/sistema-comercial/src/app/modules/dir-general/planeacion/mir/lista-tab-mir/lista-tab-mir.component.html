@@ -1,10 +1,10 @@
 <section>
-    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4">
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
             <span class="text-xl">MIR</span>
         </mat-card-header>
         <mat-card-content>
-            <mat-tab-group *ngIf="entityMir.entitiesArray$ | async as mirs; ">
+            <mat-tab-group *ngIf="entityMir.entitiesArray$ | async as mirs" ngxUiLoaderBlurred>
                 <mat-tab [label]="mir.idIndicador" *ngFor="let mir of mirs; trackBy:trackByFn" (change)="matTab(mir)">
                     <div class="grid grid-cols-10 gap-4">
                         <span class="detalle-span text-amber-900 dark:text-amber-400 col-span-2">Centro Gestor</span>

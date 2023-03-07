@@ -9,6 +9,14 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+
+export interface IBuscarEmpleado
+{
+    ano: number;
+    centroGestor: string;
+    idEmpleado: string;
+}
 
 @Component({
     selector: 'app-acciones-mir-pbr',
@@ -20,10 +28,13 @@ import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.serv
 })
 export class AccionesMirPbrComponent
 {
-    @Output() filtrarPorAno = new EventEmitter<number>();
-    @Output() filtrarCentroGestor = new EventEmitter<[string, number]>();
-    @Input() buscarPorEmpleado = false;
+    @Output() porAno = new EventEmitter<number>();
+    @Output() porCentroGestor = new EventEmitter<[string, number]>();
+    @Output() porEmpleado = new EventEmitter<[string, string, number]>();
+    @Input() habEmpleado = false;
+    @Input() habCentroGestor = false;
     buscarAno: number = new Date().getFullYear();
+    bCentroGestor: string;
 
     constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService)
     {
@@ -37,7 +48,7 @@ export class AccionesMirPbrComponent
             this.ngxToast.alertaToast('Es necesario colocar una fecha para poder utilizar este filtrado', 'Filtrar centro gestor');
             return;
         }
-        this.filtrarCentroGestor.emit([e, ano]);
+        this.porCentroGestor.emit([e, ano]);
     }
 
     buscarPorAno(): void
@@ -48,7 +59,17 @@ export class AccionesMirPbrComponent
             this.ngxToast.alertaToast('Introduce un año a cuatro digitos', 'Valor numerico requerido');
             return;
         }
-        this.filtrarPorAno.emit(this.buscarAno);
+        this.porAno.emit(this.buscarAno);
+    }
+
+    buscarEmpleado(e: string): void
+    {
+        if (isNil(this.bCentroGestor) || isNil(this.buscarAno))
+        {
+            this.ngxToast.alertaToast('Es necesario seleccionar un centro gestor y año', 'Centro gestor');
+            return;
+        }
+        this.porEmpleado.emit([this.bCentroGestor, e, this.buscarAno]);
     }
 
     trackByCentroGestor(index: number, elemento: string): number | string

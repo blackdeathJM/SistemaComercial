@@ -9,9 +9,9 @@ mutation regPbr($input: RegPbrInput!)
         }
     }
 }
-query pbrs($ano: Int!, $centroGestor: String!)
+query pbrs($ano: Int!, $centroGestor: String!, $idEmpleado: ID)
 {
-    pbrs(ano: $ano, centroGestor: $centroGestor)
+    pbrs(ano: $ano, centroGestor: $centroGestor, idEmpleado: $idEmpleado)
     {
         ...fragPbr
         resPbrEmpleado {

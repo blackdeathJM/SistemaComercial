@@ -263,7 +263,7 @@ type PbrType {
   descripcion: String
   ejercicio: EjercicioType
   unidad: String
-  idEmpleado: String
+  idEmpleado: ID
   centroGestor: String
   resPbrEmpleado: EmpleadoType!
 }
@@ -395,7 +395,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1678156574
+  tiempo: Int = 1678199521
   titulo: String
   usarRouter: Boolean = false
 }
@@ -532,7 +532,7 @@ input PbrInput {
   descripcion: String = null
   ejercicio: EjercicioInput
   unidad: String = null
-  idEmpleado: String = null
+  idEmpleado: ID = null
   centroGestor: String = null
   resPbrEmpleado: EmpleadoInput!
 }
@@ -575,8 +575,7 @@ input SeleccionInput {
 }
 
 type Query {
-  """Obtener todos los pbr Por ano"""
-  pbrs(ano: Int = 2023, centroGestor: String = null): [PbrType!]
+  pbrs(ano: Int = 2023, idEmpleado: ID = null, centroGestor: String = null): [PbrType!]
   mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
   mirsPorAno(ano: Int = 2023): [MirType!]
   centrosGestores: SeleccionType
@@ -651,7 +650,7 @@ input RegPbrInput {
   dato: String = null
   descripcion: String = null
   unidad: String = null
-  idEmpleado: String = null
+  idEmpleado: ID = null
   centroGestor: String = null
 }
 

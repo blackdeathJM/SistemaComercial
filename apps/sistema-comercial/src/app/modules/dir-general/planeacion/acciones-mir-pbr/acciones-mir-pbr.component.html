@@ -2,16 +2,19 @@
     <mat-form-field class="basis-26 mt-5">
         <input matInput placeholder="Introduce un año para filtrar" (keyup.enter)="buscarPorAno()" [(ngModel)]="buscarAno">
     </mat-form-field>
-    <ng-container *ngIf="seleccionStore.state$ | async as centros">
-        <mat-form-field class="flex-auto mt-5">
-            <mat-select (valueChange)="buscarPorCentroGestor($event)" placeholder="Filtrar por centro gestor">
-                <mat-option *ngFor="let centro of centros.centroGestor; trackBy: trackByCentroGestor" [value]="centro">{{centro}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <ng-container *ngIf="habCentroGestor">
+        <ng-container *ngIf="seleccionStore.state$ | async as centros">
+            <mat-form-field class="flex-auto mt-5">
+                <mat-select (valueChange)="buscarPorCentroGestor($event)" placeholder="Filtrar por centro gestor" [(value)]="bCentroGestor">
+                    <mat-option *ngFor="let centro of centros.centroGestor; trackBy: trackByCentroGestor" [value]="centro">{{centro}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
     </ng-container>
-    <ng-container *ngIf="buscarPorEmpleado">
+
+    <ng-container *ngIf="habEmpleado">
         <mat-form-field class="flex-auto mt-5" *ngIf="entityEmpleado.entitiesArray$ | async as empleados">
-            <mat-select>
+            <mat-select (valueChange)="buscarEmpleado($event)">
                 <mat-option *ngFor="let empleado of empleados; trackBy: trackByEmpleado" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
             </mat-select>
         </mat-form-field>

@@ -6,25 +6,37 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import {ModAvancesPbrComponent} from '@s-general/pbr-usuario/mod-avances-pbr/mod-avances-pbr.component';
+import {EntityPbr} from '@s-dir-general/pbr/store/pbr.entity';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {IResPbrEmpleado} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {loaderPbrs} from '@s-dir-general/pbr/store/pbr.service';
 
 @Component({
     selector: 'app-lista-pbr',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule],
     templateUrl: './lista-pbr.component.html',
     styleUrls: ['./lista-pbr.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListaPbrComponent
 {
     @Input() visible = false;
+    loader = loaderPbrs;
 
-    constructor(private mdr: MatDialog)
+    constructor(private mdr: MatDialog, public entityPbr: EntityPbr)
     {
     }
 
     regAvances(): void
     {
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
+    }
+
+    trackByFn(index: number, pbr: IResPbrEmpleado): number | string
+    {
+        return index || pbr.resPbrEmpleado._id;
     }
 }

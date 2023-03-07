@@ -840,7 +840,7 @@ export type PbrInput = {
   dato?: InputMaybe<Scalars['String']>;
   descripcion?: InputMaybe<Scalars['String']>;
   ejercicio?: InputMaybe<EjercicioInput>;
-  idEmpleado?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['ID']>;
   resPbrEmpleado: EmpleadoInput;
   unidad?: InputMaybe<Scalars['String']>;
   variableOrigen?: InputMaybe<Scalars['String']>;
@@ -855,7 +855,7 @@ export type PbrType = {
   dato?: Maybe<Scalars['String']>;
   descripcion?: Maybe<Scalars['String']>;
   ejercicio?: Maybe<EjercicioType>;
-  idEmpleado?: Maybe<Scalars['String']>;
+  idEmpleado?: Maybe<Scalars['ID']>;
   resPbrEmpleado: EmpleadoType;
   unidad?: Maybe<Scalars['String']>;
   variableOrigen?: Maybe<Scalars['String']>;
@@ -965,6 +965,7 @@ export type QueryNotificacionesArgs = {
 export type QueryPbrsArgs = {
   ano?: InputMaybe<Scalars['Int']>;
   centroGestor?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -1017,7 +1018,7 @@ export type RegPbrInput = {
   claveVariable?: InputMaybe<Scalars['String']>;
   dato?: InputMaybe<Scalars['String']>;
   descripcion?: InputMaybe<Scalars['String']>;
-  idEmpleado?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['ID']>;
   unidad?: InputMaybe<Scalars['String']>;
   variableOrigen?: InputMaybe<Scalars['String']>;
 };
@@ -1475,6 +1476,7 @@ export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: '
 export type PbrsQueryVariables = Exact<{
   ano: Scalars['Int'];
   centroGestor: Scalars['String'];
+  idEmpleado?: InputMaybe<Scalars['ID']>;
 }>;
 
 
@@ -2841,8 +2843,8 @@ export const RegPbrDocument = gql`
     }
   }
 export const PbrsDocument = gql`
-    query pbrs($ano: Int!, $centroGestor: String!) {
-  pbrs(ano: $ano, centroGestor: $centroGestor) {
+    query pbrs($ano: Int!, $centroGestor: String!, $idEmpleado: ID) {
+  pbrs(ano: $ano, centroGestor: $centroGestor, idEmpleado: $idEmpleado) {
     ...fragPbr
     resPbrEmpleado {
       nombreCompleto
