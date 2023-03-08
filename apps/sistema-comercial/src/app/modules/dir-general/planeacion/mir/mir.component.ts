@@ -14,7 +14,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {ListaMirComponent} from '@s-dir-general/mir/lista-mir/lista-mir.component';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
@@ -26,7 +25,7 @@ import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-
     selector: 'app-mir',
     standalone: true,
     imports: [CommonModule, ModMirComponent, MatTableModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, FormsModule, MatToolbarModule,
-        MatButtonToggleModule, MatSidenavModule, ListaMirComponent, ListaTabMirComponent, RxReactiveFormsModule, ReactiveFormsModule, AccionesMirPbrComponent],
+        MatButtonToggleModule, MatSidenavModule, ListaTabMirComponent, RxReactiveFormsModule, ReactiveFormsModule, AccionesMirPbrComponent],
     providers: [MirService],
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']
@@ -45,7 +44,7 @@ export default class MirComponent
         this.mdr.open(ModMultiplesSeleccionesComponent, {width: '40%'});
     }
 
-    filtrarCentroGestor(e: [string, number]): void
+    porCentroGestor(e: [string, number]): void
     {
         const consulta: TMirsPorCentroGestor =
             {

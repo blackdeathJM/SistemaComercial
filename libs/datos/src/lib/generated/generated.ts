@@ -899,7 +899,6 @@ export type Query = {
   mirsPorAno?: Maybe<Array<MirType>>;
   mirsPorCentroGestor?: Maybe<Array<MirType>>;
   notificaciones?: Maybe<Array<NotificacionType>>;
-  /** Obtener todos los pbr Por ano */
   pbrs?: Maybe<Array<PbrType>>;
   rolesAsig?: Maybe<RolesType>;
 };

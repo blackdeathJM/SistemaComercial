@@ -1,4 +1,4 @@
-import {ArgsType, PickType, InputType, OmitType} from '@nestjs/graphql';
+import {ArgsType, PickType, InputType} from '@nestjs/graphql';
 import {MirDto} from './mir.dto';
 
 @ArgsType()
