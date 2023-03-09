@@ -41,7 +41,7 @@ export default class MirComponent
 
     regSeleccion(): void
     {
-        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '40%'});
+        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
     }
 
     porCentroGestor(e: [string, number]): void

@@ -12,6 +12,7 @@ export class SeleccionService
 
     async agregarCentroGestor(input: SeleccionDto): Promise<SeleccionDto>
     {
+        console.log(input);
         try
         {
             let _id: string = '';
@@ -26,30 +27,22 @@ export class SeleccionService
                 _id = res.id;
             }
             const actualizacion = {};
-            console.log(input);
-            // if (!input.centroGestor.includes('sinDatos'))
-            // {
-            //     Object.assign(actualizacion, {centroGestor: input.centroGestor.pop()});
-            // }
-            // if (!input.unidad.includes('sinDatos'))
-            // {
-            //     Object.assign(actualizacion, {unidad: input.unidad.pop()});
-            // }
-            // if (!input.dimension.includes('sinDatos'))
-            // {
-            //     Object.assign(actualizacion, {variableOrigen: input.dimension.pop()});
-            // }
-            //
-            // if (!input.tipo.includes('sinDatos'))
-            // {
-            //     Object.assign(actualizacion, {tipo: input.tipo.pop()});
-            // }
-            // if (input._id !== '')
-            // {
-            //     _id = input._id;
-            // }
-            // return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true});
-            return null;
+            const llaves = Object.keys(input);
+            llaves.splice(llaves.indexOf('_id'), 1);
+            llaves.forEach((value, index, array) =>
+            {
+                console.log(input[value]);
+                if (!input[value].includes('sinDatos'))
+                {
+                    Object.assign(actualizacion, {[value]: input[value].pop()});
+                }
+            });
+
+            if (input._id !== '')
+            {
+                _id = input._id;
+            }
+            return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true});
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

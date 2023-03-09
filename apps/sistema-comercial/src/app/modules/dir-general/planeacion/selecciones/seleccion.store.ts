@@ -9,4 +9,5 @@ import {NgxsDataRepository} from '@angular-ru/ngxs/repositories';
 @Injectable()
 export class SeleccionStore extends NgxsDataRepository<SeleccionType>
 {
+
 }

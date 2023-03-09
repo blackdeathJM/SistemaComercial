@@ -12,8 +12,10 @@ import {ListDropSeleccionComponent} from '@s-dir-general/mir/list-drop-seleccion
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 import {finalize, Subscription} from 'rxjs';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
+import {NgxToastService} from '@s-services/ngx-toast.service';
+import {nth} from 'lodash-es';
 
 @Component({
     selector: 'app-mod-multiples-selecciones',
@@ -40,8 +42,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
     tipos: string[] = [];
     frecuencias: string[] = [];
 
-    constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService,
-                private seleccionStore: SeleccionStore)
+    constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService, private ngxToast: NgxToastService, private seleccionStore: SeleccionStore)
     {
     }
 
@@ -72,8 +73,52 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
                 frecuencia: this.ctrlFrecuencia.value !== '' ? [this.ctrlFrecuencia.value] : ['sinDatos']
             };
 
-        this.seleccionService.agregarCentroGestor(seleccion).pipe(finalize(() =>
+        if (isNil(this.seleccionStore.snapshot))
         {
+            this.registrar(seleccion);
+            return;
+        }
+
+        const llaves = Object.keys(this.seleccionStore.snapshot);
+        llaves.splice(llaves.indexOf('_id'), 1);
+        llaves.splice(llaves.indexOf('__typename'), 1);
+
+        llaves.forEach((value, index) =>
+        {
+            const valor: string[] = seleccion[value];
+
+            if (valor.includes('sinDatos'))
+            {
+                return;
+            }
+
+            if (this.seleccionStore.snapshot[value].includes(nth(valor)))
+            {
+                this.ngxToast.alertaToast('El dato que estas intentando ingresar ya se encuentra registrado', seleccion[value]);
+                return;
+            }
+            this.registrar(seleccion);
+        });
+    }
+
+    registrar(input: SeleccionType): void
+    {
+        this.ctrlCentroGestor.disable();
+        this.ctrlDimension.disable();
+        this.ctrlUnidad.disable();
+        this.ctrlDimension.disable();
+        this.ctrlTipo.disable();
+        this.ctrlFrecuencia.disable();
+        this.seleccionService.agregarCentroGestor(input).pipe(finalize(() =>
+        {
+
+            this.ctrlCentroGestor.enable();
+            this.ctrlDimension.enable();
+            this.ctrlUnidad.enable();
+            this.ctrlDimension.enable();
+            this.ctrlTipo.enable();
+            this.ctrlFrecuencia.enable();
+
             this.ctrlCentroGestor.setValue('');
             this.ctrlDimension.setValue('');
             this.ctrlUnidad.setValue('');
