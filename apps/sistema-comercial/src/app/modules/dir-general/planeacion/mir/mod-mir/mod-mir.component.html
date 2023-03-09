@@ -28,7 +28,7 @@
         <mat-form-field>
             <mat-label>Centro gestor</mat-label>
             <mat-select formControlName="centroGestor">
-                <mat-option *ngFor="let centroGestor of centrosGestores" [value]="centroGestor">{{centroGestor}}</mat-option>
+                <mat-option *ngFor="let centroGestor of selecciones.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
             </mat-select>
             <mat-error>{{formMir.controls.centroGestor['errorMessage']}}</mat-error>
         </mat-form-field>

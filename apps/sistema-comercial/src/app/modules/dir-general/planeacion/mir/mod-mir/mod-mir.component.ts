@@ -7,13 +7,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {finalize, Subscription} from 'rxjs';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
 import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
+import {SeleccionType} from "#/libs/datos/src";
 
 @Component({
     selector: 'app-mod-mir',
@@ -27,8 +28,13 @@ import {MirService} from '@s-dir-general/mir/store/mir.service';
 export class ModMirComponent implements OnInit, OnDestroy
 {
     @Output() panel = new EventEmitter<boolean>();
+
+    selecciones: SeleccionType;
     centrosGestores: string[] = [];
     unidades: string[] = [];
+    dimensiones: string[] = [];
+    tipos: string[] = [];
+    frecuencias: string[] = [];
     formMir: FormGroup;
     sentidoIndicador = Object.values(AscDesc);
     sub = new Subscription();
@@ -46,8 +52,7 @@ export class ModMirComponent implements OnInit, OnDestroy
         {
             if (isNotNil(res))
             {
-                this.centrosGestores = res.centroGestor;
-                this.unidades = res.unidad;
+                this.selecciones = $cast<SeleccionType>(res);
             }
         }));
     }

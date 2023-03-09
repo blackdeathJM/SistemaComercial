@@ -40,7 +40,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
     unidades: string[] = [];
     dimensiones: string[] = [];
     tipos: string[] = [];
-    frecuencias: string[] = [];
+    frecuenciasMedicion: string[] = [];
 
     constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService, private ngxToast: NgxToastService, private seleccionStore: SeleccionStore)
     {
@@ -56,7 +56,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
                 this.unidades = res.unidad;
                 this.dimensiones = res.dimension;
                 this.tipos = res.tipo;
-                this.frecuencias = res.frecuencia;
+                this.frecuenciasMedicion = res.frecuencia;
             }
         }));
     }
