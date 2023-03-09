@@ -27,11 +27,18 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
 {
     ctrlCentroGestor = new FormControl('');
     ctrlUnidad = new FormControl('');
-    ctrlVariable = new FormControl('');
+    ctrlDimension = new FormControl('');
+
+    ctrlTipo = new FormControl('');
+    ctrlFrecuencia = new FormControl('');
+
     sub = new Subscription();
+
     centrosGestores: string[] = [];
     unidades: string[] = [];
-    variableOrigen: string[] = [];
+    dimensiones: string[] = [];
+    tipos: string[] = [];
+    frecuencias: string[] = [];
 
     constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService,
                 private seleccionStore: SeleccionStore)
@@ -46,7 +53,9 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
             {
                 this.centrosGestores = res.centroGestor;
                 this.unidades = res.unidad;
-                this.variableOrigen = res.variableOrigen;
+                this.dimensiones = res.dimension;
+                this.tipos = res.tipo;
+                this.frecuencias = res.frecuencia;
             }
         }));
     }
@@ -58,14 +67,19 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
                 _id: this.seleccionStore.snapshot !== null ? this.seleccionStore.snapshot._id : '',
                 centroGestor: this.ctrlCentroGestor.value !== '' ? [this.ctrlCentroGestor.value] : ['sinDatos'],
                 unidad: this.ctrlUnidad.value !== '' ? [this.ctrlUnidad.value] : ['sinDatos'],
-                variableOrigen: this.ctrlVariable.value !== '' ? [this.ctrlVariable.value] : ['sinDatos']
+                dimension: this.ctrlDimension.value !== '' ? [this.ctrlDimension.value] : ['sinDatos'],
+                tipo: this.ctrlTipo.value !== '' ? [this.ctrlTipo.value] : ['sinDatos'],
+                frecuencia: this.ctrlFrecuencia.value !== '' ? [this.ctrlFrecuencia.value] : ['sinDatos']
             };
 
         this.seleccionService.agregarCentroGestor(seleccion).pipe(finalize(() =>
         {
             this.ctrlCentroGestor.setValue('');
-            this.ctrlVariable.setValue('');
+            this.ctrlDimension.setValue('');
             this.ctrlUnidad.setValue('');
+            this.ctrlDimension.setValue('');
+            this.ctrlTipo.setValue('');
+            this.ctrlFrecuencia.setValue('');
         })).subscribe();
     }
 

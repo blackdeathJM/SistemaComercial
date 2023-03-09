@@ -8,6 +8,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {Subscription} from 'rxjs';
+import {TipoSeleccion} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.interface';
 
 @Component({
     selector: 'app-list-drop-seleccion',
@@ -20,7 +21,7 @@ import {Subscription} from 'rxjs';
 export class ListDropSeleccionComponent implements OnInit
 {
     @Input() esLista = false;
-    @Input() tipoArreglo: 'centroGestor' | 'unidad' | 'variable';
+    @Input() tipoArreglo: TipoSeleccion;
     arreglos: string[] = [];
     sub = new Subscription();
 
@@ -34,19 +35,7 @@ export class ListDropSeleccionComponent implements OnInit
         {
             if (isNotNil(res))
             {
-                if (this.tipoArreglo === 'centroGestor')
-                {
-                    this.arreglos = this.seleccionStore.getState().centroGestor;
-                }
-
-                if (this.tipoArreglo === 'unidad')
-                {
-                    this.arreglos = this.seleccionStore.getState().unidad;
-                }
-                if (this.tipoArreglo === 'variable')
-                {
-                    this.arreglos = this.seleccionStore.getState().variableOrigen;
-                }
+                this.arreglos = this.seleccionStore.getState()[this.tipoArreglo];
             }
         }));
     }

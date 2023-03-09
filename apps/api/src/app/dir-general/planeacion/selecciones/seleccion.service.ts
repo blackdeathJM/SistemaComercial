@@ -20,29 +20,36 @@ export class SeleccionService
             {
                 const valoresDefecto: TAgregarSeleccion =
                     {
-                        centroGestor: [], unidad: [], variableOrigen: []
+                        centroGestor: [], unidad: [], dimension: [], frecuencia: [], tipo: []
                     };
                 const res = await this.seleccion.create(valoresDefecto);
                 _id = res.id;
             }
             const actualizacion = {};
-            if (!input.centroGestor.includes('sinDatos'))
-            {
-                Object.assign(actualizacion, {centroGestor: input.centroGestor.pop()});
-            }
-            if (!input.unidad.includes('sinDatos'))
-            {
-                Object.assign(actualizacion, {unidad: input.unidad.pop()});
-            }
-            if (!input.variableOrigen.includes('sinDatos'))
-            {
-                Object.assign(actualizacion, {variableOrigen: input.variableOrigen.pop()});
-            }
-            if (input._id !== '')
-            {
-                _id = input._id;
-            }
-            return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true});
+            console.log(input);
+            // if (!input.centroGestor.includes('sinDatos'))
+            // {
+            //     Object.assign(actualizacion, {centroGestor: input.centroGestor.pop()});
+            // }
+            // if (!input.unidad.includes('sinDatos'))
+            // {
+            //     Object.assign(actualizacion, {unidad: input.unidad.pop()});
+            // }
+            // if (!input.dimension.includes('sinDatos'))
+            // {
+            //     Object.assign(actualizacion, {variableOrigen: input.dimension.pop()});
+            // }
+            //
+            // if (!input.tipo.includes('sinDatos'))
+            // {
+            //     Object.assign(actualizacion, {tipo: input.tipo.pop()});
+            // }
+            // if (input._id !== '')
+            // {
+            //     _id = input._id;
+            // }
+            // return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true});
+            return null;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

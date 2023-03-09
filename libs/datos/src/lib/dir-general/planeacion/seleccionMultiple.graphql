@@ -14,7 +14,9 @@ query centrosGestores
 }
 fragment fragSeleccion on SeleccionType
 {
-    variableOrigen
+    dimension
+    frecuencia
+    tipo
     unidad
     centroGestor
     _id

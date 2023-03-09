@@ -25,7 +25,17 @@ export class SeleccionDto implements ISeleccion
     @Field(() => [String], {nullable: true, defaultValue: []})
     @Prop()
     @IsOptional()
-    variableOrigen: string[];
+    dimension: string[];
+
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    frecuencia: string[];
+
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    tipo: string[];
 }
 
 export type SeleccionType = SeleccionDto;

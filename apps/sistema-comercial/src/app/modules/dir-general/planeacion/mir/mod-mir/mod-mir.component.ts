@@ -29,7 +29,6 @@ export class ModMirComponent implements OnInit, OnDestroy
     @Output() panel = new EventEmitter<boolean>();
     centrosGestores: string[] = [];
     unidades: string[] = [];
-    variablesOrigen: string[] = [];
     formMir: FormGroup;
     sentidoIndicador = Object.values(AscDesc);
     sub = new Subscription();
@@ -49,7 +48,6 @@ export class ModMirComponent implements OnInit, OnDestroy
             {
                 this.centrosGestores = res.centroGestor;
                 this.unidades = res.unidad;
-                this.variablesOrigen = res.variableOrigen;
             }
         }));
     }

@@ -1038,16 +1038,20 @@ export type RolesType = {
 export type SeleccionInput = {
   _id?: InputMaybe<Scalars['ID']>;
   centroGestor?: InputMaybe<Array<Scalars['String']>>;
+  dimension?: InputMaybe<Array<Scalars['String']>>;
+  frecuencia?: InputMaybe<Array<Scalars['String']>>;
+  tipo?: InputMaybe<Array<Scalars['String']>>;
   unidad?: InputMaybe<Array<Scalars['String']>>;
-  variableOrigen?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type SeleccionType = {
   __typename?: 'SeleccionType';
   _id?: Maybe<Scalars['ID']>;
   centroGestor?: Maybe<Array<Scalars['String']>>;
+  dimension?: Maybe<Array<Scalars['String']>>;
+  frecuencia?: Maybe<Array<Scalars['String']>>;
+  tipo?: Maybe<Array<Scalars['String']>>;
   unidad?: Maybe<Array<Scalars['String']>>;
-  variableOrigen?: Maybe<Array<Scalars['String']>>;
 };
 
 export type Subscription = {
@@ -1486,14 +1490,14 @@ export type AgregarCentroGestorMutationVariables = Exact<{
 }>;
 
 
-export type AgregarCentroGestorMutation = { __typename?: 'Mutation', agregarCentroGestor: { __typename?: 'SeleccionType', variableOrigen?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } };
+export type AgregarCentroGestorMutation = { __typename?: 'Mutation', agregarCentroGestor: { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } };
 
 export type CentrosGestoresQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CentrosGestoresQuery = { __typename?: 'Query', centrosGestores?: { __typename?: 'SeleccionType', variableOrigen?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } | null };
+export type CentrosGestoresQuery = { __typename?: 'Query', centrosGestores?: { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } | null };
 
-export type FragSeleccionFragment = { __typename?: 'SeleccionType', variableOrigen?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null };
+export type FragSeleccionFragment = { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null };
 
 export type FragBombaFragment = { __typename?: 'BombaType', noSerie?: string | null, modelo?: string | null, fechaInstalacion?: any | null, fechaRetiro?: any | null, evidenciaInst?: Array<string> | null, evidenciaRetiro?: Array<string> | null, marca?: string | null, motivoRet?: string | null, observaciones?: string | null, descripcion?: string | null, activo?: boolean | null, noImpulsores?: number | null, rpm?: number | null, diametro?: number | null, lts?: number | null, eficiencia?: number | null };
 
@@ -1733,7 +1737,9 @@ export const FragPbrFragmentDoc = gql`
     `;
 export const FragSeleccionFragmentDoc = gql`
     fragment fragSeleccion on SeleccionType {
-  variableOrigen
+  dimension
+  frecuencia
+  tipo
   unidad
   centroGestor
   _id

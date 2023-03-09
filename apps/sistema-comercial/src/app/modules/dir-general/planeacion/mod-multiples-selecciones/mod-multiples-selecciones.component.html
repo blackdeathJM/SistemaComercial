@@ -25,7 +25,7 @@
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let centro of unidades">{{centro}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let unidad of unidades">{{unidad}}</mat-list-item>
         </mat-list>
     </div>
 
@@ -33,18 +33,50 @@
     <div class="flex flex-auto flex-col">
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
-                <mat-label>Variable</mat-label>
-                <input matInput [formControl]="ctrlVariable">
+                <mat-label>Dimension</mat-label>
+                <input matInput [formControl]="ctrlDimension">
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let centro of variableOrigen">{{centro}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let dimension of dimensiones">{{dimension}}</mat-list-item>
         </mat-list>
     </div>
+
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Tipo</mat-label>
+                <input matInput [formControl]="ctrlTipo">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let dimension of dimensiones">{{dimension}}</mat-list-item>
+        </mat-list>
+    </div>
+
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Frecuencia</mat-label>
+                <input matInput [formControl]="ctrlFrecuencia">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let dimension of dimensiones">{{dimension}}</mat-list-item>
+        </mat-list>
+    </div>
+
 </section>
+
 <div class="flex flex-col flex-auto mt-4">
     <button mat-raised-button class="flex-auto" color="warn" (click)="mdr.close()">
         <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
