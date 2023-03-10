@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AgregarCentroGestorGQL, AgregarCentroGestorMutation, CentrosGestoresGQL, CentrosGestoresQuery} from '#/libs/datos/src';
+import {RegSeleccionGQL, RegSeleccionMutation, SeleccionesGQL, SeleccionesQuery} from '#/libs/datos/src';
 import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
@@ -9,29 +9,29 @@ import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecc
 @Injectable({providedIn: 'root'})
 export class SeleccionService
 {
-    constructor(private agregarCentroGestorGQL: AgregarCentroGestorGQL, private centrosGestoresGQL: CentrosGestoresGQL, private seleccionStore: SeleccionStore)
+    constructor(private regSeleccionGQL: RegSeleccionGQL, private seleccionesGQL: SeleccionesGQL, private seleccionStore: SeleccionStore)
     {
     }
 
-    agregarCentroGestor(input: SeleccionType): Observable<SingleExecutionResult<AgregarCentroGestorMutation>>
+    agregarCentroGestor(input: SeleccionType): Observable<SingleExecutionResult<RegSeleccionMutation>>
     {
-        return this.agregarCentroGestorGQL.mutate({input}).pipe(tap((res) =>
+        return this.regSeleccionGQL.mutate({input}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const seleccion = $cast<SeleccionType>(res.data.agregarCentroGestor);
+                const seleccion = $cast<SeleccionType>(res.data.regSeleccion);
                 this.seleccionStore.patchState(seleccion);
             }
         }));
     }
 
-    centrosGestores(): Observable<SingleExecutionResult<CentrosGestoresQuery>>
+    selecciones(): Observable<SingleExecutionResult<SeleccionesQuery>>
     {
-        return this.centrosGestoresGQL.fetch().pipe(tap((res) =>
+        return this.seleccionesGQL.fetch().pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const seleccion = $cast<SeleccionType>(res.data.centrosGestores);
+                const seleccion = $cast<SeleccionType>(res.data.selecciones);
                 this.seleccionStore.setState(seleccion);
             }
         }));

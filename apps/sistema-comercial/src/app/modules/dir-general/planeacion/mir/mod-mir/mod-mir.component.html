@@ -28,7 +28,7 @@
         <mat-form-field>
             <mat-label>Centro gestor</mat-label>
             <mat-select formControlName="centroGestor">
-                <mat-option *ngFor="let centroGestor of selecciones.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
+                <mat-option *ngFor="let centroGestor of selecciones.centroGestor; trackBy:trackByFn" [value]="centroGestor">{{centroGestor}}</mat-option>
             </mat-select>
             <mat-error>{{formMir.controls.centroGestor['errorMessage']}}</mat-error>
         </mat-form-field>
@@ -39,12 +39,16 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tipo</mat-label>
-            <input matInput formControlName="tipo">
+            <mat-select>
+                <mat-option *ngFor="let tipo of selecciones.tipo" [value]="tipo">{{tipo}}</mat-option>
+            </mat-select>
             <mat-error>{{formMir.controls.tipo['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Dimension</mat-label>
-            <input matInput formControlName="dimension">
+            <mat-select formControlName="dimension">
+                <mat-option *ngFor="let dimension of selecciones.dimension; trackBy:trackByFn" [value]="dimension">{{dimension}}</mat-option>
+            </mat-select>
             <mat-error>{{formMir.controls.dimension['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -65,13 +69,15 @@
         <mat-form-field>
             <mat-label>Unidad de medida</mat-label>
             <mat-select formControlName="unidadDeMedida">
-                <mat-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</mat-option>
+                <mat-option *ngFor="let unidad of selecciones.unidad" [value]="unidad">{{unidad}}</mat-option>
             </mat-select>
             <mat-error>{{formMir.controls.unidadDeMedida['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Frecuencia de medicion</mat-label>
-            <input matInput formControlName="frecuenciaMedicion">
+            <mat-select formControlName="frecuenciaMedicion">
+                <mat-option *ngFor="let frecuencia of selecciones.frecuencia" [value]="frecuencia">{{frecuencia}}</mat-option>
+            </mat-select>
             <mat-error>{{formMir.controls.frecuenciaMedicion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>

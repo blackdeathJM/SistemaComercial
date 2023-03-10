@@ -14,7 +14,7 @@ import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
 import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
-import {SeleccionType} from "#/libs/datos/src";
+import {SeleccionType} from '#/libs/datos/src';
 
 @Component({
     selector: 'app-mod-mir',
@@ -30,11 +30,6 @@ export class ModMirComponent implements OnInit, OnDestroy
     @Output() panel = new EventEmitter<boolean>();
 
     selecciones: SeleccionType;
-    centrosGestores: string[] = [];
-    unidades: string[] = [];
-    dimensiones: string[] = [];
-    tipos: string[] = [];
-    frecuencias: string[] = [];
     formMir: FormGroup;
     sentidoIndicador = Object.values(AscDesc);
     sub = new Subscription();
@@ -48,11 +43,12 @@ export class ModMirComponent implements OnInit, OnDestroy
     {
         this.formMir = this.fb.formGroup(new Mir());
         this.formMir.get('ano').setValue(new Date().getFullYear());
+        console.log('OnInit');
         this.sub.add(this.seleccionStore.state$.subscribe((res) =>
         {
             if (isNotNil(res))
             {
-                this.selecciones = $cast<SeleccionType>(res);
+                this.selecciones = res;
             }
         }));
     }
@@ -94,6 +90,12 @@ export class ModMirComponent implements OnInit, OnDestroy
     cerrar(): void
     {
         this.panel.emit(false);
+    }
+
+    trackByFn(index: number, elemento: any): number | string
+    {
+        console.log(index, elemento);
+        return index || elemento;
     }
 
     ngOnDestroy(): void

@@ -10,7 +10,7 @@
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let centro of centrosGestores">{{centro}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let centro of seleccion.centroGestor">{{centro}}</mat-list-item>
         </mat-list>
     </div>
 
@@ -25,7 +25,7 @@
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let unidad of unidades">{{unidad}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let unidad of seleccion.unidad">{{unidad}}</mat-list-item>
         </mat-list>
     </div>
 
@@ -41,7 +41,7 @@
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let dimension of dimensiones">{{dimension}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let dimension of seleccion.dimension">{{dimension}}</mat-list-item>
         </mat-list>
     </div>
 
@@ -56,7 +56,7 @@
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let tipo of tipos">{{tipo}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let tipo of seleccion.tipo">{{tipo}}</mat-list-item>
         </mat-list>
     </div>
 
@@ -71,7 +71,7 @@
             </button>
         </div>
         <mat-list class="h-80 border-2 overflow-y-scroll">
-            <mat-list-item class="border-b-2" *ngFor="let frecuencia of frecuenciasMedicion">{{frecuencia}}</mat-list-item>
+            <mat-list-item class="border-b-2" *ngFor="let frecuencia of seleccion.frecuencia">{{frecuencia}}</mat-list-item>
         </mat-list>
     </div>
 

@@ -579,7 +579,6 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarBomba: TelemetriaType;
-  agregarCentroGestor: SeleccionType;
   agregarMir: MirType;
   agregarMotor: TelemetriaType;
   agregarPuesto: DeptoType;
@@ -603,6 +602,7 @@ export type Mutation = {
   regDoc: DocumentoType;
   regInstalacion: UnionTele;
   regPbr: PbrType;
+  regSeleccion: SeleccionType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
   valoresDefecto: Scalars['Boolean'];
@@ -668,11 +668,6 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationAgregarBombaArgs = {
   args: AgregarBombaInput;
-};
-
-
-export type MutationAgregarCentroGestorArgs = {
-  input?: InputMaybe<SeleccionInput>;
 };
 
 
@@ -792,6 +787,11 @@ export type MutationRegPbrArgs = {
 };
 
 
+export type MutationRegSeleccionArgs = {
+  input?: InputMaybe<SeleccionInput>;
+};
+
+
 export type MutationRegistroSesionArgs = {
   _id: Scalars['String'];
   auth: AuthInput;
@@ -885,7 +885,6 @@ export type PuestoType = {
 
 export type Query = {
   __typename?: 'Query';
-  centrosGestores?: Maybe<SeleccionType>;
   deptos: Array<DeptoType>;
   docsBusquedaGral: Array<DocumentoType>;
   docsFechas: Array<DocumentoType>;
@@ -901,6 +900,7 @@ export type Query = {
   notificaciones?: Maybe<Array<NotificacionType>>;
   pbrs?: Maybe<Array<PbrType>>;
   rolesAsig?: Maybe<RolesType>;
+  selecciones?: Maybe<SeleccionType>;
 };
 
 
@@ -1485,17 +1485,17 @@ export type PbrsQueryVariables = Exact<{
 
 export type PbrsQuery = { __typename?: 'Query', pbrs?: Array<{ __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null }> | null };
 
-export type AgregarCentroGestorMutationVariables = Exact<{
+export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
 }>;
 
 
-export type AgregarCentroGestorMutation = { __typename?: 'Mutation', agregarCentroGestor: { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } };
+export type RegSeleccionMutation = { __typename?: 'Mutation', regSeleccion: { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } };
 
-export type CentrosGestoresQueryVariables = Exact<{ [key: string]: never; }>;
+export type SeleccionesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CentrosGestoresQuery = { __typename?: 'Query', centrosGestores?: { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } | null };
+export type SeleccionesQuery = { __typename?: 'Query', selecciones?: { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null } | null };
 
 export type FragSeleccionFragment = { __typename?: 'SeleccionType', dimension?: Array<string> | null, frecuencia?: Array<string> | null, tipo?: Array<string> | null, unidad?: Array<string> | null, centroGestor?: Array<string> | null, _id?: string | null };
 
@@ -2869,9 +2869,9 @@ export const PbrsDocument = gql`
       super(apollo);
     }
   }
-export const AgregarCentroGestorDocument = gql`
-    mutation agregarCentroGestor($input: SeleccionInput) {
-  agregarCentroGestor(input: $input) {
+export const RegSeleccionDocument = gql`
+    mutation regSeleccion($input: SeleccionInput) {
+  regSeleccion(input: $input) {
     ...fragSeleccion
   }
 }
@@ -2880,16 +2880,16 @@ export const AgregarCentroGestorDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class AgregarCentroGestorGQL extends Apollo.Mutation<AgregarCentroGestorMutation, AgregarCentroGestorMutationVariables> {
-    document = AgregarCentroGestorDocument;
+  export class RegSeleccionGQL extends Apollo.Mutation<RegSeleccionMutation, RegSeleccionMutationVariables> {
+    document = RegSeleccionDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
-export const CentrosGestoresDocument = gql`
-    query centrosGestores {
-  centrosGestores {
+export const SeleccionesDocument = gql`
+    query selecciones {
+  selecciones {
     ...fragSeleccion
   }
 }
@@ -2898,8 +2898,8 @@ export const CentrosGestoresDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class CentrosGestoresGQL extends Apollo.Query<CentrosGestoresQuery, CentrosGestoresQueryVariables> {
-    document = CentrosGestoresDocument;
+  export class SeleccionesGQL extends Apollo.Query<SeleccionesQuery, SeleccionesQueryVariables> {
+    document = SeleccionesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

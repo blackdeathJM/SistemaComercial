@@ -1,6 +1,8 @@
 <mat-drawer-container class="w-full">
     <mat-drawer class="w-96" [opened]="abrirPanel" mode="side" autoFocus="true" position="end">
-        <app-mod-mir (panel)="cerrarPanel()"></app-mod-mir>
+        <ng-container *ngIf="abrirPanel">
+            <app-mod-mir (panel)="cerrarPanel()"></app-mod-mir>
+        </ng-container>
     </mat-drawer>
     <mat-drawer-content>
         <app-acciones-mir-pbr (porAno)="buscarPorAno($event)" (porCentroGestor)="porCentroGestor($event)" [habEmpleado]="false" [habCentroGestor]="true">

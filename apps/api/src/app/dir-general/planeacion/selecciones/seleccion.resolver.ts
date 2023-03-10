@@ -10,14 +10,14 @@ export class SeleccionResolver
     }
 
     @Mutation(() => SeleccionDto)
-    async agregarCentroGestor(@Args('input', {nullable: true}) input: SeleccionDto): Promise<SeleccionDto>
+    async regSeleccion(@Args('input', {nullable: true}) input: SeleccionDto): Promise<SeleccionDto>
     {
-        return this.seleccionService.agregarCentroGestor(input);
+        return this.seleccionService.regSeleccion(input);
     }
 
     @Query(() => SeleccionDto, {nullable: true, defaultValue: null})
-    async centrosGestores(): Promise<SeleccionDto>
+    async selecciones(): Promise<SeleccionDto>
     {
-        return this.seleccionService.centrosGestores();
+        return this.seleccionService.selecciones();
     }
 }

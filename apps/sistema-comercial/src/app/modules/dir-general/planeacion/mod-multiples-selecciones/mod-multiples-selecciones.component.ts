@@ -36,11 +36,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
 
     sub = new Subscription();
 
-    centrosGestores: string[] = [];
-    unidades: string[] = [];
-    dimensiones: string[] = [];
-    tipos: string[] = [];
-    frecuenciasMedicion: string[] = [];
+    seleccion: SeleccionType;
 
     constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService, private ngxToast: NgxToastService, private seleccionStore: SeleccionStore)
     {
@@ -52,11 +48,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
         {
             if (isNotNil(res))
             {
-                this.centrosGestores = res.centroGestor;
-                this.unidades = res.unidad;
-                this.dimensiones = res.dimension;
-                this.tipos = res.tipo;
-                this.frecuenciasMedicion = res.frecuencia;
+                this.seleccion = res;
             }
         }));
     }
@@ -83,7 +75,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
         llaves.splice(llaves.indexOf('_id'), 1);
         llaves.splice(llaves.indexOf('__typename'), 1);
 
-        llaves.forEach((value, index) =>
+        llaves.forEach((value) =>
         {
             const valor: string[] = seleccion[value];
 

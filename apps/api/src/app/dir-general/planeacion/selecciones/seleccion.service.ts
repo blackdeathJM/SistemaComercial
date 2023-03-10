@@ -10,9 +10,8 @@ export class SeleccionService
     {
     }
 
-    async agregarCentroGestor(input: SeleccionDto): Promise<SeleccionDto>
+    async regSeleccion(input: SeleccionDto): Promise<SeleccionDto>
     {
-        console.log(input);
         try
         {
             let _id: string = '';
@@ -31,7 +30,6 @@ export class SeleccionService
             llaves.splice(llaves.indexOf('_id'), 1);
             llaves.forEach((value, index, array) =>
             {
-                console.log(input[value]);
                 if (!input[value].includes('sinDatos'))
                 {
                     Object.assign(actualizacion, {[value]: input[value].pop()});
@@ -49,7 +47,7 @@ export class SeleccionService
         }
     }
 
-    async centrosGestores(): Promise<SeleccionDto>
+    async selecciones(): Promise<SeleccionDto>
     {
         try
         {

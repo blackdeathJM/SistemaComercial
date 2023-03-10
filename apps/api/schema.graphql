@@ -397,7 +397,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1678391410
+  tiempo: Int = 1678412916
   titulo: String
   usarRouter: Boolean = false
 }
@@ -582,7 +582,7 @@ type Query {
   pbrs(ano: Int = 2023, idEmpleado: ID = null, centroGestor: String = null): [PbrType!]
   mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
   mirsPorAno(ano: Int = 2023): [MirType!]
-  centrosGestores: SeleccionType
+  selecciones: SeleccionType
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -609,7 +609,7 @@ type Mutation {
   regPbr(input: RegPbrInput!): PbrType!
   agregarMir(input: MirInput!): MirType!
   mirsActAvances(input: MirsActAvancesInput!): MirType!
-  agregarCentroGestor(input: SeleccionInput): SeleccionType!
+  regSeleccion(input: SeleccionInput): SeleccionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType

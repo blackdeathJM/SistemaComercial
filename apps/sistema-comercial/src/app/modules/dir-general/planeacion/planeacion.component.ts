@@ -21,6 +21,6 @@ export class PlaneacionComponent implements OnInit
 
     ngOnInit(): void
     {
-        forkJoin([this.seleccionService.centrosGestores(), this.empleadoService.empleadosConSesion()]).subscribe();
+        forkJoin([this.seleccionService.selecciones(), this.empleadoService.empleadosConSesion()]).subscribe();
     }
 }

@@ -1,14 +1,14 @@
-mutation agregarCentroGestor($input: SeleccionInput)
+mutation regSeleccion($input: SeleccionInput)
 {
-    agregarCentroGestor(input: $input)
+    regSeleccion(input: $input)
     {
         ...fragSeleccion
     }
 }
 
-query centrosGestores
+query selecciones
 {
-    centrosGestores {
+    selecciones {
         ...fragSeleccion
     }
 }
