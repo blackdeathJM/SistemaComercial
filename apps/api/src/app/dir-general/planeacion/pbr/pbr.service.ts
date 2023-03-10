@@ -18,11 +18,10 @@ export class PbrService
             const consulta = {ano: args.ano};
             if (args.idEmpleado !== 'noAplica')
             {
-                Object.assign(consulta, {centroGestor: args.centroGestor, idEmpleado: args.idEmpleado});
+                Object.assign(consulta, {idEmpleado: args.idEmpleado});
                 return await this.pbr.find(consulta).exec();
             }
             Object.assign(consulta, {centroGestor: args.centroGestor});
-
             return await this.pbr.find(consulta).exec();
         } catch (e)
         {

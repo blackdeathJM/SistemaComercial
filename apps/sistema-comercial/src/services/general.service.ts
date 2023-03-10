@@ -4,6 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 import {deleteObject, ref, Storage, uploadBytesResumable, UploadTask} from '@angular/fire/storage';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {Observable, ReplaySubject, throwError} from 'rxjs';
+import {IResolveEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface";
 
 export interface IObjFecha
 {
@@ -26,6 +27,13 @@ export class GeneralService
     {
     }
 
+    static filtradoEmpleados(valor: string, estado: IResolveEmpleado[]): any[]
+    {
+        const filtrar = estado.filter(value => value.nombreCompleto.toLowerCase().includes(valor.toLowerCase()));
+
+        return [...filtrar];
+    }
+
     static convertirUnix(fecha: IObjFecha, segundos: number): number
     {
         // const current = new Date();
@@ -43,6 +51,7 @@ export class GeneralService
         // return DateTime.utc(fecha.year, fecha.month + 1, fecha.date, new Date().getHours(), new Date().getMinutes(), {locale: 'es-MX'}).toUnixInteger();
         return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
+
     static convertirIsoDate(fecha: IObjFecha): void
     {
         const fechas = DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toISODate();

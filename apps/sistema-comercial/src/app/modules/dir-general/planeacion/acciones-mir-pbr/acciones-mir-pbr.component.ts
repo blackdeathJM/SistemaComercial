@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -9,14 +9,8 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {isNil} from '@angular-ru/cdk/utils';
-
-export interface IBuscarEmpleado
-{
-    ano: number;
-    centroGestor: string;
-    idEmpleado: string;
-}
-
+import {GeneralService} from '@s-services/general.service';
+import {Subscription} from 'rxjs';
 @Component({
     selector: 'app-acciones-mir-pbr',
     standalone: true,
@@ -25,25 +19,34 @@ export interface IBuscarEmpleado
     styleUrls: ['./acciones-mir-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccionesMirPbrComponent implements OnInit
+export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
 {
     @Output() porAno = new EventEmitter<number>();
     @Output() porCentroGestor = new EventEmitter<[string, number]>();
-    @Output() porEmpleado = new EventEmitter<[string, string, number]>();
+    @Output() porEmpleado = new EventEmitter<[string, number]>();
     @Input() habEmpleado = false;
     @Input() habCentroGestor = false;
     buscarAno: number = new Date().getFullYear();
     bCentroGestor: string;
     empleadosFiltrar: IResolveEmpleado[];
+    sub = new Subscription();
 
     constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore)
     {
     }
 
-    ngOnInit(): void
+    ngAfterContentInit(): void
     {
-        // this.empleadosFiltrar = this.entityEmpleado.selectAll();
-        console.log('*/*/*/*/*/*');
+        if (this.habEmpleado)
+        {
+            this.sub.add(this.entityEmpleado.entitiesArray$.subscribe((res) =>
+            {
+                if (res)
+                {
+                    this.empleadosFiltrar = [...res];
+                }
+            }));
+        }
     }
 
     buscarPorCentroGestor(e: string): void
@@ -70,17 +73,17 @@ export class AccionesMirPbrComponent implements OnInit
 
     buscarEmpleado(e: string): void
     {
-        if (isNil(this.bCentroGestor) || isNil(this.buscarAno))
+        if (isNil(this.buscarAno))
         {
-            this.ngxToast.alertaToast('Es necesario seleccionar un centro gestor y año', 'Centro gestor');
+            this.ngxToast.alertaToast('Es necesario seleccionar año', 'Filtrado');
             return;
         }
-        this.porEmpleado.emit([this.bCentroGestor, e, this.buscarAno]);
+        this.porEmpleado.emit([e, this.buscarAno]);
     }
 
     filtrarEmpleados(value: string): void
     {
-        console.log('+++++++++++', value);
+        this.empleadosFiltrar = GeneralService.filtradoEmpleados(value, [...this.entityEmpleado.selectAll()]);
     }
 
     trackByCentroGestor(index: number, elemento: string): number | string
@@ -91,5 +94,10 @@ export class AccionesMirPbrComponent implements OnInit
     trackByEmpleado(index: number, elemento: IResolveEmpleado): number | string
     {
         return index || elemento._id;
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

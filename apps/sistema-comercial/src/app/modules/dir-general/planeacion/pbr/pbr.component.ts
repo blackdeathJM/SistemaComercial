@@ -37,4 +37,15 @@ export class PbrComponent
             };
         this.pbrService.pbrs(args).subscribe();
     }
+
+    porEmpleado(e: [string, number]): void
+    {
+        const pbrsEmpleado: TPbrs =
+            {
+                centroGestor: 'no-aplica',
+                idEmpleado: e[0],
+                ano: e[1]
+            };
+        this.pbrService.pbrs(pbrsEmpleado).subscribe();
+    }
 }

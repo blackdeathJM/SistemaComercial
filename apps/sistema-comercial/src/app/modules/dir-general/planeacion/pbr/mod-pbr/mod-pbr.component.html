@@ -5,15 +5,26 @@
             <input matInput formControlName="ano">
             <mat-error>{{formPbr.controls.ano['errorMessage']}}</mat-error>
         </mat-form-field>
-        <ng-container *ngIf="entityEmpleado.entitiesArray$ | async as empleadoSesion">
-            <mat-form-field>
-                <mat-label>Empleado</mat-label>
-                <mat-select formControlName="idEmpleado">
-                    <mat-option *ngFor="let empleado of empleadoSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
-                </mat-select>
-                <mat-error>{{formPbr.controls.idEmpleado['errorMessage']}}</mat-error>
-            </mat-form-field>
-        </ng-container>
+
+        <app-seleccionar-empleado class="flex-auto" [multiple]="false" formControlName="idEmpleado"></app-seleccionar-empleado>
+
+
+        <!--        <ng-container *ngIf="entityEmpleado.entitiesArray$ | async as empleadoSesion">-->
+        <!--            <mat-form-field>-->
+        <!--                <mat-label>Empleado</mat-label>-->
+        <!--                <mat-select formControlName="idEmpleado">-->
+        <!--                    <div class="flex flex-auto flex-col">-->
+        <!--                        <mat-form-field class="flex-auto mx-1">-->
+        <!--                            <input matInput placeholder="Filtrar usuario">-->
+        <!--                        </mat-form-field>-->
+        <!--                    </div>-->
+        <!--                    <mat-option *ngFor="let empleado of empleadoSesion" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>-->
+        <!--                </mat-select>-->
+        <!--                <mat-error>{{formPbr.controls.idEmpleado['errorMessage']}}</mat-error>-->
+        <!--            </mat-form-field>-->
+        <!--        </ng-container>-->
+
+
         <ng-container *ngIf="seleccionStore.state$ | async as centros">
             <mat-form-field class="flex-auto">
                 <mat-label>Centro gestor</mat-label>

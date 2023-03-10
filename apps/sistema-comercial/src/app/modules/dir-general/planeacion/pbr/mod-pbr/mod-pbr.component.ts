@@ -14,11 +14,12 @@ import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 
 @Component({
     selector: 'app-mod-pbr',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule, MatOptionModule, MatSelectModule],
+    imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule, MatOptionModule, MatSelectModule, SeleccionarEmpleadoComponent],
     providers: [PbrService],
     templateUrl: './mod-pbr.component.html',
     styleUrls: ['./mod-pbr.component.scss'],
@@ -43,27 +44,27 @@ export class ModPbrComponent implements OnInit
     {
         this.cargando = true;
         const ano = parseInt(this.formPbr.get('ano').value, 10);
-
-        const input: TRegPbr =
-            {
-                ...this.formPbr.value,
-                ano
-            };
-        this.formPbr.disable();
-
-        this.pbrService.regPbr(input).pipe(finalize(() =>
-        {
-            this.cargando = false;
-            this.formPbr.enable();
-            Object.keys(this.formPbr.controls).forEach((ctrlNombre) =>
-            {
-                const ctrl = this.formPbr.get(ctrlNombre);
-                if (ctrlNombre !== 'centroGestor' && ctrlNombre !== 'idEmpleado')
-                {
-                    ctrl.reset();
-                }
-            });
-        })).subscribe();
+        console.log('formulario', this.formPbr.value);
+        // const input: TRegPbr =
+        //     {
+        //         ...this.formPbr.value,
+        //         ano
+        //     };
+        // this.formPbr.disable();
+        //
+        // this.pbrService.regPbr(input).pipe(finalize(() =>
+        // {
+        //     this.cargando = false;
+        //     this.formPbr.enable();
+        //     Object.keys(this.formPbr.controls).forEach((ctrlNombre) =>
+        //     {
+        //         const ctrl = this.formPbr.get(ctrlNombre);
+        //         if (ctrlNombre !== 'centroGestor' && ctrlNombre !== 'idEmpleado')
+        //         {
+        //             ctrl.reset();
+        //         }
+        //     });
+        // })).subscribe();
     }
 
     cerrar(): void

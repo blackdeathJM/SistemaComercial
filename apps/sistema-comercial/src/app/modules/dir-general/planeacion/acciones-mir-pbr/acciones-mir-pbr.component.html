@@ -13,14 +13,14 @@
     </ng-container>
 
     <ng-container *ngIf="habEmpleado">
-        <mat-form-field class="flex-auto mt-5" *ngIf="entityEmpleado.entitiesArray$ | async as empleados">
+        <mat-form-field class="flex-auto mt-5">
             <mat-select (valueChange)="buscarEmpleado($event)">
                 <div class="flex flex-auto flex-col px-1">
                     <mat-form-field class="flex-auto">
                         <input matInput (keyup)="filtrarEmpleados($event.target['value'])" placeholder="Filtrar empleados">
                     </mat-form-field>
                 </div>
-                <mat-option *ngFor="let empleado of empleados; trackBy: trackByEmpleado" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                <mat-option *ngFor="let empleado of empleadosFiltrar; trackBy: trackByEmpleado" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
             </mat-select>
         </mat-form-field>
     </ng-container>
