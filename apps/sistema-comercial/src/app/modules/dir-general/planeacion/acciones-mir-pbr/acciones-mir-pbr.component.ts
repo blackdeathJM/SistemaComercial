@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -8,8 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {isNil} from '@angular-ru/cdk/utils';
 
 export interface IBuscarEmpleado
 {
@@ -26,7 +25,7 @@ export interface IBuscarEmpleado
     styleUrls: ['./acciones-mir-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccionesMirPbrComponent
+export class AccionesMirPbrComponent implements OnInit
 {
     @Output() porAno = new EventEmitter<number>();
     @Output() porCentroGestor = new EventEmitter<[string, number]>();
@@ -35,9 +34,16 @@ export class AccionesMirPbrComponent
     @Input() habCentroGestor = false;
     buscarAno: number = new Date().getFullYear();
     bCentroGestor: string;
+    empleadosFiltrar: IResolveEmpleado[];
 
-    constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore, private empleadoService: EmpleadoService)
+    constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore)
     {
+    }
+
+    ngOnInit(): void
+    {
+        // this.empleadosFiltrar = this.entityEmpleado.selectAll();
+        console.log('*/*/*/*/*/*');
     }
 
     buscarPorCentroGestor(e: string): void
@@ -70,6 +76,11 @@ export class AccionesMirPbrComponent
             return;
         }
         this.porEmpleado.emit([this.bCentroGestor, e, this.buscarAno]);
+    }
+
+    filtrarEmpleados(value: string): void
+    {
+        console.log('+++++++++++', value);
     }
 
     trackByCentroGestor(index: number, elemento: string): number | string

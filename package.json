@@ -65,7 +65,7 @@
         "apollo-server-core": "^3.12.0",
         "apollo-server-express": "^3.12.0",
         "apollo-upload-client": "^17.0.0",
-        "autoprefixer": "10.4.13",
+        "autoprefixer": "10.4.14",
         "bcrypt": "^5.1.0",
         "body-parser": "^1.20.2",
         "class-transformer": "^0.5.1",
@@ -168,7 +168,7 @@
         "@types/lodash-es": "4.17.6",
         "@types/luxon": "^3.2.0",
         "@types/marked": "^4.0.8",
-        "@types/node": "18.14.6",
+        "@types/node": "18.15.0",
         "@types/passport-jwt": "^3.0.8",
         "@types/passport-local": "^1.0.35",
         "@types/react": "^18.0.28",
@@ -193,6 +193,6 @@
         "ts-morph": "^17.0.1",
         "ts-node": "10.9.1",
         "typescript": "4.9.5",
-        "webpack": "^5.75.0"
+        "webpack": "^5.76.0"
     }
 }
