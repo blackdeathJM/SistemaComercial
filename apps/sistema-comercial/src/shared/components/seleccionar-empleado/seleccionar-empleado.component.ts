@@ -55,6 +55,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
 
     writeValue(valor: any): void
     {
+        console.log('valor', valor);
         this.valor = valor;
     }
 
