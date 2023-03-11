@@ -108,7 +108,7 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'El nivel es requerido'})
     nivel: string;
 
-    @Field(() => String, {nullable: true, defaultValue: true})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsNotEmpty({message: 'El nombre del indicador es necesario'})
     nombreDelIndicador: string;
@@ -136,7 +136,7 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'Es necesario el parametro de financiacion'})
     programaFinanciacion: string;
 
-    @Field(() => String, {nullable: true, defaultValue: true})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsNotEmpty({message: 'Es necesario el resumen narrativo'})
     resumenNarrativo: string;

@@ -397,7 +397,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1678436952
+  tiempo: Int = 1678538017
   titulo: String
   usarRouter: Boolean = false
 }
@@ -553,12 +553,12 @@ input MirInput {
   metodoCalculo: String = null
   mediosDeVerificacion: String = null
   nivel: String = null
-  nombreDelIndicador: String = "true"
+  nombreDelIndicador: String = null
   semefVerde: Float = 0
   semefAmarillo: Float = 0
   semefRojo: Float = 0
   programaFinanciacion: String = null
-  resumenNarrativo: String = "true"
+  resumenNarrativo: String = null
   sentidoDelIndicador: String = null
   supuestos: String = null
   unidadDeMedida: String = null
