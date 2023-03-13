@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MatInputModule} from '@angular/material/input';
@@ -31,7 +31,6 @@ import {GeneralService} from '@s-services/general.service';
 export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnInit, OnDestroy
 {
     @Input() multiple: boolean = false;
-    valor: any;
     cambio: (v: any) => void;
     tocado: () => void;
     estaDeshabilitado: boolean;
@@ -56,7 +55,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
     writeValue(valor: any): void
     {
         console.log('valor', valor);
-        this.valor = valor;
+        this.empleados = valor;
     }
 
     registerOnChange(fn: any): void
@@ -83,5 +82,10 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+    }
+
+    cambioSeleccion(e: MatSelectChange): void
+    {
+        console.log('evento cambio seleccion', e);
     }
 }
