@@ -68,7 +68,7 @@
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()" >
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()" [disabled]="formPbr.invalid || cargando">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
             Añadir registro
         </button>

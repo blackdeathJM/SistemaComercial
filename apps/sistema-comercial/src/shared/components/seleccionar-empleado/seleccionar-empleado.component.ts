@@ -12,7 +12,7 @@ import {GeneralService} from '@s-services/general.service';
 @Component({
     selector: 'app-seleccionar-empleado',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatInputModule],
+    imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatInputModule],
     templateUrl: './seleccionar-empleado.component.html',
     styleUrls: ['./seleccionar-empleado.component.scss'],
     providers: [
@@ -21,20 +21,20 @@ import {GeneralService} from '@s-services/general.service';
             useExisting: forwardRef(() => SeleccionarEmpleadoComponent),
             multi: true
         },
-        // {
-        //     provide: NG_VALIDATORS,
-        //     useExisting: forwardRef(() => SeleccionarEmpleadoComponent),
-        //     multi: true
-        // }
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => SeleccionarEmpleadoComponent),
+            multi: true
+        }
     ]
 })
 export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnInit, OnDestroy
 {
     @Input() multiple: boolean = false;
-    cambio: (v: any) => void;
-    tocado: () => void;
     estaDeshabilitado: boolean;
     empleados: IResolveEmpleado[];
+    onChangeCb?: (empleado: IResolveEmpleado) => void;
+    onTouchedCb?: () => void;
     sub = new Subscription();
 
     constructor(public entityEmpleado: EntityEmpleadoStore)
@@ -54,19 +54,18 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
 
     writeValue(valor: any): void
     {
-        console.log('valor', valor);
         this.empleados = valor;
     }
 
     registerOnChange(fn: any): void
     {
 
-        this.cambio = fn;
+        this.onChangeCb = fn;
     }
 
     registerOnTouched(fn: any): void
     {
-        this.tocado = fn;
+        this.onTouchedCb = fn;
     }
 
     setDisabledState?(isDisabled: boolean): void
@@ -79,13 +78,13 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
         this.empleados = GeneralService.filtradoEmpleados(e, [...this.entityEmpleado.selectAll()]);
     }
 
+    cambioSeleccion(e: MatSelectChange): void
+    {
+        this.onChangeCb(e.value);
+    }
+
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
-    }
-
-    cambioSeleccion(e: MatSelectChange): void
-    {
-        console.log('evento cambio seleccion', e);
     }
 }
