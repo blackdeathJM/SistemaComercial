@@ -4,17 +4,18 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {isNil} from '@angular-ru/cdk/utils';
-import {GeneralService} from '@s-services/general.service';
 import {Subscription} from 'rxjs';
+import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
+
 @Component({
     selector: 'app-acciones-mir-pbr',
     standalone: true,
-    imports: [CommonModule, MatToolbarModule, MatInputModule, MatSelectModule, FormsModule],
+    imports: [CommonModule, MatToolbarModule, MatInputModule, MatSelectModule, FormsModule, SeleccionarEmpleadoComponent, ReactiveFormsModule],
     templateUrl: './acciones-mir-pbr.component.html',
     styleUrls: ['./acciones-mir-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,9 +24,11 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
 {
     @Output() porAno = new EventEmitter<number>();
     @Output() porCentroGestor = new EventEmitter<[string, number]>();
-    @Output() porEmpleado = new EventEmitter<[string, number]>();
+    @Output() porEmpleado = new EventEmitter<[string | string[], number]>();
     @Input() habEmpleado = false;
     @Input() habCentroGestor = false;
+
+    ctrlEmpleados = new FormControl();
     buscarAno: number = new Date().getFullYear();
     bCentroGestor: string;
     empleadosFiltrar: IResolveEmpleado[];
@@ -71,7 +74,7 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
         this.porAno.emit(this.buscarAno);
     }
 
-    buscarEmpleado(e: string): void
+    buscarEmpleado(e: string | string[]): void
     {
         if (isNil(this.buscarAno))
         {
@@ -81,19 +84,9 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
         this.porEmpleado.emit([e, this.buscarAno]);
     }
 
-    filtrarEmpleados(value: string): void
-    {
-        this.empleadosFiltrar = GeneralService.filtradoEmpleados(value, [...this.entityEmpleado.selectAll()]);
-    }
-
-    trackByCentroGestor(index: number, elemento: string): number | string
+    trackByFn(index: number, elemento: string): number | string
     {
         return index || elemento;
-    }
-
-    trackByEmpleado(index: number, elemento: IResolveEmpleado): number | string
-    {
-        return index || elemento._id;
     }
 
     ngOnDestroy(): void

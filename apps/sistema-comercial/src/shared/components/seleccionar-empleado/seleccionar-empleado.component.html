@@ -1,6 +1,6 @@
 <mat-form-field class="w-full">
-    <mat-label>Selecciona usuario(s)</mat-label>
-    <mat-select [multiple]="multiple" (blur)="onTouchedCb?.()" [disabled]="estaDeshabilitado" (selectionChange)="cambioSeleccion($event)">
+    <mat-label *ngIf="mostrarEtiqueta">Selecciona empleado(s)</mat-label>
+    <mat-select [multiple]="multiple" (blur)="onTouchedCb?.()" [disabled]="estaDeshabilitado" (selectionChange)="cambioSeleccion($event)" placeholder="Seleccionar empleado">
         <div class="flex flex-auto flex-col">
             <mat-form-field class="flex-auto">
                 <input matInput placeholder="Filtrar empleados" (keyup)="filtrarEmpleado($event.target['value'])">

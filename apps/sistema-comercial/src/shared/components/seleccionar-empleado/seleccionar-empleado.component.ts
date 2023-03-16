@@ -1,8 +1,8 @@
-import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
-import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MatInputModule} from '@angular/material/input';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
@@ -20,17 +20,15 @@ import {GeneralService} from '@s-services/general.service';
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => SeleccionarEmpleadoComponent),
             multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => SeleccionarEmpleadoComponent),
-            multi: true
         }
     ]
 })
 export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnInit, OnDestroy
 {
     @Input() multiple: boolean = false;
+    @Input() mostrarEtiqueta = true;
+    @Output() empleadoSele = new EventEmitter<string | string[]>();
+
     estaDeshabilitado: boolean;
     empleados: IResolveEmpleado[];
     onChangeCb?: (empleado: IResolveEmpleado) => void;
@@ -81,6 +79,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
     cambioSeleccion(e: MatSelectChange): void
     {
         this.onChangeCb(e.value);
+        this.empleadoSele.emit(e.value);
     }
 
     ngOnDestroy(): void
