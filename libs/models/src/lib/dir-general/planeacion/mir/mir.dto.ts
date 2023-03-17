@@ -185,8 +185,32 @@ export class MirDto implements IMir
     @IsNumber({allowNaN: false, allowInfinity: false})
     @IsOptional()
     avanceAnual: number;
-}
 
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
+    @IsOptional()
+    formulaTrim1: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
+    @IsOptional()
+    formulaTrim2: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
+    @IsOptional()
+    formulaTrim3: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
+    @IsOptional()
+    formulaTrim4: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
+    @IsOptional()
+    formulaAnual: string;
+}
 
 export type MirType = MirDto;
 export const SCHEMA_MIR = SchemaFactory.createForClass(MirDto);

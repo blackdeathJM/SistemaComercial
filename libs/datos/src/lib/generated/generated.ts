@@ -497,10 +497,6 @@ export type MirType = {
 
 export type MirsActAvancesInput = {
   _id?: InputMaybe<Scalars['ID']>;
-  avanceTrim1?: InputMaybe<Scalars['Float']>;
-  avanceTrim2?: InputMaybe<Scalars['Float']>;
-  avanceTrim3?: InputMaybe<Scalars['Float']>;
-  avanceTrim4?: InputMaybe<Scalars['Float']>;
   lineaBaseAno?: InputMaybe<Scalars['Int']>;
   lineaBaseValor?: InputMaybe<Scalars['Float']>;
   meta?: InputMaybe<Scalars['Float']>;

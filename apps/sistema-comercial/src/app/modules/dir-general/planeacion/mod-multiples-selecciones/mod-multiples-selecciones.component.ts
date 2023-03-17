@@ -8,7 +8,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
-import {ListDropSeleccionComponent} from '@s-dir-general/mir/list-drop-seleccion/list-drop-seleccion.component';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 import {finalize, Subscription} from 'rxjs';
@@ -20,7 +19,7 @@ import {nth} from 'lodash-es';
 @Component({
     selector: 'app-mod-multiples-selecciones',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatListModule, CdkScrollable, MatButtonModule, MatIconModule, ReactiveFormsModule, ListDropSeleccionComponent, CapitalizarDirective],
+    imports: [CommonModule, MatInputModule, MatListModule, CdkScrollable, MatButtonModule, MatIconModule, ReactiveFormsModule, CapitalizarDirective],
     templateUrl: './mod-multiples-selecciones.component.html',
     styleUrls: ['./mod-multiples-selecciones.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

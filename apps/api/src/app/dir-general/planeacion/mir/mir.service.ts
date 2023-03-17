@@ -24,7 +24,7 @@ export class MirService
             {
                 throw new ConflictException({message: 'El idenficador esta duplicado'});
             }
-            throw new HttpException('Datos duplicados',11000, {description: 'Datos duplicados'});
+            throw new HttpException('Datos duplicados', 11000, {description: 'Datos duplicados'});
         }
     }
 
@@ -55,7 +55,7 @@ export class MirService
         const {_id, ...resto} = input;
         try
         {
-            return await this.mir.findByIdAndUpdate(_id, {$set: {...resto}}).exec();
+            return await this.mir.findByIdAndUpdate(_id, {$set: {...resto}}, {new: true}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});

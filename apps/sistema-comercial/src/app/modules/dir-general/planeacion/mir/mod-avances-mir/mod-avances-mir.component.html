@@ -1,0 +1,50 @@
+<form [formGroup]="formModAvances">
+    <article class="flex flex-auto flex-col">
+        <fieldset class="flex flex-auto gap-4 border-2 p-4">
+            <legend>LINEA BASE</legend>
+            <mat-form-field class="flex-auto">
+                <mat-label>Año</mat-label>
+                <input matInput formControlName="lineaBaseAno">
+                <mat-error>{{formModAvances.controls.lineaBaseAno['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="lineaBaseValor">
+                <mat-error>{{formModAvances.controls.lineaBaseValor['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Meta</mat-label>
+                <input matInput formControlName="meta">
+                <mat-error>{{formModAvances.controls.meta['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </fieldset>
+    </article>
+</form>
+<form [formGroup]="formCalculo">
+    <article class="flex flex-auto flex-col">
+        <fieldset class="flex flex-auto gap-4 border-2 p-4 my-4">
+            <legend>VALORES PARA EL CALCULO DE SEMAFORIZACION</legend>
+            <div class="flex flex-auto gap-4 justify-center items-center">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Sem. verde %</mat-label>
+                    <input matInput formControlName="semVerde">
+                    <mat-error>{{formCalculo.controls.semVerde['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Sem. Amarillo %</mat-label>
+                    <input matInput formControlName="semAmarillo">
+                    <mat-error>{{formCalculo.controls.semAmarillo['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Sem. Rojo %</mat-label>
+                    <input matInput formControlName="semRojo">
+                    <mat-error>{{formCalculo.controls.semRojo['errorMessage']}}</mat-error>
+                </mat-form-field>
+                <button mat-mini-fab color="primary" (click)="guardarValoresSem()">
+                    <mat-icon svgIcon="feather:save"></mat-icon>
+                </button>
+            </div>
+        </fieldset>
+    </article>
+</form>
+<app-registros [cargando]="cargando" [deshabilitar]="formModAvances.invalid || formCalculo.invalid || cargando" (cancelar)="mdr.close()" (registro)="guardarAvances()"></app-registros>

@@ -18,8 +18,7 @@ export class MirsPorCentroGestorDto extends PickType(MirDto, ['centroGestor', 'a
 export type TMirsPorCentroGestor = MirsPorCentroGestorDto;
 
 @InputType('MirsActAvancesInput')
-export class MirsActAvancesDto extends PickType(MirDto, ['_id', 'lineaBaseAno', 'lineaBaseValor', 'meta', 'semefVerde', 'semefAmarillo',
-    'semefRojo', 'avanceTrim1', 'avanceTrim2', 'avanceTrim3', 'avanceTrim4'], InputType)
+export class MirsActAvancesDto extends PickType(MirDto, ['_id', 'lineaBaseAno', 'lineaBaseValor', 'meta', 'semefVerde', 'semefAmarillo', 'semefRojo'], InputType)
 {
 
 }

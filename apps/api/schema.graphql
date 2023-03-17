@@ -296,6 +296,11 @@ type MirType {
   avanceTrim3: Float
   avanceTrim4: Float
   avanceAnual: Float
+  formulaTrim1: String
+  formulaTrim2: String
+  formulaTrim3: String
+  formulaTrim4: String
+  formulaAnual: String
 }
 
 type SeleccionType {
@@ -397,7 +402,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1679022287
+  tiempo: Int = 1679093209
   titulo: String
   usarRouter: Boolean = false
 }
@@ -567,6 +572,11 @@ input MirInput {
   avanceTrim3: Float = 0
   avanceTrim4: Float = 0
   avanceAnual: Float = 0
+  formulaTrim1: String = null
+  formulaTrim2: String = null
+  formulaTrim3: String = null
+  formulaTrim4: String = null
+  formulaAnual: String = null
 }
 
 input SeleccionInput {
@@ -666,10 +676,6 @@ input MirsActAvancesInput {
   semefVerde: Float = 0
   semefAmarillo: Float = 0
   semefRojo: Float = 0
-  avanceTrim1: Float = 0
-  avanceTrim2: Float = 0
-  avanceTrim3: Float = 0
-  avanceTrim4: Float = 0
 }
 
 input CambioContrasenaInput {

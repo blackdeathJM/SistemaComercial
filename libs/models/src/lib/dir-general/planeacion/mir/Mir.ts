@@ -92,4 +92,19 @@ export class Mir implements IMir
 
     @required({message: 'Asigna una unidad de medicion'})
     unidadDeMedida: string;
+
+    @prop({defaultValue: ''})
+    formulaTrim1: string;
+
+    @prop({defaultValue: ''})
+    formulaTrim2: string;
+
+    @prop({defaultValue: ''})
+    formulaTrim3: string;
+
+    @prop({defaultValue: ''})
+    formulaTrim4: string;
+
+    @prop({defaultValue: ''})
+    formulaAnual: string;
 }
