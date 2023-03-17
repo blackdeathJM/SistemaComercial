@@ -15,7 +15,7 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 @Component({
     selector: 'app-acciones-mir-pbr',
     standalone: true,
-    imports: [CommonModule, MatToolbarModule, MatInputModule, MatSelectModule, FormsModule, SeleccionarEmpleadoComponent, ReactiveFormsModule],
+    imports: [CommonModule, MatToolbarModule, MatInputModule, MatSelectModule, FormsModule, ReactiveFormsModule, SeleccionarEmpleadoComponent],
     templateUrl: './acciones-mir-pbr.component.html',
     styleUrls: ['./acciones-mir-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -76,6 +76,7 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
 
     buscarEmpleado(e: string | string[]): void
     {
+        console.log('----->', e);
         if (isNil(this.buscarAno))
         {
             this.ngxToast.alertaToast('Es necesario seleccionar año', 'Filtrado');
