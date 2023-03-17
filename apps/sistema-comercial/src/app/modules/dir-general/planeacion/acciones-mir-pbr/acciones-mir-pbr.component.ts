@@ -8,7 +8,6 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {isNil} from '@angular-ru/cdk/utils';
 import {Subscription} from 'rxjs';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 
@@ -71,18 +70,18 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
             this.ngxToast.alertaToast('Introduce un año a cuatro digitos', 'Valor numerico requerido');
             return;
         }
-        this.porAno.emit(this.buscarAno);
+        this.porAno.emit(ano);
     }
 
     buscarEmpleado(e: string | string[]): void
     {
-        console.log('----->', e);
-        if (isNil(this.buscarAno))
+        const ano = parseInt(String(this.buscarAno), 10);
+        if (isNaN(ano))
         {
             this.ngxToast.alertaToast('Es necesario seleccionar año', 'Filtrado');
             return;
         }
-        this.porEmpleado.emit([e, this.buscarAno]);
+        this.porEmpleado.emit([e, ano]);
     }
 
     trackByFn(index: number, elemento: string): number | string
