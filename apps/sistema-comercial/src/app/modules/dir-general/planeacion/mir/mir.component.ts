@@ -1,21 +1,13 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
-import {MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
 import {MatDialog} from '@angular/material/dialog';
 import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
-import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
@@ -24,8 +16,7 @@ import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-
 @Component({
     selector: 'app-mir',
     standalone: true,
-    imports: [CommonModule, ModMirComponent, MatTableModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, FormsModule, MatToolbarModule,
-        MatButtonToggleModule, MatSidenavModule, ListaTabMirComponent, RxReactiveFormsModule, ReactiveFormsModule, AccionesMirPbrComponent],
+    imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent],
     providers: [MirService],
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']

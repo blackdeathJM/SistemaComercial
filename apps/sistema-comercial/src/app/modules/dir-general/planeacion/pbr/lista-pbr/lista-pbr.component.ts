@@ -11,11 +11,14 @@ import {fuseAnimations} from '@s-fuse/public-api';
 import {IResPbrEmpleado} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {loaderPbrs} from '@s-dir-general/pbr/store/pbr.service';
+import {AvancePbrComponent} from '@s-dir-general/pbr/avance-pbr/avance-pbr.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @Component({
     selector: 'app-lista-pbr',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule],
+    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, AvancePbrComponent, MatInputModule, MatSidenavModule],
     templateUrl: './lista-pbr.component.html',
     styleUrls: ['./lista-pbr.component.scss'],
     animations: [fuseAnimations],

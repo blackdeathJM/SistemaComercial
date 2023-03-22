@@ -58,6 +58,7 @@ type EmpleadoType {
   modificadoPor: [ModificadoPorType!]
   puesto: [PuestoType!]
   deptoId: ID
+  planeacionCentroGestor: String
   deptoEmpleado: DeptoType
 }
 
@@ -358,7 +359,7 @@ input EmpleadoInput {
   modificadoPor: [ModificadoPorInput!] = []
   puesto: [PuestoInput!] = []
   deptoId: ID
-  deptoEmpleado: DeptoInput
+  planeacionCentroGestor: String = null
 }
 
 input RolesInput {
@@ -389,9 +390,6 @@ input DocumentoInput {
   usuarioFolio: String = null
   usuarios: [String!]
   esRef: Boolean = false
-  resolveEmpleado: EmpleadoInput
-  resolverEmpleadoFolio: EmpleadoInput
-  resolveEmpleadoEnviado: [EmpleadoInput!]
 }
 
 input NotificacionInput {
@@ -402,7 +400,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1679112263
+  tiempo: Int = 1679425294
   titulo: String
   usarRouter: Boolean = false
 }
@@ -541,7 +539,6 @@ input PbrInput {
   unidad: String = null
   idEmpleado: ID = null
   centroGestor: String = null
-  resPbrEmpleado: EmpleadoInput!
 }
 
 input MirInput {
@@ -717,6 +714,7 @@ input RegEmpleadoInput {
   modificadoPor: [ModificadoPorInput!] = []
   puesto: [PuestoInput!] = []
   deptoId: ID
+  planeacionCentroGestor: String = null
 }
 
 input PuestoDeptoInput {

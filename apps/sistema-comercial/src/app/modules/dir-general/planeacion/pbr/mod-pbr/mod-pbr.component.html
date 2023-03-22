@@ -5,9 +5,7 @@
             <input matInput formControlName="ano">
             <mat-error>{{formPbr.controls.ano['errorMessage']}}</mat-error>
         </mat-form-field>
-
         <app-seleccionar-empleado class="flex-auto" formControlName="idEmpleado"></app-seleccionar-empleado>
-
         <ng-container *ngIf="seleccionStore.state$ | async as centros">
             <mat-form-field class="flex-auto">
                 <mat-label>Centro gestor</mat-label>

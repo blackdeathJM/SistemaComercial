@@ -1,4 +1,4 @@
-<section>
+<section class="flex flex-auto flex-col">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR</span></mat-card-header>
         <mat-card-content>
@@ -57,14 +57,21 @@
                             <span class="detalle-span col-start-7">Total</span>
                             <span class="border-b-2">{{pbr.ejercicio.total}}</span>
                         </div>
-                        <button mat-raised-button color="primary" class="flex-auto mt-4" *ngIf="visible" (click)="regAvances()">
-                            <mat-icon svgIcon="edit"></mat-icon>
-                            Registrar avances
-                        </button>
                     </div>
                 </mat-tab>
             </mat-tab-group>
             <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
         </mat-card-content>
+        <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
+            <div class="flex flex-auto gap-4">
+                <button class="flex-auto" mat-raised-button color="primary" (click)="regAvances()">
+                    <mat-icon svgIcon="add"></mat-icon>
+                    Registrar avance
+                </button>
+            </div>
+        </mat-card-actions>
     </mat-card>
+    <ng-container>
+        <app-avance-pbr></app-avance-pbr>
+    </ng-container>
 </section>

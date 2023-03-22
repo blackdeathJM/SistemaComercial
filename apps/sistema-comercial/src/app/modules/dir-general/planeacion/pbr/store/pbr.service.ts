@@ -34,7 +34,6 @@ export class PbrService
         this.ngxLoader.startLoader(loaderPbrs);
         return this.pbrsGQL.fetch({...args}).pipe(tap((res) =>
         {
-            console.log('-----', res.data);
             if (res.data)
             {
                 this.ngxLoader.stopLoader(loaderPbrs);
