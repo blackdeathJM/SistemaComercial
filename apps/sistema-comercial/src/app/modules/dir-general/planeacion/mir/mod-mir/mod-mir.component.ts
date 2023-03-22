@@ -7,19 +7,22 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {finalize, Subscription} from 'rxjs';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {RxFormBuilder} from '@rxweb/reactive-form-validators';
+import {isNotNil} from '@angular-ru/cdk/utils';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
 import {MirType} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {SeleccionType} from '#/libs/datos/src';
+import {TrimDirective} from '@s-directives/trim.directive';
+import {TrimInputModule} from '@angular-ru/cdk/directives';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 
 @Component({
     selector: 'app-mod-mir',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule],
+    imports: [CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule, TrimDirective, TrimInputModule, NgxTrimDirectiveModule],
     providers: [MirService],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],
@@ -43,7 +46,6 @@ export class ModMirComponent implements OnInit, OnDestroy
     {
         this.formMir = this.fb.formGroup(new Mir());
         this.formMir.get('ano').setValue(new Date().getFullYear());
-        console.log('OnInit');
         this.sub.add(this.seleccionStore.state$.subscribe((res) =>
         {
             if (isNotNil(res))
@@ -94,7 +96,6 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     trackByFn(index: number, elemento: any): number | string
     {
-        console.log(index, elemento);
         return index || elemento;
     }
 

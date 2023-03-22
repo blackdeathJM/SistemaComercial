@@ -1,6 +1,8 @@
 import {IMir} from './mir.interface';
 import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {sanitize, trim, upperCase} from "@rxweb/sanitizers";
 
+@sanitize
 export class Mir implements IMir
 {
     @required()
@@ -37,6 +39,7 @@ export class Mir implements IMir
     @required({message: 'Coloca la frecuencia de medicion'})
     frecuenciaMedicion: string;
 
+    @upperCase()
     @required({message: 'Asigna un identificador'})
     idIndicador: string;
 

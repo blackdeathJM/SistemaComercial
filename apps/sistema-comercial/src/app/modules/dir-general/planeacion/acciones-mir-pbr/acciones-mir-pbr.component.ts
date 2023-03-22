@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -7,7 +7,6 @@ import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Subscription} from 'rxjs';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 
@@ -19,7 +18,7 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
     styleUrls: ['./acciones-mir-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
+export class AccionesMirPbrComponent
 {
     @Output() porAno = new EventEmitter<number>();
     @Output() porCentroGestor = new EventEmitter<[string, number]>();
@@ -30,25 +29,10 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
     ctrlEmpleados = new FormControl();
     buscarAno: number = new Date().getFullYear();
     bCentroGestor: string;
-    empleadosFiltrar: IResolveEmpleado[];
     sub = new Subscription();
 
     constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore)
     {
-    }
-
-    ngAfterContentInit(): void
-    {
-        if (this.habEmpleado)
-        {
-            this.sub.add(this.entityEmpleado.entitiesArray$.subscribe((res) =>
-            {
-                if (res)
-                {
-                    this.empleadosFiltrar = [...res];
-                }
-            }));
-        }
     }
 
     buscarPorCentroGestor(e: string): void
@@ -87,10 +71,5 @@ export class AccionesMirPbrComponent implements AfterContentInit, OnDestroy
     trackByFn(index: number, elemento: string): number | string
     {
         return index || elemento;
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
     }
 }

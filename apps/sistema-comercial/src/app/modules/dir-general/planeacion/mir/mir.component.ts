@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -12,6 +12,8 @@ import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
+import {Subscription} from 'rxjs';
+import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
 
 @Component({
     selector: 'app-mir',
@@ -21,14 +23,19 @@ import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']
 })
-export default class MirComponent
+export default class MirComponent implements OnInit
 {
     abrirPanel = false;
+    sub = new Subscription();
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private entityMir: EntityMir, private mirService: MirService)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private entityMir: EntityMir, private mirService: MirService, private seleccionService: SeleccionService)
     {
     }
 
+    ngOnInit(): void
+    {
+        this.sub.add();
+    }
 
     regSeleccion(): void
     {

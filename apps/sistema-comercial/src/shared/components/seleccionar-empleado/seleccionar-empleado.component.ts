@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterContentInit, Component, EventEmitter, forwardRef, Input, OnDestroy, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
@@ -23,7 +23,7 @@ import {GeneralService} from '@s-services/general.service';
         }
     ]
 })
-export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnInit, OnDestroy
+export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDestroy, AfterContentInit
 {
     @Input() multiple: boolean = false;
     @Input() mostrarEtiqueta = true;
@@ -39,7 +39,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnIni
     {
     }
 
-    ngOnInit(): void
+    ngAfterContentInit(): void
     {
         this.sub.add(this.entityEmpleado.entitiesArray$.subscribe((res) =>
         {

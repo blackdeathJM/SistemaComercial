@@ -9,6 +9,7 @@ import {MatListModule} from '@angular/material/list';
 import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.component';
 import {PbrService} from '@s-dir-general/pbr/store/pbr.service';
 import {TPbrs} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr-consultas.dto';
+import {$cast} from '@angular-ru/cdk/utils';
 
 @Component({
     selector: 'app-pbr',
@@ -38,12 +39,12 @@ export class PbrComponent
         this.pbrService.pbrs(args).subscribe();
     }
 
-    porEmpleado(e: [string, number]): void
+    porEmpleado(e: [(string | string[]), number]): void
     {
         const pbrsEmpleado: TPbrs =
             {
                 centroGestor: 'no-aplica',
-                idEmpleado: e[0],
+                idEmpleado: $cast<string>(e[0]),
                 ano: e[1]
             };
         this.pbrService.pbrs(pbrsEmpleado).subscribe();

@@ -7,7 +7,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Indicador</mat-label>
-            <input matInput formControlName="idIndicador">
+            <input matInput formControlName="idIndicador" trim>
             <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -39,7 +39,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tipo</mat-label>
-            <mat-select>
+            <mat-select formControlName="tipo">
                 <mat-option *ngFor="let tipo of selecciones.tipo" [value]="tipo">{{tipo}}</mat-option>
             </mat-select>
             <mat-error>{{formMir.controls.tipo['errorMessage']}}</mat-error>
@@ -96,7 +96,7 @@
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()" [disabled]="formMir.invalid || cargando">
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()" [disabled]="cargando">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
             Añadir registro
         </button>
