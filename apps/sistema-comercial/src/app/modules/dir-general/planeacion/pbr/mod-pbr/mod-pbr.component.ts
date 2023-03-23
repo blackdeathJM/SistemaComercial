@@ -44,27 +44,26 @@ export class ModPbrComponent implements OnInit
     {
         this.cargando = true;
         const ano = parseInt(this.formPbr.get('ano').value, 10);
-        console.log('formulario', this.formPbr.value);
-        // const input: TRegPbr =
-        //     {
-        //         ...this.formPbr.value,
-        //         ano
-        //     };
-        // this.formPbr.disable();
-        //
-        // this.pbrService.regPbr(input).pipe(finalize(() =>
-        // {
-        //     this.cargando = false;
-        //     this.formPbr.enable();
-        //     Object.keys(this.formPbr.controls).forEach((ctrlNombre) =>
-        //     {
-        //         const ctrl = this.formPbr.get(ctrlNombre);
-        //         if (ctrlNombre !== 'centroGestor' && ctrlNombre !== 'idEmpleado')
-        //         {
-        //             ctrl.reset();
-        //         }
-        //     });
-        // })).subscribe();
+        const input: TRegPbr =
+            {
+                ...this.formPbr.value,
+                ano
+            };
+        this.formPbr.disable();
+
+        this.pbrService.regPbr(input).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.formPbr.enable();
+            Object.keys(this.formPbr.controls).forEach((ctrlNombre) =>
+            {
+                const ctrl = this.formPbr.get(ctrlNombre);
+                if (ctrlNombre !== 'centroGestor' && ctrlNombre !== 'idEmpleado')
+                {
+                    ctrl.reset();
+                }
+            });
+        })).subscribe();
     }
 
     cerrar(): void

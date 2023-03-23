@@ -81,7 +81,7 @@ export class ModMirComponent implements OnInit, OnDestroy
             Object.keys(this.formMir.controls).forEach((ctrlNombre) =>
             {
                 const ctrl = this.formMir.get(ctrlNombre);
-                if (ctrlNombre !== 'centroGestor')
+                if (ctrlNombre !== 'centroGestor' && ctrlNombre !== 'ano')
                 {
                     ctrl.reset();
                 }

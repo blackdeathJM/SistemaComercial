@@ -17,7 +17,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Programa financiacion</mat-label>
-            <textarea matInput formControlName="programaFinanciacion"></textarea>
+            <input matInput formControlName="programaFinanciacion"/>
             <mat-error>{{formMir.controls.programaFinanciacion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -53,7 +53,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Metodo de calculo</mat-label>
-            <input matInput formControlName="metodoCalculo">
+            <textarea matInput formControlName="metodoCalculo"></textarea>
             <mat-error>{{formMir.controls.metodoCalculo['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
