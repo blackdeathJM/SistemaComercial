@@ -67,7 +67,7 @@ export class ModMirComponent implements OnInit, OnDestroy
                 avanceTrim1: +avanceTrim1,
                 avanceTrim2: +avanceTrim2,
                 avanceTrim3: +avanceTrim3,
-                lineaBaseValor: +lineaBaseValor,
+                lineaBaseValor: lineaBaseValor,
                 meta: +meta,
                 semefAmarillo: +semefAmarillo,
                 semefRojo: +semefRojo,

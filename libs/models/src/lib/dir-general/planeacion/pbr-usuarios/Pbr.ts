@@ -1,6 +1,8 @@
 import {TRegPbr} from './pbr-consultas.dto';
 import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {sanitize, upperCase} from '@rxweb/sanitizers';
 
+@sanitize
 export class Pbr implements TRegPbr
 {
     @numeric({message: 'El valor debe ser numerico', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
@@ -10,9 +12,11 @@ export class Pbr implements TRegPbr
     ano: number;
 
     @required({message: 'Este campo es requerido'})
+    @upperCase()
     claveVariable: string;
 
     @required({message: 'Este campo es requerido'})
+    @upperCase()
     variableOrigen: string;
 
     @required({message: 'Este campo es requerido'})

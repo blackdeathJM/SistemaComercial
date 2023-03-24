@@ -26,5 +26,17 @@ fragment fragPbr on PbrType
         trim3
         trim4
         total
+        forEnero
+        forFebrero
+        forMarzo
+        forAbril
+        forMayo
+        forJunio
+        forJulio
+        forAgosto
+        forSeptiembre
+        forOctubre
+        forNoviembre
+        forDiciembre
     }
 }

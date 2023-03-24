@@ -26,7 +26,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 })
 export class ListaPbrComponent
 {
-    @Input() visible = false;
+    @Input() dirComercial = false;
     loader = loaderPbrs;
 
     constructor(private mdr: MatDialog, public entityPbr: EntityPbr)

@@ -21,6 +21,18 @@ export interface IEjercicio extends IMeses
     trim3: number;
     trim4: number;
     total: number;
+    forEnero: string;
+    forFebrero: string;
+    forMarzo: string;
+    forAbril: string;
+    forMayo: string;
+    forJunio: string;
+    forJulio: string;
+    forAgosto: string;
+    forSeptiembre: string;
+    forOctubre: string;
+    forNoviembre: string;
+    forDiciembre: string;
 }
 
 export interface IResPbrEmpleado extends IPbr

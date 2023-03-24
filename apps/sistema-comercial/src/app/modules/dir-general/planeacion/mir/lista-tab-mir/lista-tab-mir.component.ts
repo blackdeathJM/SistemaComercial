@@ -30,7 +30,7 @@ export class ListaTabMirComponent
     mirSeleccionado: IMir = null;
     indice = 0;
 
-    constructor(private mdr: MatDialog, public entityMir: EntityMir, private mirService: MirService)
+    constructor(private mdr: MatDialog, public entityMir: EntityMir)
     {
     }
 

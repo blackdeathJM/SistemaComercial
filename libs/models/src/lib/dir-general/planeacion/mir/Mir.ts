@@ -1,6 +1,6 @@
 import {IMir} from './mir.interface';
 import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
-import {sanitize, trim, upperCase} from "@rxweb/sanitizers";
+import {sanitize, upperCase} from '@rxweb/sanitizers';
 
 @sanitize
 export class Mir implements IMir
@@ -46,9 +46,8 @@ export class Mir implements IMir
     @prop({defaultValue: 0})
     lineaBaseAno: number;
 
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'El valor debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    lineaBaseValor: number;
+    @prop({defaultValue: null})
+    lineaBaseValor: string;
 
     @prop({defaultValue: 0.00})
     @numeric({message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.Both})

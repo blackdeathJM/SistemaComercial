@@ -76,7 +76,7 @@ export class ModAvancesMirComponent implements OnInit
             {
                 _id: this.entityMir.snapshot.mir._id,
                 lineaBaseAno: parseFloat(this.formModAvances.get('lineaBaseAno').value),
-                lineaBaseValor: parseFloat(this.formModAvances.get('lineaBaseValor').value),
+                lineaBaseValor: this.formModAvances.get('lineaBaseValor').value,
                 meta,
                 semefVerde: (meta * this.calculo().semVerde) / 100,
                 semefAmarillo: (meta * this.calculo().semAmarillo) / 100,

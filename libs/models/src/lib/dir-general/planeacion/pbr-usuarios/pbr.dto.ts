@@ -8,10 +8,59 @@ import {IsNotEmpty, IsOptional, IsNumber} from 'class-validator';
 @InputType('EjercicioInput')
 export class EjercicioDto implements IEjercicio
 {
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forEnero: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forFebrero: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forMarzo: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forAbril: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forMayo: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forJunio: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forJulio: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forAgosto: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forSeptiembre: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forOctubre: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forNoviembre: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    forDiciembre: string;
+
     @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
     @IsOptional()
     @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
     ano: number;
+
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsOptional()
     @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})

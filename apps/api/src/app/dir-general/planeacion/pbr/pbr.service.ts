@@ -50,7 +50,19 @@ export class PbrService
                 trim1: 0.00,
                 trim2: 0.00,
                 trim3: 0.00,
-                trim4: 0.00
+                trim4: 0.00,
+                forEnero: null,
+                forFebrero: null,
+                forMarzo: null,
+                forAbril: null,
+                forMayo: null,
+                forJunio: null,
+                forJulio: null,
+                forAgosto: null,
+                forSeptiembre: null,
+                forOctubre: null,
+                forNoviembre: null,
+                forDiciembre: null
             };
 
         const reg =

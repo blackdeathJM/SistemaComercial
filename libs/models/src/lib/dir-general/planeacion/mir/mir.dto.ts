@@ -82,10 +82,10 @@ export class MirDto implements IMir
     @IsNotEmpty({message: 'La linea base del año es requerida'})
     lineaBaseAno: number;
 
-    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsNotEmpty({message: 'El valor de la linea base es requerido'})
-    lineaBaseValor: number;
+    lineaBaseValor: string;
 
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @Prop()

@@ -23,6 +23,7 @@ import {$cast} from '@angular-ru/cdk/utils';
 export class PbrComponent
 {
     abrirPanel = false;
+    dirComercial = false;
 
     constructor(private pbrService: PbrService)
     {
@@ -36,7 +37,7 @@ export class PbrComponent
                 ano: e[1],
                 idEmpleado: 'noAplica'
             };
-        this.pbrService.pbrs(args).subscribe();
+        this.pbrService.pbrs(args).pipe().subscribe();
     }
 
     porEmpleado(e: [(string | string[]), number]): void

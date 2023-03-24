@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {SingleExecutionResult} from '@apollo/client';
+import {makeVar, SingleExecutionResult, useReactiveVar} from '@apollo/client';
 import {PbrsGQL, RegPbrGQL, RegPbrMutation} from '#/libs/datos/src';
 import {TPbrs, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr-consultas.dto';
 import {EntityPbr} from '@s-dir-general/pbr/store/pbr.entity';

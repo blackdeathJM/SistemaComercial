@@ -219,9 +219,6 @@ export type DocumentoInput = {
   identificadorDoc?: InputMaybe<Scalars['String']>;
   proceso?: InputMaybe<Scalars['String']>;
   ref?: InputMaybe<Array<Scalars['String']>>;
-  resolveEmpleado?: InputMaybe<EmpleadoInput>;
-  resolveEmpleadoEnviado?: InputMaybe<Array<EmpleadoInput>>;
-  resolverEmpleadoFolio?: InputMaybe<EmpleadoInput>;
   seguimiento: Scalars['String'];
   tipoDoc?: InputMaybe<Scalars['String']>;
   usuarioFolio?: InputMaybe<Scalars['String']>;
@@ -263,6 +260,18 @@ export type EjercicioInput = {
   diciembre?: InputMaybe<Scalars['Float']>;
   enero?: InputMaybe<Scalars['Float']>;
   febrero?: InputMaybe<Scalars['Float']>;
+  forAbril?: InputMaybe<Scalars['String']>;
+  forAgosto?: InputMaybe<Scalars['String']>;
+  forDiciembre?: InputMaybe<Scalars['String']>;
+  forEnero?: InputMaybe<Scalars['String']>;
+  forFebrero?: InputMaybe<Scalars['String']>;
+  forJulio?: InputMaybe<Scalars['String']>;
+  forJunio?: InputMaybe<Scalars['String']>;
+  forMarzo?: InputMaybe<Scalars['String']>;
+  forMayo?: InputMaybe<Scalars['String']>;
+  forNoviembre?: InputMaybe<Scalars['String']>;
+  forOctubre?: InputMaybe<Scalars['String']>;
+  forSeptiembre?: InputMaybe<Scalars['String']>;
   julio?: InputMaybe<Scalars['Float']>;
   junio?: InputMaybe<Scalars['Float']>;
   marzo?: InputMaybe<Scalars['Float']>;
@@ -285,6 +294,18 @@ export type EjercicioType = {
   diciembre?: Maybe<Scalars['Float']>;
   enero?: Maybe<Scalars['Float']>;
   febrero?: Maybe<Scalars['Float']>;
+  forAbril?: Maybe<Scalars['String']>;
+  forAgosto?: Maybe<Scalars['String']>;
+  forDiciembre?: Maybe<Scalars['String']>;
+  forEnero?: Maybe<Scalars['String']>;
+  forFebrero?: Maybe<Scalars['String']>;
+  forJulio?: Maybe<Scalars['String']>;
+  forJunio?: Maybe<Scalars['String']>;
+  forMarzo?: Maybe<Scalars['String']>;
+  forMayo?: Maybe<Scalars['String']>;
+  forNoviembre?: Maybe<Scalars['String']>;
+  forOctubre?: Maybe<Scalars['String']>;
+  forSeptiembre?: Maybe<Scalars['String']>;
   julio?: Maybe<Scalars['Float']>;
   junio?: Maybe<Scalars['Float']>;
   marzo?: Maybe<Scalars['Float']>;
@@ -307,12 +328,12 @@ export type EmpleadoInput = {
   calle?: InputMaybe<Scalars['String']>;
   colonia?: InputMaybe<Scalars['String']>;
   correo?: InputMaybe<Scalars['String']>;
-  deptoEmpleado?: InputMaybe<DeptoInput>;
   deptoId?: InputMaybe<Scalars['ID']>;
   fechaBaja?: InputMaybe<Scalars['Int']>;
   fechaIngreso?: InputMaybe<Scalars['Int']>;
   modificadoPor?: InputMaybe<Array<ModificadoPorInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
+  planeacionCentroGestor?: InputMaybe<Scalars['String']>;
   puesto?: InputMaybe<Array<PuestoInput>>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
@@ -332,6 +353,7 @@ export type EmpleadoType = {
   fechaIngreso?: Maybe<Scalars['Int']>;
   modificadoPor?: Maybe<Array<ModificadoPorType>>;
   nombreCompleto?: Maybe<Scalars['String']>;
+  planeacionCentroGestor?: Maybe<Scalars['String']>;
   puesto?: Maybe<Array<PuestoType>>;
   telefono?: Maybe<Array<TelefonoType>>;
 };
@@ -444,10 +466,15 @@ export type MirInput = {
   avanceTrim4?: InputMaybe<Scalars['Float']>;
   centroGestor?: InputMaybe<Scalars['String']>;
   dimension?: InputMaybe<Scalars['String']>;
+  formulaAnual?: InputMaybe<Scalars['String']>;
+  formulaTrim1?: InputMaybe<Scalars['String']>;
+  formulaTrim2?: InputMaybe<Scalars['String']>;
+  formulaTrim3?: InputMaybe<Scalars['String']>;
+  formulaTrim4?: InputMaybe<Scalars['String']>;
   frecuenciaMedicion?: InputMaybe<Scalars['String']>;
   idIndicador?: InputMaybe<Scalars['String']>;
   lineaBaseAno?: InputMaybe<Scalars['Int']>;
-  lineaBaseValor?: InputMaybe<Scalars['Float']>;
+  lineaBaseValor?: InputMaybe<Scalars['String']>;
   mediosDeVerificacion?: InputMaybe<Scalars['String']>;
   meta?: InputMaybe<Scalars['Float']>;
   metodoCalculo?: InputMaybe<Scalars['String']>;
@@ -475,10 +502,15 @@ export type MirType = {
   avanceTrim4?: Maybe<Scalars['Float']>;
   centroGestor?: Maybe<Scalars['String']>;
   dimension?: Maybe<Scalars['String']>;
+  formulaAnual?: Maybe<Scalars['String']>;
+  formulaTrim1?: Maybe<Scalars['String']>;
+  formulaTrim2?: Maybe<Scalars['String']>;
+  formulaTrim3?: Maybe<Scalars['String']>;
+  formulaTrim4?: Maybe<Scalars['String']>;
   frecuenciaMedicion?: Maybe<Scalars['String']>;
   idIndicador?: Maybe<Scalars['String']>;
   lineaBaseAno?: Maybe<Scalars['Int']>;
-  lineaBaseValor?: Maybe<Scalars['Float']>;
+  lineaBaseValor?: Maybe<Scalars['String']>;
   mediosDeVerificacion?: Maybe<Scalars['String']>;
   meta?: Maybe<Scalars['Float']>;
   metodoCalculo?: Maybe<Scalars['String']>;
@@ -498,7 +530,7 @@ export type MirType = {
 export type MirsActAvancesInput = {
   _id?: InputMaybe<Scalars['ID']>;
   lineaBaseAno?: InputMaybe<Scalars['Int']>;
-  lineaBaseValor?: InputMaybe<Scalars['Float']>;
+  lineaBaseValor?: InputMaybe<Scalars['String']>;
   meta?: InputMaybe<Scalars['Float']>;
   semefAmarillo?: InputMaybe<Scalars['Float']>;
   semefRojo?: InputMaybe<Scalars['Float']>;
@@ -837,7 +869,6 @@ export type PbrInput = {
   descripcion?: InputMaybe<Scalars['String']>;
   ejercicio?: InputMaybe<EjercicioInput>;
   idEmpleado?: InputMaybe<Scalars['ID']>;
-  resPbrEmpleado: EmpleadoInput;
   unidad?: InputMaybe<Scalars['String']>;
   variableOrigen?: InputMaybe<Scalars['String']>;
 };
@@ -999,6 +1030,7 @@ export type RegEmpleadoInput = {
   fechaIngreso?: InputMaybe<Scalars['Int']>;
   modificadoPor?: InputMaybe<Array<ModificadoPorInput>>;
   nombreCompleto?: InputMaybe<Scalars['String']>;
+  planeacionCentroGestor?: InputMaybe<Scalars['String']>;
   puesto?: InputMaybe<Array<PuestoInput>>;
   telefono?: InputMaybe<Array<TelefonoInput>>;
 };
@@ -1432,21 +1464,21 @@ export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { 
 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
 
-export type FragMirFragment = { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null };
+export type FragMirFragment = { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null };
 
 export type AgregarMirMutationVariables = Exact<{
   input: MirInput;
 }>;
 
 
-export type AgregarMirMutation = { __typename?: 'Mutation', agregarMir: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
+export type AgregarMirMutation = { __typename?: 'Mutation', agregarMir: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
 
 export type MirsPorAnoQueryVariables = Exact<{
   ano?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type MirsPorAnoQuery = { __typename?: 'Query', mirsPorAno?: Array<{ __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
+export type MirsPorAnoQuery = { __typename?: 'Query', mirsPorAno?: Array<{ __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
 
 export type MirsPorCentroGestorQueryVariables = Exact<{
   ano?: InputMaybe<Scalars['Int']>;
@@ -1454,23 +1486,23 @@ export type MirsPorCentroGestorQueryVariables = Exact<{
 }>;
 
 
-export type MirsPorCentroGestorQuery = { __typename?: 'Query', mirsPorCentroGestor?: Array<{ __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
+export type MirsPorCentroGestorQuery = { __typename?: 'Query', mirsPorCentroGestor?: Array<{ __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
 
 export type MirsActAvancesMutationVariables = Exact<{
   input: MirsActAvancesInput;
 }>;
 
 
-export type MirsActAvancesMutation = { __typename?: 'Mutation', mirsActAvances: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: number | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
+export type MirsActAvancesMutation = { __typename?: 'Mutation', mirsActAvances: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
 
-export type FragPbrFragment = { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null };
+export type FragPbrFragment = { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null, forEnero?: string | null, forFebrero?: string | null, forMarzo?: string | null, forAbril?: string | null, forMayo?: string | null, forJunio?: string | null, forJulio?: string | null, forAgosto?: string | null, forSeptiembre?: string | null, forOctubre?: string | null, forNoviembre?: string | null, forDiciembre?: string | null } | null };
 
 export type RegPbrMutationVariables = Exact<{
   input: RegPbrInput;
 }>;
 
 
-export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null } };
+export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null, forEnero?: string | null, forFebrero?: string | null, forMarzo?: string | null, forAbril?: string | null, forMayo?: string | null, forJunio?: string | null, forJulio?: string | null, forAgosto?: string | null, forSeptiembre?: string | null, forOctubre?: string | null, forNoviembre?: string | null, forDiciembre?: string | null } | null } };
 
 export type PbrsQueryVariables = Exact<{
   ano: Scalars['Int'];
@@ -1479,7 +1511,7 @@ export type PbrsQueryVariables = Exact<{
 }>;
 
 
-export type PbrsQuery = { __typename?: 'Query', pbrs?: Array<{ __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null } | null }> | null };
+export type PbrsQuery = { __typename?: 'Query', pbrs?: Array<{ __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null, forEnero?: string | null, forFebrero?: string | null, forMarzo?: string | null, forAbril?: string | null, forMayo?: string | null, forJunio?: string | null, forJulio?: string | null, forAgosto?: string | null, forSeptiembre?: string | null, forOctubre?: string | null, forNoviembre?: string | null, forDiciembre?: string | null } | null }> | null };
 
 export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
@@ -1728,6 +1760,18 @@ export const FragPbrFragmentDoc = gql`
     trim3
     trim4
     total
+    forEnero
+    forFebrero
+    forMarzo
+    forAbril
+    forMayo
+    forJunio
+    forJulio
+    forAgosto
+    forSeptiembre
+    forOctubre
+    forNoviembre
+    forDiciembre
   }
 }
     `;

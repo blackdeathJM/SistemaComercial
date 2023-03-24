@@ -22,7 +22,7 @@ export interface IMir
     unidadDeMedida: string;
     frecuenciaMedicion: string;
     lineaBaseAno: number;
-    lineaBaseValor: number
+    lineaBaseValor: string
     meta: number;
     sentidoDelIndicador: string;
     semefVerde: number;

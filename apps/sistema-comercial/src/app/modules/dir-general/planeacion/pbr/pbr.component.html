@@ -4,7 +4,7 @@
     </mat-drawer>
     <mat-drawer-content>
         <section class="flex flex-col flex-auto">
-            <app-acciones-mir-pbr [habEmpleado]="true" [habCentroGestor]="true" (porCentroGestor)="filtrarCentroGestor($event)" (porEmpleado)="porEmpleado($event)">
+            <app-acciones-mir-pbr [habCentroGestor]="true" (porCentroGestor)="filtrarCentroGestor($event)" (porEmpleado)="porEmpleado($event)">
                 <ng-container acciones>
                     <mat-button-toggle-group>
                         <mat-button-toggle>
@@ -17,6 +17,10 @@
                         </mat-button-toggle>
                         <mat-button-toggle>
                             <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                            Formulas
+                        </mat-button-toggle>
+                        <mat-button-toggle>
+                            <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                             Imprimir
                         </mat-button-toggle>
                     </mat-button-toggle-group>
@@ -25,7 +29,7 @@
 
             <ng-container>
                 <article class="flex flex-auto flex-col">
-                    <app-lista-pbr></app-lista-pbr>
+                    <app-lista-pbr [dirComercial]="dirComercial"></app-lista-pbr>
                 </article>
             </ng-container>
         </section>

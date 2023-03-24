@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RegSeleccionGQL, RegSeleccionMutation, SeleccionesGQL, SeleccionesQuery} from '#/libs/datos/src';
 import {Observable, tap} from 'rxjs';
-import {SingleExecutionResult} from '@apollo/client';
+import {makeVar, SingleExecutionResult, useReactiveVar} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
@@ -9,10 +9,14 @@ import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecc
 @Injectable({providedIn: 'root'})
 export class SeleccionService
 {
+    dirComercialCalculos = makeVar(false);
     constructor(private regSeleccionGQL: RegSeleccionGQL, private seleccionesGQL: SeleccionesGQL, private seleccionStore: SeleccionStore)
     {
     }
-
+    habCalculoComercial(): boolean
+    {
+        return useReactiveVar(this.dirComercialCalculos);
+    }
     agregarCentroGestor(input: SeleccionType): Observable<SingleExecutionResult<RegSeleccionMutation>>
     {
         return this.regSeleccionGQL.mutate({input}).pipe(tap((res) =>

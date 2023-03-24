@@ -235,6 +235,18 @@ type TelemetriaType {
 }
 
 type EjercicioType {
+  forEnero: String
+  forFebrero: String
+  forMarzo: String
+  forAbril: String
+  forMayo: String
+  forJunio: String
+  forJulio: String
+  forAgosto: String
+  forSeptiembre: String
+  forOctubre: String
+  forNoviembre: String
+  forDiciembre: String
   ano: Int
   abril: Float
   agosto: Float
@@ -278,7 +290,7 @@ type MirType {
   frecuenciaMedicion: String
   idIndicador: String
   lineaBaseAno: Int
-  lineaBaseValor: Float
+  lineaBaseValor: String
   meta: Float
   metodoCalculo: String
   mediosDeVerificacion: String
@@ -400,7 +412,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1679514765
+  tiempo: Int = 1679596493
   titulo: String
   usarRouter: Boolean = false
 }
@@ -508,6 +520,18 @@ input TelemetriaInput {
 }
 
 input EjercicioInput {
+  forEnero: String = null
+  forFebrero: String = null
+  forMarzo: String = null
+  forAbril: String = null
+  forMayo: String = null
+  forJunio: String = null
+  forJulio: String = null
+  forAgosto: String = null
+  forSeptiembre: String = null
+  forOctubre: String = null
+  forNoviembre: String = null
+  forDiciembre: String = null
   ano: Int = 2023
   abril: Float = 0
   agosto: Float = 0
@@ -550,7 +574,7 @@ input MirInput {
   frecuenciaMedicion: String = null
   idIndicador: String = null
   lineaBaseAno: Int = 0
-  lineaBaseValor: Float = 0
+  lineaBaseValor: String = null
   meta: Float = 0
   metodoCalculo: String = null
   mediosDeVerificacion: String = null
@@ -668,7 +692,7 @@ input RegPbrInput {
 input MirsActAvancesInput {
   _id: ID
   lineaBaseAno: Int = 0
-  lineaBaseValor: Float = 0
+  lineaBaseValor: String = null
   meta: Float = 0
   semefVerde: Float = 0
   semefAmarillo: Float = 0
