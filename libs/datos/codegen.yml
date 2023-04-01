@@ -8,3 +8,33 @@ generates:
             - typescript
             - typescript-operations
             - typescript-apollo-angular
+#    libs/datos/src/lib/dir-admon-finanzas/generated/dirAdmonFinanzasGenerated.ts:
+#        documents: "libs/datos/src/lib/dir-admon-finanzas/**/*.graphql"
+#        plugins:
+#            - typescript
+#            - typescript-operations
+#            - typescript-apollo-angular
+#    libs/datos/src/lib/dir-general/generated/dirGeneralGenerated.ts:
+#        documents: "libs/datos/src/lib/dir-general/**/*.graphql"
+#        plugins:
+#            - typescript
+#            - typescript-operations
+#            - typescript-apollo-angular
+#    libs/datos/src/lib/admin/generated/adminGenerated.ts:
+#        documents: "libs/datos/src/lib/admin/**/*.graphql"
+#        plugins:
+#            - typescript
+#            - typescript-operations
+#            - typescript-apollo-angular
+#    libs/datos/src/lib/dir-tecnica-operativa/generated/dirTecnicaOperativaGenerated.ts:
+#        documents: "libs/datos/lib/dir-tecnica-operativa/**/*.graphql"
+#        plugins:
+#            - typescript
+#            - typescript-operations
+#            - typescript-apollo-angular
+#    libs/datos/src/lib/errors/generated/errorsGenerated.ts:
+#        documents: "libs/datos/lib/errors/**/*.graphql"
+#        plugins:
+#            - typescript
+#            - typescript-operations
+#            - typescript-apollo-angular

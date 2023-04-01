@@ -1,0 +1,31 @@
+<section class="flex-auto">
+    <mat-card class="bg-gray-300 dark:bg-gray-800">
+        <mat-card-header class="tarjeta-mat-cabecera border-b-fuchsia-600">
+            <span class="text-lg">Lista de motores que se han instalado</span>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex flex-auto flex-col mt-4">
+                <ng-container *ngIf="entityTelemetria.state$ | async as inst">
+                    <mat-selection-list multiple="false">
+                        <mat-list-option class="border-b-2" *ngFor="let motor of inst?.instalacion?.motores;let i=index; trackBy:trackByFn" color="primary"
+                                         (selectedChange)="motorSelect(inst.instalacion, i)">
+                            <div class="flex flex-auto gap-8">
+                                <span>{{motor?.marca}}</span>
+                                <span>{{motor?.descripcion}}</span>
+                            </div>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </ng-container>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
+            <div class="flex items-center justify-between flex-auto">
+                <button mat-raised-button color="primary" (click)="nvoMotor()" [id]="agregarMotor" [disabled]="agregarMotor | navegacionPermiso: 'ctrl'">
+                    <mat-icon>add</mat-icon>
+                    Dar de alta un nuevo motor
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</section>

@@ -3,13 +3,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExtraOptions, PreloadAllModules, RouterModule} from '@angular/router';
 import {MarkdownModule} from 'ngx-markdown';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {CommonModule} from '@angular/common';
-import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';
@@ -32,6 +31,8 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {configLoader} from '@s-core/configLoader';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {PaginacionEs} from '@s-core/paginacion-es';
+import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
+import {ManejoErroresInterceptor} from '#/apps/sistema-comercial/src/interceptors/manejoErrores.interceptor';
 
 const routerConfig: ExtraOptions =
     {
@@ -88,7 +89,8 @@ const routerConfig: ExtraOptions =
     providers:
         [
             {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
-            {provide: MatPaginatorIntl, useClass: PaginacionEs}
+            {provide: MatPaginatorIntl, useClass: PaginacionEs},
+            {provide: HTTP_INTERCEPTORS, useClass: ManejoErroresInterceptor, multi: true}
         ],
     bootstrap:
         [

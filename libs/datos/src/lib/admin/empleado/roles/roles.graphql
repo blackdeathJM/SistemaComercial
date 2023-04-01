@@ -55,3 +55,25 @@ mutation actCtrlTercerNivel($ctrl: ActRolesInput!)
         ...fragRoles
     }
 }
+mutation asigPermisoPrimerNivel($asig: ActRolesInput!)
+{
+    asigPermisoPrimerNivel(asig: $asig)
+    {
+        ...fragRoles
+    }
+}
+
+mutation asigPermisoSegNivel($asig: ActRolesInput!)
+{
+    asigPermisoSegNivel(asig: $asig)
+    {
+        ...fragRoles
+    }
+}
+mutation asigPermisoTercerNivel($asig: ActRolesInput!)
+{
+    asigPermisoTercerNivel(asig: $asig)
+    {
+        ...fragRoles
+    }
+}

@@ -29,10 +29,8 @@
                         </button>
                     </div>
                 </div>
-
                 <!-- Name -->
                 <div class="mt-3 text-xl truncate">{{empleadoSeleccionado?.nombreCompleto}}</div>
-
                 <div class="flex flex-col mt-2 pt-2 border-t space-y-2">
                     <router-outlet></router-outlet>
                 </div>
@@ -41,15 +39,15 @@
     </mat-drawer>
     <mat-drawer-content>
         <article class="absolute inset-0 flex flex-auto flex-col p-4 overflow-hidden">
-            <section class="relative flex consultas">
+            <section class="relative flex consultas mb-8">
                 <mat-form-field class="flex-auto">
                     <mat-label>Filtrar empleados</mat-label>
                     <input matInput [formControl]="ctrlBuscar" placeholder="Introduce el nombre de un empleado">
                 </mat-form-field>
             </section>
 
-            <section class="relative overflow-y-auto pt-2 bg-zinc-800" ngxUiLoaderBlurred>
-                <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b" *ngFor="let empleado of entityEmpleado.entitiesArray$ | async">
+            <section class="relative overflow-y-auto pt-4 bg-zinc-800 mx-4" ngxUiLoaderBlurred>
+                <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b-2" *ngFor="let empleado of entityEmpleado.entitiesArray$ | async">
                     <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                         <img class="object-cover w-full h-full" [src]="empleado?.avatar | imgDefecto" alt="Contact avatar"/>
                     </div>

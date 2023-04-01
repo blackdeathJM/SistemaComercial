@@ -1,0 +1,59 @@
+<form [formGroup]="formPbr">
+    <section class="flex flex-auto flex-col p-4">
+        <mat-form-field>
+            <mat-label>Año</mat-label>
+            <input matInput formControlName="ano">
+            <mat-error>{{formPbr.controls.ano['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <app-seleccionar-empleado class="flex-auto" formControlName="idEmpleado"></app-seleccionar-empleado>
+        <ng-container *ngIf="centrosGestores.length > 0">
+            <mat-form-field class="flex-auto">
+                <mat-label>Centro gestor</mat-label>
+                <mat-select formControlName="centroGestor">
+                    <mat-option *ngFor="let centro of centrosGestores" [value]="centro">{{centro}}</mat-option>
+                </mat-select>
+                <mat-error>{{formPbr.controls.centroGestor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </ng-container>
+        <mat-form-field>
+            <mat-label>Variable de origen</mat-label>
+            <input matInput formControlName="variableOrigen">
+            <mat-error>{{formPbr.controls.variableOrigen['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Clave variable</mat-label>
+            <input matInput formControlName="claveVariable">
+            <mat-error>{{formPbr.controls.claveVariable['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Dato</mat-label>
+            <input matInput formControlName="dato">
+            <mat-error>{{formPbr.controls.dato['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Descripcion</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+            <mat-error>{{formPbr.controls.descripcion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Unidad</mat-label>
+            <mat-select formControlName="unidad">
+                <mat-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</mat-option>
+            </mat-select>
+            <mat-error>{{formPbr.controls.unidad['errorMessage']}}</mat-error>
+        </mat-form-field>
+    </section>
+</form>
+
+<mat-toolbar>
+    <div class="flex flex-auto items-center gap-4">
+        <button mat-raised-button class="flex-auto" color="warn" (click)="cerrar()" [disabled]="cargando">
+            <mat-icon svgIcon="mat_outline:close"></mat-icon>
+            Cerrar
+        </button>
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()" [disabled]="formPbr.invalid || cargando">
+            <mat-icon svgIcon="mat_outline:save"></mat-icon>
+            Añadir registro
+        </button>
+    </div>
+</mat-toolbar>

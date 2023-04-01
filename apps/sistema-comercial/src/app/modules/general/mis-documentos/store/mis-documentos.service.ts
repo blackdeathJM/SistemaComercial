@@ -88,7 +88,6 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                console.log('*********************************');
                 this.ngxLoader.stopLoader(loaderMisDocs);
                 const consultaFechas = $cast<IResolveDocumento[]>(res.data.docsFechas);
                 this.entityMisDocumentos.setAll(consultaFechas);
@@ -109,16 +108,16 @@ export class MisDocumentosService
         }));
     }
 
-    finalizarDoc(_id: string): Observable<SingleExecutionResult>
+    finalizarDoc(id: string): Observable<SingleExecutionResult>
     {
-        return this.finalizarDocGQL.mutate({_id}).pipe(tap((res) =>
+        return this.finalizarDocGQL.mutate({_id: id}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.docFinalizar);
-                this.entityMisDocumentos.updateOne({id: changes._id, changes});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.docFinalizar);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('El documento ha finalizado con exito', 'Finalizar documentos');
-                this.entityMisDocumentos.patchState({documento: changes});
             }
         }));
     }
@@ -129,9 +128,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.docActFolio);
-                this.entityMisDocumentos.updateOne({id: changes._id, changes});
-                this.entityMisDocumentos.patchState({documento: changes});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.docActFolio);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('Folio generado con exito', 'Generar folio');
             }
         }));
@@ -143,23 +142,23 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.subirDocs);
-                this.entityMisDocumentos.updateOne({id: changes._id, changes});
-                this.entityMisDocumentos.patchState({documento: changes});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.subirDocs);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('El documento se ha subido con exito', 'Subir documentos');
             }
         }));
     }
 
-    reasignacionUsuarios(_id: string, usuarios: string[]): Observable<SingleExecutionResult>
+    reasignacionUsuarios(id: string, usuarios: string[]): Observable<SingleExecutionResult>
     {
-        return this.reasignarUsuarioGQL.mutate({usuarios: {_id, usuarios}}).pipe(tap((res) =>
+        return this.reasignarUsuarioGQL.mutate({usuarios: {_id: id, usuarios}}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.reasignarUsuario);
-                this.entityMisDocumentos.updateOne({id: changes._id, changes});
-                this.entityMisDocumentos.patchState({documento: changes});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.reasignarUsuario);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('La reasignacion se ha realizado con exito', 'Reasignacion de usuarios');
             }
         }));
@@ -183,9 +182,9 @@ export class MisDocumentosService
         {
             if (isNotNil(res.data))
             {
-                const changes = $cast<IResolveDocumento>(res.data.docRefFolio);
-                this.entityMisDocumentos.updateOne({id: changes._id, changes});
-                this.entityMisDocumentos.patchState({documento: changes});
+                const {_id, ...changes} = $cast<IResolveDocumento>(res.data.docRefFolio);
+                this.entityMisDocumentos.updateOne({id: _id, changes});
+                this.entityMisDocumentos.patchState({documento: {_id, ...changes}});
                 this.ngxToast.satisfactorioToast('La referencia se creo correctamente', 'Referenciar folio');
             }
         }));

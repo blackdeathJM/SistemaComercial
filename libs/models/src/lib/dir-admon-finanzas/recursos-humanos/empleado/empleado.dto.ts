@@ -47,56 +47,74 @@ export class EmpleadoDto implements IEmpleado
     @Field(() => ID, {nullable: true})
     @IsOptional()
     _id: string;
+
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     avatar: string;
+
     @Field(() => Boolean, {nullable: true, defaultValue: true})
     @Prop()
     @IsBoolean({message: 'Activo debe ser un boleano'})
     activo: boolean;
+
     @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La calle es necesaria'})
     calle: string;
+
     @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'La colonia es necesaria'})
     colonia: string;
+
     @Field(() => String, {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     correo: string;
+
     @Field(() => Int, {nullable: true, defaultValue: null})
     @Prop()
     fechaBaja: number;
+
     @Field(() => Int, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es necesario colocar la fecha de ingreso'})
     fechaIngreso: number;
+
     @Field(() => String, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'El nombre completo es requerido'})
     nombreCompleto: string;
+
     @Field(() => [TelefonoDto], {nullable: true, defaultValue: null})
     @Prop()
     @IsOptional()
     telefono: TelefonoDto[];
+
     @Field(() => AuthDto, {nullable: true, defaultValue: null})
     @Prop()
     auth: AuthDto;
+
     @Field(() => [ModificadoPorDto], {nullable: true, defaultValue: []})
     @Prop()
     @IsNotEmpty({message: 'Es necesario el campo modificado por'})
     modificadoPor: ModificadoPorDto[];
+
     @Field(() => [PuestoDto], {nullable: true, defaultValue: []})
     @Prop()
     @IsNotEmpty({message: 'Es necesario asignar un puesto'})
     puesto: PuestoDto[];
+
     @Field(() => ID, {nullable: true})
     @Prop()
     @IsNotEmpty({message: 'Es nesario el id del departamento al que sera asignado el empleado'})
     deptoId: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @Prop()
+    @IsOptional()
+    planeacionCentroGestor: string;
 }
 
 @InputType('RegEmpleadoInput')

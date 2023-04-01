@@ -1,1 +1,67 @@
-<p>mod-motor works!</p>
+<form [formGroup]="formMotor">
+    <section class="flex flex-col flex-auto">
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Marca</mat-label>
+                <input matInput formControlName="marca" appCapitalizar>
+                <mat-error>{{formMotor.controls.marca['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Modelo</mat-label>
+                <input matInput formControlName="modelo">
+                <mat-error>{{formMotor.controls.modelo['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Serie</mat-label>
+                <input matInput formControlName="noSerie">
+                <mat-error>{{formMotor.controls.noSerie['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Amperaje</mat-label>
+                <input matInput formControlName="amperaje">
+                <mat-error>{{formMotor.controls.amperaje['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Voltaje</mat-label>
+                <input matInput formControlName="voltaje">
+                <mat-error>{{formMotor.controls.voltaje['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Factor potencia</mat-label>
+                <input matInput formControlName="factPotencia">
+                <mat-error>{{formMotor.controls.factPotencia['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-auto gap-4 flex-end">
+            <mat-form-field class="flex-auto">
+                <mat-label>Hp</mat-label>
+                <input matInput formControlName="hp">
+                <mat-error>{{formMotor.controls.hp['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Eficiencia</mat-label>
+                <input matInput formControlName="eficiencia">
+                <mat-error>{{formMotor.controls.eficiencia['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="flex-auto">
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="descripcion">
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+            <mat-label>Observaciones</mat-label>
+            <input matInput formControlName="observaciones">
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+            <mat-label>Fecha de instalacion</mat-label>
+            <input matInput [matDatepicker]="picker" readonly formControlName="fechaInstalacion">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>{{formMotor.controls.fechaInstalacion['errorMessage']}}</mat-error>
+        </mat-form-field>
+    </section>
+</form>
+<!--<app-registros (cancelar)="mdr.close()" (registro)="registro()" [deshabilitar]="formMotor.invalid || cargando" [cargando]="cargando"></app-registros>-->
+<app-registros (cancelar)="mdr.close()" (registro)="registro()"></app-registros>

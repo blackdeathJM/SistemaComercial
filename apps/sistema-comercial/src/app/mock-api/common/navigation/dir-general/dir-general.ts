@@ -5,9 +5,9 @@ export const DIR_GRAL: FuseNavigationItem[] =
     [
         {
             id: 'depto-dirComercial',
-            title: ' DIR. COMERCIAL',
+            title: ' DIR. GENERAL',
             type: 'group',
-            icon: 'heroicons_outline:library',
+            icon: 'mat_solid:account_tree',
             oculto: false,
             hidden: (item: FuseNavigationItem): boolean => item.oculto,
             badge: {},

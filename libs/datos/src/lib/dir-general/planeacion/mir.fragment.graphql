@@ -1,0 +1,30 @@
+fragment fragMir on MirType
+{
+    _id
+    ano
+    idIndicador
+    nivel
+    programaFinanciacion
+    resumenNarrativo
+    centroGestor
+    nombreDelIndicador
+    tipo
+    dimension
+    metodoCalculo
+    mediosDeVerificacion
+    supuestos
+    unidadDeMedida
+    frecuenciaMedicion
+    lineaBaseAno
+    lineaBaseValor
+    meta
+    sentidoDelIndicador
+    semefVerde
+    semefAmarillo
+    semefRojo
+    avanceTrim1
+    avanceTrim2
+    avanceTrim3
+    avanceTrim4
+    avanceAnual
+}

@@ -1,0 +1,42 @@
+fragment fragPbr on PbrType
+{
+    ano
+    _id
+    claveVariable
+    variableOrigen
+    dato
+    unidad
+    descripcion
+    ejercicio {
+        ano
+        enero
+        febrero
+        marzo
+        abril
+        mayo
+        junio
+        julio
+        agosto
+        septiembre
+        octubre
+        noviembre
+        diciembre
+        trim1
+        trim2
+        trim3
+        trim4
+        total
+        forEnero
+        forFebrero
+        forMarzo
+        forAbril
+        forMayo
+        forJunio
+        forJulio
+        forAgosto
+        forSeptiembre
+        forOctubre
+        forNoviembre
+        forDiciembre
+    }
+}

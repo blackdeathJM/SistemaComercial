@@ -1,4 +1,6 @@
 {
+    "name": "sistema-comercial",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
     "sourceRoot": "apps/sistema-comercial/src",
     "prefix": "app",
@@ -44,7 +46,10 @@
                     "node_modules/ngx-toastr/toastr.css",
                     "node_modules/ngx-lightbox/lightbox.css"
                 ],
-                "scripts": [ ]
+                "scripts":
+                [
+                    "node_modules/apexcharts/dist/apexcharts.min.js"
+                ]
             },
             "configurations": {
                 "production": {
@@ -101,24 +106,16 @@
             }
         },
         "test": {
-            "executor": "@angular-devkit/build-angular:karma",
+            "executor": "@nrwl/jest:jest",
+            "outputs": [ "{workspaceRoot}/coverage/{projectRoot}" ],
             "options": {
-                "main": "apps/sistema-comercial/src/test.ts",
-                "polyfills": "apps/sistema-comercial/src/polyfills.ts",
-                "tsConfig": "apps/sistema-comercial/tsconfig.spec.json",
-                "karmaConfig": "apps/sistema-comercial/karma.conf.js",
-                "inlineStyleLanguage": "scss",
-                "assets": [
-                    "apps/sistema-comercial/src/favicon-16x16.png",
-                    "apps/sistema-comercial/src/favicon-32x32.png",
-                    "apps/sistema-comercial/src/assets"
-                ],
-                "styles": [ "apps/sistema-comercial/src/styles/styles.scss" ],
-                "scripts": [ ]
+                "jestConfig": "jest.config.ts",
+                "passWithNoTest": true
             }
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
+            "outputs": [ "{options.outputFile}" ],
             "options": {
                 "lintFilePatterns": [
                     "apps/sistema-comercial/**/*.ts",

@@ -3,7 +3,7 @@ import {
     ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL, FiltrarEmpleadosGQL,
     FiltrarEmpleadosQuery
 } from '#/libs/datos/src';
-import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
@@ -20,22 +20,11 @@ export const ngxLoaderEmp = 'loaderEmpleados';
 @Injectable({providedIn: 'root'})
 export class EmpleadoService
 {
-    #panel = new BehaviorSubject<boolean>(false);
 
     constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
                 private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
                 private filtrarEmpleadosGQL: FiltrarEmpleadosGQL, private ngxLoader: NgxUiLoaderService)
     {
-    }
-
-    get getPanel(): Observable<boolean>
-    {
-        return this.#panel.asObservable();
-    }
-
-    set setPanel(v: boolean)
-    {
-        this.#panel.next(v);
     }
 
     empleados(loader: string): Observable<SingleExecutionResult>
@@ -92,7 +81,7 @@ export class EmpleadoService
 
     empleadosConSesion(): Observable<SingleExecutionResult>
     {
-        return this.empleadosSesionGQL.watch().valueChanges.pipe(tap((res) =>
+        return this.empleadosSesionGQL.fetch().pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
@@ -105,7 +94,7 @@ export class EmpleadoService
     filtrarEmpleados(consulta: string, loader: string): Observable<SingleExecutionResult<FiltrarEmpleadosQuery>>
     {
         this.ngxLoader.startLoader(loader);
-        return this.filtrarEmpleadosGQL.watch({consulta}).valueChanges.pipe(tap((res) =>
+        return this.filtrarEmpleadosGQL.fetch({consulta}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {

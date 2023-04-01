@@ -1,14 +1,19 @@
 <mat-drawer-container class="w-full">
     <mat-drawer class="w-80" opened="true" autoFocus="false" mode="side" position="start">
         <div class="flex flex-col flex-auto mt-2">
+            <button mat-raised-button color="primary" class="mb-4 flex-auto" (click)="nvaInstalacion()" [id]="ctrlNvaInstalacion" [disabled]="ctrlNvaInstalacion | navegacionPermiso: 'ctrl'">
+                <mat-icon svgIcon="add"></mat-icon>
+                Agregar nueva instalacion
+            </button>
+            <mat-divider class="border-2"></mat-divider>
             <div class="overflow-y-auto flex-auto" ngxUiLoaderBlurred>
-                <ng-container>
-                    <div class="flex flex-auto flex-col border-b-2 pl-1">
-                        <span class="leading-relaxed cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary py-2">instalacion de prueba 1</span>
-                        <span class="leading-relaxed cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary py-2">instalacion de prueba 2</span>
-                        <span class="leading-relaxed cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary py-2">instalacion de prueba 3</span>
-                        <span class="leading-relaxed cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary py-2">instalacion de prueba 4</span>
-                        <span class="leading-relaxed cursor-pointer odd:bg-gray-300 dark:odd:bg-gray-900 hover:text-primary py-2">instalacion de prueba 5</span>
+                <ng-container *ngIf="entityTelemetria.entitiesArray$ | async as inst">
+                    <div class="flex flex-auto flex-col pl-1">
+                        <mat-selection-list multiple="false" color="primary">
+                            <mat-list-option class="border-b-2" *ngFor="let instalacion of inst" (selectedChange)="seleccionarInstalacion(instalacion)">
+                                {{instalacion.instalacion.nombre}}
+                            </mat-list-option>
+                        </mat-selection-list>
                     </div>
                 </ng-container>
                 <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>

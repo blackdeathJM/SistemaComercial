@@ -125,7 +125,7 @@ export class DetalleDocumentosComponent
     modDocs(documento: IResolveDocumento): void
     {
         this.entityMisDocumentos.patchState({documento});
-        this.dRef.open(ModSubirDocsComponent, {width: '40%'});
+        this.dRef.open(ModSubirDocsComponent, {width: '40%', hasBackdrop: true, disableClose: true});
     }
 
     docRef(documento: IResolveDocumento): void

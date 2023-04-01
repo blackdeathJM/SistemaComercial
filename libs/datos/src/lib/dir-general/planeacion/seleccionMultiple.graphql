@@ -1,0 +1,23 @@
+mutation regSeleccion($input: SeleccionInput)
+{
+    regSeleccion(input: $input)
+    {
+        ...fragSeleccion
+    }
+}
+
+query selecciones
+{
+    selecciones {
+        ...fragSeleccion
+    }
+}
+fragment fragSeleccion on SeleccionType
+{
+    dimension
+    frecuencia
+    tipo
+    unidad
+    centroGestor
+    _id
+}

@@ -1,0 +1,85 @@
+<section class="flex flex-auto gap-8">
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Centro gestor</mat-label>
+                <input matInput [formControl]="ctrlCentroGestor" appCapitalizar (keyup.enter)="agregarCentroGestor()">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let centro of seleccion.centroGestor">{{centro}}</mat-list-item>
+        </mat-list>
+    </div>
+
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Unidad</mat-label>
+                <input matInput [formControl]="ctrlUnidad" (keyup.enter)="agregarCentroGestor()">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let unidad of seleccion.unidad">{{unidad}}</mat-list-item>
+        </mat-list>
+    </div>
+
+
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Dimension</mat-label>
+                <input matInput [formControl]="ctrlDimension" (keyup.enter)="agregarCentroGestor()">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let dimension of seleccion.dimension">{{dimension}}</mat-list-item>
+        </mat-list>
+    </div>
+
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Tipo</mat-label>
+                <input matInput [formControl]="ctrlTipo" (keyup.enter)="agregarCentroGestor()">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let tipo of seleccion.tipo">{{tipo}}</mat-list-item>
+        </mat-list>
+    </div>
+
+    <div class="flex flex-auto flex-col">
+        <div class="flex flex-auto items-center gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Frecuencia</mat-label>
+                <input matInput [formControl]="ctrlFrecuencia" (keyup.enter)="agregarCentroGestor()">
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
+                <mat-icon svgIcon="add"></mat-icon>
+            </button>
+        </div>
+        <mat-list class="h-80 border-2 overflow-y-scroll">
+            <mat-list-item class="border-b-2" *ngFor="let frecuencia of seleccion.frecuencia">{{frecuencia}}</mat-list-item>
+        </mat-list>
+    </div>
+
+</section>
+
+<div class="flex flex-col flex-auto mt-4">
+    <button mat-raised-button class="flex-auto" color="warn" (click)="mdr.close()">
+        <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+        Cerrar
+    </button>
+</div>

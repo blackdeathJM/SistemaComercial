@@ -1,4 +1,52 @@
-<h2 mat-dialog-title>Alta instalaciones</h2>
-<fuse-card>
-    Estamos en el fuse card
-</fuse-card>
+<form [formGroup]="formInstalacion">
+    <div class="flex flex-col flex-auto">
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Nombre de la instalacion</mat-label>
+                <input matInput formControlName="nombre" appCapitalizar>
+                <mat-error>{{formInstalacion.controls.nombre['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="basis-40">
+                <mat-label>Tipo de instalacion</mat-label>
+                <mat-select formControlName="tipoInstalacion">
+                    <mat-option [value]="'Pozo'">Pozo</mat-option>
+                    <mat-option [value]="'Tanque'">Tanque</mat-option>
+                </mat-select>
+                <mat-error>{{formInstalacion.controls.tipoInstalacion['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="flex-auto">
+            <mat-label>Direccion</mat-label>
+            <input matInput formControlName="direccion" appCapitalizar>
+            <mat-error>{{formInstalacion.controls.direccion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Profundidad</mat-label>
+                <input matInput formControlName="profPozo">
+                <mat-error>{{formInstalacion.controls.profPozo['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Ademe</mat-label>
+                <input matInput formControlName="diamAdeme">
+                <mat-error>{{formInstalacion.controls.diamAdeme['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Diam. Columna</mat-label>
+                <input matInput formControlName="diamCol">
+                <mat-error>{{formInstalacion.controls.diamCol['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Long. Columna</mat-label>
+                <input matInput formControlName="longCol">
+                <mat-error>{{formInstalacion.controls.longCol['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Diam. Perforacion</mat-label>
+                <input matInput formControlName="diamPerforacion">
+                <mat-error>{{formInstalacion.controls.diamPerforacion['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+</form>
+<app-registros (cancelar)="mdr.close()" (registro)="regInstalacion()" [cargando]="cargando" [deshabilitar]="formInstalacion.invalid || cargando"></app-registros>

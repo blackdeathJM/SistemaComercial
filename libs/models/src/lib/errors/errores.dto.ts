@@ -1,14 +1,11 @@
-import {IErroresApi} from './errores.interface';
+import {IErrores} from './errores.interface';
 import {Field, ObjectType} from '@nestjs/graphql';
-import {GraphQLJSONObject} from 'graphql-scalars';
 
 @ObjectType('ErroresType')
-export class ErroresDto implements IErroresApi
+export class ErroresDto implements IErrores
 {
-    @Field(() => GraphQLJSONObject, {nullable: true, defaultValue: false})
-    data: object[];
-    @Field(() => [String], {nullable: true, defaultValue: []})
-    errors: string[];
-    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    @Field(() => String, {nullable: true})
+    error: string;
+    @Field(() => Boolean, {nullable: true})
     exito: boolean;
 }

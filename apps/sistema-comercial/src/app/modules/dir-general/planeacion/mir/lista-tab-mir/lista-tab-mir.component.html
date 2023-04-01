@@ -1,0 +1,78 @@
+<section>
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
+            <span class="text-xl">MIR</span>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-tab-group *ngIf="entityMir.entitiesArray$ | async as mirs" ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="mirSeleccionado = mirs[indice]">
+                <mat-tab [label]="mir.idIndicador" *ngFor="let mir of mirs; trackBy:trackByFn">
+                    <div class="grid grid-cols-10 gap-4">
+                        <span class="detalle-span text-amber-900 dark:text-amber-400 col-span-2">Centro Gestor</span>
+                        <span class="border-b-2 col-span-3">{{mir?.centroGestor}}</span>
+                        <span class="detalle-span">Nivel</span>
+                        <span class="border-b-2">{{mir?.nivel}}</span>
+                        <span class="detalle-span col-span-2">Programa financiacion</span>
+                        <span class="border-b-2">{{mir?.programaFinanciacion}}</span>
+
+                        <span class="detalle-span col-span-2">Supuestos</span>
+                        <span class="border-b-2 col-span-3">{{mir?.supuestos}}</span>
+                        <span class="detalle-span col-span-2">Nombre del indicador</span>
+                        <span class="border-b-2 col-span-3">{{mir?.nombreDelIndicador}}</span>
+                        <span class="detalle-span col-span-2">Metodo de calculo</span>
+                        <span class="border-b-2 col-span-3">{{mir?.metodoCalculo}}</span>
+
+                        <span class="detalle-span col-span-2">Medios de verificacion</span>
+                        <span class="border-b-2 col-span-3">{{mir?.mediosDeVerificacion}}</span>
+                        <span class="detalle-span col-span-2">Resumen narrativo</span>
+                        <span class="border-b-2 col-span-8">{{mir?.mediosDeVerificacion}}</span>
+
+                        <span class="detalle-span">Tipo</span>
+                        <span class="border-b-2">{{mir?.tipo}}</span>
+                        <span class="detalle-span">Dimension</span>
+                        <span class="border-b-2">{{mir?.dimension}}</span>
+                        <span class="detalle-span">U. Medida</span>
+                        <span class="border-b-2">{{mir?.unidadDeMedida}}</span>
+                        <span class="detalle-span">Frec. Med</span>
+                        <span class="border-b-2">{{mir?.frecuenciaMedicion}}</span>
+                        <span class="detalle-span">Sentido. Ind</span>
+                        <span class="border-b-2">{{mir?.sentidoDelIndicador}}</span>
+
+                        <span class="detalle-span col-start-5">Linea base año</span>
+                        <span class="border-b-2">{{mir?.lineaBaseAno}}</span>
+                        <span class="detalle-span">Valor</span>
+                        <span class="border-b-2">{{mir?.lineaBaseValor}}</span>
+                        <span class="detalle-span">Meta</span>
+                        <span class="border-b-2">{{mir?.meta}}</span>
+
+                        <span class="detalle-span col-start-5">Sem. Verde</span>
+                        <span class="border-b-2 text-green-500 font-bold text-lg">{{mir?.semefVerde}}</span>
+                        <span class="detalle-span">Sem. Amarillo</span>
+                        <span class="border-b-2 text-amber-500 font-bold text-lg">{{mir?.semefAmarillo}}</span>
+                        <span class="detalle-span">Sem. Rojo</span>
+                        <span class="border-b-2 text-red-700 font-bold text-lg">{{mir?.semefRojo}}</span>
+
+                        <span class="detalle-span">Trimestre 1</span>
+                        <span class="border-b-2">{{mir?.avanceTrim1}}</span>
+                        <span class="detalle-span">Trimestre 2</span>
+                        <span class="border-b-2">{{mir?.avanceTrim2}}</span>
+                        <span class="detalle-span">Trimestre 3</span>
+                        <span class="border-b-2">{{mir?.avanceTrim3}}</span>
+                        <span class="detalle-span">Trimestre 4</span>
+                        <span class="border-b-2">{{mir?.avanceTrim4}}</span>
+                        <span class="detalle-span">Anual</span>
+                        <span class="border-b-2">{{mir?.avanceAnual}}</span>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+            <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
+        </mat-card-content>
+        <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+            <div class="flex flex-auto">
+                <button mat-raised-button color="primary" class="flex-auto" (click)="regAvances()" [disabled]="mirSeleccionado === null">
+                    <mat-icon svgIcon="feather:save"></mat-icon>
+                    Registrar o editar avances
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</section>

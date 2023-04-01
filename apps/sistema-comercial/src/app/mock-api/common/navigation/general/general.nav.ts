@@ -80,10 +80,10 @@ export const GENERAL: FuseNavigationItem[] =
                         link: rutaGeneral + 'ordenes-atencion'
                     },
                     {
-                        id: 'sesionEmpleados',
-                        title: 'Permisos',
+                        id: 'mirUsuario',
+                        title: 'PBR',
                         type: 'basic',
-                        icon: 'admin_panel_settings',
+                        icon: 'mat_solid:microwave',
                         oculto: false,
                         hidden: (item: FuseNavigationItem): boolean => item.oculto,
                         badge: {},
@@ -91,7 +91,7 @@ export const GENERAL: FuseNavigationItem[] =
                         disabled: false,
                         puedeAsigPermisos: false,
                         acceso: false,
-                        link: rutaGeneral + 'permisos'
+                        link: rutaGeneral + 'pbr'
                     }
                 ]
         }

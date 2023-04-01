@@ -25,10 +25,7 @@
             <td *matCellDef="let doc">
                 <div class="flex flex-0 items-center py-2">
                     <ng-container *ngFor="let usuarioEnviado of doc.resolveEmpleadoEnviado">
-                        <img class="avatar w-10 h-10" [src]="usuarioEnviado?.avatar" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="usuarioEnviado.avatar" alt="avatar">
-                        <div class="avatar-letra w-10 h-10" [matTooltip]="usuarioEnviado?.nombreCompleto" *ngIf="!usuarioEnviado.avatar">
-                            {{usuarioEnviado?.nombreCompleto.charAt(0)}}
-                        </div>
+                        <img class="avatar w-10 h-10" [src]="usuarioEnviado?.avatar | imgDefecto" [matTooltip]="usuarioEnviado?.nombreCompleto" alt="avatar">
                     </ng-container>
                 </div>
             </td>
@@ -42,7 +39,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnasMostrar" class="border-b-2"></tr>
-        <tr mat-row class="cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700" (click)="seleccionarDoc(row)" *matRowDef="let row; columns: columnasMostrar"></tr>
+        <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: columnasMostrar" (click)="seleccionarDoc(row)"></tr>
     </table>
     <div class="mt-4">
         <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>

@@ -1,7 +1,6 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {ActRolesDto, CrearRolDto, RolesAsigDto, RolesDto} from '#api/libs/models/src/lib/admin/empleado/auth/roles.dto';
 import {RolesService} from '@api-admin/roles/roles.service';
-import {ErroresDto} from '#api/libs/models/src/lib/errors/errores.dto';
 
 @Resolver(() => RolesDto)
 export class RolesResolver
@@ -50,6 +49,24 @@ export class RolesResolver
     async actCtrlTercerNivel(@Args('ctrl') ctrl: ActRolesDto): Promise<RolesDto>
     {
         return await this.rolesService.actCtrlTercerNivel(ctrl);
+    }
+
+    @Mutation(() => RolesDto)
+    async asigPermisoPrimerNivel(@Args('asig') asig: ActRolesDto): Promise<RolesDto>
+    {
+        return await this.rolesService.asigPermisoPrimerNivel(asig);
+    }
+
+    @Mutation(() => RolesDto)
+    async asigPermisoSegNivel(@Args('asig') asig: ActRolesDto): Promise<RolesDto>
+    {
+        return await this.rolesService.asigPermisoSegNivel(asig);
+    }
+
+    @Mutation(() => RolesDto)
+    async asigPermisoTercerNivel(@Args('asig') asig: ActRolesDto): Promise<RolesDto>
+    {
+        return await this.rolesService.asigPermisoTercerNivel(asig);
     }
 
     @Query(() => RolesDto, {nullable: true})

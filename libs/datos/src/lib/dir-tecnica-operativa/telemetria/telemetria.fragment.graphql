@@ -1,0 +1,35 @@
+fragment fragInstalacion on InstalacionType
+{
+    activo
+    diamAdeme
+    diamCol
+    diamPerforacion
+    direccion
+    longCol
+    nombre
+    profPozo
+    tipoInstalacion
+    nivelDinamico {
+        ...fragMedicion
+    }
+    nivelEstatico {
+        ...fragMedicion
+    }
+}
+
+fragment fragMedicion on MedicionType
+{
+    ano
+    enero
+    febrero
+    marzo
+    abril
+    mayo
+    junio
+    julio
+    agosto
+    septiembre
+    octubre
+    noviembre
+    diciembre
+}

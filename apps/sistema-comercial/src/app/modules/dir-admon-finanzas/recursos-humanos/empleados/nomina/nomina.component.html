@@ -1,105 +1,86 @@
-<article class="flex flex-col w-full">
-    <section class="my-4 tarjeta-mat" @zoomIn>
-        <mat-card class="bg-gray-300 dark:bg-gray-800">
-            <mat-card-header class="tarjeta-mat-cabecera border-b-blue-800">
-                <span class="text-xl">Nomina</span>
-            </mat-card-header>
-            <mat-card-title-group class="border-b-2">
-                <mat-form-field class="mt-2 mr-2">
-                    <mat-select>
-                        <mat-option value="option1">2023</mat-option>
-                        <mat-option value="option2">2024</mat-option>
-                        <mat-option value="option3">2025</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </mat-card-title-group>
-            <mat-card-content>
-                <mat-tab-group>
-                    <mat-tab label="1">
-                        <div class="grid grid-cols-6 gap-4 py-4">
-                            <b class="col-span-full text-2xl text-green-800 text-center border-b-2">$6,071.24</b>
-                            <span class="text-end text-secondary border-b-2">Horas Extra</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Prima dominical</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Vacaciones a tiempo</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2 col-span-3">Fondo de ahorro empresa</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Estimulo</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2 col-span-5 text-orange-500">TOTAL PERCEPCIONES</span>
-                            <span class="border-b-2 text-orange-500">00.00</span>
+<section class="my-4 tarjeta-mat flex-auto" @zoomIn>
+    <mat-card class="bg-gray-300 dark:bg-gray-800">
+        <mat-card-header class="tarjeta-mat-cabecera border-b-blue-800">
+            <span class="text-xl">Nomina</span>
+        </mat-card-header>
+        <mat-card-title-group class="border-b-2">
+            <mat-form-field class="mt-2 mr-2">
+                <mat-select>
+                    <mat-option value="option1">2023</mat-option>
+                    <mat-option value="option2">2024</mat-option>
+                    <mat-option value="option3">2025</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-card-title-group>
+        <mat-card-content>
+            <mat-tab-group>
+                <mat-tab label="1">
+                    <div class="grid grid-cols-6 gap-4 py-4">
+                        <b class="col-span-full text-2xl text-green-800 text-center border-b-2">$6,071.24</b>
+                        <span class="text-end text-secondary border-b-2">Horas Extra</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Prima dominical</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Vacaciones a tiempo</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2 col-span-3">Fondo de ahorro empresa</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Estimulo</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2 col-span-5 text-orange-500">TOTAL PERCEPCIONES</span>
+                        <span class="border-b-2 text-orange-500">00.00</span>
 
-                            <span class="text-end text-secondary border-b-2">Subs al empleo(mes)</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">I.S.R.(mes)</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">I.M.S.S.</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Infonavit(vsm)</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Infonavit</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Cuota sindical</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Desc por pension</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Prestamo empresa</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Fondo de ahorro</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Prestamo caja Alianza</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Prest caja Juventino R</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Fondo de ahorro emp-2</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2">Aportacion voluntaria</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2 col-span-5 text-orange-500">TOTAL DEDUCCIONES</span>
-                            <span class="border-b-2">00.00</span>
-                            <span class="text-end text-secondary border-b-2 col-span-5 text-orange-500">NETO</span>
-                            <span class="border-b-2">00.00</span>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="2"></mat-tab>
-                    <mat-tab label="3"></mat-tab>
-                    <mat-tab label="4"></mat-tab>
-                    <mat-tab label="5"></mat-tab>
-                    <mat-tab label="6"></mat-tab>
-                    <mat-tab label="7"></mat-tab>
-                    <mat-tab label="8"></mat-tab>
-                    <mat-tab label="9"></mat-tab>
-                    <mat-tab label="10"></mat-tab>
-                    <mat-tab label="11"></mat-tab>
-                    <mat-tab label="12"></mat-tab>
-                    <mat-tab label="13"></mat-tab>
-                    <mat-tab label="14"></mat-tab>
-                    <mat-tab label="15"></mat-tab>
-                    <mat-tab label="16"></mat-tab>
-                    <mat-tab label="17"></mat-tab>
-                    <mat-tab label="18"></mat-tab>
-                    <mat-tab label="19"></mat-tab>
-                    <mat-tab label="20"></mat-tab>
-                    <mat-tab label="21"></mat-tab>
-                    <mat-tab label="22"></mat-tab>
-                    <mat-tab label="23"></mat-tab>
-                    <mat-tab label="24"></mat-tab>
-                    <mat-tab label="25"></mat-tab>
-                    <mat-tab label="26"></mat-tab>
-                </mat-tab-group>
-            </mat-card-content>
-            <mat-card-actions class="border-t-blue-800 tarjeta-mat-acciones" *ngIf="true">
-                <div class="flex flex-row-reverse flex-auto gap-4">
-                    <button mat-raised-button color="primary">
-                        Acciones
-                    </button>
-                    <button mat-raised-button color="primary">
-                        Acciones - 2
-                    </button>
-                </div>
-            </mat-card-actions>
-        </mat-card>
-    </section>
-</article>
+                        <span class="text-end text-secondary border-b-2">Subs al empleo(mes)</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">I.S.R.(mes)</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">I.M.S.S.</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Infonavit(vsm)</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Infonavit</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Cuota sindical</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Desc por pension</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Prestamo empresa</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Fondo de ahorro</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Prestamo caja Alianza</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Prest caja Juventino R</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Fondo de ahorro emp-2</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2">Aportacion voluntaria</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2 col-span-5 text-orange-500">TOTAL DEDUCCIONES</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="text-end text-secondary border-b-2 col-span-5 text-orange-500">NETO</span>
+                        <span class="border-b-2">00.00</span>
+                    </div>
+                </mat-tab>
+                <mat-tab label="2"></mat-tab>
+                <mat-tab label="3"></mat-tab>
+                <mat-tab label="4"></mat-tab>
+                <mat-tab label="5"></mat-tab>
+                <mat-tab label="6"></mat-tab>
+                <mat-tab label="7"></mat-tab>
+                <mat-tab label="8"></mat-tab>
+                <mat-tab label="9"></mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+        <mat-card-actions class="border-t-blue-800 tarjeta-mat-acciones" *ngIf="true">
+            <div class="flex flex-row-reverse flex-auto gap-4">
+                <button mat-raised-button color="primary">
+                    Acciones
+                </button>
+                <button mat-raised-button color="primary">
+                    Acciones - 2
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</section>

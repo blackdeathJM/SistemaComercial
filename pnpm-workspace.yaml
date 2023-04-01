@@ -1,4 +1,0 @@
-packages:
-    -"apps/api/*"
-    -"apps/sistema-comercial/*"
-    -"libs/*"

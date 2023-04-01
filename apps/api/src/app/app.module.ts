@@ -9,10 +9,10 @@ import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
 import {GraphQLUpload} from 'graphql-upload-ts';
 import {AppService} from '#api/apps/api/src/app/app.service';
-import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
 import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
+import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.module';
 
 @Module({
     imports:
@@ -24,25 +24,19 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
                 driver: ApolloDriver,
                 installSubscriptionHandlers: true,
                 subscriptions: {
-                    'graphql-ws': true,
-                    'subscriptions-transport-ws': true
+                    'graphql-ws': true
                 },
                 resolvers:
                     {
                         Upload: GraphQLUpload
                     },
                 autoSchemaFile: 'apps/api/schema.graphql',
-                cors: {origin: '*'},
                 buildSchemaOptions:
                     {
-                        dateScalarMode: 'timestamp',
+                        dateScalarMode: 'isoDate',
                     },
                 playground: false,
                 context: ({req}) => ({req}),
-                plugins:
-                    [
-                        ApolloServerPluginLandingPageLocalDefault
-                    ]
             }),
             MongooseModule.forRootAsync({
                 imports: [ConfigModule],
@@ -54,6 +48,7 @@ import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/d
                     }
                 )
             }),
+            DirGeneralModule,
             SubirArchivoModule,
             AdminModule,
             DirAdmonFinanzasModule,

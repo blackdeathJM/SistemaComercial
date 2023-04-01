@@ -1,0 +1,22 @@
+mutation regPbr($input: RegPbrInput!)
+{
+    regPbr(input: $input)
+    {
+        ...fragPbr
+        resPbrEmpleado {
+            nombreCompleto
+            avatar
+        }
+    }
+}
+query pbrs($ano: Int!, $centroGestor: String!, $idEmpleado: ID)
+{
+    pbrs(ano: $ano, centroGestor: $centroGestor, idEmpleado: $idEmpleado)
+    {
+        ...fragPbr
+        resPbrEmpleado {
+            nombreCompleto
+            avatar
+        }
+    }
+}

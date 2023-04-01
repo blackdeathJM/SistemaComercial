@@ -38,6 +38,10 @@ export const appRoutes: Route[] = [
                     loadComponent: () => import('@s-Inicio/inicio.component').then(i => i.InicioComponent),
                 },
                 {
+                    path: 'dir-general',
+                    loadChildren: () => import('@s-dir-general/dir-general.routing').then(d => d.dirGeneralRouting),
+                },
+                {
                     path: 'perfil',
                     loadComponent: () => import('@s-admin/empleado-admin/perfil/perfil.component').then(p => p.PerfilComponent)
                 },

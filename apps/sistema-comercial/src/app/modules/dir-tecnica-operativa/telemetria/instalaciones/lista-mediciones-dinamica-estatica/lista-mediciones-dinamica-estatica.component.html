@@ -1,0 +1,67 @@
+<section>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="ano">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Año</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['ano']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="enero">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Ene</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['enero']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="febrero">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Feb</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['febrero']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="marzo">
+            <th mat-header-cell *matHeaderCellDef class="text-center dark:bg-zinc-400 dark:bg-zinc-800">Mar</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['marzo']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="abril">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Abr</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['abril']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="mayo">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">May</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['mayo']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="junio">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Jun</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['junio']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="julio">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Jul</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['julio']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="agosto">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Ago</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['agosto']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="septiembre">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Sep</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['septiembre']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="octubre">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Oct</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['octubre']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="noviembre">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Nov</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['noviembre']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="diciembre">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">Dic</th>
+            <td mat-cell *matCellDef="let fila" class="border-r-2 text-center">{{fila['diciembre']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef class="text-center bg-zinc-400 dark:bg-zinc-800">ACC</th>
+            <td mat-cell *matCellDef="let fila; index as i;" class="w-10">
+                <button mat-icon-button (click)="enviarMedicion(fila, i)" color="primary">
+                    <mat-icon svgIcon="info"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnasMostrar" class="border-b-4"></tr>
+        <tr mat-row class="alternar-filas-tabla" *matRowDef="let row; columns: columnasMostrar"></tr>
+    </table>
+    <!--    <mat-paginator class="flex-auto bg-zinc-800 mt-2" [pageSize]="10"></mat-paginator>-->
+</section>

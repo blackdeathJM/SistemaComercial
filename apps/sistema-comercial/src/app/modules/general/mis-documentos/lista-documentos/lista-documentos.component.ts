@@ -15,6 +15,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {TablaMatComponent} from '@s-shared/components/tabla-mat/tabla-mat.component';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
+import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 
 export const LISTA_DOCS_TOKEN = new InjectionToken<ListaDocumentosComponent>('lista-docs-token');
 
@@ -22,7 +23,7 @@ export const LISTA_DOCS_TOKEN = new InjectionToken<ListaDocumentosComponent>('li
     selector: 'app-lista-documentos',
     standalone: true,
     imports: [CommonModule, FuseCardModule, FuseAlertModule, MatTooltipModule, ConvertirTimestamUnixPipe, NgxUiLoaderModule, SinDatosComponent, MatIconModule,
-        MatTableModule, MatSortModule, TablaMatComponent, MatPaginatorModule],
+        MatTableModule, MatSortModule, TablaMatComponent, MatPaginatorModule, ImgDefectoPipe],
     templateUrl: './lista-documentos.component.html',
     styleUrls: ['./lista-documentos.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,24 +40,16 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
     constructor(public entityMisDocumentos: EntityMisDocumentosStore, private misDocsService: MisDocumentosService)
     {
     }
-    // @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator)
-    // {
-    //     this.dataSource.paginator = paginator;
-    // }
 
     ngOnInit(): void
     {
         this.sub.add(this.misDocsService.docUsuarioProceso('pendiente', false).subscribe());
         this.sub.add(this.entityMisDocumentos.entitiesArray$.subscribe(r => this.dataSource.data = r));
     }
+
     ngAfterViewInit(): void
     {
         this.dataSource.paginator = this.paginator;
-    }
-
-    trackByFn(index: number, item: any): any
-    {
-        return item._id || index;
     }
 
     seleccionarDoc(documento: IResolveDocumento): void
@@ -65,6 +58,11 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
         this.entityMisDocumentos.patchState({documento});
         // Al seleccionar el documento se abre la venta de la derecha
         this.misDocsService.setPanel = true;
+    }
+
+    trackByFn(index: number, item: any): any
+    {
+        return item._id || index;
     }
 
     ngOnDestroy(): void

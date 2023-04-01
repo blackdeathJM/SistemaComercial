@@ -23,7 +23,7 @@
 }
 
 .consultas {
-    @apply bg-gray-300 dark:bg-gray-800 border-green-900 dark:border-emerald-400 p-4 rounded-lg border-b-8
+    @apply bg-gray-300 dark:bg-gray-800 border-green-900 dark:border-emerald-400 mx-4 p-4 rounded-lg border-b-8
 }
 
 .tarjeta-mat {
@@ -31,9 +31,17 @@
 }
 
 .tarjeta-mat-cabecera {
-    @apply border-b-2 bg-gray-400 dark:bg-gray-700 rounded-t-lg max-h-22
+    @apply border-b-2 bg-gray-400 dark:bg-gray-700 rounded-t-lg
 }
 
 .tarjeta-mat-acciones {
-    @apply border-t-2 bg-gray-400 dark:bg-gray-700 rounded-b-lg max-h-22
+    @apply border-t-2 bg-gray-400 dark:bg-gray-700 rounded-b-lg
+}
+
+.alternar-filas-tabla {
+    @apply cursor-pointer odd:bg-gray-100 dark:odd:bg-gray-900 even:bg-neutral-300 dark:even:bg-neutral-700
+}
+
+.detalle-span {
+    @apply text-end text-secondary border-b-2
 }

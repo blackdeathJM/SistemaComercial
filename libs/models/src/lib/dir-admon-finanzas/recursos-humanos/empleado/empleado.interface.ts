@@ -38,6 +38,7 @@ export interface IEmpleado
     //Relacion
     puesto: IPuesto[];
     deptoId: string;
+    planeacionCentroGestor: string;
 }
 
 export interface IResolveEmpleado extends IEmpleado

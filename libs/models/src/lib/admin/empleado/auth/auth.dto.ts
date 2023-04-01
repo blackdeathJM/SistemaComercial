@@ -1,13 +1,7 @@
 import {Field, InputType, ObjectType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IAsigRoles, IAuth, IGuards} from './auth.interface';
+import {IAsigRoles, IAuth} from './auth.interface';
 import {GraphQLJSONObject} from 'graphql-scalars';
-
-export class GuardsDto implements IGuards
-{
-    id: string;
-    puedeAsigPermisos: boolean;
-}
 
 @ObjectType('AuthType')
 @InputType('AuthInput')
@@ -32,6 +26,9 @@ export class AuthDto implements IAuth
     @Field(() => [String], {nullable: true, defaultValue: []})
     @IsOptional()
     controles: string[];
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    @IsOptional()
+    asigPermisos: string[];
     @Field(() => String, {nullable: true, defaultValue: 'En-linea'})
     @IsNotEmpty({message: 'El valor del estatus es necesario'})
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';

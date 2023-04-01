@@ -29,7 +29,7 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version/*"
             ],
-            "@s-services/*": ["apps/sistema-comercial/src/services/*"],
+            "@s-services/*": [ "apps/sistema-comercial/src/services/*" ],
             "@s-core/*": [
                 "apps/sistema-comercial/src/app/core/*",
                 "apps/sistema-comercial/src/app/auth/*",
@@ -54,6 +54,10 @@
             "@s-auth/*": [
                 "apps/sistema-comercial/src/app/modules/auth/*"
             ],
+            "@s-dir-general/*": [
+                "apps/sistema-comercial/src/app/modules/dir-general/*",
+                "apps/sistema-comercial/src/app/modules/dir-general/planeacion/*"
+            ],
             "@s-dirAdmonFinanzas/*": [
                 "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/*",
                 "apps/sistema-comercial/src/app/modules/dir-admon-finanzas/almacen/*",
@@ -66,7 +70,7 @@
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/*",
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/telemetria/*"
             ],
-            "@s-error/*": ["apps/sistema-comercial/src/app/modules/error/*"],
+            "@s-error/*": [ "apps/sistema-comercial/src/app/modules/error/*" ],
             "@s-general/*": [
                 "apps/sistema-comercial/src/app/modules/general/*",
                 "apps/sistema-comercial/src/app/modules/general/mis-documentos/*",

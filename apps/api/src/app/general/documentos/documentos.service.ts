@@ -28,9 +28,6 @@ import {DeptosService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-h
 @Injectable()
 export class DocumentosService
 {
-    #ano = new Date().getFullYear();
-    #mes = new Date().getMonth() + 1;
-
     constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private subirArchivoService: SubirArchivosService, private deptoService: DeptosService,
                 private notificacionService: NotificacionService)
     {
@@ -159,11 +156,12 @@ export class DocumentosService
 
     async docRef(args: DocsRefDto): Promise<DocumentoDto[]>
     {
+        const ano = new Date().getFullYear();
         // Carga todos los documentos para agregar referencia a folios ya registrados en un documento
         const {_id, usuario} = args;
         try
         {
-            return await this.documento.find({_id: {$ne: {_id}}, folio: {$eq: null}, usuarios: usuario, proceso: 'pendiente', ano: this.#ano, tipoDoc: 'Oficio'}).exec();
+            return await this.documento.find({_id: {$ne: {_id}}, folio: {$eq: null}, usuarios: usuario, proceso: 'pendiente', ano, tipoDoc: 'Oficio'}).exec();
         } catch (e)
         {
             throw new ConflictException({message: e});
@@ -275,11 +273,13 @@ export class DocumentosService
 
     async genFolioSinReg(args: DocFolioDto): Promise<string>
     {
+        const ano = new Date().getFullYear();
+        const mes = new Date().getMonth() + 1;
         try
         {
             const ultimoDocumento = await this.ultimoRegistro(args.tipoDoc);
             const {centroGestor} = await this.deptoService.deptoPorId(args.deptoId);
-            return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${this.#mes}-${this.#ano}`;
+            return `SIMAPAS/${args.tipoDoc.substring(0, 3).toUpperCase()}/${centroGestor}/${ultimoDocumento + 1}/${mes}-${ano}`;
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});
@@ -288,9 +288,10 @@ export class DocumentosService
 
     async ultimoRegistro(tipoDoc: string): Promise<number>
     {
+        const ano = new Date().getFullYear();
         try
         {
-            return await this.documento.countDocuments({ano: this.#ano, tipoDoc, folio: {$ne: null}}).exec();
+            return await this.documento.countDocuments({ano, tipoDoc, folio: {$ne: null}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e});
@@ -299,9 +300,10 @@ export class DocumentosService
 
     async aumentarSeguimiento(tipoDoc: string): Promise<number>
     {
+        const ano = new Date().getFullYear();
         try
         {
-            return await this.documento.countDocuments({ano: this.#ano, tipoDoc}).exec();
+            return await this.documento.countDocuments({ano, tipoDoc}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException({message: e.codeName});

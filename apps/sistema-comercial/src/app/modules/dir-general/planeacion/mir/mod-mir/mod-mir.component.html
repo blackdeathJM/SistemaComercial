@@ -1,0 +1,104 @@
+<form [formGroup]="formMir">
+    <section class="p-4 flex flex-col flex-auto gap-2">
+        <mat-form-field>
+            <mat-label>año</mat-label>
+            <input matInput formControlName="ano">
+            <mat-error>{{formMir.controls.ano['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Indicador</mat-label>
+            <input matInput formControlName="idIndicador" trim>
+            <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nivel</mat-label>
+            <input matInput formControlName="nivel">
+            <mat-error>{{formMir.controls.nivel['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Programa financiacion</mat-label>
+            <input matInput formControlName="programaFinanciacion"/>
+            <mat-error>{{formMir.controls.programaFinanciacion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Resume narrativo</mat-label>
+            <textarea matInput formControlName="resumenNarrativo"></textarea>
+            <mat-error>{{formMir.controls.resumenNarrativo['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Centro gestor</mat-label>
+            <mat-select formControlName="centroGestor">
+                <mat-option *ngFor="let centroGestor of selecciones.centroGestor; trackBy:trackByFn" [value]="centroGestor">{{centroGestor}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.centroGestor['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nombre del indicador</mat-label>
+            <textarea matInput formControlName="nombreDelIndicador"></textarea>
+            <mat-error>{{formMir.controls.nombreDelIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="tipo">
+                <mat-option *ngFor="let tipo of selecciones.tipo" [value]="tipo">{{tipo}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.tipo['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Dimension</mat-label>
+            <mat-select formControlName="dimension">
+                <mat-option *ngFor="let dimension of selecciones.dimension; trackBy:trackByFn" [value]="dimension">{{dimension}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.dimension['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Metodo de calculo</mat-label>
+            <textarea matInput formControlName="metodoCalculo"></textarea>
+            <mat-error>{{formMir.controls.metodoCalculo['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Medios de Verificacion</mat-label>
+            <textarea matInput formControlName="mediosDeVerificacion"></textarea>
+            <mat-error>{{formMir.controls.mediosDeVerificacion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Supuestos</mat-label>
+            <textarea matInput formControlName="supuestos"></textarea>
+            <mat-error>{{formMir.controls.supuestos['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Unidad de medida</mat-label>
+            <mat-select formControlName="unidadDeMedida">
+                <mat-option *ngFor="let unidad of selecciones.unidad" [value]="unidad">{{unidad}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.unidadDeMedida['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Frecuencia de medicion</mat-label>
+            <mat-select formControlName="frecuenciaMedicion">
+                <mat-option *ngFor="let frecuencia of selecciones.frecuencia" [value]="frecuencia">{{frecuencia}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.frecuenciaMedicion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Sentido del indicador</mat-label>
+            <mat-select formControlName="sentidoDelIndicador">
+                <mat-option *ngFor="let sentido of sentidoIndicador" [value]="sentido">{{sentido}}</mat-option>
+            </mat-select>
+            <mat-error>{{formMir.controls.sentidoDelIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+    </section>
+</form>
+
+<mat-toolbar>
+    <div class="flex flex-auto items-center gap-4">
+        <button mat-raised-button class="flex-auto" color="warn" (click)="cerrar()" [disabled]="cargando">
+            <mat-icon svgIcon="mat_outline:close"></mat-icon>
+            Cerrar
+        </button>
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()" [disabled]="cargando">
+            <mat-icon svgIcon="mat_outline:save"></mat-icon>
+            Añadir registro
+        </button>
+    </div>
+</mat-toolbar>

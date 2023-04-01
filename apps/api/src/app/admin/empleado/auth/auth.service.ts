@@ -1,6 +1,6 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
+import {ClientSession, Model} from 'mongoose';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import {EmpleadoDto, EmpleadoType} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
@@ -79,53 +79,56 @@ export class AuthService
         }
     }
 
-    async permisoRuta(acceso: boolean, rol: string, idEmpleado: string): Promise<EmpleadoDto>
+    async permisoRuta(acceso: boolean, rol: string, idEmpleado: string, session: ClientSession): Promise<EmpleadoDto>
     {
         try
         {
             if (acceso)
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.guards': rol}}, {new: true}).session(session).exec();
             } else
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.guards': rol}}, {new: true}).session(session).exec();
             }
         } catch (e)
         {
+            await session.abortTransaction();
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
 
-    async puedeAsigPermisos(idEmpleado: string, permiso: string, puedeAsigPermiso: boolean): Promise<EmpleadoDto>
-    {
-        try
-        {
-            if (puedeAsigPermiso)
-            {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.asigPermisos': permiso}}).exec();
-            } else
-            {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.asigPermisos': permiso}}).exec();
-            }
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e.codeName});
-        }
-    }
-
-    async asigCtrls(idEmpleado: string, ctrl: string, acceso: boolean): Promise<EmpleadoDto>
+    async asigCtrls(idEmpleado: string, ctrl: string, acceso: boolean, session: ClientSession): Promise<EmpleadoDto>
     {
         try
         {
             if (acceso)
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.controles': ctrl}}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.controles': ctrl}}, {new: true}).session(session).exec();
             } else
             {
-                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.controles': ctrl}}).exec();
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.controles': ctrl}}, {new: true}).session(session).exec();
             }
         } catch (e)
         {
+            await session.abortTransaction();
+            throw new InternalServerErrorException({message: e.codeName});
+        }
+    }
+
+    async asigPermisos(idEmpleado: string, permiso: string, acceso: boolean, session: ClientSession): Promise<EmpleadoDto>
+    {
+        try
+        {
+            if (acceso)
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$push: {'auth.asigPermisos': permiso}}, {new: true}).session(session).exec();
+            } else
+            {
+                return await this.empleado.findByIdAndUpdate(idEmpleado, {$pull: {'auth.asigPermisos': permiso}}, {new: true}).session(session).exec();
+            }
+        } catch (e)
+        {
+            await session.abortTransaction();
             throw new InternalServerErrorException({message: e.codeName});
         }
     }
@@ -134,11 +137,11 @@ export class AuthService
     {
         try
         {
-            const res = await this.empleado.updateMany({auth: {$ne: null}}, {$set: {'auth.guards': [], 'auth.controles': [], 'auth.roles': null}}).exec();
+            const res = await this.empleado.updateMany({auth: {$ne: null}}, {$set: {'auth.guards': [], 'auth.controles': [], 'auth.asigPermisos': [], 'auth.roles': null}}).exec();
             return res.acknowledged;
         } catch (e)
         {
-            console.log(e.codeName);
+            throw new InternalServerErrorException({message: e.codeName});
         }
     }
 

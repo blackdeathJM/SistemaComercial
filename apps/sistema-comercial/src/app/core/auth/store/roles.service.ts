@@ -7,7 +7,7 @@ import {
     ActSegundoNivelGQL,
     ActSegundoNivelMutation,
     ActTercerNivelGQL,
-    ActTercerNivelMutation,
+    ActTercerNivelMutation, AsigPermisoPrimerNivelGQL, AsigPermisoPrimerNivelMutation, AsigPermisoSegNivelGQL, AsigPermisoSegNivelMutation, AsigPermisoTercerNivelGQL, AsigPermisoTercerNivelMutation,
     CrearRolesGQL,
     CrearRolesMutation,
     RolesAsigGQL,
@@ -25,7 +25,8 @@ export class RolesService
 {
     constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService,
                 private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL, private actTercerNivelGQL: ActTercerNivelGQL, private actCtrlPrimerNivelGQL: ActCtrlPrimerNivelGQL,
-                private actCtrlSegundoNivelGQL: ActCtrlSegundoNivelGQL, private actCtrlTercerNivelGQL: ActCtrlTercerNivelGQL)
+                private actCtrlSegundoNivelGQL: ActCtrlSegundoNivelGQL, private actCtrlTercerNivelGQL: ActCtrlTercerNivelGQL, private asigPermisoPrimerNivelGQL: AsigPermisoPrimerNivelGQL,
+                private asigPermisoSegNivelGQL: AsigPermisoSegNivelGQL, private asigPermisoTercerNivelGQL: AsigPermisoTercerNivelGQL)
     {
     }
 
@@ -119,6 +120,42 @@ export class RolesService
             {
                 const ctrls = $cast<IRoles>(res.data.actCtrlTercerNivel);
                 this.stateRoles.setState(ctrls);
+            }
+        }));
+    }
+
+    asiPermisoPrimerNivel(asig: IActRoles): Observable<SingleExecutionResult<AsigPermisoPrimerNivelMutation>>
+    {
+        return this.asigPermisoPrimerNivelGQL.mutate({asig}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const asignacion = $cast<IRoles>(res.data.asigPermisoPrimerNivel);
+                this.stateRoles.setState(asignacion);
+            }
+        }));
+    }
+
+    asiPermisoSegundoNivel(asig: IActRoles): Observable<SingleExecutionResult<AsigPermisoSegNivelMutation>>
+    {
+        return this.asigPermisoSegNivelGQL.mutate({asig}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const asignacion = $cast<IRoles>(res.data.asigPermisoSegNivel);
+                this.stateRoles.setState(asignacion);
+            }
+        }));
+    }
+
+    asiPermisoTercerNivel(asig: IActRoles): Observable<SingleExecutionResult<AsigPermisoTercerNivelMutation>>
+    {
+        return this.asigPermisoTercerNivelGQL.mutate({asig}).pipe(tap((res) =>
+        {
+            if (isNotNil(res.data))
+            {
+                const asignacion = $cast<IRoles>(res.data.asigPermisoTercerNivel);
+                this.stateRoles.setState(asignacion);
             }
         }));
     }

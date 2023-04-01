@@ -2,20 +2,17 @@
     <mat-drawer class="w-128" position="end" autoFocus="false" [opened]="misDocService.getPanel | async" [mode]="drawerMode" #matDrawerDocs>
         <app-detalle-documentos></app-detalle-documentos>
     </mat-drawer>
+
     <mat-drawer-content>
-        <div class="flex flex-col">
+        <section class="flex flex-col flex-auto">
             <div class="acciones-en-cabecera">
                 <button mat-raised-button type="button" color="primary" (click)="nuevosDocs()">
                     <mat-icon svgIcon="add" class="mr-5"></mat-icon>
                     Agregar nuevo documento
                 </button>
             </div>
-            <div class="consultas">
-                <app-doc-consulta></app-doc-consulta>
-            </div>
-            <div class="flex-auto relative">
-                <app-lista-documentos></app-lista-documentos>
-            </div>
-        </div>
+            <app-doc-consulta class="flex-auto"></app-doc-consulta>
+            <app-lista-documentos class="mt-8"></app-lista-documentos>
+        </section>
     </mat-drawer-content>
 </mat-drawer-container>

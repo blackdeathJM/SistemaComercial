@@ -1,17 +1,12 @@
-export interface IGuards
-{
-    id: string;
-    puedeAsigPermisos: boolean
-}
-
 export interface IAuth
 {
     activo: boolean;
     usuario: string;
     contrasena: string;
     roles: object[];
-    guards: IGuards[];
-    controles: IGuards[];
+    guards: string[];
+    asigPermisos: string[];
+    controles: string[];
     estatus: 'En-linea' | 'Desconectado' | 'Ocupado' | 'No-visible';
 }
 
