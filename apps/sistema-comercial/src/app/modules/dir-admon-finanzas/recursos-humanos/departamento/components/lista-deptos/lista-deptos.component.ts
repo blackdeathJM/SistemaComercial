@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-depto/mod-depto.component';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {DeptoService, loaderDeptos} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatCardModule} from '@angular/material/card';
@@ -40,7 +40,7 @@ export class ListaDeptosComponent implements OnInit
 {
     idLoader = loaderDeptos;
 
-    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: DeptoEntity)
     {
 
     }
@@ -55,15 +55,14 @@ export class ListaDeptosComponent implements OnInit
         return item._id || index;
     }
 
-    editar(depto: IDepto): void
+    editar(data: IDepto): void
     {
-        this.entityDepto.patchState({depto});
-        this.dRef.open(ModDeptoComponent, {width: '40%'});
+        this.dRef.open(ModDeptoComponent, {width: '40%', data: data._id});
     }
 
-    nuevoPuesto(depto: IDepto): void
+    nuevoPuesto(data: IDepto): void
     {
-        this.entityDepto.patchState({depto});
+        this.entityDepto.patchState({data});
         this.dRef.open(ModPuestoComponent, {width: '40%'});
     }
 }

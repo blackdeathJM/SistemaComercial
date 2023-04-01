@@ -4,7 +4,7 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/for
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {IDepto} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface";
-import {EntityDeptoStore} from "@s-dirAdmonFinanzas/departamento/store/entity-depto.store";
+import {DeptoEntity} from "@s-dirAdmonFinanzas/departamento/store/depto.entity";
 
 @Component({
     selector: 'app-drop-down-deptos',
@@ -23,7 +23,7 @@ export class DropDownDeptosComponent implements ControlValueAccessor, OnInit
     isDisable = false;
     ctrlDeptos = new FormControl();
 
-    constructor(public entityDepto: EntityDeptoStore)
+    constructor(public entityDepto: DeptoEntity)
     {
     }
 

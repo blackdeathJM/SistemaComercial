@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
@@ -24,7 +24,7 @@ export class ModPuestoComponent
     ctrlPuesto = new FormControl('', RxwebValidators.required({message: 'El puesto es requerido'}));
     cargandoDatos = false;
 
-    constructor(public entityDepto: EntityDeptoStore, private deptoService: DeptoService, public mdr: MatDialogRef<ModPuestoComponent>)
+    constructor(public entityDepto: DeptoEntity, private deptoService: DeptoService, public mdr: MatDialogRef<ModPuestoComponent>)
     {
     }
 

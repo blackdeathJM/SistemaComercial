@@ -7,7 +7,7 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.store';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {StateRoles} from '@s-core/auth/store/roles.store';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
@@ -18,7 +18,7 @@ import {EntityPbr} from '@s-dir-general/pbr/store/pbr.entity';
     imports:
         [
             NgxsModule.forRoot(
-                [StateAuth, EntityDeptoStore, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion, StateRoles, EntityTelemetria,
+                [StateAuth, DeptoEntity, EntityEmpleadoStore, EntityMisDocumentosStore, EntityNotificacion, StateRoles, EntityTelemetria,
                 SeleccionStore, EntityMir, EntityPbr], {
                     developmentMode: !environment.production
                 }),

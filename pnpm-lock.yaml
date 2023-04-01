@@ -58,6 +58,9 @@ dependencies:
   '@auth0/angular-jwt':
     specifier: ^5.1.2
     version: 5.1.2(@angular/common@15.2.5)
+  '@datorama/akita':
+    specifier: ^8.0.1
+    version: 8.0.1(rxjs@7.8.0)(tslib@2.5.0)
   '@nestjs/apollo':
     specifier: ^11.0.4
     version: 11.0.4(@apollo/server@4.5.0)(@apollo/subgraph@2.4.0)(@nestjs/common@9.3.12)(@nestjs/core@9.3.12)(@nestjs/graphql@11.0.4)(graphql@16.6.0)
@@ -324,6 +327,9 @@ devDependencies:
   '@babel/core':
     specifier: ^7.21.4
     version: 7.21.4
+  '@datorama/akita-ngdevtools':
+    specifier: ^7.0.0
+    version: 7.0.0(@angular/core@15.2.1)(@datorama/akita@8.0.1)(rxjs@7.8.0)
   '@graphql-codegen/cli':
     specifier: ^3.2.2
     version: 3.2.2(@babel/core@7.21.4)(@types/node@18.15.11)(cosmiconfig-toml-loader@1.0.0)(graphql@16.6.0)
@@ -3878,6 +3884,28 @@ packages:
       enabled: 2.0.0
       kuler: 2.0.0
     dev: false
+
+  /@datorama/akita-ngdevtools@7.0.0(@angular/core@15.2.1)(@datorama/akita@8.0.1)(rxjs@7.8.0):
+    resolution: {integrity: sha512-ufUYu+mG9LFxDlbF4A8HYB6RhWLWy0U8iadu1ORUIEwpKhNZ6f+H4UH8ntzNxtKgf2yf61yV+s2CJ4i+WezfzA==}
+    peerDependencies:
+      '@angular/core': '>= 13.0.0'
+      '@datorama/akita': '>= 7.0.0'
+      rxjs: '*'
+    dependencies:
+      '@angular/core': 15.2.1(rxjs@7.8.0)(zone.js@0.13.0)
+      '@datorama/akita': 8.0.1(rxjs@7.8.0)(tslib@2.5.0)
+      rxjs: 7.8.0
+      tslib: 2.5.0
+    dev: true
+
+  /@datorama/akita@8.0.1(rxjs@7.8.0)(tslib@2.5.0):
+    resolution: {integrity: sha512-0VnPWd+Sy3ColhzjDSBNcEnzAQtbezk6bYmJHvPaLMK5Ysl90KcNls2bE4sj5vaLeGLjhMtqtfp/RgrigPXDxA==}
+    peerDependencies:
+      rxjs: '*'
+      tslib: 2.4.1
+    dependencies:
+      rxjs: 7.8.0
+      tslib: 2.5.0
 
   /@discoveryjs/json-ext@0.5.7:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}

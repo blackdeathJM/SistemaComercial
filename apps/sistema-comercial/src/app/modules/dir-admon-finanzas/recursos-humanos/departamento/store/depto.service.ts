@@ -5,8 +5,9 @@ import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDepto, IRegPuesto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
+import {DeptoStore} from '@s-dirAdmonFinanzas/departamento/store/depto.store';
 
 export const loaderDeptos = 'loaderDeptos';
 
@@ -14,7 +15,8 @@ export const loaderDeptos = 'loaderDeptos';
 export class DeptoService
 {
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL, private ngxToast: NgxToastService,
-                private entityDepto: EntityDeptoStore, private filtrarDeptosGQL: FiltrarDeptosGQL, private ngxLoader: NgxUiLoaderService, private agregarPuestoGQL: AgregarPuestoGQL)
+                private entityDepto: DeptoEntity, private filtrarDeptosGQL: FiltrarDeptosGQL, private ngxLoader: NgxUiLoaderService, private agregarPuestoGQL: AgregarPuestoGQL,
+                private deptoStore: DeptoStore)
     {
     }
 
@@ -27,6 +29,7 @@ export class DeptoService
             {
                 const deptos = $cast<IDepto[]>(res.data.deptos);
                 this.entityDepto.setAll(deptos);
+                // this.deptoStore.set(deptos);
             }
             this.ngxLoader.stopLoader(loaderDeptos);
         }));
@@ -41,6 +44,7 @@ export class DeptoService
             {
                 const deptosFiltrados = $cast<IDepto[]>(res.data.filtrarDeptos);
                 this.entityDepto.setAll(deptosFiltrados);
+                // this.deptoStore.set(deptosFiltrados);
             }
             this.ngxLoader.stopLoader(loaderDeptos);
         }));
@@ -54,6 +58,7 @@ export class DeptoService
             {
                 const depto = $cast<IDepto>(res.data.crearDepto);
                 this.entityDepto.setOne(depto);
+                // this.deptoStore.add(depto);
                 this.ngxToast.satisfactorioToast('El departamento ser registro con exito', 'Nuevo departamento');
             }
         }));
@@ -67,6 +72,7 @@ export class DeptoService
             {
                 const {_id, ...changes} = $cast<IDepto>(res.data.actualizarDepto);
                 this.entityDepto.updateOne({id: _id, changes});
+                // this.deptoStore.update(_id, changes);
                 this.ngxToast.satisfactorioToast('El Departamento se actualizo con exito', 'Actualizar departamento');
             }
         }));
@@ -80,6 +86,7 @@ export class DeptoService
             {
                 const {_id, ...changes} = $cast<IDepto>(res.data.agregarPuesto);
                 this.entityDepto.updateOne({id: _id, changes});
+                // this.deptoStore.update(_id, changes);
                 this.ngxToast.satisfactorioToast('El puesto se a agregado correctamente', 'Agregar nuevo puesto');
             }
         }));
