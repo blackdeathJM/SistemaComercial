@@ -1,4 +1,3 @@
-import {IPbr, IEjercicio} from './pbr.interface';
 import {ObjectType, InputType, Field, ID, Float, Int} from '@nestjs/graphql';
 import {Schema, Prop, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional, IsNumber} from 'class-validator';
@@ -6,7 +5,7 @@ import {IsNotEmpty, IsOptional, IsNumber} from 'class-validator';
 
 @ObjectType('EjercicioType')
 @InputType('EjercicioInput')
-export class EjercicioDto implements IEjercicio
+export class EjercicioDto
 {
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
@@ -153,7 +152,7 @@ export type TEjercicio = EjercicioDto;
 @ObjectType('PbrType')
 @InputType('PbrInput')
 @Schema({collection: 'Pbr'})
-export class PbrDto implements IPbr
+export class PbrDto
 {
     @Field(() => ID, {nullable: true})
     _id: string;
