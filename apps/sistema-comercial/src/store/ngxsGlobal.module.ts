@@ -10,7 +10,7 @@ import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.sto
 import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {StateRoles} from '@s-core/auth/store/roles.entity';
 import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
-import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
+import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
 import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {EntityPbr} from '@s-dir-general/pbr/store/pbr.entity';
 

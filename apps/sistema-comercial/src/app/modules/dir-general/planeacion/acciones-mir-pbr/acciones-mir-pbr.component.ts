@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
+import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';

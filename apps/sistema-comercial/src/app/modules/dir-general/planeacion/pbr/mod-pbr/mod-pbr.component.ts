@@ -12,7 +12,7 @@ import {PbrService} from '@s-dir-general/pbr/store/pbr.service';
 import {finalize, Subscription} from 'rxjs';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
+import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
 import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 

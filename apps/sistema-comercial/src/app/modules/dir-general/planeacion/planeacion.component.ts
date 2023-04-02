@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
-import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
+import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
 import {forkJoin, Subscription} from 'rxjs';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 

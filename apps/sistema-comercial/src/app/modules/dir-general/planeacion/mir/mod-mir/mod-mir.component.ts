@@ -5,7 +5,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
+import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
 import {finalize, Subscription} from 'rxjs';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';

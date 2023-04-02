@@ -13,7 +13,7 @@ import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {Subscription} from 'rxjs';
-import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
+import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
 
 @Component({
     selector: 'app-mir',
