@@ -51,6 +51,7 @@ export class ModDeptoComponent implements OnInit
     ngOnInit(): void
     {
         this.formDepto = this.fb.formGroup(new Depto());
+        // this.deptoQuery.selectActive().subscribe(res => console.log(res));
         this.seleccionarUno = this.entityDepto.selectOne(this._id);
         if (this.seleccionarUno)
         {
@@ -64,7 +65,7 @@ export class ModDeptoComponent implements OnInit
         // si vienen datos cuando se abre el modal cargamos los datos en el formulario para poder actualizarlos y si no realizamos un nuevo registro
         if (this.seleccionarUno)
         {
-            const input = {_id: this.entityDepto.snapshot.depto._id, ...this.formDepto.value};
+            const input = {_id: this.seleccionarUno._id, ...this.formDepto.value};
 
             this.deptoService.actualizarDepto(input).pipe(finalize(() =>
             {

@@ -22,8 +22,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {StateAuth} from '@s-core/auth/store/auth.store';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
@@ -69,8 +69,8 @@ export class ModDocumentosComponent implements OnInit, AfterContentInit, OnDestr
     mostrarProgreso: boolean = false;
     sub: Subscription = new Subscription();
 
-    constructor(private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService, private stateAuth: StateAuth,
-                private mdr: MatDialog, private cdr: ChangeDetectorRef, public entityEmpleado: EntityEmpleadoStore, private entityMisDocumentos: EntityMisDocumentosStore,
+    constructor(private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService, private stateAuth: AuthEntity,
+                private mdr: MatDialog, private cdr: ChangeDetectorRef, public entityEmpleado: EmpleadoEntity, private entityMisDocumentos: EntityMisDocumentosStore,
                 private empleadoService: EmpleadoService, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService)
     {
     }

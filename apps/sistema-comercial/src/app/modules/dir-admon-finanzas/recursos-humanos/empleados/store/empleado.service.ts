@@ -6,13 +6,13 @@ import {
 import {Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {TOKEN} from '@s-auth/const';
 import {ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 
 export const ngxLoaderEmp = 'loaderEmpleados';
@@ -21,8 +21,8 @@ export const ngxLoaderEmp = 'loaderEmpleados';
 export class EmpleadoService
 {
 
-    constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
-                private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
+    constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EmpleadoEntity, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
+                private actualizarAvtarGQL: ActualizarAvatarGQL, private authEntity: AuthEntity, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
                 private filtrarEmpleadosGQL: FiltrarEmpleadosGQL, private ngxLoader: NgxUiLoaderService)
     {
     }
@@ -60,7 +60,7 @@ export class EmpleadoService
             {
                 const nvosDatos = $cast<ILoginRespuesta>(res.data.actualizarAvatar);
                 localStorage.setItem(TOKEN, nvosDatos.token);
-                this.stateAuth.setState(nvosDatos.datosSesion);
+                this.authEntity.setState(nvosDatos.datosSesion);
                 this.ngxToast.satisfactorioToast('Tu avatar se ha cambiado con exito', 'Cambio de avatar');
             }
         }));

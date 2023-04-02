@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CanMatch, Route, Router, UrlSegment, UrlTree} from '@angular/router';
 import {Observable, of, switchMap} from 'rxjs';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {AuthService} from '@s-core/auth/store/auth.service';
 
 @Injectable({
@@ -9,7 +9,7 @@ import {AuthService} from '@s-core/auth/store/auth.service';
 })
 export class AuthGuard implements CanMatch
 {
-    constructor(private router: Router, private stateAuth: StateAuth, private authService: AuthService)
+    constructor(private router: Router, private stateAuth: AuthEntity, private authService: AuthService)
     {
     }
 

@@ -6,7 +6,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {Subscription} from 'rxjs';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 
@@ -31,7 +31,7 @@ export class AccionesMirPbrComponent
     bCentroGestor: string;
     sub = new Subscription();
 
-    constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EntityEmpleadoStore)
+    constructor(public seleccionStore: SeleccionStore, private ngxToast: NgxToastService, public entityEmpleado: EmpleadoEntity)
     {
     }
 

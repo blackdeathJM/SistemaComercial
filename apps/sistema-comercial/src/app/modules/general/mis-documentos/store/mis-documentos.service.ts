@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DocActFolioGQL, DocFinalizarGQL, DocRefFolioGQL, DocsBusquedaGralGQL, DocsFechasGQL, DocsRefGQL, DocsUsuarioProcesoGQL, ReasignarUsuarioGQL, RegDocGQL, SubirDocsGQL} from '#/libs/datos/src';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
@@ -16,7 +16,7 @@ export class MisDocumentosService
 {
     #panel = new BehaviorSubject<boolean>(false);
 
-    constructor(private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private stateAuth: StateAuth, private ngxToast: NgxToastService, private entityMisDocumentos: EntityMisDocumentosStore,
+    constructor(private docsUsuarioProcesoGQL: DocsUsuarioProcesoGQL, private stateAuth: AuthEntity, private ngxToast: NgxToastService, private entityMisDocumentos: EntityMisDocumentosStore,
                 private docsBuscarGralGQL: DocsBusquedaGralGQL, private docsFechasGQL: DocsFechasGQL, private ngxLoader: NgxUiLoaderService, private regDocGQL: RegDocGQL,
                 private finalizarDocGQL: DocFinalizarGQL, private docActFolioGQL: DocActFolioGQL, private subirDocsGQL: SubirDocsGQL, private reasignarUsuarioGQL: ReasignarUsuarioGQL,
                 private docsRefGQL: DocsRefGQL, private docRefFolioGQL: DocRefFolioGQL)

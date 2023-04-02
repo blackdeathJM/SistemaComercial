@@ -15,7 +15,7 @@ import {GeneralService} from '@s-services/general.service';
 import {finalize} from 'rxjs';
 import {getDownloadURL} from '@angular/fire/storage';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {NgxToastService} from '@s-services/ngx-toast.service';
@@ -44,7 +44,7 @@ export class PerfilComponent implements OnInit
     });
 
     constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL
-        , private generalService: GeneralService, private stateAuth: StateAuth, private empleadoService: EmpleadoService, private ngxToast: NgxToastService)
+        , private generalService: GeneralService, private stateAuth: AuthEntity, private empleadoService: EmpleadoService, private ngxToast: NgxToastService)
     {
     }
 

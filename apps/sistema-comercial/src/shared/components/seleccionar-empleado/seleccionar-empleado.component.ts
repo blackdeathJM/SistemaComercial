@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MatInputModule} from '@angular/material/input';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Subscription} from 'rxjs';
@@ -35,7 +35,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
     onTouchedCb?: () => void;
     sub = new Subscription();
 
-    constructor(public entityEmpleado: EntityEmpleadoStore)
+    constructor(public entityEmpleado: EmpleadoEntity)
     {
     }
 

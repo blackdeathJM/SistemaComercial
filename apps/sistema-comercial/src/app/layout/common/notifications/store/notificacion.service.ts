@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EliminarNotGQL, EliminarNotMutation, EliminarTodosGQL, EliminarTodosMutation, NotificacionesGQL, NotificacionesQuery, NotificarGQL, NotificarSubscription} from '#/libs/datos/src';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {Observable, tap} from 'rxjs';
 import {ApolloQueryResult, SingleExecutionResult} from '@apollo/client';
 import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.store';
@@ -13,7 +13,7 @@ import {SubscriptionResult} from 'apollo-angular';
 export class NotificacionService
 {
     constructor(private ngxToast: NgxToastService, private notificacionesGQL: NotificacionesGQL, private notificarGQL: NotificarGQL, private eliminarNotGQL: EliminarNotGQL,
-                private eliminarTodosGQL: EliminarTodosGQL, private stateAuth: StateAuth, private entityNotificacion: EntityNotificacion)
+                private eliminarTodosGQL: EliminarTodosGQL, private stateAuth: AuthEntity, private entityNotificacion: EntityNotificacion)
     {
     }
 

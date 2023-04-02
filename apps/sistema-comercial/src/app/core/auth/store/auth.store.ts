@@ -1,15 +1,21 @@
-import {StateRepository} from '@angular-ru/ngxs/decorators';
-import {State} from '@ngxs/store';
-import {Injectable} from '@angular/core';
-import {NgxsImmutableDataRepository} from '@angular-ru/ngxs/repositories';
+import {Store, StoreConfig} from '@datorama/akita';
 import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {Injectable} from '@angular/core';
 
-@StateRepository()
-@State<IDatosSesion>({
-    name: 'auth',
-    defaults: null
-})
-@Injectable()
-export class StateAuth extends NgxsImmutableDataRepository<IDatosSesion>
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+// export function createInitialState(): IDatosSesion
+// {
+//     return null;
+// }
+
+export const inicializar = (): IDatosSesion => null;
+
+@Injectable({providedIn: 'root'})
+@StoreConfig({name: 'sesionUsuario', idKey: '_id'})
+export class AuthStore extends Store<IDatosSesion>
 {
+    constructor()
+    {
+        super(inicializar());
+    }
 }

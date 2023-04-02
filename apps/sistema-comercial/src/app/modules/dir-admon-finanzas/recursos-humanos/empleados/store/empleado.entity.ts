@@ -18,7 +18,7 @@ export interface IEmpleadoSelect
     }
 })
 @Injectable()
-export class EntityEmpleadoStore extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, string, IEmpleadoSelect>
+export class EmpleadoEntity extends NgxsDataEntityCollectionsRepository<IResolveEmpleado, string, IEmpleadoSelect>
 {
     public primaryKey = '_id';
 

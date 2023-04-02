@@ -16,7 +16,7 @@ import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.s
 import {ModReasignacionComponent} from '@s-general/mod-reasignacion/mod-reasignacion.component';
 import {ModSubirDocsComponent} from '@s-general/mod-subir-docs/mod-subir-docs.component';
 import {ModDocRefComponent} from '@s-general/mod-doc-ref/mod-doc-ref.component';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {Select} from '@ngxs/store';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
@@ -49,7 +49,7 @@ export class DetalleDocumentosComponent
     cargando = false;
 
     constructor(private dRef: MatDialog, private confirmacionService: FuseConfirmationService, private ngxToastService: NgxToastService, private docActFolioGQL: DocActFolioGQL,
-                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: StateAuth, private entityMisDocumentos: EntityMisDocumentosStore, public misDocService: MisDocumentosService)
+                private docFinalizarGQL: DocFinalizarGQL, private stateAuht: AuthEntity, private entityMisDocumentos: EntityMisDocumentosStore, public misDocService: MisDocumentosService)
     {
     }
 

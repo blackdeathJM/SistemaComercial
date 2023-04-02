@@ -15,7 +15,7 @@ import {
 } from '#/libs/datos/src';
 import {SingleExecutionResult} from '@apollo/client';
 import {finalize, Observable, tap} from 'rxjs';
-import {StateRoles} from '@s-core/auth/store/roles.store';
+import {StateRoles} from '@s-core/auth/store/roles.entity';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IActRoles, IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {NgxUiLoaderService} from 'ngx-ui-loader';

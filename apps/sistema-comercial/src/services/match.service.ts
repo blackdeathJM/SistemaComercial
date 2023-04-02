@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {Constantes} from '@s-shared/constantes';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {isNil} from '@angular-ru/cdk/utils';
@@ -7,7 +7,7 @@ import {isNil} from '@angular-ru/cdk/utils';
 @Injectable({providedIn: 'root'})
 class MatchService
 {
-    constructor(private stateAuth: StateAuth, private ngxToast: NgxToastService)
+    constructor(private stateAuth: AuthEntity, private ngxToast: NgxToastService)
     {
     }
 

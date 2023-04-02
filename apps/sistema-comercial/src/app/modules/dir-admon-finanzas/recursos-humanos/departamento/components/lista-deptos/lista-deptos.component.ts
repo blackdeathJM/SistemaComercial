@@ -15,6 +15,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ModPuestoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-puesto/mod-puesto.component';
+import {DeptoStore} from '@s-dirAdmonFinanzas/departamento/store/depto.store';
+import {DeptoQuery} from '@s-dirAdmonFinanzas/departamento/store/depto.query';
 
 @Component({
     standalone: true,
@@ -40,7 +42,7 @@ export class ListaDeptosComponent implements OnInit
 {
     idLoader = loaderDeptos;
 
-    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: DeptoEntity)
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: DeptoEntity, private deptoStore: DeptoStore, public deptoQuery: DeptoQuery)
     {
 
     }
@@ -50,19 +52,19 @@ export class ListaDeptosComponent implements OnInit
         this.deptoService.departamentos().subscribe();
     }
 
-    trackByFn(index: number, item: IDepto): string | number
-    {
-        return item._id || index;
-    }
-
     editar(data: IDepto): void
     {
+        this.deptoStore.setActive(data._id);
         this.dRef.open(ModDeptoComponent, {width: '40%', data: data._id});
     }
 
     nuevoPuesto(data: IDepto): void
     {
-        this.entityDepto.patchState({data});
-        this.dRef.open(ModPuestoComponent, {width: '40%'});
+        this.dRef.open(ModPuestoComponent, {width: '40%', data: data._id});
+    }
+
+    trackByFn(index: number, item: IDepto): string | number
+    {
+        return item._id || index;
     }
 }

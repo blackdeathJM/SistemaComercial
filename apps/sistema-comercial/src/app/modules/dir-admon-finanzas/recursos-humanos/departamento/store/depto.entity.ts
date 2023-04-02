@@ -9,8 +9,7 @@ import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/
 @State({
     name: 'deptos',
     defaults: {
-        ...createEntityCollections(),
-        depto: null
+        ...createEntityCollections()
     }
 })
 @Injectable()

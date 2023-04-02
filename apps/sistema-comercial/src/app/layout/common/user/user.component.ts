@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {AuthService} from '@s-core/auth/store/auth.service';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserComponent implements AfterViewInit, OnDestroy
     @Input() showAvatar: boolean = true;
     sub = new Subscription();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, public stateAuth: StateAuth)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, public stateAuth: AuthEntity)
     {
     }
 

@@ -6,7 +6,7 @@ import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Navegation} from '@s-core/navigation/navigation.types';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 
 @Component({
     selector: 'classy-layout',
@@ -21,7 +21,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
     imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: StateAuth,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: AuthEntity,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }

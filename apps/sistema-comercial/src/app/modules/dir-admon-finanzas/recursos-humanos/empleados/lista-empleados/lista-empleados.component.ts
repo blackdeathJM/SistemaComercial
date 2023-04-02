@@ -5,7 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
@@ -36,7 +36,7 @@ export class ListaEmpleadosComponent implements OnInit, AfterViewInit, OnDestroy
     agregarNuevo = CtrlRecursosHumanos.agregarNvoEmpleado;
     sub = new Subscription();
 
-    constructor(public entityDepto: DeptoEntity, private entityEmpleado: EntityEmpleadoStore, private deptoService: DeptoService, private empleadoService: EmpleadoService)
+    constructor(public entityDepto: DeptoEntity, private entityEmpleado: EmpleadoEntity, private deptoService: DeptoService, private empleadoService: EmpleadoService)
     {
     }
 

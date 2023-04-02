@@ -3,6 +3,7 @@ import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
 import {State} from '@ngxs/store';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {createEntityCollections} from '@angular-ru/cdk/entity';
+import {Injectable} from '@angular/core';
 
 export interface IPbrSeleccion
 {
@@ -17,6 +18,7 @@ export interface IPbrSeleccion
         pbr: null
     }
 })
+@Injectable({providedIn: 'root'})
 export class EntityPbr extends NgxsDataEntityCollectionsRepository<IResPbrEmpleado, string, IPbrSeleccion>
 {
     public override primaryKey = '_id';

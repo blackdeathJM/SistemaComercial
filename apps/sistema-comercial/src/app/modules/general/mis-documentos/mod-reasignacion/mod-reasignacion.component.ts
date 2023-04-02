@@ -12,7 +12,7 @@ import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {isNotNil} from '@angular-ru/cdk/utils';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 
@@ -41,7 +41,7 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
     cargando: boolean = false;
 
     constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService,
-                private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EntityEmpleadoStore, private empleadoService: EmpleadoService)
+                private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EmpleadoEntity, private empleadoService: EmpleadoService)
     {
     }
 

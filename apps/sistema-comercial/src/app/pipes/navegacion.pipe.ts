@@ -1,10 +1,10 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 
 @Pipe({standalone: true, name: 'navegacionPermiso'})
 export class NavegacionPipe implements PipeTransform
 {
-    constructor(private stateAuth: StateAuth)
+    constructor(private stateAuth: AuthEntity)
     {
     }
 

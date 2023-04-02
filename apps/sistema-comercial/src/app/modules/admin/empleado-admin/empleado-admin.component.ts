@@ -7,7 +7,7 @@ import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/registro-sesion/registro-sesion.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -59,7 +59,7 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     deshabilitar = false;
     empleadoSeleccionado: IResolveEmpleado;
 
-    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
+    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EmpleadoEntity, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
                 private rolesService: RolesService)
     {
     }

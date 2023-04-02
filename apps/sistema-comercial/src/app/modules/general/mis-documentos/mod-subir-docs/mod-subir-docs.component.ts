@@ -13,7 +13,7 @@ import {finalize, startWith, Subscription} from 'rxjs';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 import {checkValueIsFilled} from '@angular-ru/cdk/utils';
@@ -48,7 +48,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     mostrarProgreso: boolean = false;
 
     constructor(private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxToast: NgxToastService, private misDocumentosService: MisDocumentosService,
-                private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: StateAuth, public entityMisDocumentos: EntityMisDocumentosStore)
+                private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: AuthEntity, public entityMisDocumentos: EntityMisDocumentosStore)
     {
     }
 

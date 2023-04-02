@@ -1,10 +1,9 @@
-import {EntityState, EntityStore, StoreConfig} from '@datorama/akita';
+import {ActiveState, EntityState, EntityStore, StoreConfig} from '@datorama/akita';
 import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {Injectable} from '@angular/core';
 
-export interface IDeptoState extends EntityState<IDepto>
+export interface IDeptoState extends EntityState<IDepto, string>, ActiveState
 {
-    deptoSeleccionado: IDepto | null;
 }
 
 @Injectable({providedIn: 'root'})

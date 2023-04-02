@@ -13,9 +13,9 @@ import {TrimDirective} from '@s-directives/trim.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {GeneralService} from '@s-services/general.service';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {isNotNil} from '@angular-ru/cdk/utils';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {Auth} from '@s-admin/empleado-admin/models/auth';
 import {AuthService} from '@s-core/auth/store/auth.service';
 import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
@@ -39,7 +39,7 @@ export class RegistroSesionComponent implements OnInit
     soloLectura = false;
 
     constructor(private fb: RxFormBuilder, public mdr: MatDialogRef<RegistroSesionComponent>, private registroSesionGQL: RegistroSesionGQL, private ngxToastService: NgxToastService,
-                private actualizarPassGQL: ActualizarContrasenaAdminGQL, private stateAuth: StateAuth, private entityEmpleado: EntityEmpleadoStore, private authService: AuthService,
+                private actualizarPassGQL: ActualizarContrasenaAdminGQL, private stateAuth: AuthEntity, private entityEmpleado: EmpleadoEntity, private authService: AuthService,
                 private rolesService: RolesService)
     {
     }

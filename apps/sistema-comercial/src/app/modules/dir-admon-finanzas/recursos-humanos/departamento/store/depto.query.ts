@@ -10,10 +10,4 @@ export class DeptoQuery extends QueryEntity<IDeptoState, IDepto>
     {
         super(deptoStore);
     }
-
-    seleccionarUno(_id: string): IDepto
-    {
-        this.deptoStore.setActive(_id);
-        return null;
-    }
 }

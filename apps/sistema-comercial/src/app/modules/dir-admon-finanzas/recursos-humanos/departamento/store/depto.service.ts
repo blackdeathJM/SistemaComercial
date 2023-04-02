@@ -7,7 +7,6 @@ import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDepto, IRegPuesto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
 import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
-import {DeptoStore} from '@s-dirAdmonFinanzas/departamento/store/depto.store';
 
 export const loaderDeptos = 'loaderDeptos';
 
@@ -15,15 +14,14 @@ export const loaderDeptos = 'loaderDeptos';
 export class DeptoService
 {
     constructor(private crearDeptoGQL: CrearDeptoGQL, private departamentosGQL: DepartamentosGQL, private actualizarDeptoGQL: ActualizarDeptoGQL, private ngxToast: NgxToastService,
-                private entityDepto: DeptoEntity, private filtrarDeptosGQL: FiltrarDeptosGQL, private ngxLoader: NgxUiLoaderService, private agregarPuestoGQL: AgregarPuestoGQL,
-                private deptoStore: DeptoStore)
+                private entityDepto: DeptoEntity, private filtrarDeptosGQL: FiltrarDeptosGQL, private ngxLoader: NgxUiLoaderService, private agregarPuestoGQL: AgregarPuestoGQL)
     {
     }
 
     departamentos(): Observable<SingleExecutionResult>
     {
         this.ngxLoader.startLoader(loaderDeptos);
-        return this.departamentosGQL.watch({}).valueChanges.pipe(tap((res) =>
+        return this.departamentosGQL.fetch({}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
@@ -38,7 +36,7 @@ export class DeptoService
     filtarDeptos(nombre: string): Observable<SingleExecutionResult<FiltrarDeptosQuery>>
     {
         this.ngxLoader.startLoader(loaderDeptos);
-        return this.filtrarDeptosGQL.watch({nombre}).valueChanges.pipe(tap((res) =>
+        return this.filtrarDeptosGQL.fetch({nombre}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
