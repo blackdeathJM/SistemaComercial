@@ -5,15 +5,14 @@ import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {NumericValueType, RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {MirActAvances} from '#/libs/models/src/lib/dir-general/planeacion/mir/MirActAvances';
-import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {isNotNil} from '@angular-ru/cdk/utils';
 import {MatDialogRef} from '@angular/material/dialog';
 import {TMirsActAvances} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {finalize} from 'rxjs';
+import {MirQuery} from '@s-dir-general/mir/store/mir.query';
 
 export interface ICalculo
 {
@@ -45,17 +44,17 @@ export class ModAvancesMirComponent implements OnInit
         semRojo: this.valoreReqCalculo
     });
 
-    constructor(private fb: RxFormBuilder, public entityMir: EntityMir, private ngxToast: NgxToastService, public mdr: MatDialogRef<ModAvancesMirComponent>, private mirService: MirService)
+    constructor(private fb: RxFormBuilder, private mirQuery: MirQuery, private ngxToast: NgxToastService, public mdr: MatDialogRef<ModAvancesMirComponent>, private mirService: MirService)
     {
     }
 
     ngOnInit(): void
     {
         this.formModAvances = this.fb.formGroup(new MirActAvances());
-        this.formModAvances.patchValue(this.entityMir.snapshot.mir);
+        this.formModAvances.patchValue(this.mirQuery.getActive());
 
         const valoresCalculo = localStorage.getItem(this.calculoLocal);
-        if (isNotNil(valoresCalculo))
+        if (valoresCalculo)
         {
             this.formCalculo.patchValue(JSON.parse(valoresCalculo));
         }
@@ -74,7 +73,7 @@ export class ModAvancesMirComponent implements OnInit
         const meta = parseFloat(this.formModAvances.get('meta').value);
         const input: TMirsActAvances =
             {
-                _id: this.entityMir.snapshot.mir._id,
+                _id: this.mirQuery.getActive()._id,
                 lineaBaseAno: parseFloat(this.formModAvances.get('lineaBaseAno').value),
                 lineaBaseValor: this.formModAvances.get('lineaBaseValor').value,
                 meta,

@@ -22,11 +22,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
-import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     standalone: true,
@@ -69,9 +68,9 @@ export class ModDocumentosComponent implements OnInit, AfterContentInit, OnDestr
     mostrarProgreso: boolean = false;
     sub: Subscription = new Subscription();
 
-    constructor(private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService, private stateAuth: AuthEntity,
-                private mdr: MatDialog, private cdr: ChangeDetectorRef, public entityEmpleado: EmpleadoEntity, private entityMisDocumentos: EntityMisDocumentosStore,
-                private empleadoService: EmpleadoService, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService)
+    constructor(private fb: RxFormBuilder, private configService: FuseConfirmationService, private generalService: GeneralService, private authQuery: AuthQuery,
+                private mdr: MatDialog, private cdr: ChangeDetectorRef, public empleadoQuery: EmpleadoQuery, private empleadoService: EmpleadoService,
+                private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService)
     {
     }
 
@@ -135,7 +134,7 @@ export class ModDocumentosComponent implements OnInit, AfterContentInit, OnDestr
                 usuarioFolio: null,
                 fechaRecepcion: GeneralService.convertirUnix(fechaRecepcion.c, fechaRecepcion.ts),
                 fechaLimiteEntrega: GeneralService.convertirUnix(fechaLimiteEntrega.c, fechaLimiteEntrega.ts),
-                enviadoPor: this.stateAuth.snapshot._id,
+                enviadoPor: this.authQuery.getValue()._id,
                 ...resto
             };
 

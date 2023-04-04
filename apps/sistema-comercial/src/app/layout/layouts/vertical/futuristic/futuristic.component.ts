@@ -6,7 +6,7 @@ import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {Navegation} from '@s-core/navigation/navigation.types';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     selector: 'futuristic-layout',
@@ -23,7 +23,7 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy
     /**
      * Constructor
      */
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: AuthEntity,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public authQuery: AuthQuery,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }

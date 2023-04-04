@@ -11,7 +11,6 @@ import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
 import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 
 @Component({
@@ -31,7 +30,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
     sub = new Subscription();
     deshabilitarLista = false;
 
-    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles, private cdr: ChangeDetectorRef, public stateAuth: AuthEntity)
+    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles, private cdr: ChangeDetectorRef)
     {
     }
 

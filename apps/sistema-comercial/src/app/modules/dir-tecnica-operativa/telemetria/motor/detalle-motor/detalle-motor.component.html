@@ -1,54 +1,54 @@
 <article class="flex flex-col flex-auto p-4">
     <app-lista-motores class="flex-auto" (indiceMotor)="indiceMotor($event)"></app-lista-motores>
-    <ng-container *ngIf="entityTelemetria.state$ | async as instalacion">
+    <ng-container *ngIf="telemetriaQuery.selectActive() | async as instalacion">
         <section class="flex-auto mt-8" *ngIf="instalacion.instalacion" @zoomIn>
             <mat-card class="bg-gray-300 dark:bg-gray-800">
                 <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500">
                     <div class="flex flex-auto justify-between items-center">
-                        <span class="text-lg font-medium">Motor {{instalacion.instalacion.instalacion.nombre}}</span>
-                        <mat-icon [svgIcon]="instalacion.instalacion.motores[indice]?.activo? 'heroicons_solid:check-circle': 'heroicons_solid:x-circle'"
-                                  [ngClass]="instalacion.instalacion.motores[indice]?.activo? 'text-green-400': 'text-red-400'"></mat-icon>
+                        <span class="text-lg font-medium">Motor {{instalacion.instalacion.nombre}}</span>
+                        <mat-icon [svgIcon]="instalacion.motores[indice]?.activo? 'heroicons_solid:check-circle': 'heroicons_solid:x-circle'"
+                                  [ngClass]="instalacion.motores[indice]?.activo? 'text-green-400': 'text-red-400'"></mat-icon>
                     </div>
                 </mat-card-header>
                 <mat-card-content>
                     <div class="grid grid-cols-6 gap-4 p-3">
                         <span class="detalle-span">Marca:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.marca | defaultValue:'---'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.marca | defaultValue:'---'}}</span>
                         <span class="detalle-span">Modelo:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.modelo | defaultValue: '---'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.modelo | defaultValue: '---'}}</span>
                         <span class="detalle-span">Serie:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.noSerie | defaultValue: '---'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.noSerie | defaultValue: '---'}}</span>
 
                         <span class="detalle-span">Amperaje:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.amperaje | defaultValue: '0.00'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.amperaje | defaultValue: '0.00'}}</span>
                         <span class="detalle-span">Voltaje:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.voltaje | defaultValue: '0.00'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.voltaje | defaultValue: '0.00'}}</span>
                         <span class="detalle-span">Fact potencia:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.factPotencia | defaultValue: '0.00'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.factPotencia | defaultValue: '0.00'}}</span>
 
                         <span class="detalle-span col-start-3">Hp:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.hp | defaultValue:'0.00'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.hp | defaultValue:'0.00'}}</span>
                         <span class="detalle-span">Eficiencia:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.eficiencia}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.eficiencia}}</span>
 
                         <span class="detalle-span col-start-3">Fecha instalacion:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.fechaInstalacion | date: 'dd/MM/YYYY'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.fechaInstalacion | date: 'dd/MM/YYYY'}}</span>
                         <span class="detalle-span">Fecha retiro:</span>
-                        <span class="border-b-2">{{instalacion.instalacion.motores[indice]?.fechaRetiro | date: 'dd/MM/YYYY' | defaultValue: '---'}}</span>
+                        <span class="border-b-2">{{instalacion.motores[indice]?.fechaRetiro | date: 'dd/MM/YYYY' | defaultValue: '---'}}</span>
 
                         <span class="detalle-span">Descripcion:</span>
-                        <span class="col-span-5 border-b-2">{{instalacion.instalacion.motores[indice]?.descripcion | defaultValue: '---'}}</span>
+                        <span class="col-span-5 border-b-2">{{instalacion.motores[indice]?.descripcion | defaultValue: '---'}}</span>
 
                         <span class="detalle-span">Observaciones:</span>
-                        <span class="col-span-5 border-b-2">{{instalacion.instalacion.motores[indice]?.observaciones | defaultValue: '---'}}</span>
+                        <span class="col-span-5 border-b-2">{{instalacion.motores[indice]?.observaciones | defaultValue: '---'}}</span>
                         <span class="detalle-span">Motivo de retiro:</span>
-                        <span class="col-span-5 border-b-2">{{instalacion.instalacion.motores[indice]?.motivoRet | defaultValue: '---'}}</span>
+                        <span class="col-span-5 border-b-2">{{instalacion.motores[indice]?.motivoRet | defaultValue: '---'}}</span>
                         <span class="text-md col-span-full border-b-2 text-start text-amber-900 dark:text-amber-400">EVIDENCIA INSTALACION</span>
                         <span class="text-md col-span-full border-b-2 text-start text-amber-900 dark:text-amber-400">EVIDENCIA BAJA</span>
                     </div>
                 </mat-card-content>
                 <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
-                    <div class="flex items-center justify-between items-center gap-4">
+                    <div class="flex items-center justify-between gap-4">
                         <button mat-raised-button color="primary">
                             <mat-icon>add</mat-icon>
                             Evidencia de instalacion

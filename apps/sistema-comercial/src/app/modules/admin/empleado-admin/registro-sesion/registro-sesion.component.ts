@@ -13,14 +13,14 @@ import {TrimDirective} from '@s-directives/trim.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {GeneralService} from '@s-services/general.service';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {isNotNil} from '@angular-ru/cdk/utils';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {Auth} from '@s-admin/empleado-admin/models/auth';
 import {AuthService} from '@s-core/auth/store/auth.service';
 import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
 import {RolesService} from '@s-core/auth/store/roles.service';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     standalone: true,
@@ -39,7 +39,7 @@ export class RegistroSesionComponent implements OnInit
     soloLectura = false;
 
     constructor(private fb: RxFormBuilder, public mdr: MatDialogRef<RegistroSesionComponent>, private registroSesionGQL: RegistroSesionGQL, private ngxToastService: NgxToastService,
-                private actualizarPassGQL: ActualizarContrasenaAdminGQL, private stateAuth: AuthEntity, private entityEmpleado: EmpleadoEntity, private authService: AuthService,
+                private actualizarPassGQL: ActualizarContrasenaAdminGQL, private authQuery: AuthQuery, private empleadoQuery: EmpleadoQuery, private authService: AuthService,
                 private rolesService: RolesService)
     {
     }
@@ -47,10 +47,10 @@ export class RegistroSesionComponent implements OnInit
     ngOnInit(): void
     {
         this.formAuth = this.fb.formGroup(new Auth());
-        if (isNotNil(this.entityEmpleado.snapshot.empleado.auth))
+        if (this.empleadoQuery.getActive().auth)
         {
             this.soloLectura = true;
-            this.formAuth.patchValue(this.entityEmpleado.snapshot.empleado.auth);
+            this.formAuth.patchValue(this.empleadoQuery.getActive().auth);
         }
     }
 
@@ -60,16 +60,16 @@ export class RegistroSesionComponent implements OnInit
         this.formAuth.disable();
         const {confirmContrasena, ...resto} = this.formAuth.value;
         // si el campo auth ya existe le damos opcion al administrador solo de cambiar la contrasena y si no existe puede agregar el usuario y contrasena
-        if (isNotNil(this.entityEmpleado.snapshot.empleado.auth))
+        if (isNotNil(this.empleadoQuery.getActive().auth))
         {
             const datos =
                 {
-                    _id: this.entityEmpleado.snapshot.empleado._id,
+                    _id: this.empleadoQuery.getActive()._id,
                     contrasena: this.formAuth.get('contrasena').value,
                 };
             const modificadoPor: IModificado =
                 {
-                    usuario: this.stateAuth.snapshot.auth.usuario,
+                    usuario: this.authQuery.getValue().auth.usuario,
                     accion: 'Modificacion de contrasena',
                     fecha: GeneralService.fechaHoraActual(),
                     valorActual: [{}],
@@ -86,13 +86,13 @@ export class RegistroSesionComponent implements OnInit
         {
             const modificadoPor: IModificado =
                 {
-                    usuario: this.stateAuth.snapshot.nombreCompleto,
+                    usuario: this.authQuery.getValue().nombreCompleto,
                     fecha: GeneralService.fechaHoraActual(),
                     accion: 'Asignacion de usuario para el inicio de sesion en el portal',
                     valorAnterior: [{}],
                     valorActual: [{}]
                 };
-            this.authService.registroSesion(this.entityEmpleado.snapshot.empleado._id, resto, modificadoPor).pipe(concatMap((res) =>
+            this.authService.registroSesion(this.empleadoQuery.getActive()._id, resto, modificadoPor).pipe(concatMap((res) =>
             {
                 if (isNotNil(res.data.registroSesion))
                 {

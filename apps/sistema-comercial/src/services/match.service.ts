@@ -1,27 +1,28 @@
 import {inject, Injectable} from '@angular/core';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {Constantes} from '@s-shared/constantes';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {isNil} from '@angular-ru/cdk/utils';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Injectable({providedIn: 'root'})
 class MatchService
 {
-    constructor(private stateAuth: AuthEntity, private ngxToast: NgxToastService)
+    constructor(private authQuery: AuthQuery, private ngxToast: NgxToastService)
     {
     }
 
     accesoRutas(role: string): boolean
     {
-        if (this.stateAuth.snapshot.auth.usuario === Constantes.admin)
+        if (this.authQuery.getValue().auth.usuario
+            === Constantes.admin)
         {
             return true;
         }
-        if (isNil(this.stateAuth.snapshot.auth.guards))
+        if (!this.authQuery.getValue().auth.guards)
         {
             return false;
         }
-        if (!this.stateAuth.snapshot.auth.guards.includes(role))
+        if (!this.authQuery.getValue().auth.guards.includes(role))
         {
             this.ngxToast.alertaToast(Constantes.mensaje, 'Acceso denegado');
             return false;

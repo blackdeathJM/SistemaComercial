@@ -10,11 +10,10 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {finalize} from 'rxjs';
 import {RxwebValidators} from '@rxweb/reactive-form-validators';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
-import {isNotNil} from '@angular-ru/cdk/utils';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {MisDocsQuery} from '@s-general/store/mis-docs.query';
 
 @Component({
     selector: 'app-mod-reasignacion',
@@ -40,8 +39,8 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
     formSelect: FormControl = new FormControl([], RxwebValidators.required({message: 'Es necesario que selecciones por lo menos un usuario'}));
     cargando: boolean = false;
 
-    constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService,
-                private entityMisDocumentos: EntityMisDocumentosStore, public entityEmpleados: EmpleadoEntity, private empleadoService: EmpleadoService)
+    constructor(public dRef: MatDialogRef<ModReasignacionComponent>, private misDocumentosService: MisDocumentosService, private ngxToast: NgxToastService, public empleadoQuery: EmpleadoQuery,
+                private empleadoService: EmpleadoService, private misDocsQuery: MisDocsQuery)
     {
     }
 
@@ -53,9 +52,10 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
 
     ngAfterContentInit(): void
     {
-        if (isNotNil(this.entityMisDocumentos.snapshot.documento))
+        if (this.misDocsQuery.getActive())
         {
-            this.formSelect.setValue(this.entityMisDocumentos.snapshot.documento.usuarios);
+            // this.formSelect.setValue(this.entityMisDocumentos.snapshot.documento.usuarios);
+            this.formSelect.setValue(this.misDocsQuery.getActive().usuarios);
         }
     }
 
@@ -67,7 +67,7 @@ export class ModReasignacionComponent implements OnInit, AfterContentInit
             return;
         }
         this.cargando = true;
-        this.misDocumentosService.reasignacionUsuarios(this.entityMisDocumentos.snapshot.documento._id, this.formSelect.value).pipe(finalize(() =>
+        this.misDocumentosService.reasignacionUsuarios(this.misDocsQuery.getActive()._id, this.formSelect.value).pipe(finalize(() =>
         {
             this.cargando = false;
             this.dRef.close();

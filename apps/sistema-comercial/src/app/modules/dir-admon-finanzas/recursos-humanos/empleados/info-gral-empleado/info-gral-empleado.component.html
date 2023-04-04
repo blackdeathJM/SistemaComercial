@@ -1,5 +1,5 @@
 <article class="flex flex-col flex-auto">
-    <section class="flex-auto my-4 tarjeta-mat" *ngIf="empleado$ | async as empleado" @zoomIn>
+    <section class="flex-auto my-4 tarjeta-mat" *ngIf="empleadoQuery.selectActive() | async as empleado" @zoomIn>
         <mat-card class="bg-gray-300 dark:bg-gray-800">
             <mat-card-header class="tarjeta-mat-cabecera border-b-cyan-500">
                 <span class="text-xl">Informacion personal</span>

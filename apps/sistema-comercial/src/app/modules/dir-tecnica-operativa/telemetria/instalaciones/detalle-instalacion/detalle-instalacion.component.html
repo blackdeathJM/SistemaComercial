@@ -1,29 +1,29 @@
-<ng-container *ngIf="(entityTelemetria.state$ | async) as inst">
+<ng-container *ngIf="(telemetriaQuery.selectActive() | async) as inst">
     <article class="flex flex-col flex-auto p-4" *ngIf="inst.instalacion" @zoomIn>
         <section class="tarjeta-mat">
             <mat-card class="bg-gray-300 dark:bg-gray-800">
                 <mat-card-header class="tarjeta-mat-cabecera border-b-yellow-400">
-                    <span class="text-lg font-medium">Instalacion {{inst.instalacion.instalacion.nombre | uppercase}}</span>
+                    <span class="text-lg font-medium">Instalacion {{inst.instalacion.nombre | uppercase}}</span>
 
                 </mat-card-header>
                 <mat-card-content>
                     <section class="flex flex-col flex-auto">
                         <div class="grid grid-cols-8 gap-4 p-3">
                             <span class="detalle-span">Instalacion:</span>
-                            <span class="border-b-2">{{inst.instalacion.instalacion.nombre}}</span>
+                            <span class="border-b-2">{{inst.instalacion.nombre}}</span>
                             <span class="detalle-span">Direccion:</span>
-                            <span class="col-span-3 border-b-2">{{inst.instalacion.instalacion.direccion}}</span>
+                            <span class="col-span-3 border-b-2">{{inst.instalacion.direccion}}</span>
                             <span class="detalle-span">Tipo:</span>
-                            <span class="border-b-2">{{inst.instalacion.instalacion.tipoInstalacion}}</span>
+                            <span class="border-b-2">{{inst.instalacion.tipoInstalacion}}</span>
 
                             <span class="detalle-span">Profundidad:</span>
-                            <span class="border-b-2">{{inst.instalacion.instalacion.profPozo}}</span>
+                            <span class="border-b-2">{{inst.instalacion.profPozo}}</span>
                             <span class="detalle-span">Ademe:</span>
-                            <span class="border-b-2">{{inst.instalacion.instalacion.diamAdeme}}</span>
+                            <span class="border-b-2">{{inst.instalacion.diamAdeme}}</span>
                             <span class="detalle-span">Diam Columna:</span>
-                            <span class="border-b-2">{{inst.instalacion.instalacion.diamCol}}</span>
+                            <span class="border-b-2">{{inst.instalacion.diamCol}}</span>
                             <span class="detalle-span">Long Columna:</span>
-                            <span class="border-b-2">{{inst.instalacion.instalacion.longCol}}</span>
+                            <span class="border-b-2">{{inst.instalacion.longCol}}</span>
                         </div>
                         <mat-divider class="my-4 border-2 border-yellow-400"></mat-divider>
 
@@ -40,11 +40,11 @@
                 </mat-card-content>
                 <mat-card-actions class="tarjeta-mat-acciones border-t-yellow-400">
                     <div class="flex flex-auto items-center justify-between">
-                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, 'instalacion.nivelDinamico')" [id]="ctrlNvaMedicionDin" [disabled]="ctrlNvaMedicionDin | navegacionPermiso: 'ctrl'">
+                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst._id, 'instalacion.nivelDinamico')" [id]="ctrlNvaMedicionDin" [disabled]="ctrlNvaMedicionDin | navegacionPermiso: 'ctrl'">
                             <mat-icon>add</mat-icon>
                             Inicializar medicion dinamica
                         </button>
-                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst.instalacion._id, 'instalacion.nivelEstatico')" [id]="ctrlNvaMedicionEst" [disabled]="ctrlNvaMedicionEst | navegacionPermiso: 'ctrl'">
+                        <button mat-raised-button color="primary" (click)="agregarNvaMedicion(inst._id, 'instalacion.nivelEstatico')" [id]="ctrlNvaMedicionEst" [disabled]="ctrlNvaMedicionEst | navegacionPermiso: 'ctrl'">
                             <mat-icon>add</mat-icon>
                             Inicializar medicion estatica
                         </button>

@@ -55,7 +55,7 @@ export class ListaDeptosComponent implements OnInit
     editar(data: IDepto): void
     {
         this.deptoStore.setActive(data._id);
-        this.dRef.open(ModDeptoComponent, {width: '40%', data: data._id});
+        this.dRef.open(ModDeptoComponent, {width: '40%'});
     }
 
     nuevoPuesto(data: IDepto): void

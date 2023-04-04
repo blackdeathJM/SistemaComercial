@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {FuseCardModule} from '@s-fuse/card';
@@ -7,18 +7,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {fuseAnimations} from '@s-fuse/public-api';
-import {MatDialog} from '@angular/material/dialog';
-import {ModRegistroEmpleadoComponent} from '@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
-import {Select} from '@ngxs/store';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
-import {Observable} from 'rxjs';
-import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/convertir-timestam-unix.pipe';
 import {CtrlRecursosHumanos} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 
 @Component({
     selector: 'app-info-gral-empleado',
@@ -45,10 +39,10 @@ import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.
 })
 export class InfoGralEmpleadoComponent
 {
-    @Select(EmpleadoEntity.empleado) empleado$: Observable<IResolveEmpleado>;
+    // @Select(EmpleadoEntity.empleado) empleado$: Observable<IResolveEmpleado>;
     idCtrl = CtrlRecursosHumanos.agregarNvoEmpleado;
 
-    constructor(public authEntity: AuthEntity)
+    constructor(public empleadoQuery: EmpleadoQuery)
     {
     }
 }

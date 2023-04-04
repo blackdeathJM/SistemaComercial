@@ -1,19 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {makeVar, SingleExecutionResult, useReactiveVar} from '@apollo/client';
+import {SingleExecutionResult} from '@apollo/client';
 import {PbrsGQL, RegPbrGQL, RegPbrMutation} from '#/libs/datos/src';
 import {TPbrs, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr-consultas.dto';
-import {EntityPbr} from '@s-dir-general/pbr/store/pbr.entity';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IResPbrEmpleado} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
+import {PbrStore} from '@s-dir-general/pbr/store/pbr.store';
 
 export const loaderPbrs = 'loaderPbrs';
 
 @Injectable()
 export class PbrService
 {
-    constructor(private regPbrGQL: RegPbrGQL, private pbrsGQL: PbrsGQL, private entityPbr: EntityPbr, private ngxLoader: NgxUiLoaderService)
+    constructor(private regPbrGQL: RegPbrGQL, private pbrsGQL: PbrsGQL, private pbrStore: PbrStore, private ngxLoader: NgxUiLoaderService)
     {
     }
 
@@ -21,10 +20,11 @@ export class PbrService
     {
         return this.regPbrGQL.mutate({input}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const pbr = $cast<IResPbrEmpleado>(res.data.regPbr);
-                this.entityPbr.addOne(pbr);
+                const pbr = res.data.regPbr as IResPbrEmpleado;
+                // this.entityPbr.addOne(pbr);
+                this.pbrStore.add(pbr);
             }
         }));
     }
@@ -37,8 +37,9 @@ export class PbrService
             if (res.data)
             {
                 this.ngxLoader.stopLoader(loaderPbrs);
-                const pbrs = $cast<IResPbrEmpleado[]>(res.data.pbrs);
-                this.entityPbr.setAll(pbrs);
+                const pbrs = res.data.pbrs as IResPbrEmpleado[];
+                // this.entityPbr.setAll(pbrs);
+                this.pbrStore.set(pbrs);
             }
         }));
     }

@@ -7,7 +7,7 @@
             </button>
             <mat-divider class="border-2"></mat-divider>
             <div class="overflow-y-auto flex-auto" ngxUiLoaderBlurred>
-                <ng-container *ngIf="entityTelemetria.entitiesArray$ | async as inst">
+                <ng-container *ngIf="telemetriaQuery.selectAll() | async as inst">
                     <div class="flex flex-auto flex-col pl-1">
                         <mat-selection-list multiple="false" color="primary">
                             <mat-list-option class="border-b-2" *ngFor="let instalacion of inst" (selectedChange)="seleccionarInstalacion(instalacion)">

@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Depto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto';
 import {finalize} from 'rxjs';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -13,8 +13,8 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
-import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
+import {DeptoQuery} from '@s-dirAdmonFinanzas/departamento/store/depto.query';
 
 @Component({
     standalone: true,
@@ -42,8 +42,7 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
     seleccionarUno: IDepto = null;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, private entityDepto: DeptoEntity,
-                @Inject(MAT_DIALOG_DATA) private _id: string)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, private deptoQuery: DeptoQuery)
     {
 
     }
@@ -52,7 +51,7 @@ export class ModDeptoComponent implements OnInit
     {
         this.formDepto = this.fb.formGroup(new Depto());
         // this.deptoQuery.selectActive().subscribe(res => console.log(res));
-        this.seleccionarUno = this.entityDepto.selectOne(this._id);
+        this.seleccionarUno = this.deptoQuery.getActive();
         if (this.seleccionarUno)
         {
             this.formDepto.patchValue(this.seleccionarUno);

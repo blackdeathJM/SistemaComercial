@@ -4,7 +4,7 @@
             <span class="text-xl">MIR</span>
         </mat-card-header>
         <mat-card-content>
-            <mat-tab-group *ngIf="entityMir.entitiesArray$ | async as mirs" ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="mirSeleccionado = mirs[indice]">
+            <mat-tab-group *ngIf="mirQuery.selectAll() | async as mirs" ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="mirSeleccionado = mirs[indice]">
                 <mat-tab [label]="mir.idIndicador" *ngFor="let mir of mirs; trackBy:trackByFn">
                     <div class="grid grid-cols-10 gap-4">
                         <span class="detalle-span text-amber-900 dark:text-amber-400 col-span-2">Centro Gestor</span>

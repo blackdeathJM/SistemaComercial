@@ -1,8 +1,8 @@
-import {StateRepository} from '@angular-ru/ngxs/decorators';
-import {Selector, State} from '@ngxs/store';
+import {DataAction, Payload, StateRepository} from '@angular-ru/ngxs/decorators';
+import {State} from '@ngxs/store';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Injectable} from '@angular/core';
-import {createEntityCollections, EntityCollections} from '@angular-ru/cdk/entity';
+import {createEntityCollections} from '@angular-ru/cdk/entity';
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 
 export interface IEmpleadoSelect
@@ -22,23 +22,16 @@ export class EmpleadoEntity extends NgxsDataEntityCollectionsRepository<IResolve
 {
     public primaryKey = '_id';
 
-    @Selector()
-    public static empleado(stateEmpleado: EntityCollections<IResolveEmpleado, string, IEmpleadoSelect>): IResolveEmpleado
+    @DataAction()
+    public seleccionarEmpleado(@Payload('empleadoSeleccionado') empleado: IResolveEmpleado): void
     {
-        return stateEmpleado.empleado;
+        // const state = this.getState();
+        // const empleado = this.selectOne(_id);
+        // this.setEntitiesState({
+        //     ...state,
+        //     empleado
+        // });
+        const empleadoSeleccionado = this.selectOne(empleado._id);
+        this.ctx.patchState({empleado: empleadoSeleccionado});
     }
 }
-
-
-// @DataAction()
-// public seleccionarEmpleado(@Payload('empleadoSeleccionado') empleado: IResolveEmpleado): void
-// {
-//     // const state = this.getState();
-//     // const empleado = this.selectOne(_id);
-//     // this.setEntitiesState({
-//     //     ...state,
-//     //     empleado
-//     // });
-//     const empleadoSeleccionado = this.selectOne(empleado._id);
-//     this.ctx.patchState({empleado: empleadoSeleccionado});
-// }

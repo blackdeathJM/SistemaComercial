@@ -14,6 +14,7 @@ export class AuthGuard implements CanMatch
 
     canMatch(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
+        console.log('authGuard');
         return this.checar(segments);
     }
 

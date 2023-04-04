@@ -5,7 +5,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
@@ -18,6 +17,8 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {MatButtonModule} from '@angular/material/button';
 import {CtrlRecursosHumanos} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {EmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
 
 @Component({
     selector: 'app-lista-empleados',
@@ -36,7 +37,7 @@ export class ListaEmpleadosComponent implements OnInit, AfterViewInit, OnDestroy
     agregarNuevo = CtrlRecursosHumanos.agregarNvoEmpleado;
     sub = new Subscription();
 
-    constructor(public entityDepto: DeptoEntity, private entityEmpleado: EmpleadoEntity, private deptoService: DeptoService, private empleadoService: EmpleadoService)
+    constructor(public entityDepto: DeptoEntity, private empleadoQuery: EmpleadoQuery, private empleadoStore: EmpleadoStore, private deptoService: DeptoService, private empleadoService: EmpleadoService)
     {
     }
 
@@ -47,21 +48,24 @@ export class ListaEmpleadosComponent implements OnInit, AfterViewInit, OnDestroy
 
     ngAfterViewInit(): void
     {
-        this.sub.add(this.entityEmpleado.entitiesArray$.subscribe((res: IResolveEmpleado[]) =>
+        this.sub.add(this.empleadoQuery.selectAll().subscribe((res: IResolveEmpleado[]) =>
         {
             this.dataSource.data = res;
             this.dataSource.paginator = this.paginacion;
         }));
     }
+
     seleccionar(empleado: IResolveEmpleado): void
     {
-        this.entityEmpleado.patchState({empleado});
+        // this.entityEmpleado.patchState({empleado});
+        this.empleadoStore.setActive(empleado._id);
     }
 
     nvoEmpleado(): void
     {
 
     }
+
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();

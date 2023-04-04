@@ -13,10 +13,10 @@ import {finalize, startWith, Subscription} from 'rxjs';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
-import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {MisDocumentosService} from '@s-general/store/mis-documentos.service';
 import {checkValueIsFilled} from '@angular-ru/cdk/utils';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
+import {MisDocsQuery} from '@s-general/store/mis-docs.query';
 
 @Component({
     selector: 'app-mod-subir-docs',
@@ -48,7 +48,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
     mostrarProgreso: boolean = false;
 
     constructor(private fb: RxFormBuilder, private dRef: MatDialogRef<ModSubirDocsComponent>, private ngxToast: NgxToastService, private misDocumentosService: MisDocumentosService,
-                private cdr: ChangeDetectorRef, public generalServices: GeneralService, private stateAuth: AuthEntity, public entityMisDocumentos: EntityMisDocumentosStore)
+                private cdr: ChangeDetectorRef, public generalServices: GeneralService, private authQuery: AuthQuery, public misDocsQuery: MisDocsQuery)
     {
     }
 
@@ -62,7 +62,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
             this.cdr.detectChanges();
         }));
 
-        if (this.entityMisDocumentos.snapshot.documento.enviadoPor !== this.stateAuth.snapshot._id)
+        if (this.misDocsQuery.getActive().enviadoPor !== this.authQuery.getValue()._id)
         {
             this.formDocsArchivo.get('docArchivo').disable();
             this.advertencia = 'Este documento solo puede ser modificado por la persona que lo subio';
@@ -90,14 +90,14 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
         {
             if (docArchivo)
             {
-                if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.docUrl))
+                if (this.misDocsQuery.getActive().docUrl)
                 {
-                    await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.docUrl);
+                    await this.generalServices.eliminarDocFirabase(this.misDocsQuery.getActive().docUrl);
                 }
                 try
                 {
                     this.mostrarProgreso = true;
-                    const ruta = GeneralService.rutaGuardar(this.entityMisDocumentos.snapshot.documento.tipoDoc, docArchivo._files[0].name, 'documentos');
+                    const ruta = GeneralService.rutaGuardar(this.misDocsQuery.getActive().tipoDoc, docArchivo._files[0].name, 'documentos');
                     const doc = await this.generalServices.subirFirebase(docArchivo._files[0], ruta);
                     docUrl = await getDownloadURL(doc.ref);
                 } catch (e)
@@ -108,11 +108,11 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
             }
             if (acuseArchivo)
             {
-                if (checkValueIsFilled(this.entityMisDocumentos.snapshot.documento.acuseUrl))
+                if (checkValueIsFilled(this.misDocsQuery.getActive().acuseUrl))
                 {
                     try
                     {
-                        await this.generalServices.eliminarDocFirabase(this.entityMisDocumentos.snapshot.documento.acuseUrl);
+                        await this.generalServices.eliminarDocFirabase(this.misDocsQuery.getActive().acuseUrl);
                     } catch (e)
                     {
                         this.ngxToast.errorToast(e, 'Ocurrio un error al tratar de eminar el documento');
@@ -121,7 +121,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
                 try
                 {
                     this.mostrarProgreso = true;
-                    const ruta = GeneralService.rutaGuardar(this.entityMisDocumentos.snapshot.documento.tipoDoc, acuseArchivo._files[0].name, 'documentos');
+                    const ruta = GeneralService.rutaGuardar(this.misDocsQuery.getActive().tipoDoc, acuseArchivo._files[0].name, 'documentos');
                     const acuse = await this.generalServices.subirFirebase(acuseArchivo._files[0], ruta);
                     acuseUrl = await getDownloadURL(acuse.ref);
                 } catch (e)
@@ -143,7 +143,7 @@ export class ModSubirDocsComponent implements OnInit, OnDestroy
         }
         const actDocs =
             {
-                _id: this.entityMisDocumentos.snapshot.documento._id,
+                _id: this.misDocsQuery.getActive()._id,
                 docUrl,
                 acuseUrl,
             };

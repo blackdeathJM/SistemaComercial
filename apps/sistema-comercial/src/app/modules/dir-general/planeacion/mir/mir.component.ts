@@ -8,12 +8,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
-import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {Subscription} from 'rxjs';
-import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
 
 @Component({
     selector: 'app-mir',
@@ -28,7 +26,7 @@ export default class MirComponent implements OnInit
     abrirPanel = false;
     sub = new Subscription();
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private entityMir: EntityMir, private mirService: MirService, private seleccionService: SeleccionService)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private mirService: MirService)
     {
     }
 

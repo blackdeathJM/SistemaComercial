@@ -3,11 +3,11 @@ import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {MatInputModule} from '@angular/material/input';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {Subscription} from 'rxjs';
 import {GeneralService} from '@s-services/general.service';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -35,13 +35,13 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
     onTouchedCb?: () => void;
     sub = new Subscription();
 
-    constructor(public entityEmpleado: EmpleadoEntity)
+    constructor(public empleadoQuery: EmpleadoQuery)
     {
     }
 
     ngAfterContentInit(): void
     {
-        this.sub.add(this.entityEmpleado.entitiesArray$.subscribe((res) =>
+        this.sub.add(this.empleadoQuery.selectAll().subscribe((res) =>
         {
             if (res)
             {
@@ -73,7 +73,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
 
     filtrarEmpleado(e: string): void
     {
-        this.empleados = GeneralService.filtradoEmpleados(e, [...this.entityEmpleado.selectAll()]);
+        this.empleados = GeneralService.filtradoEmpleados(e, [...this.empleadoQuery.getAll()]);
     }
 
     cambioSeleccion(e: MatSelectChange): void

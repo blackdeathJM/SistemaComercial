@@ -26,7 +26,6 @@ import {appConfig} from '@s-core/config/app.config';
 import {mockApiServices} from '#/apps/sistema-comercial/src/app/mock-api';
 import {CoreModule} from '@s-core/core.module';
 import {LayoutModule} from '@s-layout/layout.module';
-import {NgxsGlobalModule} from '#/apps/sistema-comercial/src/store/ngxsGlobal.module';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {configLoader} from '@s-core/configLoader';
 import {MatPaginatorIntl} from '@angular/material/paginator';
@@ -60,7 +59,6 @@ const routerConfig: ExtraOptions =
             LuxonModule,
             ReactiveFormsModule,
             BrowserAnimationsModule,
-            NgxsGlobalModule,
             RouterModule.forRoot(appRoutes, routerConfig),
 
             // Fuse, FuseConfig & FuseMockAPI

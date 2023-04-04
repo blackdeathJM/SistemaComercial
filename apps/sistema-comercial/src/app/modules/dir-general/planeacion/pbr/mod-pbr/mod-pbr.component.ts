@@ -13,8 +13,8 @@ import {finalize, Subscription} from 'rxjs';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
+import {EmpleadoQuery} from "@s-dirAdmonFinanzas/empleados/store/empleado.query";
 
 @Component({
     selector: 'app-mod-pbr',
@@ -34,7 +34,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
     unidades: string[] = [];
     sub = new Subscription();
 
-    constructor(private fb: RxFormBuilder, private pbrService: PbrService, private seleccionStore: SeleccionStore, public entityEmpleado: EmpleadoEntity)
+    constructor(private fb: RxFormBuilder, private pbrService: PbrService, private seleccionStore: SeleccionStore, public empleadoQuery: EmpleadoQuery)
     {
     }
 

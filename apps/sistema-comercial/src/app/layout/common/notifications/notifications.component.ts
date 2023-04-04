@@ -4,7 +4,7 @@ import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
 import {Subscription} from 'rxjs';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
-import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.store';
+import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.entity';
 import {NotificacionService} from '@s-layout/notifications/store/notificacion.service';
 
 @Component({
