@@ -1,43 +1,46 @@
-import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {Injectable} from '@angular/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
 import {
     ActualizarContrasenaAdminGQL, ActualizarContrasenaAdminMutation, LoginGQL, RegistroSesionGQL, RegistroSesionMutation, RolCambiadoGQL,
     RolCambiadoSubscription
 } from '#/libs/datos/src';
-import { Observable, of, tap } from 'rxjs';
-import { SingleExecutionResult } from '@apollo/client';
-import { ILogin, ILoginRespuesta } from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
-import { $cast, isNil, isNotNil } from '@angular-ru/cdk/utils';
-import { TOKEN } from '@s-auth/const';
-import { NgxToastService } from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthEntity } from '@s-core/auth/store/auth.entity';
-import { IAuth, ICambioContrasena, IDatosSesion } from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import { IModificado } from '#/libs/models/src/lib/common/common.interface';
-import { IResolveEmpleado } from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import { EmpleadoEntity } from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
-import { SubscriptionResult } from 'apollo-angular';
-import { AuthStore } from '@s-core/auth/store/auth.store';
+import {Observable, of, tap} from 'rxjs';
+import {SingleExecutionResult} from '@apollo/client';
+import {ILogin, ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
+import {$cast, isNil, isNotNil} from '@angular-ru/cdk/utils';
+import {TOKEN} from '@s-auth/const';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
+import {IAuth, ICambioContrasena, IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {IModificado} from '#/libs/models/src/lib/common/common.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
+import {SubscriptionResult} from 'apollo-angular';
+import {AuthStore} from '@s-core/auth/store/auth.store';
+import {AuthQuery} from "@s-core/auth/store/auth.query";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService
 {
     constructor(private jwtHelperService: JwtHelperService, private loginGQL: LoginGQL, private ngxToast: NgxToastService, private router: Router, private rolCambiadoGQL: RolCambiadoGQL,
-                private authEntity: AuthEntity, private activatedRoute: ActivatedRoute, private actPassGQL: ActualizarContrasenaAdminGQL, private registroSesionGQL: RegistroSesionGQL,
-                private entityEmpleado: EmpleadoEntity, private authStore: AuthStore)
+                private activatedRoute: ActivatedRoute, private actPassGQL: ActualizarContrasenaAdminGQL, private registroSesionGQL: RegistroSesionGQL,
+                private entityEmpleado: EmpleadoEntity, private authStore: AuthStore, private authQuery: AuthQuery)
     {
     }
 
     login(login: ILogin): Observable<SingleExecutionResult>
     {
-        return this.loginGQL.mutate({ login }).pipe(tap((res) =>
+        return this.loginGQL.mutate({login}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
                 const respuestaLogin = $cast<ILoginRespuesta>(res.data.login);
                 localStorage.setItem(TOKEN, respuestaLogin.token);
+
                 // this.authEntity.setState(respuestaLogin.datosSesion);
                 this.authStore._setState(respuestaLogin.datosSesion);
+
                 const redireccionUrl = this.activatedRoute.snapshot.queryParamMap.get('redirectUrl') || '/redireccion';
                 this.router.navigateByUrl(redireccionUrl).then();
             }
@@ -46,7 +49,7 @@ export class AuthService
 
     validarSesion(): Observable<boolean>
     {
-        if (isNil(this.jwtHelperService.tokenGetter()))
+        if (!this.jwtHelperService.tokenGetter())
         {
             return of(false);
         }
@@ -56,19 +59,19 @@ export class AuthService
             return of(false);
         }
 
-        if (isNotNil(this.authEntity.snapshot))
+        if (this.authQuery.getValue())
         {
             return of(true);
         }
         const sesionPorToken = this.jwtHelperService.decodeToken();
-        // this.authEntity.setState(sesionPorToken);
+        this.authEntity.setState(sesionPorToken);
         this.authStore._setState(sesionPorToken);
         return of(true);
     }
 
     actualizarContrasena(datos: ICambioContrasena, modificadoPor: IModificado): Observable<SingleExecutionResult<ActualizarContrasenaAdminMutation>>
     {
-        return this.actPassGQL.mutate({ datos, modificadoPor }).pipe(tap((res) =>
+        return this.actPassGQL.mutate({datos, modificadoPor}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
@@ -79,12 +82,12 @@ export class AuthService
 
     registroSesion(id: string, auth: IAuth, modificadoPor: IModificado): Observable<SingleExecutionResult<RegistroSesionMutation>>
     {
-        return this.registroSesionGQL.mutate({ _id: id, auth, modificadoPor }).pipe(tap((res) =>
+        return this.registroSesionGQL.mutate({_id: id, auth, modificadoPor}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
-                const { _id, ...changes } = $cast<IResolveEmpleado>(res.data.registroSesion);
-                this.entityEmpleado.updateOne({ id: _id, changes });
+                const {_id, ...changes} = $cast<IResolveEmpleado>(res.data.registroSesion);
+                this.entityEmpleado.updateOne({id: _id, changes});
                 this.ngxToast.satisfactorioToast('La sesion fue asignada con exito', 'Asignacion de sesion');
             }
         }));
@@ -92,7 +95,7 @@ export class AuthService
 
     rolCambiado(_id: string): Observable<SubscriptionResult<RolCambiadoSubscription>>
     {
-        return this.rolCambiadoGQL.subscribe({ _id }).pipe(tap((res) =>
+        return this.rolCambiadoGQL.subscribe({_id}).pipe(tap((res) =>
         {
             if (isNotNil(res.data))
             {
