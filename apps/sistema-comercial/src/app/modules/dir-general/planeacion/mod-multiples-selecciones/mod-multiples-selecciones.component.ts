@@ -8,13 +8,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
-import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 import {finalize, Subscription} from 'rxjs';
-import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {nth} from 'lodash-es';
+import {isNil, nth} from 'lodash-es';
+import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 
 @Component({
     selector: 'app-mod-multiples-selecciones',
@@ -37,15 +36,16 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
 
     seleccion: SeleccionType;
 
-    constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService, private ngxToast: NgxToastService, private seleccionStore: SeleccionStore)
+    constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService, private ngxToast: NgxToastService,
+                private seleccionQuery: SeleccionQuery)
     {
     }
 
     ngOnInit(): void
     {
-        this.sub.add(this.seleccionStore.state$.subscribe((res) =>
+        this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
-            if (isNotNil(res))
+            if (res)
             {
                 this.seleccion = res;
             }
@@ -56,7 +56,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
     {
         const seleccion: SeleccionType =
             {
-                _id: this.seleccionStore.snapshot !== null ? this.seleccionStore.snapshot._id : '',
+                _id: this.seleccionQuery.getValue() !== null ? this.seleccionQuery.getValue()._id : '',
                 centroGestor: this.ctrlCentroGestor.value !== '' ? [this.ctrlCentroGestor.value] : ['sinDatos'],
                 unidad: this.ctrlUnidad.value !== '' ? [this.ctrlUnidad.value] : ['sinDatos'],
                 dimension: this.ctrlDimension.value !== '' ? [this.ctrlDimension.value] : ['sinDatos'],
@@ -64,13 +64,13 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
                 frecuencia: this.ctrlFrecuencia.value !== '' ? [this.ctrlFrecuencia.value] : ['sinDatos']
             };
 
-        if (isNil(this.seleccionStore.snapshot))
+        if (isNil(this.seleccionQuery.getValue()))
         {
             this.registrar(seleccion);
             return;
         }
 
-        const llaves = Object.keys(this.seleccionStore.snapshot);
+        const llaves = Object.keys(this.seleccionQuery.getValue());
         llaves.splice(llaves.indexOf('_id'), 1);
         llaves.splice(llaves.indexOf('__typename'), 1);
 
@@ -83,7 +83,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
                 return;
             }
 
-            if (this.seleccionStore.snapshot[value].includes(nth(valor)))
+            if (this.seleccionQuery.getValue()[value].includes(nth(valor)))
             {
                 this.ngxToast.alertaToast('El dato que estas intentando ingresar ya se encuentra registrado', seleccion[value]);
                 return;

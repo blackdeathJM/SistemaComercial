@@ -1,13 +1,18 @@
-import {StateRepository} from '@angular-ru/ngxs/decorators';
-import {State} from '@ngxs/store';
-import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
+import {Store, StoreConfig} from '@datorama/akita';
+import {ISeleccion} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.interface';
 import {Injectable} from '@angular/core';
-import {NgxsDataRepository} from '@angular-ru/ngxs/repositories';
 
-@StateRepository()
-@State<SeleccionType>({name: 'seleccion', defaults: null})
-@Injectable()
-export class SeleccionStore extends NgxsDataRepository<SeleccionType>
+// export interface ISeleccionState extends EntityState<ISeleccion, string>, ActiveState
+// {
+//
+// }
+
+@Injectable({providedIn: 'root'})
+@StoreConfig({name: 'Selecciones', idKey: '_id'})
+export class SeleccionStore extends Store<ISeleccion>
 {
-
+    constructor()
+    {
+        super({});
+    }
 }

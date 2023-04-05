@@ -5,7 +5,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-import {SeleccionStore} from '@s-dir-general/selecciones/store/seleccion.store';
 import {finalize, Subscription} from 'rxjs';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -18,6 +17,7 @@ import {SeleccionType} from '#/libs/datos/src';
 import {TrimDirective} from '@s-directives/trim.directive';
 import {TrimInputModule} from '@angular-ru/cdk/directives';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 
 @Component({
     selector: 'app-mod-mir',
@@ -38,7 +38,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     sub = new Subscription();
     cargando = false;
 
-    constructor(private seleccionStore: SeleccionStore, private fb: RxFormBuilder, private mirService: MirService)
+    constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private mirService: MirService)
     {
     }
 
@@ -46,7 +46,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     {
         this.formMir = this.fb.formGroup(new Mir());
         this.formMir.get('ano').setValue(new Date().getFullYear());
-        this.sub.add(this.seleccionStore.state$.subscribe((res) =>
+        this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
             if (isNotNil(res))
             {

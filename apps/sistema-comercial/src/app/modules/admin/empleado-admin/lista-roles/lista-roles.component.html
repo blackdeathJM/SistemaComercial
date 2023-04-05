@@ -1,4 +1,4 @@
-<ng-container *ngIf="stateRoles.state$ | async as empleado">
+<ng-container *ngIf="rolesQuery.select() | async as empleado">
     <section class="flex flex-auto flex-col" ngxUiLoaderBlurred>
         <ng-container *ngIf="empleado; else noHayDatos">
             <mat-list [disabled]="deshabilitarLista">

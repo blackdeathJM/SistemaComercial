@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+// import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 
 export const environment = {
@@ -17,7 +17,7 @@ export const environment = {
     production: false,
     apiGraphql: 'http://localhost:3333/graphql',
     wsGraphql: 'ws://localhost:3333/graphql',
-    plugins: [NgxsLoggerPluginModule.forRoot(), NgxsReduxDevtoolsPluginModule.forRoot()]
+    // plugins: [NgxsLoggerPluginModule.forRoot(), NgxsReduxDevtoolsPluginModule.forRoot()]
 };
 
 /*

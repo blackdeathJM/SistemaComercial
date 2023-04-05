@@ -15,15 +15,15 @@ import {
 } from '#/libs/datos/src';
 import {SingleExecutionResult} from '@apollo/client';
 import {finalize, Observable, tap} from 'rxjs';
-import {StateRoles} from '@s-core/auth/store/roles.entity';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IActRoles, IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
+import {RolesStore} from '@s-core/auth/store/roles.store';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 
 @Injectable({providedIn: 'root'})
 export class RolesService
 {
-    constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private stateRoles: StateRoles, private ngxUiLoaderService: NgxUiLoaderService,
+    constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private ngxUiLoaderService: NgxUiLoaderService, private rolesStore: RolesStore,
                 private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL, private actTercerNivelGQL: ActTercerNivelGQL, private actCtrlPrimerNivelGQL: ActCtrlPrimerNivelGQL,
                 private actCtrlSegundoNivelGQL: ActCtrlSegundoNivelGQL, private actCtrlTercerNivelGQL: ActCtrlTercerNivelGQL, private asigPermisoPrimerNivelGQL: AsigPermisoPrimerNivelGQL,
                 private asigPermisoSegNivelGQL: AsigPermisoSegNivelGQL, private asigPermisoTercerNivelGQL: AsigPermisoTercerNivelGQL)
@@ -34,10 +34,11 @@ export class RolesService
     {
         return this.crearRolesGQL.mutate({args}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const nvoEstado = $cast<IRoles>(res.data.crearRoles);
-                this.stateRoles.setState(nvoEstado);
+                const nvoEstado = res.data.crearRoles as IRoles;
+                // this.stateRoles.setState(nvoEstado);
+                this.rolesStore.update(nvoEstado);
             }
         }));
     }
@@ -47,8 +48,9 @@ export class RolesService
         this.ngxUiLoaderService.startLoader(ngxLoader);
         return this.rolesAsigGQL.fetch({idEmpleado}).pipe(finalize(() => this.ngxUiLoaderService.stopLoader(ngxLoader)), tap((res) =>
         {
-            const rolesEmpleado = $cast<IRoles>(res.data.rolesAsig);
-            this.stateRoles.setState(rolesEmpleado);
+            const rolesEmpleado = res.data.rolesAsig as IRoles;
+            // this.stateRoles.setState(rolesEmpleado);
+            this.rolesStore.update(rolesEmpleado);
         }));
     }
 
@@ -56,10 +58,11 @@ export class RolesService
     {
         return this.actPrimerNivelGQL.mutate({role}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const roles = $cast<IRoles>(res.data.actPrimerNivel);
-                this.stateRoles.setState(roles);
+                const roles = res.data.actPrimerNivel as IRoles;
+                // this.stateRoles.setState(roles);
+                this.rolesStore.update(roles);
             }
         }));
     }
@@ -68,10 +71,11 @@ export class RolesService
     {
         return this.actCtrlPrimerNivelGQL.mutate({ctrl}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const ctrls = $cast<IRoles>(res.data.actCtrlPrimerNivel);
-                this.stateRoles.setState(ctrls);
+                const ctrls = res.data.actCtrlPrimerNivel as IRoles;
+                // this.stateRoles.setState(ctrls);
+                this.rolesStore.update(ctrls);
             }
         }));
     }
@@ -80,10 +84,11 @@ export class RolesService
     {
         return this.actSegundoNivelGQL.mutate({role}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const roles = $cast<IRoles>(res.data.actSegundoNivel);
-                this.stateRoles.setState(roles);
+                const roles = res.data.actSegundoNivel as IRoles;
+                // this.stateRoles.setState(roles);
+                this.rolesStore.update(roles);
             }
         }));
     }
@@ -92,10 +97,10 @@ export class RolesService
     {
         return this.actCtrlSegundoNivelGQL.mutate({ctrl}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const ctrls = $cast<IRoles>(res.data.actCtrlSegundoNivel);
-                this.stateRoles.setState(ctrls);
+                const ctrls = res.data.actCtrlSegundoNivel as IRoles;
+                // this.stateRoles.setState(ctrls);
             }
         }));
     }
@@ -107,7 +112,8 @@ export class RolesService
             if (isNotNil(res.data))
             {
                 const roles = $cast<IRoles>(res.data.actTercerNivel);
-                this.stateRoles.setState(roles);
+                // this.stateRoles.setState(roles);
+                this.rolesStore.update(roles);
             }
         }));
     }
@@ -119,7 +125,8 @@ export class RolesService
             if (isNotNil(res.data))
             {
                 const ctrls = $cast<IRoles>(res.data.actCtrlTercerNivel);
-                this.stateRoles.setState(ctrls);
+                // this.stateRoles.setState(ctrls);
+                this.rolesStore.update(ctrls);
             }
         }));
     }
@@ -131,7 +138,8 @@ export class RolesService
             if (isNotNil(res.data))
             {
                 const asignacion = $cast<IRoles>(res.data.asigPermisoPrimerNivel);
-                this.stateRoles.setState(asignacion);
+                // this.stateRoles.setState(asignacion);
+                this.rolesStore.update(asignacion);
             }
         }));
     }
@@ -143,7 +151,8 @@ export class RolesService
             if (isNotNil(res.data))
             {
                 const asignacion = $cast<IRoles>(res.data.asigPermisoSegNivel);
-                this.stateRoles.setState(asignacion);
+                // this.stateRoles.setState(asignacion);
+                this.rolesStore.update(asignacion);
             }
         }));
     }
@@ -155,7 +164,8 @@ export class RolesService
             if (isNotNil(res.data))
             {
                 const asignacion = $cast<IRoles>(res.data.asigPermisoTercerNivel);
-                this.stateRoles.setState(asignacion);
+                // this.stateRoles.setState(asignacion);
+                this.rolesStore.update(asignacion);
             }
         }));
     }

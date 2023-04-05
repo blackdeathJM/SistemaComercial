@@ -4,8 +4,8 @@ import {TemplatePortal} from '@angular/cdk/portal';
 import {MatButton} from '@angular/material/button';
 import {Subscription} from 'rxjs';
 import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
-import {EntityNotificacion} from '@s-layout/notifications/store/notificacion.entity';
 import {NotificacionService} from '@s-layout/notifications/store/notificacion.service';
+import {NotificacionQuery} from '@s-layout/notifications/store/notificacion.query';
 
 @Component({
     selector: 'notifications',
@@ -21,7 +21,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterContentIn
     sub: Subscription = new Subscription();
     private _overlayRef: OverlayRef;
 
-    constructor(private _overlay: Overlay, private _viewContainerRef: ViewContainerRef, public entityNotificacion: EntityNotificacion,
+    constructor(private _overlay: Overlay, private _viewContainerRef: ViewContainerRef, public notificacionQuery: NotificacionQuery,
                 private notificacionService: NotificacionService)
     {
     }

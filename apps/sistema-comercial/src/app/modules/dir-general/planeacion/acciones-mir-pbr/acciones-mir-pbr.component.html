@@ -3,7 +3,7 @@
         <input matInput placeholder="Introduce un año para filtrar" (keyup.enter)="buscarPorAno()" [(ngModel)]="buscarAno">
     </mat-form-field>
     <ng-container *ngIf="habCentroGestor">
-        <ng-container *ngIf="seleccionStore.state$ | async as centros">
+        <ng-container *ngIf="seleccionQuery.select() | async as centros">
             <mat-form-field class="flex-auto mt-5">
                 <mat-select (valueChange)="buscarPorCentroGestor($event)" placeholder="Filtrar por centro gestor" [(value)]="bCentroGestor">
                     <mat-option *ngFor="let centro of centros.centroGestor; trackBy: trackByFn" [value]="centro">{{centro}}</mat-option>

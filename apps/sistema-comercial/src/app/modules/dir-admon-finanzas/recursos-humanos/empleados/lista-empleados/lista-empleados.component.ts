@@ -4,7 +4,6 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
@@ -19,6 +18,7 @@ import {CtrlRecursosHumanos} from '#/apps/sistema-comercial/src/app/mock-api/com
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {EmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
+import {DeptoQuery} from '@s-dirAdmonFinanzas/departamento/store/depto.query';
 
 @Component({
     selector: 'app-lista-empleados',
@@ -37,7 +37,7 @@ export class ListaEmpleadosComponent implements OnInit, AfterViewInit, OnDestroy
     agregarNuevo = CtrlRecursosHumanos.agregarNvoEmpleado;
     sub = new Subscription();
 
-    constructor(public entityDepto: DeptoEntity, private empleadoQuery: EmpleadoQuery, private empleadoStore: EmpleadoStore, private deptoService: DeptoService, private empleadoService: EmpleadoService)
+    constructor(public deptoQuery: DeptoQuery, private empleadoQuery: EmpleadoQuery, private empleadoStore: EmpleadoStore, private deptoService: DeptoService, private empleadoService: EmpleadoService)
     {
     }
 

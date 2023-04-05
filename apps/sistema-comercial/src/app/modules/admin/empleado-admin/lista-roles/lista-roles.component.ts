@@ -4,7 +4,6 @@ import {ActivatedRoute} from '@angular/router';
 import {MatListModule} from '@angular/material/list';
 import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import {RolesService} from '@s-core/auth/store/roles.service';
-import {StateRoles} from '@s-core/auth/store/roles.entity';
 import {concatMap, finalize, Subscription} from 'rxjs';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
@@ -12,6 +11,7 @@ import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
+import {RolesQuery} from '@s-core/auth/store/roles.query';
 
 @Component({
     selector: 'app-lista-roles',
@@ -30,7 +30,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
     sub = new Subscription();
     deshabilitarLista = false;
 
-    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, public stateRoles: StateRoles, private cdr: ChangeDetectorRef)
+    constructor(private activatedRoute: ActivatedRoute, private rolesService: RolesService, private cdr: ChangeDetectorRef, public rolesQuery: RolesQuery)
     {
     }
 

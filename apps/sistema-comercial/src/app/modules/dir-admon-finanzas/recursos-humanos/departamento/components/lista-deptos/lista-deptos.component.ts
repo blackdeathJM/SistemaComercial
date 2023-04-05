@@ -6,7 +6,6 @@ import {CommonModule} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-depto/mod-depto.component';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
 import {DeptoService, loaderDeptos} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatCardModule} from '@angular/material/card';
@@ -42,7 +41,7 @@ export class ListaDeptosComponent implements OnInit
 {
     idLoader = loaderDeptos;
 
-    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: DeptoEntity, private deptoStore: DeptoStore, public deptoQuery: DeptoQuery)
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, private deptoStore: DeptoStore, public deptoQuery: DeptoQuery)
     {
 
     }

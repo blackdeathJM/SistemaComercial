@@ -1,13 +1,13 @@
 // import {StateRepository} from '@angular-ru/ngxs/decorators';
 // import {State} from '@ngxs/store';
-// import {IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+// import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 // import {Injectable} from '@angular/core';
 // import {NgxsDataRepository} from '@angular-ru/ngxs/repositories';
 //
 // @StateRepository()
-// @State<IRoles>({name: 'roles', defaults: null})
+// @State<SeleccionType>({name: 'seleccion', defaults: null})
 // @Injectable()
-// export class StateRoles extends NgxsDataRepository<IRoles>
+// export class SeleccionEntity extends NgxsDataRepository<SeleccionType>
 // {
 //
 // }
