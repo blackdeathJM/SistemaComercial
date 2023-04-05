@@ -32,6 +32,7 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {PaginacionEs} from '@s-core/paginacion-es';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
 import {ManejoErroresInterceptor} from '#/apps/sistema-comercial/src/interceptors/manejoErrores.interceptor';
+import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
 
 const routerConfig: ExtraOptions =
     {
@@ -83,6 +84,7 @@ const routerConfig: ExtraOptions =
             // modulos
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
+            environment.production ? [] : AkitaNgDevtools.forRoot()
         ],
     providers:
         [
