@@ -26,7 +26,6 @@ export class UserComponent implements AfterViewInit, OnDestroy
 
     updateUserStatus(status: string): void
     {
-        // TODO: Actualizar el estado del usuario
         // if (!this.user)
         // {
         //     return;

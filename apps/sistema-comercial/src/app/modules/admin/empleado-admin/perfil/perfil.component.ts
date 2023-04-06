@@ -1,23 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MaterialFileInputModule} from 'ngx-material-file-input';
-import {MatDividerModule} from '@angular/material/divider';
-import {ReactiveFormsModule} from '@angular/forms';
-import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from '@rxweb/reactive-form-validators';
-import {ActualizarAvatarGQL, ActualizarContrasenaAdminGQL} from '#/libs/datos/src';
-import {IModificado} from '#/libs/models/src/lib/common/common.interface';
-import {GeneralService} from '@s-services/general.service';
-import {finalize} from 'rxjs';
-import {getDownloadURL} from '@angular/fire/storage';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
-import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {NgxToastService} from '@s-services/ngx-toast.service';
-import {AuthQuery} from '@s-core/auth/store/auth.query';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { MatDividerModule } from '@angular/material/divider';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RxFormBuilder, RxReactiveFormsModule, RxwebValidators } from '@rxweb/reactive-form-validators';
+import { ActualizarAvatarGQL, ActualizarContrasenaAdminGQL } from '#/libs/datos/src';
+import { IModificado } from '#/libs/models/src/lib/common/common.interface';
+import { GeneralService } from '@s-services/general.service';
+import { finalize } from 'rxjs';
+import { getDownloadURL } from '@angular/fire/storage';
+import { IDatosSesion } from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import { EmpleadoService } from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import { NgxToastService } from '@s-services/ngx-toast.service';
+import { AuthQuery } from '@s-core/auth/store/auth.query';
 
 @Component({
     selector: 'app-perfil',
@@ -28,7 +28,7 @@ import {AuthQuery} from '@s-core/auth/store/auth.query';
             MaterialFileInputModule, MatDividerModule, NgOptimizedImage, ReactiveFormsModule, RxReactiveFormsModule
         ],
     templateUrl: './perfil.component.html',
-    styleUrls: ['./perfil.component.scss'],
+    styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit
 {
@@ -38,13 +38,13 @@ export class PerfilComponent implements OnInit
     usuarioSesionActual: IDatosSesion = null;
     deshabilitar = false;
     formCambioContrasena = this.fb.group({
-        txtContrasena: ['', RxwebValidators.required({message: 'La contrasena es requerida'})],
-        txtConfContrasena: ['', [RxwebValidators.required({message: 'Confirma la contrasena'}),
-            RxwebValidators.compare({fieldName: 'txtContrasena', message: 'Las contrasenas no son iguales'})]]
+        txtContrasena: ['', RxwebValidators.required({ message: 'La contrasena es requerida' })],
+        txtConfContrasena: ['', [RxwebValidators.required({ message: 'Confirma la contrasena' }),
+            RxwebValidators.compare({ fieldName: 'txtContrasena', message: 'Las contrasenas no son iguales' })]]
     });
 
-    constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL
-        , private generalService: GeneralService, private authQuery: AuthQuery, private empleadoService: EmpleadoService, private ngxToast: NgxToastService)
+    constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL,
+                private generalService: GeneralService, private authQuery: AuthQuery, private empleadoService: EmpleadoService, private ngxToast: NgxToastService)
     {
     }
 
@@ -72,6 +72,11 @@ export class PerfilComponent implements OnInit
 
     async cambiarImagen(): Promise<void>
     {
+        if (!this.img)
+        {
+            this.ngxToast.alertaToast('Necesitas seleccionar una imagen para poder mostrar', 'Selecciona imagen');
+            return;
+        }
         this.deshabilitar = true;
         try
         {
@@ -94,7 +99,7 @@ export class PerfilComponent implements OnInit
     cambiarContrasena(): void
     {
         this.formCambioContrasena.disable();
-        const {txtContrasena} = this.formCambioContrasena.value;
+        const { txtContrasena } = this.formCambioContrasena.value;
         const modificadoPor: IModificado =
             {
                 accion: 'Cambio de contrasena',

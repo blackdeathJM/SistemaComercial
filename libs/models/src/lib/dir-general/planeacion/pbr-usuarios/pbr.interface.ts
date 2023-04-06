@@ -1,14 +1,20 @@
-import {IMeses} from '../../../common/common';
-import {IEmpleado} from '../../../dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import { IMeses } from '../../../common/common';
+import { IEmpleado } from '../../../dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+
+export interface IPbrCuestionario
+{
+    centroGestor: string;
+    cuestionario: IPbr[];
+}
 
 export interface IPbr extends IMeses
 {
-    _id?: string;
+    id: string;
     claveVariable: string;
     variableOrigen: string;
     dato: string;
     unidad: string;
-    descripcion: string
+    descripcion: string;
     centroGestor: string;
     idEmpleado: string;
     trim1: number;
@@ -16,33 +22,4 @@ export interface IPbr extends IMeses
     trim3: number;
     trim4: number;
     total: number;
-    forEnero: string;
-    forFebrero: string;
-    forMarzo: string;
-    forAbril: string;
-    forMayo: string;
-    forJunio: string;
-    forJulio: string;
-    forAgosto: string;
-    forSeptiembre: string;
-    forOctubre: string;
-    forNoviembre: string;
-    forDiciembre: string;
-}
-
-export interface IPbrUsuario
-{
-    _id: string;
-    ano: number;
-    pbr: IPbr;
-    tTomas: number;
-    forTTomas: string;
-    tTomasDescargaSan: number;
-    forTomasDescargaSan: string;
-}
-
-
-export interface IResPbrEmpleado extends IPbr
-{
-    resPbrEmpleado: IEmpleado;
 }

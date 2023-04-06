@@ -1,10 +1,10 @@
-import {IMir} from './mir.interface';
-import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
-import {sanitize, upperCase} from '@rxweb/sanitizers';
+import { maxNumber, minNumber, numeric, NumericValueType, prop, required } from '@rxweb/reactive-form-validators';
+import { sanitize, upperCase } from '@rxweb/sanitizers';
 
 @sanitize
-export class Mir implements IMir
+export class Mir
 {
+
     @required()
     @numeric({message: 'El año es requerido', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
     @maxNumber({message: 'El valor maximo es 2050', value: 2050})

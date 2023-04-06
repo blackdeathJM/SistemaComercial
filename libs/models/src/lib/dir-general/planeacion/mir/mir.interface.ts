@@ -1,18 +1,28 @@
+import { IPbrCuestionario } from '../pbr-usuarios/pbr.interface';
+
 export enum AscDesc
 {
     ascendente = 'Asc',
     descendente = 'Desc'
 }
 
-export interface IMir
+export interface IPlaneacion
 {
-    _id?: string;
+    _id: string;
+    ano: number;
+    mirCuestionario: IMirCuestionario[];
+    pbrCuestionario: IPbrCuestionario[];
+}
+
+export interface IMirCuestionario
+{
+    id: string;
     ano: number;
     idIndicador: string;
     nivel: string;
     programaFinanciacion: string;
     resumenNarrativo: string;
-    centroGestor: string
+    centroGestor: string;
     nombreDelIndicador: string;
     tipo: string;
     dimension: string;
@@ -22,7 +32,7 @@ export interface IMir
     unidadDeMedida: string;
     frecuenciaMedicion: string;
     lineaBaseAno: number;
-    lineaBaseValor: string
+    lineaBaseValor: string;
     meta: number;
     sentidoDelIndicador: string;
     semefVerde: number;
