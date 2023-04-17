@@ -284,6 +284,12 @@ type PbrType {
 type MirType {
   _id: ID
   ano: Int
+  mirCuestionario: [MirCuestionarioType!]
+}
+
+type MirCuestionarioType {
+  id: ID
+  ano: Int
   tipo: String
   dimension: String
   centroGestor: String
@@ -412,7 +418,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1680755538
+  tiempo: Int = 1681315684
   titulo: String
   usarRouter: Boolean = false
 }
@@ -568,6 +574,12 @@ input PbrInput {
 input MirInput {
   _id: ID
   ano: Int = 2023
+  mirCuestionario: [MirCuestionarioInput!] = []
+}
+
+input MirCuestionarioInput {
+  id: ID
+  ano: Int = 2023
   tipo: String = null
   dimension: String = null
   centroGestor: String = null
@@ -611,7 +623,7 @@ input SeleccionInput {
 
 type Query {
   pbrs(ano: Int = 2023, idEmpleado: ID = null, centroGestor: String = null): [PbrType!]
-  mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
+  mirsPorCentroGestor(ano: Int = 2023): [MirType!]
   mirsPorAno(ano: Int = 2023): [MirType!]
   selecciones: SeleccionType
   rolesAsig(idEmpleado: ID): RolesType
@@ -691,12 +703,6 @@ input RegPbrInput {
 
 input MirsActAvancesInput {
   _id: ID
-  lineaBaseAno: Int = 0
-  lineaBaseValor: String = null
-  meta: Float = 0
-  semefVerde: Float = 0
-  semefAmarillo: Float = 0
-  semefRojo: Float = 0
 }
 
 input CambioContrasenaInput {
