@@ -1,8 +1,6 @@
 import {Module} from '@nestjs/common';
 import {PbrService} from '#api/apps/api/src/app/dir-general/planeacion/pbr/pbr.service';
 import {MongooseModule} from '@nestjs/mongoose';
-import {MirDto, SCHEMA_MIR} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {PbrDto, SCHEMA_PBR} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {MirService} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.service';
 import {PbrResolver} from '#api/apps/api/src/app/dir-general/planeacion/pbr/pbr.resolver';
 import {MirResolver} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.resolver';
@@ -11,13 +9,13 @@ import {SeleccionResolver} from '#api/apps/api/src/app/dir-general/planeacion/se
 import {SeleccionService} from '#api/apps/api/src/app/dir-general/planeacion/selecciones/seleccion.service';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
+import {PlaneacionDto, SCHEMA_PLANEACION} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 
 @Module({
     imports:
         [
             MongooseModule.forFeature([
-                {name: MirDto.name, schema: SCHEMA_MIR},
-                {name: PbrDto.name, schema: SCHEMA_PBR},
+                {name: PlaneacionDto.name, schema: SCHEMA_PLANEACION},
                 {name: SeleccionDto.name, schema: SCHEMA_SELECCION},
                 {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}
             ])

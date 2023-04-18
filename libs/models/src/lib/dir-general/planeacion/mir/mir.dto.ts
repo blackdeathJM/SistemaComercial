@@ -147,6 +147,3 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsOptional()
     formulaAnual: string;
 }
-
-export type MirType = MirCuestionarioDto;
-export const SCHEMA_MIR = SchemaFactory.createForClass(MirCuestionarioDto);

@@ -1,9 +1,8 @@
-import {TRegPbr} from './pbr-consultas.dto';
 import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 import {sanitize, upperCase} from '@rxweb/sanitizers';
 
 @sanitize
-export class Pbr implements TRegPbr
+export class Pbr
 {
     @numeric({message: 'El valor debe ser numerico', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
     @maxNumber({message: 'El valor maximo es 2050', value: 2050})
