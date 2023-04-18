@@ -11,6 +11,7 @@ export interface IPlaneacion
 {
     _id: string;
     ano: number;
+    descripcion: string;
     mirCuestionario: IMirCuestionario[];
     pbrCuestionario: IPbrCuestionario[];
 }
