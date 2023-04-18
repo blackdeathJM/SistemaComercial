@@ -1,19 +1,3 @@
-import { IPbrCuestionario } from '../pbr-usuarios/pbr.interface';
-
-export enum AscDesc
-{
-    ascendente = 'Asc',
-    descendente = 'Desc'
-}
-
-export interface IPlaneacion
-{
-    _id: string;
-    ano: number;
-    mirCuestionario: IMirCuestionario[];
-    pbrCuestionario: IPbrCuestionario[];
-}
-
 export interface IMirCuestionario
 {
     id: string;

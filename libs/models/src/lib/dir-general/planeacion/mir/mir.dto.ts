@@ -1,27 +1,9 @@
-import { IMir, IMirCuestionario } from './mir.interface';
+import { IMirCuestionario } from './mir.interface';
 import { Field, ID, Int, Float, ObjectType, InputType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsOptional, IsNotEmpty, IsNumber } from 'class-validator';
 
 // registerEnumType(AscDesc, {name: 'AscDesc'});
-@ObjectType('MirType')
-@InputType('MirInput')
-@Schema({ collection: 'Mir' })
-export class MirDto implements IMir
-{
-    @Field(() => ID, { nullable: true })
-    _id: string;
-
-    @Field(() => Int, { nullable: true, defaultValue: new Date().getFullYear() })
-    @Prop({ unique: true })
-    @IsNotEmpty({message: 'El año es requerido'})
-    ano: number;
-
-    @Field(() => [MirCuestionarioDto], {nullable: true, defaultValue: []})
-    @Prop()
-    mirCuestionario: [MirCuestionarioDto];
-    pbrCuestionario: [];
-}
 
 @ObjectType('MirCuestionarioType')
 @InputType('MirCuestionarioInput')
@@ -166,5 +148,5 @@ export class MirCuestionarioDto implements IMirCuestionario
     formulaAnual: string;
 }
 
-export type MirType = MirDto;
-export const SCHEMA_MIR = SchemaFactory.createForClass(MirDto);
+export type MirType = MirCuestionarioDto;
+export const SCHEMA_MIR = SchemaFactory.createForClass(MirCuestionarioDto);

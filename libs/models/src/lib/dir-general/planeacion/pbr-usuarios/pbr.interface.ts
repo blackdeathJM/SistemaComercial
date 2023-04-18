@@ -1,13 +1,6 @@
 import { IMeses } from '../../../common/common';
-import { IEmpleado } from '../../../dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 
-export interface IPbrCuestionario
-{
-    centroGestor: string;
-    cuestionario: IPbr[];
-}
-
-export interface IPbr extends IMeses
+export interface IPbrCuestionario extends IMeses
 {
     id: string;
     claveVariable: string;
