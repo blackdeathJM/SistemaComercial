@@ -1,0 +1,13 @@
+query filTodos
+{
+    filTodos {
+        ...fragPlaneacion
+    }
+}
+mutation inicializarPlaneacion($input: IniPlaneacionInput!)
+{
+    inicializarPlaneacion(input: $input)
+    {
+        ...fragPlaneacion
+    }
+}

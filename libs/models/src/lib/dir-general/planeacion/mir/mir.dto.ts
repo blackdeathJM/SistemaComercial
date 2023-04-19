@@ -13,10 +13,6 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsOptional()
     id: string;
 
-    @Field(() => Int, { nullable: true, defaultValue: new Date().getFullYear() })
-    @IsNotEmpty({ message: 'El año es requerido' })
-    ano: number;
-
     @Field(() => String, { nullable: true, defaultValue: null })
     @IsNotEmpty({ message: 'El tipo es requerido' })
     tipo: string;

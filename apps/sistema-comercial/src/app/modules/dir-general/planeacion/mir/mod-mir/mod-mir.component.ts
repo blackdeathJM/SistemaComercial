@@ -10,7 +10,6 @@ import {isNotNil} from '@angular-ru/cdk/utils';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
-import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {SeleccionType} from '#/libs/datos/src';
 import {TrimDirective} from '@s-directives/trim.directive';
 import {TrimInputModule} from '@angular-ru/cdk/directives';
@@ -21,7 +20,7 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
     selector: 'app-mod-mir',
     standalone: true,
     imports: [CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule, TrimDirective, TrimInputModule, NgxTrimDirectiveModule],
-    providers: [MirService],
+    providers: [],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -36,7 +35,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     sub = new Subscription();
     cargando = false;
 
-    constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private mirService: MirService)
+    constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder)
     {
     }
 

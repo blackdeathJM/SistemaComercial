@@ -8,35 +8,37 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
-import {MirService} from '@s-dir-general/mir/store/mir.service';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
-import {Subscription} from 'rxjs';
+import {ModInicialzarRegistroComponent} from "@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component";
 
 @Component({
     selector: 'app-mir',
     standalone: true,
     imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent],
-    providers: [MirService],
+    providers: [],
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']
 })
 export default class MirComponent implements OnInit
 {
     abrirPanel = false;
-    sub = new Subscription();
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private mirService: MirService)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService)
     {
     }
 
     ngOnInit(): void
     {
-        this.sub.add();
     }
 
     regSeleccion(): void
     {
         this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
+    }
+
+    inicializarPlaneacion()
+    {
+        this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
 
     porCentroGestor(e: [string, number]): void

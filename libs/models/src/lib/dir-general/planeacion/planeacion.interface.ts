@@ -12,6 +12,7 @@ export interface IPlaneacion
     _id: string;
     ano: number;
     descripcion: string;
+    copia: boolean;
     mirCuestionario: IMirCuestionario[];
     pbrCuestionario: IPbrCuestionario[];
 }

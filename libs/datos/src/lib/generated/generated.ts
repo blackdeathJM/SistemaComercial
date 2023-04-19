@@ -253,73 +253,6 @@ export type DocumentoType = {
   usuarios?: Maybe<Array<Scalars['String']>>;
 };
 
-export type EjercicioInput = {
-  abril?: InputMaybe<Scalars['Float']>;
-  agosto?: InputMaybe<Scalars['Float']>;
-  ano?: InputMaybe<Scalars['Int']>;
-  diciembre?: InputMaybe<Scalars['Float']>;
-  enero?: InputMaybe<Scalars['Float']>;
-  febrero?: InputMaybe<Scalars['Float']>;
-  forAbril?: InputMaybe<Scalars['String']>;
-  forAgosto?: InputMaybe<Scalars['String']>;
-  forDiciembre?: InputMaybe<Scalars['String']>;
-  forEnero?: InputMaybe<Scalars['String']>;
-  forFebrero?: InputMaybe<Scalars['String']>;
-  forJulio?: InputMaybe<Scalars['String']>;
-  forJunio?: InputMaybe<Scalars['String']>;
-  forMarzo?: InputMaybe<Scalars['String']>;
-  forMayo?: InputMaybe<Scalars['String']>;
-  forNoviembre?: InputMaybe<Scalars['String']>;
-  forOctubre?: InputMaybe<Scalars['String']>;
-  forSeptiembre?: InputMaybe<Scalars['String']>;
-  julio?: InputMaybe<Scalars['Float']>;
-  junio?: InputMaybe<Scalars['Float']>;
-  marzo?: InputMaybe<Scalars['Float']>;
-  mayo?: InputMaybe<Scalars['Float']>;
-  noviembre?: InputMaybe<Scalars['Float']>;
-  octubre?: InputMaybe<Scalars['Float']>;
-  septiembre?: InputMaybe<Scalars['Float']>;
-  total?: InputMaybe<Scalars['Float']>;
-  trim1?: InputMaybe<Scalars['Float']>;
-  trim2?: InputMaybe<Scalars['Float']>;
-  trim3?: InputMaybe<Scalars['Float']>;
-  trim4?: InputMaybe<Scalars['Float']>;
-};
-
-export type EjercicioType = {
-  __typename?: 'EjercicioType';
-  abril?: Maybe<Scalars['Float']>;
-  agosto?: Maybe<Scalars['Float']>;
-  ano?: Maybe<Scalars['Int']>;
-  diciembre?: Maybe<Scalars['Float']>;
-  enero?: Maybe<Scalars['Float']>;
-  febrero?: Maybe<Scalars['Float']>;
-  forAbril?: Maybe<Scalars['String']>;
-  forAgosto?: Maybe<Scalars['String']>;
-  forDiciembre?: Maybe<Scalars['String']>;
-  forEnero?: Maybe<Scalars['String']>;
-  forFebrero?: Maybe<Scalars['String']>;
-  forJulio?: Maybe<Scalars['String']>;
-  forJunio?: Maybe<Scalars['String']>;
-  forMarzo?: Maybe<Scalars['String']>;
-  forMayo?: Maybe<Scalars['String']>;
-  forNoviembre?: Maybe<Scalars['String']>;
-  forOctubre?: Maybe<Scalars['String']>;
-  forSeptiembre?: Maybe<Scalars['String']>;
-  julio?: Maybe<Scalars['Float']>;
-  junio?: Maybe<Scalars['Float']>;
-  marzo?: Maybe<Scalars['Float']>;
-  mayo?: Maybe<Scalars['Float']>;
-  noviembre?: Maybe<Scalars['Float']>;
-  octubre?: Maybe<Scalars['Float']>;
-  septiembre?: Maybe<Scalars['Float']>;
-  total?: Maybe<Scalars['Float']>;
-  trim1?: Maybe<Scalars['Float']>;
-  trim2?: Maybe<Scalars['Float']>;
-  trim3?: Maybe<Scalars['Float']>;
-  trim4?: Maybe<Scalars['Float']>;
-};
-
 export type EmpleadoInput = {
   _id?: InputMaybe<Scalars['ID']>;
   activo?: InputMaybe<Scalars['Boolean']>;
@@ -362,6 +295,14 @@ export type ErroresType = {
   __typename?: 'ErroresType';
   error?: Maybe<Scalars['String']>;
   exito?: Maybe<Scalars['Boolean']>;
+};
+
+export type IniPlaneacionInput = {
+  ano?: InputMaybe<Scalars['Int']>;
+  copia?: InputMaybe<Scalars['Boolean']>;
+  descripcion?: InputMaybe<Scalars['String']>;
+  mirCuestionario?: InputMaybe<Array<MirCuestionarioInput>>;
+  pbrCuestionario?: InputMaybe<Array<PbrInput>>;
 };
 
 export type InstalacionInput = {
@@ -456,9 +397,7 @@ export type MedidorType = {
   servicio?: Maybe<Scalars['String']>;
 };
 
-export type MirInput = {
-  _id?: InputMaybe<Scalars['ID']>;
-  ano?: InputMaybe<Scalars['Int']>;
+export type MirCuestionarioInput = {
   avanceAnual?: InputMaybe<Scalars['Float']>;
   avanceTrim1?: InputMaybe<Scalars['Float']>;
   avanceTrim2?: InputMaybe<Scalars['Float']>;
@@ -472,6 +411,7 @@ export type MirInput = {
   formulaTrim3?: InputMaybe<Scalars['String']>;
   formulaTrim4?: InputMaybe<Scalars['String']>;
   frecuenciaMedicion?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
   idIndicador?: InputMaybe<Scalars['String']>;
   lineaBaseAno?: InputMaybe<Scalars['Int']>;
   lineaBaseValor?: InputMaybe<Scalars['String']>;
@@ -491,10 +431,8 @@ export type MirInput = {
   unidadDeMedida?: InputMaybe<Scalars['String']>;
 };
 
-export type MirType = {
-  __typename?: 'MirType';
-  _id?: Maybe<Scalars['ID']>;
-  ano?: Maybe<Scalars['Int']>;
+export type MirCuestionarioType = {
+  __typename?: 'MirCuestionarioType';
   avanceAnual?: Maybe<Scalars['Float']>;
   avanceTrim1?: Maybe<Scalars['Float']>;
   avanceTrim2?: Maybe<Scalars['Float']>;
@@ -508,6 +446,7 @@ export type MirType = {
   formulaTrim3?: Maybe<Scalars['String']>;
   formulaTrim4?: Maybe<Scalars['String']>;
   frecuenciaMedicion?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
   idIndicador?: Maybe<Scalars['String']>;
   lineaBaseAno?: Maybe<Scalars['Int']>;
   lineaBaseValor?: Maybe<Scalars['String']>;
@@ -525,16 +464,6 @@ export type MirType = {
   supuestos?: Maybe<Scalars['String']>;
   tipo?: Maybe<Scalars['String']>;
   unidadDeMedida?: Maybe<Scalars['String']>;
-};
-
-export type MirsActAvancesInput = {
-  _id?: InputMaybe<Scalars['ID']>;
-  lineaBaseAno?: InputMaybe<Scalars['Int']>;
-  lineaBaseValor?: InputMaybe<Scalars['String']>;
-  meta?: InputMaybe<Scalars['Float']>;
-  semefAmarillo?: InputMaybe<Scalars['Float']>;
-  semefRojo?: InputMaybe<Scalars['Float']>;
-  semefVerde?: InputMaybe<Scalars['Float']>;
 };
 
 export type ModificadoPorInput = {
@@ -607,7 +536,6 @@ export type Mutation = {
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
   agregarBomba: TelemetriaType;
-  agregarMir: MirType;
   agregarMotor: TelemetriaType;
   agregarPuesto: DeptoType;
   asigPermisoPrimerNivel: RolesType;
@@ -624,12 +552,11 @@ export type Mutation = {
   eliminarNot: NotificacionType;
   eliminarTodos: Scalars['Int'];
   genFolioSinReg: Scalars['String'];
+  inicializarPlaneacion: PlaneacionType;
   login?: Maybe<LoginRespuestaType>;
-  mirsActAvances: MirType;
   reasignarUsuario: DocumentoType;
   regDoc: DocumentoType;
   regInstalacion: UnionTele;
-  regPbr: PbrType;
   regSeleccion: SeleccionType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
@@ -696,11 +623,6 @@ export type MutationActualizarDeptoArgs = {
 
 export type MutationAgregarBombaArgs = {
   args: AgregarBombaInput;
-};
-
-
-export type MutationAgregarMirArgs = {
-  input: MirInput;
 };
 
 
@@ -784,13 +706,13 @@ export type MutationGenFolioSinRegArgs = {
 };
 
 
-export type MutationLoginArgs = {
-  login: LoginInput;
+export type MutationInicializarPlaneacionArgs = {
+  input: IniPlaneacionInput;
 };
 
 
-export type MutationMirsActAvancesArgs = {
-  input: MirsActAvancesInput;
+export type MutationLoginArgs = {
+  login: LoginInput;
 };
 
 
@@ -807,11 +729,6 @@ export type MutationRegDocArgs = {
 
 export type MutationRegInstalacionArgs = {
   datos: RegInstalacionInput;
-};
-
-
-export type MutationRegPbrArgs = {
-  input: RegPbrInput;
 };
 
 
@@ -861,31 +778,87 @@ export type NotificacionType = {
 };
 
 export type PbrInput = {
-  _id?: InputMaybe<Scalars['ID']>;
+  abril?: InputMaybe<Scalars['Float']>;
+  agosto?: InputMaybe<Scalars['Float']>;
   ano?: InputMaybe<Scalars['Int']>;
   centroGestor?: InputMaybe<Scalars['String']>;
   claveVariable?: InputMaybe<Scalars['String']>;
   dato?: InputMaybe<Scalars['String']>;
   descripcion?: InputMaybe<Scalars['String']>;
-  ejercicio?: InputMaybe<EjercicioInput>;
-  idEmpleado?: InputMaybe<Scalars['ID']>;
+  diciembre?: InputMaybe<Scalars['Float']>;
+  email?: InputMaybe<Scalars['String']>;
+  enero?: InputMaybe<Scalars['Float']>;
+  febrero?: InputMaybe<Scalars['Float']>;
+  fechaCompleta?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['String']>;
+  julio?: InputMaybe<Scalars['Float']>;
+  junio?: InputMaybe<Scalars['Float']>;
+  marzo?: InputMaybe<Scalars['Float']>;
+  mayo?: InputMaybe<Scalars['Float']>;
+  nombreRes?: InputMaybe<Scalars['String']>;
+  noviembre?: InputMaybe<Scalars['Float']>;
+  octubre?: InputMaybe<Scalars['Float']>;
+  septiembre?: InputMaybe<Scalars['Float']>;
+  total?: InputMaybe<Scalars['Float']>;
+  trim1?: InputMaybe<Scalars['Float']>;
+  trim2?: InputMaybe<Scalars['Float']>;
+  trim3?: InputMaybe<Scalars['Float']>;
+  trim4?: InputMaybe<Scalars['Float']>;
   unidad?: InputMaybe<Scalars['String']>;
   variableOrigen?: InputMaybe<Scalars['String']>;
 };
 
 export type PbrType = {
   __typename?: 'PbrType';
-  _id?: Maybe<Scalars['ID']>;
+  abril?: Maybe<Scalars['Float']>;
+  agosto?: Maybe<Scalars['Float']>;
   ano?: Maybe<Scalars['Int']>;
   centroGestor?: Maybe<Scalars['String']>;
   claveVariable?: Maybe<Scalars['String']>;
   dato?: Maybe<Scalars['String']>;
   descripcion?: Maybe<Scalars['String']>;
-  ejercicio?: Maybe<EjercicioType>;
-  idEmpleado?: Maybe<Scalars['ID']>;
-  resPbrEmpleado: EmpleadoType;
+  diciembre?: Maybe<Scalars['Float']>;
+  email?: Maybe<Scalars['String']>;
+  enero?: Maybe<Scalars['Float']>;
+  febrero?: Maybe<Scalars['Float']>;
+  fechaCompleta?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  idEmpleado?: Maybe<Scalars['String']>;
+  julio?: Maybe<Scalars['Float']>;
+  junio?: Maybe<Scalars['Float']>;
+  marzo?: Maybe<Scalars['Float']>;
+  mayo?: Maybe<Scalars['Float']>;
+  nombreRes?: Maybe<Scalars['String']>;
+  noviembre?: Maybe<Scalars['Float']>;
+  octubre?: Maybe<Scalars['Float']>;
+  septiembre?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+  trim1?: Maybe<Scalars['Float']>;
+  trim2?: Maybe<Scalars['Float']>;
+  trim3?: Maybe<Scalars['Float']>;
+  trim4?: Maybe<Scalars['Float']>;
   unidad?: Maybe<Scalars['String']>;
   variableOrigen?: Maybe<Scalars['String']>;
+};
+
+export type PlaneacionInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  ano?: InputMaybe<Scalars['Int']>;
+  copia?: InputMaybe<Scalars['Boolean']>;
+  descripcion?: InputMaybe<Scalars['String']>;
+  mirCuestionario?: InputMaybe<Array<MirCuestionarioInput>>;
+  pbrCuestionario?: InputMaybe<Array<PbrInput>>;
+};
+
+export type PlaneacionType = {
+  __typename?: 'PlaneacionType';
+  _id?: Maybe<Scalars['ID']>;
+  ano?: Maybe<Scalars['Int']>;
+  copia?: Maybe<Scalars['Boolean']>;
+  descripcion?: Maybe<Scalars['String']>;
+  mirCuestionario?: Maybe<Array<MirCuestionarioType>>;
+  pbrCuestionario?: Maybe<Array<PbrType>>;
 };
 
 export type PuestoDeptoInput = {
@@ -919,13 +892,11 @@ export type Query = {
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
+  filTodos: Array<PlaneacionType>;
   filtrarDeptos: Array<DeptoType>;
   filtrarEmpleados: Array<EmpleadoType>;
   instalaciones: Array<TelemetriaType>;
-  mirsPorAno?: Maybe<Array<MirType>>;
-  mirsPorCentroGestor?: Maybe<Array<MirType>>;
   notificaciones?: Maybe<Array<NotificacionType>>;
-  pbrs?: Maybe<Array<PbrType>>;
   rolesAsig?: Maybe<RolesType>;
   selecciones?: Maybe<SeleccionType>;
 };
@@ -972,26 +943,8 @@ export type QueryFiltrarEmpleadosArgs = {
 };
 
 
-export type QueryMirsPorAnoArgs = {
-  ano?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryMirsPorCentroGestorArgs = {
-  ano?: InputMaybe<Scalars['Int']>;
-  centroGestor?: InputMaybe<Scalars['String']>;
-};
-
-
 export type QueryNotificacionesArgs = {
   idUsuario: Scalars['String'];
-};
-
-
-export type QueryPbrsArgs = {
-  ano?: InputMaybe<Scalars['Int']>;
-  centroGestor?: InputMaybe<Scalars['String']>;
-  idEmpleado?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -1037,17 +990,6 @@ export type RegEmpleadoInput = {
 
 export type RegInstalacionInput = {
   instalacion?: InputMaybe<InstalacionInput>;
-};
-
-export type RegPbrInput = {
-  ano?: InputMaybe<Scalars['Int']>;
-  centroGestor?: InputMaybe<Scalars['String']>;
-  claveVariable?: InputMaybe<Scalars['String']>;
-  dato?: InputMaybe<Scalars['String']>;
-  descripcion?: InputMaybe<Scalars['String']>;
-  idEmpleado?: InputMaybe<Scalars['ID']>;
-  unidad?: InputMaybe<Scalars['String']>;
-  variableOrigen?: InputMaybe<Scalars['String']>;
 };
 
 export type RolesInput = {
@@ -1464,54 +1406,23 @@ export type CrearEmpleadoMutation = { __typename?: 'Mutation', crearEmpleado: { 
 
 export type FragPuestoFragment = { __typename?: 'PuestoType', puesto?: string | null, activo?: boolean | null, fechaAsignacion?: number | null, isr?: number | null, sueldo?: number | null };
 
-export type FragMirFragment = { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null };
+export type FragMirFragment = { __typename?: 'MirCuestionarioType', id?: string | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null };
 
-export type AgregarMirMutationVariables = Exact<{
-  input: MirInput;
+export type FragPbrFragment = { __typename?: 'PbrType', id?: string | null, fechaCompleta?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, email?: string | null, nombreRes?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null };
+
+export type FragPlaneacionFragment = { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', id?: string | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', id?: string | null, fechaCompleta?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, email?: string | null, nombreRes?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null }> | null };
+
+export type FilTodosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FilTodosQuery = { __typename?: 'Query', filTodos: Array<{ __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', id?: string | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', id?: string | null, fechaCompleta?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, email?: string | null, nombreRes?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null }> | null }> };
+
+export type InicializarPlaneacionMutationVariables = Exact<{
+  input: IniPlaneacionInput;
 }>;
 
 
-export type AgregarMirMutation = { __typename?: 'Mutation', agregarMir: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
-
-export type MirsPorAnoQueryVariables = Exact<{
-  ano?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type MirsPorAnoQuery = { __typename?: 'Query', mirsPorAno?: Array<{ __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
-
-export type MirsPorCentroGestorQueryVariables = Exact<{
-  ano?: InputMaybe<Scalars['Int']>;
-  centroGestor?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type MirsPorCentroGestorQuery = { __typename?: 'Query', mirsPorCentroGestor?: Array<{ __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null }> | null };
-
-export type MirsActAvancesMutationVariables = Exact<{
-  input: MirsActAvancesInput;
-}>;
-
-
-export type MirsActAvancesMutation = { __typename?: 'Mutation', mirsActAvances: { __typename?: 'MirType', _id?: string | null, ano?: number | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceTrim4?: number | null, avanceAnual?: number | null } };
-
-export type FragPbrFragment = { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null, forEnero?: string | null, forFebrero?: string | null, forMarzo?: string | null, forAbril?: string | null, forMayo?: string | null, forJunio?: string | null, forJulio?: string | null, forAgosto?: string | null, forSeptiembre?: string | null, forOctubre?: string | null, forNoviembre?: string | null, forDiciembre?: string | null } | null };
-
-export type RegPbrMutationVariables = Exact<{
-  input: RegPbrInput;
-}>;
-
-
-export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null, forEnero?: string | null, forFebrero?: string | null, forMarzo?: string | null, forAbril?: string | null, forMayo?: string | null, forJunio?: string | null, forJulio?: string | null, forAgosto?: string | null, forSeptiembre?: string | null, forOctubre?: string | null, forNoviembre?: string | null, forDiciembre?: string | null } | null } };
-
-export type PbrsQueryVariables = Exact<{
-  ano: Scalars['Int'];
-  centroGestor: Scalars['String'];
-  idEmpleado?: InputMaybe<Scalars['ID']>;
-}>;
-
-
-export type PbrsQuery = { __typename?: 'Query', pbrs?: Array<{ __typename?: 'PbrType', ano?: number | null, _id?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, resPbrEmpleado: { __typename?: 'EmpleadoType', nombreCompleto?: string | null, avatar?: string | null }, ejercicio?: { __typename?: 'EjercicioType', ano?: number | null, enero?: number | null, febrero?: number | null, marzo?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, total?: number | null, forEnero?: string | null, forFebrero?: string | null, forMarzo?: string | null, forAbril?: string | null, forMayo?: string | null, forJunio?: string | null, forJulio?: string | null, forAgosto?: string | null, forSeptiembre?: string | null, forOctubre?: string | null, forNoviembre?: string | null, forDiciembre?: string | null } | null }> | null };
+export type InicializarPlaneacionMutation = { __typename?: 'Mutation', inicializarPlaneacion: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', id?: string | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', id?: string | null, fechaCompleta?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, email?: string | null, nombreRes?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null }> | null } };
 
 export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
@@ -1702,9 +1613,8 @@ export const FragPuestoFragmentDoc = gql`
 }
     `;
 export const FragMirFragmentDoc = gql`
-    fragment fragMir on MirType {
-  _id
-  ano
+    fragment fragMir on MirCuestionarioType {
+  id
   idIndicador
   nivel
   programaFinanciacion
@@ -1728,53 +1638,61 @@ export const FragMirFragmentDoc = gql`
   avanceTrim1
   avanceTrim2
   avanceTrim3
-  avanceTrim4
   avanceAnual
+  avanceTrim4
+  formulaTrim1
+  formulaTrim2
+  formulaTrim3
+  formulaTrim4
+  formulaAnual
 }
     `;
 export const FragPbrFragmentDoc = gql`
     fragment fragPbr on PbrType {
-  ano
-  _id
+  id
+  fechaCompleta
   claveVariable
   variableOrigen
   dato
   unidad
   descripcion
-  ejercicio {
-    ano
-    enero
-    febrero
-    marzo
-    abril
-    mayo
-    junio
-    julio
-    agosto
-    septiembre
-    octubre
-    noviembre
-    diciembre
-    trim1
-    trim2
-    trim3
-    trim4
-    total
-    forEnero
-    forFebrero
-    forMarzo
-    forAbril
-    forMayo
-    forJunio
-    forJulio
-    forAgosto
-    forSeptiembre
-    forOctubre
-    forNoviembre
-    forDiciembre
-  }
+  centroGestor
+  idEmpleado
+  email
+  nombreRes
+  enero
+  febrero
+  marzo
+  trim1
+  abril
+  mayo
+  junio
+  trim2
+  julio
+  agosto
+  septiembre
+  trim3
+  octubre
+  noviembre
+  diciembre
+  trim4
+  total
 }
     `;
+export const FragPlaneacionFragmentDoc = gql`
+    fragment fragPlaneacion on PlaneacionType {
+  _id
+  ano
+  descripcion
+  mirCuestionario {
+    ...fragMir
+  }
+  pbrCuestionario {
+    ...fragPbr
+  }
+}
+    ${FragMirFragmentDoc}
+${FragPbrFragmentDoc}`;
 export const FragSeleccionFragmentDoc = gql`
     fragment fragSeleccion on SeleccionType {
   dimension
@@ -2793,117 +2711,37 @@ ${FragTelefonoFragmentDoc}`;
       super(apollo);
     }
   }
-export const AgregarMirDocument = gql`
-    mutation agregarMir($input: MirInput!) {
-  agregarMir(input: $input) {
-    ...fragMir
+export const FilTodosDocument = gql`
+    query filTodos {
+  filTodos {
+    ...fragPlaneacion
   }
 }
-    ${FragMirFragmentDoc}`;
+    ${FragPlaneacionFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class AgregarMirGQL extends Apollo.Mutation<AgregarMirMutation, AgregarMirMutationVariables> {
-    document = AgregarMirDocument;
+  export class FilTodosGQL extends Apollo.Query<FilTodosQuery, FilTodosQueryVariables> {
+    document = FilTodosDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
-export const MirsPorAnoDocument = gql`
-    query mirsPorAno($ano: Int) {
-  mirsPorAno(ano: $ano) {
-    ...fragMir
+export const InicializarPlaneacionDocument = gql`
+    mutation inicializarPlaneacion($input: IniPlaneacionInput!) {
+  inicializarPlaneacion(input: $input) {
+    ...fragPlaneacion
   }
 }
-    ${FragMirFragmentDoc}`;
+    ${FragPlaneacionFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
-  export class MirsPorAnoGQL extends Apollo.Query<MirsPorAnoQuery, MirsPorAnoQueryVariables> {
-    document = MirsPorAnoDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const MirsPorCentroGestorDocument = gql`
-    query mirsPorCentroGestor($ano: Int, $centroGestor: String) {
-  mirsPorCentroGestor(ano: $ano, centroGestor: $centroGestor) {
-    ...fragMir
-  }
-}
-    ${FragMirFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class MirsPorCentroGestorGQL extends Apollo.Query<MirsPorCentroGestorQuery, MirsPorCentroGestorQueryVariables> {
-    document = MirsPorCentroGestorDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const MirsActAvancesDocument = gql`
-    mutation mirsActAvances($input: MirsActAvancesInput!) {
-  mirsActAvances(input: $input) {
-    ...fragMir
-  }
-}
-    ${FragMirFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class MirsActAvancesGQL extends Apollo.Mutation<MirsActAvancesMutation, MirsActAvancesMutationVariables> {
-    document = MirsActAvancesDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const RegPbrDocument = gql`
-    mutation regPbr($input: RegPbrInput!) {
-  regPbr(input: $input) {
-    ...fragPbr
-    resPbrEmpleado {
-      nombreCompleto
-      avatar
-    }
-  }
-}
-    ${FragPbrFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class RegPbrGQL extends Apollo.Mutation<RegPbrMutation, RegPbrMutationVariables> {
-    document = RegPbrDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const PbrsDocument = gql`
-    query pbrs($ano: Int!, $centroGestor: String!, $idEmpleado: ID) {
-  pbrs(ano: $ano, centroGestor: $centroGestor, idEmpleado: $idEmpleado) {
-    ...fragPbr
-    resPbrEmpleado {
-      nombreCompleto
-      avatar
-    }
-  }
-}
-    ${FragPbrFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class PbrsGQL extends Apollo.Query<PbrsQuery, PbrsQueryVariables> {
-    document = PbrsDocument;
+  export class InicializarPlaneacionGQL extends Apollo.Mutation<InicializarPlaneacionMutation, InicializarPlaneacionMutationVariables> {
+    document = InicializarPlaneacionDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

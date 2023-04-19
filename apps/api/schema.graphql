@@ -245,7 +245,6 @@ type SeleccionType {
 
 type MirCuestionarioType {
   id: ID
-  ano: Int
   tipo: String
   dimension: String
   centroGestor: String
@@ -279,7 +278,8 @@ type MirCuestionarioType {
 }
 
 type PbrType {
-  ano: String
+  ano: Int
+  fechaCompleta: String
   enero: Float
   febrero: Float
   marzo: Float
@@ -293,6 +293,8 @@ type PbrType {
   noviembre: Float
   diciembre: Float
   idEmpleado: String
+  nombreRes: String
+  email: String
   descripcion: String
   centroGestor: String
   claveVariable: String
@@ -305,6 +307,15 @@ type PbrType {
   id: String
   total: Float
   unidad: String
+}
+
+type PlaneacionType {
+  _id: ID
+  copia: Boolean
+  ano: Int
+  descripcion: String
+  mirCuestionario: [MirCuestionarioType!]
+  pbrCuestionario: [PbrType!]
 }
 
 input ModificadoPorInput {
@@ -394,7 +405,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1681874297
+  tiempo: Int = 1681903289
   titulo: String
   usarRouter: Boolean = false
 }
@@ -512,7 +523,6 @@ input SeleccionInput {
 
 input MirCuestionarioInput {
   id: ID
-  ano: Int = 2023
   tipo: String = null
   dimension: String = null
   centroGestor: String = null
@@ -546,7 +556,8 @@ input MirCuestionarioInput {
 }
 
 input PbrInput {
-  ano: String = null
+  ano: Int = 2023
+  fechaCompleta: String
   enero: Float = 0
   febrero: Float = 0
   marzo: Float = 0
@@ -560,6 +571,8 @@ input PbrInput {
   noviembre: Float = 0
   diciembre: Float = 0
   idEmpleado: String
+  nombreRes: String
+  email: String
   descripcion: String
   centroGestor: String
   claveVariable: String
@@ -574,8 +587,18 @@ input PbrInput {
   unidad: String
 }
 
+input PlaneacionInput {
+  _id: ID
+  copia: Boolean
+  ano: Int = 2023
+  descripcion: String
+  mirCuestionario: [MirCuestionarioInput!] = []
+  pbrCuestionario: [PbrInput!] = []
+}
+
 type Query {
   selecciones: SeleccionType
+  filTodos: [PlaneacionType!]!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -600,6 +623,7 @@ type Query {
 
 type Mutation {
   regSeleccion(input: SeleccionInput): SeleccionType!
+  inicializarPlaneacion(input: IniPlaneacionInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -635,6 +659,14 @@ type Mutation {
   actInst(args: ActInstInput!): TelemetriaType!
   agregarMotor(args: AgregarMotorInput!): TelemetriaType!
   agregarBomba(args: AgregarBombaInput!): TelemetriaType!
+}
+
+input IniPlaneacionInput {
+  copia: Boolean
+  ano: Int = 2023
+  descripcion: String
+  mirCuestionario: [MirCuestionarioInput!] = []
+  pbrCuestionario: [PbrInput!] = []
 }
 
 input CambioContrasenaInput {

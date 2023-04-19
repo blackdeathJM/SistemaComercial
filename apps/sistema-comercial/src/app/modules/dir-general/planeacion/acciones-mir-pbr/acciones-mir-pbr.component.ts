@@ -20,9 +20,6 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 })
 export class AccionesMirPbrComponent
 {
-    @Output() porAno = new EventEmitter<number>();
-    @Output() porCentroGestor = new EventEmitter<[string, number]>();
-    @Output() porEmpleado = new EventEmitter<[string | string[], number]>();
     @Input() habEmpleado = false;
     @Input() habCentroGestor = false;
 
@@ -34,37 +31,19 @@ export class AccionesMirPbrComponent
     {
     }
 
-    buscarPorCentroGestor(e: string): void
+    filAno(): void
     {
-        // const ano = parseInt(String(this.buscarAno), 10);
-        if (isNaN(ano))
-        {
-            this.ngxToast.alertaToast('Es necesario colocar una fecha para poder utilizar este filtrado', 'Filtrar centro gestor');
-            return;
-        }
-        this.porCentroGestor.emit([e, ano]);
+
     }
 
-    buscarPorAno(): void
+    filEmpleado($event: any): void
     {
-        const ano = parseInt(String(this.buscarAno), 10);
-        if (isNaN(ano))
-        {
-            this.ngxToast.alertaToast('Introduce un año a cuatro digitos', 'Valor numerico requerido');
-            return;
-        }
-        this.porAno.emit(ano);
+
     }
 
-    buscarEmpleado(e: string | string[]): void
+    filCentroGestor($event: any): void
     {
-        const ano = parseInt(String(this.buscarAno), 10);
-        if (isNaN(ano))
-        {
-            this.ngxToast.alertaToast('Es necesario seleccionar año', 'Filtrado');
-            return;
-        }
-        this.porEmpleado.emit([e, ano]);
+
     }
 
     trackByFn(index: number, elemento: string): number | string

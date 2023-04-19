@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxToastService } from '@s-services/ngx-toast.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MirService } from '@s-dir-general/mir/store/mir.service';
 import { finalize } from 'rxjs';
 
 export interface ICalculo
@@ -22,7 +21,7 @@ export interface ICalculo
     selector: 'app-mod-avances-mir',
     standalone: true,
     imports: [CommonModule, MatInputModule, RegistrosComponent, ReactiveFormsModule, RxReactiveFormsModule, MatButtonModule, MatIconModule],
-    providers: [MirService],
+    providers: [],
     templateUrl: './mod-avances-mir.component.html',
     styleUrls: ['./mod-avances-mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -41,7 +40,7 @@ export class ModAvancesMirComponent implements OnInit
         semRojo: this.valoreReqCalculo
     });
 
-    constructor(private fb: RxFormBuilder, private ngxToast: NgxToastService, public mdr: MatDialogRef<ModAvancesMirComponent>, private mirService: MirService)
+    constructor(private fb: RxFormBuilder, private ngxToast: NgxToastService, public mdr: MatDialogRef<ModAvancesMirComponent>)
     {
     }
 

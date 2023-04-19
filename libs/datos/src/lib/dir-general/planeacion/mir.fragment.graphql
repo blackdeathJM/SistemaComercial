@@ -1,7 +1,6 @@
-fragment fragMir on MirType
+fragment fragMir on MirCuestionarioType
 {
-    _id
-    ano
+    id
     idIndicador
     nivel
     programaFinanciacion
@@ -25,6 +24,11 @@ fragment fragMir on MirType
     avanceTrim1
     avanceTrim2
     avanceTrim3
-    avanceTrim4
     avanceAnual
+    avanceTrim4
+    formulaTrim1
+    formulaTrim2
+    formulaTrim3
+    formulaTrim4
+    formulaAnual
 }

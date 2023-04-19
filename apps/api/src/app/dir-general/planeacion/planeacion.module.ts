@@ -10,6 +10,8 @@ import {SeleccionService} from '#api/apps/api/src/app/dir-general/planeacion/sel
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto';
 import {PlaneacionDto, SCHEMA_PLANEACION} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {PlaneacionService} from "#api/apps/api/src/app/dir-general/planeacion/planeacion.service";
+import {PlaneacionResolver} from "#api/apps/api/src/app/dir-general/planeacion/planeacion.resolver";
 
 @Module({
     imports:
@@ -20,7 +22,7 @@ import {PlaneacionDto, SCHEMA_PLANEACION} from '#api/libs/models/src/lib/dir-gen
                 {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}
             ])
         ],
-    providers: [PbrService, MirService, PbrResolver, MirResolver, SeleccionService, SeleccionResolver, EmpleadoService]
+    providers: [PbrService, MirService, PbrResolver, MirResolver, SeleccionService, SeleccionResolver, EmpleadoService, PlaneacionService, PlaneacionResolver]
 })
 export class PlaneacionModule
 {

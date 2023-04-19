@@ -7,7 +7,6 @@ import { RxFormBuilder, RxReactiveFormsModule } from '@rxweb/reactive-form-valid
 import { Pbr } from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { PbrService } from '@s-dir-general/pbr/store/pbr.service';
 import { Subscription } from 'rxjs';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -20,7 +19,7 @@ import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query
     standalone: true,
     imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule, MatOptionModule, MatSelectModule,
         SeleccionarEmpleadoComponent],
-    providers: [PbrService],
+    providers: [],
     templateUrl: './mod-pbr.component.html',
     styleUrls: ['./mod-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -34,7 +33,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
     unidades: string[] = [];
     sub = new Subscription();
 
-    constructor(private fb: RxFormBuilder, private pbrService: PbrService, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery)
+    constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery)
     {
     }
 

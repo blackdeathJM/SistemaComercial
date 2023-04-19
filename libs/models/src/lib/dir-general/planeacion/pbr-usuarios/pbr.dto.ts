@@ -1,15 +1,18 @@
-import {ObjectType, InputType, Field, Float} from '@nestjs/graphql';
+import {ObjectType, InputType, Field, Float, Int} from '@nestjs/graphql';
 import {IPbrCuestionario} from './pbr.interface';
 import {IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
-
 
 @ObjectType('PbrType')
 @InputType('PbrInput')
 export class PbrCuestionarioDto implements IPbrCuestionario
 {
-    @Field(() => String, {nullable: true, defaultValue: null})
+    @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
     @IsOptional()
     ano: number;
+
+    @Field(() => String, {nullable: true})
+    @IsOptional()
+    fechaCompleta: string;
 
     @Field(() => Float, {nullable: true, defaultValue: 0})
     @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
@@ -62,6 +65,14 @@ export class PbrCuestionarioDto implements IPbrCuestionario
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'El campo id del empleado es requerido'})
     idEmpleado: string;
+
+    @Field(() => String, {nullable: true})
+    @IsOptional()
+    nombreRes: string;
+
+    @Field(() => String, {nullable: true})
+    @IsOptional()
+    email: string;
 
     @Field(() => String, {nullable: true})
     @IsOptional()

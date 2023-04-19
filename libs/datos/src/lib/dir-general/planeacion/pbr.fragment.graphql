@@ -1,9 +1,31 @@
 fragment fragPbr on PbrType
 {
-    ano
+    id
+    fechaCompleta
     claveVariable
     variableOrigen
     dato
     unidad
     descripcion
+    centroGestor
+    idEmpleado
+    email
+    nombreRes
+    enero
+    febrero
+    marzo
+    trim1
+    abril
+    mayo
+    junio
+    trim2
+    julio
+    agosto
+    septiembre
+    trim3
+    octubre
+    noviembre
+    diciembre
+    trim4
+    total
 }
