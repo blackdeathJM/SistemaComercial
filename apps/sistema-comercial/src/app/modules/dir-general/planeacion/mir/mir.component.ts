@@ -9,7 +9,6 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import {MirService} from '@s-dir-general/mir/store/mir.service';
-import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {Subscription} from 'rxjs';
 
@@ -42,22 +41,21 @@ export default class MirComponent implements OnInit
 
     porCentroGestor(e: [string, number]): void
     {
-        const consulta: TMirsPorCentroGestor =
-            {
-                centroGestor: e[0],
-                ano: e[1]
-            };
-        this.mirService.mirsPorCentroGestor(consulta).subscribe();
+        // const consulta: TMirsPorCentroGestor =
+        //     {
+        //         centroGestor: e[0],
+        //         ano: e[1]
+        //     };
+        // this.mirService.mirsPorCentroGestor(consulta).subscribe();
     }
 
     buscarPorAno(ano: number): void
     {
-
-        const actMir: TMirsPorAno =
-            {
-                ano
-            };
-        this.mirService.mirsPorAno(actMir).subscribe();
+        // const actMir: TMirsPorAno =
+        //     {
+        //         ano
+        //     };
+        // this.mirService.mirsPorAno(actMir).subscribe();
     }
 
     cerrarPanel(): void

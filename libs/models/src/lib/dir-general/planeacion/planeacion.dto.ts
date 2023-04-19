@@ -1,27 +1,32 @@
-import {IPlaneacion} from './planeacion.interface';
-import {Field, InputType, Int, ObjectType} from '@nestjs/graphql';
-import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsOptional} from 'class-validator';
-import {MirCuestionarioDto} from './mir/mir.dto';
-import {PbrCuestionarioDto} from './pbr-usuarios/pbr.dto';
+
+import { IPlaneacion } from './planeacion.interface';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsOptional } from 'class-validator';
+import { MirCuestionarioDto } from './mir/mir.dto';
+import { PbrCuestionarioDto } from './pbr-usuarios/pbr.dto';
 
 @ObjectType('PlaneacionType')
 @InputType('PlaneacionInput')
-@Schema({collection: 'Planeacion'})
+@Schema({ collection: 'Planeacion' })
 export class PlaneacionDto implements IPlaneacion
 {
     @IsOptional()
     _id: string;
 
-    @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
-    @Prop({unique: true})
+    @Field(() => Int, { nullable: true, defaultValue: new Date().getFullYear() })
+    @Prop({ unique: true })
     ano: number;
 
-    @Field(() => [MirCuestionarioDto], {nullable: true, defaultValue: []})
+    @Field(() => String, { nullable: true })
+    @Prop()
+    descripcion: string;
+
+    @Field(() => [MirCuestionarioDto], { nullable: true, defaultValue: [] })
     @Prop()
     mirCuestionario: MirCuestionarioDto[];
 
-    @Field(() => [PbrCuestionarioDto], {nullable: true, defaultValue: []})
+    @Field(() => [PbrCuestionarioDto], { nullable: true, defaultValue: [] })
     @Prop()
     pbrCuestionario: PbrCuestionarioDto[];
 }

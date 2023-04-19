@@ -122,5 +122,7 @@
     ],
     "plugins": [
         "@nrwl/nx"
-    ]
+    ],
+    "rules": {
+    }
 }

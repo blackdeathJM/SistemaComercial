@@ -1,6 +1,6 @@
 <mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
-    <mat-form-field class="basis-26 mt-5">
-        <input matInput placeholder="Introduce un año para filtrar" (keyup.enter)="buscarPorAno()" [(ngModel)]="buscarAno">
+    <mat-form-field class="flex-auto mt-5">
+
     </mat-form-field>
     <ng-container *ngIf="habCentroGestor">
         <ng-container *ngIf="seleccionQuery.select() | async as centros">

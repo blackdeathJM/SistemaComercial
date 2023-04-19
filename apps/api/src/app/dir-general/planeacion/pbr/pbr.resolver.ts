@@ -1,7 +1,6 @@
 import {Resolver} from '@nestjs/graphql';
-import {PbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 
-@Resolver(() => PbrDto)
+// @Resolver(() => PbrDto)
 export class PbrResolver
 {
     // constructor(private pbrService: PbrService, private empleadoService: EmpleadoService)

@@ -2,21 +2,21 @@
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR</span></mat-card-header>
         <mat-card-content>
-            <mat-tab-group *ngIf="pbrQuery.selectAll() | async as pbrs" ngxUiLoaderBlurred>
-                <mat-tab *ngFor="let pbr of pbrs; trackBy:trackByFn" [label]="pbr.claveVariable">
-                    <div class="flex flex-col flex-auto">
-                        <div class="grid grid-cols-10 gap-4">
-                            <span class="detalle-span">Origen variable</span>
-                            <span class="border-b-2">{{pbr.variableOrigen}}</span>
-                            <span class="detalle-span">Clave variable</span>
-                            <span class="border-b-2">{{pbr.claveVariable}}</span>
-                            <span class="detalle-span">Unidad</span>
-                            <span class="border-b-2">{{pbr.unidad}}</span>
-                            <span class="detalle-span">Dato</span>
-                            <span class="border-b-2 col-span-3">{{pbr.dato}}</span>
-                            <span class="text-center text-amber-700 text-xl col-span-full border-b-2">Descripcion</span>
-                            <span class="border-b-2 col-span-full">{{pbr.descripcion}}</span>
-                        </div>
+<!--            <mat-tab-group *ngIf="pbrQuery.selectAll() | async as pbrs" ngxUiLoaderBlurred>-->
+<!--                <mat-tab *ngFor="let pbr of pbrs; trackBy:trackByFn" [label]="pbr.claveVariable">-->
+<!--                    <div class="flex flex-col flex-auto">-->
+<!--                        <div class="grid grid-cols-10 gap-4">-->
+<!--                            <span class="detalle-span">Origen variable</span>-->
+<!--                            <span class="border-b-2">{{pbr.variableOrigen}}</span>-->
+<!--                            <span class="detalle-span">Clave variable</span>-->
+<!--                            <span class="border-b-2">{{pbr.claveVariable}}</span>-->
+<!--                            <span class="detalle-span">Unidad</span>-->
+<!--                            <span class="border-b-2">{{pbr.unidad}}</span>-->
+<!--                            <span class="detalle-span">Dato</span>-->
+<!--                            <span class="border-b-2 col-span-3">{{pbr.dato}}</span>-->
+<!--                            <span class="text-center text-amber-700 text-xl col-span-full border-b-2">Descripcion</span>-->
+<!--                            <span class="border-b-2 col-span-full">{{pbr.descripcion}}</span>-->
+<!--                        </div>-->
 <!--                        <div class="grid grid-cols-8 gap-4 mt-4">-->
 <!--                            <span class="detalle-span">Enero</span>-->
 <!--                            <span class="border-b-2">{{pbr.ejercicio.enero}}</span>-->
@@ -57,9 +57,9 @@
 <!--                            <span class="detalle-span col-start-7">Total</span>-->
 <!--                            <span class="border-b-2">{{pbr.ejercicio.total}}</span>-->
 <!--                        </div>-->
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
+<!--                    </div>-->
+<!--                </mat-tab>-->
+<!--            </mat-tab-group>-->
             <ng-container>
                 <div class="flex flex-col flex-auto items-end my-4 border-t-2 border-t-rose-500 py-4">
                     <span>TOTAL DE TOMAS: -----}}</span>

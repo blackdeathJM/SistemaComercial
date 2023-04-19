@@ -234,57 +234,13 @@ type TelemetriaType {
   motores: [MotorType!]
 }
 
-type EjercicioType {
-  forEnero: String
-  forFebrero: String
-  forMarzo: String
-  forAbril: String
-  forMayo: String
-  forJunio: String
-  forJulio: String
-  forAgosto: String
-  forSeptiembre: String
-  forOctubre: String
-  forNoviembre: String
-  forDiciembre: String
-  ano: Int
-  abril: Float
-  agosto: Float
-  diciembre: Float
-  enero: Float
-  febrero: Float
-  julio: Float
-  junio: Float
-  marzo: Float
-  mayo: Float
-  noviembre: Float
-  octubre: Float
-  septiembre: Float
-  total: Float
-  trim1: Float
-  trim2: Float
-  trim3: Float
-  trim4: Float
-}
-
-type PbrType {
+type SeleccionType {
   _id: ID
-  ano: Int
-  claveVariable: String
-  variableOrigen: String
-  dato: String
-  descripcion: String
-  ejercicio: EjercicioType
-  unidad: String
-  idEmpleado: ID
-  centroGestor: String
-  resPbrEmpleado: EmpleadoType!
-}
-
-type MirType {
-  _id: ID
-  ano: Int
-  mirCuestionario: [MirCuestionarioType!]
+  centroGestor: [String!]
+  unidad: [String!]
+  dimension: [String!]
+  frecuencia: [String!]
+  tipo: [String!]
 }
 
 type MirCuestionarioType {
@@ -322,13 +278,33 @@ type MirCuestionarioType {
   formulaAnual: String
 }
 
-type SeleccionType {
-  _id: ID
-  centroGestor: [String!]
-  unidad: [String!]
-  dimension: [String!]
-  frecuencia: [String!]
-  tipo: [String!]
+type PbrType {
+  ano: String
+  enero: Float
+  febrero: Float
+  marzo: Float
+  abril: Float
+  mayo: Float
+  junio: Float
+  julio: Float
+  agosto: Float
+  septiembre: Float
+  octubre: Float
+  noviembre: Float
+  diciembre: Float
+  idEmpleado: String
+  descripcion: String
+  centroGestor: String
+  claveVariable: String
+  variableOrigen: String
+  trim1: Float
+  trim2: Float
+  trim3: Float
+  trim4: Float
+  dato: String
+  id: String
+  total: Float
+  unidad: String
 }
 
 input ModificadoPorInput {
@@ -418,7 +394,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1681757928
+  tiempo: Int = 1681874297
   titulo: String
   usarRouter: Boolean = false
 }
@@ -525,56 +501,13 @@ input TelemetriaInput {
   motores: [MotorInput!] = []
 }
 
-input EjercicioInput {
-  forEnero: String = null
-  forFebrero: String = null
-  forMarzo: String = null
-  forAbril: String = null
-  forMayo: String = null
-  forJunio: String = null
-  forJulio: String = null
-  forAgosto: String = null
-  forSeptiembre: String = null
-  forOctubre: String = null
-  forNoviembre: String = null
-  forDiciembre: String = null
-  ano: Int = 2023
-  abril: Float = 0
-  agosto: Float = 0
-  diciembre: Float = 0
-  enero: Float = 0
-  febrero: Float = 0
-  julio: Float = 0
-  junio: Float = 0
-  marzo: Float = 0
-  mayo: Float = 0
-  noviembre: Float = 0
-  octubre: Float = 0
-  septiembre: Float = 0
-  total: Float = 0
-  trim1: Float = 0
-  trim2: Float = 0
-  trim3: Float = 0
-  trim4: Float = 0
-}
-
-input PbrInput {
+input SeleccionInput {
   _id: ID
-  ano: Int = 2023
-  claveVariable: String = null
-  variableOrigen: String = null
-  dato: String = null
-  descripcion: String = null
-  ejercicio: EjercicioInput
-  unidad: String = null
-  idEmpleado: ID = null
-  centroGestor: String = null
-}
-
-input MirInput {
-  _id: ID
-  ano: Int = 2023
-  mirCuestionario: [MirCuestionarioInput!] = []
+  centroGestor: [String!] = []
+  unidad: [String!] = []
+  dimension: [String!] = []
+  frecuencia: [String!] = []
+  tipo: [String!] = []
 }
 
 input MirCuestionarioInput {
@@ -612,19 +545,36 @@ input MirCuestionarioInput {
   formulaAnual: String = null
 }
 
-input SeleccionInput {
-  _id: ID
-  centroGestor: [String!] = []
-  unidad: [String!] = []
-  dimension: [String!] = []
-  frecuencia: [String!] = []
-  tipo: [String!] = []
+input PbrInput {
+  ano: String = null
+  enero: Float = 0
+  febrero: Float = 0
+  marzo: Float = 0
+  abril: Float = 0
+  mayo: Float = 0
+  junio: Float = 0
+  julio: Float = 0
+  agosto: Float = 0
+  septiembre: Float = 0
+  octubre: Float = 0
+  noviembre: Float = 0
+  diciembre: Float = 0
+  idEmpleado: String
+  descripcion: String
+  centroGestor: String
+  claveVariable: String
+  variableOrigen: String
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  dato: String
+  id: String
+  total: Float = 0
+  unidad: String
 }
 
 type Query {
-  pbrs(ano: Int = 2023, idEmpleado: ID = null, centroGestor: String = null): [PbrType!]
-  mirsPorCentroGestor(ano: Int = 2023): [MirType!]
-  mirsPorAno(ano: Int = 2023): [MirType!]
   selecciones: SeleccionType
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
@@ -649,9 +599,6 @@ type Query {
 }
 
 type Mutation {
-  regPbr(input: RegPbrInput!): PbrType!
-  agregarMir(input: MirInput!): MirType!
-  mirsActAvances(input: MirsActAvancesInput!): MirType!
   regSeleccion(input: SeleccionInput): SeleccionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
@@ -688,21 +635,6 @@ type Mutation {
   actInst(args: ActInstInput!): TelemetriaType!
   agregarMotor(args: AgregarMotorInput!): TelemetriaType!
   agregarBomba(args: AgregarBombaInput!): TelemetriaType!
-}
-
-input RegPbrInput {
-  ano: Int = 2023
-  claveVariable: String = null
-  variableOrigen: String = null
-  dato: String = null
-  descripcion: String = null
-  unidad: String = null
-  idEmpleado: ID = null
-  centroGestor: String = null
-}
-
-input MirsActAvancesInput {
-  _id: ID
 }
 
 input CambioContrasenaInput {

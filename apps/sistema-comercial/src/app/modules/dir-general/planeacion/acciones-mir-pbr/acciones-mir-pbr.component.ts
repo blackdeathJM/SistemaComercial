@@ -27,7 +27,6 @@ export class AccionesMirPbrComponent
     @Input() habCentroGestor = false;
 
     ctrlEmpleados = new FormControl();
-    buscarAno: number = new Date().getFullYear();
     bCentroGestor: string;
     sub = new Subscription();
 
@@ -37,7 +36,7 @@ export class AccionesMirPbrComponent
 
     buscarPorCentroGestor(e: string): void
     {
-        const ano = parseInt(String(this.buscarAno), 10);
+        // const ano = parseInt(String(this.buscarAno), 10);
         if (isNaN(ano))
         {
             this.ngxToast.alertaToast('Es necesario colocar una fecha para poder utilizar este filtrado', 'Filtrar centro gestor');
