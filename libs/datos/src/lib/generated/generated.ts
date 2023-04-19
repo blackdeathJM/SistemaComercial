@@ -297,14 +297,6 @@ export type ErroresType = {
   exito?: Maybe<Scalars['Boolean']>;
 };
 
-export type IniPlaneacionInput = {
-  ano?: InputMaybe<Scalars['Int']>;
-  copia?: InputMaybe<Scalars['Boolean']>;
-  descripcion?: InputMaybe<Scalars['String']>;
-  mirCuestionario?: InputMaybe<Array<MirCuestionarioInput>>;
-  pbrCuestionario?: InputMaybe<Array<PbrInput>>;
-};
-
 export type InstalacionInput = {
   activo?: InputMaybe<Scalars['Boolean']>;
   diamAdeme?: InputMaybe<Scalars['Float']>;
@@ -707,7 +699,7 @@ export type MutationGenFolioSinRegArgs = {
 
 
 export type MutationInicializarPlaneacionArgs = {
-  input: IniPlaneacionInput;
+  input: PlaneacionInput;
 };
 
 
@@ -1418,7 +1410,7 @@ export type FilTodosQueryVariables = Exact<{ [key: string]: never; }>;
 export type FilTodosQuery = { __typename?: 'Query', filTodos: Array<{ __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', id?: string | null, idIndicador?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, mediosDeVerificacion?: string | null, supuestos?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefAmarillo?: number | null, semefRojo?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', id?: string | null, fechaCompleta?: string | null, claveVariable?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, email?: string | null, nombreRes?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null }> | null }> };
 
 export type InicializarPlaneacionMutationVariables = Exact<{
-  input: IniPlaneacionInput;
+  input: PlaneacionInput;
 }>;
 
 
@@ -2730,7 +2722,7 @@ export const FilTodosDocument = gql`
     }
   }
 export const InicializarPlaneacionDocument = gql`
-    mutation inicializarPlaneacion($input: IniPlaneacionInput!) {
+    mutation inicializarPlaneacion($input: PlaneacionInput!) {
   inicializarPlaneacion(input: $input) {
     ...fragPlaneacion
   }

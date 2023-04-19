@@ -1,36 +1,48 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatInputModule} from "@angular/material/input";
-import {RegistrosComponent} from "@s-shared/registros/registros.component";
-import {MatSelectModule} from "@angular/material/select";
-import {RxFormBuilder, RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
-import {FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {Planeacion} from "#/libs/models/src/lib/dir-general/planeacion/Planeacion";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { RegistrosComponent } from '@s-shared/registros/registros.component';
+import { MatSelectModule } from '@angular/material/select';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
+import { TPlaneacionType } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 
 @Component({
     selector: 'sistema-comercial-mod-inicialzar-registro',
     standalone: true,
-    imports: [CommonModule, MatInputModule, RegistrosComponent, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule],
+    imports: [CommonModule, MatInputModule, RegistrosComponent, MatSelectModule, ReactiveFormsModule],
     templateUrl: './mod-inicialzar-registro.component.html',
     styleUrls: ['./mod-inicialzar-registro.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModInicialzarRegistroComponent implements OnInit
+export class ModInicialzarRegistroComponent
 {
 
-    formPlaneacion: FormGroup;
+    ctrlDescripcion = new FormControl('');
+    cargando = false;
+    seleccionAno: string = null;
 
-    constructor(private fb: RxFormBuilder)
+    constructor(private planeacionService: PlaneacionService, public planeacionQuery: PlaneacionQuery)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.formPlaneacion = this.fb.formGroup(new Planeacion());
     }
 
     inicializarPlaneacion(): void
     {
+        const datos: TPlaneacionType = {
+            _id: this.seleccionAno,
+            ano: new Date().getFullYear(),
+            descripcion: this.ctrlDescripcion.value,
+            copia: true,
+            mirCuestionario: [],
+            pbrCuestionario: []
+        };
+        this.planeacionService.inicializarPlaneacion(datos).pipe().subscribe();
+    }
 
+    seleccionDeAno(e: any): void
+    {
+        console.log(e);
+        this.seleccionAno = e;
     }
 }

@@ -31,7 +31,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        console.log('plantilla');
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))

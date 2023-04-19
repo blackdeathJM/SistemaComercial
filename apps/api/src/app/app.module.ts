@@ -1,18 +1,20 @@
-import {Module} from '@nestjs/common';
-import {GraphQLModule} from '@nestjs/graphql';
-import {MongooseModule} from '@nestjs/mongoose';
-import {PubSub} from 'graphql-subscriptions';
-import {ConfigModule, ConfigService} from '@nestjs/config';
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PubSub } from 'graphql-subscriptions';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from '../config/config';
-import {AdminModule} from './admin/admin.module';
-import {GeneralModule} from './general/general.module';
-import {SubirArchivoModule} from './upload/subirArchivo.module';
-import {GraphQLUpload} from 'graphql-upload-ts';
-import {AppService} from '#api/apps/api/src/app/app.service';
-import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
-import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
-import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
-import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.module';
+import { AdminModule } from './admin/admin.module';
+import { GeneralModule } from './general/general.module';
+import { SubirArchivoModule } from './upload/subirArchivo.module';
+import { GraphQLUpload } from 'graphql-upload-ts';
+import { AppService } from '#api/apps/api/src/app/app.service';
+import { TecnicaOperativaModule } from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { DirAdmonFinanzasModule } from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
+import { DirGeneralModule } from '#api/apps/api/src/app/dir-general/dir-general.module';
+import { APP_FILTER, HttpAdapterHost } from '@nestjs/core';
+import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/claveDuplicada';
 
 @Module({
     imports:
@@ -33,10 +35,10 @@ import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.mo
                 autoSchemaFile: 'apps/api/schema.graphql',
                 buildSchemaOptions:
                     {
-                        dateScalarMode: 'isoDate',
+                        dateScalarMode: 'isoDate'
                     },
                 playground: false,
-                context: ({req}) => ({req}),
+                context: ({ req }) => ({ req })
             }),
             MongooseModule.forRootAsync({
                 imports: [ConfigModule],
@@ -55,7 +57,7 @@ import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.mo
             GeneralModule,
             TecnicaOperativaModule
         ],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService],
+    providers: [{ provide: 'PUB_SUB', useValue: new PubSub() }, AppService, { provide: APP_FILTER, useClass: ExcepcionesMongoose }],
     exports: [AppService]
 })
 export class AppModule

@@ -1,12 +1,12 @@
-import {PlaneacionDto, PlaneacionType, IniPlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import {Model} from 'mongoose';
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
+import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import { Model } from 'mongoose';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class PlaneacionService
 {
-    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<PlaneacionType>)
+    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>)
     {
     }
 
@@ -14,22 +14,36 @@ export class PlaneacionService
     {
         try
         {
-            return await this.planeacion.find({}, {}, {sort: {ano: -1}}).exec();
+            return await this.planeacion.find({}, {}, { sort: { ano: -1 } }).exec();
         } catch (e)
         {
             throw new InternalServerErrorException(e);
         }
     }
 
-    async inicializarPlaneacion(planeacion: IniPlaneacionDto): Promise<PlaneacionDto>
+    async inicializarPlaneacion(planeacion: PlaneacionDto): Promise<PlaneacionDto>
     {
         try
         {
-            console.log(planeacion);
-            // return new this.planeacion(planeacion).save();
-            return null;
+            if (planeacion._id)
+            {
+                const copia = await this.planeacion.findById(planeacion._id).exec();
+                const nvaInicializacion: TPlaneacionType = {
+                    _id: null,
+                    ano: new Date().getFullYear(),
+                    copia: true,
+                    descripcion: planeacion.descripcion,
+                    mirCuestionario: copia.mirCuestionario,
+                    pbrCuestionario: copia.pbrCuestionario
+                };
+                return new this.planeacion(nvaInicializacion).save();
+            } else
+            {
+                return new this.planeacion(planeacion).save();
+            }
         } catch (e)
         {
+            console.log(e);
             throw new InternalServerErrorException(e);
         }
     }

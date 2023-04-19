@@ -4,7 +4,7 @@ query filTodos
         ...fragPlaneacion
     }
 }
-mutation inicializarPlaneacion($input: IniPlaneacionInput!)
+mutation inicializarPlaneacion($input: PlaneacionInput!)
 {
     inicializarPlaneacion(input: $input)
     {

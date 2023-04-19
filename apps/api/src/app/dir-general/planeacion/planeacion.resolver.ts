@@ -1,6 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import {PlaneacionDto, IniPlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import { PlaneacionDto } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import { PlaneacionService } from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
+import { UseFilters } from '@nestjs/common';
+import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/claveDuplicada';
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
@@ -16,7 +18,7 @@ export class PlaneacionResolver
     }
 
     @Mutation(() => PlaneacionDto)
-    async inicializarPlaneacion(@Args('input') input: IniPlaneacionDto): Promise<PlaneacionDto>
+    async inicializarPlaneacion(@Args('input') input: PlaneacionDto): Promise<PlaneacionDto>
     {
         return await this.planeacionService.inicializarPlaneacion(input);
     }
