@@ -1,7 +1,7 @@
-import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { Model } from 'mongoose';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import {PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {Model} from 'mongoose';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
 
 @Injectable()
 export class PlaneacionService
@@ -14,7 +14,7 @@ export class PlaneacionService
     {
         try
         {
-            return await this.planeacion.find({}, {}, { sort: { ano: -1 } }).exec();
+            return await this.planeacion.find({}, {}, {sort: {ano: -1}}).exec();
         } catch (e)
         {
             throw new InternalServerErrorException(e);
