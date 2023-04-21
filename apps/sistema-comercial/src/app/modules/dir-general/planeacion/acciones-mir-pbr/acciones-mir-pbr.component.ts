@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -9,6 +9,8 @@ import {Subscription} from 'rxjs';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
+import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
+import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 
 @Component({
     selector: 'app-acciones-mir-pbr',
@@ -27,13 +29,14 @@ export class AccionesMirPbrComponent
     bCentroGestor: string;
     sub = new Subscription();
 
-    constructor(public seleccionQuery: SeleccionQuery, private ngxToast: NgxToastService, public empleadoQuery: EmpleadoQuery)
+    constructor(public seleccionQuery: SeleccionQuery, private ngxToast: NgxToastService, public empleadoQuery: EmpleadoQuery, public planeacionQuery: PlaneacionQuery,
+                private planeacionService: PlaneacionService)
     {
     }
 
-    filAno(): void
+    filAno(e: string): void
     {
-
+        this.planeacionService.filPorAno(e).subscribe();
     }
 
     filEmpleado($event: any): void

@@ -165,7 +165,7 @@
         "@types/lodash-es": "4.17.7",
         "@types/luxon": "^3.3.0",
         "@types/marked": "^4.0.8",
-        "@types/node": "18.15.12",
+        "@types/node": "18.15.13",
         "@types/passport-jwt": "^3.0.8",
         "@types/passport-local": "^1.0.35",
         "@types/react": "^18.0.37",

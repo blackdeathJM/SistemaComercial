@@ -244,7 +244,6 @@ type SeleccionType {
 }
 
 type MirCuestionarioType {
-  id: ID
   tipo: String
   dimension: String
   centroGestor: String
@@ -270,11 +269,6 @@ type MirCuestionarioType {
   avanceTrim3: Float
   avanceTrim4: Float
   avanceAnual: Float
-  formulaTrim1: String
-  formulaTrim2: String
-  formulaTrim3: String
-  formulaTrim4: String
-  formulaAnual: String
 }
 
 type PbrType {
@@ -405,7 +399,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682045058
+  tiempo: Int = 1682077624
   titulo: String
   usarRouter: Boolean = false
 }
@@ -522,7 +516,6 @@ input SeleccionInput {
 }
 
 input MirCuestionarioInput {
-  id: ID
   tipo: String = null
   dimension: String = null
   centroGestor: String = null
@@ -548,11 +541,6 @@ input MirCuestionarioInput {
   avanceTrim3: Float = 0
   avanceTrim4: Float = 0
   avanceAnual: Float = 0
-  formulaTrim1: String = null
-  formulaTrim2: String = null
-  formulaTrim3: String = null
-  formulaTrim4: String = null
-  formulaAnual: String = null
 }
 
 input PbrInput {
@@ -599,6 +587,7 @@ input PlaneacionInput {
 type Query {
   selecciones: SeleccionType
   filTodos: [PlaneacionType!]!
+  filPorAno(_id: String!): PlaneacionType!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!

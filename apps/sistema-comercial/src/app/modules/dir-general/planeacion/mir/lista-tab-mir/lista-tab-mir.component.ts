@@ -1,15 +1,19 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
-import { ModAvancesMirComponent } from '@s-dir-general/mir/mod-avances-mir/mod-avances-mir.component';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { fuseAnimations } from '@s-fuse/public-api';
-import { FormsModule } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
+import {ModAvancesMirComponent} from '@s-dir-general/mir/mod-avances-mir/mod-avances-mir.component';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FormsModule} from '@angular/forms';
+import {loaderPlaneacion} from "@s-dir-general/store/planeacion.service";
+import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
+import {PlaneacionStore} from "@s-dir-general/store/planeacion.store";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -23,11 +27,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListaTabMirComponent
 {
-    loader = 'loaderMirs';
-    // mirSeleccionado: IMir = null;
+    loader = loaderPlaneacion;
+    mirSeleccionado: IMirCuestionario[];
     indice = 0;
 
-    constructor(private mdr: MatDialog)
+    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
     {
     }
 
@@ -39,6 +43,11 @@ export class ListaTabMirComponent
     regAvances(): void
     {
         // this.mirStore.setActive(this.mirSeleccionado._id);
-        this.mdr.open(ModAvancesMirComponent, { width: '45%' });
+        this.mdr.open(ModAvancesMirComponent, {width: '45%'});
+    }
+
+    cambiarSeleccion(e: number)
+    {
+        console.log('TabGroup', e);
     }
 }

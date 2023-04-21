@@ -1,6 +1,5 @@
 export interface IMirCuestionario
 {
-    id: string;
     idIndicador: string;
     nivel: string;
     programaFinanciacion: string;

@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExtraOptions, PreloadAllModules, RouterModule} from '@angular/router';
 import {MarkdownModule} from 'ngx-markdown';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
@@ -31,8 +31,8 @@ import {configLoader} from '@s-core/configLoader';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {PaginacionEs} from '@s-core/paginacion-es';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
-import {ManejoErroresInterceptor} from '#/apps/sistema-comercial/src/interceptors/manejoErrores.interceptor';
 import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
+import {provideAkitaDevtools} from "#/apps/sistema-comercial/src/store/config-devtools-akita";
 
 const routerConfig: ExtraOptions =
     {
@@ -90,6 +90,7 @@ const routerConfig: ExtraOptions =
         [
             {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
             {provide: MatPaginatorIntl, useClass: PaginacionEs},
+            provideAkitaDevtools()
             // {provide: HTTP_INTERCEPTORS, useClass: ManejoErroresInterceptor, multi: true}
         ],
     bootstrap:

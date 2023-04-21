@@ -4,7 +4,7 @@ import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeaci
 
 export interface IPlaneacionState extends EntityState<IPlaneacion, string>, ActiveState
 {
-
+    obtenerSeleccionado: IPlaneacion;
 }
 
 @Injectable({providedIn: 'root'})

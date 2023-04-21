@@ -1,7 +1,7 @@
-import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import {PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {Model} from 'mongoose';
+import {Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
 
 @Injectable()
 export class PlaneacionService
@@ -12,7 +12,12 @@ export class PlaneacionService
 
     async filTodos(): Promise<PlaneacionDto[]>
     {
-        return await this.planeacion.find({}, {}, { sort: { ano: -1 } }).exec();
+        return await this.planeacion.find({}, {}, {sort: {ano: -1}}).exec();
+    }
+
+    async filPorAno(_id: string): Promise<PlaneacionDto>
+    {
+        return await this.planeacion.findById(_id).exec();
     }
 
     async inicializarPlaneacion(planeacion: PlaneacionDto): Promise<PlaneacionDto>

@@ -3,7 +3,6 @@ import {DocActFolioGQL, DocFinalizarGQL, DocRefFolioGQL, DocsBusquedaGralGQL, Do
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {SingleExecutionResult} from '@apollo/client';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {IDocActFolio, IDocsFechas, IDocsUsuarioProceso, IResolveDocumento, TDocRefFolio, TDocumentoReg} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {AuthQuery} from '@s-core/auth/store/auth.query';

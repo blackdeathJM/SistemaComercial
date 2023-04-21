@@ -1,9 +1,5 @@
 import {Module} from '@nestjs/common';
-import {PbrService} from '#api/apps/api/src/app/dir-general/planeacion/pbr/pbr.service';
 import {MongooseModule} from '@nestjs/mongoose';
-import {MirService} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.service';
-import {PbrResolver} from '#api/apps/api/src/app/dir-general/planeacion/pbr/pbr.resolver';
-import {MirResolver} from '#api/apps/api/src/app/dir-general/planeacion/mir/mir.resolver';
 import {SCHEMA_SELECCION, SeleccionDto} from '#api/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
 import {SeleccionResolver} from '#api/apps/api/src/app/dir-general/planeacion/selecciones/seleccion.resolver';
 import {SeleccionService} from '#api/apps/api/src/app/dir-general/planeacion/selecciones/seleccion.service';
@@ -22,7 +18,7 @@ import {PlaneacionResolver} from "#api/apps/api/src/app/dir-general/planeacion/p
                 {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}
             ])
         ],
-    providers: [PbrService, MirService, PbrResolver, MirResolver, SeleccionService, SeleccionResolver, EmpleadoService, PlaneacionService, PlaneacionResolver]
+    providers: [SeleccionService, SeleccionResolver, EmpleadoService, PlaneacionService, PlaneacionResolver]
 })
 export class PlaneacionModule
 {

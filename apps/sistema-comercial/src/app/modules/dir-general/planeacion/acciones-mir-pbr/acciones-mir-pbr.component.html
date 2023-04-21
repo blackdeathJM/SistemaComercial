@@ -1,9 +1,11 @@
 <mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
-    <mat-form-field class="flex-auto mt-5">
-        <mat-select (valueChange)="filAno()">
-            <mat-option></mat-option>
-        </mat-select>
-    </mat-form-field>
+    <ng-container *ngIf="planeacionQuery.selectAll() | async as planes">
+        <mat-form-field class="flex-auto mt-5">
+            <mat-select (valueChange)="filAno($event)">
+                <mat-option *ngFor="let plan of planes" [value]="plan._id">{{plan.ano}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
     <ng-container *ngIf="habCentroGestor">
         <ng-container *ngIf="seleccionQuery.select() | async as centros">
             <mat-form-field class="flex-auto mt-5">
