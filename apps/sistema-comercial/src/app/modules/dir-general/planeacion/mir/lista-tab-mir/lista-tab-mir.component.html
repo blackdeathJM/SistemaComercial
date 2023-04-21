@@ -68,10 +68,18 @@
                 <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
             </mat-card-content>
             <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
-                <div class="flex flex-auto">
-                    <button mat-raised-button color="primary" class="flex-auto" (click)="regAvances()">
+                <div class="flex flex-auto gap-4">
+                    <button mat-raised-button color="primary" class="flex-auto">
                         <mat-icon svgIcon="feather:save"></mat-icon>
-                        Registrar o editar avances
+                        Nuevo registro
+                    </button>
+                    <button mat-raised-button color="primary" class="flex-auto">
+                        <mat-icon svgIcon="feather:save"></mat-icon>
+                        Editar registro
+                    </button>
+                    <button mat-raised-button color="primary" class="flex-auto">
+                        <mat-icon svgIcon="feather:save"></mat-icon>
+                        Eliminar registro
                     </button>
                 </div>
             </mat-card-actions>

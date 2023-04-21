@@ -269,6 +269,11 @@ type MirCuestionarioType {
   avanceTrim3: Float
   avanceTrim4: Float
   avanceAnual: Float
+  formulaTrim1: String
+  formulaTrim2: String
+  formulaTrim3: String
+  formulaTrim4: String
+  formulaAnual: String
 }
 
 type PbrType {
@@ -399,7 +404,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682077624
+  tiempo: Int = 1682096632
   titulo: String
   usarRouter: Boolean = false
 }
@@ -541,6 +546,11 @@ input MirCuestionarioInput {
   avanceTrim3: Float = 0
   avanceTrim4: Float = 0
   avanceAnual: Float = 0
+  formulaTrim1: String = null
+  formulaTrim2: String = null
+  formulaTrim3: String = null
+  formulaTrim4: String = null
+  formulaAnual: String = null
 }
 
 input PbrInput {
@@ -613,6 +623,7 @@ type Query {
 type Mutation {
   regSeleccion(input: SeleccionInput): SeleccionType!
   inicializarPlaneacion(input: PlaneacionInput!): PlaneacionType!
+  regMir(datos: RegMirInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -648,6 +659,41 @@ type Mutation {
   actInst(args: ActInstInput!): TelemetriaType!
   agregarMotor(args: AgregarMotorInput!): TelemetriaType!
   agregarBomba(args: AgregarBombaInput!): TelemetriaType!
+}
+
+input RegMirInput {
+  tipo: String = null
+  dimension: String = null
+  centroGestor: String = null
+  frecuenciaMedicion: String = null
+  idIndicador: String = null
+  lineaBaseAno: Int = 0
+  lineaBaseValor: String = null
+  meta: Float = 0
+  metodoCalculo: String = null
+  mediosDeVerificacion: String = null
+  nivel: String = null
+  nombreDelIndicador: String = null
+  semefVerde: Float = 0
+  semefAmarillo: Float = 0
+  semefRojo: Float = 0
+  programaFinanciacion: String = null
+  resumenNarrativo: String = null
+  sentidoDelIndicador: String = null
+  supuestos: String = null
+  unidadDeMedida: String = null
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
+  avanceAnual: Float = 0
+  formulaTrim1: String = null
+  formulaTrim2: String = null
+  formulaTrim3: String = null
+  formulaTrim4: String = null
+  formulaAnual: String = null
+  _id: ID
+  esActualizar: Boolean = false
 }
 
 input CambioContrasenaInput {

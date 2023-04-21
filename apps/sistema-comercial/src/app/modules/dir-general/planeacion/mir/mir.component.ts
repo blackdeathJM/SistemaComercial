@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialog} from '@angular/material/dialog';
-import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {NgxToastService} from '@s-services/ngx-toast.service';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
-import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
-import {ModInicialzarRegistroComponent} from "@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component";
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ModMirComponent } from '@s-dir-general/mir/mod-mir/mod-mir.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ModMultiplesSeleccionesComponent } from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgxToastService } from '@s-services/ngx-toast.service';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ListaTabMirComponent } from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
+import { AccionesMirPbrComponent } from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
+import { ModInicialzarRegistroComponent } from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
 
 @Component({
     selector: 'app-mir',
@@ -33,12 +33,12 @@ export default class MirComponent implements OnInit
 
     regSeleccion(): void
     {
-        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
+        this.mdr.open(ModMultiplesSeleccionesComponent, { width: '60%' });
     }
 
     inicializarPlaneacion()
     {
-        this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
+        this.mdr.open(ModInicialzarRegistroComponent, { width: '40%' });
     }
 
     porCentroGestor(e: [string, number]): void
@@ -62,6 +62,6 @@ export default class MirComponent implements OnInit
 
     cerrarPanel(): void
     {
-        this.abrirPanel = false;
+        // this.abrirPanel = false;
     }
 }

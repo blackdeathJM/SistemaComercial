@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
@@ -12,7 +12,6 @@ import {fuseAnimations} from '@s-fuse/public-api';
 import {FormsModule} from '@angular/forms';
 import {loaderPlaneacion} from "@s-dir-general/store/planeacion.service";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
-import {PlaneacionStore} from "@s-dir-general/store/planeacion.store";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Component({

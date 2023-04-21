@@ -1,6 +1,5 @@
 fragment fragMir on MirCuestionarioType
 {
-    id
     idIndicador
     nivel
     programaFinanciacion

@@ -1,7 +1,8 @@
-import {PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import {Model} from 'mongoose';
-import {Injectable} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
+import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { MirCuestionarioDto, RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Injectable()
 export class PlaneacionService
@@ -12,7 +13,7 @@ export class PlaneacionService
 
     async filTodos(): Promise<PlaneacionDto[]>
     {
-        return await this.planeacion.find({}, {}, {sort: {ano: -1}}).exec();
+        return await this.planeacion.find({}, {}, { sort: { ano: -1 } }).exec();
     }
 
     async filPorAno(_id: string): Promise<PlaneacionDto>
@@ -40,16 +41,13 @@ export class PlaneacionService
         }
     }
 
-    // async regMir(mir: MirCuestionarioDto): Promise<MirCuestionarioDto>
-    // {
-    //     try
-    //     {
-    //         return await this.planeacion.findOneAndUpdate();
-    //     } catch (e)
-    //     {
-    //         throw new InternalServerErrorException(e);
-    //     }
-    // }
+    async regMir(datos: RegMirDto): Promise<PlaneacionDto>
+    {
+        const { _id, esActualizar, ...resto } = datos;
+        return await this.planeacion.findOneAndUpdate({ _id, mirCuestionario: { $elemMatch: { idIndicador: resto.idIndicador } } },
+            { $set: { 'mirCuestionario.$': resto }, $addToSet: { mirCuestionario: resto } }).exec();
+
+    }
 
     // async regPbr(): Promise<PlaneacionDto>
     // {
