@@ -90,7 +90,7 @@ const routerConfig: ExtraOptions =
         [
             {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
             {provide: MatPaginatorIntl, useClass: PaginacionEs},
-            {provide: HTTP_INTERCEPTORS, useClass: ManejoErroresInterceptor, multi: true}
+            // {provide: HTTP_INTERCEPTORS, useClass: ManejoErroresInterceptor, multi: true}
         ],
     bootstrap:
         [

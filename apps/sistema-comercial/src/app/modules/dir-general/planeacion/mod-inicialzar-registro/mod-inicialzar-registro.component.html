@@ -14,4 +14,4 @@
         </ng-container>
     </ng-container>
 </div>
-<app-registros (click)="inicializarPlaneacion()" [cargando]="cargando" [deshabilitar]="cargando"></app-registros>
+<app-registros (registro)="inicializarPlaneacion()" [cargando]="cargando" [deshabilitar]="cargando" (cancelar)="mdr.close()"></app-registros>

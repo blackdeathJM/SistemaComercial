@@ -1,21 +1,21 @@
-import {Module} from '@nestjs/common';
-import {GraphQLModule} from '@nestjs/graphql';
-import {MongooseModule} from '@nestjs/mongoose';
-import {PubSub} from 'graphql-subscriptions';
-import {ConfigModule, ConfigService} from '@nestjs/config';
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PubSub } from 'graphql-subscriptions';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from '../config/config';
-import {AdminModule} from './admin/admin.module';
-import {GeneralModule} from './general/general.module';
-import {SubirArchivoModule} from './upload/subirArchivo.module';
-import {GraphQLUpload} from 'graphql-upload-ts';
-import {AppService} from '#api/apps/api/src/app/app.service';
-import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
-import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
-import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
-import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.module';
-import {GraphQLError, GraphQLFormattedError} from "graphql";
-import {APP_FILTER} from "@nestjs/core";
-import {ExcepcionesMongoose} from "#api/apps/api/src/exceptions/excepciones";
+import { AdminModule } from './admin/admin.module';
+import { GeneralModule } from './general/general.module';
+import { SubirArchivoModule } from './upload/subirArchivo.module';
+import { GraphQLUpload } from 'graphql-upload-ts';
+import { AppService } from '#api/apps/api/src/app/app.service';
+import { TecnicaOperativaModule } from '#api/apps/api/src/app/tecnica-operativa/tecnica-operativa.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { DirAdmonFinanzasModule } from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
+import { DirGeneralModule } from '#api/apps/api/src/app/dir-general/dir-general.module';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { APP_FILTER } from '@nestjs/core';
+import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/excepciones';
 
 @Module({
     imports:
@@ -39,18 +39,16 @@ import {ExcepcionesMongoose} from "#api/apps/api/src/exceptions/excepciones";
                         dateScalarMode: 'isoDate'
                     },
                 playground: false,
-                context: ({req}) => ({req}),
-                formatError: (error: GraphQLError) =>
+                context: ({ req }) => ({ req }),
+                formatError: error =>
                 {
-                    const graphQLFormattedError: GraphQLFormattedError =
-                        {
-                            message: error?.message,
-                        };
-                    return graphQLFormattedError;
-                }
+
+                    return {
+                        message: error.message
+                    };
+                },
+                autoTransformHttpErrors: true
             }),
-
-
             MongooseModule.forRootAsync({
                 imports: [ConfigModule],
                 inject: [ConfigService],
@@ -68,8 +66,8 @@ import {ExcepcionesMongoose} from "#api/apps/api/src/exceptions/excepciones";
             GeneralModule,
             TecnicaOperativaModule
         ],
-    // providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService, {provide: APP_FILTER, useClass: ExcepcionesMongoose}],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService],
+    providers: [{ provide: 'PUB_SUB', useValue: new PubSub() }, AppService, { provide: APP_FILTER, useClass: ExcepcionesMongoose }],
+    // providers: [{ provide: 'PUB_SUB', useValue: new PubSub() }, AppService],
     exports: [AppService]
 })
 export class AppModule

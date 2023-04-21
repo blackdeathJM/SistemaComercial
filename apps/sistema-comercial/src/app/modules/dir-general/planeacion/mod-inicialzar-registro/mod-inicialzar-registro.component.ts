@@ -7,6 +7,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PlaneacionService } from '@s-dir-general/store/planeacion.service';
 import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
 import { TPlaneacionType } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import { finalize } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'sistema-comercial-mod-inicialzar-registro',
@@ -23,12 +25,13 @@ export class ModInicialzarRegistroComponent
     cargando = false;
     seleccionAno: string = null;
 
-    constructor(private planeacionService: PlaneacionService, public planeacionQuery: PlaneacionQuery)
+    constructor(private planeacionService: PlaneacionService, public planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModInicialzarRegistroComponent>)
     {
     }
 
     inicializarPlaneacion(): void
     {
+        this.cargando = true;
         const datos: TPlaneacionType = {
             _id: this.seleccionAno,
             ano: new Date().getFullYear(),
@@ -37,12 +40,15 @@ export class ModInicialzarRegistroComponent
             mirCuestionario: [],
             pbrCuestionario: []
         };
-        this.planeacionService.inicializarPlaneacion(datos).pipe().subscribe();
+        this.planeacionService.inicializarPlaneacion(datos).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.mdr.close();
+        })).subscribe();
     }
 
     seleccionDeAno(e: any): void
     {
-        console.log(e);
         this.seleccionAno = e;
     }
 }
