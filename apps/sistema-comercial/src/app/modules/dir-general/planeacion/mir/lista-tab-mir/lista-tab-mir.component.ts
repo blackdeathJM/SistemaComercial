@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
@@ -26,6 +26,7 @@ import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir
 })
 export class ListaTabMirComponent
 {
+    @Output() abrirPanel = new EventEmitter<boolean>();
     loader = loaderPlaneacion;
     mirSeleccionado: IMirCuestionario[];
     indice = 0;
@@ -48,5 +49,10 @@ export class ListaTabMirComponent
     cambiarSeleccion(e: number)
     {
         console.log('TabGroup', e);
+    }
+
+    nuevoElemento()
+    {
+        this.abrirPanel.emit(true)
     }
 }

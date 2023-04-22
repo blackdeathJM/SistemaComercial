@@ -1,106 +1,45 @@
-import { numeric, NumericValueType, prop, required } from '@rxweb/reactive-form-validators';
-import { sanitize, upperCase } from '@rxweb/sanitizers';
-import { IMirCuestionario } from './mir.interface';
+import {numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {sanitize, upperCase} from '@rxweb/sanitizers';
+import {IMirCuestionario} from './mir.interface';
+import {TRegMir} from "./mir.dto";
+import {idPlaneacion} from "../../../../../../../apps/sistema-comercial/src/app/modules/dir-general/planeacion/store/planeacion.service";
 
 @sanitize
-export class Mir implements IMirCuestionario
+export class Mir implements TRegMir
 {
-    @prop({ defaultValue: 0.00 })
+    @prop()
+    _id: string;
+
     avanceAnual: number;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both })
     avanceTrim1: number;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both })
     avanceTrim2: number;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both })
-    avanceTrim3: number = 0;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both })
+    avanceTrim3: number;
     avanceTrim4: number;
-
-    @required({ message: 'El centro gestor es requerido' })
     centroGestor: string;
-
-    @required({ message: 'La dimension es requerida' })
     dimension: string;
-
-    @required({ message: 'Coloca la frecuencia de medicion' })
+    esActualizar: boolean;
+    formulaAnual: string;
+    formulaTrim1: string;
+    formulaTrim2: string;
+    formulaTrim3: string;
+    formulaTrim4: string;
     frecuenciaMedicion: string;
-
-    @upperCase()
-    @required({ message: 'Asigna un identificador' })
     idIndicador: string;
-
-    @prop({ defaultValue: 0 })
     lineaBaseAno: number;
-
-    @prop({ defaultValue: null })
     lineaBaseValor: string;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.Both })
-    meta: number;
-
-    @required({ message: 'Asigna el metodo de calculo' })
-    metodoCalculo: string;
-
-    @required({ message: 'Es necesario el calculo de verificacion' })
     mediosDeVerificacion: string;
-
-    @required({ message: 'Es necesario el nivel' })
+    meta: number;
+    metodoCalculo: string;
     nivel: string;
-
-    @required({ message: 'Es necesario el nombre del indicador' })
     nombreDelIndicador: string;
-
-    @required({ message: 'Es necesario el programa de financiacion' })
     programaFinanciacion: string;
-
-    @required({ message: 'Es necesario el resumen narrativo' })
     resumenNarrativo: string;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.PositiveNumber })
     semefAmarillo: number;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.Both })
     semefRojo: number;
-
-    @prop({ defaultValue: 0.00 })
-    @numeric({ message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.PositiveNumber })
-    semefVerde: number = 0;
-
-    @required({ message: 'Selecciona el sentido del indicador' })
+    semefVerde: number;
     sentidoDelIndicador: string;
-
-    @required({ message: 'Es necesario colocar un supuesto' })
     supuestos: string;
-
-    @required({ message: 'Coloca el tipo' })
     tipo: string;
-
-    @required({ message: 'Asigna una unidad de medicion' })
     unidadDeMedida: string;
 
-    @prop({ defaultValue: '' })
-    formulaTrim1: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim2: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim3: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim4: string;
-
-    @prop({ defaultValue: '' })
-    formulaAnual: string;
 }

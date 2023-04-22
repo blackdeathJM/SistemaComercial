@@ -5,7 +5,7 @@
         </ng-container>
     </mat-drawer>
     <mat-drawer-content>
-        <app-acciones-mir-pbr (porAno)="buscarPorAno($event)" (porCentroGestor)="porCentroGestor($event)" [habEmpleado]="false" [habCentroGestor]="true">
+        <app-acciones-mir-pbr [habEmpleado]="false" [habCentroGestor]="true">
             <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle (click)="regSeleccion()" value="bold">
@@ -16,10 +16,6 @@
                         <mat-icon svgIcon="heroicons_outline:collection"></mat-icon>
                         Inicializar nuevo mir
                     </mat-button-toggle>
-<!--                    <mat-button-toggle (click)="abrirPanel = true">-->
-<!--                        <mat-icon svgIcon="add"></mat-icon>-->
-<!--                        Nvo elemento MIR-->
-<!--                    </mat-button-toggle>-->
                     <mat-button-toggle>
                         <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                         Imprimir
@@ -28,7 +24,7 @@
             </ng-container>
         </app-acciones-mir-pbr>
         <article class="flex flex-col flex-auto">
-            <app-lista-tab-mir></app-lista-tab-mir>
+            <app-lista-tab-mir (abrirPanel)="abrirPanel = true"></app-lista-tab-mir>
         </article>
     </mat-drawer-content>
 </mat-drawer-container>

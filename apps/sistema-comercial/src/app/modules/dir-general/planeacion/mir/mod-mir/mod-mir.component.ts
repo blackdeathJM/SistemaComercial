@@ -1,22 +1,22 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { finalize, Subscription } from 'rxjs';
-import { RxFormBuilder, RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Mir } from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
-import { SeleccionType } from '#/libs/datos/src';
-import { TrimDirective } from '@s-directives/trim.directive';
-import { TrimInputModule } from '@angular-ru/cdk/directives';
-import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
-import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query';
-import { AscDesc } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
-import { TRegMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import { PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {finalize, Subscription} from 'rxjs';
+import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
+import {SeleccionType} from '#/libs/datos/src';
+import {TrimDirective} from '@s-directives/trim.directive';
+import {TrimInputModule} from '@angular-ru/cdk/directives';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
+import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
 
 @Component({
     selector: 'app-mod-mir',
@@ -37,7 +37,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     sub = new Subscription();
     cargando = false;
 
-    constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService)
+    constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef)
     {
     }
 
@@ -56,10 +56,12 @@ export class ModMirComponent implements OnInit, OnDestroy
     regMir(): void
     {
         this.cargando = true;
-        const { ano, avanceAnual, avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4, lineaBaseValor, meta, semefAmarillo, semefRojo, semefVerde, ...resto } = this.formMir.value;
+        const {_id, ano, avanceAnual, avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4, lineaBaseValor, meta, semefAmarillo, semefRojo, semefVerde, ...resto} = this.formMir.value;
 
         const datos: TRegMir =
             {
+                _id: idPlaneacion(),
+                esActualizar: false,
                 avanceAnual: +avanceAnual,
                 avanceTrim1: +avanceTrim1,
                 avanceTrim2: +avanceTrim2,
@@ -71,18 +73,19 @@ export class ModMirComponent implements OnInit, OnDestroy
                 semefVerde: +semefVerde,
                 ...resto
             };
-
         this.planeacionService.regMir(datos).pipe(finalize(() =>
         {
             this.cargando = false;
-            Object.keys(this.formMir.controls).forEach((ctrl) =>
-            {
-                const ctrlNombre = this.formMir.get(ctrl);
-                if (ctrl !== 'centroGestor')
-                {
-                    ctrlNombre.reset();
-                }
-            });
+            console.log('finalize');
+            this.cdr.detectChanges();
+            // Object.keys(this.formMir.controls).forEach((ctrl) =>
+            // {
+            //     const ctrlNombre = this.formMir.get(ctrl);
+            //     if (ctrl !== 'centroGestor')
+            //     {
+            //         ctrlNombre.reset();
+            //     }
+            // });
         })).subscribe();
     }
 

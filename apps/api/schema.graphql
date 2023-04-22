@@ -404,7 +404,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682096632
+  tiempo: Int = 1682159438
   titulo: String
   usarRouter: Boolean = false
 }

@@ -10,7 +10,7 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
-import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
+import {idPlaneacion, PlaneacionService} from "@s-dir-general/store/planeacion.service";
 
 @Component({
     selector: 'app-acciones-mir-pbr',
@@ -36,6 +36,7 @@ export class AccionesMirPbrComponent
 
     filAno(e: string): void
     {
+
         this.planeacionService.filPorAno(e).subscribe();
     }
 
