@@ -84,7 +84,6 @@ const routerConfig: ExtraOptions =
             // modulos
             provideFirebaseApp(() => initializeApp(environment.firebase)),
             provideStorage(() => getStorage()),
-            environment.production ? [] : AkitaNgDevtools.forRoot()
         ],
     providers:
         [

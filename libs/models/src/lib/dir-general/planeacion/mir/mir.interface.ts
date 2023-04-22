@@ -9,13 +9,11 @@ export interface IMirCuestionario
     tipo: string;
     dimension: string;
     metodoCalculo: string;
-    mediosDeVerificacion: string;
-    supuestos: string;
     unidadDeMedida: string;
     frecuenciaMedicion: string;
     lineaBaseAno: number;
     lineaBaseValor: string;
-    meta: number;
+    meta: string;
     sentidoDelIndicador: string;
     semefVerde: number;
     semefAmarillo: number;

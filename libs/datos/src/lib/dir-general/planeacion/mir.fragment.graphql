@@ -9,8 +9,6 @@ fragment fragMir on MirCuestionarioType
     tipo
     dimension
     metodoCalculo
-    mediosDeVerificacion
-    supuestos
     unidadDeMedida
     frecuenciaMedicion
     lineaBaseAno

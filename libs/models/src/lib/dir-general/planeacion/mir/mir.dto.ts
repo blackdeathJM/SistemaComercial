@@ -1,5 +1,5 @@
 import { IMirCuestionario } from './mir.interface';
-import { Field, ID, Int, Float, ObjectType, InputType } from '@nestjs/graphql';
+import { Field, ID, Int, Float, ObjectType, InputType, PickType } from '@nestjs/graphql';
 import { Prop } from '@nestjs/mongoose';
 import { IsOptional, IsNotEmpty, IsNumber } from 'class-validator';
 
@@ -38,18 +38,13 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({ message: 'El valor de la linea base es requerido' })
     lineaBaseValor: string;
 
-    @Field(() => Float, { nullable: true, defaultValue: 0.00 })
+    @Field(() => String, { nullable: true, defaultValue: '' })
     @IsNotEmpty({ message: 'La meta es requerida' })
-    @IsNumber({ allowNaN: false, allowInfinity: false, maxDecimalPlaces: 2 })
-    meta: number;
+    meta: string;
 
     @Field(() => String, { nullable: true, defaultValue: null })
     @IsNotEmpty({ message: 'El metodo de calculo es necesario' })
     metodoCalculo: string;
-
-    @Field(() => String, { nullable: true, defaultValue: null })
-    @IsNotEmpty({ message: 'El metodo de verificacion es necesario' })
-    mediosDeVerificacion: string;
 
     @Field(() => String, { nullable: true, defaultValue: null })
     @IsNotEmpty({ message: 'El nivel es requerido' })
@@ -86,9 +81,6 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({ message: 'Tienes que colocar el sentido del indicador Ascendente o Descendente' })
     sentidoDelIndicador: string;
 
-    @Field(() => String, { nullable: true, defaultValue: null })
-    @IsNotEmpty({ message: 'Los supuestos son necesarios' })
-    supuestos: string;
 
     @Field(() => String, { nullable: true, defaultValue: null })
     @IsNotEmpty({ message: 'Es necesario colocar una unidad de medida' })

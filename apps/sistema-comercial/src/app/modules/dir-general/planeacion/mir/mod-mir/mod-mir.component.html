@@ -12,7 +12,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Programa financiacion</mat-label>
-            <input matInput formControlName="programaFinanciacion"/>
+            <input matInput formControlName="programaFinanciacion" />
             <mat-error>{{formMir.controls.programaFinanciacion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -51,16 +51,7 @@
             <textarea matInput formControlName="metodoCalculo"></textarea>
             <mat-error>{{formMir.controls.metodoCalculo['errorMessage']}}</mat-error>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Medios de Verificacion</mat-label>
-            <textarea matInput formControlName="mediosDeVerificacion"></textarea>
-            <mat-error>{{formMir.controls.mediosDeVerificacion['errorMessage']}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Supuestos</mat-label>
-            <textarea matInput formControlName="supuestos"></textarea>
-            <mat-error>{{formMir.controls.supuestos['errorMessage']}}</mat-error>
-        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Unidad de medida</mat-label>
             <mat-select formControlName="unidadDeMedida">
@@ -68,6 +59,7 @@
             </mat-select>
             <mat-error>{{formMir.controls.unidadDeMedida['errorMessage']}}</mat-error>
         </mat-form-field>
+
         <mat-form-field>
             <mat-label>Frecuencia de medicion</mat-label>
             <mat-select formControlName="frecuenciaMedicion">
@@ -75,6 +67,27 @@
             </mat-select>
             <mat-error>{{formMir.controls.frecuenciaMedicion['errorMessage']}}</mat-error>
         </mat-form-field>
+
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Linea base año</mat-label>
+                <input matInput formControlName="lineaBaseAno" />
+                <mat-error>{{formMir.controls.lineaBaseAno['errorMessage']}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="lineaBaseValor" />
+                <mat-error>{{formMir.controls.lineaBaseValor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field>
+            <mat-label>Meta</mat-label>
+            <input matInput formControlName="meta" />
+            <mat-error>{{formMir.controls.meta['errorMessage']}}</mat-error>
+        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Sentido del indicador</mat-label>
             <mat-select formControlName="sentidoDelIndicador">
