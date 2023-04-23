@@ -16,8 +16,11 @@ fragment fragMir on MirCuestionarioType
     meta
     sentidoDelIndicador
     semefVerde
+    semefVerdeV
     semefAmarillo
+    semefAmarilloV
     semefRojo
+    semefRojoV
     avanceTrim1
     avanceTrim2
     avanceTrim3

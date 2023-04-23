@@ -13,11 +13,14 @@ export interface IMirCuestionario
     frecuenciaMedicion: string;
     lineaBaseAno: number;
     lineaBaseValor: string;
-    meta: string;
+    meta: number;
     sentidoDelIndicador: string;
     semefVerde: number;
+    semefVerdeV: number;
     semefAmarillo: number;
+    semefAmarilloV: number;
     semefRojo: number;
+    semefRojoV: number;
     avanceTrim1: number;
     avanceTrim2: number;
     avanceTrim3: number;

@@ -251,13 +251,16 @@ type MirCuestionarioType {
   idIndicador: String
   lineaBaseAno: Int
   lineaBaseValor: String
-  meta: String
+  meta: Float
   metodoCalculo: String
   nivel: String
   nombreDelIndicador: String
   semefVerde: Float
+  semefVerdeV: Float
   semefAmarillo: Float
+  semefAmarilloV: Float
   semefRojo: Float
+  semefRojoV: Float
   programaFinanciacion: String
   resumenNarrativo: String
   sentidoDelIndicador: String
@@ -402,7 +405,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682179318
+  tiempo: Int = 1682250560
   titulo: String
   usarRouter: Boolean = false
 }
@@ -526,13 +529,16 @@ input MirCuestionarioInput {
   idIndicador: String = null
   lineaBaseAno: Int = 0
   lineaBaseValor: String = null
-  meta: String = ""
+  meta: Float = 0
   metodoCalculo: String = null
   nivel: String = null
   nombreDelIndicador: String = null
   semefVerde: Float = 0
+  semefVerdeV: Float = 0
   semefAmarillo: Float = 0
+  semefAmarilloV: Float = 0
   semefRojo: Float = 0
+  semefRojoV: Float = 0
   programaFinanciacion: String = null
   resumenNarrativo: String = null
   sentidoDelIndicador: String = null
@@ -665,13 +671,16 @@ input RegMirInput {
   idIndicador: String = null
   lineaBaseAno: Int = 0
   lineaBaseValor: String = null
-  meta: String = ""
+  meta: Float = 0
   metodoCalculo: String = null
   nivel: String = null
   nombreDelIndicador: String = null
   semefVerde: Float = 0
+  semefVerdeV: Float = 0
   semefAmarillo: Float = 0
+  semefAmarilloV: Float = 0
   semefRojo: Float = 0
+  semefRojoV: Float = 0
   programaFinanciacion: String = null
   resumenNarrativo: String = null
   sentidoDelIndicador: String = null

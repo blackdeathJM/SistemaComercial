@@ -1,5 +1,5 @@
 import { IMirCuestionario } from './mir.interface';
-import { Field, ID, Int, Float, ObjectType, InputType, PickType } from '@nestjs/graphql';
+import { Field, ID, Int, Float, ObjectType, InputType, PickType, PartialType } from '@nestjs/graphql';
 import { Prop } from '@nestjs/mongoose';
 import { IsOptional, IsNotEmpty, IsNumber } from 'class-validator';
 
@@ -38,9 +38,9 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({ message: 'El valor de la linea base es requerido' })
     lineaBaseValor: string;
 
-    @Field(() => String, { nullable: true, defaultValue: '' })
+    @Field(() => Float, { nullable: true, defaultValue: 0.00 })
     @IsNotEmpty({ message: 'La meta es requerida' })
-    meta: string;
+    meta: number;
 
     @Field(() => String, { nullable: true, defaultValue: null })
     @IsNotEmpty({ message: 'El metodo de calculo es necesario' })
@@ -59,15 +59,27 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsOptional()
     semefVerde: number;
 
+    @Field(() => Float, { nullable: true, defaultValue: 0.00 })
+    @IsNumber({ allowNaN: false, allowInfinity: false }, { message: 'El valor debe ser numerico, semaforo verde' })
+    semefVerdeV: number;
+
     @Field(() => Float, { nullable: true, defaultValue: 0 })
     @IsNumber({ allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false })
     @IsOptional()
     semefAmarillo: number;
 
+    @Field(() => Float, { nullable: true, defaultValue: 0.00 })
+    @IsNumber({ allowNaN: false, allowInfinity: false }, { message: 'El valor debe ser numerico, semaforo amarillo' })
+    semefAmarilloV: number;
+
     @Field(() => Float, { nullable: true, defaultValue: 0 })
     @IsNumber({ allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false })
     @IsOptional()
     semefRojo: number;
+
+    @Field(() => Float, { nullable: true, defaultValue: 0.00 })
+    @IsNumber({ allowNaN: false, allowInfinity: false }, { message: 'El valor debe ser numerico, semaforo rojo' })
+    semefRojoV: number;
 
     @Field(() => String, { nullable: true, defaultValue: null })
     @IsNotEmpty({ message: 'Es necesario el parametro de financiacion' })
@@ -133,11 +145,11 @@ export class MirCuestionarioDto implements IMirCuestionario
 }
 
 @InputType('RegMirInput')
-export class RegMirDto extends MirCuestionarioDto
+export class RegMirDto extends PartialType(MirCuestionarioDto, InputType)
 {
     @Field(() => ID, { nullable: true })
     @IsNotEmpty({ message: 'Es necesario el id' })
-    _id: string;
+    _id?: string;
 
     @Field(() => Boolean, { nullable: true, defaultValue: false })
     @IsOptional()

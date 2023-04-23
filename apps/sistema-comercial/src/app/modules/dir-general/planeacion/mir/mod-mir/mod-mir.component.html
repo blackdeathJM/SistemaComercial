@@ -95,6 +95,24 @@
             </mat-select>
             <mat-error>{{formMir.controls.sentidoDelIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
+
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>S.Verde</mat-label>
+                <input matInput formControlName="semefVerdeV">
+                <mat-icon svgIcon="feather:percent" matSuffix></mat-icon>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>S.Amarillo</mat-label>
+                <input matInput formControlName="semefAmarilloV">
+                <mat-icon svgIcon="feather:percent" matSuffix></mat-icon>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>S.Rojo</mat-label>
+                <input matInput formControlName="semefRojoV">
+                <mat-icon svgIcon="feather:percent" matSuffix></mat-icon>
+            </mat-form-field>
+        </div>
     </section>
 </form>
 

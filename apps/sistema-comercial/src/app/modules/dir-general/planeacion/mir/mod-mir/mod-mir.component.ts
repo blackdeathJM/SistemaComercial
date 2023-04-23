@@ -63,20 +63,17 @@ export class ModMirComponent implements OnInit, OnDestroy
     regMir(): void
     {
         this.cargando = true;
-        const { _id, avanceAnual, avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4, semefAmarillo, semefRojo, semefVerde, ...resto } = this.formMir.value;
+        const { semefVerdeV, semefAmarilloV, semefRojoV, meta, ...resto } = this.formMir.value;
         const datos: TRegMir =
             {
                 _id: idPlaneacion(),
-                avanceAnual: parseFloat(avanceAnual),
-                avanceTrim1: parseFloat(avanceTrim1),
-                avanceTrim2: parseFloat(avanceTrim2),
-                avanceTrim3: parseFloat(avanceTrim3),
-                avanceTrim4: parseFloat(avanceTrim4),
-                semefAmarillo: parseFloat(semefAmarillo),
-                semefRojo: parseFloat(semefRojo),
-                semefVerde: parseFloat(semefVerde),
+                semefVerdeV: parseFloat(String(semefVerdeV / 100)),
+                semefAmarilloV: parseFloat(String(semefAmarilloV / 100)),
+                semefRojoV: parseFloat(String(semefRojoV / 100)),
+                meta: parseFloat(meta),
                 ...resto
             };
+
         this.planeacionService.regMir(datos).pipe(finalize(() =>
         {
             this.cargando = false;

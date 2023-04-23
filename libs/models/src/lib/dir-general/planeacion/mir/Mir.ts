@@ -5,29 +5,6 @@ import { TRegMir } from './mir.dto';
 @sanitize
 export class Mir implements TRegMir
 {
-    @prop()
-    _id: string;
-
-    @toFloat()
-    @prop({ defaultValue: 0.00 })
-    avanceAnual: number;
-
-    @toFloat()
-    @prop({ defaultValue: 0.00 })
-    avanceTrim1: number;
-
-    @toFloat()
-    @prop({ defaultValue: 0.00 })
-    avanceTrim2: number;
-
-    @toFloat()
-    @prop({ defaultValue: 0.00 })
-    avanceTrim3: number;
-
-    @toFloat()
-    @prop({ defaultValue: 0.00 })
-    avanceTrim4: number;
-
     @required()
     centroGestor: string;
 
@@ -36,21 +13,6 @@ export class Mir implements TRegMir
 
     @prop({ defaultValue: false })
     esActualizar: boolean;
-
-    @prop({ defaultValue: '' })
-    formulaAnual: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim1: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim2: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim3: string;
-
-    @prop({ defaultValue: '' })
-    formulaTrim4: string;
 
     @required()
     frecuenciaMedicion: string;
@@ -62,12 +24,13 @@ export class Mir implements TRegMir
     @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: false })
     lineaBaseAno: number = new Date().getFullYear();
 
-    @prop({ defaultValue: '' })
+    @prop()
     lineaBaseValor: string;
 
-
-    @prop({ defaultValue: '' })
-    meta: string;
+    @prop()
+    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, message: 'El valor de la meta debe ser numerico' })
+    @required()
+    meta: number;
 
     @required()
     metodoCalculo: string;
@@ -84,15 +47,6 @@ export class Mir implements TRegMir
     @required()
     resumenNarrativo: string;
 
-    @prop({ defaultValue: 0.00 })
-    semefAmarillo: number;
-
-    @prop({ defaultValue: 0.00 })
-    semefRojo: number;
-
-    @prop({ defaultValue: 0.00 })
-    semefVerde: number;
-
     @required()
     sentidoDelIndicador: string;
 
@@ -101,4 +55,19 @@ export class Mir implements TRegMir
 
     @required()
     unidadDeMedida: string;
+
+    @toFloat()
+    @required()
+    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true })
+    semefVerdeV: number;
+
+    @toFloat()
+    @required()
+    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true })
+    semefAmarilloV: number;
+
+    @toFloat()
+    @required()
+    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true })
+    semefRojoV: number;
 }
