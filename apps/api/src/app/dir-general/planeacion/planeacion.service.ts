@@ -53,15 +53,17 @@ export class PlaneacionService
 
     async filCentroGestorMir(args: FilCentroGestorMirDto): Promise<PlaneacionDto>
     {
+        console.log(args);
         // const res = await this.planeacion.aggregate([
         //     { $match: { _id: args._id } },
         //     { $unwind: '$mirCuestionario' },
         //     { $match: { 'mirCuestionario.centroGestor': args.centroGestor } }
         // ]).exec();
-        const res = await this.planeacion.findOne({ $and: [{ _id: args._id }, { mirCuestionario: { $elemMatch: { centroGestor: { $eq: args.centroGestor } } } }] }).exec();
+        const res = await this.planeacion.findOne({ _id: args._id, mirCuestionario: { $elemMatch: { centroGestor: { $eq: args.centroGestor } } } },
+            {}).exec();
 
         console.log(res);
-        return null;
+        return res;
     }
 
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>
