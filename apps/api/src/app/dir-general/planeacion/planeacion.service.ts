@@ -2,7 +2,7 @@ import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-gen
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import { FilCentroGestorMirDto, RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Injectable()
 export class PlaneacionService
@@ -49,6 +49,19 @@ export class PlaneacionService
         {
             return new this.planeacion(planeacion).save();
         }
+    }
+
+    async filCentroGestorMir(args: FilCentroGestorMirDto): Promise<PlaneacionDto>
+    {
+        // const res = await this.planeacion.aggregate([
+        //     { $match: { _id: args._id } },
+        //     { $unwind: '$mirCuestionario' },
+        //     { $match: { 'mirCuestionario.centroGestor': args.centroGestor } }
+        // ]).exec();
+        const res = await this.planeacion.findOne({ $and: [{ _id: args._id }, { mirCuestionario: { $elemMatch: { centroGestor: { $eq: args.centroGestor } } } }] }).exec();
+
+        console.log(res);
+        return null;
     }
 
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>

@@ -42,9 +42,11 @@ import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/excepciones';
                 context: ({ req }) => ({ req }),
                 formatError: error =>
                 {
-
                     return {
-                        message: error.message
+                        message: error.message,
+                        path: error.path,
+                        locations: error.locations,
+                        extensions: error.extensions
                     };
                 },
                 autoTransformHttpErrors: true

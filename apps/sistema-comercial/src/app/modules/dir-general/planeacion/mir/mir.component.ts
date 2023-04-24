@@ -10,6 +10,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ListaTabMirComponent } from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import { AccionesMirPbrComponent } from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import { ModInicialzarRegistroComponent } from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
+import { idPlaneacion, PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import { TFilCentroGestorMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Component({
     selector: 'app-mir',
@@ -23,7 +25,7 @@ export default class MirComponent implements OnInit
 {
     abrirPanel = false;
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService)
     {
     }
 
@@ -41,14 +43,21 @@ export default class MirComponent implements OnInit
         this.mdr.open(ModInicialzarRegistroComponent, { width: '40%' });
     }
 
-    porCentroGestor(e: [string, number]): void
+    filCentroGestorMir(e: string): void
     {
-        // const consulta: TMirsPorCentroGestor =
-        //     {
-        //         centroGestor: e[0],
-        //         ano: e[1]
-        //     };
-        // this.mirService.mirsPorCentroGestor(consulta).subscribe();
+        if (!idPlaneacion())
+        {
+            this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
+            return;
+        }
+        const args: TFilCentroGestorMir =
+            {
+                _id: idPlaneacion(),
+                centroGestor: e
+            };
+
+
+        // this.planeacionService.filCentroGestorMir(args).subscribe();
     }
 
     buscarPorAno(ano: number): void

@@ -63,7 +63,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     regMir(): void
     {
         this.cargando = true;
-        const { semefVerdeV, semefAmarilloV, semefRojoV, meta, ...resto } = this.formMir.value;
+        const { semefVerdeV, semefAmarilloV, semefRojoV, meta, lineaBaseAno, ...resto } = this.formMir.value;
         const datos: TRegMir =
             {
                 _id: idPlaneacion(),
@@ -71,6 +71,7 @@ export class ModMirComponent implements OnInit, OnDestroy
                 semefAmarilloV: parseFloat(String(semefAmarilloV / 100)),
                 semefRojoV: parseFloat(String(semefRojoV / 100)),
                 meta: parseFloat(meta),
+                lineaBaseAno: parseInt(lineaBaseAno, 10),
                 ...resto
             };
 

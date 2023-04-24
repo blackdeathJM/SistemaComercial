@@ -405,7 +405,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682250560
+  tiempo: Int = 1682305986
   titulo: String
   usarRouter: Boolean = false
 }
@@ -600,6 +600,7 @@ type Query {
   selecciones: SeleccionType
   filTodos: [PlaneacionType!]!
   filPorAno(_id: String!): PlaneacionType!
+  filCentroGestorMir(centroGestor: String = null, _id: ID): PlaneacionType!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!

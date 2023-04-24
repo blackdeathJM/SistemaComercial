@@ -1,5 +1,5 @@
 import { IMirCuestionario } from './mir.interface';
-import { Field, ID, Int, Float, ObjectType, InputType, PickType, PartialType } from '@nestjs/graphql';
+import { Field, ID, Int, Float, ObjectType, InputType, PickType, PartialType, ArgsType } from '@nestjs/graphql';
 import { Prop } from '@nestjs/mongoose';
 import { IsOptional, IsNotEmpty, IsNumber } from 'class-validator';
 
@@ -157,3 +157,13 @@ export class RegMirDto extends PartialType(MirCuestionarioDto, InputType)
 }
 
 export type TRegMir = RegMirDto;
+
+@ArgsType()
+export class FilCentroGestorMirDto extends PickType(MirCuestionarioDto, ['centroGestor'], ArgsType)
+{
+    @Field(() => ID, { nullable: true })
+    @IsNotEmpty({message: 'El id es necesario'})
+    _id: string;
+}
+
+export type TFilCentroGestorMir = FilCentroGestorMirDto;
