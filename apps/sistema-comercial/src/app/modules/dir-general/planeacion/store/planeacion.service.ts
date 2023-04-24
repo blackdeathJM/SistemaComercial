@@ -54,7 +54,6 @@ export class PlaneacionService
             {
                 if (res && res.data)
                 {
-                    console.log('respuesta', res);
                     const { _id, ...datos } = res.data.filCentroGestorMir as IPlaneacion;
                     this.planeacionStore.update(_id, datos);
                     // this.planeacionStore.setActive(_id);

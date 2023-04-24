@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -23,6 +23,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class ListaPbrComponent
 {
+    @Output() panel = new EventEmitter<boolean>;
     @Input() dirComercial = false;
     loader = 'loaderPbrs';
 
@@ -38,5 +39,10 @@ export class ListaPbrComponent
     trackByFn(index: number): number | string
     {
         return index;
+    }
+
+    abrirPanel(): void
+    {
+        this.panel.emit(true);
     }
 }

@@ -405,7 +405,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682323121
+  tiempo: Int = 1682359387
   titulo: String
   usarRouter: Boolean = false
 }
@@ -556,7 +556,7 @@ input MirCuestionarioInput {
 }
 
 input PbrInput {
-  ano: Int = 2023
+  ano: Int = null
   fechaCompleta: String
   enero: Float = 0
   febrero: Float = 0

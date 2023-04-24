@@ -7,11 +7,12 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ModPbrComponent} from '@s-dir-general/pbr/mod-pbr/mod-pbr.component';
 import {MatListModule} from '@angular/material/list';
 import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-pbr',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule, ListaPbrComponent],
+    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule, ListaPbrComponent, MatButtonModule],
     providers: [],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],

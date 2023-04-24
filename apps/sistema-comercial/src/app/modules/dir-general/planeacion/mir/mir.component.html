@@ -5,7 +5,7 @@
         </ng-container>
     </mat-drawer>
     <mat-drawer-content>
-        <app-acciones-mir-pbr [habEmpleado]="false" [habCentroGestor]="true" (centroGestor)="filCentroGestorMir($event)">
+        <app-acciones-mir-pbr [habCentroGestor]="true" (centroGestor)="filCentroGestorMir($event)">
             <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle (click)="regSeleccion()" value="bold">
