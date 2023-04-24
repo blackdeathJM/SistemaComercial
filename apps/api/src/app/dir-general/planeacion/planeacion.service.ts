@@ -1,8 +1,8 @@
-import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { FilCentroGestorMirDto, RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {Model} from 'mongoose';
+import {Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {FilCentroGestorMirDto, RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Injectable()
 export class PlaneacionService
@@ -13,7 +13,7 @@ export class PlaneacionService
 
     async filTodos(): Promise<PlaneacionDto[]>
     {
-        return await this.planeacion.find({}, {}, { sort: { ano: -1 } }).exec();
+        return await this.planeacion.find({}, {}, {sort: {ano: -1}}).exec();
     }
 
     async filPorAno(_id: string): Promise<PlaneacionDto>
@@ -38,7 +38,7 @@ export class PlaneacionService
 
             const nvo = await new this.planeacion(nvaInicializacion).save();
 
-            const { _id, ...resto } = nvo;
+            const {_id, ...resto} = nvo;
 
             this.planeacion.findByIdAndUpdate(_id, {
                 'mirCuestionario.$.semefVerde': 0.00, 'mirCuestionario.$.semefAmarillo': 0.00, 'mirCuestionario.$.semefRojo': 0.00, 'mirCuestionario.$.avanceTrim1': 0.00,
@@ -59,8 +59,8 @@ export class PlaneacionService
         //     { $unwind: '$mirCuestionario' },
         //     { $match: { 'mirCuestionario.centroGestor': args.centroGestor } }
         // ]).exec();
-        const res = await this.planeacion.findOne({ _id: args._id, mirCuestionario: { $elemMatch: { centroGestor: { $eq: args.centroGestor } } } },
-            {}).exec();
+        const res = await this.planeacion.findOne({_id: args._id},
+            {}, {arrayFilters: [{'mirCuestionario.centroGestor': args.centroGestor}]}).exec();
 
         console.log(res);
         return res;
@@ -68,17 +68,17 @@ export class PlaneacionService
 
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>
     {
-        const { _id, esActualizar, ...resto } = datos;
+        const {_id, esActualizar, ...resto} = datos;
 
         if (esActualizar)
         {
             // TODO: Actualizar verificar como actualizar el array
-            return await this.planeacion.findOneAndUpdate({ _id, mirCuestionario: { $elemMatch: { idIndicador: resto.idIndicador } } },
-                { $set: { mirCuestionario: resto } }).exec();
+            return await this.planeacion.findOneAndUpdate({_id, mirCuestionario: {$elemMatch: {idIndicador: resto.idIndicador}}},
+                {$set: {mirCuestionario: resto}}).exec();
         } else
         {
             return await this.planeacion.findByIdAndUpdate(_id,
-                { $push: { 'mirCuestionario': resto } }, { new: true }).exec();
+                {$push: {'mirCuestionario': resto}}, {new: true}).exec();
         }
 
     }
