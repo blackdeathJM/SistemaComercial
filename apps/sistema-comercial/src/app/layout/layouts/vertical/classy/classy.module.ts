@@ -17,6 +17,7 @@ import {QuickChatModule} from '@s-layout/quick-chat/quick-chat.module';
 import {SearchModule} from '@s-layout/search/search.module';
 import {ShortcutsModule} from '@s-layout/shortcuts/shortcuts.module';
 import {UserModule} from '@s-layout/user/user.module';
+import {ImgDefectoPipe} from "#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe";
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import {UserModule} from '@s-layout/user/user.module';
         SearchModule,
         ShortcutsModule,
         UserModule,
-        SharedModule
+        SharedModule,
+        ImgDefectoPipe
     ],
     exports: [
         ClassyLayoutComponent

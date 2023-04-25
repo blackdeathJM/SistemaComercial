@@ -1,7 +1,7 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PlaneacionDto } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { PlaneacionService } from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
-import { FilCentroGestorMirDto, RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
+import {PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
+import {FilCentroGestorMirDto, RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
@@ -14,12 +14,6 @@ export class PlaneacionResolver
     async filTodos(): Promise<PlaneacionDto[]>
     {
         return await this.planeacionService.filTodos();
-    }
-
-    @Query(() => PlaneacionDto)
-    async filPorAno(@Args('_id') _id: string): Promise<PlaneacionDto>
-    {
-        return await this.planeacionService.filPorAno(_id);
     }
 
     @Query(() => PlaneacionDto)

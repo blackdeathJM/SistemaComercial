@@ -7,7 +7,7 @@
             <mat-card-content>
                 <div class="flex flex-auto gap-4 p-4">
                     <div class="flex-shrink border-r-2 pr-8">
-                        <img class="avatar w-36 h-36 rounded-full" [ngSrc]="empleado?.avatar | imgDefecto" alt="" width="36" height="36">
+                        <img class="avatar w-36 h-36 rounded-full" [src]="empleado?.avatar | imgDefecto" alt="">
                     </div>
                     <div class="flex-grow">
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -31,7 +31,7 @@
             </mat-card-content>
             <mat-card-actions class="tarjeta-mat-acciones border-t-cyan-500">
                 <div class="flex flex-row-reverse flex-auto">
-                    <button mat-raised-button color="primary">
+                    <button mat-raised-button color="primary" (click)="editarInfo(empleado)">
                         <mat-icon class="mr-5" svgIcon="edit"></mat-icon>
                         Editar informacion
                     </button>

@@ -17,5 +17,7 @@ export interface IPbrCuestionario extends IMeses
     trim2: number;
     trim3: number;
     trim4: number;
+    calculoTrim: string;
     total: number;
+    calculoTotal: string;
 }

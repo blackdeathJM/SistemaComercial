@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -16,14 +16,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
-import {AuthEntity} from '@s-core/auth/store/auth.entity';
 import {finalize} from 'rxjs';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
-import {DeptoEntity} from '@s-dirAdmonFinanzas/departamento/store/depto.entity';
-import {EmpleadoEntity} from '@s-dirAdmonFinanzas/empleados/store/empleado.entity';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {DeptoQuery} from "@s-dirAdmonFinanzas/departamento/store/depto.query";
+import {EmpleadoQuery} from "@s-dirAdmonFinanzas/empleados/store/empleado.query";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -49,7 +46,7 @@ import {isNotNil} from '@angular-ru/cdk/utils';
     styleUrls: ['./mod-registro-empleado.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
+export class ModRegistroEmpleadoComponent implements OnInit
 {
     formEmpleado: FormGroup;
     cargando = false;
@@ -61,8 +58,8 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 5);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
-    constructor(private fb: RxFormBuilder, public mdr: MatDialog, private stateAuth: AuthEntity, private ngxToast: NgxToastService, public entityDepto: DeptoEntity,
-                private deptoService: DeptoService, private empleadoService: EmpleadoService, private entityEmpleado: EmpleadoEntity)
+    constructor(private fb: RxFormBuilder, public mdr: MatDialog, private ngxToast: NgxToastService, private empleadoService: EmpleadoService,
+                public deptoQuery: DeptoQuery, private empleadoQuery: EmpleadoQuery)
     {
     }
 
@@ -84,15 +81,10 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
-        if (isNotNil(this.entityEmpleado.snapshot.empleado))
+        if (this.empleadoQuery.getActive())
         {
-            this.formEmpleado.patchValue(this.entityEmpleado.snapshot.empleado);
+            this.formEmpleado.patchValue(this.empleadoQuery.getActive());
         }
-    }
-
-    ngAfterContentInit(): void
-    {
-        this.deptoService.departamentos().subscribe();
     }
 
     agregarTel(): void
@@ -126,7 +118,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
                 modificadoPor:
                     [
                         {
-                            usuario: this.stateAuth.snapshot._id,
+                            usuario: this.empleadoQuery.getActive()._id,
                             accion: 'Registro de nuevo empleado',
                             fecha: GeneralService.fechaHoraActual(),
                             valorActual: {},
@@ -135,6 +127,7 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
                     ],
                 ...resto
             };
+
         this.empleadoService.crearEmpleado(empleadoDatos).pipe(finalize(() =>
         {
             this.cargando = false;

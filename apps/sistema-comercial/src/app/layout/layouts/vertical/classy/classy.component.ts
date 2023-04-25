@@ -16,7 +16,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
     isScreenSmall: boolean;
     navigation: Navegation;
-    imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public authQuery: AuthQuery,

@@ -1,18 +1,18 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RxFormBuilder, RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
-import { Pbr } from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { Subscription } from 'rxjs';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { SeleccionarEmpleadoComponent } from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
-import { EmpleadoQuery } from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
-import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {Pbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {Subscription} from 'rxjs';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 
 @Component({
     selector: 'app-mod-pbr',
@@ -35,6 +35,12 @@ export class ModPbrComponent implements OnInit, OnDestroy
 
     constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery)
     {
+        ReactiveFormConfig.set({
+            'validationMessage': {
+                'required': 'Este campo es requerido',
+                'numeric': 'El valor debe ser numerico'
+            }
+        })
     }
 
     ngOnInit(): void

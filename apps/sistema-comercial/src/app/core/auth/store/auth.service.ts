@@ -32,7 +32,7 @@ export class AuthService
     {
         return this.loginGQL.mutate({login}).pipe(tap((res) =>
         {
-            if (res.data)
+            if (res && res.data)
             {
                 const respuestaLogin = res.data.login as ILoginRespuesta;
                 localStorage.setItem(TOKEN, respuestaLogin.token);

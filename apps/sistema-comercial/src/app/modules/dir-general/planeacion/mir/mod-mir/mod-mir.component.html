@@ -1,5 +1,12 @@
 <form [formGroup]="formMir">
     <section class="p-4 flex flex-col flex-auto gap-2">
+
+        <app-seleccionar-empleado class="flex-auto" formControlName="idEmpleado"></app-seleccionar-empleado>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error>{{formMir.controls.email['errorMessage']}}</mat-error>
+        </mat-form-field>
         <mat-form-field>
             <mat-label>Id indicador</mat-label>
             <input matInput formControlName="idIndicador" trim>

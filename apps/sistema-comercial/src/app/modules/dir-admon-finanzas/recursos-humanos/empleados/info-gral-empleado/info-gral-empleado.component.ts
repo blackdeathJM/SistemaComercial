@@ -13,6 +13,10 @@ import {ConvertirTimestamUnixPipe} from '#/apps/sistema-comercial/src/app/pipes/
 import {CtrlRecursosHumanos} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-admon-finanzas/recursos-humanos';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {IResolveEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface";
+import {EmpleadoStore} from "@s-dirAdmonFinanzas/empleados/store/empleado.store";
+import {MatDialog} from "@angular/material/dialog";
+import {ModRegistroEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/mod-registro-empleado/mod-registro-empleado.component";
 
 @Component({
     selector: 'app-info-gral-empleado',
@@ -42,7 +46,13 @@ export class InfoGralEmpleadoComponent
     // @Select(EmpleadoEntity.empleado) empleado$: Observable<IResolveEmpleado>;
     idCtrl = CtrlRecursosHumanos.agregarNvoEmpleado;
 
-    constructor(public empleadoQuery: EmpleadoQuery)
+    constructor(public empleadoQuery: EmpleadoQuery, private empleadoStore: EmpleadoStore, private mdr: MatDialog)
     {
+    }
+
+    editarInfo(empleado: IResolveEmpleado): void
+    {
+        this.empleadoStore.setActive(empleado._id);
+        this.mdr.open(ModRegistroEmpleadoComponent, {width: '45%', data: null});
     }
 }

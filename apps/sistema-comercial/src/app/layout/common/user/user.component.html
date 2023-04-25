@@ -1,7 +1,7 @@
 <!-- Button -->
 <button mat-icon-button [matMenuTriggerFor]="userActions" *ngIf="authQuery.select() | async as usuario">
     <span class="relative">
-        <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && usuario.avatar" [ngSrc]="usuario.avatar" alt="" width="7" height="7">
+        <img class="w-7 h-7 rounded-full" *ngIf="showAvatar && usuario?.avatar" [src]="usuario?.avatar" alt="Avatar">
         <mat-icon *ngIf="!showAvatar || !usuario.avatar" [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
         <span class="absolute right-0 bottom-0 w-2 h-2 rounded-full" [ngClass]="{'mr-px mb-px': !showAvatar || !usuario.avatar,
                           'bg-green-500': usuario.auth.estatus === 'En-linea',

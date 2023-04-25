@@ -17,12 +17,13 @@ import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query
 import { AscDesc } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import { TRegMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import { idPlaneacion, PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import {SeleccionarEmpleadoComponent} from "@s-shared/components/seleccionar-empleado/seleccionar-empleado.component";
 
 @Component({
     selector: 'app-mod-mir',
     standalone: true,
     imports: [
-        CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule, TrimDirective, TrimInputModule, NgxTrimDirectiveModule],
+        CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule, TrimDirective, TrimInputModule, NgxTrimDirectiveModule, SeleccionarEmpleadoComponent],
     providers: [],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],

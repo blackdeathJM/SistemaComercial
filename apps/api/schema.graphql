@@ -275,9 +275,14 @@ type MirCuestionarioType {
   formulaTrim3: String
   formulaTrim4: String
   formulaAnual: String
+  email: String
+  encargado: String
+  idEmpleado: String
 }
 
 type PbrType {
+  calculoTrim: String
+  calculoTotal: String
   ano: Int
   fechaCompleta: String
   enero: Float
@@ -405,7 +410,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682359387
+  tiempo: Int = 1682420567
   titulo: String
   usarRouter: Boolean = false
 }
@@ -553,9 +558,14 @@ input MirCuestionarioInput {
   formulaTrim3: String = null
   formulaTrim4: String = null
   formulaAnual: String = null
+  email: String
+  encargado: String
+  idEmpleado: String
 }
 
 input PbrInput {
+  calculoTrim: String
+  calculoTotal: String = "Sumatoria"
   ano: Int = null
   fechaCompleta: String
   enero: Float = 0
@@ -599,7 +609,6 @@ input PlaneacionInput {
 type Query {
   selecciones: SeleccionType
   filTodos: [PlaneacionType!]!
-  filPorAno(_id: String!): PlaneacionType!
   filCentroGestorMir(centroGestor: String = null, _id: ID): PlaneacionType!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
@@ -696,6 +705,9 @@ input RegMirInput {
   formulaTrim3: String = null
   formulaTrim4: String = null
   formulaAnual: String = null
+  email: String
+  encargado: String
+  idEmpleado: String
   _id: ID
   esActualizar: Boolean = false
 }

@@ -54,7 +54,7 @@ import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query'
 export class EmpleadoAdminComponent implements OnInit, OnDestroy
 {
     ctrlBuscar: FormControl = new FormControl();
-    ngxLoader = ngxLoaderEmp;
+    ngxLoader = ngxLoaderEmp();
     sub = new Subscription();
     abriPanel = false;
     deshabilitar = false;
@@ -68,8 +68,8 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
-            this.empleadoService.filtrarEmpleados(res, this.ngxLoader))).subscribe());
-        this.empleadoService.empleados(this.ngxLoader).subscribe();
+            this.empleadoService.filtrarEmpleados(res))).subscribe());
+        this.empleadoService.empleados().subscribe();
     }
 
     listaRoles(empleado: IResolveEmpleado): void
