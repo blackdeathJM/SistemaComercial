@@ -1,7 +1,6 @@
 import {numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 import {sanitize, toFloat, upperCase} from '@rxweb/sanitizers';
 import {TRegMir} from './mir.dto';
-import {EmpleadoQuery} from "../../../../../../../apps/sistema-comercial/src/app/modules/dir-admon-finanzas/recursos-humanos/empleados/store/empleado.query";
 
 @sanitize
 export class Mir implements TRegMir
@@ -10,7 +9,7 @@ export class Mir implements TRegMir
     idEmpleado: string;
 
     @required()
-    email: string;
+    correo: string;
 
     @prop()
     responsable: string;

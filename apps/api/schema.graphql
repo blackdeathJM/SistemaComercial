@@ -275,7 +275,7 @@ type MirCuestionarioType {
   formulaTrim3: String
   formulaTrim4: String
   formulaAnual: String
-  email: String
+  correo: String
   responsable: String
   idEmpleado: String
 }
@@ -410,7 +410,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682509904
+  tiempo: Int = 1682531723
   titulo: String
   usarRouter: Boolean = false
 }
@@ -558,7 +558,7 @@ input MirCuestionarioInput {
   formulaTrim3: String = null
   formulaTrim4: String = null
   formulaAnual: String = null
-  email: String = null
+  correo: String = null
   responsable: String
   idEmpleado: String
 }
@@ -636,6 +636,7 @@ type Mutation {
   regSeleccion(input: SeleccionInput): SeleccionType!
   inicializarPlaneacion(input: PlaneacionInput!): PlaneacionType!
   regMir(datos: RegMirInput!): PlaneacionType!
+  eliminarElementoMir(idIndicador: String = null, _id: ID): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -705,7 +706,7 @@ input RegMirInput {
   formulaTrim3: String = null
   formulaTrim4: String = null
   formulaAnual: String = null
-  email: String = null
+  correo: String = null
   responsable: String
   idEmpleado: String
   _id: ID

@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialog} from '@angular/material/dialog';
-import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {NgxToastService} from '@s-services/ngx-toast.service';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
-import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
-import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
-import {idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
-import {TFilCentroGestorMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ModMirComponent } from '@s-dir-general/mir/mod-mir/mod-mir.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ModMultiplesSeleccionesComponent } from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgxToastService } from '@s-services/ngx-toast.service';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ListaTabMirComponent } from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
+import { AccionesMirPbrComponent } from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
+import { ModInicialzarRegistroComponent } from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
+import { idPlaneacion, PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import { TFilCentroGestorMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Component({
     selector: 'app-mir',
@@ -21,7 +21,7 @@ import {TFilCentroGestorMir} from '#/libs/models/src/lib/dir-general/planeacion/
     templateUrl: './mir.component.html',
     styleUrls: ['./mir.component.scss']
 })
-export default class MirComponent implements OnInit
+export default class MirComponent
 {
     abrirPanel = false;
 
@@ -29,18 +29,14 @@ export default class MirComponent implements OnInit
     {
     }
 
-    ngOnInit(): void
-    {
-    }
-
     regSeleccion(): void
     {
-        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
+        this.mdr.open(ModMultiplesSeleccionesComponent, { width: '60%' });
     }
 
     inicializarPlaneacion()
     {
-        this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
+        this.mdr.open(ModInicialzarRegistroComponent, { width: '40%' });
     }
 
     filCentroGestorMir(e: string): void
@@ -57,19 +53,5 @@ export default class MirComponent implements OnInit
             };
 
         this.planeacionService.filCentroGestorMir(args).subscribe();
-    }
-
-    buscarPorAno(ano: number): void
-    {
-        // const actMir: TMirsPorAno =
-        //     {
-        //         ano
-        //     };
-        // this.mirService.mirsPorAno(actMir).subscribe();
-    }
-
-    cerrarPanel(): void
-    {
-        // this.abrirPanel = false;
     }
 }

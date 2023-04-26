@@ -1,16 +1,17 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {fuseAnimations} from '@s-fuse/public-api';
-import {FormsModule} from '@angular/forms';
-import {ngxLoaderMir} from '@s-dir-general/store/planeacion.service';
-import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { fuseAnimations } from '@s-fuse/public-api';
+import { FormsModule } from '@angular/forms';
+import { actualizarMir, ngxLoaderMir, PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
+import { ConfirmacionService } from '@s-services/confirmacion.service';
+import { TEliminarElementoMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -26,10 +27,9 @@ export class ListaTabMirComponent
 {
     @Output() abrirPanel = new EventEmitter<boolean>();
     loader = ngxLoaderMir();
-    mirSeleccionado: IMirCuestionario;
     indice = 0;
 
-    constructor(public planeacionQuery: PlaneacionQuery)
+    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService)
     {
     }
 
@@ -40,21 +40,34 @@ export class ListaTabMirComponent
 
     nuevoElemento()
     {
+        actualizarMir([false, this.indice]);
         this.abrirPanel.emit(true);
     }
 
     editarRegistro(): void
     {
-        console.log('Mir seleccionado', this.mirSeleccionado);
+        actualizarMir([true, this.indice]);
+        this.abrirPanel.emit(true);
     }
 
     eliminarReg(): void
     {
-
+        this.confirmacionService.abrir().afterClosed().subscribe((res) =>
+        {
+            if (res === 'confirmed')
+            {
+                const args: TEliminarElementoMir =
+                    {
+                        _id: this.planeacionQuery.getActive()._id,
+                        idIndicador: this.planeacionQuery.getActive().mirCuestionario[this.indice].idIndicador
+                    };
+                this.planeacionService.eliminarElementoMir(args).subscribe();
+            }
+        });
     }
 
     cambioDeIndiceMir(e: number): void
     {
-        console.log(this.planeacionQuery.getActive());
+        this.indice = e;
     }
 }

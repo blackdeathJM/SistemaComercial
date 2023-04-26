@@ -1,7 +1,7 @@
 fragment fragMir on MirCuestionarioType
 {
     idIndicador
-    email
+    correo
     responsable
     idEmpleado
     nivel

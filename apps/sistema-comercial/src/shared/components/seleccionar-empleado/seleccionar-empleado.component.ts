@@ -1,15 +1,15 @@
-import {AfterContentInit, Component, EventEmitter, forwardRef, Input, OnDestroy, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectChange, MatSelectModule} from '@angular/material/select';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {Subscription} from 'rxjs';
-import {GeneralService} from '@s-services/general.service';
-import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
-import {EmpleadoStore} from "@s-dirAdmonFinanzas/empleados/store/empleado.store";
-import {isArray} from "@datorama/akita";
+import { AfterContentInit, Component, EventEmitter, forwardRef, Input, OnDestroy, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { IResolveEmpleado } from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import { Subscription } from 'rxjs';
+import { GeneralService } from '@s-services/general.service';
+import { EmpleadoQuery } from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import { EmpleadoStore } from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
+import { isArray } from '@datorama/akita';
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -29,6 +29,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
 {
     @Input() multiple: boolean = false;
     @Input() mostrarEtiqueta = true;
+    @Input() empleadoSeleccionado: IResolveEmpleado;
     @Output() empleadoSele = new EventEmitter<string | string[]>();
 
     estaDeshabilitado: boolean;
@@ -52,14 +53,13 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
         }));
     }
 
-    writeValue(valor: any): void
+    writeValue(valor: IResolveEmpleado[]): void
     {
         this.empleados = valor;
     }
 
     registerOnChange(fn: any): void
     {
-
         this.onChangeCb = fn;
     }
 

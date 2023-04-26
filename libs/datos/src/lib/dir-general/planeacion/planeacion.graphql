@@ -28,3 +28,10 @@ mutation regMir($datos: RegMirInput!)
         ...fragPlaneacion
     }
 }
+mutation eliminarElementoMir($_id: ID!, $idIndicador: String!)
+{
+    eliminarElementoMir(_id: $_id, idIndicador: $idIndicador)
+    {
+        ...fragPlaneacion
+    }
+}

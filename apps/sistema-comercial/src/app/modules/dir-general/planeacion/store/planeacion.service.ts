@@ -1,26 +1,26 @@
-import {Injectable} from '@angular/core';
-import {catchError, Observable, tap} from 'rxjs';
-import {FilCentroGestorMirGQL, FilCentroGestorMirQuery, FilTodosGQL, FilTodosQuery, InicializarPlaneacionGQL, InicializarPlaneacionMutation, RegMirGQL, RegMirMutation} from '#/libs/datos/src';
-import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
-import {makeVar, SingleExecutionResult} from '@apollo/client';
-import {TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import {NgxToastService} from '@s-services/ngx-toast.service';
-import {GeneralService} from '@s-services/general.service';
-import {NgxUiLoaderService} from 'ngx-ui-loader';
-import {TFilCentroGestorMir, TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import { Injectable } from '@angular/core';
+import { catchError, Observable, tap } from 'rxjs';
+import { EliminarElementoMirGQL, EliminarElementoMirMutation, FilCentroGestorMirGQL, FilCentroGestorMirQuery, FilTodosGQL, FilTodosQuery, InicializarPlaneacionGQL, InicializarPlaneacionMutation, RegMirGQL, RegMirMutation } from '#/libs/datos/src';
+import { PlaneacionStore } from '@s-dir-general/store/planeacion.store';
+import { makeVar, SingleExecutionResult } from '@apollo/client';
+import { TPlaneacionType } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import { NgxToastService } from '@s-services/ngx-toast.service';
+import { GeneralService } from '@s-services/general.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { TEliminarElementoMir, TFilCentroGestorMir, TRegMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import { IPlaneacion } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
-
 export const idPlaneacion = makeVar<string>(null);
+export const actualizarMir = makeVar<[boolean, number]>([false, 0]);
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class PlaneacionService
 {
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
-                private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL,
-                private filCentroGestorMirGQL: FilCentroGestorMirGQL)
+                private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private filCentroGestorMirGQL: FilCentroGestorMirGQL,
+                private eliminarElementoMirGQL: EliminarElementoMirGQL)
     {
     }
 
@@ -44,12 +44,12 @@ export class PlaneacionService
 
     filCentroGestorMir(args: TFilCentroGestorMir): Observable<SingleExecutionResult<FilCentroGestorMirQuery>>
     {
-        return this.filCentroGestorMirGQL.fetch({_id: args._id, centroGestor: args.centroGestor}).pipe(catchError(err => this.generalService.cacharError(err)),
+        return this.filCentroGestorMirGQL.fetch({ _id: args._id, centroGestor: args.centroGestor }).pipe(catchError(err => this.generalService.cacharError(err)),
             tap((res) =>
             {
                 if (res && res.data)
                 {
-                    const {_id, ...datos} = res.data.filCentroGestorMir as IPlaneacion;
+                    const { _id, ...datos } = res.data.filCentroGestorMir as IPlaneacion;
                     this.planeacionStore.update(_id, datos);
                     // this.planeacionStore.setActive(_id);
                 }
@@ -58,7 +58,7 @@ export class PlaneacionService
 
     inicializarPlaneacion(input: TPlaneacionType): Observable<SingleExecutionResult<InicializarPlaneacionMutation>>
     {
-        return this.inicializarPlaneacionGQL.mutate({input}).pipe(catchError((err) => this.generalService.cacharError(err)), tap((res) =>
+        return this.inicializarPlaneacionGQL.mutate({ input }).pipe(catchError((err) => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res && res.data)
             {
@@ -71,13 +71,26 @@ export class PlaneacionService
 
     regMir(datos: TRegMir): Observable<SingleExecutionResult<RegMirMutation>>
     {
-        return this.regMirGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.regMirGQL.mutate({ datos }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res && res.data)
             {
-                const {_id, ...cambio} = res.data.regMir as IPlaneacion;
-                this.planeacionStore.replace(_id, cambio);
+                const { _id, ...cambio } = res.data.regMir as IPlaneacion;
+                this.planeacionStore.update(_id, cambio);
             }
         }));
+    }
+
+    eliminarElementoMir(args: TEliminarElementoMir): Observable<SingleExecutionResult<EliminarElementoMirMutation>>
+    {
+        return this.eliminarElementoMirGQL.mutate({ ...args }).pipe(catchError(err => this.generalService.cacharError(err)),
+            tap((res) =>
+            {
+                if (res && res.data)
+                {
+                    const { _id, ...cambios } = res.data.eliminarElementoMir as IPlaneacion;
+                    this.planeacionStore.remove(_id);
+                }
+            }));
     }
 }
