@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     ActCtrlPrimerNivelGQL,
     ActCtrlPrimerNivelMutation, ActCtrlSegundoNivelGQL, ActCtrlSegundoNivelMutation, ActCtrlTercerNivelGQL, ActCtrlTercerNivelMutation,
@@ -13,28 +13,31 @@ import {
     RolesAsigGQL,
     RolesAsigQuery
 } from '#/libs/datos/src';
-import {SingleExecutionResult} from '@apollo/client';
-import {finalize, Observable, tap} from 'rxjs';
-import {IActRoles, IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
-import {NgxUiLoaderService} from 'ngx-ui-loader';
-import {RolesStore} from '@s-core/auth/store/roles.store';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import { makeVar, SingleExecutionResult } from '@apollo/client';
+import { catchError, finalize, Observable, tap } from 'rxjs';
+import { IActRoles, IRoles, TCrearRol } from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { RolesStore } from '@s-core/auth/store/roles.store';
+import { $cast, isNotNil } from '@angular-ru/cdk/utils';
+import { GeneralService } from '@s-services/general.service';
 
-@Injectable({providedIn: 'root'})
+export const ngxRoles = makeVar('ngxRoles');
+
+@Injectable({ providedIn: 'root' })
 export class RolesService
 {
     constructor(private crearRolesGQL: CrearRolesGQL, private rolesAsigGQL: RolesAsigGQL, private ngxUiLoaderService: NgxUiLoaderService, private rolesStore: RolesStore,
                 private actPrimerNivelGQL: ActPrimerNivelGQL, private actSegundoNivelGQL: ActSegundoNivelGQL, private actTercerNivelGQL: ActTercerNivelGQL, private actCtrlPrimerNivelGQL: ActCtrlPrimerNivelGQL,
                 private actCtrlSegundoNivelGQL: ActCtrlSegundoNivelGQL, private actCtrlTercerNivelGQL: ActCtrlTercerNivelGQL, private asigPermisoPrimerNivelGQL: AsigPermisoPrimerNivelGQL,
-                private asigPermisoSegNivelGQL: AsigPermisoSegNivelGQL, private asigPermisoTercerNivelGQL: AsigPermisoTercerNivelGQL)
+                private asigPermisoSegNivelGQL: AsigPermisoSegNivelGQL, private asigPermisoTercerNivelGQL: AsigPermisoTercerNivelGQL, private generalService: GeneralService)
     {
     }
 
     crearRoles(args: TCrearRol): Observable<SingleExecutionResult<CrearRolesMutation>>
     {
-        return this.crearRolesGQL.mutate({args}).pipe(tap((res) =>
+        return this.crearRolesGQL.mutate({ args }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res.data)
+            if (res && res.data)
             {
                 const nvoEstado = res.data.crearRoles as IRoles;
                 // this.stateRoles.setState(nvoEstado);
@@ -43,35 +46,41 @@ export class RolesService
         }));
     }
 
-    rolesAsig(idEmpleado: string, ngxLoader: string): Observable<SingleExecutionResult<RolesAsigQuery>>
+    rolesAsig(idEmpleado: string): Observable<SingleExecutionResult<RolesAsigQuery>>
     {
-        this.ngxUiLoaderService.startLoader(ngxLoader);
-        return this.rolesAsigGQL.fetch({idEmpleado}).pipe(finalize(() => this.ngxUiLoaderService.stopLoader(ngxLoader)), tap((res) =>
-        {
-            const rolesEmpleado = res.data.rolesAsig as IRoles;
-            // this.stateRoles.setState(rolesEmpleado);
-            this.rolesStore.update(rolesEmpleado);
-        }));
+        this.ngxUiLoaderService.startLoader(ngxRoles());
+        return this.rolesAsigGQL.fetch({ idEmpleado }).pipe(
+            catchError(err => this.generalService.cacharError(err)),
+            finalize(() => this.ngxUiLoaderService.stopLoader(ngxRoles())), tap((res) =>
+            {
+                if (res && res.data)
+                {
+                    const rolesEmpleado = res.data.rolesAsig as IRoles;
+                    // this.stateRoles.setState(rolesEmpleado);
+                    this.rolesStore.update(rolesEmpleado);
+                }
+            }));
     }
 
     actPrimerNivel(role: IActRoles): Observable<SingleExecutionResult<ActPrimerNivelMutation>>
     {
-        return this.actPrimerNivelGQL.mutate({role}).pipe(tap((res) =>
-        {
-            if (res.data)
+        return this.actPrimerNivelGQL.mutate({ role }).pipe(
+            catchError(err => this.generalService.cacharError(err)), tap((res) =>
             {
-                const roles = res.data.actPrimerNivel as IRoles;
-                // this.stateRoles.setState(roles);
-                this.rolesStore.update(roles);
-            }
-        }));
+                if (res && res.data)
+                {
+                    const roles = res.data.actPrimerNivel as IRoles;
+                    // this.stateRoles.setState(roles);
+                    this.rolesStore.update(roles);
+                }
+            }));
     }
 
     actCtrlPrimerNivel(ctrl: IActRoles): Observable<SingleExecutionResult<ActCtrlPrimerNivelMutation>>
     {
-        return this.actCtrlPrimerNivelGQL.mutate({ctrl}).pipe(tap((res) =>
+        return this.actCtrlPrimerNivelGQL.mutate({ ctrl }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res.data)
+            if (res && res.data)
             {
                 const ctrls = res.data.actCtrlPrimerNivel as IRoles;
                 // this.stateRoles.setState(ctrls);
@@ -82,9 +91,9 @@ export class RolesService
 
     actSegundoNivel(role: IActRoles): Observable<SingleExecutionResult<ActSegundoNivelMutation>>
     {
-        return this.actSegundoNivelGQL.mutate({role}).pipe(tap((res) =>
+        return this.actSegundoNivelGQL.mutate({ role }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res.data)
+            if (res && res.data)
             {
                 const roles = res.data.actSegundoNivel as IRoles;
                 // this.stateRoles.setState(roles);
@@ -95,11 +104,12 @@ export class RolesService
 
     actCtrlSegundoNivel(ctrl: IActRoles): Observable<SingleExecutionResult<ActCtrlSegundoNivelMutation>>
     {
-        return this.actCtrlSegundoNivelGQL.mutate({ctrl}).pipe(tap((res) =>
+        return this.actCtrlSegundoNivelGQL.mutate({ ctrl }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res.data)
+            if (res && res.data)
             {
                 const ctrls = res.data.actCtrlSegundoNivel as IRoles;
+                this.rolesStore.update(ctrls);
                 // this.stateRoles.setState(ctrls);
             }
         }));
@@ -107,11 +117,11 @@ export class RolesService
 
     actTercerNivel(role: IActRoles): Observable<SingleExecutionResult<ActTercerNivelMutation>>
     {
-        return this.actTercerNivelGQL.mutate({role}).pipe(tap((res) =>
+        return this.actTercerNivelGQL.mutate({ role }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (isNotNil(res) && isNotNil(res.data))
             {
-                const roles = $cast<IRoles>(res.data.actTercerNivel);
+                const roles = res.data.actTercerNivel as IRoles;
                 // this.stateRoles.setState(roles);
                 this.rolesStore.update(roles);
             }
@@ -120,9 +130,9 @@ export class RolesService
 
     actCtrlTercerNivel(ctrl: IActRoles): Observable<SingleExecutionResult<ActCtrlTercerNivelMutation>>
     {
-        return this.actCtrlTercerNivelGQL.mutate({ctrl}).pipe(tap((res) =>
+        return this.actCtrlTercerNivelGQL.mutate({ ctrl }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (isNotNil(res) && isNotNil(res.data))
             {
                 const ctrls = $cast<IRoles>(res.data.actCtrlTercerNivel);
                 // this.stateRoles.setState(ctrls);
@@ -133,9 +143,9 @@ export class RolesService
 
     asiPermisoPrimerNivel(asig: IActRoles): Observable<SingleExecutionResult<AsigPermisoPrimerNivelMutation>>
     {
-        return this.asigPermisoPrimerNivelGQL.mutate({asig}).pipe(tap((res) =>
+        return this.asigPermisoPrimerNivelGQL.mutate({ asig }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (isNotNil(res) && isNotNil(res.data))
             {
                 const asignacion = $cast<IRoles>(res.data.asigPermisoPrimerNivel);
                 // this.stateRoles.setState(asignacion);
@@ -146,9 +156,9 @@ export class RolesService
 
     asiPermisoSegundoNivel(asig: IActRoles): Observable<SingleExecutionResult<AsigPermisoSegNivelMutation>>
     {
-        return this.asigPermisoSegNivelGQL.mutate({asig}).pipe(tap((res) =>
+        return this.asigPermisoSegNivelGQL.mutate({ asig }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (isNotNil(res) && isNotNil(res.data))
             {
                 const asignacion = $cast<IRoles>(res.data.asigPermisoSegNivel);
                 // this.stateRoles.setState(asignacion);
@@ -159,9 +169,9 @@ export class RolesService
 
     asiPermisoTercerNivel(asig: IActRoles): Observable<SingleExecutionResult<AsigPermisoTercerNivelMutation>>
     {
-        return this.asigPermisoTercerNivelGQL.mutate({asig}).pipe(tap((res) =>
+        return this.asigPermisoTercerNivelGQL.mutate({ asig }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res && res.data)
             {
                 const asignacion = $cast<IRoles>(res.data.asigPermisoTercerNivel);
                 // this.stateRoles.setState(asignacion);

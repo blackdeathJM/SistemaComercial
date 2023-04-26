@@ -321,6 +321,7 @@ type PlaneacionType {
   descripcion: String
   mirCuestionario: [MirCuestionarioType!]
   pbrCuestionario: [PbrType!]
+  empleadoMir: EmpleadoType!
 }
 
 input ModificadoPorInput {
@@ -410,7 +411,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682420567
+  tiempo: Int = 1682447126
   titulo: String
   usarRouter: Boolean = false
 }
@@ -558,7 +559,7 @@ input MirCuestionarioInput {
   formulaTrim3: String = null
   formulaTrim4: String = null
   formulaAnual: String = null
-  email: String
+  email: String = null
   encargado: String
   idEmpleado: String
 }
@@ -705,7 +706,7 @@ input RegMirInput {
   formulaTrim3: String = null
   formulaTrim4: String = null
   formulaAnual: String = null
-  email: String
+  email: String = null
   encargado: String
   idEmpleado: String
   _id: ID

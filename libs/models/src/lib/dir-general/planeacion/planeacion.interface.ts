@@ -1,5 +1,6 @@
-import {IPbrCuestionario} from './pbr-usuarios/pbr.interface';
-import {IMirCuestionario} from './mir/mir.interface';
+import { IPbrCuestionario } from './pbr-usuarios/pbr.interface';
+import { IMirCuestionario } from './mir/mir.interface';
+import { IEmpleado } from '../../dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 
 export enum AscDesc
 {
@@ -15,4 +16,9 @@ export interface IPlaneacion
     copia: boolean;
     mirCuestionario: IMirCuestionario[];
     pbrCuestionario: IPbrCuestionario[];
+}
+
+export interface IResolvePlaneacion extends IPlaneacion
+{
+    empleadoPlaneacion: IEmpleado;
 }

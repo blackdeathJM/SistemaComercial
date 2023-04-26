@@ -1,15 +1,14 @@
-import {ActiveState, EntityState, EntityStore, StoreConfig} from "@datorama/akita";
-import {Injectable} from "@angular/core";
-import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import { ActiveState, EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { Injectable } from '@angular/core';
+import { IResolvePlaneacion } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 
-export interface IPlaneacionState extends EntityState<IPlaneacion, string>, ActiveState
+export interface IPlaneacionState extends EntityState<IResolvePlaneacion, string>, ActiveState
 {
-    obtenerSeleccionado: IPlaneacion;
 }
 
-@Injectable({providedIn: 'root'})
-@StoreConfig({name: 'Planeacion', idKey: '_id'})
-export class PlaneacionStore extends EntityStore<IPlaneacionState, IPlaneacion>
+@Injectable({ providedIn: 'root' })
+@StoreConfig({ name: 'Planeacion', idKey: '_id' })
+export class PlaneacionStore extends EntityStore<IPlaneacionState, IResolvePlaneacion>
 {
     constructor()
     {

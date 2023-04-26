@@ -1,17 +1,17 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
-import {MatListModule} from '@angular/material/list';
-import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
-import {RolesService} from '@s-core/auth/store/roles.service';
-import {concatMap, finalize, Subscription} from 'rxjs';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {SinDatosComponent} from '@s-shared/sin-datos/sin-datos.component';
-import {IActRoles, IRoles} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
-import {RolesQuery} from '@s-core/auth/store/roles.query';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { ngxRoles, RolesService } from '@s-core/auth/store/roles.service';
+import { concatMap, finalize, Subscription } from 'rxjs';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { SinDatosComponent } from '@s-shared/sin-datos/sin-datos.component';
+import { IActRoles, IRoles } from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavegacionPipe } from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
+import { RolesQuery } from '@s-core/auth/store/roles.query';
 
 @Component({
     selector: 'app-lista-roles',
@@ -26,7 +26,7 @@ import {RolesQuery} from '@s-core/auth/store/roles.query';
 })
 export class ListaRolesComponent implements OnInit, OnDestroy
 {
-    ngxLoader: 'listaRoles';
+    ngxLoader = ngxRoles();
     sub = new Subscription();
     deshabilitarLista = false;
 
@@ -37,7 +37,7 @@ export class ListaRolesComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.sub.add(this.activatedRoute.params.pipe(concatMap(res =>
-            this.rolesService.rolesAsig(res._id, this.ngxLoader))).subscribe());
+            this.rolesService.rolesAsig(res._id))).subscribe());
     }
 
     actCtrl(e: MatCheckboxChange, grupo: object, exp: Element, expRuta: Element, subRuta: Element, empleado: IRoles, ctrls: Element, nivel: number): void

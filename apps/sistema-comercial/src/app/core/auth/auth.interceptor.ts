@@ -6,19 +6,10 @@ import {AuthService} from '@s-core/auth/store/auth.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
 {
-    /**
-     * Constructor
-     */
     constructor(private _authService: AuthService)
     {
     }
 
-    /**
-     * Intercept
-     *
-     * @param req
-     * @param next
-     */
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
         // Clone the request object

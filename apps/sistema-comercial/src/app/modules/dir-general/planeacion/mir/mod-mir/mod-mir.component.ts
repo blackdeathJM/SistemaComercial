@@ -17,7 +17,7 @@ import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query
 import { AscDesc } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import { TRegMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import { idPlaneacion, PlaneacionService } from '@s-dir-general/store/planeacion.service';
-import {SeleccionarEmpleadoComponent} from "@s-shared/components/seleccionar-empleado/seleccionar-empleado.component";
+import { SeleccionarEmpleadoComponent } from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 
 @Component({
     selector: 'app-mod-mir',
@@ -64,7 +64,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     regMir(): void
     {
         this.cargando = true;
-        const { semefVerdeV, semefAmarilloV, semefRojoV, meta, lineaBaseAno, ...resto } = this.formMir.value;
+        const { idEmpleado, semefVerdeV, semefAmarilloV, semefRojoV, meta, lineaBaseAno, ...resto } = this.formMir.value;
         const datos: TRegMir =
             {
                 _id: idPlaneacion(),

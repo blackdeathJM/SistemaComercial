@@ -18,31 +18,33 @@ import {SearchModule} from '@s-layout/search/search.module';
 import {ShortcutsModule} from '@s-layout/shortcuts/shortcuts.module';
 import {UserModule} from '@s-layout/user/user.module';
 import {ImgDefectoPipe} from "#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe";
+import { DefaultValuePipeModule } from '@angular-ru/cdk/pipes';
 
 @NgModule({
     declarations: [
         ClassyLayoutComponent
     ],
-    imports: [
-        HttpClientModule,
-        RouterModule,
-        MatButtonModule,
-        MatDividerModule,
-        MatIconModule,
-        MatMenuModule,
-        FuseFullscreenModule,
-        FuseLoadingBarModule,
-        FuseNavigationModule,
-        LanguagesModule,
-        MessagesModule,
-        NotificationsModule,
-        QuickChatModule,
-        SearchModule,
-        ShortcutsModule,
-        UserModule,
-        SharedModule,
-        ImgDefectoPipe
-    ],
+  imports: [
+    HttpClientModule,
+    RouterModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
+    FuseFullscreenModule,
+    FuseLoadingBarModule,
+    FuseNavigationModule,
+    LanguagesModule,
+    MessagesModule,
+    NotificationsModule,
+    QuickChatModule,
+    SearchModule,
+    ShortcutsModule,
+    UserModule,
+    SharedModule,
+    ImgDefectoPipe,
+    DefaultValuePipeModule
+  ],
     exports: [
         ClassyLayoutComponent
     ]

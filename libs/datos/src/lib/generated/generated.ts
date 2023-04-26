@@ -397,12 +397,15 @@ export type MirCuestionarioInput = {
   avanceTrim4?: InputMaybe<Scalars['Float']>;
   centroGestor?: InputMaybe<Scalars['String']>;
   dimension?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  encargado?: InputMaybe<Scalars['String']>;
   formulaAnual?: InputMaybe<Scalars['String']>;
   formulaTrim1?: InputMaybe<Scalars['String']>;
   formulaTrim2?: InputMaybe<Scalars['String']>;
   formulaTrim3?: InputMaybe<Scalars['String']>;
   formulaTrim4?: InputMaybe<Scalars['String']>;
   frecuenciaMedicion?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['String']>;
   idIndicador?: InputMaybe<Scalars['String']>;
   lineaBaseAno?: InputMaybe<Scalars['Int']>;
   lineaBaseValor?: InputMaybe<Scalars['String']>;
@@ -432,12 +435,15 @@ export type MirCuestionarioType = {
   avanceTrim4?: Maybe<Scalars['Float']>;
   centroGestor?: Maybe<Scalars['String']>;
   dimension?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  encargado?: Maybe<Scalars['String']>;
   formulaAnual?: Maybe<Scalars['String']>;
   formulaTrim1?: Maybe<Scalars['String']>;
   formulaTrim2?: Maybe<Scalars['String']>;
   formulaTrim3?: Maybe<Scalars['String']>;
   formulaTrim4?: Maybe<Scalars['String']>;
   frecuenciaMedicion?: Maybe<Scalars['String']>;
+  idEmpleado?: Maybe<Scalars['String']>;
   idIndicador?: Maybe<Scalars['String']>;
   lineaBaseAno?: Maybe<Scalars['Int']>;
   lineaBaseValor?: Maybe<Scalars['String']>;
@@ -779,6 +785,8 @@ export type PbrInput = {
   abril?: InputMaybe<Scalars['Float']>;
   agosto?: InputMaybe<Scalars['Float']>;
   ano?: InputMaybe<Scalars['Int']>;
+  calculoTotal?: InputMaybe<Scalars['String']>;
+  calculoTrim?: InputMaybe<Scalars['String']>;
   centroGestor?: InputMaybe<Scalars['String']>;
   claveVariable?: InputMaybe<Scalars['String']>;
   dato?: InputMaybe<Scalars['String']>;
@@ -812,6 +820,8 @@ export type PbrType = {
   abril?: Maybe<Scalars['Float']>;
   agosto?: Maybe<Scalars['Float']>;
   ano?: Maybe<Scalars['Int']>;
+  calculoTotal?: Maybe<Scalars['String']>;
+  calculoTrim?: Maybe<Scalars['String']>;
   centroGestor?: Maybe<Scalars['String']>;
   claveVariable?: Maybe<Scalars['String']>;
   dato?: Maybe<Scalars['String']>;
@@ -855,6 +865,7 @@ export type PlaneacionType = {
   ano?: Maybe<Scalars['Int']>;
   copia?: Maybe<Scalars['Boolean']>;
   descripcion?: Maybe<Scalars['String']>;
+  empleadoPlaneacion: EmpleadoType;
   mirCuestionario?: Maybe<Array<MirCuestionarioType>>;
   pbrCuestionario?: Maybe<Array<PbrType>>;
 };
@@ -1006,6 +1017,8 @@ export type RegMirInput = {
   avanceTrim4?: InputMaybe<Scalars['Float']>;
   centroGestor?: InputMaybe<Scalars['String']>;
   dimension?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  encargado?: InputMaybe<Scalars['String']>;
   esActualizar?: InputMaybe<Scalars['Boolean']>;
   formulaAnual?: InputMaybe<Scalars['String']>;
   formulaTrim1?: InputMaybe<Scalars['String']>;
@@ -1013,6 +1026,7 @@ export type RegMirInput = {
   formulaTrim3?: InputMaybe<Scalars['String']>;
   formulaTrim4?: InputMaybe<Scalars['String']>;
   frecuenciaMedicion?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['String']>;
   idIndicador?: InputMaybe<Scalars['String']>;
   lineaBaseAno?: InputMaybe<Scalars['Int']>;
   lineaBaseValor?: InputMaybe<Scalars['String']>;
