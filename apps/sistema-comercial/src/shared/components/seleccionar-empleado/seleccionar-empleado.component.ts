@@ -8,6 +8,8 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recurso
 import {Subscription} from 'rxjs';
 import {GeneralService} from '@s-services/general.service';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {EmpleadoStore} from "@s-dirAdmonFinanzas/empleados/store/empleado.store";
+import {isArray} from "@datorama/akita";
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -35,7 +37,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
     onTouchedCb?: () => void;
     sub = new Subscription();
 
-    constructor(public empleadoQuery: EmpleadoQuery)
+    constructor(public empleadoQuery: EmpleadoQuery, private empleadoStore: EmpleadoStore)
     {
     }
 
@@ -79,11 +81,16 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
     cambioSeleccion(e: MatSelectChange): void
     {
         this.onChangeCb(e.value);
+        if (!isArray(e))
+        {
+            this.empleadoStore.setActive(e.value);
+        }
         this.empleadoSele.emit(e.value);
     }
 
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+        this.empleadoStore.setActive(null);
     }
 }

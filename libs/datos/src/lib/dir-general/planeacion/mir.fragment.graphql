@@ -1,6 +1,9 @@
 fragment fragMir on MirCuestionarioType
 {
     idIndicador
+    email
+    responsable
+    idEmpleado
     nivel
     programaFinanciacion
     resumenNarrativo

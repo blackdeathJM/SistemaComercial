@@ -1,6 +1,7 @@
-import { numeric, NumericValueType, prop, required } from '@rxweb/reactive-form-validators';
-import { sanitize, toFloat, upperCase } from '@rxweb/sanitizers';
-import { TRegMir } from './mir.dto';
+import {numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {sanitize, toFloat, upperCase} from '@rxweb/sanitizers';
+import {TRegMir} from './mir.dto';
+import {EmpleadoQuery} from "../../../../../../../apps/sistema-comercial/src/app/modules/dir-admon-finanzas/recursos-humanos/empleados/store/empleado.query";
 
 @sanitize
 export class Mir implements TRegMir
@@ -9,12 +10,18 @@ export class Mir implements TRegMir
     idEmpleado: string;
 
     @required()
+    email: string;
+
+    @prop()
+    responsable: string;
+
+    @required()
     centroGestor: string;
 
     @required()
     dimension: string;
 
-    @prop({ defaultValue: false })
+    @prop({defaultValue: false})
     esActualizar: boolean;
 
     @required()
@@ -24,14 +31,14 @@ export class Mir implements TRegMir
     @required()
     idIndicador: string;
 
-    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: false })
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: false})
     lineaBaseAno: number = new Date().getFullYear();
 
     @prop()
     lineaBaseValor: string;
 
     @prop()
-    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, message: 'El valor de la meta debe ser numerico' })
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, message: 'El valor de la meta debe ser numerico'})
     @required()
     meta: number;
 
@@ -61,16 +68,16 @@ export class Mir implements TRegMir
 
     @toFloat()
     @required()
-    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true })
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true})
     semefVerdeV: number;
 
     @toFloat()
     @required()
-    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true })
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true})
     semefAmarilloV: number;
 
     @toFloat()
     @required()
-    @numeric({ acceptValue: NumericValueType.PositiveNumber, allowDecimal: true })
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true})
     semefRojoV: number;
 }

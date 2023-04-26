@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { fuseAnimations } from '@s-fuse/public-api';
-import { FormsModule } from '@angular/forms';
-import { loaderPlaneacion } from '@s-dir-general/store/planeacion.service';
-import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
-import { IMirCuestionario } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FormsModule} from '@angular/forms';
+import {ngxLoaderMir} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -25,7 +25,7 @@ import { IMirCuestionario } from '#/libs/models/src/lib/dir-general/planeacion/m
 export class ListaTabMirComponent
 {
     @Output() abrirPanel = new EventEmitter<boolean>();
-    loader = loaderPlaneacion;
+    loader = ngxLoaderMir();
     mirSeleccionado: IMirCuestionario;
     indice = 0;
 
@@ -51,5 +51,10 @@ export class ListaTabMirComponent
     eliminarReg(): void
     {
 
+    }
+
+    cambioDeIndiceMir(e: number): void
+    {
+        console.log(this.planeacionQuery.getActive());
     }
 }

@@ -1,11 +1,11 @@
 <form [formGroup]="formPbr">
     <section class="flex flex-col">
 
-        <app-seleccionar-empleado class="flex-auto" formControlName="idEmpleado"></app-seleccionar-empleado>
+        <app-seleccionar-empleado class="flex-auto" formControlName="idEmpleado" (empleadoSele)="empleadoSelec($event)"></app-seleccionar-empleado>
         <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email">
-            <mat-error>{{formPbr.controls.email['errorMessage']}}</mat-error>
+            <mat-label>Correo</mat-label>
+            <input matInput formControlName="correo">
+            <mat-error>{{formPbr.controls.correo['errorMessage']}}</mat-error>
         </mat-form-field>
 
         <mat-form-field>

@@ -276,7 +276,7 @@ type MirCuestionarioType {
   formulaTrim4: String
   formulaAnual: String
   email: String
-  encargado: String
+  responsable: String
   idEmpleado: String
 }
 
@@ -299,7 +299,7 @@ type PbrType {
   diciembre: Float
   idEmpleado: String
   nombreRes: String
-  email: String
+  correo: String
   descripcion: String
   centroGestor: String
   claveVariable: String
@@ -321,7 +321,6 @@ type PlaneacionType {
   descripcion: String
   mirCuestionario: [MirCuestionarioType!]
   pbrCuestionario: [PbrType!]
-  empleadoMir: EmpleadoType!
 }
 
 input ModificadoPorInput {
@@ -411,7 +410,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682447126
+  tiempo: Int = 1682509904
   titulo: String
   usarRouter: Boolean = false
 }
@@ -560,7 +559,7 @@ input MirCuestionarioInput {
   formulaTrim4: String = null
   formulaAnual: String = null
   email: String = null
-  encargado: String
+  responsable: String
   idEmpleado: String
 }
 
@@ -583,7 +582,7 @@ input PbrInput {
   diciembre: Float = 0
   idEmpleado: String
   nombreRes: String
-  email: String
+  correo: String
   descripcion: String
   centroGestor: String
   claveVariable: String
@@ -707,7 +706,7 @@ input RegMirInput {
   formulaTrim4: String = null
   formulaAnual: String = null
   email: String = null
-  encargado: String
+  responsable: String
   idEmpleado: String
   _id: ID
   esActualizar: Boolean = false

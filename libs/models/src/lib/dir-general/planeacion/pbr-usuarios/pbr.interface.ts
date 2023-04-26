@@ -11,7 +11,7 @@ export interface IPbrCuestionario extends IMeses
     descripcion: string;
     centroGestor: string;
     idEmpleado: string;
-    email: string;
+    correo: string;
     nombreRes: string;
     trim1: number;
     trim2: number;

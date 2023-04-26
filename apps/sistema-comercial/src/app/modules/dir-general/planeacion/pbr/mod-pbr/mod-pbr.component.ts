@@ -79,6 +79,19 @@ export class ModPbrComponent implements OnInit, OnDestroy
         // })).subscribe();
     }
 
+
+    empleadoSelec(e: string | string[])
+    {
+        const empleadoActivo = this.empleadoQuery.getEntity(<string>e);
+        if (empleadoActivo?.correo)
+        {
+            this.formPbr.get('correo').setValue(empleadoActivo.correo);
+        } else
+        {
+            this.formPbr.get('correo').reset();
+        }
+    }
+
     cerrar(): void
     {
         this.panel.emit(false);

@@ -9,7 +9,7 @@ fragment fragPbr on PbrType
     descripcion
     centroGestor
     idEmpleado
-    email
+    correo
     nombreRes
     enero
     febrero

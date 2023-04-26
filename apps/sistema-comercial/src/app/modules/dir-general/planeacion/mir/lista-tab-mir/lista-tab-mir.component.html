@@ -1,87 +1,89 @@
-<section>
-    <ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
-        <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
-            <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
-                <span class="text-xl">MIR - {{planeacion.ano}}</span>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="mirSeleccionado = planeacion.mirCuestionario[indice]">
-                    <mat-tab [label]="mir?.idIndicador" *ngFor="let mir of planeacion.mirCuestionario; trackBy:trackByFn">
-                        <div class="grid grid-cols-8 gap-4">
-                            <span class="detalle-span">Nivel</span>
-                            <span class="border-b-2">{{mir?.nivel}}</span>
-                            <span class="detalle-span">Programa financiacion</span>
-                            <span class="border-b-2">{{mir?.programaFinanciacion}}</span>
-                            <span class="detalle-span">CentroGestor</span>
-                            <span class="border-b-2 col-span-3">{{mir?.centroGestor}}</span>
+<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
+            <span class="text-xl">MIR - {{planeacion.ano}}</span>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioDeIndiceMir($event)">
+                <mat-tab [label]="mir?.idIndicador" *ngFor="let mir of planeacion.mirCuestionario; trackBy:trackByFn">
+                    <div class="grid grid-cols-8 gap-4">
+                        <span class="detalle-span">Nivel</span>
+                        <span class="border-b-2">{{mir?.nivel}}</span>
+                        <span class="detalle-span">Programa financiacion</span>
+                        <span class="border-b-2">{{mir?.programaFinanciacion}}</span>
+                        <span class="detalle-span">CentroGestor</span>
+                        <span class="border-b-2 col-span-3">{{mir?.centroGestor}}</span>
 
-                            <span class="detalle-span">Resumen narrativo</span>
-                            <span class="border-b-2 col-span-7">{{mir?.resumenNarrativo}}</span>
+                        <span class="detalle-span">Resumen narrativo</span>
+                        <span class="border-b-2 col-span-7">{{mir?.resumenNarrativo}}</span>
 
-                            <span class="detalle-span">tipo</span>
-                            <span class="border-b-2">{{mir?.tipo}}</span>
-                            <span class="detalle-span">Dimension</span>
-                            <span class="border-b-2">{{mir?.dimension}}</span>
-                            <span class="detalle-span">Unidad medida</span>
-                            <span class="border-b-2">{{mir?.unidadDeMedida}}</span>
-                            <span class="detalle-span">Frecuencia de med</span>
-                            <span class="border-b-2">{{mir?.frecuenciaMedicion}}</span>
+                        <span class="detalle-span">tipo</span>
+                        <span class="border-b-2">{{mir?.tipo}}</span>
+                        <span class="detalle-span">Dimension</span>
+                        <span class="border-b-2">{{mir?.dimension}}</span>
+                        <span class="detalle-span">Unidad medida</span>
+                        <span class="border-b-2">{{mir?.unidadDeMedida}}</span>
+                        <span class="detalle-span">Frecuencia de med</span>
+                        <span class="border-b-2">{{mir?.frecuenciaMedicion}}</span>
 
-                            <span class="detalle-span">Nombre del indicador</span>
-                            <span class="border-b-2 col-span-7">{{mir?.nombreDelIndicador}}</span>
+                        <span class="detalle-span">Nombre del indicador</span>
+                        <span class="border-b-2 col-span-7">{{mir?.nombreDelIndicador}}</span>
 
-                            <span class="detalle-span">Metodo de calculo</span>
-                            <span class="border-b-2 col-span-7 text-green-600">{{mir?.metodoCalculo}}</span>
+                        <span class="detalle-span">Metodo de calculo</span>
+                        <span class="border-b-2 col-span-7 text-green-600">{{mir?.metodoCalculo}}</span>
 
-                            <span class="detalle-span">Linea base año</span>
-                            <span class="border-b-2">{{mir?.lineaBaseAno}}</span>
-                            <span class="detalle-span">Linea base valor</span>
-                            <span class="border-b-2">{{mir?.lineaBaseValor}}</span>
-                            <span class="detalle-span">Meta</span>
-                            <span class="border-b-2">{{mir?.meta}}</span>
-                            <span class="detalle-span">Sentido del indicador</span>
-                            <span class="border-b-2">{{mir?.sentidoDelIndicador}}</span>
+                        <span class="detalle-span">Linea base año</span>
+                        <span class="border-b-2">{{mir?.lineaBaseAno}}</span>
+                        <span class="detalle-span">Linea base valor</span>
+                        <span class="border-b-2">{{mir?.lineaBaseValor}}</span>
+                        <span class="detalle-span">Meta</span>
+                        <span class="border-b-2">{{mir?.meta}}</span>
+                        <span class="detalle-span">Sentido del indicador</span>
+                        <span class="border-b-2">{{mir?.sentidoDelIndicador}}</span>
 
-                            <span class="detalle-span col-start-3">Semaforo verde</span>
-                            <span class="border-b-2 text-green-600 text-lg">{{mir?.meta * mir?.semefVerdeV}}</span>
-                            <span class="detalle-span">Semaforo amarillo</span>
-                            <span class="border-b-2 text-amber-600 text-lg">{{mir?.meta * mir?.semefAmarilloV}}</span>
-                            <span class="detalle-span">Semaforo rojo</span>
-                            <span class="border-b-2 text-red-600 text-lg">{{mir?.meta * mir?.semefRojoV}}</span>
+                        <span class="detalle-span col-start-3">Semaforo verde</span>
+                        <span class="border-b-2 text-green-600 text-lg">{{mir?.meta * mir?.semefVerdeV}}</span>
+                        <span class="detalle-span">Semaforo amarillo</span>
+                        <span class="border-b-2 text-amber-600 text-lg">{{mir?.meta * mir?.semefAmarilloV}}</span>
+                        <span class="detalle-span">Semaforo rojo</span>
+                        <span class="border-b-2 text-red-600 text-lg">{{mir?.meta * mir?.semefRojoV}}</span>
 
-                            <span class="detalle-span">Avance trim1</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim1}}</span>
-                            <span class="detalle-span">Avance trim2</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim2}}</span>
-                            <span class="detalle-span text-cyan-500">Avance trim3</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim3}}</span>
-                            <span class="detalle-span">Avance trim4</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim4}}</span>
+                        <span class="detalle-span">Avance trim1</span>
+                        <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim1}}</span>
+                        <span class="detalle-span">Avance trim2</span>
+                        <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim2}}</span>
+                        <span class="detalle-span text-cyan-500">Avance trim3</span>
+                        <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim3}}</span>
+                        <span class="detalle-span">Avance trim4</span>
+                        <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim4}}</span>
 
 
-                            <span class="detalle-span col-start-7">Avance anual</span>
-                            <span class="border-b-2">{{mir?.avanceAnual}}</span>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-                <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
-            </mat-card-content>
-            <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
-                <div class="flex flex-auto gap-4">
-                    <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoElemento()">
-                        <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
-                        Nuevo registro
-                    </button>
-                    <button mat-raised-button color="accent" class="flex-auto" (click)="editarRegistro()" [disabled]="mirSeleccionado === undefined">
-                        <mat-icon svgIcon="feather:save"></mat-icon>
-                        Editar registro
-                    </button>
-                    <button mat-raised-button color="warn" class="flex-auto" (click)="eliminarReg()">
-                        <mat-icon svgIcon="feather:save"></mat-icon>
-                        Eliminar registro
-                    </button>
-                </div>
-            </mat-card-actions>
-        </mat-card>
-    </ng-container>
-</section>
+                        <span class="detalle-span col-start-7">Avance anual</span>
+                        <span class="border-b-2">{{mir?.avanceAnual}}</span>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+            <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
+        </mat-card-content>
+        <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+            <div class="flex flex-auto gap-4">
+                <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoElemento()">
+                    <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                    Nuevo registro
+                </button>
+                <button mat-raised-button color="accent" class="flex-auto" (click)="editarRegistro()" [disabled]="mirSeleccionado === undefined">
+                    <mat-icon svgIcon="mat_outline:edit"></mat-icon>
+                    Editar registro
+                </button>
+                <button mat-raised-button color="warn" class="flex-auto" (click)="eliminarReg()">
+                    <mat-icon svgIcon="mat_outline:delete"></mat-icon>
+                    Eliminar registro
+                </button>
+                <button mat-raised-button color="accent" class="flex-auto" (click)="eliminarReg()">
+                    <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                    Imprimir
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</ng-container>

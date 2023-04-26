@@ -29,7 +29,7 @@ export class Pbr implements TRegPbr
     idEmpleado: string;
 
     @required()
-    email: string;
+    correo: string;
 
     @prop()
     nombreRes: string;

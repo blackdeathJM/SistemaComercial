@@ -3,11 +3,13 @@ import {Model, Types} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {FilCentroGestorMirDto, RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {EmpleadoService} from "#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service";
+import {IMirCuestionario} from "#api/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Injectable()
 export class PlaneacionService
 {
-    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>)
+    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private empleadoService: EmpleadoService)
     {
     }
 
@@ -42,6 +44,7 @@ export class PlaneacionService
 
         } else
         {
+
             return new this.planeacion(planeacion).save();
         }
     }
@@ -65,7 +68,7 @@ export class PlaneacionService
                 {$set: {mirCuestionario: resto}}).exec();
         } else
         {
-            return await this.planeacion.findByIdAndUpdate(_id, {$push: {'mirCuestionario': resto}}, {new: true});
+            return await this.planeacion.findByIdAndUpdate(_id, {$push: {'mirCuestionario': resto}}, {new: true}).exec();
         }
     }
 

@@ -79,7 +79,7 @@ export class PbrCuestionarioDto implements IPbrCuestionario
 
     @Field(() => String, {nullable: true})
     @IsOptional()
-    email: string;
+    correo: string;
 
     @Field(() => String, {nullable: true})
     @IsOptional()
