@@ -1,32 +1,87 @@
-<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
+<ng-container>
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
-        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR- {{planeacion.ano}}</span></mat-card-header>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR</span></mat-card-header>
         <mat-card-content>
 
-            <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="pbrSeleccionado = planeacion.pbrCuestionario[indice]">
+            <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndicePbr($event)">
+                <mat-tab [label]="'El id'">
+                    <section class="grid grid-cols-8 gap-4">
+                        <span class="detalle-span">Variable de origen</span>
+                        <span class="border-b-2">-----------------</span>
+                        <span class="detalle-span">Dato</span>
+                        <span class="border-b-2 col-span-3">Monto facturado por el servicio de tratamiento de las descargas públicas</span>
+                        <span class="detalle-span">Unidad</span>
+                        <span class="border-b-2">--------</span>
 
+                        <span class="detalle-span">Descripcion</span>
+                        <span class="border-b-2 col-span-7">Son aquellas conectadas a los predios que llevan a cabo una actividad económica y donde no usan el agua como un insumo directo del bien que comercializan. Serán las que actualmente estan activas, se incluyen las de localidades rurales integradas al sistema.
+</span>
+
+                        <span class="detalle-span">Enero</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Febrero</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Marzo</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Trimestre 1</span>
+                        <span class="border-b-2">00.00</span>
+
+                        <span class="detalle-span">Abril</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Mayo</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Junio</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Trimestre 2</span>
+                        <span class="border-b-2">00.00</span>
+
+
+                        <span class="detalle-span">Julio</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Agosto</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Septiembre</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Trimestre 3</span>
+                        <span class="border-b-2">00.00</span>
+
+
+                        <span class="detalle-span">Octubre</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Noviembre</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Diciembre</span>
+                        <span class="border-b-2">00.00</span>
+                        <span class="detalle-span">Trimestre 4</span>
+                        <span class="border-b-2">00.00</span>
+
+                        <span class="detalle-span col-start-7">Acumulado final</span>
+                        <span class="border-b-2">00.00</span>
+                    </section>
+                </mat-tab>
             </mat-tab-group>
-
             <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
         </mat-card-content>
 
-
         <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
             <div class="flex flex-auto gap-4">
-                <button class="flex-auto" mat-raised-button color="primary" (click)="abrirPanel()">
+                <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="abrirPanel()">
                     <mat-icon svgIcon="add"></mat-icon>
                     Nuevo registro
                 </button>
-                <button class="flex-auto" mat-raised-button color="accent">
+                <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg">
                     <mat-icon svgIcon="edit"></mat-icon>
                     Editar registro
                 </button>
-                <button class="flex-auto" mat-raised-button color="warn">
+                <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg">
                     <mat-icon svgIcon="mat_outline:delete"></mat-icon>
                     Eliminar registro
                 </button>
-
-                <button mat-raised-button color="accent" class="flex-auto">
+                <button mat-flat-button color="accent" class="flex-auto">
+                    <mat-icon svgIcon="assignment"></mat-icon>
+                    Registrar avances
+                </button>
+                <button mat-flat-button color="accent" class="flex-auto">
                     <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                     Imprimir
                 </button>

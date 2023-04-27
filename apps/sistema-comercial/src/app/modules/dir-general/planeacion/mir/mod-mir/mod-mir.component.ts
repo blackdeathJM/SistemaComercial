@@ -113,10 +113,10 @@ export class ModMirComponent implements OnInit, OnDestroy
         const empleado = this.empleadoQuery.getEntity(e);
         if (empleado?.correo)
         {
-            this.formMir.get('email').setValue(empleado.correo);
+            this.formMir.get('correo').setValue(empleado.correo);
         } else
         {
-            this.formMir.get('email').reset();
+            this.formMir.get('correo').reset();
         }
         this.formMir.get('responsable').setValue(empleado.nombreCompleto);
     }

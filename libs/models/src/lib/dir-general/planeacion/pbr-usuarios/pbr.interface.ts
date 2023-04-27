@@ -2,7 +2,7 @@ import {IMeses} from '../../../common/common';
 
 export interface IPbrCuestionario extends IMeses
 {
-    id: string;
+    idIndicador: string;
     fechaCompleta: string;
     claveVariable: string;
     variableOrigen: string;
@@ -12,12 +12,16 @@ export interface IPbrCuestionario extends IMeses
     centroGestor: string;
     idEmpleado: string;
     correo: string;
-    nombreRes: string;
+    responsable: string;
     trim1: number;
     trim2: number;
     trim3: number;
     trim4: number;
-    calculoTrim: string;
+    esSumatoria: boolean;
+    camposCalculo: string[];
+    formulaCalculo: string;
     total: number;
-    calculoTotal: string;
+    esSumatoriaTotal: boolean;
+    camposCalculoTotal: string[];
+    formulaTotal: string;
 }

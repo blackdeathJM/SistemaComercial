@@ -1,6 +1,6 @@
 fragment fragPbr on PbrType
 {
-    id
+    idIndicador
     fechaCompleta
     claveVariable
     variableOrigen
@@ -10,7 +10,7 @@ fragment fragPbr on PbrType
     centroGestor
     idEmpleado
     correo
-    nombreRes
+    responsable
     enero
     febrero
     marzo
@@ -28,4 +28,10 @@ fragment fragPbr on PbrType
     diciembre
     trim4
     total
+    esSumatoria
+    camposCalculo
+    formulaCalculo
+    esSumatoriaTotal
+    camposCalculoTotal
+    formulaTotal
 }

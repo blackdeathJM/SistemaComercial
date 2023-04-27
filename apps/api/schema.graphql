@@ -281,8 +281,6 @@ type MirCuestionarioType {
 }
 
 type PbrType {
-  calculoTrim: String
-  calculoTotal: String
   ano: Int
   fechaCompleta: String
   enero: Float
@@ -298,7 +296,7 @@ type PbrType {
   noviembre: Float
   diciembre: Float
   idEmpleado: String
-  nombreRes: String
+  responsable: String
   correo: String
   descripcion: String
   centroGestor: String
@@ -309,9 +307,15 @@ type PbrType {
   trim3: Float
   trim4: Float
   dato: String
-  id: String
+  idIndicador: String
   total: Float
   unidad: String
+  camposCalculo: [String!]
+  camposCalculoTotal: [String!]!
+  esSumatoria: Boolean
+  esSumatoriaTotal: Boolean
+  formulaCalculo: String
+  formulaTotal: String
 }
 
 type PlaneacionType {
@@ -410,7 +414,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682531723
+  tiempo: Int = 1682596736
   titulo: String
   usarRouter: Boolean = false
 }
@@ -564,8 +568,6 @@ input MirCuestionarioInput {
 }
 
 input PbrInput {
-  calculoTrim: String
-  calculoTotal: String = "Sumatoria"
   ano: Int = null
   fechaCompleta: String
   enero: Float = 0
@@ -581,7 +583,7 @@ input PbrInput {
   noviembre: Float = 0
   diciembre: Float = 0
   idEmpleado: String
-  nombreRes: String
+  responsable: String
   correo: String
   descripcion: String
   centroGestor: String
@@ -592,9 +594,15 @@ input PbrInput {
   trim3: Float = 0
   trim4: Float = 0
   dato: String
-  id: String
+  idIndicador: String
   total: Float = 0
   unidad: String
+  camposCalculo: [String!] = []
+  camposCalculoTotal: [String!]! = []
+  esSumatoria: Boolean = true
+  esSumatoriaTotal: Boolean = true
+  formulaCalculo: String
+  formulaTotal: String
 }
 
 input PlaneacionInput {
@@ -609,7 +617,7 @@ input PlaneacionInput {
 type Query {
   selecciones: SeleccionType
   filTodos: [PlaneacionType!]!
-  filCentroGestorMir(centroGestor: String = null, _id: ID): PlaneacionType!
+  filCentroGestor(_id: ID, centroGestor: String, cuestionario: String): PlaneacionType!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -636,7 +644,8 @@ type Mutation {
   regSeleccion(input: SeleccionInput): SeleccionType!
   inicializarPlaneacion(input: PlaneacionInput!): PlaneacionType!
   regMir(datos: RegMirInput!): PlaneacionType!
-  eliminarElementoMir(idIndicador: String = null, _id: ID): PlaneacionType!
+  eliminarElemento(_id: ID, idIndicador: String, cuestionario: String): PlaneacionType!
+  regPbr(datos: RegPbrInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -709,6 +718,46 @@ input RegMirInput {
   correo: String = null
   responsable: String
   idEmpleado: String
+  _id: ID
+  esActualizar: Boolean = false
+}
+
+input RegPbrInput {
+  ano: Int = null
+  fechaCompleta: String
+  enero: Float = 0
+  febrero: Float = 0
+  marzo: Float = 0
+  abril: Float = 0
+  mayo: Float = 0
+  junio: Float = 0
+  julio: Float = 0
+  agosto: Float = 0
+  septiembre: Float = 0
+  octubre: Float = 0
+  noviembre: Float = 0
+  diciembre: Float = 0
+  idEmpleado: String
+  responsable: String
+  correo: String
+  descripcion: String
+  centroGestor: String
+  claveVariable: String
+  variableOrigen: String
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  dato: String
+  idIndicador: String
+  total: Float = 0
+  unidad: String
+  camposCalculo: [String!] = []
+  camposCalculoTotal: [String!] = []
+  esSumatoria: Boolean = true
+  esSumatoriaTotal: Boolean = true
+  formulaCalculo: String
+  formulaTotal: String
   _id: ID
   esActualizar: Boolean = false
 }

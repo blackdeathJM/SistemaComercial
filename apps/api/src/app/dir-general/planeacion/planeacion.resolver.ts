@@ -1,8 +1,9 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PlaneacionDto } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { PlaneacionService } from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
-import { EliminarElementoMirDto, FilCentroGestorMirDto, RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import { EmpleadoService } from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
+import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
+import {EliminarElementoDto, FilCentroGestorDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
+import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
+import {RegPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto";
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
@@ -18,9 +19,9 @@ export class PlaneacionResolver
     }
 
     @Query(() => PlaneacionDto)
-    async filCentroGestorMir(@Args() args: FilCentroGestorMirDto): Promise<PlaneacionDto>
+    async filCentroGestor(@Args() args: FilCentroGestorDto): Promise<PlaneacionDto>
     {
-        return await this.planeacionService.filCentroGestorMir(args);
+        return await this.planeacionService.filCentroGestor(args);
     }
 
     @Mutation(() => PlaneacionDto)
@@ -36,8 +37,14 @@ export class PlaneacionResolver
     }
 
     @Mutation(() => PlaneacionDto)
-    async eliminarElementoMir(@Args() args: EliminarElementoMirDto): Promise<PlaneacionDto>
+    async eliminarElemento(@Args() args: EliminarElementoDto): Promise<PlaneacionDto>
     {
-        return await this.planeacionService.eliminarElementoMir(args);
+        return await this.planeacionService.eliminiarElemento(args);
+    }
+
+    @Mutation(() => PlaneacionDto)
+    async regPbr(@Args('datos') datos: RegPbrDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacionService.regPbr(datos);
     }
 }

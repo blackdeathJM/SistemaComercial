@@ -13,7 +13,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {ngxLoaderPbr} from "@s-dir-general/store/planeacion.service";
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -27,8 +26,11 @@ import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr
 export class ListaPbrComponent
 {
     @Output() panel = new EventEmitter<boolean>;
-    @Input() dirComercial = false;
-    pbrSeleccionado: IPbrCuestionario;
+
+    @Input() desNuevoReg: boolean = false;
+    @Input() desEditarReg: boolean = false;
+    @Input() desEliminarReg: boolean = false;
+
     indice = 0;
     loader = ngxLoaderPbr();
 
@@ -49,5 +51,10 @@ export class ListaPbrComponent
     abrirPanel(): void
     {
         this.panel.emit(true);
+    }
+
+    cambioIndicePbr(e: number): void
+    {
+
     }
 }

@@ -1,18 +1,11 @@
-import {ObjectType, InputType, Field, Float, Int, PartialType} from '@nestjs/graphql';
+import {ObjectType, InputType, Field, Float, Int, PartialType, ID, ArgsType, PickType} from '@nestjs/graphql';
 import {IPbrCuestionario} from './pbr.interface';
-import {IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 
 @ObjectType('PbrType')
 @InputType('PbrInput')
 export class PbrCuestionarioDto implements IPbrCuestionario
 {
-    @Field(() => String, {nullable: true})
-    calculoTrim: string;
-
-    @Field(() => String, {nullable: true, defaultValue: 'Sumatoria'})
-    @IsNotEmpty({message: 'Debes seleccionar el tiempo de calculo'})
-    calculoTotal: string;
-
     @Field(() => Int, {nullable: true, defaultValue: null})
     @IsOptional()
     ano: number;
@@ -75,7 +68,7 @@ export class PbrCuestionarioDto implements IPbrCuestionario
 
     @Field(() => String, {nullable: true})
     @IsOptional()
-    nombreRes: string;
+    responsable: string;
 
     @Field(() => String, {nullable: true})
     @IsOptional()
@@ -117,23 +110,53 @@ export class PbrCuestionarioDto implements IPbrCuestionario
     @IsNotEmpty({message: 'El dato es requerido'})
     dato: string;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'El id es requerido'})
-    id: string;
+    idIndicador: string;
 
-    @Field({nullable: true, defaultValue: 0.00})
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
     @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
     total: number;
 
-    @Field({nullable: true})
+    @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'La unidad es requerida'})
     unidad: string;
+
+    @IsOptional()
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    camposCalculo: string[];
+
+    @IsOptional()
+    @Field(() => [String], {defaultValue: []})
+    camposCalculoTotal: string[];
+
+    @IsBoolean({message: 'El valor debe ser boolean'})
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    esSumatoria: boolean;
+
+    @IsBoolean({message: 'El valor debe ser boolean'})
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    esSumatoriaTotal: boolean;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true})
+    formulaCalculo: string;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true})
+    formulaTotal: string;
 }
 
 @InputType('RegPbrInput')
 export class RegPbrDto extends PartialType(PbrCuestionarioDto, InputType)
 {
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el id'})
+    _id: string;
 
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    @IsOptional()
+    esActualizar: boolean;
 }
 
 export type TRegPbr = RegPbrDto;

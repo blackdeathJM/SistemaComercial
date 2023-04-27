@@ -5,6 +5,13 @@ import {prop, required} from "@rxweb/reactive-form-validators";
 @sanitize
 export class Pbr implements TRegPbr
 {
+    @prop({defaultValue: null})
+    _id: string;
+
+    @upperCase()
+    @prop()
+    idIndicador: string;
+
     @upperCase()
     @required()
     claveVariable: string;
@@ -32,5 +39,14 @@ export class Pbr implements TRegPbr
     correo: string;
 
     @prop()
-    nombreRes: string;
+    responsable: string;
+
+    @prop({defaultValue: false})
+    esActualizar: boolean;
+
+    @required()
+    calculoTrim: boolean;
+
+    @required()
+    calculoTotal: string[];
 }

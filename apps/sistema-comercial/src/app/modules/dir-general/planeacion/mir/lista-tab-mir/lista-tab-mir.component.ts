@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { fuseAnimations } from '@s-fuse/public-api';
-import { FormsModule } from '@angular/forms';
-import { actualizarMir, ngxLoaderMir, PlaneacionService } from '@s-dir-general/store/planeacion.service';
-import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
-import { ConfirmacionService } from '@s-services/confirmacion.service';
-import { TEliminarElementoMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FormsModule} from '@angular/forms';
+import {actualizarMir, ngxLoaderMir, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {ConfirmacionService} from '@s-services/confirmacion.service';
+import {TEliminarElemento} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -56,12 +56,14 @@ export class ListaTabMirComponent
         {
             if (res === 'confirmed')
             {
-                const args: TEliminarElementoMir =
+                const args: TEliminarElemento =
                     {
                         _id: this.planeacionQuery.getActive()._id,
-                        idIndicador: this.planeacionQuery.getActive().mirCuestionario[this.indice].idIndicador
+                        idIndicador: this.planeacionQuery.getActive().mirCuestionario[this.indice].idIndicador,
+                        cuestionario: 'mirCuestionario'
                     };
-                this.planeacionService.eliminarElementoMir(args).subscribe();
+
+                this.planeacionService.eliminarElemento(args).subscribe();
             }
         });
     }

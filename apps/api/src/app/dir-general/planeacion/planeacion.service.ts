@@ -1,9 +1,10 @@
-import { PlaneacionDto, TPlaneacionType } from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { EliminarElementoMirDto, FilCentroGestorMirDto, RegMirDto } from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import { EmpleadoService } from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
+import {EliminarElementoDto, FilCentroGestorDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {Model} from 'mongoose';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
+import {RegPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto";
 
 @Injectable()
 export class PlaneacionService
@@ -14,7 +15,7 @@ export class PlaneacionService
 
     async filTodos(): Promise<PlaneacionDto[]>
     {
-        return this.planeacion.find({}, {}, { sort: { ano: -1 } }).exec();
+        return this.planeacion.find({}, {}, {sort: {ano: -1}}).exec();
     }
 
     async inicializarPlaneacion(planeacion: PlaneacionDto): Promise<PlaneacionDto>
@@ -34,7 +35,7 @@ export class PlaneacionService
 
             const nvo = await new this.planeacion(nvaInicializacion).save();
 
-            const { _id, ...resto } = nvo;
+            const {_id, ...resto} = nvo;
 
             this.planeacion.findByIdAndUpdate(_id, {
                 'mirCuestionario.$.semefVerde': 0.00, 'mirCuestionario.$.semefAmarillo': 0.00, 'mirCuestionario.$.semefRojo': 0.00, 'mirCuestionario.$.avanceTrim1': 0.00,
@@ -48,34 +49,50 @@ export class PlaneacionService
         }
     }
 
-    async filCentroGestorMir(args: FilCentroGestorMirDto): Promise<PlaneacionDto>
+    async filCentroGestor(args: FilCentroGestorDto): Promise<PlaneacionDto>
     {
-        const res = await this.planeacion.findById(args._id).exec();
-        res.mirCuestionario = res.mirCuestionario.filter(value => value.centroGestor === args.centroGestor);
+        const {_id, centroGestor, cuestionario} = args
+        const res = await this.planeacion.findById(_id).exec();
+        res[cuestionario] = res[cuestionario].filter(value => value.centroGestor === centroGestor);
         return res;
 
     }
 
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>
     {
-        const { _id, esActualizar, ...resto } = datos;
+        const {_id, esActualizar, ...resto} = datos;
 
         if (esActualizar)
         {
-            return await this.planeacion.findOneAndUpdate({ _id, 'mirCuestionario.idIndicador': resto.idIndicador }, { $set: { 'mirCuestionario.$': resto } }, { new: true }).exec();
+            return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': resto.idIndicador}, {$set: {'mirCuestionario.$': resto}}, {new: true}).exec();
         } else
         {
-            return await this.planeacion.findByIdAndUpdate(_id, { $push: { 'mirCuestionario': resto } }, { new: true }).exec();
+            return await this.planeacion.findByIdAndUpdate(_id, {$push: {mirCuestionario: resto}}, {new: true}).exec();
         }
     }
 
-    async eliminarElementoMir(args: EliminarElementoMirDto): Promise<PlaneacionDto>
+    async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
     {
-        return await this.planeacion.findByIdAndUpdate(args._id, { $pull: { mirCuestionario: { idIndicador: args.idIndicador } } }, { new: true }).exec();
+        const {_id, idIndicador, cuestionario} = args;
+        return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
     }
 
-    // async regPbr(): Promise<PlaneacionDto>
-    // {
-    //
-    // }
+    async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
+    {
+        const {_id, esActualizar, ...resto} = datos;
+
+        try
+        {
+            if (esActualizar)
+            {
+                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.id': resto.idIndicador}, {$set: {'pbrCuestionario.$': resto}}).exec();
+            } else
+            {
+                return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException(e);
+        }
+    }
 }

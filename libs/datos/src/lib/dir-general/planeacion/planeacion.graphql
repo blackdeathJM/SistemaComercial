@@ -5,9 +5,9 @@ query filTodos
     }
 }
 
-query filCentroGestorMir($_id: ID!, $centroGestor: String!)
+query filCentroGestor($_id: ID!, $centroGestor: String!, $cuestionario: String!)
 {
-    filCentroGestorMir(_id: $_id, centroGestor: $centroGestor)
+    filCentroGestor(_id: $_id, centroGestor: $centroGestor, cuestionario: $cuestionario)
     {
         ...fragPlaneacion
     }
@@ -28,9 +28,16 @@ mutation regMir($datos: RegMirInput!)
         ...fragPlaneacion
     }
 }
-mutation eliminarElementoMir($_id: ID!, $idIndicador: String!)
+mutation eliminarElemento($_id: ID!, $idIndicador: String!, $cuestionario: String!)
 {
-    eliminarElementoMir(_id: $_id, idIndicador: $idIndicador)
+    eliminarElemento(_id: $_id, idIndicador: $idIndicador, cuestionario: $cuestionario)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation regPbr($datos: RegPbrInput!)
+{
+    regPbr(datos: $datos)
     {
         ...fragPlaneacion
     }
