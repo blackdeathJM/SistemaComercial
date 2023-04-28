@@ -4,7 +4,6 @@ export interface IPbrCuestionario extends IMeses
 {
     idIndicador: string;
     fechaCompleta: string;
-    claveVariable: string;
     variableOrigen: string;
     dato: string;
     unidad: string;

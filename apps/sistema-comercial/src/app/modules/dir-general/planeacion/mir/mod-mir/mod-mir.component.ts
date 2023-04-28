@@ -67,7 +67,10 @@ export class ModMirComponent implements OnInit, OnDestroy
                 this.selecciones = res;
             }
         }));
+
+
         this.empleados = this.empleadoQuery.getAll();
+
         if (actualizarMir()[0])
         {
             const cuestionarioMir = this.planeacionQuery.getActive().mirCuestionario[actualizarMir()[1]];
@@ -121,6 +124,11 @@ export class ModMirComponent implements OnInit, OnDestroy
         this.formMir.get('responsable').setValue(empleado.nombreCompleto);
     }
 
+    filtrarEmpleados(e: string)
+    {
+        this.empleados = GeneralService.filtradoEmpleados(e, [...this.empleadoQuery.getAll()]);
+    }
+
     cerrar(): void
     {
         this.panel.emit(false);
@@ -134,10 +142,5 @@ export class ModMirComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
-    }
-
-    filtrarEmpleados(e: string)
-    {
-        this.empleados = GeneralService.filtradoEmpleados(e, [...this.empleadoQuery.getAll()]);
     }
 }

@@ -2,7 +2,6 @@ fragment fragPbr on PbrType
 {
     idIndicador
     fechaCompleta
-    claveVariable
     variableOrigen
     dato
     unidad

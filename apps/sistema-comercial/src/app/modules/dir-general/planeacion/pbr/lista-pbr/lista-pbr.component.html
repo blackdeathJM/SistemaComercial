@@ -69,11 +69,11 @@
                     <mat-icon svgIcon="add"></mat-icon>
                     Nuevo registro
                 </button>
-                <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg">
+                <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg" (click)="editarPbr()">
                     <mat-icon svgIcon="edit"></mat-icon>
                     Editar registro
                 </button>
-                <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg">
+                <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg" (click)="eliminarPbr()">
                     <mat-icon svgIcon="mat_outline:delete"></mat-icon>
                     Eliminar registro
                 </button>

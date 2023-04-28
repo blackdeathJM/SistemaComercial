@@ -300,7 +300,6 @@ type PbrType {
   correo: String
   descripcion: String
   centroGestor: String
-  claveVariable: String
   variableOrigen: String
   trim1: Float
   trim2: Float
@@ -414,7 +413,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682596736
+  tiempo: Int = 1682650407
   titulo: String
   usarRouter: Boolean = false
 }
@@ -568,7 +567,7 @@ input MirCuestionarioInput {
 }
 
 input PbrInput {
-  ano: Int = null
+  ano: Int = 0
   fechaCompleta: String
   enero: Float = 0
   febrero: Float = 0
@@ -587,7 +586,6 @@ input PbrInput {
   correo: String
   descripcion: String
   centroGestor: String
-  claveVariable: String
   variableOrigen: String
   trim1: Float = 0
   trim2: Float = 0
@@ -723,7 +721,7 @@ input RegMirInput {
 }
 
 input RegPbrInput {
-  ano: Int = null
+  ano: Int = 0
   fechaCompleta: String
   enero: Float = 0
   febrero: Float = 0
@@ -742,7 +740,6 @@ input RegPbrInput {
   correo: String
   descripcion: String
   centroGestor: String
-  claveVariable: String
   variableOrigen: String
   trim1: Float = 0
   trim2: Float = 0
