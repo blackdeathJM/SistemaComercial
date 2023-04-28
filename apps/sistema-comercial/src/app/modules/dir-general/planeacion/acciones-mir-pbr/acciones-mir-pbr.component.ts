@@ -22,7 +22,8 @@ export class AccionesMirPbrComponent
     @Input() habCentroGestor = false;
 
     // consultas
-    @Output() centroGestor = new EventEmitter<string>;
+    @Output() centroGestor = new EventEmitter<string>();
+    @Output() filtroAno = new EventEmitter<string>()
 
     valorCentroGestor: string;
 
@@ -32,7 +33,7 @@ export class AccionesMirPbrComponent
 
     filAno(e: string): void
     {
-        this.planeacionService.filPorAno(e);
+        this.filtroAno.emit(e);
     }
 
     filCentroGestor(e: string): void

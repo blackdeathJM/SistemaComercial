@@ -295,7 +295,7 @@ type PbrType {
   octubre: Float
   noviembre: Float
   diciembre: Float
-  idEmpleado: String
+  idEmpleado: ID
   responsable: String
   correo: String
   descripcion: String
@@ -309,12 +309,8 @@ type PbrType {
   idIndicador: String
   total: Float
   unidad: String
-  camposCalculo: [String!]
-  camposCalculoTotal: [String!]!
-  esSumatoria: Boolean
   esSumatoriaTotal: Boolean
-  formulaCalculo: String
-  formulaTotal: String
+  esSumatoriaTrim: Boolean
 }
 
 type PlaneacionType {
@@ -413,7 +409,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682650929
+  tiempo: Int = 1682682465
   titulo: String
   usarRouter: Boolean = false
 }
@@ -581,7 +577,7 @@ input PbrInput {
   octubre: Float = 0
   noviembre: Float = 0
   diciembre: Float = 0
-  idEmpleado: String
+  idEmpleado: ID
   responsable: String
   correo: String
   descripcion: String
@@ -595,12 +591,8 @@ input PbrInput {
   idIndicador: String
   total: Float = 0
   unidad: String
-  camposCalculo: [String!] = []
-  camposCalculoTotal: [String!]! = []
-  esSumatoria: Boolean = true
-  esSumatoriaTotal: Boolean = true
-  formulaCalculo: String
-  formulaTotal: String
+  esSumatoriaTotal: Boolean
+  esSumatoriaTrim: Boolean
 }
 
 input PlaneacionInput {
@@ -735,7 +727,7 @@ input RegPbrInput {
   octubre: Float = 0
   noviembre: Float = 0
   diciembre: Float = 0
-  idEmpleado: String
+  idEmpleado: ID
   responsable: String
   correo: String
   descripcion: String
@@ -749,12 +741,8 @@ input RegPbrInput {
   idIndicador: String
   total: Float = 0
   unidad: String
-  camposCalculo: [String!] = []
-  camposCalculoTotal: [String!] = []
-  esSumatoria: Boolean = true
-  esSumatoriaTotal: Boolean = true
-  formulaCalculo: String
-  formulaTotal: String
+  esSumatoriaTotal: Boolean
+  esSumatoriaTrim: Boolean
   _id: ID
   esActualizar: Boolean = false
 }

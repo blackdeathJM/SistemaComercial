@@ -1,5 +1,5 @@
 <form [formGroup]="formMir">
-    <section class="p-4 flex flex-col flex-auto gap-2">
+    <section class="px-4 flex flex-col flex-auto gap-2">
         <mat-form-field>
             <mat-label>Selecciona empleado</mat-label>
             <mat-select formControlName="idEmpleado" (selectionChange)="empleadoSele($event.value)">
@@ -29,7 +29,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Programa financiacion</mat-label>
-            <input matInput formControlName="programaFinanciacion" />
+            <input matInput formControlName="programaFinanciacion"/>
             <mat-error>{{formMir.controls.programaFinanciacion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -88,20 +88,20 @@
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Linea base año</mat-label>
-                <input matInput formControlName="lineaBaseAno" />
+                <input matInput formControlName="lineaBaseAno"/>
                 <mat-error>{{formMir.controls.lineaBaseAno['errorMessage']}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
                 <mat-label>Valor</mat-label>
-                <input matInput formControlName="lineaBaseValor" />
+                <input matInput formControlName="lineaBaseValor"/>
                 <mat-error>{{formMir.controls.lineaBaseValor['errorMessage']}}</mat-error>
             </mat-form-field>
         </div>
 
         <mat-form-field>
             <mat-label>Meta</mat-label>
-            <input matInput formControlName="meta" />
+            <input matInput formControlName="meta"/>
             <mat-error>{{formMir.controls.meta['errorMessage']}}</mat-error>
         </mat-form-field>
 

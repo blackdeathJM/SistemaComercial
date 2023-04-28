@@ -1,28 +1,28 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { finalize, Subscription } from 'rxjs';
-import { ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Mir } from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
-import { SeleccionType } from '#/libs/datos/src';
-import { TrimDirective } from '@s-directives/trim.directive';
-import { TrimInputModule } from '@angular-ru/cdk/directives';
-import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
-import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query';
-import { AscDesc } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
-import { TRegMir } from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import { actualizarMir, idPlaneacion, PlaneacionService } from '@s-dir-general/store/planeacion.service';
-import { SeleccionarEmpleadoComponent } from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
-import { EmpleadoQuery } from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
-import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
-import { NgxToastService } from '@s-services/ngx-toast.service';
-import { IResolveEmpleado } from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import { GeneralService } from '@s-services/general.service';
+import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {finalize, Subscription} from 'rxjs';
+import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
+import {SeleccionType} from '#/libs/datos/src';
+import {TrimDirective} from '@s-directives/trim.directive';
+import {TrimInputModule} from '@angular-ru/cdk/directives';
+import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
+import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
+import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
+import {actualizarMir, idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {NgxToastService} from '@s-services/ngx-toast.service';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {GeneralService} from '@s-services/general.service';
 
 @Component({
     selector: 'app-mod-mir',
@@ -34,7 +34,7 @@ import { GeneralService } from '@s-services/general.service';
     styleUrls: ['./mod-mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModMirComponent implements OnInit, OnDestroy
+export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
 {
     @Output() panel = new EventEmitter<boolean>();
     selecciones: SeleccionType;
@@ -46,7 +46,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     cargando = false;
 
     constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef,
-                private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService)
+                private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery)
     {
         ReactiveFormConfig.set({
             'validationMessage': {
@@ -59,7 +59,10 @@ export class ModMirComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.formMir = this.fb.formGroup(new Mir());
+    }
 
+    ngAfterContentInit(): void
+    {
         this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
             if (res)
@@ -68,9 +71,11 @@ export class ModMirComponent implements OnInit, OnDestroy
             }
         }));
 
+        this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
+    }
 
-        this.empleados = this.empleadoQuery.getAll();
-
+    ngAfterViewInit(): void
+    {
         if (actualizarMir()[0])
         {
             const cuestionarioMir = this.planeacionQuery.getActive().mirCuestionario[actualizarMir()[1]];
@@ -82,7 +87,7 @@ export class ModMirComponent implements OnInit, OnDestroy
     regMir(): void
     {
         this.cargando = true;
-        const { semefVerdeV, semefAmarilloV, semefRojoV, meta, lineaBaseAno, esActualizar, ...resto } = this.formMir.value;
+        const {semefVerdeV, semefAmarilloV, semefRojoV, meta, lineaBaseAno, esActualizar, ...resto} = this.formMir.value;
 
         const datos: TRegMir =
             {

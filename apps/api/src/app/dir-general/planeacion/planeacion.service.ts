@@ -76,7 +76,6 @@ export class PlaneacionService
         const {_id, idIndicador, cuestionario} = args;
         return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
     }
-
     async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
     {
         const {_id, esActualizar, ...resto} = datos;
@@ -85,7 +84,7 @@ export class PlaneacionService
         {
             if (esActualizar)
             {
-                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.id': resto.idIndicador}, {$set: {'pbrCuestionario.$': resto}}).exec();
+                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario': resto.idIndicador}, {$set: {'pbrCuestionario.$': resto}}).exec();
             } else
             {
                 return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();

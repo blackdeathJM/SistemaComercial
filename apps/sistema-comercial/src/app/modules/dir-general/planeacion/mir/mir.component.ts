@@ -55,4 +55,9 @@ export default class MirComponent
 
         this.planeacionService.filCentroGestor(args).subscribe();
     }
+
+    filAno(e: string): void
+    {
+        this.planeacionService.filPorAno(e);
+    }
 }

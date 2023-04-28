@@ -1,12 +1,12 @@
-import { sanitize, upperCase } from '@rxweb/sanitizers';
-import { TRegPbr } from './pbr.dto';
-import { prop, required } from '@rxweb/reactive-form-validators';
-import { DateTime } from 'luxon';
+import {sanitize, upperCase} from '@rxweb/sanitizers';
+import {TRegPbr} from './pbr.dto';
+import {prop, required} from '@rxweb/reactive-form-validators';
+import {DateTime} from 'luxon';
+import {idPlaneacion} from "../../../../../../../apps/sistema-comercial/src/app/modules/dir-general/planeacion/store/planeacion.service";
 
 @sanitize
 export class Pbr implements TRegPbr
 {
-    @prop({ defaultValue: null })
     _id: string;
 
     @upperCase()
@@ -32,17 +32,17 @@ export class Pbr implements TRegPbr
     @required()
     idEmpleado: string;
 
-    @required()
-    correo: string;
-
     @prop()
     responsable: string;
 
-    @prop({ defaultValue: false })
+    @required()
+    correo: string;
+
+    @prop({defaultValue: false})
     esActualizar: boolean;
 
     @required()
-    esSumatoria: boolean;
+    esSumatoriaTrim: boolean
 
     @required()
     esSumatoriaTotal: boolean;

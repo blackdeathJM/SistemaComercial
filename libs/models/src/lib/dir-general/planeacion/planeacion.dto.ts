@@ -79,3 +79,13 @@ export class EliminarElementoDto
 }
 
 export type TEliminarElemento = EliminarElementoDto;
+
+@ArgsType()
+export class FilPbrEmpleadoDto extends PickType(PlaneacionDto, ['_id'])
+{
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el id del empleado PBR'})
+    idEmpleado: string;
+}
+
+export type TFilPbrEmpleado = FilPbrEmpleadoDto;

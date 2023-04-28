@@ -27,10 +27,6 @@ fragment fragPbr on PbrType
     diciembre
     trim4
     total
-    esSumatoria
-    camposCalculo
-    formulaCalculo
+    esSumatoriaTrim
     esSumatoriaTotal
-    camposCalculoTotal
-    formulaTotal
 }

@@ -1,5 +1,5 @@
 <form [formGroup]="formPbr">
-    <section class="flex flex-col">
+    <section class="flex flex-col px-4">
         <mat-form-field>
             <mat-label>Clave variable</mat-label>
             <input matInput formControlName="idIndicador">
@@ -60,8 +60,8 @@
             <mat-error>{{formPbr.controls.descripcion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Formula para calcular el trimestre</mat-label>
-            <mat-select (selectionChange)="calculoTrimestre($event.value)">
+            <mat-label>Forma de calcular el trimestre</mat-label>
+            <mat-select formControlName="esSumatoriaTrim">
                 <mat-option [value]="true">Sumatoria de los meses del trimestre</mat-option>
                 <mat-option [value]="false">Ultimo valor del mes</mat-option>
             </mat-select>
@@ -69,8 +69,8 @@
 
         <mat-form-field>
             <mat-label>Formula para calcular el acumulado total</mat-label>
-            <mat-select (selectionChange)="calculoAcumulado($event.value)">
-                <mat-option [value]="true">Sumatoria de los meses</mat-option>
+            <mat-select formControlName="esSumatoriaTotal">
+                <mat-option [value]="true">Sumar los todos los meses</mat-option>
                 <mat-option [value]="false">Ultimo valor del mes</mat-option>
             </mat-select>
         </mat-form-field>
