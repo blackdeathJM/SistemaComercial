@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,7 @@ import { Pbr } from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/P
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { SeleccionarEmpleadoComponent } from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import { EmpleadoQuery } from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import { SeleccionQuery } from '@s-dir-general/selecciones/store/seleccion.query';
@@ -57,9 +57,9 @@ export class ModPbrComponent implements OnInit, AfterViewInit, OnDestroy
         this.formPbr = this.fb.formGroup(new Pbr());
     }
 
-    ngAfterViewInit(): void
+     ngAfterViewInit():void
     {
-        this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
+        // this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
         this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
             this.centrosGestores = res.centroGestor;

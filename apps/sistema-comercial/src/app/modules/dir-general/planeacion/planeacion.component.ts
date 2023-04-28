@@ -16,8 +16,6 @@ import { PlaneacionService } from '@s-dir-general/store/planeacion.service';
 })
 export class PlaneacionComponent implements OnInit
 {
-    sub: Subscription = new Subscription();
-
     constructor(private seleccionService: SeleccionService, private empleadoService: EmpleadoService, private planeacionService: PlaneacionService)
     {
     }
