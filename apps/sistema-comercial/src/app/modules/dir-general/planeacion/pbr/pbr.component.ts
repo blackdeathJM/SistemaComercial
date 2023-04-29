@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -28,6 +28,11 @@ export class PbrComponent
     sub: Subscription = new Subscription();
 
     constructor(private planeacionQuery: PlaneacionQuery)
+    {
+
+    }
+
+    seleccionarPlaneacion(e: IPlaneacion): void
     {
 
     }

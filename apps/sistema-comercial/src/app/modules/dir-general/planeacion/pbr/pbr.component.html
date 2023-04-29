@@ -4,7 +4,7 @@
     </mat-drawer>
     <mat-drawer-content>
         <section class="flex flex-col flex-auto">
-            <app-acciones-mir-pbr [habCentroGestor]="true">
+            <app-acciones-mir-pbr [habCentroGestor]="true" (planeacionSeleccionado)="seleccionarPlaneacion($event)">
                 <ng-container acciones>
                     <button mat-flat-button color="accent">
                         <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>

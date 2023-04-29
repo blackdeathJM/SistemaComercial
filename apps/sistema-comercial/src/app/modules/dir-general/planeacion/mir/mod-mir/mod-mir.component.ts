@@ -16,7 +16,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {actualizarMir, idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {actualizarMir, PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -91,7 +91,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
 
         const datos: TRegMir =
             {
-                _id: idPlaneacion(),
+                _id: this.planeacionQuery.getActive()._id,
                 esActualizar: this.actualizar,
                 semefVerdeV: parseFloat(String(semefVerdeV)),
                 semefAmarilloV: parseFloat(String(semefAmarilloV)),

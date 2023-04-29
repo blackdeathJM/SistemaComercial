@@ -16,7 +16,7 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recurso
 import {GeneralService} from '@s-services/general.service';
 import {finalize, Subscription} from 'rxjs';
 import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {actualizarPbr, idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {actualizarPbr, PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 
 @Component({
@@ -81,7 +81,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         this.cargando = true;
         const datos: TRegPbr =
             {
-                _id: idPlaneacion(),
+                _id: this.planeacionQuery.getActive()._id,
                 ...this.formPbr.value
             };
         console.log('pbr', datos);

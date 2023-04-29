@@ -1,8 +1,6 @@
 import {sanitize, upperCase} from '@rxweb/sanitizers';
 import {TRegPbr} from './pbr.dto';
 import {prop, required} from '@rxweb/reactive-form-validators';
-import {DateTime} from 'luxon';
-import {idPlaneacion} from "../../../../../../../apps/sistema-comercial/src/app/modules/dir-general/planeacion/store/planeacion.service";
 
 @sanitize
 export class Pbr implements TRegPbr

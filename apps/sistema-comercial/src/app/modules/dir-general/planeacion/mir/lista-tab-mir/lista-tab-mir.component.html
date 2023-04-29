@@ -1,5 +1,5 @@
 <ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
-    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn *ngIf="planeacion.mirCuestionario.length > 0">
         <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
             <span class="text-xl">{{planeacion?.descripcion}} - {{planeacion?.ano}}</span>
         </mat-card-header>

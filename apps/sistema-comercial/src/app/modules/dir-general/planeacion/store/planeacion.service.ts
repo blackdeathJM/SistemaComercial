@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {catchError, Observable, tap} from 'rxjs';
+import {catchError, finalize, Observable, tap} from 'rxjs';
 import {
     EliminarElementoGQL,
     EliminarElementoMutation,
@@ -24,7 +24,6 @@ import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
-export const idPlaneacion = makeVar<string>(null);
 export const actualizarMir = makeVar<[boolean, number]>([false, 0]);
 export const actualizarPbr = makeVar<[boolean, number]>([false, 0]);
 
@@ -51,7 +50,6 @@ export class PlaneacionService
 
     filPorAno(_id: string): void
     {
-        idPlaneacion(_id);
         this.planeacionStore.setActive(_id);
     }
 
@@ -69,13 +67,16 @@ export class PlaneacionService
 
     filCentroGestor(args: TFilCentroGestor): Observable<SingleExecutionResult<FilCentroGestorQuery>>
     {
-        return this.filCentroGestorGQL.fetch({...args}).pipe(catchError(err => this.generalService.cacharError(err)),
+        this.ngxLoader.startLoader(ngxLoaderMir())
+        return this.filCentroGestorGQL.fetch({...args}, {fetchPolicy: 'network-only'}).pipe(
+            finalize(() => this.ngxLoader.stopLoader(ngxLoaderMir())),
+            catchError(err => this.generalService.cacharError(err)),
             tap((res) =>
             {
                 if (res && res.data)
                 {
                     const {_id, ...datos} = res.data.filCentroGestor as IPlaneacion;
-                    this.planeacionStore.update(_id, datos);
+                    this.planeacionStore.update(_id, {mirCuestionario: datos.mirCuestionario});
                 }
             }));
     }

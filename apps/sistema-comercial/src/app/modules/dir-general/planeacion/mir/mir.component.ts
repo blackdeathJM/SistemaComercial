@@ -10,9 +10,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
-import {idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {TFilCentroGestor} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 
 @Component({
     selector: 'app-mir',
@@ -26,7 +27,7 @@ export default class MirComponent
 {
     abrirPanel = false;
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
     {
     }
 
@@ -42,14 +43,15 @@ export default class MirComponent
 
     filCentroGestorMir(e: string): void
     {
-        if (!idPlaneacion())
+        if (!this.planeacionQuery.getActive()._id)
         {
             this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
             return;
         }
+
         const args: TFilCentroGestor =
             {
-                _id: idPlaneacion(),
+                _id: '',
                 centroGestor: e,
                 cuestionario: 'mirCuestionario'
             };
