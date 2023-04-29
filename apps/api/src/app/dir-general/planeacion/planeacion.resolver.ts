@@ -1,9 +1,9 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {EliminarElementoDto, FilCentroGestorDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {EliminarElementoDto, FilCentroGestorDto, FilPbrEmpleadoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
-import {RegPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto";
+import {RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
@@ -22,6 +22,12 @@ export class PlaneacionResolver
     async filCentroGestor(@Args() args: FilCentroGestorDto): Promise<PlaneacionDto>
     {
         return await this.planeacionService.filCentroGestor(args);
+    }
+
+    @Query(() => PlaneacionDto)
+    async filEmpleadoPbr(@Args() args: FilPbrEmpleadoDto): Promise<PlaneacionDto>
+    {
+        return this.planeacionService.filEmpleadoPbr(args);
     }
 
     @Mutation(() => PlaneacionDto)

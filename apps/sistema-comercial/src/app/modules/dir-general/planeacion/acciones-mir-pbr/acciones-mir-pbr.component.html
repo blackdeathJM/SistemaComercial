@@ -1,9 +1,9 @@
 <mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
 
-    <ng-container *ngIf="planeacionQuery.selectAll() | async as planes">
+    <ng-container *ngIf="planeacionQuery.selectAll() | async as planeaciones">
         <mat-form-field class="flex-auto mt-5">
-            <mat-select (valueChange)="filAno($event)">
-                <mat-option *ngFor="let plan of planes" [value]="plan._id">{{plan.ano}}</mat-option>
+            <mat-select (valueChange)="seleccionarPlaneacion($event)">
+                <mat-option *ngFor="let planeacion of planeaciones" [value]="planeacion">{{planeacion.ano}}</mat-option>
             </mat-select>
         </mat-form-field>
     </ng-container>

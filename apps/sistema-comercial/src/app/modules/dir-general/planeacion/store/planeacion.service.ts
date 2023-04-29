@@ -3,7 +3,7 @@ import {catchError, Observable, tap} from 'rxjs';
 import {
     EliminarElementoGQL,
     EliminarElementoMutation,
-    FilCentroGestorGQL, FilCentroGestorQuery,
+    FilCentroGestorGQL, FilCentroGestorQuery, FilEmpleadoPbrGQL, FilEmpleadoPbrQuery,
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
@@ -13,7 +13,7 @@ import {
 } from '#/libs/datos/src';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {makeVar, SingleExecutionResult} from '@apollo/client';
-import {TEliminarElemento, TFilCentroGestor, TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {TEliminarElemento, TFilCentroGestor, TFilPbrEmpleado, TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {GeneralService} from '@s-services/general.service';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
@@ -33,7 +33,7 @@ export class PlaneacionService
 {
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private filCentroGestorGQL: FilCentroGestorGQL,
-                private eliminarElementoGQL: EliminarElementoGQL, private regPbrGQL: RegPbrGQL)
+                private eliminarElementoGQL: EliminarElementoGQL, private regPbrGQL: RegPbrGQL, private filEmpleadoPbrGQL: FilEmpleadoPbrGQL)
     {
     }
 
@@ -55,10 +55,17 @@ export class PlaneacionService
         this.planeacionStore.setActive(_id);
     }
 
-    // filEmpleado(_id: string, idEmpleado: string): Observable<SingleExecutionResult>
-    // {
-    //
-    // }
+    filEmpleadoPbr(args: TFilPbrEmpleado): Observable<SingleExecutionResult<FilEmpleadoPbrQuery>>
+    {
+        return this.filEmpleadoPbrGQL.fetch({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        {
+            if (isNotNil(res) && isNotNil(res.data))
+            {
+                const {_id, ...cambios} = res.data.filEmpleadoPbr as IPlaneacion;
+                this.planeacionStore.update(_id, cambios);
+            }
+        }));
+    }
 
     filCentroGestor(args: TFilCentroGestor): Observable<SingleExecutionResult<FilCentroGestorQuery>>
     {

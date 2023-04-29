@@ -1,11 +1,10 @@
-<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
+<ng-container *ngIf="_planeacion">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR</span></mat-card-header>
         <mat-card-content>
 
             <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndicePbr($event)">
-
-                <mat-tab [label]="pbr.idIndicador" *ngFor="let pbr of planeacion.pbrCuestionario; trackBy:trackByFn">
+                <mat-tab [label]="pbr.idIndicador" *ngFor="let pbr of _planeacion.pbrCuestionario; trackBy:trackByFn">
                     <section class="grid grid-cols-8 gap-4">
                         <span class="detalle-span">Variable de origen</span>
                         <span class="border-b-2">{{pbr?.variableOrigen}}</span>

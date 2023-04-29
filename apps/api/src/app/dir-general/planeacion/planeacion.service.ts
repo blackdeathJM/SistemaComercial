@@ -1,10 +1,10 @@
-import {EliminarElementoDto, FilCentroGestorDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {EliminarElementoDto, FilCentroGestorDto, FilPbrEmpleadoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
-import {RegPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto";
+import {RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 
 @Injectable()
 export class PlaneacionService
@@ -51,11 +51,19 @@ export class PlaneacionService
 
     async filCentroGestor(args: FilCentroGestorDto): Promise<PlaneacionDto>
     {
-        const {_id, centroGestor, cuestionario} = args
+        const {_id, centroGestor, cuestionario} = args;
         const res = await this.planeacion.findById(_id).exec();
         res[cuestionario] = res[cuestionario].filter(value => value.centroGestor === centroGestor);
         return res;
 
+    }
+
+    async filEmpleadoPbr(args: FilPbrEmpleadoDto): Promise<PlaneacionDto>
+    {
+        const {_id, idEmpleado} = args;
+        const res = await this.planeacion.findById(_id).exec();
+        res.pbrCuestionario = res.pbrCuestionario.filter(value => value.idEmpleado === idEmpleado);
+        return res;
     }
 
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>
@@ -76,6 +84,7 @@ export class PlaneacionService
         const {_id, idIndicador, cuestionario} = args;
         return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
     }
+
     async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
     {
         const {_id, esActualizar, ...resto} = datos;

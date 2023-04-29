@@ -1,7 +1,7 @@
 import {IPlaneacion} from './planeacion.interface';
 import {ArgsType, Field, ID, InputType, Int, ObjectType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
+import {IsNotEmpty, IsOptional} from 'class-validator';
 import {MirCuestionarioDto} from './mir/mir.dto';
 import {PbrCuestionarioDto} from './pbr-usuarios/pbr.dto';
 
@@ -81,7 +81,7 @@ export class EliminarElementoDto
 export type TEliminarElemento = EliminarElementoDto;
 
 @ArgsType()
-export class FilPbrEmpleadoDto extends PickType(PlaneacionDto, ['_id'])
+export class FilPbrEmpleadoDto extends PickType(PlaneacionDto, ['_id'], ArgsType)
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el id del empleado PBR'})

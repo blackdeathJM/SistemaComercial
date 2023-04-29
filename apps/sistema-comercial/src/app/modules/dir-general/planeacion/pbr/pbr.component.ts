@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -7,7 +7,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ModPbrComponent} from '@s-dir-general/pbr/mod-pbr/mod-pbr.component';
 import {MatListModule} from '@angular/material/list';
 import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.component';
-import { MatButtonModule } from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-pbr',
@@ -21,31 +24,11 @@ import { MatButtonModule } from '@angular/material/button';
 export class PbrComponent
 {
     abrirPanel = false;
-    dirComercial = false;
+    planeacion: IPlaneacion;
+    sub: Subscription = new Subscription();
 
-    constructor()
+    constructor(private planeacionQuery: PlaneacionQuery)
     {
-    }
 
-    filtrarCentroGestor(e: [string, number]): void
-    {
-        // const args: TPbrs =
-        //     {
-        //         centroGestor: e[0],
-        //         ano: e[1],
-        //         idEmpleado: 'noAplica'
-        //     };
-        // this.pbrService.pbrs(args).pipe().subscribe();
-    }
-
-    porEmpleado(e: [(string | string[]), number]): void
-    {
-        // const pbrsEmpleado: TPbrs =
-        //     {
-        //         centroGestor: 'no-aplica',
-        //         idEmpleado: $cast<string>(e[0]),
-        //         ano: e[1]
-        //     };
-        // this.pbrService.pbrs(pbrsEmpleado).subscribe();
     }
 }

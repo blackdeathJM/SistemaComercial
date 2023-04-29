@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { SeleccionService } from '@s-dir-general/selecciones/store/seleccion.service';
-import { forkJoin, Subscription } from 'rxjs';
-import { EmpleadoService } from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import { PlaneacionService } from '@s-dir-general/store/planeacion.service';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterOutlet} from '@angular/router';
+import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
+import {forkJoin} from 'rxjs';
+import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
 
 @Component({
     selector: 'app-planeacion',

@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 
 @Component({
     selector: 'app-acciones-mir-pbr',
@@ -23,17 +23,17 @@ export class AccionesMirPbrComponent
 
     // consultas
     @Output() centroGestor = new EventEmitter<string>();
-    @Output() filtroAno = new EventEmitter<string>()
+    @Output() planeacionSeleccionado = new EventEmitter<IPlaneacion>();
 
     valorCentroGestor: string;
 
-    constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, private planeacionService: PlaneacionService)
+    constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery)
     {
     }
 
-    filAno(e: string): void
+    seleccionarPlaneacion(e: IPlaneacion): void
     {
-        this.filtroAno.emit(e);
+        this.planeacionSeleccionado.emit(e);
     }
 
     filCentroGestor(e: string): void

@@ -13,6 +13,13 @@ query filCentroGestor($_id: ID!, $centroGestor: String!, $cuestionario: String!)
     }
 }
 
+query filEmpleadoPbr($_id: ID!, $idEmpleado: ID!)
+{
+    filEmpleadoPbr(_id: $_id, idEmpleado: $idEmpleado)
+    {
+        ...fragPlaneacion
+    }
+}
 
 mutation inicializarPlaneacion($input: PlaneacionInput!)
 {

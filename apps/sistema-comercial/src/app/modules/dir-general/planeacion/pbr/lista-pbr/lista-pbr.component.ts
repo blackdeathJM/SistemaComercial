@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -12,7 +12,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {actualizarPbr, ngxLoaderPbr} from '@s-dir-general/store/planeacion.service';
-import {CalculosPipePbr} from "@s-dir-general/pbr/pipes/calculosPbr.pipe";
+import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
+import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -25,17 +26,24 @@ import {CalculosPipePbr} from "@s-dir-general/pbr/pipes/calculosPbr.pipe";
 })
 export class ListaPbrComponent
 {
-    @Output() panel = new EventEmitter<boolean>;
+    @Output() panel = new EventEmitter<boolean>();
 
     @Input() desNuevoReg: boolean = false;
     @Input() desEditarReg: boolean = false;
     @Input() desEliminarReg: boolean = false;
+
+    _planeacion: IPlaneacion;
 
     indice = 0;
     loader = ngxLoaderPbr();
 
     constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
     {
+    }
+
+    @Input() set planeacion(valor: IPlaneacion)
+    {
+        this._planeacion = valor;
     }
 
     regAvances(): void

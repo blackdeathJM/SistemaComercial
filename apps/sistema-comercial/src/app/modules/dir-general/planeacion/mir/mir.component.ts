@@ -12,6 +12,7 @@ import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
 import {idPlaneacion, PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {TFilCentroGestor} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
+import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Component({
     selector: 'app-mir',
@@ -34,7 +35,7 @@ export default class MirComponent
         this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
     }
 
-    inicializarPlaneacion()
+    inicializarPlaneacion(): void
     {
         this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
@@ -56,8 +57,8 @@ export default class MirComponent
         this.planeacionService.filCentroGestor(args).subscribe();
     }
 
-    filAno(e: string): void
+    filAno(e: IPlaneacion): void
     {
-        this.planeacionService.filPorAno(e);
+        this.planeacionService.filPorAno(e._id);
     }
 }
