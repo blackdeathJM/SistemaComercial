@@ -11,6 +11,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {Subscription} from 'rxjs';
+import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     selector: 'app-pbr',
@@ -27,7 +29,7 @@ export class PbrComponent
     planeacion: IPlaneacion;
     sub: Subscription = new Subscription();
 
-    constructor(private planeacionQuery: PlaneacionQuery)
+    constructor(private planeacionQuery: PlaneacionQuery, private planeacionService: PlaneacionService, private authQuery: AuthQuery)
     {
 
     }

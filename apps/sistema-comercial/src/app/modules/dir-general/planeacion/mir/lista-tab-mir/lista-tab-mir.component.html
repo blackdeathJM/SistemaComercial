@@ -1,11 +1,11 @@
-<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
-    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn *ngIf="planeacion.mirCuestionario.length > 0">
+<ng-container *ngIf="_planeacion">
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn *ngIf="_planeacion.mirCuestionario.length > 0">
         <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
-            <span class="text-xl">{{planeacion?.descripcion}} - {{planeacion?.ano}}</span>
+            <span class="text-xl">{{_planeacion?.descripcion}} - {{_planeacion?.ano}}</span>
         </mat-card-header>
         <mat-card-content>
             <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioDeIndiceMir($event)">
-                <mat-tab [label]="mir?.idIndicador" *ngFor="let mir of planeacion.mirCuestionario; trackBy:trackByFn">
+                <mat-tab [label]="mir?.idIndicador" *ngFor="let mir of _planeacion.mirCuestionario; trackBy:trackByFn">
                     <div class="grid grid-cols-8 gap-4">
                         <span class="detalle-span">Nivel</span>
                         <span class="border-b-2">{{mir?.nivel}}</span>

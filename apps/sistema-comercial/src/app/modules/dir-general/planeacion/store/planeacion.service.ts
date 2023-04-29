@@ -60,7 +60,7 @@ export class PlaneacionService
             if (isNotNil(res) && isNotNil(res.data))
             {
                 const {_id, ...cambios} = res.data.filEmpleadoPbr as IPlaneacion;
-                this.planeacionStore.update(_id, cambios);
+                this.planeacionStore.update(_id, {...cambios});
             }
         }));
     }
@@ -76,14 +76,14 @@ export class PlaneacionService
                 if (res && res.data)
                 {
                     const {_id, ...datos} = res.data.filCentroGestor as IPlaneacion;
-                    this.planeacionStore.update(_id, {mirCuestionario: datos.mirCuestionario});
+                    this.planeacionStore.replace(_id, {mirCuestionario: datos.mirCuestionario});
                 }
             }));
     }
 
     inicializarPlaneacion(input: TPlaneacionType): Observable<SingleExecutionResult<InicializarPlaneacionMutation>>
     {
-        return this.inicializarPlaneacionGQL.mutate({input}).pipe(catchError((err) => this.generalService.cacharError(err)), tap((res) =>
+        return this.inicializarPlaneacionGQL.mutate({input}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res && res.data)
             {

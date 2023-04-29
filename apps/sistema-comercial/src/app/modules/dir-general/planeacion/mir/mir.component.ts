@@ -11,9 +11,9 @@ import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-m
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
 import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
-import {TFilCentroGestor} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
-import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
-import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
+import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 
 @Component({
     selector: 'app-mir',
@@ -26,8 +26,10 @@ import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 export default class MirComponent
 {
     abrirPanel = false;
+    planeacion: IPlaneacion;
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery,
+                private planeacionStore: PlaneacionStore)
     {
     }
 
@@ -43,24 +45,29 @@ export default class MirComponent
 
     filCentroGestorMir(e: string): void
     {
-        if (!this.planeacionQuery.getActive()._id)
+        if (!this.planeacion)
         {
             this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
             return;
         }
-
-        const args: TFilCentroGestor =
+        const {mirCuestionario, ...resto} = this.planeacion;
+        this.planeacion =
             {
-                _id: '',
-                centroGestor: e,
-                cuestionario: 'mirCuestionario'
+                mirCuestionario: mirCuestionario.filter(value => value.centroGestor === e),
+                ...resto
             };
-
-        this.planeacionService.filCentroGestor(args).subscribe();
+        // const args: TFilCentroGestor =
+        //     {
+        //         _id: this.planeacionQuery.getActive()._id,
+        //         centroGestor: e,
+        //         cuestionario: 'mirCuestionario'
+        //     };
+        //
+        // this.planeacionService.filCentroGestor(args).subscribe();
     }
 
     filAno(e: IPlaneacion): void
     {
-        this.planeacionService.filPorAno(e._id);
+        this.planeacion = e;
     }
 }

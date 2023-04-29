@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -13,7 +13,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {actualizarPbr, ngxLoaderPbr} from '@s-dir-general/store/planeacion.service';
 import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
-import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 
 @Component({
     selector: 'app-lista-pbr',

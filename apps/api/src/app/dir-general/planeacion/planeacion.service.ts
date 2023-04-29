@@ -63,6 +63,7 @@ export class PlaneacionService
         const {_id, idEmpleado} = args;
         const res = await this.planeacion.findById(_id).exec();
         res.pbrCuestionario = res.pbrCuestionario.filter(value => value.idEmpleado === idEmpleado);
+        console.log(res, args);
         return res;
     }
 

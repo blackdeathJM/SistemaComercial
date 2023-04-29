@@ -1,17 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { fuseAnimations } from '@s-fuse/public-api';
-import { FormsModule } from '@angular/forms';
-import { actualizarMir, ngxLoaderMir, PlaneacionService } from '@s-dir-general/store/planeacion.service';
-import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
-import { ConfirmacionService } from '@s-services/confirmacion.service';
-import { TEliminarElemento } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {FormsModule} from '@angular/forms';
+import {actualizarMir, ngxLoaderMir, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {ConfirmacionService} from '@s-services/confirmacion.service';
+import {TEliminarElemento} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -28,9 +30,15 @@ export class ListaTabMirComponent
     @Output() abrirPanel = new EventEmitter<boolean>();
     loader = ngxLoaderMir();
     indice = 0;
+    _planeacion: IPlaneacion = null;
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService)
     {
+    }
+
+    @Input() set planeacion(valor: IPlaneacion)
+    {
+        this._planeacion = valor;
     }
 
     trackByFn(index: number): string | number
@@ -38,7 +46,7 @@ export class ListaTabMirComponent
         return index;
     }
 
-    nuevoElemento()
+    nuevoElemento(): void
     {
         actualizarMir([false, this.indice]);
         this.abrirPanel.emit(true);
