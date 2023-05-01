@@ -66,20 +66,17 @@ export class PlaneacionService
     {
         try
         {
-            const respuesta = await this.planeacion.findByIdAndUpdate(args._id).exec();
-            const filtro: IMirCuestionario[] = [];
-            respuesta.mirCuestionario.map((value) =>
-            {
-                const {idEmpleado, correo, responsable, ...resto} = value;
-                if (value.idEmpleado === args.idEmpleadoAnterior)
+            return await this.planeacion.findByIdAndUpdate(args._id,
                 {
-                    filtro.push({idEmpleado: args.idEmpleado, responsable: args.responsable, correo: args.correo, ...resto});
-                } else
+                    $set: {
+                        [`${args.cuestionario}.$[elem].idEmpleado`]: args.idEmpleado,
+                        [`${args.cuestionario}.$[elem].responsable`]: args.responsable,
+                        [`${args.cuestionario}.$[elem].correo`]: args.correo,
+                    }
+                },
                 {
-                    filtro.push(value);
-                }
-            });
-            return await this.planeacion.findByIdAndUpdate(args._id, {$set: {mirCuestionario: filtro}}).exec();
+                    arrayFilters: [{'elem.idEmpleado': args.idEmpleadoAnterior}], new: true
+                }).exec();
         } catch (e)
         {
             throw new InternalServerErrorException(e);

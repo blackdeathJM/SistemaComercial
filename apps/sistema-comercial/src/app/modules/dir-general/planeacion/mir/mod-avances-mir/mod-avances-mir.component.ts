@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxToastService } from '@s-services/ngx-toast.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { finalize } from 'rxjs';
 
 export interface ICalculo
 {

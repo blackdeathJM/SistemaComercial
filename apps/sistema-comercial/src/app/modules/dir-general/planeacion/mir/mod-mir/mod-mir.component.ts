@@ -16,7 +16,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {actualizarMir, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {actualizarMir, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -168,7 +168,8 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
                         idEmpleado: this.formMir.get('idEmpleado').value,
                         idEmpleadoAnterior: this.idEmpleadoAnterior,
                         correo: this.formMir.get('correo').value,
-                        responsable: this.formMir.get('responsable').value
+                        responsable: this.formMir.get('responsable').value,
+                        cuestionario: ValoresCamposMod.mirCuestionario
                     };
                 this.planeacionService.actualizarResponsable(args).subscribe();
             }

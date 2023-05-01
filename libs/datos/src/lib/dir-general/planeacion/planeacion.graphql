@@ -19,9 +19,9 @@ mutation regMir($datos: RegMirInput!)
         ...fragPlaneacion
     }
 }
-mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!)
+mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!, $cuestionario: String!)
 {
-    actualizarResponsable(_id: $_id, idEmpleado: $idEmpleado, correo: $correo, responsable: $responsable, idEmpleadoAnterior: $idEmpleadoAnterior)
+    actualizarResponsable(_id: $_id, idEmpleado: $idEmpleado, correo: $correo, responsable: $responsable, idEmpleadoAnterior: $idEmpleadoAnterior, cuestionario: $cuestionario)
     {
         ...fragPlaneacion
     }

@@ -84,6 +84,10 @@ export class ActualizarResponsableDto
     @IsNotEmpty({message: 'El nombre del responsable es requerido'})
     @Field(() => String, {nullable: true})
     responsable: string;
+
+    @IsNotEmpty({message: 'El tipo de cuestionario es necesario'})
+    @Field(() => String, {nullable: true})
+    cuestionario: string;
 }
 
 export type TActualizarResponsable = ActualizarResponsableDto;

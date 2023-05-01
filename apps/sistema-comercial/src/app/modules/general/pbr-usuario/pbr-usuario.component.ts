@@ -4,7 +4,7 @@ import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.componen
 import {MatInputModule} from '@angular/material/input';
 import {ModAvancesPbrComponent} from '@s-general/pbr-usuario/mod-avances-pbr/mod-avances-pbr.component';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
-import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -35,6 +35,6 @@ export default class PbrUsuarioComponent implements OnInit
     seleccionarPlaneacion(e: IPlaneacion): void
     {
         this.planeacionStore.setActive(e._id);
-        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado('pbrCuestionario', 'idEmpleado', this.authQuery.getValue()._id);
+        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.idEmpleado, this.authQuery.getValue()._id);
     }
 }

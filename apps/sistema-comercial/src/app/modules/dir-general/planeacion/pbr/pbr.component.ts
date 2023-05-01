@@ -12,6 +12,7 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
+import {ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 
 @Component({
     selector: 'app-pbr',
@@ -45,6 +46,6 @@ export class PbrComponent
             this.ngxToast.alertaToast('Es necesario seleccionar el año del ejercicio para poder filtrar por centro gestor', 'PBR');
             return;
         }
-        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado('pbrCuestionario', 'centroGestor', e);
+        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.centroGestor, e);
     }
 }

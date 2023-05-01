@@ -27,6 +27,14 @@ export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
 export const actualizarMir = makeVar<[boolean, number]>([false, 0]);
 export const actualizarPbr = makeVar<[boolean, number]>([false, 0]);
 
+export enum ValoresCamposMod
+{
+    centroGestor = 'centroGestor',
+    idEmpleado = 'idEmpleado',
+    mirCuestionario = 'mirCuestionario',
+    pbrCuestionario = 'pbrCuestionario'
+}
+
 @Injectable({providedIn: 'root'})
 export class PlaneacionService
 {

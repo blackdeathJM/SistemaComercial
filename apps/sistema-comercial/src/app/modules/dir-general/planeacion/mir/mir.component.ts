@@ -10,7 +10,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
-import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
@@ -50,7 +50,7 @@ export default class MirComponent
             this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
             return;
         }
-        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado('mirCuestionario', 'centroGestor', centroGestor);
+        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado(ValoresCamposMod.mirCuestionario, ValoresCamposMod.centroGestor, centroGestor);
     }
 
     filAno(e: IPlaneacion): void

@@ -626,6 +626,7 @@ export type MutationActualizarDeptoArgs = {
 export type MutationActualizarResponsableArgs = {
   _id?: InputMaybe<Scalars['ID']>;
   correo?: InputMaybe<Scalars['String']>;
+  cuestionario?: InputMaybe<Scalars['String']>;
   idEmpleado?: InputMaybe<Scalars['ID']>;
   idEmpleadoAnterior?: InputMaybe<Scalars['ID']>;
   responsable?: InputMaybe<Scalars['String']>;
@@ -1541,6 +1542,7 @@ export type ActualizarResponsableMutationVariables = Exact<{
   correo?: InputMaybe<Scalars['String']>;
   responsable: Scalars['String'];
   idEmpleadoAnterior: Scalars['ID'];
+  cuestionario: Scalars['String'];
 }>;
 
 
@@ -2908,13 +2910,14 @@ export const RegMirDocument = gql`
     }
   }
 export const ActualizarResponsableDocument = gql`
-    mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!) {
+    mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!, $cuestionario: String!) {
   actualizarResponsable(
     _id: $_id
     idEmpleado: $idEmpleado
     correo: $correo
     responsable: $responsable
     idEmpleadoAnterior: $idEmpleadoAnterior
+    cuestionario: $cuestionario
   ) {
     ...fragPlaneacion
   }
