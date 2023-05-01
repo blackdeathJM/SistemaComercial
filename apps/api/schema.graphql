@@ -409,7 +409,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682767609
+  tiempo: Int = 1682899514
   titulo: String
   usarRouter: Boolean = false
 }
@@ -607,8 +607,6 @@ input PlaneacionInput {
 type Query {
   selecciones: SeleccionType
   filTodos: [PlaneacionType!]!
-  filCentroGestor(_id: ID, centroGestor: String, cuestionario: String): PlaneacionType!
-  filEmpleadoPbr(_id: ID, idEmpleado: ID): PlaneacionType!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -635,6 +633,7 @@ type Mutation {
   regSeleccion(input: SeleccionInput): SeleccionType!
   inicializarPlaneacion(input: PlaneacionInput!): PlaneacionType!
   regMir(datos: RegMirInput!): PlaneacionType!
+  actualizarResponsable(_id: ID, idEmpleado: ID, idEmpleadoAnterior: ID, correo: String, responsable: String): PlaneacionType!
   eliminarElemento(_id: ID, idIndicador: String, cuestionario: String): PlaneacionType!
   regPbr(datos: RegPbrInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!

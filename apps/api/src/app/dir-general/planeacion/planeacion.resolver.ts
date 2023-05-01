@@ -1,5 +1,5 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {EliminarElementoDto, FilCentroGestorDto, FilPbrEmpleadoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
@@ -18,18 +18,6 @@ export class PlaneacionResolver
         return await this.planeacionService.filTodos();
     }
 
-    @Query(() => PlaneacionDto)
-    async filCentroGestor(@Args() args: FilCentroGestorDto): Promise<PlaneacionDto>
-    {
-        return await this.planeacionService.filCentroGestor(args);
-    }
-
-    @Query(() => PlaneacionDto)
-    async filEmpleadoPbr(@Args() args: FilPbrEmpleadoDto): Promise<PlaneacionDto>
-    {
-        return this.planeacionService.filEmpleadoPbr(args);
-    }
-
     @Mutation(() => PlaneacionDto)
     async inicializarPlaneacion(@Args('input') input: PlaneacionDto): Promise<PlaneacionDto>
     {
@@ -40,6 +28,12 @@ export class PlaneacionResolver
     async regMir(@Args('datos') datos: RegMirDto): Promise<PlaneacionDto>
     {
         return await this.planeacionService.regMir(datos);
+    }
+
+    @Mutation(() => PlaneacionDto)
+    async actualizarResponsable(@Args() args: ActualizarResponsableDto): Promise<PlaneacionDto>
+    {
+        return this.planeacionService.actualizarResponsable(args);
     }
 
     @Mutation(() => PlaneacionDto)

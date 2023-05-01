@@ -13,7 +13,6 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {GeneralService} from '@s-services/general.service';
 import {finalize, Subscription} from 'rxjs';
 import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {actualizarPbr, PlaneacionService} from '@s-dir-general/store/planeacion.service';
@@ -22,8 +21,8 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 @Component({
     selector: 'app-mod-pbr',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule, MatOptionModule, MatSelectModule,
-        SeleccionarEmpleadoComponent],
+    imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule,
+        MatOptionModule, MatSelectModule, SeleccionarEmpleadoComponent],
     providers: [],
     templateUrl: './mod-pbr.component.html',
     styleUrls: ['./mod-pbr.component.scss'],
@@ -84,7 +83,6 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
                 _id: this.planeacionQuery.getActive()._id,
                 ...this.formPbr.value
             };
-        console.log('pbr', datos);
         this.formPbr.disable();
 
         this.planeacionService.regPbr(datos).pipe(finalize(() =>
@@ -117,7 +115,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     filtrarEmpleados(e: string): void
     {
-        this.empleados = GeneralService.filtradoEmpleados(e, [...this.empleadoQuery.getAll()]);
+        this.empleados = this.empleadoQuery.filEmpleados(e);
     }
 
     cerrar(): void

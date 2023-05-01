@@ -10,4 +10,16 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     {
         super(planeacionStore);
     }
+
+    public filPlaneacionCentroGestorEmpleado(cuestionario: string, filtro: string, valorFiltrar: string): IPlaneacion
+    {
+        const entidad = this.getActive();
+        // const mirCuestionarioOriginal = [...entidad.mirCuestionario];
+        const mirCuestionarioOriginal = entidad[cuestionario].slice();
+
+        return {
+            ...entidad,
+            [cuestionario]: mirCuestionarioOriginal.filter(value => value[filtro] === valorFiltrar)
+        };
+    }
 }

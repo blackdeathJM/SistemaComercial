@@ -71,7 +71,7 @@ export class RegistroSesionComponent implements OnInit
                 {
                     usuario: this.authQuery.getValue().auth.usuario,
                     accion: 'Modificacion de contrasena',
-                    fecha: GeneralService.fechaHoraActual(),
+                    fecha: GeneralService.fechaHoraActualUnix(),
                     valorActual: [{}],
                     valorAnterior: [{}]
                 };
@@ -87,7 +87,7 @@ export class RegistroSesionComponent implements OnInit
             const modificadoPor: IModificado =
                 {
                     usuario: this.authQuery.getValue().nombreCompleto,
-                    fecha: GeneralService.fechaHoraActual(),
+                    fecha: GeneralService.fechaHoraActualUnix(),
                     accion: 'Asignacion de usuario para el inicio de sesion en el portal',
                     valorAnterior: [{}],
                     valorActual: [{}]

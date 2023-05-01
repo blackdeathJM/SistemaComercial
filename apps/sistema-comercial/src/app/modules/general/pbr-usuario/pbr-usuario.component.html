@@ -1,4 +1,4 @@
 <section class="flex flex-auto flex-col">
-    <app-acciones-mir-pbr [habCentroGestor]="false" ></app-acciones-mir-pbr>
-    <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true"></app-lista-pbr>
+    <app-acciones-mir-pbr [habCentroGestor]="false" (planeacionSeleccionado)="seleccionarPlaneacion($event)"></app-acciones-mir-pbr>
+    <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true" [planeacion]="planeacion"></app-lista-pbr>
 </section>

@@ -26,7 +26,7 @@ import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 export default class MirComponent
 {
     abrirPanel = false;
-    planeacion: IPlaneacion;
+    planeacion: IPlaneacion = null;
 
     constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery,
                 private planeacionStore: PlaneacionStore)
@@ -43,31 +43,19 @@ export default class MirComponent
         this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
 
-    filCentroGestorMir(e: string): void
+    filCentroGestorMir(centroGestor: string): void
     {
         if (!this.planeacion)
         {
             this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
             return;
         }
-        const {mirCuestionario, ...resto} = this.planeacion;
-        this.planeacion =
-            {
-                mirCuestionario: mirCuestionario.filter(value => value.centroGestor === e),
-                ...resto
-            };
-        // const args: TFilCentroGestor =
-        //     {
-        //         _id: this.planeacionQuery.getActive()._id,
-        //         centroGestor: e,
-        //         cuestionario: 'mirCuestionario'
-        //     };
-        //
-        // this.planeacionService.filCentroGestor(args).subscribe();
+        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado('mirCuestionario', 'centroGestor', centroGestor);
     }
 
     filAno(e: IPlaneacion): void
     {
         this.planeacion = e;
+        this.planeacionStore.setActive(e._id);
     }
 }

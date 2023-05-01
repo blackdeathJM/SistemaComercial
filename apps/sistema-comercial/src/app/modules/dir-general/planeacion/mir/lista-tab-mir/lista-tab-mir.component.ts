@@ -12,13 +12,13 @@ import {actualizarMir, ngxLoaderMir, PlaneacionService} from '@s-dir-general/sto
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {TEliminarElemento} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
-import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
-    imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule],
+    imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
@@ -50,6 +50,11 @@ export class ListaTabMirComponent
     {
         actualizarMir([false, this.indice]);
         this.abrirPanel.emit(true);
+    }
+
+    actualizarResponsable(): void
+    {
+
     }
 
     editarRegistro(): void

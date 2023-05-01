@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {catchError, finalize, Observable, tap} from 'rxjs';
+import {catchError, Observable, tap} from 'rxjs';
 import {
+    ActualizarResponsableGQL, ActualizarResponsableMutation,
     EliminarElementoGQL,
     EliminarElementoMutation,
-    FilCentroGestorGQL, FilCentroGestorQuery, FilEmpleadoPbrGQL, FilEmpleadoPbrQuery,
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
@@ -13,7 +13,7 @@ import {
 } from '#/libs/datos/src';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {makeVar, SingleExecutionResult} from '@apollo/client';
-import {TEliminarElemento, TFilCentroGestor, TFilPbrEmpleado, TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {TActualizarResponsable, TEliminarElemento, TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {GeneralService} from '@s-services/general.service';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
@@ -31,14 +31,14 @@ export const actualizarPbr = makeVar<[boolean, number]>([false, 0]);
 export class PlaneacionService
 {
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
-                private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private filCentroGestorGQL: FilCentroGestorGQL,
-                private eliminarElementoGQL: EliminarElementoGQL, private regPbrGQL: RegPbrGQL, private filEmpleadoPbrGQL: FilEmpleadoPbrGQL)
+                private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarElementoGQL: EliminarElementoGQL,
+                private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL)
     {
     }
 
     filTodos(): Observable<SingleExecutionResult<FilTodosQuery>>
     {
-        return this.filTodosGQL.fetch().pipe(catchError((err) => this.generalService.cacharError(err)), tap((res) =>
+        return this.filTodosGQL.fetch().pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res && res.data)
             {
@@ -46,39 +46,6 @@ export class PlaneacionService
                 this.planeacionStore.set(planeacion);
             }
         }));
-    }
-
-    filPorAno(_id: string): void
-    {
-        this.planeacionStore.setActive(_id);
-    }
-
-    filEmpleadoPbr(args: TFilPbrEmpleado): Observable<SingleExecutionResult<FilEmpleadoPbrQuery>>
-    {
-        return this.filEmpleadoPbrGQL.fetch({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
-        {
-            if (isNotNil(res) && isNotNil(res.data))
-            {
-                const {_id, ...cambios} = res.data.filEmpleadoPbr as IPlaneacion;
-                this.planeacionStore.update(_id, {...cambios});
-            }
-        }));
-    }
-
-    filCentroGestor(args: TFilCentroGestor): Observable<SingleExecutionResult<FilCentroGestorQuery>>
-    {
-        this.ngxLoader.startLoader(ngxLoaderMir())
-        return this.filCentroGestorGQL.fetch({...args}, {fetchPolicy: 'network-only'}).pipe(
-            finalize(() => this.ngxLoader.stopLoader(ngxLoaderMir())),
-            catchError(err => this.generalService.cacharError(err)),
-            tap((res) =>
-            {
-                if (res && res.data)
-                {
-                    const {_id, ...datos} = res.data.filCentroGestor as IPlaneacion;
-                    this.planeacionStore.replace(_id, {mirCuestionario: datos.mirCuestionario});
-                }
-            }));
     }
 
     inicializarPlaneacion(input: TPlaneacionType): Observable<SingleExecutionResult<InicializarPlaneacionMutation>>
@@ -102,7 +69,7 @@ export class PlaneacionService
             if (res && res.data)
             {
                 const {_id, ...cambio} = res.data.regMir as IPlaneacion;
-                this.planeacionStore.update(_id, cambio);
+                this.planeacionStore.update(_id, {...cambio});
                 this.ngxToast.satisfactorioToast('El guardado ha sido exitoso', 'MIR');
             }
         }));
@@ -120,6 +87,18 @@ export class PlaneacionService
                     this.ngxToast.satisfactorioToast('Un elemento se ha removido con exito', 'Remover MIR');
                 }
             }));
+    }
+
+    actualizarResponsable(args: TActualizarResponsable): Observable<SingleExecutionResult<ActualizarResponsableMutation>>
+    {
+        return this.actualizarResponsableGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        {
+            if (isNotNil(res) && isNotNil(res.data))
+            {
+                const {_id, ...cambios} = res.data.actualizarResponsable as IPlaneacion;
+                this.planeacionStore.update(_id, cambios);
+            }
+        }));
     }
 
     regPbr(datos: TRegPbr): Observable<SingleExecutionResult<RegPbrMutation>>

@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { DateTime } from 'luxon';
-import { v4 as uuidv4 } from 'uuid';
-import { deleteObject, ref, Storage, uploadBytesResumable, UploadTask } from '@angular/fire/storage';
-import { NgxToastService } from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import { Observable, of, ReplaySubject } from 'rxjs';
-import { IResolveEmpleado } from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {Injectable} from '@angular/core';
+import {DateTime} from 'luxon';
+import {v4 as uuidv4} from 'uuid';
+import {deleteObject, ref, Storage, uploadBytesResumable, UploadTask} from '@angular/fire/storage';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {Observable, of, ReplaySubject} from 'rxjs';
 
 export interface IObjFecha
 {
@@ -18,20 +17,13 @@ export interface IObjFecha
 })
 export class GeneralService
 {
-    private static mes = new Date().toLocaleString('es-mx', { month: 'long' });
+    private static mes = new Date().toLocaleString('es-mx', {month: 'long'});
     private porcentaje: ReplaySubject<number> = new ReplaySubject<number>();
 
     // private porcentaje: Subject<number> = new Subject<number>();
 
     constructor(private storage: Storage, private ngxToast: NgxToastService)
     {
-    }
-
-    static filtradoEmpleados(valor: string, estado: IResolveEmpleado[]): any[]
-    {
-        const filtrar = estado.filter(value => value.nombreCompleto.toLowerCase().includes(valor.toLowerCase()));
-
-        return [...filtrar];
     }
 
     static convertirUnix(fecha: IObjFecha, segundos: number): number
@@ -49,19 +41,19 @@ export class GeneralService
 
         // const tiempo = DateTime.local(fecha.year, fecha.month, fecha.date, new Date().getHours(), new Date().getMinutes(), {zone: 'America/Mexico_City'});
         // return DateTime.utc(fecha.year, fecha.month + 1, fecha.date, new Date().getHours(), new Date().getMinutes(), {locale: 'es-MX'}).toUnixInteger();
-        return DateTime.fromObject({ year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes() }).toUnixInteger();
+        return DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toUnixInteger();
     }
 
     static convertirIsoDate(fecha: IObjFecha): void
     {
-        const fechas = DateTime.fromObject({ year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes() }).toISODate();
+        const fechas = DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toISODate();
     }
 
-    static fechaHoraActual(): number
+    static fechaHoraActualUnix(): number
     {
         // console.log(DateTime.local({zone: 'America/Mexico_City'}).toUnixInteger());
         // console.log(DateTime.utc({locale: 'es-MX'}).toUnixInteger())
-        return DateTime.utc({ locale: 'es-MX' }).toUnixInteger();
+        return DateTime.utc({locale: 'es-MX'}).toUnixInteger();
     }
 
     static nombreArchivo(nombreActual: string): string

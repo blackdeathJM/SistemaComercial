@@ -32,8 +32,7 @@ export class ListaPbrComponent
     @Input() desEditarReg: boolean = false;
     @Input() desEliminarReg: boolean = false;
 
-    _planeacion: IPlaneacion;
-
+    _planeacion: IPlaneacion = null;
     indice = 0;
     loader = ngxLoaderPbr();
 
@@ -51,11 +50,6 @@ export class ListaPbrComponent
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
     }
 
-    trackByFn(index: number): number
-    {
-        return index;
-    }
-
     abrirPanel(): void
     {
         actualizarPbr([false, this.indice]);
@@ -71,6 +65,11 @@ export class ListaPbrComponent
     {
         actualizarPbr([true, this.indice]);
         this.panel.emit(true);
+    }
+
+    trackByFn(index: number): number
+    {
+        return index;
     }
 
     eliminarPbr(): void

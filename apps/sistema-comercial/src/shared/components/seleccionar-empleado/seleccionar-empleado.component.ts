@@ -1,15 +1,14 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, Input, OnDestroy, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { IResolveEmpleado } from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import { Subscription } from 'rxjs';
-import { GeneralService } from '@s-services/general.service';
-import { EmpleadoQuery } from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
-import { EmpleadoStore } from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
-import { isArray } from '@datorama/akita';
+import {AfterContentInit, Component, EventEmitter, forwardRef, Input, OnDestroy, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectChange, MatSelectModule} from '@angular/material/select';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {Subscription} from 'rxjs';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {EmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
+import {isArray} from '@datorama/akita';
 
 @Component({
     selector: 'app-seleccionar-empleado',
@@ -75,7 +74,7 @@ export class SeleccionarEmpleadoComponent implements ControlValueAccessor, OnDes
 
     filtrarEmpleado(e: string): void
     {
-        this.empleados = GeneralService.filtradoEmpleados(e, [...this.empleadoQuery.getAll()]);
+        this.empleados = this.empleadoQuery.filEmpleados(e);
     }
 
     cambioSeleccion(e: MatSelectChange): void

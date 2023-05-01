@@ -533,6 +533,7 @@ export type Mutation = {
   actualizarAvatar: LoginRespuestaType;
   actualizarContrasenaAdmin: EmpleadoType;
   actualizarDepto: DeptoType;
+  actualizarResponsable: PlaneacionType;
   agregarBomba: TelemetriaType;
   agregarMotor: TelemetriaType;
   agregarPuesto: DeptoType;
@@ -619,6 +620,15 @@ export type MutationActualizarContrasenaAdminArgs = {
 
 export type MutationActualizarDeptoArgs = {
   input: DeptoInput;
+};
+
+
+export type MutationActualizarResponsableArgs = {
+  _id?: InputMaybe<Scalars['ID']>;
+  correo?: InputMaybe<Scalars['String']>;
+  idEmpleado?: InputMaybe<Scalars['ID']>;
+  idEmpleadoAnterior?: InputMaybe<Scalars['ID']>;
+  responsable?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -912,8 +922,6 @@ export type Query = {
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
-  filCentroGestor: PlaneacionType;
-  filEmpleadoPbr: PlaneacionType;
   filTodos: Array<PlaneacionType>;
   filtrarDeptos: Array<DeptoType>;
   filtrarEmpleados: Array<EmpleadoType>;
@@ -952,19 +960,6 @@ export type QueryDocsUsuarioProcesoArgs = {
   esEnviadoPor?: InputMaybe<Scalars['Boolean']>;
   proceso?: InputMaybe<Scalars['String']>;
   usuario?: InputMaybe<Scalars['ID']>;
-};
-
-
-export type QueryFilCentroGestorArgs = {
-  _id?: InputMaybe<Scalars['ID']>;
-  centroGestor?: InputMaybe<Scalars['String']>;
-  cuestionario?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryFilEmpleadoPbrArgs = {
-  _id?: InputMaybe<Scalars['ID']>;
-  idEmpleado?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -1526,23 +1521,6 @@ export type FilTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FilTodosQuery = { __typename?: 'Query', filTodos: Array<{ __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null }> };
 
-export type FilCentroGestorQueryVariables = Exact<{
-  _id: Scalars['ID'];
-  centroGestor: Scalars['String'];
-  cuestionario: Scalars['String'];
-}>;
-
-
-export type FilCentroGestorQuery = { __typename?: 'Query', filCentroGestor: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
-
-export type FilEmpleadoPbrQueryVariables = Exact<{
-  _id: Scalars['ID'];
-  idEmpleado: Scalars['ID'];
-}>;
-
-
-export type FilEmpleadoPbrQuery = { __typename?: 'Query', filEmpleadoPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
-
 export type InicializarPlaneacionMutationVariables = Exact<{
   input: PlaneacionInput;
 }>;
@@ -1556,6 +1534,17 @@ export type RegMirMutationVariables = Exact<{
 
 
 export type RegMirMutation = { __typename?: 'Mutation', regMir: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+
+export type ActualizarResponsableMutationVariables = Exact<{
+  _id: Scalars['ID'];
+  idEmpleado: Scalars['ID'];
+  correo?: InputMaybe<Scalars['String']>;
+  responsable: Scalars['String'];
+  idEmpleadoAnterior: Scalars['ID'];
+}>;
+
+
+export type ActualizarResponsableMutation = { __typename?: 'Mutation', actualizarResponsable: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
 
 export type EliminarElementoMutationVariables = Exact<{
   _id: Scalars['ID'];
@@ -2882,46 +2871,6 @@ export const FilTodosDocument = gql`
       super(apollo);
     }
   }
-export const FilCentroGestorDocument = gql`
-    query filCentroGestor($_id: ID!, $centroGestor: String!, $cuestionario: String!) {
-  filCentroGestor(
-    _id: $_id
-    centroGestor: $centroGestor
-    cuestionario: $cuestionario
-  ) {
-    ...fragPlaneacion
-  }
-}
-    ${FragPlaneacionFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FilCentroGestorGQL extends Apollo.Query<FilCentroGestorQuery, FilCentroGestorQueryVariables> {
-    document = FilCentroGestorDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const FilEmpleadoPbrDocument = gql`
-    query filEmpleadoPbr($_id: ID!, $idEmpleado: ID!) {
-  filEmpleadoPbr(_id: $_id, idEmpleado: $idEmpleado) {
-    ...fragPlaneacion
-  }
-}
-    ${FragPlaneacionFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FilEmpleadoPbrGQL extends Apollo.Query<FilEmpleadoPbrQuery, FilEmpleadoPbrQueryVariables> {
-    document = FilEmpleadoPbrDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const InicializarPlaneacionDocument = gql`
     mutation inicializarPlaneacion($input: PlaneacionInput!) {
   inicializarPlaneacion(input: $input) {
@@ -2953,6 +2902,30 @@ export const RegMirDocument = gql`
   })
   export class RegMirGQL extends Apollo.Mutation<RegMirMutation, RegMirMutationVariables> {
     document = RegMirDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ActualizarResponsableDocument = gql`
+    mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!) {
+  actualizarResponsable(
+    _id: $_id
+    idEmpleado: $idEmpleado
+    correo: $correo
+    responsable: $responsable
+    idEmpleadoAnterior: $idEmpleadoAnterior
+  ) {
+    ...fragPlaneacion
+  }
+}
+    ${FragPlaneacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ActualizarResponsableGQL extends Apollo.Mutation<ActualizarResponsableMutation, ActualizarResponsableMutationVariables> {
+    document = ActualizarResponsableDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -1,5 +1,5 @@
 import {IPlaneacion} from './planeacion.interface';
-import {ArgsType, Field, ID, InputType, Int, ObjectType, PickType} from '@nestjs/graphql';
+import {ArgsType, Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {MirCuestionarioDto} from './mir/mir.dto';
@@ -45,24 +45,6 @@ export type TPlaneacionType = PlaneacionDto;
 export const SCHEMA_PLANEACION = SchemaFactory.createForClass(PlaneacionDto);
 
 @ArgsType()
-export class FilCentroGestorDto
-{
-    @IsNotEmpty({message: 'El id de planeacion es necesario'})
-    @Field(() => ID, {nullable: true})
-    _id: string;
-
-    @IsNotEmpty({message: 'El centro gestor es necesario'})
-    @Field(() => String, {nullable: true})
-    centroGestor: string;
-
-    @IsNotEmpty({message: 'Falta el tipo de cuestionario'})
-    @Field(() => String, {nullable: true})
-    cuestionario: string;
-}
-
-export type TFilCentroGestor = FilCentroGestorDto;
-
-@ArgsType()
 export class EliminarElementoDto
 {
     @IsNotEmpty({message: 'El id es requerido'})
@@ -81,11 +63,27 @@ export class EliminarElementoDto
 export type TEliminarElemento = EliminarElementoDto;
 
 @ArgsType()
-export class FilPbrEmpleadoDto extends PickType(PlaneacionDto, ['_id'], ArgsType)
+export class ActualizarResponsableDto
 {
+    @IsNotEmpty({message: 'Es necesario el id de la coleccion'})
     @Field(() => ID, {nullable: true})
-    @IsNotEmpty({message: 'Es necesario el id del empleado PBR'})
+    _id: string;
+
+    @IsNotEmpty({message: 'El id del empleado es requerido'})
+    @Field(() => ID, {nullable: true})
     idEmpleado: string;
+
+    @IsNotEmpty({message: 'Es necesario el id anterior'})
+    @Field(() => ID, {nullable: true})
+    idEmpleadoAnterior: string;
+
+    @IsNotEmpty({message: 'El correo es necesario'})
+    @Field(() => String, {nullable: true})
+    correo: string;
+
+    @IsNotEmpty({message: 'El nombre del responsable es requerido'})
+    @Field(() => String, {nullable: true})
+    responsable: string;
 }
 
-export type TFilPbrEmpleado = FilPbrEmpleadoDto;
+export type TActualizarResponsable = ActualizarResponsableDto;

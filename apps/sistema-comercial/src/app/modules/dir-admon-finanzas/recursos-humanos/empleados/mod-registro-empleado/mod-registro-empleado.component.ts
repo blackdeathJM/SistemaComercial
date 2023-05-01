@@ -120,7 +120,7 @@ export class ModRegistroEmpleadoComponent implements OnInit
                         {
                             usuario: this.empleadoQuery.getActive()._id,
                             accion: 'Registro de nuevo empleado',
-                            fecha: GeneralService.fechaHoraActual(),
+                            fecha: GeneralService.fechaHoraActualUnix(),
                             valorActual: {},
                             valorAnterior: {}
                         }

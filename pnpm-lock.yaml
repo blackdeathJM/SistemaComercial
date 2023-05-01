@@ -113,8 +113,8 @@ dependencies:
     specifier: ^5.0.15
     version: 5.0.15(sweetalert2@11.7.3)
   apexcharts:
-    specifier: 3.39.0
-    version: 3.39.0
+    specifier: 3.40.0
+    version: 3.40.0
   apollo-angular:
     specifier: 4.2.1
     version: 4.2.1(@angular/core@15.2.8)(@apollo/client@3.7.13)(graphql@16.6.0)(rxjs@7.8.1)
@@ -176,8 +176,8 @@ dependencies:
     specifier: ^5.12.1
     version: 5.12.1(graphql@16.6.0)
   highlight.js:
-    specifier: 11.7.0
-    version: 11.7.0
+    specifier: 11.8.0
+    version: 11.8.0
   js-yaml:
     specifier: ^4.1.0
     version: 4.1.0
@@ -209,8 +209,8 @@ dependencies:
     specifier: ^2.2.0
     version: 2.2.0(@nestjs/graphql@11.0.5)
   ng-apexcharts:
-    specifier: 1.7.5
-    version: 1.7.5(@angular/common@15.2.8)(@angular/core@15.2.8)(apexcharts@3.39.0)(rxjs@7.8.1)
+    specifier: 1.7.6
+    version: 1.7.6(@angular/common@15.2.8)(@angular/core@15.2.8)(apexcharts@3.40.0)(rxjs@7.8.1)
   ngx-image-cropper:
     specifier: ^6.3.3
     version: 6.3.3(@angular/common@15.2.8)(@angular/core@15.2.8)
@@ -9104,8 +9104,8 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  /apexcharts@3.39.0:
-    resolution: {integrity: sha512-GRvdTg+ZaD55P7/jxqEXpbdCMZQOaej9qE9f7zKkN/oWAbBuuE3mnSCi44UkGMS2X249uEOEXWx0A96jjP3lcA==}
+  /apexcharts@3.40.0:
+    resolution: {integrity: sha512-dSi3BUfCJkFd67uFp+xffrJVd3lDT7AAUUyRp0qPYiglJ76CeZLddVhM3FAk1P9GCzf8VewqGYUPCYQvXm+b9A==}
     dependencies:
       svg.draggable.js: 2.2.2
       svg.easing.js: 2.0.0
@@ -13258,8 +13258,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /highlight.js@11.7.0:
-    resolution: {integrity: sha512-1rRqesRFhMO/PRF+G86evnyJkCgaZFOI+Z6kdj15TA18funfoqJXvgPCLSf0SWq3SRfg1j3HlDs8o4s3EGq1oQ==}
+  /highlight.js@11.8.0:
+    resolution: {integrity: sha512-MedQhoqVdr0U6SSnWPzfiadUcDHfN/Wzq25AkXiQv9oiOO/sG0S7XkvpFIqWBl9Yq1UYyYOOVORs5UW2XlPyzg==}
     engines: {node: '>=12.0.0'}
     dev: false
 
@@ -15648,17 +15648,17 @@ packages:
       accesscontrol: 2.2.1
     dev: false
 
-  /ng-apexcharts@1.7.5(@angular/common@15.2.8)(@angular/core@15.2.8)(apexcharts@3.39.0)(rxjs@7.8.1):
-    resolution: {integrity: sha512-rciddisJISd5j/nPPPmxoD69F9oPMmdiZVBqgRNyOxQDz2rlFQhqLh5QW2t6EiNBGtFWbFB7vgpnI4CusHhgdA==}
+  /ng-apexcharts@1.7.6(@angular/common@15.2.8)(@angular/core@15.2.8)(apexcharts@3.40.0)(rxjs@7.8.1):
+    resolution: {integrity: sha512-XzW0gLRG9x9ntJ+Ena3dbrGB6lLPuIgVP21Qcv82zbebnYncG9aOyQk48fd2P56jDychanAVTYrNUuK0pMUM1g==}
     peerDependencies:
       '@angular/common': '>=13.0.0'
       '@angular/core': '>=13.0.0'
-      apexcharts: ^3.38.0
+      apexcharts: ^3.40.0
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:
       '@angular/common': 15.2.8(@angular/core@15.2.8)(rxjs@7.8.1)
       '@angular/core': 15.2.8(rxjs@7.8.1)(zone.js@0.13.0)
-      apexcharts: 3.39.0
+      apexcharts: 3.40.0
       rxjs: 7.8.1
       tslib: 2.5.0
     dev: false

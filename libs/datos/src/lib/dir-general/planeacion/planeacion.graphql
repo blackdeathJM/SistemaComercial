@@ -5,22 +5,6 @@ query filTodos
     }
 }
 
-query filCentroGestor($_id: ID!, $centroGestor: String!, $cuestionario: String!)
-{
-    filCentroGestor(_id: $_id, centroGestor: $centroGestor, cuestionario: $cuestionario)
-    {
-        ...fragPlaneacion
-    }
-}
-
-query filEmpleadoPbr($_id: ID!, $idEmpleado: ID!)
-{
-    filEmpleadoPbr(_id: $_id, idEmpleado: $idEmpleado)
-    {
-        ...fragPlaneacion
-    }
-}
-
 mutation inicializarPlaneacion($input: PlaneacionInput!)
 {
     inicializarPlaneacion(input: $input)
@@ -31,6 +15,13 @@ mutation inicializarPlaneacion($input: PlaneacionInput!)
 mutation regMir($datos: RegMirInput!)
 {
     regMir(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!)
+{
+    actualizarResponsable(_id: $_id, idEmpleado: $idEmpleado, correo: $correo, responsable: $responsable, idEmpleadoAnterior: $idEmpleadoAnterior)
     {
         ...fragPlaneacion
     }

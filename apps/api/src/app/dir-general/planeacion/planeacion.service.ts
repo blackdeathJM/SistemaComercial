@@ -1,15 +1,15 @@
-import {EliminarElementoDto, FilCentroGestorDto, FilPbrEmpleadoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {IMirCuestionario} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 
 @Injectable()
 export class PlaneacionService
 {
-    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private empleadoService: EmpleadoService)
+    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>)
     {
     }
 
@@ -49,24 +49,6 @@ export class PlaneacionService
         }
     }
 
-    async filCentroGestor(args: FilCentroGestorDto): Promise<PlaneacionDto>
-    {
-        const {_id, centroGestor, cuestionario} = args;
-        const res = await this.planeacion.findById(_id).exec();
-        res[cuestionario] = res[cuestionario].filter(value => value.centroGestor === centroGestor);
-        return res;
-
-    }
-
-    async filEmpleadoPbr(args: FilPbrEmpleadoDto): Promise<PlaneacionDto>
-    {
-        const {_id, idEmpleado} = args;
-        const res = await this.planeacion.findById(_id).exec();
-        res.pbrCuestionario = res.pbrCuestionario.filter(value => value.idEmpleado === idEmpleado);
-        console.log(res, args);
-        return res;
-    }
-
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>
     {
         const {_id, esActualizar, ...resto} = datos;
@@ -77,6 +59,30 @@ export class PlaneacionService
         } else
         {
             return await this.planeacion.findByIdAndUpdate(_id, {$push: {mirCuestionario: resto}}, {new: true}).exec();
+        }
+    }
+
+    async actualizarResponsable(args: ActualizarResponsableDto): Promise<any>
+    {
+        try
+        {
+            const respuesta = await this.planeacion.findByIdAndUpdate(args._id).exec();
+            const filtro: IMirCuestionario[] = [];
+            respuesta.mirCuestionario.map((value) =>
+            {
+                const {idEmpleado, correo, responsable, ...resto} = value;
+                if (value.idEmpleado === args.idEmpleadoAnterior)
+                {
+                    filtro.push({idEmpleado: args.idEmpleado, responsable: args.responsable, correo: args.correo, ...resto});
+                } else
+                {
+                    filtro.push(value);
+                }
+            });
+            return await this.planeacion.findByIdAndUpdate(args._id, {$set: {mirCuestionario: filtro}}).exec();
+        } catch (e)
+        {
+            throw new InternalServerErrorException(e);
         }
     }
 

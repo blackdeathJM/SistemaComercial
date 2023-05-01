@@ -20,15 +20,18 @@ import {actualizarMir, PlaneacionService} from '@s-dir-general/store/planeacion.
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {NgxToastService} from '@s-services/ngx-toast.service';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {GeneralService} from '@s-services/general.service';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {NgxToastService} from '@s-services/ngx-toast.service';
+import {ConfirmacionService} from '@s-services/confirmacion.service';
+import {TActualizarResponsable} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 
 @Component({
     selector: 'app-mod-mir',
     standalone: true,
     imports: [
-        CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule, TrimDirective, TrimInputModule, NgxTrimDirectiveModule, SeleccionarEmpleadoComponent],
+        CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule,
+        TrimDirective, TrimInputModule, NgxTrimDirectiveModule, SeleccionarEmpleadoComponent, MatTooltipModule],
     providers: [],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],
@@ -42,11 +45,12 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
     formMir: FormGroup;
     actualizar = false;
     sentidoIndicador = Object.values(AscDesc);
+    idEmpleadoAnterior: string;
     sub = new Subscription();
     cargando = false;
 
     constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef,
-                private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery)
+                private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private confirmacionService: ConfirmacionService)
     {
         ReactiveFormConfig.set({
             'validationMessage': {
@@ -76,11 +80,17 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     ngAfterViewInit(): void
     {
+
+        // TODO: Cambiar a forma reactiva el patch del form
+        // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
+        // indice del mirCuestionario para hacer el patch en el formulario y cambiamos la propiedad actualizar en true, que es recibida en el backend para hacer
+        // el proceso de actualizar el documento
         if (actualizarMir()[0])
         {
             const cuestionarioMir = this.planeacionQuery.getActive().mirCuestionario[actualizarMir()[1]];
             this.formMir.patchValue(cuestionarioMir);
             this.actualizar = true;
+            this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;
         }
     }
 
@@ -116,7 +126,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
         })).subscribe();
     }
 
-    empleadoSele(e: string)
+    empleadoSele(e: string): void
     {
         const empleado = this.empleadoQuery.getEntity(e);
         if (empleado?.correo)
@@ -129,9 +139,40 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
         this.formMir.get('responsable').setValue(empleado.nombreCompleto);
     }
 
-    filtrarEmpleados(e: string)
+    filtrarEmpleados(e: string): void
     {
-        this.empleados = GeneralService.filtradoEmpleados(e, [...this.empleadoQuery.getAll()]);
+        this.empleados = this.empleadoQuery.filEmpleados(e);
+    }
+
+    actualizarResponsable(): void
+    {
+        if (this.formMir.get('idEmpleado').invalid)
+        {
+            this.ngxToast.alertaToast('Debes seleccionar un empleado a reemplazar', 'Responsable');
+            return;
+        }
+        if (this.formMir.get('correo').invalid)
+        {
+            this.ngxToast.alertaToast('Debes tener un correo para el responsable', 'Responsable');
+            return;
+        }
+        const message: string = 'Al realizar esta accion vas a cambiar el responsable para todo el centro gestor el cual tenga asignado';
+        const title: string = 'Confirma que deseas realizar esta accion';
+        this.confirmacionService.abrir({message, title}).afterClosed().subscribe((res) =>
+        {
+            if (res === 'confirmed')
+            {
+                const args: TActualizarResponsable =
+                    {
+                        _id: this.planeacionQuery.getActive()._id,
+                        idEmpleado: this.formMir.get('idEmpleado').value,
+                        idEmpleadoAnterior: this.idEmpleadoAnterior,
+                        correo: this.formMir.get('correo').value,
+                        responsable: this.formMir.get('responsable').value
+                    };
+                this.planeacionService.actualizarResponsable(args).subscribe();
+            }
+        });
     }
 
     cerrar(): void

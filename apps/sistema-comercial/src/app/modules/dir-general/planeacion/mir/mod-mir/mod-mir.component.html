@@ -1,17 +1,22 @@
 <form [formGroup]="formMir">
     <section class="px-4 flex flex-col flex-auto gap-2">
-        <mat-form-field>
-            <mat-label>Selecciona empleado</mat-label>
-            <mat-select formControlName="idEmpleado" (selectionChange)="empleadoSele($event.value)">
-                <div class="flex flex-col flex-auto">
-                    <mat-form-field>
-                        <input matInput placeholder="Filtrar empleados" (keyup)="filtrarEmpleados($event.target['value'])">
-                    </mat-form-field>
-                </div>
-                <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
-            </mat-select>
-            <mat-error>{{formMir.controls.idEmpleado['errorMessage']}}</mat-error>
-        </mat-form-field>
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Selecciona empleado</mat-label>
+                <mat-select formControlName="idEmpleado" (selectionChange)="empleadoSele($event.value)">
+                    <div class="flex flex-col flex-auto">
+                        <mat-form-field>
+                            <input matInput placeholder="Filtrar empleados" (keyup)="filtrarEmpleados($event.target['value'])">
+                        </mat-form-field>
+                    </div>
+                    <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                </mat-select>
+                <mat-error>{{formMir.controls.idEmpleado['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="actualizarResponsable()" matTooltip="Modifica el responsable para todo el centro gestor" *ngIf="actualizar">
+                <mat-icon svgIcon="people_alt"></mat-icon>
+            </button>
+        </div>
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input matInput formControlName="correo">

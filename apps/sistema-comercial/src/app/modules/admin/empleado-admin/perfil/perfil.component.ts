@@ -103,7 +103,7 @@ export class PerfilComponent implements OnInit
         const modificadoPor: IModificado =
             {
                 accion: 'Cambio de contrasena',
-                fecha: GeneralService.fechaHoraActual(),
+                fecha: GeneralService.fechaHoraActualUnix(),
                 usuario: this.usuarioSesionActual._id,
                 valorActual: null,
                 valorAnterior: null

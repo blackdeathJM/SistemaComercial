@@ -10,9 +10,8 @@ import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.componen
 import {MatButtonModule} from '@angular/material/button';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
-import {Subscription} from 'rxjs';
-import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
-import {AuthQuery} from '@s-core/auth/store/auth.query';
+import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
+import {NgxToastService} from '@s-services/ngx-toast.service';
 
 @Component({
     selector: 'app-pbr',
@@ -26,16 +25,26 @@ import {AuthQuery} from '@s-core/auth/store/auth.query';
 export class PbrComponent
 {
     abrirPanel = false;
-    planeacion: IPlaneacion;
-    sub: Subscription = new Subscription();
+    planeacion: IPlaneacion = null;
 
-    constructor(private planeacionQuery: PlaneacionQuery, private planeacionService: PlaneacionService, private authQuery: AuthQuery)
+    constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService)
     {
 
     }
 
     seleccionarPlaneacion(e: IPlaneacion): void
     {
+        this.planeacion = e;
+        this.planeacionStore.setActive(e._id);
+    }
 
+    filCentroGestorPbr(e: string): void
+    {
+        if (!this.planeacion)
+        {
+            this.ngxToast.alertaToast('Es necesario seleccionar el año del ejercicio para poder filtrar por centro gestor', 'PBR');
+            return;
+        }
+        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado('pbrCuestionario', 'centroGestor', e);
     }
 }
