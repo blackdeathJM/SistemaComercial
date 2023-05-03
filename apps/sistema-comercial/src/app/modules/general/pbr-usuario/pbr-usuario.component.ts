@@ -35,6 +35,6 @@ export default class PbrUsuarioComponent implements OnInit
     seleccionarPlaneacion(e: IPlaneacion): void
     {
         this.planeacionStore.setActive(e._id);
-        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.idEmpleado, this.authQuery.getValue()._id);
+        this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.idEmpleado, this.authQuery.getValue()._id);
     }
 }

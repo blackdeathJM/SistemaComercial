@@ -15,14 +15,15 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {finalize, Subscription} from 'rxjs';
 import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {actualizarPbr, PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {actualizarPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
     selector: 'app-mod-pbr',
     standalone: true,
     imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule,
-        MatOptionModule, MatSelectModule, SeleccionarEmpleadoComponent],
+        MatOptionModule, MatSelectModule, SeleccionarEmpleadoComponent, MatTooltipModule],
     providers: [],
     templateUrl: './mod-pbr.component.html',
     styleUrls: ['./mod-pbr.component.scss'],
@@ -37,6 +38,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
     centrosGestores: string[] = [];
     unidades: string[] = [];
     actualizar = false;
+    empleadoAnterior: string;
     sub: Subscription = new Subscription();
 
     constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery,
@@ -45,7 +47,8 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         ReactiveFormConfig.set({
             'validationMessage': {
                 'required': 'Este campo es requerido',
-                'numeric': 'El valor debe ser numerico'
+                'numeric': 'El valor debe ser numerico',
+                'email': 'El texto no cumple con la estructura de email'
             }
         });
     }
@@ -70,6 +73,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         if (actualizarPbr()[0])
         {
             const cuestionarioPbr = this.planeacionQuery.getActive().pbrCuestionario[actualizarPbr()[1]];
+            this.empleadoAnterior = cuestionarioPbr.idEmpleado;
             this.formPbr.patchValue(cuestionarioPbr);
             this.actualizar = true;
         }
@@ -128,4 +132,8 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         this.sub.unsubscribe();
     }
 
+    actualizarResponsable(): void
+    {
+        this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario);
+    }
 }

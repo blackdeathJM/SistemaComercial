@@ -19,6 +19,13 @@ mutation regMir($datos: RegMirInput!)
         ...fragPlaneacion
     }
 }
+mutation regPbr($datos: RegPbrInput!)
+{
+    regPbr(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
 mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!, $cuestionario: String!)
 {
     actualizarResponsable(_id: $_id, idEmpleado: $idEmpleado, correo: $correo, responsable: $responsable, idEmpleadoAnterior: $idEmpleadoAnterior, cuestionario: $cuestionario)
@@ -33,9 +40,9 @@ mutation eliminarElemento($_id: ID!, $idIndicador: String!, $cuestionario: Strin
         ...fragPlaneacion
     }
 }
-mutation regPbr($datos: RegPbrInput!)
+mutation regAvancePbr($datos: RegAvancesPbrInput!)
 {
-    regPbr(datos: $datos)
+    regAvancePbr(datos: $datos)
     {
         ...fragPlaneacion
     }

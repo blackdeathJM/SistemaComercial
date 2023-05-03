@@ -147,7 +147,7 @@ export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id es necesario'})
-    _id: string
+    _id: string;
 }
 
 export type TRegAvancesPbr = RegAvancesPbrDto;

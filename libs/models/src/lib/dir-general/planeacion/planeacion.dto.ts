@@ -4,6 +4,7 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {MirCuestionarioDto} from './mir/mir.dto';
 import {PbrCuestionarioDto} from './pbr-usuarios/pbr.dto';
+import {PbrSumatoriaDto} from './pbr-usuarios/pbrSumatoria.dto';
 
 @ObjectType('PlaneacionType')
 @InputType('PlaneacionInput')
@@ -38,6 +39,11 @@ export class PlaneacionDto implements IPlaneacion
     @Prop()
     @IsOptional()
     pbrCuestionario: PbrCuestionarioDto[];
+
+    @Field(() => [PbrSumatoriaDto], {nullable: true, defaultValue: []})
+    @Prop()
+    @IsOptional()
+    pbrSumatoria: PbrSumatoriaDto[];
 }
 
 export type TPlaneacionType = PlaneacionDto;
@@ -49,7 +55,7 @@ export class EliminarElementoDto
 {
     @IsNotEmpty({message: 'El id es requerido'})
     @Field(() => ID, {nullable: true})
-    _id: string
+    _id: string;
 
     @IsNotEmpty({message: 'El id del elemento es necesario'})
     @Field(() => String, {nullable: true})

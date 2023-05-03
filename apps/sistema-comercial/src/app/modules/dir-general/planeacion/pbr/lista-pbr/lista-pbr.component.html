@@ -1,8 +1,7 @@
 <ng-container *ngIf="_planeacion">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
-        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>PBR</span></mat-card-header>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>{{_planeacion.descripcion}} --- {{_planeacion.ano}}</span></mat-card-header>
         <mat-card-content>
-
             <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndicePbr($event)">
                 <mat-tab [label]="pbr.idIndicador" *ngFor="let pbr of _planeacion.pbrCuestionario; trackBy:trackByFn">
                     <section class="grid grid-cols-8 gap-4">
@@ -80,6 +79,10 @@
                 <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">
                     <mat-icon svgIcon="assignment"></mat-icon>
                     Registrar avances
+                </button>
+                <button mat-flat-button color="accent" class="flex-auto" [disabled]="desSumatoria" (click)="sumatoria()">
+                    <mat-icon svgIcon="heroicons_outline:calculator"></mat-icon>
+                    Crear sumatorias
                 </button>
                 <button mat-flat-button color="accent" class="flex-auto">
                     <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>

@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
 import {
-    ActualizarResponsableGQL, ActualizarResponsableMutation,
-    EliminarElementoGQL,
-    EliminarElementoMutation,
+    ActualizarResponsableGQL, EliminarElementoGQL,
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
-    InicializarPlaneacionMutation,
+    InicializarPlaneacionMutation, RegAvancePbrGQL, RegAvancePbrMutation,
     RegMirGQL,
     RegMirMutation, RegPbrGQL, RegPbrMutation
 } from '#/libs/datos/src';
@@ -20,12 +18,16 @@ import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {isNotNil} from '@angular-ru/cdk/utils';
-import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {FormGroup} from '@angular/forms';
+import {ConfirmacionService} from '@s-services/confirmacion.service';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
 export const actualizarMir = makeVar<[boolean, number]>([false, 0]);
 export const actualizarPbr = makeVar<[boolean, number]>([false, 0]);
+export const avancesPbr = makeVar<[string, number]>([null, null]);
 
 export enum ValoresCamposMod
 {
@@ -40,7 +42,8 @@ export class PlaneacionService
 {
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarElementoGQL: EliminarElementoGQL,
-                private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL)
+                private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService,
+                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL)
     {
     }
 
@@ -83,32 +86,6 @@ export class PlaneacionService
         }));
     }
 
-    eliminarElemento(args: TEliminarElemento): Observable<SingleExecutionResult<EliminarElementoMutation>>
-    {
-        return this.eliminarElementoGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)),
-            tap((res) =>
-            {
-                if (res && res.data)
-                {
-                    const {_id, ...cambios} = res.data.eliminarElemento as IPlaneacion;
-                    this.planeacionStore.update(_id, cambios);
-                    this.ngxToast.satisfactorioToast('Un elemento se ha removido con exito', 'Remover MIR');
-                }
-            }));
-    }
-
-    actualizarResponsable(args: TActualizarResponsable): Observable<SingleExecutionResult<ActualizarResponsableMutation>>
-    {
-        return this.actualizarResponsableGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
-        {
-            if (isNotNil(res) && isNotNil(res.data))
-            {
-                const {_id, ...cambios} = res.data.actualizarResponsable as IPlaneacion;
-                this.planeacionStore.update(_id, cambios);
-            }
-        }));
-    }
-
     regPbr(datos: TRegPbr): Observable<SingleExecutionResult<RegPbrMutation>>
     {
         return this.regPbrGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
@@ -120,5 +97,84 @@ export class PlaneacionService
                 this.ngxToast.satisfactorioToast('El elemento fue guardado con exito', 'PBR');
             }
         }));
+    }
+
+    eliminarElemento(indiceArreglo: number, cuestionario: string): void
+    {
+        this.confirmacionService.abrir().afterClosed().subscribe((confirmacion) =>
+        {
+            if (confirmacion === 'confirmed')
+            {
+                const args: TEliminarElemento =
+                    {
+                        _id: this.planeacionQuery.getActive()._id,
+                        idIndicador: this.planeacionQuery.getActive()[cuestionario][indiceArreglo].idIndicador,
+                        cuestionario
+                    };
+                this.eliminarElementoGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)),
+                    tap((res) =>
+                    {
+                        if (isNotNil(res) && isNotNil(res.data))
+                        {
+                            const {_id, ...cambios} = res.data.eliminarElemento as IPlaneacion;
+                            this.planeacionStore.update(_id, cambios);
+                            this.ngxToast.satisfactorioToast('Un elemento se ha removido con exito', 'Planeacion');
+                        }
+                    })).subscribe();
+            }
+        });
+    }
+
+    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): void
+    {
+        if (form.get('idEmpleado').invalid)
+        {
+            this.ngxToast.alertaToast('Debes seleccionar un empleado a reemplazar', 'Responsable');
+            return;
+        }
+        if (form.get('correo').invalid)
+        {
+            this.ngxToast.alertaToast('Debes tener un correo para el responsable', 'Responsable');
+            return;
+        }
+        const message: string = 'Al realizar esta accion vas a cambiar el responsable para todo el centro gestor el cual tenga asignado';
+        this.confirmacionService.abrir({message}).afterClosed().subscribe((conf) =>
+        {
+            if (conf === 'confirmed')
+            {
+                const args: TActualizarResponsable =
+                    {
+                        _id: this.planeacionQuery.getActive()._id,
+                        idEmpleadoAnterior,
+                        idEmpleado: form.get('idEmpleado').value,
+                        correo: form.get('correo').value,
+                        responsable: form.get('responsable').value,
+                        cuestionario
+                    };
+
+                this.actualizarResponsableGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+                {
+                    if (isNotNil(res) && isNotNil(res.data))
+                    {
+                        const {_id, ...cambios} = res.data.actualizarResponsable as IPlaneacion;
+                        this.planeacionStore.update(_id, cambios);
+                    }
+                })).subscribe();
+            }
+        });
+    }
+
+    regAvancePbr(datos: TRegAvancesPbr): Observable<SingleExecutionResult<RegAvancePbrMutation>>
+    {
+        return this.regAvancePbrGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)),
+            tap((res) =>
+            {
+                if (isNotNil(res) && isNotNil(res.data))
+                {
+                    const {_id, ...cambios} = res.data.regAvancePbr as IPlaneacion;
+                    this.planeacionStore.update(_id, {...cambios});
+                    this.ngxToast.satisfactorioToast('El avance se ha registrado con exito', 'Registro de avances');
+                }
+            }));
     }
 }

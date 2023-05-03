@@ -1,5 +1,5 @@
-import { IPbrCuestionario } from './pbr-usuarios/pbr.interface';
-import { IMirCuestionario } from './mir/mir.interface';
+import {IPbrCuestionario, ISumatorias} from './pbr-usuarios/pbr.interface';
+import {IMirCuestionario} from './mir/mir.interface';
 
 export enum AscDesc
 {
@@ -15,4 +15,5 @@ export interface IPlaneacion
     copia: boolean;
     mirCuestionario: IMirCuestionario[];
     pbrCuestionario: IPbrCuestionario[];
+    pbrSumatoria: ISumatorias[];
 }

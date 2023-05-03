@@ -11,7 +11,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         super(planeacionStore);
     }
 
-    public filPlaneacionCentroGestorEmpleado(cuestionario: string, filtro: string, valorFiltrar: string): IPlaneacion
+    public filPlaneacionDinamica(cuestionario: string, filtro: string, valorFiltrar: string): IPlaneacion
     {
         const entidad = this.getActive();
         // const mirCuestionarioOriginal = [...entidad.mirCuestionario];

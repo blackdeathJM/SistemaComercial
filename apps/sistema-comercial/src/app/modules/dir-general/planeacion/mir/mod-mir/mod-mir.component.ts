@@ -22,9 +22,6 @@ import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query'
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {NgxToastService} from '@s-services/ngx-toast.service';
-import {ConfirmacionService} from '@s-services/confirmacion.service';
-import {TActualizarResponsable} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 
 @Component({
     selector: 'app-mod-mir',
@@ -50,12 +47,13 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
     cargando = false;
 
     constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef,
-                private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private confirmacionService: ConfirmacionService)
+                private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery)
     {
         ReactiveFormConfig.set({
             'validationMessage': {
                 'required': 'Este campo es requerido',
-                'numeric': 'El valor debe ser numerico'
+                'numeric': 'El valor debe ser numerico',
+                'email': 'El texto no cumple con las caracteristicas de email'
             }
         });
     }
@@ -146,34 +144,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     actualizarResponsable(): void
     {
-        if (this.formMir.get('idEmpleado').invalid)
-        {
-            this.ngxToast.alertaToast('Debes seleccionar un empleado a reemplazar', 'Responsable');
-            return;
-        }
-        if (this.formMir.get('correo').invalid)
-        {
-            this.ngxToast.alertaToast('Debes tener un correo para el responsable', 'Responsable');
-            return;
-        }
-        const message: string = 'Al realizar esta accion vas a cambiar el responsable para todo el centro gestor el cual tenga asignado';
-        const title: string = 'Confirma que deseas realizar esta accion';
-        this.confirmacionService.abrir({message, title}).afterClosed().subscribe((res) =>
-        {
-            if (res === 'confirmed')
-            {
-                const args: TActualizarResponsable =
-                    {
-                        _id: this.planeacionQuery.getActive()._id,
-                        idEmpleado: this.formMir.get('idEmpleado').value,
-                        idEmpleadoAnterior: this.idEmpleadoAnterior,
-                        correo: this.formMir.get('correo').value,
-                        responsable: this.formMir.get('responsable').value,
-                        cuestionario: ValoresCamposMod.mirCuestionario
-                    };
-                this.planeacionService.actualizarResponsable(args).subscribe();
-            }
-        });
+        this.planeacionService.actualizarResponsable(this.formMir, this.idEmpleadoAnterior, ValoresCamposMod.mirCuestionario);
     }
 
     cerrar(): void

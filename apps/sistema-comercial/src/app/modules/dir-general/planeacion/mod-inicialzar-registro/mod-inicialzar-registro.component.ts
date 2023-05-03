@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { RegistrosComponent } from '@s-shared/registros/registros.component';
-import { MatSelectModule } from '@angular/material/select';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { PlaneacionService } from '@s-dir-general/store/planeacion.service';
-import { PlaneacionQuery } from '@s-dir-general/store/planeacion.query';
-import { TPlaneacionType } from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
-import { finalize } from 'rxjs';
-import { MatDialogRef } from '@angular/material/dialog';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {RegistrosComponent} from '@s-shared/registros/registros.component';
+import {MatSelectModule} from '@angular/material/select';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {finalize} from 'rxjs';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
     selector: 'sistema-comercial-mod-inicialzar-registro',
@@ -38,8 +38,10 @@ export class ModInicialzarRegistroComponent
             descripcion: this.ctrlDescripcion.value,
             copia: true,
             mirCuestionario: [],
-            pbrCuestionario: []
+            pbrCuestionario: [],
+            pbrSumatoria: []
         };
+
         this.planeacionService.inicializarPlaneacion(datos).pipe(finalize(() =>
         {
             this.cargando = false;

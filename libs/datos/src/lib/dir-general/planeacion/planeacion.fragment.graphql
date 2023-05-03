@@ -9,4 +9,7 @@ fragment fragPlaneacion on PlaneacionType
     pbrCuestionario {
         ...fragPbr
     }
+    pbrSumatoria {
+        ...fragSumPbr
+    }
 }

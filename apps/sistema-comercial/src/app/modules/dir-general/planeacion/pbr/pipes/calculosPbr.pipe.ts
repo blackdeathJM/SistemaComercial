@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from "@angular/core";
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({standalone: true, name: 'calculoPbr'})
 export class CalculosPipePbr implements PipeTransform
@@ -9,7 +9,7 @@ export class CalculosPipePbr implements PipeTransform
 
         if (!campo)
         {
-            return sumatoria === 0 ? sumatoria : value.find(ultimoValor => ultimoValor !== 0)
+            return sumatoria === 0 ? sumatoria : value.find(ultimoValor => ultimoValor !== 0);
         }
         return sumatoria;
     }

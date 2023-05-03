@@ -3,8 +3,8 @@ import {Model} from 'mongoose';
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {IMirCuestionario} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {RegSumPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 
 @Injectable()
 export class PlaneacionService
@@ -30,17 +30,14 @@ export class PlaneacionService
                 copia: true,
                 descripcion: planeacion.descripcion,
                 mirCuestionario: copia.mirCuestionario,
-                pbrCuestionario: copia.pbrCuestionario
+                pbrCuestionario: copia.pbrCuestionario,
+                pbrSumatoria: copia.pbrSumatoria
             };
 
             const nvo = await new this.planeacion(nvaInicializacion).save();
 
             const {_id, ...resto} = nvo;
-
-            this.planeacion.findByIdAndUpdate(_id, {
-                'mirCuestionario.$.semefVerde': 0.00, 'mirCuestionario.$.semefAmarillo': 0.00, 'mirCuestionario.$.semefRojo': 0.00, 'mirCuestionario.$.avanceTrim1': 0.00,
-                'mirCuestionario.$.avanceTrim2': 0.00, 'mirCuestionario.$.avanceTrim3': 0.00, 'mirCuestionario.$.avanceTrim4': 0.00, 'mirCuestionario.$.avanceAnual': 0.00
-            });
+            //TODO inicializar la copia de planeacion
 
         } else
         {
@@ -62,7 +59,26 @@ export class PlaneacionService
         }
     }
 
-    async actualizarResponsable(args: ActualizarResponsableDto): Promise<any>
+    async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
+    {
+        const {_id, esActualizar, ...resto} = datos;
+
+        try
+        {
+            if (esActualizar)
+            {
+                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario': resto.idIndicador}, {$set: {'pbrCuestionario.$': resto}}).exec();
+            } else
+            {
+                return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
+            }
+        } catch (e)
+        {
+            throw new InternalServerErrorException(e);
+        }
+    }
+
+    async actualizarResponsable(args: ActualizarResponsableDto): Promise<PlaneacionDto>
     {
         try
         {
@@ -89,22 +105,52 @@ export class PlaneacionService
         return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
     }
 
-    async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
+    async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
-        const {_id, esActualizar, ...resto} = datos;
+        const {
+            _id, esSumatoriaTrim, esSumatoriaTotal, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
+            septiembre, octubre, noviembre, diciembre
+        } = datos;
 
-        try
+        const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
+
+        let total: number = 0;
+
+        const valoresTrim: number[] = [];
+
+        if (esSumatoriaTrim)
         {
-            if (esActualizar)
+            trimestres.forEach((value, index) =>
             {
-                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario': resto.idIndicador}, {$set: {'pbrCuestionario.$': resto}}).exec();
-            } else
-            {
-                return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
-            }
-        } catch (e)
+                const valor = value.reduce((previousValue, currentValue) => previousValue + currentValue);
+                valoresTrim.push(valor);
+            });
+
+            total = valoresTrim.reduce((previousValue, currentValue) => previousValue + currentValue);
+        } else
         {
-            throw new InternalServerErrorException(e);
+            trimestres.forEach((value) =>
+            {
+                const ultimo = value.find(ultimoValor => ultimoValor !== 0);
+                valoresTrim.push(ultimo);
+            });
+            total = [diciembre, noviembre, octubre, septiembre, agosto, julio, junio, mayo, abril, marzo, febrero, enero].find(value => value !== 0);
         }
+
+        return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
+            {
+                $set: {
+                    'pbrCuestionario.$.enero': enero, 'pbrCuestionario.$.febrero': febrero, 'pbrCuestionario.$.marzo': marzo, 'pbrCuestionario.$.trim1': valoresTrim[0],
+                    'pbrCuestionario.$.abril': abril, 'pbrCuestionario.$.mayo': mayo, 'pbrCuestionario.$.junio': junio, 'pbrCuestionario.$.trim2': valoresTrim[1],
+                    'pbrCuestionario.$.julio': julio, 'pbrCuestionario.$.agosto': agosto, 'pbrCuestionario.$.septiembre': septiembre, 'pbrCuestionario.$.trim3': valoresTrim[2],
+                    'pbrCuestionario.$.octubre': octubre, 'pbrCuestionario.$.noviembre': noviembre, 'pbrCuestionario.$.diciembre': diciembre, 'pbrCuestionario.$.trim4': valoresTrim[3],
+                    'pbrCuestionario.$.total': total,
+                }
+            }, {new: true}).exec();
+    }
+
+    sumatoriaPbr(datos: RegSumPbrDto): Promise<PlaneacionDto>
+    {
+
     }
 }

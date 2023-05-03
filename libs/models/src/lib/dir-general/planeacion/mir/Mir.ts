@@ -1,4 +1,4 @@
-import {numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {email, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 import {sanitize, toFloat, upperCase} from '@rxweb/sanitizers';
 import {TRegMir} from './mir.dto';
 
@@ -9,6 +9,7 @@ export class Mir implements TRegMir
     idEmpleado: string;
 
     @required()
+    @email()
     correo: string;
 
     @prop()

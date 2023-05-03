@@ -50,7 +50,7 @@ export default class MirComponent
             this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
             return;
         }
-        this.planeacion = this.planeacionQuery.filPlaneacionCentroGestorEmpleado(ValoresCamposMod.mirCuestionario, ValoresCamposMod.centroGestor, centroGestor);
+        this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.mirCuestionario, ValoresCamposMod.centroGestor, centroGestor);
     }
 
     filAno(e: IPlaneacion): void

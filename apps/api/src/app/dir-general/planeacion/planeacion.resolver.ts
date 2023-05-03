@@ -3,7 +3,7 @@ import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto} from '#api
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
-import {RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
@@ -31,6 +31,12 @@ export class PlaneacionResolver
     }
 
     @Mutation(() => PlaneacionDto)
+    async regPbr(@Args('datos') datos: RegPbrDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacionService.regPbr(datos);
+    }
+
+    @Mutation(() => PlaneacionDto)
     async actualizarResponsable(@Args() args: ActualizarResponsableDto): Promise<PlaneacionDto>
     {
         return this.planeacionService.actualizarResponsable(args);
@@ -43,8 +49,8 @@ export class PlaneacionResolver
     }
 
     @Mutation(() => PlaneacionDto)
-    async regPbr(@Args('datos') datos: RegPbrDto): Promise<PlaneacionDto>
+    async regAvancePbr(@Args('datos') datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
-        return await this.planeacionService.regPbr(datos);
+        return this.planeacionService.regAvancePbr(datos);
     }
 }

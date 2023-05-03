@@ -11,9 +11,11 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {actualizarPbr, ngxLoaderPbr} from '@s-dir-general/store/planeacion.service';
+import {actualizarPbr, avancesPbr, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {ConfirmacionService} from '@s-services/confirmacion.service';
+import {ModSumatoriasComponent} from '@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component';
 
 @Component({
     selector: 'app-lista-pbr',
@@ -31,12 +33,13 @@ export class ListaPbrComponent
     @Input() desNuevoReg: boolean = false;
     @Input() desEditarReg: boolean = false;
     @Input() desEliminarReg: boolean = false;
+    @Input() desSumatoria: boolean = false;
 
     _planeacion: IPlaneacion = null;
     indice = 0;
     loader = ngxLoaderPbr();
 
-    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
+    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService)
     {
     }
 
@@ -47,6 +50,7 @@ export class ListaPbrComponent
 
     regAvances(): void
     {
+        avancesPbr([this._planeacion._id, this.indice]);
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
     }
 
@@ -74,6 +78,11 @@ export class ListaPbrComponent
 
     eliminarPbr(): void
     {
+        this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.pbrCuestionario);
+    }
 
+    sumatoria(): void
+    {
+        this.mdr.open(ModSumatoriasComponent, {width: '45%', disableClose: true, hasBackdrop: false});
     }
 }

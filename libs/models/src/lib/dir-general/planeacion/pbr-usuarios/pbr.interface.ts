@@ -1,10 +1,12 @@
 import {IMeses} from '../../../common/common';
 
-export interface ISumatorias
+export interface ISumatorias extends IMeses
 {
-    idIndicador: string;
+    centroGestor: string;
     nombreSumatoria: string;
     descripcion: string;
+    ids: string[];
+    total: number;
 }
 
 export interface IPbrCuestionario extends IMeses
@@ -24,7 +26,6 @@ export interface IPbrCuestionario extends IMeses
     trim3: number;
     trim4: number;
     total: number;
-
     esSumatoriaTrim: boolean;
     esSumatoriaTotal: boolean;
 }

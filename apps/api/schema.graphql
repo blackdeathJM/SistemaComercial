@@ -313,6 +313,27 @@ type PbrType {
   esSumatoriaTrim: Boolean
 }
 
+type PbrSumatoriaType {
+  centroGestor: String
+  descripcion: String
+  ids: [String!]
+  nombreSumatoria: String
+  total: Float
+  abril: Float
+  agosto: Float
+  ano: Float
+  diciembre: Float
+  enero: Float
+  febrero: Float
+  julio: Float
+  junio: Float
+  marzo: Float
+  mayo: Float
+  noviembre: Float
+  octubre: Float
+  septiembre: Float
+}
+
 type PlaneacionType {
   _id: ID
   copia: Boolean
@@ -320,6 +341,7 @@ type PlaneacionType {
   descripcion: String
   mirCuestionario: [MirCuestionarioType!]
   pbrCuestionario: [PbrType!]
+  pbrSumatoria: [PbrSumatoriaType!]
 }
 
 input ModificadoPorInput {
@@ -409,7 +431,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1682925106
+  tiempo: Int = 1683136525
   titulo: String
   usarRouter: Boolean = false
 }
@@ -595,6 +617,27 @@ input PbrInput {
   esSumatoriaTrim: Boolean
 }
 
+input PbrSumatoriaInput {
+  centroGestor: String
+  descripcion: String
+  ids: [String!] = []
+  nombreSumatoria: String
+  total: Float = 0
+  abril: Float = 0
+  agosto: Float = 0
+  ano: Float = 0
+  diciembre: Float = 0
+  enero: Float = 0
+  febrero: Float = 0
+  julio: Float = 0
+  junio: Float = 0
+  marzo: Float = 0
+  mayo: Float = 0
+  noviembre: Float = 0
+  octubre: Float = 0
+  septiembre: Float = 0
+}
+
 input PlaneacionInput {
   _id: ID
   copia: Boolean
@@ -602,6 +645,7 @@ input PlaneacionInput {
   descripcion: String
   mirCuestionario: [MirCuestionarioInput!] = []
   pbrCuestionario: [PbrInput!] = []
+  pbrSumatoria: [PbrSumatoriaInput!] = []
 }
 
 type Query {
@@ -633,9 +677,10 @@ type Mutation {
   regSeleccion(input: SeleccionInput): SeleccionType!
   inicializarPlaneacion(input: PlaneacionInput!): PlaneacionType!
   regMir(datos: RegMirInput!): PlaneacionType!
+  regPbr(datos: RegPbrInput!): PlaneacionType!
   actualizarResponsable(_id: ID, idEmpleado: ID, idEmpleadoAnterior: ID, correo: String, responsable: String, cuestionario: String): PlaneacionType!
   eliminarElemento(_id: ID, idIndicador: String, cuestionario: String): PlaneacionType!
-  regPbr(datos: RegPbrInput!): PlaneacionType!
+  regAvancePbr(datos: RegAvancesPbrInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -745,6 +790,25 @@ input RegPbrInput {
   esSumatoriaTrim: Boolean
   _id: ID
   esActualizar: Boolean = false
+}
+
+input RegAvancesPbrInput {
+  enero: Float = 0
+  febrero: Float = 0
+  marzo: Float = 0
+  abril: Float = 0
+  mayo: Float = 0
+  junio: Float = 0
+  julio: Float = 0
+  agosto: Float = 0
+  septiembre: Float = 0
+  octubre: Float = 0
+  noviembre: Float = 0
+  diciembre: Float = 0
+  idIndicador: String
+  esSumatoriaTotal: Boolean
+  esSumatoriaTrim: Boolean
+  _id: ID
 }
 
 input CambioContrasenaInput {
