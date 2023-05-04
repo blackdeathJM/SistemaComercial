@@ -1,7 +1,7 @@
 import {sanitize, upperCase} from '@rxweb/sanitizers';
 import {TRegAvancesPbr, TRegPbr} from './pbr.dto';
 import {email, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
-import {TRegSumPbr} from './pbrSumatoria.dto';
+import {TSumPbr} from './pbrSumatoria.dto';
 
 @sanitize
 export class Pbr implements TRegPbr
@@ -92,7 +92,7 @@ export class AvancesPbr implements TRegAvancesPbr
     diciembre: number;
 }
 
-export class RegSumPbr implements TRegSumPbr
+export class RegSumPbr implements TSumPbr
 {
     _id: string;
 

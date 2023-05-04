@@ -2,6 +2,7 @@ import {IMeses} from '../../../common/common';
 
 export interface ISumatorias extends IMeses
 {
+    idSumatoria: string;
     centroGestor: string;
     nombreSumatoria: string;
     descripcion: string;

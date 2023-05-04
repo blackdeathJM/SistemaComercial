@@ -7,7 +7,7 @@ import {
     InicializarPlaneacionGQL,
     InicializarPlaneacionMutation, RegAvancePbrGQL, RegAvancePbrMutation,
     RegMirGQL,
-    RegMirMutation, RegPbrGQL, RegPbrMutation
+    RegMirMutation, RegPbrGQL, RegPbrMutation, SumatoriaPbrGQL, SumatoriaPbrMutation
 } from '#/libs/datos/src';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {makeVar, SingleExecutionResult} from '@apollo/client';
@@ -22,6 +22,7 @@ import {TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeac
 import {FormGroup} from '@angular/forms';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {PbrSumatoriaDto, TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
@@ -43,7 +44,7 @@ export class PlaneacionService
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarElementoGQL: EliminarElementoGQL,
                 private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService,
-                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL)
+                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL)
     {
     }
 
@@ -176,5 +177,18 @@ export class PlaneacionService
                     this.ngxToast.satisfactorioToast('El avance se ha registrado con exito', 'Registro de avances');
                 }
             }));
+    }
+
+    sumatoriaPbr(datos: TSumPbr): Observable<SingleExecutionResult<SumatoriaPbrMutation>>
+    {
+        return this.sumatoriaPbrGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        {
+            if (isNotNil(res) && isNotNil(res.data))
+            {
+                const {_id, ...cambios} = res.data.sumatoriaPbr as IPlaneacion;
+                this.planeacionStore.update(_id, {...cambios});
+                this.ngxToast.satisfactorioToast('La sumatoria se ha creado con exito', 'Sumatoria');
+            }
+        }));
     }
 }

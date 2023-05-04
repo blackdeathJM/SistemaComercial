@@ -1,11 +1,16 @@
 import {ISumatorias} from './pbr.interface';
-import {Field, Float, ID, InputType, Int, ObjectType, PartialType} from '@nestjs/graphql';
+import {Field, Float, ID, InputType, ObjectType, PartialType} from '@nestjs/graphql';
 import {IsNotEmpty, IsOptional} from 'class-validator';
+
 
 @ObjectType('PbrSumatoriaType')
 @InputType('PbrSumatoriaInput')
 export class PbrSumatoriaDto implements ISumatorias
 {
+    @IsOptional({message: 'Es necesario el id de la sumatoria'})
+    @Field(() => String, {nullable: true})
+    idSumatoria: string;
+
     @IsNotEmpty({message: 'El centro gestor es requerido'})
     @Field(() => String, {nullable: true})
     centroGestor: string;
@@ -79,12 +84,12 @@ export class PbrSumatoriaDto implements ISumatorias
     septiembre: number;
 }
 
-@InputType('RegSumPbrInput')
-export class RegSumPbrDto extends PartialType(PbrSumatoriaDto, InputType)
+@InputType('SumPbrInput')
+export class SumPbrDto extends PartialType(PbrSumatoriaDto, InputType)
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el id principal'})
     _id: string;
 }
 
-export type TRegSumPbr = RegSumPbrDto;
+export type TSumPbr = SumPbrDto;

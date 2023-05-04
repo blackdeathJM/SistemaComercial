@@ -563,6 +563,7 @@ export type Mutation = {
   regSeleccion: SeleccionType;
   registroSesion: EmpleadoType;
   subirDocs: DocumentoType;
+  sumatoriaPbr: PlaneacionType;
   valoresDefecto: Scalars['Boolean'];
 };
 
@@ -785,6 +786,11 @@ export type MutationSubirDocsArgs = {
   filesAcuse?: InputMaybe<UploadInput>;
 };
 
+
+export type MutationSumatoriaPbrArgs = {
+  datos: SumPbrInput;
+};
+
 export type NotificacionInput = {
   _id?: InputMaybe<Scalars['ID']>;
   descripcion?: InputMaybe<Scalars['String']>;
@@ -845,6 +851,49 @@ export type PbrInput = {
   variableOrigen?: InputMaybe<Scalars['String']>;
 };
 
+export type PbrSumatoriaInput = {
+  abril?: InputMaybe<Scalars['Float']>;
+  agosto?: InputMaybe<Scalars['Float']>;
+  ano?: InputMaybe<Scalars['Float']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
+  descripcion?: InputMaybe<Scalars['String']>;
+  diciembre?: InputMaybe<Scalars['Float']>;
+  enero?: InputMaybe<Scalars['Float']>;
+  febrero?: InputMaybe<Scalars['Float']>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  julio?: InputMaybe<Scalars['Float']>;
+  junio?: InputMaybe<Scalars['Float']>;
+  marzo?: InputMaybe<Scalars['Float']>;
+  mayo?: InputMaybe<Scalars['Float']>;
+  nombreSumatoria?: InputMaybe<Scalars['String']>;
+  noviembre?: InputMaybe<Scalars['Float']>;
+  octubre?: InputMaybe<Scalars['Float']>;
+  septiembre?: InputMaybe<Scalars['Float']>;
+  total?: InputMaybe<Scalars['Float']>;
+};
+
+export type PbrSumatoriaType = {
+  __typename?: 'PbrSumatoriaType';
+  abril?: Maybe<Scalars['Float']>;
+  agosto?: Maybe<Scalars['Float']>;
+  ano?: Maybe<Scalars['Float']>;
+  centroGestor?: Maybe<Scalars['String']>;
+  descripcion?: Maybe<Scalars['String']>;
+  diciembre?: Maybe<Scalars['Float']>;
+  enero?: Maybe<Scalars['Float']>;
+  febrero?: Maybe<Scalars['Float']>;
+  ids?: Maybe<Array<Scalars['String']>>;
+  julio?: Maybe<Scalars['Float']>;
+  junio?: Maybe<Scalars['Float']>;
+  marzo?: Maybe<Scalars['Float']>;
+  mayo?: Maybe<Scalars['Float']>;
+  nombreSumatoria?: Maybe<Scalars['String']>;
+  noviembre?: Maybe<Scalars['Float']>;
+  octubre?: Maybe<Scalars['Float']>;
+  septiembre?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
 export type PbrType = {
   __typename?: 'PbrType';
   abril?: Maybe<Scalars['Float']>;
@@ -886,6 +935,7 @@ export type PlaneacionInput = {
   descripcion?: InputMaybe<Scalars['String']>;
   mirCuestionario?: InputMaybe<Array<MirCuestionarioInput>>;
   pbrCuestionario?: InputMaybe<Array<PbrInput>>;
+  pbrSumatoria?: InputMaybe<Array<PbrSumatoriaInput>>;
 };
 
 export type PlaneacionType = {
@@ -896,6 +946,7 @@ export type PlaneacionType = {
   descripcion?: Maybe<Scalars['String']>;
   mirCuestionario?: Maybe<Array<MirCuestionarioType>>;
   pbrCuestionario?: Maybe<Array<PbrType>>;
+  pbrSumatoria?: Maybe<Array<PbrSumatoriaType>>;
 };
 
 export type PuestoDeptoInput = {
@@ -1168,6 +1219,28 @@ export type SubscriptionNotificarArgs = {
 
 export type SubscriptionRolCambiadoArgs = {
   _id: Scalars['String'];
+};
+
+export type SumPbrInput = {
+  _id?: InputMaybe<Scalars['ID']>;
+  abril?: InputMaybe<Scalars['Float']>;
+  agosto?: InputMaybe<Scalars['Float']>;
+  ano?: InputMaybe<Scalars['Float']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
+  descripcion?: InputMaybe<Scalars['String']>;
+  diciembre?: InputMaybe<Scalars['Float']>;
+  enero?: InputMaybe<Scalars['Float']>;
+  febrero?: InputMaybe<Scalars['Float']>;
+  ids?: InputMaybe<Array<Scalars['String']>>;
+  julio?: InputMaybe<Scalars['Float']>;
+  junio?: InputMaybe<Scalars['Float']>;
+  marzo?: InputMaybe<Scalars['Float']>;
+  mayo?: InputMaybe<Scalars['Float']>;
+  nombreSumatoria?: InputMaybe<Scalars['String']>;
+  noviembre?: InputMaybe<Scalars['Float']>;
+  octubre?: InputMaybe<Scalars['Float']>;
+  septiembre?: InputMaybe<Scalars['Float']>;
+  total?: InputMaybe<Scalars['Float']>;
 };
 
 export type TelefonoInput = {
@@ -1540,33 +1613,35 @@ export type FragMirFragment = { __typename?: 'MirCuestionarioType', idIndicador?
 
 export type FragPbrFragment = { __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null };
 
-export type FragPlaneacionFragment = { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null };
+export type FragSumPbrFragment = { __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null };
+
+export type FragPlaneacionFragment = { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null };
 
 export type FilTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FilTodosQuery = { __typename?: 'Query', filTodos: Array<{ __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null }> };
+export type FilTodosQuery = { __typename?: 'Query', filTodos: Array<{ __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null }> };
 
 export type InicializarPlaneacionMutationVariables = Exact<{
   input: PlaneacionInput;
 }>;
 
 
-export type InicializarPlaneacionMutation = { __typename?: 'Mutation', inicializarPlaneacion: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+export type InicializarPlaneacionMutation = { __typename?: 'Mutation', inicializarPlaneacion: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
 
 export type RegMirMutationVariables = Exact<{
   datos: RegMirInput;
 }>;
 
 
-export type RegMirMutation = { __typename?: 'Mutation', regMir: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+export type RegMirMutation = { __typename?: 'Mutation', regMir: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
 
 export type RegPbrMutationVariables = Exact<{
   datos: RegPbrInput;
 }>;
 
 
-export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+export type RegPbrMutation = { __typename?: 'Mutation', regPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
 
 export type ActualizarResponsableMutationVariables = Exact<{
   _id: Scalars['ID'];
@@ -1578,7 +1653,7 @@ export type ActualizarResponsableMutationVariables = Exact<{
 }>;
 
 
-export type ActualizarResponsableMutation = { __typename?: 'Mutation', actualizarResponsable: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+export type ActualizarResponsableMutation = { __typename?: 'Mutation', actualizarResponsable: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
 
 export type EliminarElementoMutationVariables = Exact<{
   _id: Scalars['ID'];
@@ -1587,14 +1662,21 @@ export type EliminarElementoMutationVariables = Exact<{
 }>;
 
 
-export type EliminarElementoMutation = { __typename?: 'Mutation', eliminarElemento: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+export type EliminarElementoMutation = { __typename?: 'Mutation', eliminarElemento: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
 
 export type RegAvancePbrMutationVariables = Exact<{
   datos: RegAvancesPbrInput;
 }>;
 
 
-export type RegAvancePbrMutation = { __typename?: 'Mutation', regAvancePbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null } };
+export type RegAvancePbrMutation = { __typename?: 'Mutation', regAvancePbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
+
+export type SumatoriaPbrMutationVariables = Exact<{
+  datos: SumPbrInput;
+}>;
+
+
+export type SumatoriaPbrMutation = { __typename?: 'Mutation', sumatoriaPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, lineaBaseAno?: number | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, esSumatoriaTrim?: boolean | null, esSumatoriaTotal?: boolean | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null }> | null } };
 
 export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
@@ -1855,6 +1937,28 @@ export const FragPbrFragmentDoc = gql`
   esSumatoriaTotal
 }
     `;
+export const FragSumPbrFragmentDoc = gql`
+    fragment fragSumPbr on PbrSumatoriaType {
+  centroGestor
+  descripcion
+  ids
+  nombreSumatoria
+  total
+  abril
+  agosto
+  ano
+  diciembre
+  enero
+  febrero
+  julio
+  junio
+  marzo
+  mayo
+  noviembre
+  octubre
+  septiembre
+}
+    `;
 export const FragPlaneacionFragmentDoc = gql`
     fragment fragPlaneacion on PlaneacionType {
   _id
@@ -1866,9 +1970,13 @@ export const FragPlaneacionFragmentDoc = gql`
   pbrCuestionario {
     ...fragPbr
   }
+  pbrSumatoria {
+    ...fragSumPbr
+  }
 }
     ${FragMirFragmentDoc}
-${FragPbrFragmentDoc}`;
+${FragPbrFragmentDoc}
+${FragSumPbrFragmentDoc}`;
 export const FragSeleccionFragmentDoc = gql`
     fragment fragSeleccion on SeleccionType {
   dimension
@@ -3019,6 +3127,24 @@ export const RegAvancePbrDocument = gql`
   })
   export class RegAvancePbrGQL extends Apollo.Mutation<RegAvancePbrMutation, RegAvancePbrMutationVariables> {
     document = RegAvancePbrDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SumatoriaPbrDocument = gql`
+    mutation sumatoriaPbr($datos: SumPbrInput!) {
+  sumatoriaPbr(datos: $datos) {
+    ...fragPlaneacion
+  }
+}
+    ${FragPlaneacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SumatoriaPbrGQL extends Apollo.Mutation<SumatoriaPbrMutation, SumatoriaPbrMutationVariables> {
+    document = SumatoriaPbrDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

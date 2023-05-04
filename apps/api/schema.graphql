@@ -314,6 +314,7 @@ type PbrType {
 }
 
 type PbrSumatoriaType {
+  idSumatoria: String
   centroGestor: String
   descripcion: String
   ids: [String!]
@@ -431,7 +432,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683181007
+  tiempo: Int = 1683197856
   titulo: String
   usarRouter: Boolean = false
 }
@@ -618,6 +619,7 @@ input PbrInput {
 }
 
 input PbrSumatoriaInput {
+  idSumatoria: String
   centroGestor: String
   descripcion: String
   ids: [String!] = []
@@ -681,6 +683,7 @@ type Mutation {
   actualizarResponsable(_id: ID, idEmpleado: ID, idEmpleadoAnterior: ID, correo: String, responsable: String, cuestionario: String): PlaneacionType!
   eliminarElemento(_id: ID, idIndicador: String, cuestionario: String): PlaneacionType!
   regAvancePbr(datos: RegAvancesPbrInput!): PlaneacionType!
+  sumatoriaPbr(datos: SumPbrInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -808,6 +811,29 @@ input RegAvancesPbrInput {
   idIndicador: String
   esSumatoriaTotal: Boolean
   esSumatoriaTrim: Boolean
+  _id: ID
+}
+
+input SumPbrInput {
+  idSumatoria: String
+  centroGestor: String
+  descripcion: String
+  ids: [String!] = []
+  nombreSumatoria: String
+  total: Float = 0
+  abril: Float = 0
+  agosto: Float = 0
+  ano: Float = 0
+  diciembre: Float = 0
+  enero: Float = 0
+  febrero: Float = 0
+  julio: Float = 0
+  junio: Float = 0
+  marzo: Float = 0
+  mayo: Float = 0
+  noviembre: Float = 0
+  octubre: Float = 0
+  septiembre: Float = 0
   _id: ID
 }
 

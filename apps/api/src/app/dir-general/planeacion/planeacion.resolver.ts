@@ -4,6 +4,7 @@ import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/pl
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {SumPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
@@ -52,5 +53,11 @@ export class PlaneacionResolver
     async regAvancePbr(@Args('datos') datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
         return this.planeacionService.regAvancePbr(datos);
+    }
+
+    @Mutation(() => PlaneacionDto)
+    async sumatoriaPbr(@Args('datos') datos: SumPbrDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacionService.sumatoriaPbr(datos);
     }
 }

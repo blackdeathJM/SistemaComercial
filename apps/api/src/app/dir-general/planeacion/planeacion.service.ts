@@ -4,7 +4,10 @@ import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {RegSumPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
+import {SumPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
+import {IMeses} from "#api/libs/models/src/lib/common/common";
+import {ISumatorias} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class PlaneacionService
@@ -149,8 +152,59 @@ export class PlaneacionService
             }, {new: true}).exec();
     }
 
-    sumatoriaPbr(datos: RegSumPbrDto): Promise<PlaneacionDto>
+    async sumatoriaPbr(datos: SumPbrDto): Promise<PlaneacionDto>
     {
-        return null;
+        const {_id, ids, centroGestor, descripcion, nombreSumatoria, ...resto} = datos;
+
+        const buscarDoc = await this.planeacion.findById(_id).exec();
+        const matrizDeValoresMeses: number[][] = [];
+        ids.forEach(idIndicador =>
+        {
+            buscarDoc.pbrCuestionario.forEach((pbr, index) =>
+            {
+                if (pbr.idIndicador === idIndicador)
+                {
+                    const arregloMeses: number[] = [pbr.enero, pbr.febrero, pbr.marzo, pbr.abril, pbr.mayo, pbr.junio, pbr.julio, pbr.agosto, pbr.septiembre,
+                        pbr.octubre, pbr.noviembre, pbr.diciembre];
+                    matrizDeValoresMeses.push(arregloMeses);
+                }
+            })
+        });
+        const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
+        matrizDeValoresMeses.forEach((matrizMeses) =>
+        {
+            matrizMeses.forEach((value, index) =>
+            {
+                sumatoriaMeses[index].push(value);
+            });
+        });
+        const sumatoria: ISumatorias =
+            {
+                enero: sumatoriaMeses[0].reduce((previousValue, currentValue) => previousValue + currentValue),
+                febrero: sumatoriaMeses[1].reduce((previousValue, currentValue) => previousValue + currentValue),
+                marzo: sumatoriaMeses[2].reduce((previousValue, currentValue) => previousValue + currentValue),
+                abril: sumatoriaMeses[3].reduce((previousValue, currentValue) => previousValue + currentValue),
+                mayo: sumatoriaMeses[4].reduce((previousValue, currentValue) => previousValue + currentValue),
+                junio: sumatoriaMeses[5].reduce((previousValue, currentValue) => previousValue + currentValue),
+                julio: sumatoriaMeses[6].reduce((previousValue, currentValue) => previousValue + currentValue),
+                agosto: sumatoriaMeses[7].reduce((previousValue, currentValue) => previousValue + currentValue),
+                septiembre: sumatoriaMeses[8].reduce((previousValue, currentValue) => previousValue + currentValue),
+                octubre: sumatoriaMeses[9].reduce((previousValue, currentValue) => previousValue + currentValue),
+                noviembre: sumatoriaMeses[10].reduce((previousValue, currentValue) => previousValue + currentValue),
+                diciembre: sumatoriaMeses[11].reduce((previousValue, currentValue) => previousValue + currentValue),
+                total: 0,
+                ano: 0,
+                ids,
+                centroGestor,
+                descripcion,
+                nombreSumatoria,
+                idSumatoria: uuidv4()
+            };
+        return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrSumatoria: sumatoria}}).exec();
+    }
+
+    async calcularSumPbr(meses: IMeses): Promise<void>
+    {
+
     }
 }
