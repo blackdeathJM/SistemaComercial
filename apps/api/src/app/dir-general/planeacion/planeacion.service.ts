@@ -151,6 +151,6 @@ export class PlaneacionService
 
     sumatoriaPbr(datos: RegSumPbrDto): Promise<PlaneacionDto>
     {
-
+        return null;
     }
 }
