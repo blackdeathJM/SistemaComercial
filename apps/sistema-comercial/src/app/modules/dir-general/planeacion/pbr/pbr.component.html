@@ -1,6 +1,6 @@
 <mat-drawer-container class="w-full">
-    <mat-drawer class="w-96" [opened]="abrirPanel" [mode]="'side'" autoFocus="true" position="end">
-        <app-mod-pbr (panel)="abrirPanel=false" *ngIf="abrirPanel"></app-mod-pbr>
+    <mat-drawer class="w-96" [opened]="abrirPanel()" [mode]="'side'" autoFocus="true" position="end">
+        <app-mod-pbr *ngIf="abrirPanel()"></app-mod-pbr>
     </mat-drawer>
     <mat-drawer-content>
         <section class="flex flex-col flex-auto">
@@ -15,7 +15,7 @@
 
             <ng-container>
                 <article class="flex flex-auto flex-col">
-                    <app-lista-pbr (panel)="abrirPanel = true" [planeacion]="planeacion"></app-lista-pbr>
+                    <app-lista-pbr [planeacion]="planeacion"></app-lista-pbr>
                 </article>
             </ng-container>
         </section>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal, Signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -14,6 +14,8 @@ import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 
+export const abrirPanelPbr = signal<boolean>(false);
+
 @Component({
     selector: 'app-pbr',
     standalone: true,
@@ -25,8 +27,9 @@ import {ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 })
 export class PbrComponent
 {
-    abrirPanel = false;
+
     planeacion: IPlaneacion = null;
+    abrirPanel = abrirPanelPbr;
 
     constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService)
     {

@@ -55,6 +55,7 @@ export class ModSumatoriasComponent implements OnInit
         const datos: TSumPbr =
             {
                 _id: this.planeacionQuery.getActive()._id,
+                idSumatoria: '',
                 ...this.formSum.value,
             };
 

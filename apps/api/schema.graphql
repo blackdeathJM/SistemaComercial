@@ -432,7 +432,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683197856
+  tiempo: Int = 1683202514
   titulo: String
   usarRouter: Boolean = false
 }
@@ -619,7 +619,7 @@ input PbrInput {
 }
 
 input PbrSumatoriaInput {
-  idSumatoria: String
+  idSumatoria: String = null
   centroGestor: String
   descripcion: String
   ids: [String!] = []
@@ -815,7 +815,7 @@ input RegAvancesPbrInput {
 }
 
 input SumPbrInput {
-  idSumatoria: String
+  idSumatoria: String = null
   centroGestor: String
   descripcion: String
   ids: [String!] = []

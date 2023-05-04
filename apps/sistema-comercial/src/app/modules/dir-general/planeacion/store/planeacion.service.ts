@@ -22,7 +22,7 @@ import {TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeac
 import {FormGroup} from '@angular/forms';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {PbrSumatoriaDto, TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
+import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');

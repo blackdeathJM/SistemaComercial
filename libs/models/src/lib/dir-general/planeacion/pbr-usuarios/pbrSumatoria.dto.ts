@@ -8,7 +8,7 @@ import {IsNotEmpty, IsOptional} from 'class-validator';
 export class PbrSumatoriaDto implements ISumatorias
 {
     @IsOptional({message: 'Es necesario el id de la sumatoria'})
-    @Field(() => String, {nullable: true})
+    @Field(() => String, {nullable: true, defaultValue: null})
     idSumatoria: string;
 
     @IsNotEmpty({message: 'El centro gestor es requerido'})

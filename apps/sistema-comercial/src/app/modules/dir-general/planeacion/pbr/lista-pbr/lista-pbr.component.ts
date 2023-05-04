@@ -16,6 +16,7 @@ import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {ModSumatoriasComponent} from '@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component';
+import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -28,8 +29,6 @@ import {ModSumatoriasComponent} from '@s-dir-general/mir/mod-sumatorias/mod-suma
 })
 export class ListaPbrComponent
 {
-    @Output() panel = new EventEmitter<boolean>();
-
     @Input() desNuevoReg: boolean = false;
     @Input() desEditarReg: boolean = false;
     @Input() desEliminarReg: boolean = false;
@@ -57,7 +56,7 @@ export class ListaPbrComponent
     abrirPanel(): void
     {
         actualizarPbr([false, this.indice]);
-        this.panel.emit(true);
+        abrirPanelPbr.set(true);
     }
 
     cambioIndicePbr(e: number): void
@@ -68,7 +67,7 @@ export class ListaPbrComponent
     editarPbr(): void
     {
         actualizarPbr([true, this.indice]);
-        this.panel.emit(true);
+        abrirPanelPbr.set(true);
     }
 
     trackByFn(index: number): number

@@ -18,6 +18,7 @@ import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 import {actualizarPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 
 @Component({
     selector: 'app-mod-pbr',
@@ -31,7 +32,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 })
 export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
 {
-    @Output() panel = new EventEmitter<boolean>();
     formPbr: FormGroup;
     cargando = false;
     empleados: IResolveEmpleado[];
@@ -124,16 +124,16 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     cerrar(): void
     {
-        this.panel.emit(false);
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
+        abrirPanelPbr.set(false);
     }
 
     actualizarResponsable(): void
     {
         this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario);
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }
