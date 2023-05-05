@@ -23,7 +23,9 @@
                 <article class="flex flex-auto flex-col">
                     <app-lista-pbr [planeacion]="planeacion"></app-lista-pbr>
                     <mat-divider class="my-4"></mat-divider>
-                    <app-lista-sum-pbr></app-lista-sum-pbr>
+                    <ng-container *ngIf="sumatoria.length > 0">
+                        <app-lista-sum-pbr [sumatoriaPbr]="sum" *ngFor="let sum of pbrSumatoria"></app-lista-sum-pbr>
+                    </ng-container>
                 </article>
             </ng-container>
         </section>

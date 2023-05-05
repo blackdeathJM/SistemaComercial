@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuseAlertModule} from "@s-fuse/alert";
 import {MatCardModule} from "@angular/material/card";
 import {fuseAnimations} from "@s-fuse/public-api";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
+import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-lista-sum-pbr',
@@ -18,7 +18,10 @@ import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 })
 export class ListaSumPbrComponent
 {
-    constructor(private planeacionQuery: PlaneacionQuery)
+    @Input({required: true}) set sumatoriaPbr(v: ISumatorias)
     {
+        this._sumatoria = v;
     }
+
+    _sumatoria: ISumatorias
 }

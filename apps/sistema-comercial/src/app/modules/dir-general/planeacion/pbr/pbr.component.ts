@@ -14,6 +14,7 @@ import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {ListaSumPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-sum-pbr/lista-sum-pbr.component";
+import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 export const abrirPanelPbr = signal<boolean>(false);
 
@@ -30,6 +31,7 @@ export class PbrComponent
 {
 
     planeacion: IPlaneacion = null;
+    pbrSumatoria: ISumatorias[] = [];
     abrirPanel = abrirPanelPbr;
 
     constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService)
@@ -51,6 +53,8 @@ export class PbrComponent
             return;
         }
         this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.centroGestor, e);
+        this.pbrSumatoria = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrSumatoria, ValoresCamposMod.centroGestor, e).pbrSumatoria;
+        console.log(this.pbrSumatoria);
     }
 
     sumatoria(): void

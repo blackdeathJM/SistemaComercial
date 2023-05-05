@@ -1,49 +1,49 @@
 <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
-    <mat-card-header class="tarjeta-mat-cabecera border-b-rose-200 py-2"><span>nombre de la sumatoria</span></mat-card-header>
-    <mat-card-title-group class="border-b-2 p-2"><span>Descripcion de la sumatoria</span></mat-card-title-group>
+    <mat-card-header class="tarjeta-mat-cabecera border-b-rose-200 py-2"><span class="text-lg text-green-700">{{_sumatoria?.nombreSumatoria}}</span></mat-card-header>
+    <mat-card-title-group class="border-b-2 p-2"><span class="text-lg">{{_sumatoria?.descripcion}}</span></mat-card-title-group>
     <mat-card-title class="p-2 border-b-2">
-        <div class="flex items-center content-center gap-5">id-1,id-2,id-3</div>
+        <div class="flex items-center content-center gap-5 text-lg text-amber-600">{{_sumatoria?.ids}}</div>
     </mat-card-title>
     <mat-card-content>
         <div class="grid grid-cols-8 gap-4 py-2">
             <span class="detalle-span">Enero</span>
-            <span class="border-b-2">45.6</span>
+            <span class="border-b-2">{{_sumatoria?.enero}}</span>
             <span class="detalle-span">Febrero</span>
-            <span class="border-b-2">66.6</span>
+            <span class="border-b-2">{{_sumatoria?.febrero}}</span>
             <span class="detalle-span">Marzo</span>
-            <span class="border-b-2">88.9</span>
+            <span class="border-b-2">{{_sumatoria?.marzo}}</span>
             <span class="detalle-span">Trim 1</span>
-            <span class="border-b-2">98.66</span>
+            <span class="border-b-2">{{_sumatoria?.trim1}}</span>
 
             <span class="detalle-span">Abril</span>
-            <span class="border-b-2">45.6</span>
+            <span class="border-b-2">{{_sumatoria?.abril}}</span>
             <span class="detalle-span">Mayo</span>
-            <span class="border-b-2">66.6</span>
+            <span class="border-b-2">{{_sumatoria?.mayo}}</span>
             <span class="detalle-span">Junio</span>
-            <span class="border-b-2">88.9</span>
+            <span class="border-b-2">{{_sumatoria?.junio}}</span>
             <span class="detalle-span">Trime 2</span>
-            <span class="border-b-2">98.66</span>
+            <span class="border-b-2">{{_sumatoria?.trim2}}</span>
 
             <span class="detalle-span">Julio</span>
-            <span class="border-b-2">45.6</span>
+            <span class="border-b-2">{{_sumatoria?.julio}}</span>
             <span class="detalle-span">Agosto</span>
-            <span class="border-b-2">66.6</span>
+            <span class="border-b-2">{{_sumatoria?.agosto}}</span>
             <span class="detalle-span">Septiembre</span>
-            <span class="border-b-2">88.9</span>
+            <span class="border-b-2">{{_sumatoria?.septiembre}}</span>
             <span class="detalle-span">Trim 3</span>
-            <span class="border-b-2">98.66</span>
+            <span class="border-b-2">{{_sumatoria?.trim3}}</span>
 
             <span class="detalle-span">Octubre</span>
-            <span class="border-b-2">45.6</span>
+            <span class="border-b-2">{{_sumatoria?.octubre}}</span>
             <span class="detalle-span">Noviembre</span>
-            <span class="border-b-2">66.6</span>
+            <span class="border-b-2">{{_sumatoria?.noviembre}}</span>
             <span class="detalle-span">Diciembre</span>
-            <span class="border-b-2">88.9</span>
+            <span class="border-b-2">{{_sumatoria?.diciembre}}</span>
             <span class="detalle-span">Trim 4</span>
-            <span class="border-b-2">98.66</span>
+            <span class="border-b-2">{{_sumatoria?.trim4}}</span>
 
             <span class="detalle-span col-start-7">Acumulado total</span>
-            <span class="border-b-2">7785.6</span>
+            <span class="border-b-2">{{_sumatoria?.total}}</span>
         </div>
     </mat-card-content>
     <mat-card-actions class="tarjeta-mat-acciones border-t-rose-200">
