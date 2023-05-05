@@ -220,8 +220,8 @@ export class PlaneacionService
         };
         if (actualizar)
         {
-            // return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}})
-            return await this.planeacion.replaceOne({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {pbrSumatoria}, {new: true})
+            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}).exec();
+            // return await this.planeacion.replaceOne({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {pbrSumatoria}, {new: true})
         } else
         {
             return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}).exec();

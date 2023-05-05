@@ -57,6 +57,6 @@ export class ModSumatoriasComponent implements OnInit
                 ...this.formSum.value,
             };
 
-        this.planeacionService.sumatoriaPbr(datos).subscribe();
+        this.planeacionService.sumatoriaPbr(datos, false).subscribe();
     }
 }
