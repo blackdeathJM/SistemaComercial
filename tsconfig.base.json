@@ -1,6 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "declarationMap": false,
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "baseUrl": ".",
@@ -12,14 +13,14 @@
         "strictPropertyInitialization": false,
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "types": ["node", "ES2022"],
+        "types": [ "node", "ES2022" ],
         "importHelpers": true,
         "target": "ES2022",
         "useDefineForClassFields": false,
         "module": "ES2022",
-        "lib": ["es2020", "dom", "esnext.asynciterable", "es6", "ES7"],
+        "lib": [ "es2020", "dom", "esnext.asynciterable", "es6", "ES7" ],
         "paths": {
-            "@sistema-comercial/datos": ["libs/datos/src/index.ts"],
+            "@sistema-comercial/datos": [ "libs/datos/src/index.ts" ],
             "@sistema-comercial/modelos/*": [
                 "libs/models/src/lib/upload/*",
                 "libs/models/src/lib/admin/deptos/*",
@@ -35,7 +36,9 @@
         "rootDir": "."
     },
     "angularCompilerOptions": {
-        "enableI18nLegacyMessageIdFormat": false
+        "enableI18nLegacyMessageIdFormat": false,
+        "enableIvy": true,
+        "compilationMode": "full"
     },
-    "exclude": ["node_modules", "tmp"]
+    "exclude": [ "node_modules", "tmp" ]
 }
