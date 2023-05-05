@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -43,7 +43,7 @@ export class ListaPbrComponent
     {
     }
 
-    @Input() set planeacion(valor: IPlaneacion)
+    @Input({required: true}) set planeacion(valor: IPlaneacion)
     {
         this._planeacion = valor;
     }
@@ -79,10 +79,5 @@ export class ListaPbrComponent
     eliminarPbr(): void
     {
         this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.pbrCuestionario);
-    }
-
-    sumatoria(): void
-    {
-        this.mdr.open(ModSumatoriasComponent, {width: '45%', disableClose: true, hasBackdrop: false});
     }
 }

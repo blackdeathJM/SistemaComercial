@@ -6,16 +6,24 @@
         <section class="flex flex-col flex-auto">
             <app-acciones-mir-pbr [habCentroGestor]="true" (planeacionSeleccionado)="seleccionarPlaneacion($event)" (centroGestor)="filCentroGestorPbr($event)">
                 <ng-container acciones>
-                    <button mat-flat-button color="accent">
-                        <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
-                        Imprimir
-                    </button>
+                    <div class="flex items-center content-center gap-4">
+                        <button mat-flat-button color="accent" class="flex-auto" (click)="sumatoria()">
+                            <mat-icon svgIcon="mat_solid:calculate"></mat-icon>
+                            Crear sumatorias
+                        </button>
+                        <button mat-flat-button color="accent">
+                            <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                            Imprimir
+                        </button>
+                    </div>
                 </ng-container>
             </app-acciones-mir-pbr>
 
             <ng-container>
                 <article class="flex flex-auto flex-col">
                     <app-lista-pbr [planeacion]="planeacion"></app-lista-pbr>
+                    <mat-divider class="my-4"></mat-divider>
+                    <app-lista-sum-pbr></app-lista-sum-pbr>
                 </article>
             </ng-container>
         </section>

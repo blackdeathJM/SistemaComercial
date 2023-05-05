@@ -57,7 +57,6 @@
                         <span class="detalle-span col-start-7">Acumulado final</span>
                         <span class="border-b-2">{{pbr?.total}}</span>
                     </section>
-                    <app-lista-sum-pbr></app-lista-sum-pbr>
                 </mat-tab>
             </mat-tab-group>
             <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
@@ -80,10 +79,6 @@
                 <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">
                     <mat-icon svgIcon="assignment"></mat-icon>
                     Registrar avances
-                </button>
-                <button mat-flat-button color="accent" class="flex-auto" [disabled]="desSumatoria" (click)="sumatoria()">
-                    <mat-icon svgIcon="heroicons_outline:calculator"></mat-icon>
-                    Crear sumatorias
                 </button>
                 <button mat-flat-button color="accent" class="flex-auto">
                     <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
