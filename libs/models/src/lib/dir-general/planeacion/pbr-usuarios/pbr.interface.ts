@@ -7,6 +7,12 @@ export interface ISumatorias extends IMeses
     nombreSumatoria: string;
     descripcion: string;
     ids: string[];
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number;
+    sumTrim: boolean;
+    sumTotal: boolean;
     total: number;
 }
 

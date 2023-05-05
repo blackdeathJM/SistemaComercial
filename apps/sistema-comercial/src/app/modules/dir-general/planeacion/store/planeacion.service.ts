@@ -35,7 +35,8 @@ export enum ValoresCamposMod
     centroGestor = 'centroGestor',
     idEmpleado = 'idEmpleado',
     mirCuestionario = 'mirCuestionario',
-    pbrCuestionario = 'pbrCuestionario'
+    pbrCuestionario = 'pbrCuestionario',
+    pbrSumatoria = 'pbrSumatoria'
 }
 
 @Injectable({providedIn: 'root'})

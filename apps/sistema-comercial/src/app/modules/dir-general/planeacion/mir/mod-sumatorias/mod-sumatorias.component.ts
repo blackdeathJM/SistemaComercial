@@ -5,7 +5,6 @@ import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {IPbrCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {MatDialogRef} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
@@ -13,7 +12,8 @@ import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validat
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TSumPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {RegSumPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
-import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
+import {PlaneacionService, ValoresCamposMod} from "@s-dir-general/store/planeacion.service";
+import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Component({
     selector: 'app-mod-sumatorias',
@@ -25,7 +25,7 @@ import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 })
 export class ModSumatoriasComponent implements OnInit
 {
-    pbrSumatoria: IPbrCuestionario[] = [];
+    planeacion: IPlaneacion = null;
     formSum: FormGroup;
 
     constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModSumatoriasComponent>, private fb: RxFormBuilder,
@@ -40,8 +40,7 @@ export class ModSumatoriasComponent implements OnInit
 
     filCentroGestor(e: string): void
     {
-        const cuestionario = this.planeacionQuery.getActive().pbrCuestionario.slice();
-        this.pbrSumatoria = cuestionario.filter(value => value.centroGestor === e);
+        this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrSumatoria, e, e);
     }
 
     trackByFn(index: number, elemento: string): number | string

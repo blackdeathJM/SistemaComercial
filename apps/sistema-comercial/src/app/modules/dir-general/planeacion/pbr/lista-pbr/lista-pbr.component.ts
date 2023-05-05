@@ -17,11 +17,12 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {ModSumatoriasComponent} from '@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component';
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
+import {ListaSumPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-sum-pbr/lista-sum-pbr.component";
 
 @Component({
     selector: 'app-lista-pbr',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr],
+    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr, ListaSumPbrComponent],
     templateUrl: './lista-pbr.component.html',
     styleUrls: ['./lista-pbr.component.scss'],
     animations: [fuseAnimations],

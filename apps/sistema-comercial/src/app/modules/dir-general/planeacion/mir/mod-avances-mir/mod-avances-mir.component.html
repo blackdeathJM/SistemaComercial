@@ -2,4 +2,4 @@
 
 </form>
 
-<app-registros [cargando]="cargando" [deshabilitar]="formModAvances.invalid || formCalculo.invalid || cargando" (cancelar)="mdr.close()" (registro)="guardarAvances()"></app-registros>
+<app-registros [cargando]="cargando" [deshabilitar]="cargando" (cancelar)="mdr.close()" (registro)="guardarAvances()"></app-registros>

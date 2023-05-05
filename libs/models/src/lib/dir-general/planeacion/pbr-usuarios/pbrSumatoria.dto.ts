@@ -1,6 +1,6 @@
 import {ISumatorias} from './pbr.interface';
 import {Field, Float, ID, InputType, ObjectType, PartialType} from '@nestjs/graphql';
-import {IsNotEmpty, IsOptional} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 
 
 @ObjectType('PbrSumatoriaType')
@@ -82,6 +82,30 @@ export class PbrSumatoriaDto implements ISumatorias
     @IsOptional()
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     septiembre: number;
+
+    @IsBoolean({message: 'El valor debe ser boleano'})
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    sumTotal: boolean;
+
+    @IsBoolean({message: 'El valor debe ser boleano'})
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    sumTrim: boolean;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim1: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim2: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim3: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim4: number;
 }
 
 @InputType('SumPbrInput')

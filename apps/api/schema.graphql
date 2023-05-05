@@ -333,6 +333,12 @@ type PbrSumatoriaType {
   noviembre: Float
   octubre: Float
   septiembre: Float
+  sumTotal: Boolean
+  sumTrim: Boolean
+  trim1: Float
+  trim2: Float
+  trim3: Float
+  trim4: Float
 }
 
 type PlaneacionType {
@@ -432,7 +438,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683202514
+  tiempo: Int = 1683225380
   titulo: String
   usarRouter: Boolean = false
 }
@@ -638,6 +644,12 @@ input PbrSumatoriaInput {
   noviembre: Float = 0
   octubre: Float = 0
   septiembre: Float = 0
+  sumTotal: Boolean = false
+  sumTrim: Boolean = false
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
 }
 
 input PlaneacionInput {
@@ -834,6 +846,12 @@ input SumPbrInput {
   noviembre: Float = 0
   octubre: Float = 0
   septiembre: Float = 0
+  sumTotal: Boolean = false
+  sumTrim: Boolean = false
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
   _id: ID
 }
 

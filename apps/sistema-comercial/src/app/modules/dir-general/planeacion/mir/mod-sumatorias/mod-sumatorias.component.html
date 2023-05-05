@@ -9,11 +9,11 @@
                 <mat-error>{{formSum.controls.centroGestor['errorMessage']}}</mat-error>
             </mat-form-field>
         </ng-container>
-        <ng-container *ngIf="pbrSumatoria.length > 0">
+        <ng-container *ngIf="planeacion">
             <mat-form-field class="flex-auto mt-5">
                 <mat-label>Selecciona los campos que deseas sumar</mat-label>
                 <mat-select formControlName="ids" placeholder="Seleccionar" multiple>
-                    <mat-option *ngFor="let pbr of pbrSumatoria" [value]="pbr.idIndicador">{{pbr.descripcion}}</mat-option>
+                    <mat-option *ngFor="let pbr of planeacion.pbrCuestionario" [value]="pbr.idIndicador">{{pbr.descripcion}}</mat-option>
                 </mat-select>
                 <mat-error>{{formSum.controls.ids['errorMessage']}}</mat-error>
             </mat-form-field>
@@ -29,6 +29,14 @@
             <mat-label>Descripcion</mat-label>
             <input matInput formControlName="descripcion">
             <mat-error>{{formSum.controls.descripcion['errorMessage']}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Forma de calcular el trimestre</mat-label>
+            <mat-select formControlName="sumTrim">
+                <mat-option [value]="true">Sumatoria de los meses del trimestre</mat-option>
+                <mat-option [value]="false">Ultimo valor del mes</mat-option>
+            </mat-select>
         </mat-form-field>
     </section>
 </form>

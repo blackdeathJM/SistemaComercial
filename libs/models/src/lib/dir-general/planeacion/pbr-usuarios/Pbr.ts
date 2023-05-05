@@ -107,4 +107,10 @@ export class RegSumPbr implements TSumPbr
 
     @required({message: 'Es necesario que asignes una descripcion'})
     descripcion: string;
+
+    @required({message: 'Este campo es requerido'})
+    sumTrim: boolean;
+
+    @required({message: 'Este campo es requerido'})
+    sumTotal: boolean;
 }

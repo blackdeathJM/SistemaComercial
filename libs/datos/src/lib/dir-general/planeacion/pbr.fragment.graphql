@@ -33,6 +33,7 @@ fragment fragPbr on PbrType
 
 fragment fragSumPbr on PbrSumatoriaType
 {
+    idSumatoria
     centroGestor
     descripcion
     ids
@@ -51,4 +52,10 @@ fragment fragSumPbr on PbrSumatoriaType
     noviembre
     octubre
     septiembre
+    trim1
+    trim2
+    trim3
+    trim4
+    sumTrim
+    sumTotal
 }
