@@ -788,6 +788,7 @@ export type MutationSubirDocsArgs = {
 
 
 export type MutationSumatoriaPbrArgs = {
+  actualizar: Scalars['Boolean'];
   datos: SumPbrInput;
 };
 
@@ -1694,6 +1695,7 @@ export type RegAvancePbrMutation = { __typename?: 'Mutation', regAvancePbr: { __
 
 export type SumatoriaPbrMutationVariables = Exact<{
   datos: SumPbrInput;
+  actualizar: Scalars['Boolean'];
 }>;
 
 
@@ -3161,8 +3163,8 @@ export const RegAvancePbrDocument = gql`
     }
   }
 export const SumatoriaPbrDocument = gql`
-    mutation sumatoriaPbr($datos: SumPbrInput!) {
-  sumatoriaPbr(datos: $datos) {
+    mutation sumatoriaPbr($datos: SumPbrInput!, $actualizar: Boolean!) {
+  sumatoriaPbr(datos: $datos, actualizar: $actualizar) {
     ...fragPlaneacion
   }
 }

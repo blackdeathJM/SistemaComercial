@@ -47,9 +47,9 @@ mutation regAvancePbr($datos: RegAvancesPbrInput!)
         ...fragPlaneacion
     }
 }
-mutation sumatoriaPbr($datos: SumPbrInput!)
+mutation sumatoriaPbr($datos: SumPbrInput!, $actualizar: Boolean!)
 {
-    sumatoriaPbr(datos: $datos)
+    sumatoriaPbr(datos: $datos, actualizar: $actualizar)
     {
         ...fragPlaneacion
     }

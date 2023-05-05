@@ -180,9 +180,9 @@ export class PlaneacionService
             }));
     }
 
-    sumatoriaPbr(datos: TSumPbr): Observable<SingleExecutionResult<SumatoriaPbrMutation>>
+    sumatoriaPbr(datos: TSumPbr, actualizar: boolean): Observable<SingleExecutionResult<SumatoriaPbrMutation>>
     {
-        return this.sumatoriaPbrGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.sumatoriaPbrGQL.mutate({datos, actualizar}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (isNotNil(res) && isNotNil(res.data))
             {

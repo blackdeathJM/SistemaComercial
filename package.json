@@ -16,7 +16,7 @@
         "watch": "nx build --watch --configuration development",
         "test": "nx test",
         "lint": "nx lint",
-        "postinstall": "node ./decorate-angular-cli.js && ngcc --properties ES2022 browser module main"
+        "postinstall": "node decorate-angular-cli.js && ngcc --properties ES2022 browser module main"
     },
     "dependencies": {
         "@angular-material-components/datetime-picker": "^9.0.0",
@@ -165,7 +165,7 @@
         "@types/lodash-es": "4.17.7",
         "@types/luxon": "^3.3.0",
         "@types/marked": "^4.3.0",
-        "@types/node": "18.16.3",
+        "@types/node": "20.0.0",
         "@types/passport-jwt": "^3.0.8",
         "@types/passport-local": "^1.0.35",
         "@types/react": "^18.2.5",

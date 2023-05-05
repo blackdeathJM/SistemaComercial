@@ -50,7 +50,6 @@ export class ModSumatoriasComponent implements OnInit
 
     resSumatoria(): void
     {
-
         const datos: TSumPbr =
             {
                 _id: this.planeacionQuery.getActive()._id,
