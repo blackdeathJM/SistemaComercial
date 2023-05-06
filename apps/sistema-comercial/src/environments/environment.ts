@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 // import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
-import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+// import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 
 export const environment = {
     firebase: {
