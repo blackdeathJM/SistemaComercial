@@ -15,6 +15,9 @@ import {NgxToastService} from '@s-services/ngx-toast.service';
 import {ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {ListaSumPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-sum-pbr/lista-sum-pbr.component";
 import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {MatDialog} from "@angular/material/dialog";
+import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
+import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interfaces";
 
 export const abrirPanelPbr = signal<boolean>(false);
 
@@ -34,7 +37,7 @@ export class PbrComponent
     pbrSumatoria: ISumatorias[] = [];
     abrirPanel = abrirPanelPbr;
 
-    constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService)
+    constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private mdr: MatDialog)
     {
 
     }
@@ -53,12 +56,16 @@ export class PbrComponent
             return;
         }
         this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.centroGestor, e);
-        this.pbrSumatoria = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrSumatoria, ValoresCamposMod.centroGestor, e).pbrSumatoria;
-        console.log(this.pbrSumatoria);
+        this.pbrSumatoria = this.planeacion.pbrSumatoria.filter(value => value.centroGestor === e);
     }
 
     sumatoria(): void
     {
-
+        const data: IEditarSumatoriaPBR =
+            {
+                idSumatoria: null,
+                actualizar: false
+            }
+        this.mdr.open(ModSumatoriasComponent, {width: '40%', data});
     }
 }
