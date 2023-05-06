@@ -15,8 +15,7 @@
         "update": "nx update @nrwl/workspace",
         "watch": "nx build --watch --configuration development",
         "test": "nx test",
-        "lint": "nx lint",
-        "postinstall": "node decorate-angular-cli.js && nx affected:libs --all --prod && nx affected:build --prod"
+        "lint": "nx lint"
     },
     "dependencies": {
         "@angular-material-components/datetime-picker": "^9.0.0",
