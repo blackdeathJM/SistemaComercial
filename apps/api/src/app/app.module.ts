@@ -13,7 +13,6 @@ import { TecnicaOperativaModule } from '#api/apps/api/src/app/tecnica-operativa/
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DirAdmonFinanzasModule } from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
 import { DirGeneralModule } from '#api/apps/api/src/app/dir-general/dir-general.module';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { APP_FILTER } from '@nestjs/core';
 import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/excepciones';
 

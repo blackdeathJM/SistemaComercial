@@ -1,7 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { GqlArgumentsHost, GqlExceptionFilter } from '@nestjs/graphql';
-import { Request, Response } from 'express';
-import { GraphQLResolveInfo } from 'graphql/type';
 
 @Catch()
 export class ExcepcionesMongoose implements GqlExceptionFilter, ExceptionFilter
