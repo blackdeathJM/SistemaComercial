@@ -10,11 +10,12 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interfaces";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @Component({
     selector: 'app-lista-sum-pbr',
     standalone: true,
-    imports: [CommonModule, FuseAlertModule, MatCardModule, MatButtonModule, MatIconModule, MatGridListModule],
+    imports: [CommonModule, FuseAlertModule, MatCardModule, MatButtonModule, MatIconModule, MatGridListModule, MatTabsModule],
     templateUrl: './lista-sum-pbr.component.html',
     styleUrls: ['./lista-sum-pbr.component.scss'],
     animations: [fuseAnimations],
@@ -22,12 +23,14 @@ import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-suma
 })
 export class ListaSumPbrComponent
 {
-    @Input({required: true}) set sumatoriaPbr(v: ISumatorias)
+    indice = 0;
+
+    @Input({required: true}) set sumatoriasPbr(v: ISumatorias)
     {
         this._sumatoria = v;
     }
 
-    _sumatoria: ISumatorias
+    _sumatoria: ISumatorias = null
 
     constructor(private mdr: MatDialog)
     {
@@ -41,5 +44,10 @@ export class ListaSumPbrComponent
                 actualizar: true
             }
         this.mdr.open(ModSumatoriasComponent, {width: '40%', data, hasBackdrop: true, disableClose: true})
+    }
+
+    cambioIndice(e: number): void
+    {
+        this.indice = e;
     }
 }

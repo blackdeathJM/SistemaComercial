@@ -15,11 +15,12 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
+import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
-    imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule],
+    imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule, ComponentesComponent],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],

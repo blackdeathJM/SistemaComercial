@@ -13,7 +13,7 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
-import {ListaSumPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-sum-pbr/lista-sum-pbr.component";
+import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
 import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
@@ -34,7 +34,7 @@ export class PbrComponent
 {
 
     planeacion: IPlaneacion = null;
-    pbrSumatoria: ISumatorias[] = [];
+    pbrSumatorias: ISumatorias[] = [];
     abrirPanel = abrirPanelPbr;
 
     constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private mdr: MatDialog)
@@ -56,7 +56,7 @@ export class PbrComponent
             return;
         }
         this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.centroGestor, e);
-        this.pbrSumatoria = this.planeacion.pbrSumatoria.filter(value => value.centroGestor === e);
+        this.pbrSumatorias = this.planeacion.pbrSumatoria.filter(value => value.centroGestor === e);
     }
 
     sumatoria(): void

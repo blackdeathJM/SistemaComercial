@@ -16,7 +16,7 @@ import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
-import {ListaSumPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-sum-pbr/lista-sum-pbr.component";
+import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
 import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 

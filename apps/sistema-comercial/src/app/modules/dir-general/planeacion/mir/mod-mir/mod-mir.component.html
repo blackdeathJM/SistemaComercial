@@ -1,5 +1,11 @@
 <form [formGroup]="formMir">
     <section class="px-4 flex flex-col flex-auto gap-2">
+        <mat-form-field>
+            <mat-label>Id indicador</mat-label>
+            <input matInput formControlName="idIndicador" trim>
+            <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+
         <div class="flex flex-auto gap-4 items-center content-center">
             <mat-form-field class="flex-auto">
                 <mat-label>Selecciona empleado</mat-label>
@@ -22,11 +28,7 @@
             <input matInput formControlName="correo">
             <mat-error>{{formMir.controls.correo['errorMessage']}}</mat-error>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Id indicador</mat-label>
-            <input matInput formControlName="idIndicador" trim>
-            <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
-        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Nivel</mat-label>
             <input matInput formControlName="nivel">

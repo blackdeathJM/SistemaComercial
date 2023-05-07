@@ -82,7 +82,7 @@ export class PlaneacionService
             if (res && res.data)
             {
                 const {_id, ...cambio} = res.data.regMir as IPlaneacion;
-                this.planeacionStore.update(_id, {...cambio});
+                this.planeacionStore.update(_id, {mirCuestionario: cambio.mirCuestionario});
                 this.ngxToast.satisfactorioToast('El guardado ha sido exitoso', 'MIR');
             }
         }));
