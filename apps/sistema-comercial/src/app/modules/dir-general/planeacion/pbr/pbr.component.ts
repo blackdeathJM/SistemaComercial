@@ -61,6 +61,11 @@ export class PbrComponent
 
     sumatoria(): void
     {
+        if (!this.planeacionQuery.getActive())
+        {
+            this.ngxToast.alertaToast('Debes seleccionar el año del ejercicio', 'Sumatorias');
+            return;
+        }
         const data: IEditarSumatoriaPBR =
             {
                 idSumatoria: null,

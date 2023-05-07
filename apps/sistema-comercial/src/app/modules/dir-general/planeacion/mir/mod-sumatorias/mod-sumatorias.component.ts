@@ -57,20 +57,19 @@ export class ModSumatoriasComponent implements OnInit, AfterContentInit
         console.log(this.planeacion);
     }
 
-    trackByFn(index: number, elemento: string): number | string
-    {
-        return index || elemento;
-    }
-
     resSumatoria(): void
     {
         const datos: TSumPbr =
             {
                 _id: this.planeacionQuery.getActive()._id,
-                idSumatoria: '',
+                idSumatoria: this.data.idSumatoria,
                 ...this.formSum.value,
             };
 
-        this.planeacionService.sumatoriaPbr(datos, false).subscribe();
+        this.planeacionService.sumatoriaPbr(datos, this.data.actualizar).subscribe();
+    }
+    trackByFn(index: number, elemento: string): number | string
+    {
+        return index || elemento;
     }
 }

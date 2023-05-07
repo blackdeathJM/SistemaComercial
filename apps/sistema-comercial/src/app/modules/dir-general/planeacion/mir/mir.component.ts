@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -14,19 +14,23 @@ import {PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeaci
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
+import {fuseAnimations} from "@s-fuse/public-api";
 
+export const abrirPanelMir = signal<boolean>(false)
 @Component({
     selector: 'app-mir',
     standalone: true,
     imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent],
     providers: [],
     templateUrl: './mir.component.html',
-    styleUrls: ['./mir.component.scss']
+    animations: [fuseAnimations],
+    styleUrls: ['./mir.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class MirComponent
 {
-    abrirPanel = false;
     planeacion: IPlaneacion = null;
+    abrirPanel = abrirPanelMir;
 
     constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery,
                 private planeacionStore: PlaneacionStore)

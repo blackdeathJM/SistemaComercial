@@ -183,7 +183,7 @@ export class PlaneacionService
 
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 
-        //Sumatoria de los meses en vertical empezando por diciembre, se hizo asi para asignar el ultimo valor a los trimestres que lo requieran
+        //Sumatoria de los meses en vertical empezando por diciembre, se hizo asi para asignar el último valor a los trimestres que lo requieran
         const sumatoriaMeses = this.sumarValoresDelMismoMes(valoresMatrizMeses.flat());
 
         const ultimoValorDelMes = sumatoriaMeses.slice();
@@ -207,7 +207,7 @@ export class PlaneacionService
             noviembre: sumatoriaMeses[1],
             diciembre: sumatoriaMeses[0],
             trim4: sumTrim ? arrayTrim[0].reduce((acc, act) => acc + act) : arrayTrim[0].find(value => value !== 0),
-            total: sumTrim ? sumatoriaMeses.reduce((acc, act) => acc + act) : sumatoriaMeses[11],
+            total: sumTrim ? sumatoriaMeses.reduce((acc, act) => acc + act) : sumatoriaMeses[0],
             ano: 0,
             ids,
             centroGestor,
@@ -215,15 +215,15 @@ export class PlaneacionService
             nombreSumatoria,
             sumTotal,
             sumTrim,
-            idSumatoria: idSumatoria === null ? uuidv4() : idSumatoria
+            idSumatoria: actualizar ? idSumatoria : uuidv4()
         };
         if (actualizar)
         {
-            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}).exec();
+            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
             // return await this.planeacion.replaceOne({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {pbrSumatoria}, {new: true})
         } else
         {
-            return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}).exec();
+            return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
         }
     }
 }

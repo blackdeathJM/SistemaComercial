@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
@@ -13,6 +13,8 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {NgxToastService} from "@s-services/ngx-toast.service";
+import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -26,12 +28,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class ListaTabMirComponent
 {
-    @Output() abrirPanel = new EventEmitter<boolean>();
     loader = ngxLoaderMir();
     indice = 0;
     _planeacion: IPlaneacion = null;
 
-    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService)
+    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
     {
     }
 
@@ -40,30 +41,47 @@ export class ListaTabMirComponent
         this._planeacion = valor;
     }
 
-    trackByFn(index: number): string | number
+    cambioDeIndiceMir(e: number): void
     {
-        return index;
+        this.indice = e;
     }
 
     nuevoElemento(): void
     {
         actualizarMir([false, this.indice]);
-        this.abrirPanel.emit(true);
+        abrirPanelMir.set(true)
     }
 
     editarRegistro(): void
     {
+        if (this._planeacion.mirCuestionario.length === 0)
+        {
+            this.ngxToast.alertaToast('No hay elementos que editar por el momento', 'Actualizar MIR');
+            return;
+        }
         actualizarMir([true, this.indice]);
-        this.abrirPanel.emit(true);
+        abrirPanelMir.set(true);
     }
 
     eliminarReg(): void
     {
+        if (this._planeacion.mirCuestionario.length === 0)
+        {
+            this.ngxToast.alertaToast('No hay elementos que eliminar por el momento', 'Eliminar MIR');
+            return;
+        }
         this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.mirCuestionario);
     }
-
-    cambioDeIndiceMir(e: number): void
+    imprimirMir(): void
     {
-        this.indice = e;
+        if (this._planeacion.mirCuestionario.length === 0)
+        {
+            this.ngxToast.alertaToast('No hay elementos para imprimir por el momento', 'Eliminar MIR');
+            return;
+        }
+    }
+    trackByFn(index: number): string | number
+    {
+        return index;
     }
 }

@@ -15,9 +15,10 @@ import {actualizarPbr, avancesPbr, ngxLoaderPbr, PlaneacionService, ValoresCampo
 import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
-import {ModSumatoriasComponent} from '@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component';
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 import {ListaSumPbrComponent} from "@s-dir-general/pbr/lista-pbr/lista-sum-pbr/lista-sum-pbr.component";
+import {isNil} from "@angular-ru/cdk/utils";
+import {NgxToastService} from "@s-services/ngx-toast.service";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -39,7 +40,8 @@ export class ListaPbrComponent
     indice = 0;
     loader = ngxLoaderPbr();
 
-    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService)
+    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
+                private ngxToast: NgxToastService)
     {
     }
 
@@ -67,6 +69,11 @@ export class ListaPbrComponent
 
     editarPbr(): void
     {
+        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0)
+        {
+            this.ngxToast.alertaToast('No hay elemento que puedas editar', 'Editar elementos');
+            return;
+        }
         actualizarPbr([true, this.indice]);
         abrirPanelPbr.set(true);
     }
@@ -78,6 +85,11 @@ export class ListaPbrComponent
 
     eliminarPbr(): void
     {
+        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0)
+        {
+            this.ngxToast.alertaToast('No hay elemento que puedas eliminar', 'Eliminar elemento');
+            return;
+        }
         this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.pbrCuestionario);
     }
 }

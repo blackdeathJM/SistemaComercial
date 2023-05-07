@@ -18,6 +18,11 @@
             </button>
         </div>
         <mat-form-field>
+            <mat-label>Correo</mat-label>
+            <input matInput formControlName="correo">
+            <mat-error>{{formPbr.controls.correo['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
             <mat-label>Clave variable</mat-label>
             <input matInput formControlName="idIndicador">
             <mat-error>{{formPbr.controls.idIndicador['errorMessage']}}</mat-error>
@@ -26,12 +31,6 @@
             <mat-label>Variable de origen</mat-label>
             <input matInput formControlName="variableOrigen">
             <mat-error>{{formPbr.controls.variableOrigen['errorMessage']}}</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Correo</mat-label>
-            <input matInput formControlName="correo">
-            <mat-error>{{formPbr.controls.correo['errorMessage']}}</mat-error>
         </mat-form-field>
 
         <mat-form-field>
