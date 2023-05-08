@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -18,6 +18,7 @@ import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usua
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
 import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interfaces";
+import {Subscription} from "rxjs";
 
 export const abrirPanelPbr = signal<boolean>(false);
 
@@ -30,21 +31,22 @@ export const abrirPanelPbr = signal<boolean>(false);
     styleUrls: ['./pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PbrComponent implements AfterViewInit
+export class PbrComponent implements OnInit, OnDestroy
 {
 
     planeacion: IPlaneacion = null;
     pbrSumatorias: ISumatorias[] = [];
     abrirPanel = abrirPanelPbr;
+    sub: Subscription = new Subscription();
 
     constructor(private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private mdr: MatDialog)
     {
 
     }
 
-    ngAfterViewInit(): void
+    ngOnInit(): void
     {
-        this.planeacion = this.planeacionQuery.getActive();
+        this.sub.add(this.planeacionQuery.selectActive().subscribe(res => this.planeacion = res));
     }
 
     filCentroGestorPbr(e: string): void
@@ -71,5 +73,10 @@ export class PbrComponent implements AfterViewInit
                 actualizar: false
             }
         this.mdr.open(ModSumatoriasComponent, {width: '40%', data});
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

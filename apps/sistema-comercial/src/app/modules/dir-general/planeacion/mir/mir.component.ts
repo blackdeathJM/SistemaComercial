@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -14,6 +14,7 @@ import {PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeaci
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from "@s-fuse/public-api";
+import {Subscription} from "rxjs";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -26,10 +27,11 @@ export const abrirPanelMir = signal<boolean>(false)
     styleUrls: ['./mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class MirComponent implements AfterViewInit
+export default class MirComponent implements AfterViewInit, OnDestroy
 {
     planeacion: IPlaneacion = null;
     abrirPanel = abrirPanelMir;
+    sub: Subscription = new Subscription();
 
     constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
     {
@@ -37,7 +39,7 @@ export default class MirComponent implements AfterViewInit
 
     ngAfterViewInit(): void
     {
-        this.planeacion = this.planeacionQuery.getActive();
+        this.sub.add(this.planeacionQuery.selectActive().subscribe(res => this.planeacion = res))
     }
 
     regSeleccion(): void
@@ -58,5 +60,10 @@ export default class MirComponent implements AfterViewInit
             return;
         }
         this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.mirCuestionario, ValoresCamposMod.centroGestor, centroGestor);
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }
