@@ -29,41 +29,53 @@
     <!--            </fieldset>-->
     <!--        </ng-container>-->
     <!--    </div>-->
-    <fieldset class="border-2">
+    <fieldset class="p-4 border-2" @zoomIn>
         <legend>Componente</legend>
         <ng-container>
-            <section class="grid grid-cols-6 gap-4 m-4 text-lg">
-                <span class="detalle-span">Fecha</span>
-                <span class="border-b-2">{{fecha}}</span>
-                <span class="detalle-span">ID INDICADOR</span>
-                <span class="border-b-2">C7A9DT_47</span>
-                <span class="detalle-span">Programa presupuestal</span>
-                <span class="border-b-2">E00050109</span>
+            <article class="flex flex-col flex-auto">
+                <section class="grid grid-cols-6 gap-4 m-4 text-lg">
+                    <span class="detalle-span">Fecha</span>
+                    <span class="border-b-2">{{fecha}}</span>
+                    <span class="detalle-span">ID INDICADOR</span>
+                    <span class="border-b-2">{{_mirCuestionario?.idIndicador}}</span>
+                    <span class="detalle-span">Programa presupuestal</span>
+                    <span class="border-b-2">{{_mirCuestionario?.programaFinanciacion}}</span>
 
-                <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">FUNCIONARIO RESPONSABLE</span>
-                <span class="detalle-span">Nombre</span>
-                <span class="border-b-2">nombre del responsable</span>
-                <span class="detalle-span">Centro gestor</span>
-                <span class="border-b-2">nombre del centro</span>
-                <span class="detalle-span">Correo electronico</span>
-                <span class="border-b-2">usuarioRespo@gmail.com</span>
+                    <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">FUNCIONARIO RESPONSABLE</span>
+                    <span class="detalle-span">Responsable</span>
+                    <span class="border-b-2">{{_mirCuestionario?.responsable}}</span>
+                    <span class="detalle-span">Centro gestor</span>
+                    <span class="border-b-2">{{_mirCuestionario?.centroGestor}}</span>
+                    <span class="detalle-span">Correo electronico</span>
+                    <span class="border-b-2">{{_mirCuestionario?.correo}}</span>
 
-                <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Nombre del indicador</span>
-                <span class="border-b-2 col-span-full text-center">Estudios y analisis al agua de las fuentes de abastecimiento</span>
+                    <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Nombre del indicador</span>
+                    <span class="border-b-2 col-span-full text-center">{{_mirCuestionario?.resumenNarrativo}}</span>
 
-                <span class="detalle-span col-start-5">Unidad de medida</span>
-                <span class="border-b-2">medida</span>
-                <span class="detalle-span col-start-5">Nivel</span>
-                <span class="border-b-2">Componente 7 Actividad 4</span>
-                <span class="detalle-span col-start-5">Linea base</span>
-                <span class="border-b-2">699.17</span>
-                <span class="detalle-span col-start-5">Meta</span>
-                <span class="border-b-2">75 %</span>
-                <span class="detalle-span col-start-5">Sentido del indicador</span>
-                <span class="border-b-2">Asc</span>
-                <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Metodo de calculo</span>
-                <span class="border-b-2 col-span-full text-center">Total de estudios realizados en el período evaluado con parámetros aceptables/Total de estudios a realizar en el ejercicio fiscal evaluado * 100</span>
-            </section>
+                    <span class="detalle-span col-start-5">Unidad de medida</span>
+                    <span class="border-b-2">{{_mirCuestionario?.unidadDeMedida}}</span>
+                    <span class="detalle-span col-start-5">Nivel</span>
+                    <span class="border-b-2">{{_mirCuestionario?.nivel}}</span>
+                    <span class="detalle-span col-start-5">Linea base</span>
+                    <span class="border-b-2">{{_mirCuestionario?.lineaBaseValor}}</span>
+                    <span class="detalle-span col-start-5">Meta</span>
+                    <span class="border-b-2">{{_mirCuestionario?.meta}}</span>
+                    <span class="detalle-span col-start-5">Sentido del indicador</span>
+                    <span class="border-b-2">{{_mirCuestionario?.sentidoDelIndicador}}</span>
+                    <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Metodo de calculo</span>
+                    <span class="border-b-2 col-span-full text-center">{{_mirCuestionario?.metodoCalculo}}</span>
+                </section>
+
+                <mat-toolbar>
+                    <button mat-raised-button color="primary" (click)="regComponente()">
+                        <mat-icon svgIcon="add"></mat-icon>
+                        Registrar componente
+                    </button>
+                </mat-toolbar>
+                <section>
+
+                </section>
+            </article>
         </ng-container>
     </fieldset>
 </section>

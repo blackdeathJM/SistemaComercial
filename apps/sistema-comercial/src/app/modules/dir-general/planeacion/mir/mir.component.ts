@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -27,7 +27,7 @@ export const abrirPanelMir = signal<boolean>(false)
     styleUrls: ['./mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class MirComponent implements AfterViewInit, OnDestroy
+export default class MirComponent implements OnInit, OnDestroy
 {
     planeacion: IPlaneacion = null;
     abrirPanel = abrirPanelMir;
@@ -36,8 +36,7 @@ export default class MirComponent implements AfterViewInit, OnDestroy
     constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
     {
     }
-
-    ngAfterViewInit(): void
+    ngOnInit(): void
     {
         this.sub.add(this.planeacionQuery.selectActive().subscribe(res => this.planeacion = res))
     }

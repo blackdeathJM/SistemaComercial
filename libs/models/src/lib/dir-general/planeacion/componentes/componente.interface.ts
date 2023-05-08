@@ -1,14 +1,22 @@
-export interface IComponente
+export interface IOtrosDatos
 {
-    idComponente: string;
+    nombreCampo: string;
+    valor: number;
 }
 
-export interface ICompGeneral
+export interface IComponente1
 {
-    idCentroGestor: string;
+    idIndicador: string;
     descripcion: string;
     valor: number;
-    formulaValor: string;
-    avancePrimerTrim: number;
-    formulaAvanceTrim: string;
+    otroCampo: IOtrosDatos[];
+    avanceTrim1: number;
+    avanceTrim2: number;
+    avanceTrim3: number;
+    avanceTrim4: number;
+    obtenerValorPorMes: boolean;
+    formCalTrim1: string;
+    formCalTrim2: string
+    formCalTrim3: string;
+    formCalTrim4: string;
 }

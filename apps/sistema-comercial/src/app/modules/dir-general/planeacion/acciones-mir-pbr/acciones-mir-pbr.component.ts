@@ -24,6 +24,7 @@ export class AccionesMirPbrComponent
 
     // consultas
     @Output() centroGestor = new EventEmitter<string>();
+    @Output() planeacionSeleccionado: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore)
     {
@@ -32,6 +33,7 @@ export class AccionesMirPbrComponent
     seleccionarPlaneacion(e: IPlaneacion): void
     {
         this.planeacionStore.setActive(e._id);
+        this.planeacionSeleccionado.emit(true);
     }
 
     filCentroGestor(e: string): void

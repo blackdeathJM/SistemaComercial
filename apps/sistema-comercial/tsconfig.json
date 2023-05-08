@@ -29,6 +29,7 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version/*"
             ],
+            "@s-shared/*": [ "apps/sistema-comercial/src/Shared/*" ],
             "@s-services/*": [ "apps/sistema-comercial/src/services/*" ],
             "@s-core/*": [
                 "apps/sistema-comercial/src/app/core/*",
@@ -91,8 +92,7 @@
                 "apps/sistema-comercial/src/assets/styles/*"
             ],
             "@s-directives/*": [ "apps/sistema-comercial/src/directives/*" ],
-            "@s-environments/*": [ "apps/sistema-comercial/src/environments/*" ],
-            "@s-shared/*": [ "apps/sistema-comercial/src/Shared/*" ]
+            "@s-environments/*": [ "apps/sistema-comercial/src/environments/*" ]
         },
         "types": [ ]
     },

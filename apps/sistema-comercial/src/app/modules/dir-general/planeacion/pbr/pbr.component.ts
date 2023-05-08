@@ -17,7 +17,7 @@ import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-p
 import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
-import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interfaces";
+import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {Subscription} from "rxjs";
 
 export const abrirPanelPbr = signal<boolean>(false);

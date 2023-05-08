@@ -14,7 +14,7 @@ import {TSumPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 import {RegSumPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
 import {PlaneacionService, ValoresCamposMod} from "@s-dir-general/store/planeacion.service";
 import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
-import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interfaces";
+import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({

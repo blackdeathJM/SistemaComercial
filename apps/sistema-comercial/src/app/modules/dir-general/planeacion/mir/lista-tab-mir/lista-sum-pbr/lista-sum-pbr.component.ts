@@ -7,7 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatGridListModule} from "@angular/material/grid-list";
-import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interfaces";
+import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
 import {MatTabsModule} from "@angular/material/tabs";

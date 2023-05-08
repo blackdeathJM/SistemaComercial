@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.component';
 import {MatInputModule} from '@angular/material/input';
@@ -20,7 +20,7 @@ import {AuthQuery} from '@s-core/auth/store/auth.query';
 })
 export default class PbrUsuarioComponent implements OnInit
 {
-    planeacion: IPlaneacion = null;
+    planeacion: IPlaneacion;
 
     constructor(private planeacionService: PlaneacionService, private planeacionStore: PlaneacionStore, private planeacionQuery: PlaneacionQuery,
                 private authQuery: AuthQuery)
@@ -29,12 +29,13 @@ export default class PbrUsuarioComponent implements OnInit
 
     ngOnInit(): void
     {
+        // Obtenermos de la coleccion todos los años para poderlos seleccionar recoredad que toda la información se maneja en una sola coleccion,
+        // mirCuestionario, pbrCuestionario, sumatorias y lo que vaya saliendo
         this.planeacionService.filTodos().subscribe();
     }
 
-    seleccionarPlaneacion(e: IPlaneacion): void
+    planeacionSeleccionado(): void
     {
-        this.planeacionStore.setActive(e._id);
         this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.idEmpleado, this.authQuery.getValue()._id);
     }
 }

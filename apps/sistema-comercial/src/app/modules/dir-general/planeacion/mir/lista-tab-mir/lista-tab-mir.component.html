@@ -88,6 +88,7 @@
             </mat-card-actions>
         </mat-card>
     </ng-container>
-
-    <app-componentes></app-componentes>
+    <ng-container *ngIf="_planeacion && _planeacion.mirCuestionario.length > 0">
+        <app-componentes [mirCuestionario]="_planeacion.mirCuestionario[indice]"></app-componentes>
+    </ng-container>
 </article>

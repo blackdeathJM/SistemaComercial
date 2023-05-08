@@ -15,12 +15,14 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
-    imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule, ComponentesComponent],
+    imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule,
+        ComponentesComponent],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
@@ -32,6 +34,7 @@ export class ListaTabMirComponent
     loader = ngxLoaderMir();
     indice = 0;
     _planeacion: IPlaneacion = null;
+    mirCuestionarioComponente: IMirCuestionario = null;
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
     {
@@ -73,6 +76,7 @@ export class ListaTabMirComponent
         }
         this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.mirCuestionario);
     }
+
     imprimirMir(): void
     {
         if (this._planeacion.mirCuestionario.length === 0)
@@ -81,6 +85,7 @@ export class ListaTabMirComponent
             return;
         }
     }
+
     trackByFn(index: number): string | number
     {
         return index;

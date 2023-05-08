@@ -1,0 +1,55 @@
+<section class="flex flex-col flex-auto">
+    <fieldset class="p-4 border-2 mb-4">
+        <legend>Selecciona el tipo de formulario</legend>
+        <mat-radio-group color="primary" [(ngModel)]="seleccionTipo">
+            <mat-radio-button [value]="1" checked>Tipo 1</mat-radio-button>
+            <mat-radio-button [value]="2">Tipo 2</mat-radio-button>
+            <mat-radio-button [value]="3">Tipo 3</mat-radio-button>
+        </mat-radio-group>
+    </fieldset>
+
+    <!--    Establecer como Control para poder utilizarlo en todos los ngswitch-->
+    <mat-form-field class="flex-auto">
+        <mat-label>Valor - Id de la variable a la que se va hacer referencia</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let pbr of planeacion.pbrCuestionario" [value]="pbr.idIndicador">{{pbr.idIndicador}} ---- {{pbr.descripcion}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <ng-container [ngSwitch]="seleccionTipo">
+        <section class="flex flex-col flex-auto" *ngSwitchCase="1">
+            <mat-form-field>
+                <mat-label>Descripcion</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <div class="flex flex-auto gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Valor</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Dato a adquirir</mat-label>
+                    <mat-select>
+                        <mat-option [value]="true">Obtener valor del mes</mat-option>
+                        <mat-option [value]="false">Obtener valor del trimestre</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <mat-form-field class="flex-auto">
+                <mat-label>Formula para calcular el avance trimestral</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </section>
+
+        <section class="flex flex-col flex-auto" *ngSwitchCase="2">
+            <mat-form-field>
+                <mat-label>descripcion</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </section>
+
+        <section *ngSwitchCase="3">
+            <h1>Caso 3</h1>
+        </section>
+    </ng-container>
+</section>
+<app-registros (registro)="registro()"></app-registros>
