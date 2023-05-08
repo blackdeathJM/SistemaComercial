@@ -4,9 +4,9 @@ import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {SumPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
+import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {chunk} from "lodash";
-import {ISumatorias} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
@@ -111,7 +111,7 @@ export class PlaneacionService
     async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
         const {
-            _id, esSumatoriaTrim, esSumatoriaTotal, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
+            _id, tipoOperacion, esSumatoriaTotal, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
             septiembre, octubre, noviembre, diciembre
         } = datos;
 
@@ -121,23 +121,32 @@ export class PlaneacionService
 
         const valoresTrim: number[] = [];
 
-        if (esSumatoriaTrim)
+        switch (tipoOperacion)
         {
-            trimestres.forEach((value) =>
-            {
-                const valor = value.reduce((previousValue, currentValue) => previousValue + currentValue);
-                valoresTrim.push(valor);
-            });
+            case TipoOperaciones.suma:
+                trimestres.forEach((value) =>
+                {
+                    const valor = value.reduce((previousValue, currentValue) => previousValue + currentValue);
+                    valoresTrim.push(valor);
+                });
 
-            total = valoresTrim.reduce((previousValue, currentValue) => previousValue + currentValue);
-        } else
-        {
-            trimestres.forEach((value) =>
-            {
-                const ultimo = value.find(ultimoValor => ultimoValor !== 0);
-                valoresTrim.push(ultimo);
-            });
-            total = [diciembre, noviembre, octubre, septiembre, agosto, julio, junio, mayo, abril, marzo, febrero, enero].find(value => value !== 0);
+                total = valoresTrim.reduce((previousValue, currentValue) => previousValue + currentValue);
+                break;
+            case TipoOperaciones.ultimo:
+                trimestres.forEach((value) =>
+                {
+                    const ultimo = value.find(ultimoValor => ultimoValor !== 0);
+                    valoresTrim.push(ultimo);
+                });
+                total = [diciembre, noviembre, octubre, septiembre, agosto, julio, junio, mayo, abril, marzo, febrero, enero].find(value => value !== 0);
+                break;
+            case TipoOperaciones.promedio:
+                trimestres.forEach((value) =>
+                {
+                    const valor = value.reduce((previousValue, currentValue) => previousValue + currentValue);
+                    valoresTrim.push(valor / 3);
+                });
+                break;
         }
 
         const actualizarPbr = await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
@@ -150,10 +159,15 @@ export class PlaneacionService
                     'pbrCuestionario.$.total': total,
                 }
             }, {new: true}).exec();
-
+// Actualizamos la sumatoria del centro gestor por si tiene
         if (actualizarPbr.pbrSumatoria && actualizarPbr.pbrSumatoria.length > 0)
         {
-
+            const datos: TSumPbr =
+                {
+                    _id: actualizarPbr._id,
+                    ...actualizarPbr.pbrSumatoria
+                }
+            return await this.sumatoriaPbr(datos, true);
         }
         return actualizarPbr;
     }

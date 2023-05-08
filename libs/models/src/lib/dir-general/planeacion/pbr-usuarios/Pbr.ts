@@ -42,7 +42,7 @@ export class Pbr implements TRegPbr
     esActualizar: boolean;
 
     @required()
-    esSumatoriaTrim: boolean;
+    tipoOperacion: string;
 
     @required()
     esSumatoriaTotal: boolean;
@@ -51,8 +51,12 @@ export class Pbr implements TRegPbr
 export class AvancesPbr implements TRegAvancesPbr
 {
     _id: string;
+
     idIndicador: string;
-    esSumatoriaTrim: boolean;
+
+    @required()
+    tipoOperacion: string;
+
     esSumatoriaTotal: boolean;
 
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})

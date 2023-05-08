@@ -27,7 +27,7 @@ fragment fragPbr on PbrType
     diciembre
     trim4
     total
-    esSumatoriaTrim
+    tipoOperacion
     esSumatoriaTotal
 }
 

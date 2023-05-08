@@ -122,9 +122,9 @@ export class PbrCuestionarioDto implements IPbrCuestionario
     @Field(() => Boolean, {nullable: true})
     esSumatoriaTotal: boolean;
 
-    @IsBoolean({message: 'El valor debe ser boleano'})
-    @Field(() => Boolean, {nullable: true})
-    esSumatoriaTrim: boolean;
+    @IsNotEmpty({message: 'Es necesario el tipo de valor'})
+    @Field(() => String, {nullable: true, defaultValue: 'suma'})
+    tipoOperacion: string;
 }
 
 @InputType('RegPbrInput')
@@ -143,7 +143,7 @@ export type TRegPbr = RegPbrDto;
 
 @InputType('RegAvancesPbrInput')
 export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
-    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'esSumatoriaTrim', 'esSumatoriaTotal'], InputType)
+    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'tipoOperacion', 'esSumatoriaTotal'], InputType)
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id es necesario'})

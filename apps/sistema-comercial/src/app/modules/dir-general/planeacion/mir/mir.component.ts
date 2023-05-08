@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -13,7 +13,6 @@ import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-regi
 import {PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {fuseAnimations} from "@s-fuse/public-api";
 
 export const abrirPanelMir = signal<boolean>(false)
@@ -27,14 +26,18 @@ export const abrirPanelMir = signal<boolean>(false)
     styleUrls: ['./mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class MirComponent
+export default class MirComponent implements AfterViewInit
 {
     planeacion: IPlaneacion = null;
     abrirPanel = abrirPanelMir;
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery,
-                private planeacionStore: PlaneacionStore)
+    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
     {
+    }
+
+    ngAfterViewInit(): void
+    {
+        this.planeacion = this.planeacionQuery.getActive();
     }
 
     regSeleccion(): void
@@ -55,11 +58,5 @@ export default class MirComponent
             return;
         }
         this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.mirCuestionario, ValoresCamposMod.centroGestor, centroGestor);
-    }
-
-    filAno(e: IPlaneacion): void
-    {
-        this.planeacion = e;
-        this.planeacionStore.setActive(e._id);
     }
 }

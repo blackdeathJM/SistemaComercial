@@ -310,7 +310,7 @@ type PbrType {
   total: Float
   unidad: String
   esSumatoriaTotal: Boolean
-  esSumatoriaTrim: Boolean
+  tipoOperacion: String
 }
 
 type PbrSumatoriaType {
@@ -438,7 +438,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683497303
+  tiempo: Int = 1683516189
   titulo: String
   usarRouter: Boolean = false
 }
@@ -621,7 +621,7 @@ input PbrInput {
   total: Float = 0
   unidad: String
   esSumatoriaTotal: Boolean
-  esSumatoriaTrim: Boolean
+  tipoOperacion: String = "suma"
 }
 
 input PbrSumatoriaInput {
@@ -802,7 +802,7 @@ input RegPbrInput {
   total: Float = 0
   unidad: String
   esSumatoriaTotal: Boolean
-  esSumatoriaTrim: Boolean
+  tipoOperacion: String = "suma"
   _id: ID
   esActualizar: Boolean = false
 }
@@ -822,7 +822,7 @@ input RegAvancesPbrInput {
   diciembre: Float = 0
   idIndicador: String
   esSumatoriaTotal: Boolean
-  esSumatoriaTrim: Boolean
+  tipoOperacion: String = "suma"
   _id: ID
 }
 

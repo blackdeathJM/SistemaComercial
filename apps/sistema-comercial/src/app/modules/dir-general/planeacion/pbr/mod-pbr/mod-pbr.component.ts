@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,6 +19,7 @@ import {actualizarPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
+import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-mod-pbr',
@@ -39,6 +40,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
     unidades: string[] = [];
     actualizar = false;
     empleadoAnterior: string;
+    tipoOperacion = TipoOperaciones;
     sub: Subscription = new Subscription();
 
     constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery,

@@ -65,19 +65,20 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Forma de calcular el trimestre</mat-label>
-            <mat-select formControlName="esSumatoriaTrim">
-                <mat-option [value]="true">Sumatoria de los meses del trimestre</mat-option>
-                <mat-option [value]="false">Ultimo valor del mes</mat-option>
+            <mat-select formControlName="tipoOperacion">
+                <mat-option [value]="tipoOperacion.suma">Sumatoria de los meses del trimestre</mat-option>
+                <mat-option [value]="tipoOperacion.ultimo">Promedio de los meses del trimestre</mat-option>
+                <mat-option [value]="tipoOperacion.promedio">Ultimo valor del mes</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Formula para calcular el acumulado total</mat-label>
-            <mat-select formControlName="esSumatoriaTotal">
-                <mat-option [value]="true">Sumar los todos los meses</mat-option>
-                <mat-option [value]="false">Ultimo valor del mes</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <!--        <mat-form-field>-->
+        <!--            <mat-label>Formula para calcular el acumulado total</mat-label>-->
+        <!--            <mat-select formControlName="esSumatoriaTotal">-->
+        <!--                <mat-option [value]="true">Sumar los todos los meses</mat-option>-->
+        <!--                <mat-option [value]="false">Ultimo valor del mes</mat-option>-->
+        <!--            </mat-select>-->
+        <!--        </mat-form-field>-->
     </section>
 </form>
 

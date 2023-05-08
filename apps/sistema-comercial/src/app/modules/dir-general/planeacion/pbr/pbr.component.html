@@ -4,7 +4,7 @@
     </mat-drawer>
     <mat-drawer-content>
         <section class="flex flex-col flex-auto">
-            <app-acciones-mir-pbr [habCentroGestor]="true" (planeacionSeleccionado)="seleccionarPlaneacion($event)" (centroGestor)="filCentroGestorPbr($event)">
+            <app-acciones-mir-pbr [habCentroGestor]="true" (centroGestor)="filCentroGestorPbr($event)">
                 <ng-container acciones>
                     <div class="flex items-center content-center gap-4">
                         <button mat-flat-button color="accent" class="flex-auto" (click)="sumatoria()">

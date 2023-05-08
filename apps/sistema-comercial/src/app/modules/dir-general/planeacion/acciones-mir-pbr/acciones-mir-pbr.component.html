@@ -11,7 +11,7 @@
     <ng-container *ngIf="habCentroGestor">
         <ng-container *ngIf="seleccionQuery.select() | async as centros">
             <mat-form-field class="flex-auto mt-5">
-                <mat-select (valueChange)="filCentroGestor($event)" placeholder="Filtrar por centro gestor" [(value)]="valorCentroGestor">
+                <mat-select (valueChange)="filCentroGestor($event)" placeholder="Filtrar por centro gestor">
                     <mat-option *ngFor="let centro of centros.centroGestor; trackBy: trackByFn" [value]="centro">{{centro}}</mat-option>
                 </mat-select>
             </mat-form-field>

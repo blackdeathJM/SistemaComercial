@@ -50,7 +50,7 @@ export class ModAvancesPbrComponent implements OnInit, AfterContentInit
         const datos: TRegAvancesPbr =
             {
                 _id: this.planeacion._id,
-                esSumatoriaTrim: pbrCuestionario.esSumatoriaTrim,
+                tipoOperacion: pbrCuestionario.tipoOperacion,
                 esSumatoriaTotal: pbrCuestionario.esSumatoriaTotal,
                 idIndicador: pbrCuestionario.idIndicador,
                 enero: +enero,

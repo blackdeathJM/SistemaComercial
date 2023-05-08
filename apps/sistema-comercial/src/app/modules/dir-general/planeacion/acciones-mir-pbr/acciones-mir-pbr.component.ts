@@ -8,6 +8,7 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {PlaneacionStore} from "@s-dir-general/store/planeacion.store";
 
 @Component({
     selector: 'app-acciones-mir-pbr',
@@ -23,17 +24,14 @@ export class AccionesMirPbrComponent
 
     // consultas
     @Output() centroGestor = new EventEmitter<string>();
-    @Output() planeacionSeleccionado = new EventEmitter<IPlaneacion>();
 
-    valorCentroGestor: string;
-
-    constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery)
+    constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore)
     {
     }
 
     seleccionarPlaneacion(e: IPlaneacion): void
     {
-        this.planeacionSeleccionado.emit(e);
+        this.planeacionStore.setActive(e._id);
     }
 
     filCentroGestor(e: string): void

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -30,7 +30,7 @@ export const abrirPanelPbr = signal<boolean>(false);
     styleUrls: ['./pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PbrComponent
+export class PbrComponent implements AfterViewInit
 {
 
     planeacion: IPlaneacion = null;
@@ -42,10 +42,9 @@ export class PbrComponent
 
     }
 
-    seleccionarPlaneacion(e: IPlaneacion): void
+    ngAfterViewInit(): void
     {
-        this.planeacion = e;
-        this.planeacionStore.setActive(e._id);
+        this.planeacion = this.planeacionQuery.getActive();
     }
 
     filCentroGestorPbr(e: string): void
