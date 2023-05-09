@@ -41,10 +41,68 @@
         </section>
 
         <section class="flex flex-col flex-auto" *ngSwitchCase="2">
-            <mat-form-field>
-                <mat-label>descripcion</mat-label>
-                <input matInput>
-            </mat-form-field>
+            <span class="text-lg flex-auto mb-2 border-b-2 text-red-600">Carga contaminante de entrada</span>
+
+            <div class="flex flex-auto gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>PTAR</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>SST</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>DQO</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Grasas y aceites</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+
+            <span class="text-lg flex-auto mb-2 border-b-2 text-red-600">Carga contaminante de salida</span>
+
+            <div class="flex flex-auto gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>PTAR</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>SST</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>DQO</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Grasas y aceites</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+
+            <span class="text-lg flex-auto mb-2 border-b-2 text-red-600">Porcentaje de remocion</span>
+
+            <div class="flex flex-auto gap-4">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Planta</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>SST</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>DQO</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Grasas y aceites</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
         </section>
 
         <section *ngSwitchCase="3">
