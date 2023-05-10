@@ -243,13 +243,34 @@ type SeleccionType {
   tipo: [String!]
 }
 
+type ValoresAdicionalesType {
+  campo: String
+  valor: Float
+}
+
+type FormUnoType {
+  id: String
+  idIndicador: String
+}
+
+type ComponenteType {
+  formulaTrim: String
+  tipoForm: Int
+  formUno: [FormUnoType!]
+  trim1: Float
+  trim2: Float
+  trim3: Float
+  trim4: Float
+  valoresAdicionales: [ValoresAdicionalesType!]
+}
+
 type MirCuestionarioType {
   tipo: String
   dimension: String
   centroGestor: String
   frecuenciaMedicion: String
   idIndicador: String
-  lineaBaseAno: Int
+  lineaBaseAno: String
   lineaBaseValor: String
   meta: Float
   metodoCalculo: String
@@ -281,6 +302,7 @@ type MirCuestionarioType {
   correo: String
   responsable: String
   idEmpleado: String
+  componente: ComponenteType
 }
 
 type PbrType {
@@ -441,7 +463,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683716544
+  tiempo: Int = 1683741307
   titulo: String
   usarRouter: Boolean = false
 }
@@ -557,13 +579,34 @@ input SeleccionInput {
   tipo: [String!] = []
 }
 
+input ValoresAdicionalesInput {
+  campo: String = null
+  valor: Float = 0
+}
+
+input FormUnoInput {
+  id: String = "1fed363f-e764-468b-ae7e-ca0b0dcd6976"
+  idIndicador: String = null
+}
+
+input ComponenteInput {
+  formulaTrim: String = null
+  tipoForm: Int = 1
+  formUno: [FormUnoInput!] = []
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  valoresAdicionales: [ValoresAdicionalesInput!] = []
+}
+
 input MirCuestionarioInput {
   tipo: String = null
   dimension: String = null
   centroGestor: String = null
   frecuenciaMedicion: String = null
   idIndicador: String = null
-  lineaBaseAno: Int = 0
+  lineaBaseAno: String = null
   lineaBaseValor: String = null
   meta: Float = 0
   metodoCalculo: String = null
@@ -595,6 +638,7 @@ input MirCuestionarioInput {
   correo: String = null
   responsable: String
   idEmpleado: String
+  componente: ComponenteInput = null
 }
 
 input PbrInput {
@@ -674,7 +718,6 @@ type Query {
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
-  filtrarEmpleados(consulta: String!): [EmpleadoType!]!
   deptos: [DeptoType!]!
   filtrarDeptos(nombre: String!): [DeptoType!]!
   docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!
@@ -717,7 +760,7 @@ type Mutation {
   asigPermisoPrimerNivel(asig: ActRolesInput!): RolesType!
   asigPermisoSegNivel(asig: ActRolesInput!): RolesType!
   asigPermisoTercerNivel(asig: ActRolesInput!): RolesType!
-  crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
+  crearActEmpledo(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
@@ -745,7 +788,7 @@ input RegMirInput {
   centroGestor: String = null
   frecuenciaMedicion: String = null
   idIndicador: String = null
-  lineaBaseAno: Int = 0
+  lineaBaseAno: String = null
   lineaBaseValor: String = null
   meta: Float = 0
   metodoCalculo: String = null
@@ -777,6 +820,7 @@ input RegMirInput {
   correo: String = null
   responsable: String
   idEmpleado: String
+  componente: ComponenteInput = null
   _id: ID
   esActualizar: Boolean = false
 }
@@ -892,14 +936,17 @@ input ActRolesInput {
 }
 
 input RegEmpleadoInput {
+  _id: ID
   avatar: String = null
   activo: Boolean = true
   calle: String
   colonia: String
   correo: String = null
+  fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
   telefono: [TelefonoInput!] = null
+  auth: AuthInput = null
   modificadoPor: [ModificadoPorInput!] = []
   puesto: [PuestoInput!] = []
   deptoId: ID

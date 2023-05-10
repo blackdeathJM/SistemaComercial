@@ -1,7 +1,8 @@
-import {ITelefono, TRegEmpleado} from './empleado.interface';
+import {ITelefono} from './empleado.interface';
 import {email, maxLength, minLength, prop, propArray, required} from '@rxweb/reactive-form-validators';
 import {lowerCase, sanitize} from '@rxweb/sanitizers';
 import {Modificado} from '../../../common/common';
+import {TRegEmpleado} from "./empleado.dto";
 
 export const campoRequerido = 'Este campo es requerido';
 
@@ -31,10 +32,6 @@ export class Empleado implements TRegEmpleado
     telefono: Telefono[];
 
     modificadoPor: Modificado[];
-
-    activo: boolean;
-
-    avatar: string;
 
     @prop({defaultValue: null})
     planeacionCentroGestor: string;

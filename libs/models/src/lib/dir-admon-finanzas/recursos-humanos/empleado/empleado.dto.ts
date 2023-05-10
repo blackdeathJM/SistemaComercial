@@ -1,7 +1,7 @@
-import {Field, Float, ID, InputType, Int, ObjectType, OmitType} from '@nestjs/graphql';
+import {Field, Float, ID, InputType, Int, ObjectType, OmitType, PartialType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
-import {IEmpleado, IPuesto, ISeguroSocial, ITelefono, TRegEmpleado} from './empleado.interface';
+import {IEmpleado, IPuesto, ISeguroSocial, ITelefono} from './empleado.interface';
 import {ModificadoPorDto} from '../../../common/common.dto';
 import {AuthDto} from '../../../admin/empleado/auth/auth.dto';
 
@@ -118,9 +118,11 @@ export class EmpleadoDto implements IEmpleado
 }
 
 @InputType('RegEmpleadoInput')
-export class RegEmpleadoDto extends OmitType(EmpleadoDto, ['_id', 'auth', 'fechaBaja'], InputType) implements TRegEmpleado
+export class RegEmpleadoDto extends PartialType(EmpleadoDto, InputType) implements TRegEmpleado
 {
 }
 
-export type EmpleadoType = EmpleadoDto & Document;
+export type EmpleadoType = EmpleadoDto;
+
+export type TRegEmpleado = RegEmpleadoDto;
 export const SCHEMA_EMPLEADO = SchemaFactory.createForClass(EmpleadoDto).index({'auth.usuario': 1}, {unique: true, partialFilterExpression: {'auth.usuario': {$exists: true}}});

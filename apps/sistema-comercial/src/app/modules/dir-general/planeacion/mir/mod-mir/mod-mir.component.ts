@@ -94,7 +94,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
     regMir(): void
     {
         this.cargando = true;
-        const {semefVerdeV, semefAmarilloV, semefRojoV, meta, lineaBaseAno, esActualizar, ...resto} = this.formMir.value;
+        const {semefVerdeV, semefAmarilloV, semefRojoV, meta, esActualizar, ...resto} = this.formMir.value;
 
         const datos: TRegMir =
             {
@@ -104,7 +104,6 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
                 semefAmarilloV: parseFloat(String(semefAmarilloV)),
                 semefRojoV: parseFloat(String(semefRojoV)),
                 meta: parseFloat(meta),
-                lineaBaseAno: parseInt(lineaBaseAno, 10),
                 ...resto
             };
 
@@ -114,7 +113,8 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
             Object.keys(this.formMir.controls).forEach((ctrl) =>
             {
                 const ctrlNombre = this.formMir.get(ctrl);
-                if (ctrl === 'metodoCalculo' || ctrl === 'nombreDelIndicador' || ctrl === 'programaFinanciacion' || ctrl === 'resumenNarrativo' || ctrl === 'idIndicador')
+                if (ctrl === 'metodoCalculo' || ctrl === 'nombreDelIndicador' || ctrl === 'programaFinanciacion' || ctrl === 'resumenNarrativo' || ctrl === 'idIndicador' || ctrl === 'mediosVerificacion'
+                    || ctrl === 'supuestos' || ctrl === 'definicionIndicador')
                 {
                     ctrlNombre.reset();
                 }

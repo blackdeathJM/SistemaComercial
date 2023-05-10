@@ -2,9 +2,9 @@ import {IMirCuestionario} from './mir.interface';
 import {Field, ID, Int, Float, ObjectType, InputType, PartialType} from '@nestjs/graphql';
 import {Prop} from '@nestjs/mongoose';
 import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
+import {ComponenteDto} from "../componentes/componente.dto";
 
 // registerEnumType(AscDesc, {name: 'AscDesc'});
-
 @ObjectType('MirCuestionarioType')
 @InputType('MirCuestionarioInput')
 export class MirCuestionarioDto implements IMirCuestionario
@@ -30,9 +30,9 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({message: 'El id del indicador es requerido'})
     idIndicador: string;
 
-    @Field(() => Int, {nullable: true, defaultValue: 0})
-    @IsNotEmpty({message: 'La linea base del año es requerida'})
-    lineaBaseAno: number;
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsOptional()
+    lineaBaseAno: string;
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsNotEmpty({message: 'El valor de la linea base es requerido'})
@@ -166,6 +166,11 @@ export class MirCuestionarioDto implements IMirCuestionario
     @Field(() => String, {nullable: true})
     @IsNotEmpty({message: 'Es necesario el id del encargado'})
     idEmpleado: string;
+
+    @Field(() => ComponenteDto, {nullable: true, defaultValue: null})
+    @IsOptional()
+    componente: ComponenteDto;
+
 }
 
 @InputType('RegMirInput')

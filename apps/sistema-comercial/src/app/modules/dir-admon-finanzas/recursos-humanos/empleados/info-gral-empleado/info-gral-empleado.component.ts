@@ -52,7 +52,6 @@ export class InfoGralEmpleadoComponent
 
     editarInfo(empleado: IResolveEmpleado): void
     {
-        this.empleadoStore.setActive(empleado._id);
-        this.mdr.open(ModRegistroEmpleadoComponent, {width: '45%', data: null});
+        this.mdr.open(ModRegistroEmpleadoComponent, {width: '45%', data: empleado});
     }
 }

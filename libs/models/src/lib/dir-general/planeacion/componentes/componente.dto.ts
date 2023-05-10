@@ -1,73 +1,67 @@
-import {IComponente1, IOtrosDatos} from "./componente.interface";
-import {Field, Float, InputType, ObjectType} from "@nestjs/graphql";
-import {IsBoolean, IsNotEmpty, IsOptional} from "class-validator";
+import {Field, Float, InputType, Int, ObjectType} from "@nestjs/graphql";
+import {IComponente, formUno, IValoresAdicionales} from "./componente.interface";
+import {IsArray, IsNotEmpty, IsNumber, IsOptional} from "class-validator";
+import {v4 as uuidv4} from 'uuid';
 
-@ObjectType('OtrosDatosType')
-@InputType('OtrosDatosInput')
-export class OtrosDatosDto implements IOtrosDatos
+@ObjectType('ValoresAdicionalesType')
+@InputType('ValoresAdicionalesInput')
+export class ValoresAdicionalesDto implements IValoresAdicionales
 {
-    @IsOptional()
+    @IsNotEmpty({message: 'El nombre del campo es requerido'})
     @Field(() => String, {nullable: true, defaultValue: null})
-    nombreCampo: string;
+    campo: string;
 
-    @IsOptional()
+    @IsNumber({allowNaN: false}, {message: 'El valor debe ser numerico'})
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     valor: number;
 }
 
-@ObjectType('Componente1Type')
-@InputType('Componente1Input')
-export class Componente1Dto implements IComponente1
+@ObjectType('FormUnoType')
+@InputType('FormUnoInput')
+export class formUnoDto implements formUno
 {
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim1: number;
+    @Field(() => String, {nullable: true, defaultValue: uuidv4()})
+    id: string;
 
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim2: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim3: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim4: number;
-
-    @IsNotEmpty({message: 'La descripcion es requerida'})
-    @Field(() => String, {nullable: true, defaultValue: null})
-    descripcion: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    formCalTrim1: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    formCalTrim2: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    formCalTrim3: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    formCalTrim4: string;
-
-    @IsNotEmpty({message: 'Es necesario el id del PBR'})
+    @IsNotEmpty({message: 'El id del indicador PBR no puede estar vacio en formulario tipo 1'})
     @Field(() => String, {nullable: true, defaultValue: null})
     idIndicador: string;
+}
 
-    @IsBoolean({message: 'El valor debe ser boleano'})
-    @Field(() => Boolean, {nullable: true, defaultValue: false})
-    obtenerValorPorMes: boolean;
+@ObjectType('ComponenteType')
+@InputType('ComponenteInput')
+export class ComponenteDto implements IComponente
+{
+    @IsNotEmpty({message: 'Es necesario especificar el tipo de formula para los calculos'})
+    @Field(() => String, {nullable: true, defaultValue: null})
+    formulaTrim: string;
 
-    @IsOptional()
-    @Field(() => [OtrosDatosDto], {nullable: true, defaultValue: []})
-    otroCampo: OtrosDatosDto[];
+    @IsNumber({allowNaN: false, maxDecimalPlaces: 0, allowInfinity: false}, {message: 'Es necesario especificar el tipo de formulario'})
+    @Field(() => Int, {nullable: true, defaultValue: 1})
+    tipoForm: number;
+
+    @IsArray({message: 'Los datos del formulario debe ser un arreglo'})
+    @Field(() => [formUnoDto], {nullable: true, defaultValue: []})
+    formUno: formUnoDto[];
 
     @IsOptional()
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    valor: number;
+    trim1: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim2: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim3: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    trim4: number;
+
+    @IsOptional()
+    @Field(() => [ValoresAdicionalesDto], {nullable: true, defaultValue: []})
+    valoresAdicionales: ValoresAdicionalesDto[];
 }

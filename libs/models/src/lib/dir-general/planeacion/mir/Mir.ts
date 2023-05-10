@@ -34,8 +34,8 @@ export class Mir implements TRegMir
     @required()
     idIndicador: string;
 
-    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: false})
-    lineaBaseAno: number = new Date().getFullYear();
+    @prop()
+    lineaBaseAno: string;
 
     @prop()
     lineaBaseValor: string;

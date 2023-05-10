@@ -1,0 +1,27 @@
+fragment fragComponente on ComponenteType
+{
+    trim1
+    trim2
+    trim3
+    trim4
+    formulaTrim
+    tipoForm
+    formUno {
+        ...fragFormUno
+    }
+    valoresAdicionales {
+        ...fragValoresAdicionales
+    }
+}
+
+fragment fragFormUno on FormUnoType
+{
+    id
+    idIndicador
+}
+
+fragment fragValoresAdicionales on ValoresAdicionalesType
+{
+    campo
+    valor
+}

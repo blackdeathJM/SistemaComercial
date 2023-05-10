@@ -1,25 +1,4 @@
-export interface IValoresAdicionales
-{
-    campo: string;
-    valor: number;
-}
-
-export interface ITablaCampos
-{
-    idIndicador: string;
-}
-
-export interface IComponente
-{
-    trim1: number;
-    trim2: number;
-    trim3: number;
-    trim4: number;
-    formulaTrim: string;
-    tipoFormulario: number;
-    tabla: ITablaCampos[];
-    valoresAdicionales: IValoresAdicionales[];
-}
+import {IComponente} from "../componentes/componente.interface";
 
 export interface IMirCuestionario
 {
@@ -40,7 +19,7 @@ export interface IMirCuestionario
     metodoCalculo: string;
     unidadDeMedida: string;
     frecuenciaMedicion: string;
-    lineaBaseAno: number;
+    lineaBaseAno: string;
     lineaBaseValor: string;
     meta: number;
     sentidoDelIndicador: string;
@@ -61,5 +40,5 @@ export interface IMirCuestionario
     formulaTrim4: string;
     formulaAnual: string;
 
-    componente: IComponente[];
+    componente: IComponente;
 }

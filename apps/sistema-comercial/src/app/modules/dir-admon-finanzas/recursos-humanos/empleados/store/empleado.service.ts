@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {
-    ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL, FiltrarEmpleadosGQL,
-    FiltrarEmpleadosQuery
+    ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearActEmpledoGQL, CrearActEmpledoMutation, EmpleadosGQL, EmpleadosSesionGQL
 } from '#/libs/datos/src';
 import {catchError, finalize, Observable, tap} from 'rxjs';
 import {makeVar, SingleExecutionResult} from '@apollo/client';
-import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {TOKEN} from '@s-auth/const';
@@ -14,6 +13,8 @@ import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {AuthStore} from '@s-core/auth/store/auth.store';
 import {EmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
 import {GeneralService} from "@s-services/general.service";
+import {TRegEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto";
+import {isNotNil} from "@angular-ru/cdk/utils";
 
 export const ngxLoaderEmp = makeVar<string>('ngxLoaderEmpleados');
 
@@ -22,9 +23,8 @@ export class EmpleadoService
 {
 
     constructor(private empleadosGQL: EmpleadosGQL, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
-                private actualizarAvtarGQL: ActualizarAvatarGQL, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
-                private filtrarEmpleadosGQL: FiltrarEmpleadosGQL, private ngxLoader: NgxUiLoaderService, private authStore: AuthStore, private empleadoStore: EmpleadoStore,
-                private generalService: GeneralService)
+                private actualizarAvtarGQL: ActualizarAvatarGQL, private empleadosSesionGQL: EmpleadosSesionGQL, private crearActEmpledoGQL: CrearActEmpledoGQL,
+                private ngxLoader: NgxUiLoaderService, private authStore: AuthStore, private empleadoStore: EmpleadoStore, private generalService: GeneralService)
     {
     }
 
@@ -70,15 +70,22 @@ export class EmpleadoService
         }));
     }
 
-    crearEmpleado(empleado: TRegEmpleado): Observable<SingleExecutionResult>
+    crearActEmpledo(empleado: TRegEmpleado): Observable<SingleExecutionResult<CrearActEmpledoMutation>>
     {
-        return this.crearEmpleadoGQL.mutate({empleadoDatos: empleado}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.crearActEmpledoGQL.mutate({empleadoDatos: empleado}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res.data)
+            if (isNotNil(res) && isNotNil(res.data))
             {
-                const nvoEmpleado = res.data.crearEmpleado as IResolveEmpleado;
+                const {_id, ...cambios} = res.data.crearActEmpledo as IResolveEmpleado;
                 // this.entityEmpleado.addOne(nvoEmpleado);
-                this.empleadoStore.add(nvoEmpleado);
+                const existe = this.empleadoStore.getValue().ids.includes(_id);
+                if (existe)
+                {
+                    this.empleadoStore.update(_id, {...cambios});
+                } else
+                {
+                    this.empleadoStore.add(res.data.crearActEmpledo);
+                }
                 this.ngxToast.satisfactorioToast('El empleado fue dado de alta con exito', 'Alta empleados');
             }
         }));
@@ -86,32 +93,14 @@ export class EmpleadoService
 
     empleadosConSesion(): Observable<SingleExecutionResult>
     {
-        return this.empleadosSesionGQL.fetch().pipe(
-            catchError(err => this.generalService.cacharError(err)),
+        return this.empleadosSesionGQL.fetch().pipe(catchError(err => this.generalService.cacharError(err)),
             tap((res) =>
             {
-                if (res.data)
+                if (isNotNil(res) && isNotNil(res.data))
                 {
                     const empleadosSesion = res.data.empleadosSesion as IResolveEmpleado[];
                     // this.entityEmpleado.setAll(empleadosSesion);
                     this.empleadoStore.set(empleadosSesion);
-                }
-            }));
-    }
-
-    filtrarEmpleados(consulta: string): Observable<SingleExecutionResult<FiltrarEmpleadosQuery>>
-    {
-        this.ngxLoader.startLoader(ngxLoaderEmp());
-        return this.filtrarEmpleadosGQL.fetch({consulta}).pipe(
-            catchError(err => this.generalService.cacharError(err)),
-            finalize(() => this.ngxLoader.stopLoader(ngxLoaderEmp())),
-            tap((res) =>
-            {
-                if (res.data)
-                {
-                    const filtroEmpleados = res.data.filtrarEmpleados as IResolveEmpleado[];
-                    // this.entityEmpleado.setAll(filtroEmpleados);
-                    this.empleadoStore.set(filtroEmpleados);
                 }
             }));
     }

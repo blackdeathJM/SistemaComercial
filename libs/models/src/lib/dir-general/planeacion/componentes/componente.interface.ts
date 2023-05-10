@@ -1,22 +1,23 @@
-export interface IOtrosDatos
+export interface IValoresAdicionales
 {
-    nombreCampo: string;
+    campo: string;
     valor: number;
 }
 
-export interface IComponente1
+export interface formUno
 {
+    id: string;
     idIndicador: string;
-    descripcion: string;
-    valor: number;
-    otroCampo: IOtrosDatos[];
-    avanceTrim1: number;
-    avanceTrim2: number;
-    avanceTrim3: number;
-    avanceTrim4: number;
-    obtenerValorPorMes: boolean;
-    formCalTrim1: string;
-    formCalTrim2: string
-    formCalTrim3: string;
-    formCalTrim4: string;
+}
+
+export interface IComponente
+{
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number;
+    formulaTrim: string;
+    tipoForm: number;
+    formUno: formUno[];
+    valoresAdicionales: IValoresAdicionales[];
 }

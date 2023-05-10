@@ -37,4 +37,7 @@ fragment fragMir on MirCuestionarioType
     formulaTrim3
     formulaTrim4
     formulaAnual
+    componente {
+        ...fragComponente
+    }
 }

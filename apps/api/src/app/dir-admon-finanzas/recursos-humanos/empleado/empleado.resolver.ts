@@ -24,16 +24,10 @@ export class EmpleadoResolver
         return await this.empleadoService.empleadosSesion();
     }
 
-    @Query(() => [EmpleadoDto])
-    async filtrarEmpleados(@Args('consulta') consulta: string): Promise<EmpleadoDto[]>
-    {
-        return await this.empleadoService.filtrarEmpleados(consulta);
-    }
-
     @Mutation(() => EmpleadoDto)
-    async crearEmpleado(@Args('empleadoDatos') empleadoDatos: RegEmpleadoDto): Promise<EmpleadoDto>
+    async crearActEmpledo(@Args('empleadoDatos') empleadoDatos: RegEmpleadoDto): Promise<EmpleadoDto>
     {
-        return await this.empleadoService.crearEmpleado(empleadoDatos);
+        return await this.empleadoService.crearActEmpledo(empleadoDatos);
     }
 
     @ResolveField(() => DeptoDto, {nullable: true})
