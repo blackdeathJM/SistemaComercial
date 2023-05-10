@@ -46,6 +46,12 @@ export class Mir implements TRegMir
     metodoCalculo: string;
 
     @required()
+    supuestos: string;
+
+    @required()
+    mediosVerificacion: string;
+
+    @required()
     nivel: string;
 
     @required()

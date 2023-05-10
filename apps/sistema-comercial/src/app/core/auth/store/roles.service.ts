@@ -37,7 +37,7 @@ export class RolesService
     {
         return this.crearRolesGQL.mutate({ args }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res && res.data)
+            if (isNotNil(res) && isNotNil(res.data))
             {
                 const nvoEstado = res.data.crearRoles as IRoles;
                 // this.stateRoles.setState(nvoEstado);

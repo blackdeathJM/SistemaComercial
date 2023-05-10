@@ -47,6 +47,14 @@ export class MirCuestionarioDto implements IMirCuestionario
     metodoCalculo: string;
 
     @Field(() => String, {nullable: true, defaultValue: null})
+    @IsNotEmpty({message: 'Los supuestos son requeridos'})
+    supuestos: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsNotEmpty({message: 'Los medios de verificacion es necesaria'})
+    mediosVerificacion: string;
+
+    @Field(() => String, {nullable: true, defaultValue: null})
     @IsNotEmpty({message: 'El nivel es requerido'})
     nivel: string;
 

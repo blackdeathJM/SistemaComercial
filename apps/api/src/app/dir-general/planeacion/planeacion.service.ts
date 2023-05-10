@@ -29,7 +29,7 @@ export class PlaneacionService
 
             const nvaInicializacion: TPlaneacionType = {
                 _id: null,
-                ano: new Date().getFullYear() + 1,
+                ano: planeacion.ano,
                 copia: true,
                 descripcion: planeacion.descripcion,
                 mirCuestionario: copia.mirCuestionario,

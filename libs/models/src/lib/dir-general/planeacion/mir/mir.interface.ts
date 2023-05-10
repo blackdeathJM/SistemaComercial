@@ -3,6 +3,8 @@ export interface IMirCuestionario
     idIndicador: string;
     idEmpleado: string;
     correo: string;
+    supuestos: string;
+    mediosVerificacion: string;
     responsable: string;
     nivel: string;
     programaFinanciacion: string;
