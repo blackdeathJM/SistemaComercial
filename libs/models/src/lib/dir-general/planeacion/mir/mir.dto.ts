@@ -62,6 +62,10 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({message: 'El nombre del indicador es necesario'})
     nombreDelIndicador: string;
 
+    @Field(() => String, {nullable: true, defaultValue: null})
+    @IsNotEmpty({message: 'Falta definicion del indicador'})
+    definicionIndicador: string;
+
     @Field(() => Float, {nullable: true, defaultValue: 0})
     @IsNumber({allowNaN: false, maxDecimalPlaces: 2, allowInfinity: false})
     @IsOptional()

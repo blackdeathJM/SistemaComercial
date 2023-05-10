@@ -1,3 +1,26 @@
+export interface IValoresAdicionales
+{
+    campo: string;
+    valor: number;
+}
+
+export interface ITablaCampos
+{
+    idIndicador: string;
+}
+
+export interface IComponente
+{
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number;
+    formulaTrim: string;
+    tipoFormulario: number;
+    tabla: ITablaCampos[];
+    valoresAdicionales: IValoresAdicionales[];
+}
+
 export interface IMirCuestionario
 {
     idIndicador: string;
@@ -5,6 +28,7 @@ export interface IMirCuestionario
     correo: string;
     supuestos: string;
     mediosVerificacion: string;
+    definicionIndicador: string;
     responsable: string;
     nivel: string;
     programaFinanciacion: string;
@@ -36,4 +60,6 @@ export interface IMirCuestionario
     formulaTrim3: string;
     formulaTrim4: string;
     formulaAnual: string;
+
+    componente: IComponente[];
 }

@@ -71,11 +71,25 @@
             <mat-error>{{formMir.controls.dimension['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
+            <mat-label>Definicion del indicador</mat-label>
+            <textarea matInput formControlName="definicionIndicador"></textarea>
+            <mat-error>{{formMir.controls.definicionIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
             <mat-label>Metodo de calculo</mat-label>
             <textarea matInput formControlName="metodoCalculo"></textarea>
             <mat-error>{{formMir.controls.metodoCalculo['errorMessage']}}</mat-error>
         </mat-form-field>
-
+        <mat-form-field>
+            <mat-label>Medios de verificacion</mat-label>
+            <textarea matInput formControlName="mediosVerificacion"></textarea>
+            <mat-error>{{formMir.controls.mediosVerificacion['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Supuestos</mat-label>
+            <textarea matInput formControlName="supuestos"></textarea>
+            <mat-error>{{formMir.controls.supuestos['errorMessage']}}</mat-error>
+        </mat-form-field>
         <mat-form-field>
             <mat-label>Unidad de medida</mat-label>
             <mat-select formControlName="unidadDeMedida">

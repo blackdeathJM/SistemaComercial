@@ -27,6 +27,9 @@ export class Mir implements TRegMir
     @required()
     frecuenciaMedicion: string;
 
+    @required()
+    definicionIndicador: string;
+
     @upperCase()
     @required()
     idIndicador: string;

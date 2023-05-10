@@ -17,7 +17,6 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {actualizarMir, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
-import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
@@ -28,7 +27,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     standalone: true,
     imports: [
         CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule,
-        TrimDirective, TrimInputModule, NgxTrimDirectiveModule, SeleccionarEmpleadoComponent, MatTooltipModule],
+        TrimDirective, TrimInputModule, NgxTrimDirectiveModule, MatTooltipModule],
     providers: [],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],

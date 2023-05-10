@@ -253,8 +253,11 @@ type MirCuestionarioType {
   lineaBaseValor: String
   meta: Float
   metodoCalculo: String
+  supuestos: String
+  mediosVerificacion: String
   nivel: String
   nombreDelIndicador: String
+  definicionIndicador: String
   semefVerde: Float
   semefVerdeV: Float
   semefAmarillo: Float
@@ -438,7 +441,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683644434
+  tiempo: Int = 1683716544
   titulo: String
   usarRouter: Boolean = false
 }
@@ -564,8 +567,11 @@ input MirCuestionarioInput {
   lineaBaseValor: String = null
   meta: Float = 0
   metodoCalculo: String = null
+  supuestos: String = null
+  mediosVerificacion: String = null
   nivel: String = null
   nombreDelIndicador: String = null
+  definicionIndicador: String = null
   semefVerde: Float = 0
   semefVerdeV: Float = 0
   semefAmarillo: Float = 0
@@ -743,8 +749,11 @@ input RegMirInput {
   lineaBaseValor: String = null
   meta: Float = 0
   metodoCalculo: String = null
+  supuestos: String = null
+  mediosVerificacion: String = null
   nivel: String = null
   nombreDelIndicador: String = null
+  definicionIndicador: String = null
   semefVerde: Float = 0
   semefVerdeV: Float = 0
   semefAmarillo: Float = 0
