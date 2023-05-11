@@ -12,7 +12,7 @@ import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecc
 import {finalize, Subscription} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {isNil, nth} from 'lodash-es';
+import {isEmpty, nth} from 'lodash-es';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 
 @Component({
@@ -56,7 +56,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
     {
         const seleccion: SeleccionType =
             {
-                _id: this.seleccionQuery.getValue() !== null ? this.seleccionQuery.getValue()._id : '',
+                _id: this.seleccionQuery.getValue() !== null ? this.seleccionQuery.getValue()._id : null,
                 centroGestor: this.ctrlCentroGestor.value !== '' ? [this.ctrlCentroGestor.value] : ['sinDatos'],
                 unidad: this.ctrlUnidad.value !== '' ? [this.ctrlUnidad.value] : ['sinDatos'],
                 dimension: this.ctrlDimension.value !== '' ? [this.ctrlDimension.value] : ['sinDatos'],
@@ -64,7 +64,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
                 frecuencia: this.ctrlFrecuencia.value !== '' ? [this.ctrlFrecuencia.value] : ['sinDatos']
             };
 
-        if (isNil(this.seleccionQuery.getValue()))
+        if (isEmpty(this.seleccionQuery.getValue()))
         {
             this.registrar(seleccion);
             return;
@@ -102,7 +102,6 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
         this.ctrlFrecuencia.disable();
         this.seleccionService.agregarCentroGestor(input).pipe(finalize(() =>
         {
-
             this.ctrlCentroGestor.enable();
             this.ctrlDimension.enable();
             this.ctrlUnidad.enable();

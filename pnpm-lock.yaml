@@ -116,8 +116,8 @@ dependencies:
     specifier: 3.40.0
     version: 3.40.0
   apollo-angular:
-    specifier: 4.2.1
-    version: 4.2.1(@angular/core@16.0.1)(@apollo/client@3.7.14)(graphql@16.6.0)(rxjs@7.8.1)
+    specifier: 5.0.0
+    version: 5.0.0(@angular/core@16.0.1)(@apollo/client@3.7.14)(graphql@16.6.0)(rxjs@7.8.1)
   apollo-server-core:
     specifier: ^3.12.0
     version: 3.12.0(graphql@16.6.0)
@@ -9435,11 +9435,11 @@ packages:
       svg.select.js: 3.0.1
     dev: false
 
-  /apollo-angular@4.2.1(@angular/core@16.0.1)(@apollo/client@3.7.14)(graphql@16.6.0)(rxjs@7.8.1):
-    resolution: {integrity: sha512-lMFVZmw7hIa4+VGutoiUMwHWggXFiDhbsrnZddQYzfdV6lkJRjm0hANG0KxXoaoLqEqkGTHdq5DaMCdsp6E4rw==}
-    engines: {node: '>=14'}
+  /apollo-angular@5.0.0(@angular/core@16.0.1)(@apollo/client@3.7.14)(graphql@16.6.0)(rxjs@7.8.1):
+    resolution: {integrity: sha512-g98CvEGmRkrfBcXQS+HwIDuSsDnxqg/7RB+N/ICXbXfnnbBNIVzQ+xSaawz6kOo04Rx7jtLQAjda6/69fhHMDQ==}
+    engines: {node: '>=16'}
     peerDependencies:
-      '@angular/core': ^14.0.0 || ^15.0.0
+      '@angular/core': ^14.0.0 || ^15.0.0 || ^16.0.0
       '@apollo/client': ^3.0.0
       graphql: ^15.0.0 || ^16.0.0
       rxjs: ^6.0.0 || ^7.0.0
