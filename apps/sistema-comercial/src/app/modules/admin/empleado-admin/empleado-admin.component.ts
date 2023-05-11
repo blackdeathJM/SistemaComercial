@@ -1,11 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/registro-sesion/registro-sesion.component';
@@ -51,11 +50,10 @@ import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query'
     templateUrl: './empleado-admin.component.html',
     styleUrls: ['./empleado-admin.component.scss']
 })
-export class EmpleadoAdminComponent implements OnInit, OnDestroy
+export class EmpleadoAdminComponent implements OnDestroy
 {
     ctrlBuscar: FormControl = new FormControl();
     ngxLoader = ngxLoaderEmp();
-    sub = new Subscription();
     abriPanel = false;
     deshabilitar = false;
     empleadoSeleccionado: IResolveEmpleado;
@@ -63,13 +61,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
     constructor(public empleadoService: EmpleadoService, private empleadoStore: EmpleadoStore, public empleadoQuery: EmpleadoQuery, private mdr: MatDialog, private router: Router,
                 private activatedRoute: ActivatedRoute, private rolesService: RolesService)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
-            this.empleadoService.filtrarEmpleados(res))).subscribe());
-        this.empleadoService.empleados().subscribe();
     }
 
     listaRoles(empleado: IResolveEmpleado): void
@@ -103,7 +94,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     {
-        this.sub.unsubscribe();
         this.abriPanel = false;
     }
 }

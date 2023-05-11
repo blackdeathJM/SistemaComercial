@@ -82,11 +82,12 @@ export class EmpleadoService
                 if (existe)
                 {
                     this.empleadoStore.update(_id, {...cambios});
+                    this.ngxToast.satisfactorioToast('Los datos fueron actualizados con exito', 'Actualizacion de empleados');
                 } else
                 {
                     this.empleadoStore.add(res.data.crearActEmpledo);
+                    this.ngxToast.satisfactorioToast('El empleado fue dado de alta con exito', 'Alta empleados');
                 }
-                this.ngxToast.satisfactorioToast('El empleado fue dado de alta con exito', 'Alta empleados');
             }
         }));
     }

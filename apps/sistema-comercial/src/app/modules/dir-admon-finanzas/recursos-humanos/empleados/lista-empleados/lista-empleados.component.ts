@@ -25,7 +25,8 @@ import {ModRegistroEmpleadoComponent} from "@s-dirAdmonFinanzas/empleados/mod-re
 @Component({
     selector: 'app-lista-empleados',
     standalone: true,
-    imports: [CommonModule, MatTableModule, MatCardModule, MatInputModule, MatSelectModule, MatPaginatorModule, ImgDefectoPipe, DefaultValuePipeModule, MatIconModule, NgxUiLoaderModule, MatButtonModule, NavegacionPipe],
+    imports: [CommonModule, MatTableModule, MatCardModule, MatInputModule, MatSelectModule, MatPaginatorModule, ImgDefectoPipe, DefaultValuePipeModule,
+        MatIconModule, NgxUiLoaderModule, MatButtonModule, NavegacionPipe],
     templateUrl: './lista-empleados.component.html',
     styleUrls: ['./lista-empleados.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,6 +58,7 @@ export class ListaEmpleadosComponent implements AfterViewInit
 
     seleccionar(empleado: IResolveEmpleado): void
     {
+        console.log(empleado);
         // this.entityEmpleado.patchState({empleado});
         this.empleadoStore.setActive(empleado._id);
     }

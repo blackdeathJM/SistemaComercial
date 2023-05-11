@@ -8,14 +8,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatDialogRef} from '@angular/material/dialog';
-
-export interface ICalculo
-{
-    semVerde: number;
-    semAmarillo: number;
-    semRojo: number;
-}
-
 @Component({
     selector: 'app-mod-avances-mir',
     standalone: true,

@@ -43,20 +43,6 @@ export const PLANEACION: FuseNavigationItem =
                     puedeAsigPermisos: true,
                     acceso: true,
                     link: dirGeneral + 'planeacion/pbr'
-                },
-                {
-                    id: 'depto-componentes',
-                    title: 'Componentes',
-                    type: 'basic',
-                    icon: 'mat_solid:6_ft_apart',
-                    oculto: false,
-                    hidden: (item: FuseNavigationItem): boolean => item.oculto,
-                    badge: {},
-                    controles: [],
-                    disabled: false,
-                    puedeAsigPermisos: true,
-                    acceso: true,
-                    link: dirGeneral + 'planeacion/componentes'
-                },
+                }
             ]
     };

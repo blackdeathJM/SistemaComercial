@@ -29,7 +29,7 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version/*"
             ],
-            "@s-shared/*": [ "apps/sistema-comercial/src/Shared/*" ],
+            "@s-shared/*": [ "apps/sistema-comercial/src/shared/*" ],
             "@s-services/*": [ "apps/sistema-comercial/src/services/*" ],
             "@s-core/*": [
                 "apps/sistema-comercial/src/app/core/*",

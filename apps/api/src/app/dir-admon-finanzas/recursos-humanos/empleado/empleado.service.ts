@@ -20,6 +20,7 @@ export class EmpleadoService
             throw new InternalServerErrorException({message: 'Error al consultar empleados'});
         }
     }
+
     async empleadosSesion(): Promise<EmpleadoDto[]>
     {
         try
@@ -41,7 +42,7 @@ export class EmpleadoService
                 return await this.empleado.findByIdAndUpdate(_id, {$set: {...resto}}, {new: true}).exec();
             } else
             {
-                return await this.empleado.create(datosEmpleado);
+                return await this.empleado.create(resto);
             }
         } catch (e)
         {

@@ -5,6 +5,7 @@ import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.servi
 import {forkJoin} from 'rxjs';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {fuseAnimations} from "@s-fuse/public-api";
 
 @Component({
     selector: 'app-planeacion',
@@ -12,6 +13,7 @@ import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
     imports: [CommonModule, RouterOutlet],
     templateUrl: './planeacion.component.html',
     styleUrls: ['./planeacion.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaneacionComponent implements OnInit

@@ -7,24 +7,24 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {Empleado, Telefono} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/Empleado';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
-import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
 import {finalize} from 'rxjs';
-import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
 import {DeptoQuery} from "@s-dirAdmonFinanzas/departamento/store/depto.query";
 import {EmpleadoQuery} from "@s-dirAdmonFinanzas/empleados/store/empleado.query";
 import {isNil, isNotNil} from "@angular-ru/cdk/utils";
-import {TRegEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto";
 import {AuthQuery} from "@s-core/auth/store/auth.query";
 import {DateTime} from "luxon";
+import {NgxToastService} from "@s-services/ngx-toast.service";
 import {IResolveEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface";
+import {Empleado, Telefono} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/Empleado";
+import {TRegEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto";
+import {GeneralService} from "@s-services/general.service";
 
 @Component({
     selector: 'app-mod-registro-empleado',

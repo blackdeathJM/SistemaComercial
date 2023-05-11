@@ -54,4 +54,9 @@ export class InfoGralEmpleadoComponent
     {
         this.mdr.open(ModRegistroEmpleadoComponent, {width: '45%', data: empleado});
     }
+
+    checarActivo(): void
+    {
+        console.log(this.empleadoQuery.getActive())
+    }
 }
