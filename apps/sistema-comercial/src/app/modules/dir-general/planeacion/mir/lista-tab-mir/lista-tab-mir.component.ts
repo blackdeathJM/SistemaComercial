@@ -8,7 +8,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {FormsModule} from '@angular/forms';
-import {actualizarMir, ngxLoaderMir, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
+import {actCuestionario, ngxLoaderMir, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
@@ -57,14 +57,14 @@ export class ListaTabMirComponent
 
     nuevoElemento(): void
     {
-        actualizarMir([false, null]);
+        actCuestionario([false, null]);
         abrirPanelMir.set(true)
     }
 
     editarRegistro(): void
     {
         this.validacionesParaLista();
-        actualizarMir([true, this.elementoMir.idIndicador]);
+        actCuestionario([true, this.elementoMir.idIndicador]);
         abrirPanelMir.set(true);
     }
 
@@ -81,14 +81,9 @@ export class ListaTabMirComponent
 
     validacionesParaLista(): void
     {
-        if (this._planeacion.mirCuestionario.length === 0)
+        if (this._planeacion.mirCuestionario.length === 0 || isNil(this.elementoMir))
         {
-            this.ngxToast.alertaToast('No hay elementos que editar por el momento', 'MIR');
-            return;
-        }
-        if (isNil(this.elementoMir))
-        {
-            this.ngxToast.alertaToast('Selecciona un elemento de la lista superior', 'MIR');
+            this.ngxToast.alertaToast('No hay elemento', 'MIR');
             return;
         }
     }

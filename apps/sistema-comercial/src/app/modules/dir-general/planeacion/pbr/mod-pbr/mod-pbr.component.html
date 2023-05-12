@@ -35,9 +35,7 @@
 
         <mat-form-field>
             <mat-label>Unidad</mat-label>
-            <mat-select formControlName="unidad">
-                <mat-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</mat-option>
-            </mat-select>
+            <input matInput formControlName="unidad">
             <mat-error>{{formPbr.controls.unidad['errorMessage']}}</mat-error>
         </mat-form-field>
         <ng-container *ngIf="centrosGestores">
@@ -71,14 +69,13 @@
                 <mat-option [value]="tipoOperacion.promedio">Ultimo valor del mes</mat-option>
             </mat-select>
         </mat-form-field>
+<!--        <div class="flex flex-auto gap-4 items-center content-center">-->
 
-        <!--        <mat-form-field>-->
-        <!--            <mat-label>Formula para calcular el acumulado total</mat-label>-->
-        <!--            <mat-select formControlName="esSumatoriaTotal">-->
-        <!--                <mat-option [value]="true">Sumar los todos los meses</mat-option>-->
-        <!--                <mat-option [value]="false">Ultimo valor del mes</mat-option>-->
-        <!--            </mat-select>-->
-        <!--        </mat-form-field>-->
+        <!--            <button mat-mini-fab color="primary" (click)="actLaFormaDeCalculo()" matTooltip="Modifica la forma en la que se realiza el calculo para todos los-->
+        <!--elementos del mismo centro gestor" *ngIf="actualizar">-->
+        <!--                <mat-icon svgIcon="assignment"></mat-icon>-->
+        <!--            </button>-->
+        <!--        </div>-->
     </section>
 </form>
 

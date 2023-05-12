@@ -43,9 +43,6 @@ export class Pbr implements TRegPbr
 
     @required()
     tipoOperacion: string;
-
-    @required()
-    esSumatoriaTotal: boolean;
 }
 
 export class AvancesPbr implements TRegAvancesPbr

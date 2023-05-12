@@ -23,8 +23,10 @@
                 </mat-button-toggle-group>
             </ng-container>
         </app-acciones-mir-pbr>
-        <article class="flex flex-col flex-auto">
-            <app-lista-tab-mir [planeacion]="planeacion"></app-lista-tab-mir>
-        </article>
+        <ng-container *ngIf="planeacion">
+            <article class="flex flex-col flex-auto">
+                <app-lista-tab-mir [planeacion]="planeacion"></app-lista-tab-mir>
+            </article>
+        </ng-container>
     </mat-drawer-content>
 </mat-drawer-container>

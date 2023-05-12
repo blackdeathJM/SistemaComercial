@@ -15,6 +15,7 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from "@s-fuse/public-api";
 import {Subscription} from "rxjs";
+import {isNil} from "@angular-ru/cdk/utils";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -54,7 +55,7 @@ export default class MirComponent implements OnInit, OnDestroy
 
     filCentroGestorMir(centroGestor: string): void
     {
-        if (!this.planeacion)
+        if (isNil(this.planeacion))
         {
             this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
             return;

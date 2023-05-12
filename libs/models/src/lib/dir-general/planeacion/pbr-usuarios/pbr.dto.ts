@@ -1,6 +1,7 @@
 import {ObjectType, InputType, Field, Float, Int, PartialType, ID, ArgsType, PickType} from '@nestjs/graphql';
 import {IPbrCuestionario} from './pbr.interface';
 import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {MirCuestionarioDto} from "../mir/mir.dto";
 
 @ObjectType('PbrType')
 @InputType('PbrInput')
@@ -10,7 +11,7 @@ export class PbrCuestionarioDto implements IPbrCuestionario
     @IsOptional()
     ano: number;
 
-    @Field(() => String, {nullable: true})
+    @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
     fechaCompleta: string;
 
@@ -118,10 +119,6 @@ export class PbrCuestionarioDto implements IPbrCuestionario
     @IsNotEmpty({message: 'La unidad es requerida'})
     unidad: string;
 
-    @IsBoolean({message: 'El valor debe ser boleano'})
-    @Field(() => Boolean, {nullable: true})
-    esSumatoriaTotal: boolean;
-
     @IsNotEmpty({message: 'Es necesario el tipo de valor'})
     @Field(() => String, {nullable: true, defaultValue: 'suma'})
     tipoOperacion: string;
@@ -143,7 +140,7 @@ export type TRegPbr = RegPbrDto;
 
 @InputType('RegAvancesPbrInput')
 export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
-    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'tipoOperacion', 'esSumatoriaTotal'], InputType)
+    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'tipoOperacion'], InputType)
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id es necesario'})
@@ -151,3 +148,11 @@ export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
 }
 
 export type TRegAvancesPbr = RegAvancesPbrDto;
+
+@ArgsType()
+export class ActFormaDeCalculoPbr extends PickType(MirCuestionarioDto, ['idIndicador', 'metodoCalculo', 'centroGestor'], ArgsType)
+{
+    @IsNotEmpty({message: 'Es necesario el identificado'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+}

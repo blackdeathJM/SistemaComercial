@@ -16,7 +16,7 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {AscDesc} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {actualizarMir, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
+import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
@@ -86,9 +86,9 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
         // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
         // indice del mirCuestionario para hacer el patch en el formulario y cambiamos la propiedad actualizar en true, que es recibida en el backend para hacer
         // el proceso de actualizar el documento
-        if (actualizarMir()[0])
+        if (actCuestionario()[0])
         {
-            const cuestionarioMir: IMirCuestionario = this.planeacionQuery.getActive().mirCuestionario.find(value => value.idIndicador === actualizarMir()[1]);
+            const cuestionarioMir: IMirCuestionario = this.planeacionQuery.getActive().mirCuestionario.find(value => value.idIndicador === actCuestionario()[1]);
             this.formMir.patchValue(cuestionarioMir);
             this.actualizar = true;
             this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;

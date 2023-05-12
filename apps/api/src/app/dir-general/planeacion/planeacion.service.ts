@@ -107,6 +107,11 @@ export class PlaneacionService
         }
     }
 
+    // async actFormaDeCalculoPbr(): Promise<PlaneacionDto>
+    // {
+    //
+    // }
+
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
     {
         const {_id, idIndicador, cuestionario} = args;
@@ -116,7 +121,7 @@ export class PlaneacionService
     async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
         const {
-            _id, tipoOperacion, esSumatoriaTotal, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
+            _id, tipoOperacion, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
             septiembre, octubre, noviembre, diciembre
         } = datos;
 
@@ -165,6 +170,7 @@ export class PlaneacionService
                 }
             }, {new: true}).exec();
 // Actualizamos la sumatoria del centro gestor por si tiene
+
         if (actualizarPbr.pbrSumatoria && actualizarPbr.pbrSumatoria.length > 0)
         {
             const datos: TSumPbr =

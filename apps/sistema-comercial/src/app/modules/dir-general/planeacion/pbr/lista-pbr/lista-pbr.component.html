@@ -1,70 +1,80 @@
 <ng-container *ngIf="_planeacion">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>{{_planeacion.descripcion}} --- {{_planeacion.ano}}</span></mat-card-header>
+        <mat-card-title>
+            <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">
+                <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
+                    <mat-panel-title>Presupuesto basado en resultados</mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-button-toggle-group>
+                    <div class="flex flex-auto flex-wrap">
+                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of _planeacion.pbrCuestionario; trackBy:trackByFn" [value]="pbr" (change)="cambioDeSeleccion($event)">
+                            <span class="text-left">{{pbr?.idIndicador}}</span>
+                        </mat-button-toggle>
+                    </div>
+                </mat-button-toggle-group>
+            </mat-expansion-panel>
+        </mat-card-title>
         <mat-card-content>
-            <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndicePbr($event)">
-                <mat-tab [label]="pbr.idIndicador" *ngFor="let pbr of _planeacion.pbrCuestionario; trackBy:trackByFn">
-                    <section class="grid grid-cols-8 gap-4">
-                        <span class="detalle-span">Variable de origen</span>
-                        <span class="border-b-2">{{pbr?.variableOrigen}}</span>
-                        <span class="detalle-span">Dato</span>
-                        <span class="border-b-2 col-span-3">{{pbr?.dato}}</span>
-                        <span class="detalle-span">Unidad</span>
-                        <span class="border-b-2">{{pbr?.unidad}}</span>
+            <section class="grid grid-cols-8 gap-4">
+                <span class="detalle-span">Variable de origen</span>
+                <span class="border-b-2">{{elementosPbr?.variableOrigen | defaultValue: '---'}}</span>
+                <span class="detalle-span">Dato</span>
+                <span class="border-b-2 col-span-3">{{elementosPbr?.dato | defaultValue: '---'}}</span>
+                <span class="detalle-span">Unidad</span>
+                <span class="border-b-2">{{elementosPbr?.unidad | defaultValue: '---'}}</span>
 
-                        <span class="detalle-span">Descripcion</span>
-                        <span class="border-b-2 col-span-7">{{pbr?.descripcion}}</span>
+                <span class="detalle-span">Descripcion</span>
+                <span class="border-b-2 col-span-7">{{elementosPbr?.descripcion}}</span>
 
-                        <span class="detalle-span">Enero</span>
-                        <span class="border-b-2">{{pbr?.enero}}</span>
-                        <span class="detalle-span">Febrero</span>
-                        <span class="border-b-2">{{pbr?.febrero}}</span>
-                        <span class="detalle-span">Marzo</span>
-                        <span class="border-b-2">{{pbr?.marzo}}</span>
-                        <span class="detalle-span">Trimestre 1</span>
-                        <!--                        <span class="border-b-2">{{[pbr?.marzo, pbr?.febrero, pbr?.enero] | calculoPbr: pbr?.esSumatoriaTrim}}</span>-->
-                        <span class="border-b-2">{{pbr.trim1}}</span>
+                <span class="detalle-span">Enero</span>
+                <span class="border-b-2">{{elementosPbr?.enero | defaultValue: '---'}}</span>
+                <span class="detalle-span">Febrero</span>
+                <span class="border-b-2">{{elementosPbr?.febrero | defaultValue: '---'}}</span>
+                <span class="detalle-span">Marzo</span>
+                <span class="border-b-2">{{elementosPbr?.marzo | defaultValue: '---'}}</span>
+                <span class="detalle-span">Trimestre 1</span>
+                <!--                        <span class="border-b-2">{{[pbr?.marzo, pbr?.febrero, pbr?.enero] | calculoPbr: pbr?.esSumatoriaTrim}}</span>-->
+                <span class="border-b-2">{{elementosPbr?.trim1 | defaultValue: '---'}}</span>
 
-                        <span class="detalle-span">Abril</span>
-                        <span class="border-b-2">{{pbr?.abril}}</span>
-                        <span class="detalle-span">Mayo</span>
-                        <span class="border-b-2">{{pbr?.mayo}}</span>
-                        <span class="detalle-span">Junio</span>
-                        <span class="border-b-2">{{pbr?.junio}}</span>
-                        <span class="detalle-span">Trimestre 2</span>
-                        <span class="border-b-2">{{pbr?.trim2}}</span>
+                <span class="detalle-span">Abril</span>
+                <span class="border-b-2">{{elementosPbr?.abril | defaultValue: '---'}}</span>
+                <span class="detalle-span">Mayo</span>
+                <span class="border-b-2">{{elementosPbr?.mayo | defaultValue: '---'}}</span>
+                <span class="detalle-span">Junio</span>
+                <span class="border-b-2">{{elementosPbr?.junio | defaultValue: '---'}}</span>
+                <span class="detalle-span">Trimestre 2</span>
+                <span class="border-b-2">{{elementosPbr?.trim2 | defaultValue: '---'}}</span>
 
 
-                        <span class="detalle-span">Julio</span>
-                        <span class="border-b-2">{{pbr?.julio}}</span>
-                        <span class="detalle-span">Agosto</span>
-                        <span class="border-b-2">{{pbr?.agosto}}</span>
-                        <span class="detalle-span">Septiembre</span>
-                        <span class="border-b-2">{{pbr?.septiembre}}</span>
-                        <span class="detalle-span">Trimestre 3</span>
-                        <span class="border-b-2">{{pbr.trim3}}</span>
+                <span class="detalle-span">Julio</span>
+                <span class="border-b-2">{{elementosPbr?.julio | defaultValue: '---'}}</span>
+                <span class="detalle-span">Agosto</span>
+                <span class="border-b-2">{{elementosPbr?.agosto | defaultValue: '---'}}</span>
+                <span class="detalle-span">Septiembre</span>
+                <span class="border-b-2">{{elementosPbr?.septiembre | defaultValue: '---'}}</span>
+                <span class="detalle-span">Trimestre 3</span>
+                <span class="border-b-2">{{elementosPbr?.trim3 | defaultValue: '---'}}</span>
 
 
-                        <span class="detalle-span">Octubre</span>
-                        <span class="border-b-2">{{pbr?.octubre}}</span>
-                        <span class="detalle-span">Noviembre</span>
-                        <span class="border-b-2">{{pbr?.noviembre}}</span>
-                        <span class="detalle-span">Diciembre</span>
-                        <span class="border-b-2">{{pbr?.diciembre}}</span>
-                        <span class="detalle-span">Trimestre 4</span>
-                        <span class="border-b-2">{{pbr?.trim4}}</span>
+                <span class="detalle-span">Octubre</span>
+                <span class="border-b-2">{{elementosPbr?.octubre | defaultValue: '---'}}</span>
+                <span class="detalle-span">Noviembre</span>
+                <span class="border-b-2">{{elementosPbr?.noviembre | defaultValue: '---'}}</span>
+                <span class="detalle-span">Diciembre</span>
+                <span class="border-b-2">{{elementosPbr?.diciembre | defaultValue: '---'}}</span>
+                <span class="detalle-span">Trimestre 4</span>
+                <span class="border-b-2">{{elementosPbr?.trim4 | defaultValue: '---'}}</span>
 
-                        <span class="detalle-span col-start-7">Acumulado final</span>
-                        <span class="border-b-2">{{pbr?.total}}</span>
-                    </section>
-                </mat-tab>
-            </mat-tab-group>
+                <span class="detalle-span col-start-7">Acumulado final</span>
+                <span class="border-b-2">{{elementosPbr?.total | defaultValue: '---'}}</span>
+            </section>
             <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
         </mat-card-content>
 
         <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
             <div class="flex flex-auto gap-4">
-                <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="abrirPanel()">
+                <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="nvoElemento()">
                     <mat-icon svgIcon="add"></mat-icon>
                     Nuevo registro
                 </button>

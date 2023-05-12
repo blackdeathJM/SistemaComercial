@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
 import {
-    ActualizarResponsableGQL, EliminarElementoGQL,
+    ActualizarResponsableGQL, ActualizarResponsableMutation, EliminarElementoGQL,
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
@@ -26,8 +26,7 @@ import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
-export const actualizarMir = makeVar<[boolean, string]>([false, null]);
-export const actualizarPbr = makeVar<[boolean, number]>([false, 0]);
+export const actCuestionario = makeVar<[boolean, string]>([false, null]);
 export const avancesPbr = makeVar<[string, number]>([null, null]);
 
 export enum ValoresCamposMod
@@ -127,7 +126,7 @@ export class PlaneacionService
         });
     }
 
-    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): void
+    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): Observable<SingleExecutionResult<ActualizarResponsableMutation>>
     {
         if (form.get('idEmpleado').invalid)
         {
@@ -161,7 +160,7 @@ export class PlaneacionService
                         const {_id, ...cambios} = res.data.actualizarResponsable as IPlaneacion;
                         this.planeacionStore.update(_id, cambios);
                     }
-                })).subscribe();
+                }));
             }
         });
     }

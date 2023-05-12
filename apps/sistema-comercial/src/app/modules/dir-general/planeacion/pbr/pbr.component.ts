@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';

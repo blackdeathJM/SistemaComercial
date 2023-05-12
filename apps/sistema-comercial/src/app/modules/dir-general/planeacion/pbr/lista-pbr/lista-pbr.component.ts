@@ -11,19 +11,23 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {actualizarPbr, avancesPbr, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
+import {actCuestionario, avancesPbr, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
-import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
+import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {isNil} from "@angular-ru/cdk/utils";
+import {DefaultValuePipeModule} from "@angular-ru/cdk/pipes";
 
 @Component({
     selector: 'app-lista-pbr',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr, ListaSumPbrComponent],
+    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr, ListaSumPbrComponent, MatButtonToggleModule, MatExpansionModule, DefaultValuePipeModule, DefaultValuePipeModule],
     templateUrl: './lista-pbr.component.html',
     styleUrls: ['./lista-pbr.component.scss'],
     animations: [fuseAnimations],
@@ -37,8 +41,8 @@ export class ListaPbrComponent
     @Input() desSumatoria: boolean = false;
 
     _planeacion: IPlaneacion = null;
-    indice = 0;
     loader = ngxLoaderPbr();
+    elementosPbr: IPbrCuestionario = null;
 
     constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private ngxToast: NgxToastService)
@@ -50,31 +54,27 @@ export class ListaPbrComponent
         this._planeacion = valor;
     }
 
+    cambioDeSeleccion(e: MatButtonToggleChange): void
+    {
+        this.elementosPbr = e.value;
+    }
+
     regAvances(): void
     {
-        avancesPbr([this._planeacion._id, this.indice]);
+        avancesPbr([this._planeacion._id, 0]);
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
     }
 
-    abrirPanel(): void
+    nvoElemento(): void
     {
-        actualizarPbr([false, this.indice]);
+        actCuestionario([false, null]);
         abrirPanelPbr.set(true);
-    }
-
-    cambioIndicePbr(e: number): void
-    {
-        this.indice = e;
     }
 
     editarPbr(): void
     {
-        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0)
-        {
-            this.ngxToast.alertaToast('No hay elemento que puedas editar', 'Editar elementos');
-            return;
-        }
-        actualizarPbr([true, this.indice]);
+        this.validarElemento();
+        actCuestionario([true, this.elementosPbr.idIndicador]);
         abrirPanelPbr.set(true);
     }
 
@@ -85,11 +85,16 @@ export class ListaPbrComponent
 
     eliminarPbr(): void
     {
-        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0)
+        this.validarElemento();
+        this.planeacionService.eliminarElemento(this.elementosPbr.idIndicador, ValoresCamposMod.pbrCuestionario);
+    }
+
+    validarElemento(): void
+    {
+        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementosPbr))
         {
-            this.ngxToast.alertaToast('No hay elemento que puedas eliminar', 'Eliminar elemento');
+            this.ngxToast.alertaToast('No hay elementos', 'PBR');
             return;
         }
-        // this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.pbrCuestionario);
     }
 }

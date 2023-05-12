@@ -28,7 +28,6 @@ fragment fragPbr on PbrType
     trim4
     total
     tipoOperacion
-    esSumatoriaTotal
 }
 
 fragment fragSumPbr on PbrSumatoriaType

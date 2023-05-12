@@ -15,7 +15,7 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {finalize, Subscription} from 'rxjs';
 import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {actualizarPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
+import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
@@ -72,9 +72,9 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     ngAfterViewInit(): void
     {
-        if (actualizarPbr()[0])
+        if (actCuestionario()[0])
         {
-            const cuestionarioPbr = this.planeacionQuery.getActive().pbrCuestionario[actualizarPbr()[1]];
+            const cuestionarioPbr = this.planeacionQuery.getActive().pbrCuestionario.find(value => value.idIndicador === actCuestionario()[1]);
             this.empleadoAnterior = cuestionarioPbr.idEmpleado;
             this.formPbr.patchValue(cuestionarioPbr);
             this.actualizar = true;
@@ -103,6 +103,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
                     ctrl.reset();
                 }
             });
+            abrirPanelPbr.set(!this.actualizar);
         })).subscribe();
     }
 
@@ -131,11 +132,17 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     actualizarResponsable(): void
     {
-        this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario);
+        this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario).pipe(finalize(() =>
+            abrirPanelPbr.set(!this.actualizar))).subscribe();
     }
 
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+    }
+
+    actLaFormaDeCalculo(): void
+    {
+
     }
 }

@@ -34,7 +34,6 @@ export interface IPbrCuestionario extends IMeses
     trim4: number;
     total: number;
     tipoOperacion: string;
-    esSumatoriaTotal: boolean;
 }
 
 export enum TipoOperaciones

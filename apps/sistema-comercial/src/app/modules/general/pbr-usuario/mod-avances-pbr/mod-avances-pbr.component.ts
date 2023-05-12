@@ -51,7 +51,6 @@ export class ModAvancesPbrComponent implements OnInit, AfterContentInit
             {
                 _id: this.planeacion._id,
                 tipoOperacion: pbrCuestionario.tipoOperacion,
-                esSumatoriaTotal: pbrCuestionario.esSumatoriaTotal,
                 idIndicador: pbrCuestionario.idIndicador,
                 enero: +enero,
                 febrero: +febrero,

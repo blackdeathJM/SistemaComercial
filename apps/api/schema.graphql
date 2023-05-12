@@ -334,7 +334,6 @@ type PbrType {
   idIndicador: String
   total: Float
   unidad: String
-  esSumatoriaTotal: Boolean
   tipoOperacion: String
 }
 
@@ -463,7 +462,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683881954
+  tiempo: Int = 1683914980
   titulo: String
   usarRouter: Boolean = false
 }
@@ -585,7 +584,7 @@ input ValoresAdicionalesInput {
 }
 
 input FormUnoInput {
-  id: String = "00e5e0e6-4f80-4c37-b940-633dfe8bf972"
+  id: String = "3473bdc5-b696-4dcd-8d89-dc11e74609c6"
   idIndicador: String = null
 }
 
@@ -643,7 +642,7 @@ input MirCuestionarioInput {
 
 input PbrInput {
   ano: Int = 0
-  fechaCompleta: String
+  fechaCompleta: String = null
   enero: Float = 0
   febrero: Float = 0
   marzo: Float = 0
@@ -670,7 +669,6 @@ input PbrInput {
   idIndicador: String
   total: Float = 0
   unidad: String
-  esSumatoriaTotal: Boolean
   tipoOperacion: String = "suma"
 }
 
@@ -827,7 +825,7 @@ input RegMirInput {
 
 input RegPbrInput {
   ano: Int = 0
-  fechaCompleta: String
+  fechaCompleta: String = null
   enero: Float = 0
   febrero: Float = 0
   marzo: Float = 0
@@ -854,7 +852,6 @@ input RegPbrInput {
   idIndicador: String
   total: Float = 0
   unidad: String
-  esSumatoriaTotal: Boolean
   tipoOperacion: String = "suma"
   _id: ID
   esActualizar: Boolean = false
@@ -874,7 +871,6 @@ input RegAvancesPbrInput {
   noviembre: Float = 0
   diciembre: Float = 0
   idIndicador: String
-  esSumatoriaTotal: Boolean
   tipoOperacion: String = "suma"
   _id: ID
 }
