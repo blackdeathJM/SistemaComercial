@@ -1,37 +1,9 @@
-<section class="flex flex-auto flex-col p-4">
-    <!--    <app-acciones-mir-pbr [habCentroGestor]="true" (planeacionSeleccionado)="planeacionSeleccionado($event)" (centroGestor)="centroGestor($event)"></app-acciones-mir-pbr>-->
-    <!--    <div class="flex flex-auto gap-4">-->
-    <!--        <ng-container *ngIf="mirCuestionario.length > 0">-->
-    <!--            <fieldset class="p-2 m-4 border-2 flex-auto h-64">-->
-    <!--                <legend>MIR</legend>-->
-    <!--                <mat-selection-list multiple (cuechange)="cueChange($event)" class="h-64 overflow-y-auto" color="primary">-->
-    <!--                    <mat-list-option *ngFor="let mir of mirCuestionario" class="border-b-2">-->
-    <!--                        <div class="flex flex-auto gap-4">-->
-    <!--                            <span>{{mir.idIndicador}}</span>-->
-    <!--                            <span>{{mir.nombreDelIndicador}}</span>-->
-    <!--                        </div>-->
-    <!--                    </mat-list-option>-->
-    <!--                </mat-selection-list>-->
-    <!--            </fieldset>-->
-    <!--        </ng-container>-->
-
-    <!--        <ng-container *ngIf="pbrCuestionario.length > 0">-->
-    <!--            <fieldset class="p-2 m-4 border-2 flex-auto h-64">-->
-    <!--                <legend>Presupuesto basado en resultados</legend>-->
-    <!--                <mat-selection-list multiple (cuechange)="cueChange($event)" class="h-64 overflow-y-auto" color="primary">-->
-    <!--                    <mat-list-option *ngFor="let pbr of pbrCuestionario" class="border-b-2">-->
-    <!--                        <div class="flex flex-auto gap-4">-->
-    <!--                            <span>{{pbr.idIndicador}}</span>-->
-    <!--                            <span>{{pbr.descripcion}}</span>-->
-    <!--                        </div>-->
-    <!--                    </mat-list-option>-->
-    <!--                </mat-selection-list>-->
-    <!--            </fieldset>-->
-    <!--        </ng-container>-->
-    <!--    </div>-->
-    <fieldset class="p-4 border-2" @zoomIn>
-        <legend>Componente</legend>
-        <ng-container>
+<section class="flex flex-auto flex-col">
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4 flex-auto" @zoomIn>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
+            <span class="text-xl">{{_mirCuestionario.nivel}}</span>
+        </mat-card-header>
+        <mat-card-content>
             <article class="flex flex-col flex-auto">
                 <section class="grid grid-cols-6 gap-4 m-4 text-lg">
                     <span class="detalle-span">Fecha</span>
@@ -65,17 +37,27 @@
                     <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Metodo de calculo</span>
                     <span class="border-b-2 col-span-full text-center">{{_mirCuestionario?.metodoCalculo}}</span>
                 </section>
-
-                <mat-toolbar>
-                    <button mat-raised-button color="primary" (click)="regComponente()">
-                        <mat-icon svgIcon="add"></mat-icon>
-                        Registrar componente
-                    </button>
-                </mat-toolbar>
-                <section>
-
-                </section>
             </article>
-        </ng-container>
-    </fieldset>
+        </mat-card-content>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+                <div class="flex flex-auto gap-4">
+                    <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoElemento()">
+                        <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                        Nuevo registro
+                    </button>
+                    <button mat-raised-button color="accent" class="flex-auto">
+                        <mat-icon svgIcon="mat_outline:edit"></mat-icon>
+                        Editar registro
+                    </button>
+                    <button mat-raised-button color="warn" class="flex-auto">
+                        <mat-icon svgIcon="mat_outline:delete"></mat-icon>
+                        Eliminar registro
+                    </button>
+                    <button mat-raised-button color="accent" class="flex-auto">
+                        <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                        Imprimir
+                    </button>
+                </div>
+            </mat-card-actions>
+    </mat-card>
 </section>

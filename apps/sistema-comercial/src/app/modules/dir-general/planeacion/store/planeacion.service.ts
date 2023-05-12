@@ -26,7 +26,7 @@ import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
-export const actualizarMir = makeVar<[boolean, number]>([false, 0]);
+export const actualizarMir = makeVar<[boolean, string]>([false, null]);
 export const actualizarPbr = makeVar<[boolean, number]>([false, 0]);
 export const avancesPbr = makeVar<[string, number]>([null, null]);
 
@@ -101,7 +101,7 @@ export class PlaneacionService
         }));
     }
 
-    eliminarElemento(indiceArreglo: number, cuestionario: string): void
+    eliminarElemento(idIndicador: string, cuestionario: string): void
     {
         this.confirmacionService.abrir().afterClosed().subscribe((confirmacion) =>
         {
@@ -110,7 +110,7 @@ export class PlaneacionService
                 const args: TEliminarElemento =
                     {
                         _id: this.planeacionQuery.getActive()._id,
-                        idIndicador: this.planeacionQuery.getActive()[cuestionario][indiceArreglo].idIndicador,
+                        idIndicador: this.planeacionQuery.getActive()[cuestionario].find(va => va.idIndicador === idIndicador),
                         cuestionario
                     };
                 this.eliminarElementoGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)),

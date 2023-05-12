@@ -13,11 +13,12 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {ModComponentesComponent} from "@s-dir-general/componentes/mod-componentes/mod-componentes.component";
 import {TRegComp} from "@s-dir-general/store/planeacion.interface";
+import {MatCardModule} from "@angular/material/card";
 
 @Component({
     selector: 'app-componentes',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule],
+    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule],
     templateUrl: './componentes.component.html',
     styleUrls: ['./componentes.component.scss'],
     animations: [fuseAnimations],
@@ -54,5 +55,10 @@ export class ComponentesComponent
                 centroGestor: this._mirCuestionario.centroGestor
             };
         this.mdr.open(ModComponentesComponent, {width: '50%', data});
+    }
+
+    nuevoElemento(): void
+    {
+
     }
 }

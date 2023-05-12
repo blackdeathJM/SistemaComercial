@@ -36,6 +36,7 @@ export default class MirComponent implements OnInit, OnDestroy
     constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
     {
     }
+
     ngOnInit(): void
     {
         this.sub.add(this.planeacionQuery.selectActive().subscribe(res => this.planeacion = res))
@@ -64,5 +65,6 @@ export default class MirComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+        abrirPanelMir.set(false);
     }
 }

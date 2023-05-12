@@ -15,14 +15,19 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
-import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
+import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatDividerModule} from "@angular/material/divider";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {isNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
     imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule,
-        ComponentesComponent],
+        ComponentesComponent, MatButtonToggleModule, MatGridListModule, MatDividerModule, MatExpansionModule],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
@@ -34,59 +39,61 @@ export class ListaTabMirComponent
     loader = ngxLoaderMir();
     indice = 0;
     _planeacion: IPlaneacion = null;
-    mirCuestionarioComponente: IMirCuestionario = null;
+    elementoMir: IMirCuestionario = null;
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
     {
     }
 
-    @Input() set planeacion(valor: IPlaneacion)
+    @Input({required: true}) set planeacion(valor: IPlaneacion)
     {
         this._planeacion = valor;
     }
 
-    cambioDeIndiceMir(e: number): void
+    cambioDeSeleccion(e: MatButtonToggleChange): void
     {
-        this.indice = e;
+        this.elementoMir = e.value;
     }
 
     nuevoElemento(): void
     {
-        actualizarMir([false, this.indice]);
+        actualizarMir([false, null]);
         abrirPanelMir.set(true)
     }
 
     editarRegistro(): void
     {
-        if (this._planeacion.mirCuestionario.length === 0)
-        {
-            this.ngxToast.alertaToast('No hay elementos que editar por el momento', 'Actualizar MIR');
-            return;
-        }
-        actualizarMir([true, this.indice]);
+        this.validacionesParaLista();
+        actualizarMir([true, this.elementoMir.idIndicador]);
         abrirPanelMir.set(true);
     }
 
     eliminarReg(): void
     {
-        if (this._planeacion.mirCuestionario.length === 0)
-        {
-            this.ngxToast.alertaToast('No hay elementos que eliminar por el momento', 'Eliminar MIR');
-            return;
-        }
-        this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.mirCuestionario);
+        this.validacionesParaLista();
+        this.planeacionService.eliminarElemento(this.elementoMir.idIndicador, ValoresCamposMod.mirCuestionario);
     }
 
     imprimirMir(): void
     {
+        this.validacionesParaLista();
+    }
+
+    validacionesParaLista(): void
+    {
         if (this._planeacion.mirCuestionario.length === 0)
         {
-            this.ngxToast.alertaToast('No hay elementos para imprimir por el momento', 'Eliminar MIR');
+            this.ngxToast.alertaToast('No hay elementos que editar por el momento', 'MIR');
+            return;
+        }
+        if (isNil(this.elementoMir))
+        {
+            this.ngxToast.alertaToast('Selecciona un elemento de la lista superior', 'MIR');
             return;
         }
     }
 
-    trackByFn(index: number): string | number
+    trackByFn(index: number): number
     {
         return index;
     }

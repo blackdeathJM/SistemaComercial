@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {finalize, Subscription} from 'rxjs';
 import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Mir} from '#/libs/models/src/lib/dir-general/planeacion/mir/Mir';
 import {SeleccionType} from '#/libs/datos/src';
 import {TrimDirective} from '@s-directives/trim.directive';
@@ -21,13 +21,16 @@ import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query'
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
+import {isNotNil} from "@angular-ru/cdk/utils";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Component({
     selector: 'app-mod-mir',
     standalone: true,
     imports: [
         CommonModule, MatInputModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSelectModule, ReactiveFormsModule, RxReactiveFormsModule,
-        TrimDirective, TrimInputModule, NgxTrimDirectiveModule, MatTooltipModule],
+        TrimDirective, TrimInputModule, NgxTrimDirectiveModule, MatTooltipModule, FormsModule],
     providers: [],
     templateUrl: './mod-mir.component.html',
     styleUrls: ['./mod-mir.component.scss'],
@@ -35,7 +38,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
 {
-    @Output() panel = new EventEmitter<boolean>();
+    @ViewChild('filEmpleado') filEmpleado: ElementRef;
+
     selecciones: SeleccionType;
     empleados: IResolveEmpleado[];
     formMir: FormGroup;
@@ -84,7 +88,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
         // el proceso de actualizar el documento
         if (actualizarMir()[0])
         {
-            const cuestionarioMir = this.planeacionQuery.getActive().mirCuestionario[actualizarMir()[1]];
+            const cuestionarioMir: IMirCuestionario = this.planeacionQuery.getActive().mirCuestionario.find(value => value.idIndicador === actualizarMir()[1]);
             this.formMir.patchValue(cuestionarioMir);
             this.actualizar = true;
             this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;
@@ -113,12 +117,13 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
             Object.keys(this.formMir.controls).forEach((ctrl) =>
             {
                 const ctrlNombre = this.formMir.get(ctrl);
-                if (ctrl === 'metodoCalculo' || ctrl === 'nombreDelIndicador' || ctrl === 'programaFinanciacion' || ctrl === 'resumenNarrativo' || ctrl === 'idIndicador' || ctrl === 'mediosVerificacion'
-                    || ctrl === 'supuestos' || ctrl === 'definicionIndicador')
+                if (ctrl !== 'responsable' && ctrl !== 'correo' && ctrl !== 'centroGestor' && ctrl !== 'idEmpleado' && ctrl !== 'semefVerdeV' && ctrl !== 'semefAmarilloV'
+                    && ctrl !== 'semefRojoV')
                 {
                     ctrlNombre.reset();
                 }
             });
+            abrirPanelMir.set(!this.actualizar);
             this.cdr.detectChanges();
         })).subscribe();
     }
@@ -126,7 +131,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
     empleadoSele(e: string): void
     {
         const empleado = this.empleadoQuery.getEntity(e);
-        if (empleado?.correo)
+        if (isNotNil(empleado.correo))
         {
             this.formMir.get('correo').setValue(empleado.correo);
         } else
@@ -148,7 +153,7 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     cerrar(): void
     {
-        this.panel.emit(false);
+        abrirPanelMir.set(false);
     }
 
     trackByFn(index: number, elemento: any): number | string

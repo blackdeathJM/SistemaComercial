@@ -90,6 +90,6 @@ export class ListaPbrComponent
             this.ngxToast.alertaToast('No hay elemento que puedas eliminar', 'Eliminar elemento');
             return;
         }
-        this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.pbrCuestionario);
+        // this.planeacionService.eliminarElemento(this.indice, ValoresCamposMod.pbrCuestionario);
     }
 }

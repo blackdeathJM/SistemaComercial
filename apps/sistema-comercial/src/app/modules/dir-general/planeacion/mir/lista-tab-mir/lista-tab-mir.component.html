@@ -4,73 +4,83 @@
             <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
                 <span class="text-xl">{{_planeacion?.descripcion}} - {{_planeacion?.ano}}</span>
             </mat-card-header>
-            <mat-card-content>
-                <mat-tab-group ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="cambioDeIndiceMir($event)">
-                    <mat-tab [label]="mir?.idIndicador" *ngFor="let mir of _planeacion.mirCuestionario; trackBy:trackByFn">
-                        <div class="grid grid-cols-8 gap-4">
-                            <span class="detalle-span">Nivel</span>
-                            <span class="border-b-2">{{mir?.nivel}}</span>
-                            <span class="detalle-span">Programa financiacion</span>
-                            <span class="border-b-2">{{mir?.programaFinanciacion}}</span>
-                            <span class="detalle-span">CentroGestor</span>
-                            <span class="border-b-2 col-span-3">{{mir?.centroGestor}}</span>
-
-                            <span class="detalle-span">Definicion del indicador</span>
-                            <span class="border-b-2">{{mir?.definicionIndicador}}</span>
-                            <span class="detalle-span">Medios de verificacion</span>
-                            <span class="border-b-2">{{mir?.mediosVerificacion}}</span>
-                            <span class="detalle-span">Supuestos</span>
-                            <span class="border-b-2 col-span-3">{{mir?.supuestos}}</span>
-
-                            <span class="detalle-span">Resumen narrativo</span>
-                            <span class="border-b-2 col-span-7">{{mir?.resumenNarrativo}}</span>
-
-                            <span class="detalle-span">tipo</span>
-                            <span class="border-b-2">{{mir?.tipo}}</span>
-                            <span class="detalle-span">Dimension</span>
-                            <span class="border-b-2">{{mir?.dimension}}</span>
-                            <span class="detalle-span">Unidad medida</span>
-                            <span class="border-b-2">{{mir?.unidadDeMedida}}</span>
-                            <span class="detalle-span">Frecuencia de med</span>
-                            <span class="border-b-2">{{mir?.frecuenciaMedicion}}</span>
-
-                            <span class="detalle-span">Nombre del indicador</span>
-                            <span class="border-b-2 col-span-7">{{mir?.nombreDelIndicador}}</span>
-
-                            <span class="detalle-span">Metodo de calculo</span>
-                            <span class="border-b-2 col-span-7 text-green-600">{{mir?.metodoCalculo}}</span>
-
-                            <span class="detalle-span">Linea base año</span>
-                            <span class="border-b-2">{{mir?.lineaBaseAno}}</span>
-                            <span class="detalle-span">Linea base valor</span>
-                            <span class="border-b-2">{{mir?.lineaBaseValor}}</span>
-                            <span class="detalle-span">Meta</span>
-                            <span class="border-b-2">{{mir?.meta}}</span>
-                            <span class="detalle-span">Sentido del indicador</span>
-                            <span class="border-b-2">{{mir?.sentidoDelIndicador}}</span>
-
-                            <span class="detalle-span col-start-3">Semaforo verde</span>
-                            <span class="border-b-2 text-green-600 text-lg">{{(mir?.meta * mir?.semefVerdeV) / 100}}</span>
-                            <span class="detalle-span">Semaforo amarillo</span>
-                            <span class="border-b-2 text-amber-600 text-lg">{{(mir?.meta * mir?.semefAmarilloV) / 100}}</span>
-                            <span class="detalle-span">Semaforo rojo</span>
-                            <span class="border-b-2 text-red-600 text-lg">{{(mir?.meta * mir?.semefRojoV) / 100}}</span>
-
-                            <span class="detalle-span">Avance trim1</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim1}}</span>
-                            <span class="detalle-span">Avance trim2</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim2}}</span>
-                            <span class="detalle-span">Avance trim3</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim3}}</span>
-                            <span class="detalle-span">Avance trim4</span>
-                            <span class="border-b-2 text-cyan-500">{{mir?.avanceTrim4}}</span>
-
-
-                            <span class="detalle-span col-start-7">Avance anual</span>
-                            <span class="border-b-2">{{mir?.avanceAnual}}</span>
+            <mat-card-title>
+                <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">
+                    <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
+                        <mat-panel-title>Elementos MIR</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-button-toggle-group>
+                        <div class="flex flex-auto flex-wrap">
+                            <mat-button-toggle class="rounded-none" *ngFor="let mir of _planeacion.mirCuestionario; trackBy:trackByFn" [value]="mir" (change)="cambioDeSeleccion($event)">
+                                <span class="text-left">{{mir?.idIndicador}}</span>
+                            </mat-button-toggle>
                         </div>
-                    </mat-tab>
-                </mat-tab-group>
+                    </mat-button-toggle-group>
+                </mat-expansion-panel>
+            </mat-card-title>
+            <mat-card-content>
+                <div class="grid grid-cols-8 gap-4">
+                    <span class="detalle-span">Nivel</span>
+                    <span class="border-b-2">{{elementoMir?.nivel}}</span>
+                    <span class="detalle-span">Programa financiacion</span>
+                    <span class="border-b-2">{{elementoMir?.programaFinanciacion}}</span>
+                    <span class="detalle-span">CentroGestor</span>
+                    <span class="border-b-2 col-span-3">{{elementoMir?.centroGestor}}</span>
+
+                    <span class="detalle-span">Definicion del indicador</span>
+                    <span class="border-b-2">{{elementoMir?.definicionIndicador}}</span>
+                    <span class="detalle-span">Medios de verificacion</span>
+                    <span class="border-b-2">{{elementoMir?.mediosVerificacion}}</span>
+                    <span class="detalle-span">Supuestos</span>
+                    <span class="border-b-2 col-span-3">{{elementoMir?.supuestos}}</span>
+
+                    <span class="detalle-span">Resumen narrativo</span>
+                    <span class="border-b-2 col-span-7">{{elementoMir?.resumenNarrativo}}</span>
+
+                    <span class="detalle-span">tipo</span>
+                    <span class="border-b-2">{{elementoMir?.tipo}}</span>
+                    <span class="detalle-span">Dimension</span>
+                    <span class="border-b-2">{{elementoMir?.dimension}}</span>
+                    <span class="detalle-span">Unidad medida</span>
+                    <span class="border-b-2">{{elementoMir?.unidadDeMedida}}</span>
+                    <span class="detalle-span">Frecuencia de med</span>
+                    <span class="border-b-2">{{elementoMir?.frecuenciaMedicion}}</span>
+
+                    <span class="detalle-span">Nombre del indicador</span>
+                    <span class="border-b-2 col-span-7">{{elementoMir?.nombreDelIndicador}}</span>
+
+                    <span class="detalle-span">Metodo de calculo</span>
+                    <span class="border-b-2 col-span-7 text-green-600">{{elementoMir?.metodoCalculo}}</span>
+
+                    <span class="detalle-span">Linea base año</span>
+                    <span class="border-b-2">{{elementoMir?.lineaBaseAno}}</span>
+                    <span class="detalle-span">Linea base valor</span>
+                    <span class="border-b-2">{{elementoMir?.lineaBaseValor}}</span>
+                    <span class="detalle-span">Meta</span>
+                    <span class="border-b-2">{{elementoMir?.meta}}</span>
+                    <span class="detalle-span">Sentido del indicador</span>
+                    <span class="border-b-2">{{elementoMir?.sentidoDelIndicador}}</span>
+
+                    <span class="detalle-span col-start-3">Semaforo verde</span>
+                    <span class="border-b-2 text-green-600 text-lg">{{(elementoMir?.meta * elementoMir?.semefVerdeV) / 100}}</span>
+                    <span class="detalle-span">Semaforo amarillo</span>
+                    <span class="border-b-2 text-amber-600 text-lg">{{(elementoMir?.meta * elementoMir?.semefAmarilloV) / 100}}</span>
+                    <span class="detalle-span">Semaforo rojo</span>
+                    <span class="border-b-2 text-red-600 text-lg">{{(elementoMir?.meta * elementoMir?.semefRojoV) / 100}}</span>
+
+                    <span class="detalle-span">Avance trim1</span>
+                    <span class="border-b-2 text-cyan-500">{{elementoMir?.avanceTrim1}}</span>
+                    <span class="detalle-span">Avance trim2</span>
+                    <span class="border-b-2 text-cyan-500">{{elementoMir?.avanceTrim2}}</span>
+                    <span class="detalle-span">Avance trim3</span>
+                    <span class="border-b-2 text-cyan-500">{{elementoMir?.avanceTrim3}}</span>
+                    <span class="detalle-span">Avance trim4</span>
+                    <span class="border-b-2 text-cyan-500">{{elementoMir?.avanceTrim4}}</span>
+
+
+                    <span class="detalle-span col-start-7">Avance anual</span>
+                    <span class="border-b-2">{{elementoMir?.avanceAnual}}</span>
+                </div>
                 <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
             </mat-card-content>
             <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
@@ -95,7 +105,8 @@
             </mat-card-actions>
         </mat-card>
     </ng-container>
-    <ng-container *ngIf="_planeacion && _planeacion.mirCuestionario.length > 0">
-        <app-componentes [mirCuestionario]="_planeacion.mirCuestionario[indice]"></app-componentes>
+
+    <ng-container *ngIf="elementoMir">
+        <app-componentes [mirCuestionario]="elementoMir"></app-componentes>
     </ng-container>
 </article>
