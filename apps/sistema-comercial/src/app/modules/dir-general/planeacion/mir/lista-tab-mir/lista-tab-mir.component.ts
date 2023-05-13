@@ -22,6 +22,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {isNil} from "@angular-ru/cdk/utils";
+import {PlaneacionStore} from "@s-dir-general/store/planeacion.store";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -37,7 +38,6 @@ import {isNil} from "@angular-ru/cdk/utils";
 export class ListaTabMirComponent
 {
     loader = ngxLoaderMir();
-    indice = 0;
     _planeacion: IPlaneacion = null;
     elementoMir: IMirCuestionario = null;
 

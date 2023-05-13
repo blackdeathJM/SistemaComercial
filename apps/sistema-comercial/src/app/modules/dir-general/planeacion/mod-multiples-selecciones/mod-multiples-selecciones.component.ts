@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
@@ -9,7 +9,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
 import {SeleccionType} from '#/libs/models/src/lib/dir-general/planeacion/selecciones/seleccion.dto';
-import {finalize, Subscription} from 'rxjs';
+import {finalize} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {isEmpty, nth} from 'lodash-es';
@@ -23,7 +23,7 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
     styleUrls: ['./mod-multiples-selecciones.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
+export class ModMultiplesSeleccionesComponent
 {
     ctrlCentroGestor = new FormControl('');
     ctrlUnidad = new FormControl('');
@@ -32,24 +32,9 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
     ctrlTipo = new FormControl('');
     ctrlFrecuencia = new FormControl('');
 
-    sub = new Subscription();
-
-    seleccion: SeleccionType;
-
     constructor(public mdr: MatDialogRef<ModMultiplesSeleccionesComponent>, private seleccionService: SeleccionService, private ngxToast: NgxToastService,
-                private seleccionQuery: SeleccionQuery)
+                public seleccionQuery: SeleccionQuery)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add(this.seleccionQuery.select().subscribe((res) =>
-        {
-            if (res)
-            {
-                this.seleccion = res;
-            }
-        }));
     }
 
     agregarCentroGestor(): void
@@ -100,6 +85,7 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
         this.ctrlDimension.disable();
         this.ctrlTipo.disable();
         this.ctrlFrecuencia.disable();
+
         this.seleccionService.agregarCentroGestor(input).pipe(finalize(() =>
         {
             this.ctrlCentroGestor.enable();
@@ -109,17 +95,12 @@ export class ModMultiplesSeleccionesComponent implements OnInit, OnDestroy
             this.ctrlTipo.enable();
             this.ctrlFrecuencia.enable();
 
-            this.ctrlCentroGestor.setValue('');
-            this.ctrlDimension.setValue('');
-            this.ctrlUnidad.setValue('');
-            this.ctrlDimension.setValue('');
-            this.ctrlTipo.setValue('');
-            this.ctrlFrecuencia.setValue('');
+            this.ctrlCentroGestor.reset();
+            this.ctrlDimension.reset();
+            this.ctrlUnidad.reset();
+            this.ctrlDimension.reset();
+            this.ctrlTipo.reset();
+            this.ctrlFrecuencia.reset();
         })).subscribe();
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
     }
 }

@@ -81,17 +81,14 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
 
     ngAfterViewInit(): void
     {
-
         // TODO: Cambiar a forma reactiva el patch del form
         // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
-        // indice del mirCuestionario para hacer el patch en el formulario y cambiamos la propiedad actualizar en true, que es recibida en el backend para hacer
-        // el proceso de actualizar el documento
         if (actCuestionario()[0])
         {
-            const cuestionarioMir: IMirCuestionario = this.planeacionQuery.getActive().mirCuestionario.find(value => value.idIndicador === actCuestionario()[1]);
+            const cuestionarioMir = this.planeacionQuery.getActive().mirCuestionario.find(value => value.idIndicador === actCuestionario()[1])
             this.formMir.patchValue(cuestionarioMir);
-            this.actualizar = true;
             this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;
+            this.actualizar = true;
         }
     }
 

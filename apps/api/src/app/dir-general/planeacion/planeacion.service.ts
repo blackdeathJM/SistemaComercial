@@ -107,18 +107,46 @@ export class PlaneacionService
         }
     }
 
-    // async actFormaDeCalculoPbr(): Promise<PlaneacionDto>
-    // {
-    //
-    // }
-
-    async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
+    async actFormaDeCalculoPbr(): Promise<void>
     {
-        const {_id, idIndicador, cuestionario} = args;
-        return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
+
     }
 
-    async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
+    async calcularAvancerPbr(_id: string, centroGestor: string, tipoOperacion: string, trimestres: number[][], recalcular: boolean): Promise<[number[], number]>
+    {
+        let total: number = 0;
+        const valoresTrim: number[] = [];
+
+        if (recalcular)
+        {
+            const datosActuales = await this.planeacion.findById(_id).exec();
+            const filtrarDatos = datosActuales.pbrCuestionario.filter(value => value.centroGestor === centroGestor);
+
+            //Agrupar los meses del arreglo por trimestre
+            filtrarDatos.map(value => trimestres.push([value.enero, value.febrero, value.marzo], [value.abril, value.mayo, value.junio],
+                [value.julio, value.agosto, value.septiembre], [value.octubre, value.noviembre, value.diciembre]));
+        }
+
+        switch (tipoOperacion)
+        {
+            case TipoOperaciones.suma:
+                trimestres.forEach((value) => valoresTrim.push(value.reduce((acc, act) => acc + act)));
+                total = valoresTrim.reduce((acc, act) => acc + act);
+                break;
+            case TipoOperaciones.ultimo:
+                trimestres.forEach(value => valoresTrim.push(value.find(ultimoValor => ultimoValor !== 0)));
+                // total = [diciembre, noviembre, octubre, septiembre, agosto, julio, junio, mayo, abril, marzo, febrero, enero].find(value => value !== 0);
+                total = valoresTrim.reverse().find(ultimoValorPorTrim => ultimoValorPorTrim !== 0);
+                break;
+            case  TipoOperaciones.promedio:
+                trimestres.forEach(value => valoresTrim.push(value.reduce((acc, act) => (acc + act) / 3)));
+                total = valoresTrim.reduce((acc, act) => (acc + act) / 4);
+                break;
+        }
+        return [valoresTrim, total];
+    }
+
+    async regAvancePbr(datos: RegAvancesPbrDto, centroGestor: string): Promise<PlaneacionDto>
     {
         const {
             _id, tipoOperacion, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
@@ -127,37 +155,9 @@ export class PlaneacionService
 
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
 
-        let total: number = 0;
+        const valoresTrim = await this.calcularAvancerPbr(_id, centroGestor, tipoOperacion, trimestres, false)[0];
 
-        const valoresTrim: number[] = [];
-
-        switch (tipoOperacion)
-        {
-            case TipoOperaciones.suma:
-                trimestres.forEach((value) =>
-                {
-                    const valor = value.reduce((previousValue, currentValue) => previousValue + currentValue);
-                    valoresTrim.push(valor);
-                });
-
-                total = valoresTrim.reduce((previousValue, currentValue) => previousValue + currentValue);
-                break;
-            case TipoOperaciones.ultimo:
-                trimestres.forEach((value) =>
-                {
-                    const ultimo = value.find(ultimoValor => ultimoValor !== 0);
-                    valoresTrim.push(ultimo);
-                });
-                total = [diciembre, noviembre, octubre, septiembre, agosto, julio, junio, mayo, abril, marzo, febrero, enero].find(value => value !== 0);
-                break;
-            case TipoOperaciones.promedio:
-                trimestres.forEach((value) =>
-                {
-                    const valor = value.reduce((previousValue, currentValue) => previousValue + currentValue);
-                    valoresTrim.push(valor / 3);
-                });
-                break;
-        }
+        let total: number = await this.calcularAvancerPbr(_id, centroGestor, tipoOperacion, trimestres, false)[1];
 
         const actualizarPbr = await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
             {
@@ -250,5 +250,11 @@ export class PlaneacionService
         {
             return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
         }
+    }
+
+    async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
+    {
+        const {_id, idIndicador, cuestionario} = args;
+        return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
     }
 }

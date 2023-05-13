@@ -49,7 +49,7 @@ export class ModInicialzarRegistroComponent
         })).subscribe();
     }
 
-    seleccionDeAno(e: any): void
+    seleccionDeAno(e: string): void
     {
         this.seleccionAno = e;
     }

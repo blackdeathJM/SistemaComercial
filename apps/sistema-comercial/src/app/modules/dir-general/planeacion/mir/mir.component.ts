@@ -45,7 +45,7 @@ export default class MirComponent implements OnInit, OnDestroy
 
     regSeleccion(): void
     {
-        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
+        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '70%'});
     }
 
     inicializarPlaneacion(): void

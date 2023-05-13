@@ -37,7 +37,6 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
     cargando = false;
     empleados: IResolveEmpleado[];
     centrosGestores: string[] = [];
-    unidades: string[] = [];
     actualizar = false;
     empleadoAnterior: string;
     tipoOperacion = TipoOperaciones;
@@ -66,7 +65,6 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
             this.centrosGestores = res.centroGestor;
-            this.unidades = res.unidad;
         }));
     }
 
@@ -107,6 +105,11 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         })).subscribe();
     }
 
+    actLaFormaDeCalculo(): void
+    {
+
+    }
+
     empleadoSele(e: string): void
     {
         const empleado = this.empleadoQuery.getEntity(e);
@@ -139,10 +142,5 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
-    }
-
-    actLaFormaDeCalculo(): void
-    {
-
     }
 }
