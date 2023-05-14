@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -23,7 +23,6 @@ import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recurso
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
 import {isNotNil} from "@angular-ru/cdk/utils";
-import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Component({
     selector: 'app-mod-mir',
@@ -36,18 +35,18 @@ import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir
     styleUrls: ['./mod-mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
+export class ModMirComponent implements OnInit, OnDestroy
 {
-    @ViewChild('filEmpleado') filEmpleado: ElementRef;
-
     selecciones: SeleccionType;
     empleados: IResolveEmpleado[];
-    formMir: FormGroup;
+    formMir: FormGroup = this.fb.formGroup(new Mir());
     actualizar = false;
     sentidoIndicador = Object.values(AscDesc);
     idEmpleadoAnterior: string;
     sub = new Subscription();
     cargando = false;
+
+    cuestionarioMir = this.planeacionQuery.cuestionarioMir;
 
     constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef,
                 private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery)
@@ -59,14 +58,21 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
                 'email': 'El texto no cumple con las caracteristicas de email'
             }
         });
+        effect(() =>
+        {
+            // TODO: Cambiar a forma reactiva el patch del form
+            // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
+            if (actCuestionario() && isNotNil(this.cuestionarioMir()))
+            {
+                const cuestionarioMir = this.cuestionarioMir();
+                this.formMir.patchValue(cuestionarioMir);
+                this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;
+                this.actualizar = true;
+            }
+        })
     }
 
     ngOnInit(): void
-    {
-        this.formMir = this.fb.formGroup(new Mir());
-    }
-
-    ngAfterContentInit(): void
     {
         this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
@@ -77,19 +83,6 @@ export class ModMirComponent implements OnInit, AfterContentInit, AfterViewInit,
         }));
 
         this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
-    }
-
-    ngAfterViewInit(): void
-    {
-        // TODO: Cambiar a forma reactiva el patch del form
-        // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
-        if (actCuestionario()[0])
-        {
-            const cuestionarioMir = this.planeacionQuery.getActive().mirCuestionario.find(value => value.idIndicador === actCuestionario()[1])
-            this.formMir.patchValue(cuestionarioMir);
-            this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;
-            this.actualizar = true;
-        }
     }
 
     regMir(): void

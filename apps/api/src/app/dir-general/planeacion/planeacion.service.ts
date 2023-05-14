@@ -3,7 +3,7 @@ import {Model} from 'mongoose';
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {chunk} from "lodash";
 import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
@@ -38,7 +38,6 @@ export class PlaneacionService
                 descripcion: planeacion.descripcion,
                 mirCuestionario: copia.mirCuestionario,
                 pbrCuestionario: copia.pbrCuestionario.map(p => ({...p, ...inicializarMeses})),
-
                 pbrSumatoria: copia.pbrSumatoria.map(s => ({...s, ...inicializarMeses}))
             };
 
@@ -112,6 +111,25 @@ export class PlaneacionService
         {
             throw new InternalServerErrorException(e);
         }
+    }
+
+    async recalcularPbr(args: RecalcularPbrDto): Promise<PlaneacionDto>
+    {
+        const idsPbr: string[] = [];
+        const consulta = await this.planeacion.findByIdAndUpdate(args._id, {$set: {'pbrCuestionario.[elem].suma': args.tipoOperacion}},
+            {arrayFilters: [{'elem.centroGestor': args.centroGestor}], new: true}).exec();
+        consulta.pbrCuestionario.forEach(value =>
+        {
+            if (value.centroGestor === args.centroGestor)
+            {
+                idsPbr.push(value.idIndicador);
+            }
+        });
+        const resp = idsPbr.map(async value =>
+        {
+            return await this.calcularAvancerPbr(args._id, value, args.centroGestor, args.tipoOperacion, [], true)
+        });
+        return resp[resp.length];
     }
 
     async calcularAvancerPbr(_id: string, idIndicador: string, centroGestor: string, tipoOperacion: string, trimestres: number[][], recalcular: boolean): Promise<PlaneacionDto>

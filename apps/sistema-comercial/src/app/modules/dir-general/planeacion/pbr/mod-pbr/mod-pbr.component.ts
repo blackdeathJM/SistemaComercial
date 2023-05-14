@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, effect, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
@@ -69,6 +69,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
+
         this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
             this.centrosGestores = res.centroGestor;
@@ -97,6 +98,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
                     ctrl.reset();
                 }
             });
+
             abrirPanelPbr.set(!this.actualizar);
         })).subscribe(res => this.planeacionQuery.cuestionarioPbr.set(<IPbrCuestionario>res.data.regPbr.pbrCuestionario.find((value: IPbrCuestionario) => value.idIndicador === this.cuestionarioPbr().idIndicador)));
     }

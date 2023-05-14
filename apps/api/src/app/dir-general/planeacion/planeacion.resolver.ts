@@ -60,4 +60,10 @@ export class PlaneacionResolver
     {
         return await this.planeacionService.sumatoriaPbr(datos, actualizar);
     }
+
+    @Mutation(() => PlaneacionDto)
+    async recalcularPbr(@Args('args') args: RegAvancesPbrDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacionService.recalcularPbr(args);
+    }
 }

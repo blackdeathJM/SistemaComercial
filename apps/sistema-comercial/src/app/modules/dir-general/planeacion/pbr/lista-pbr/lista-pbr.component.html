@@ -1,6 +1,6 @@
-<ng-container *ngIf="_planeacion">
+<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
-        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>{{_planeacion.descripcion}} --- {{_planeacion.ano}}</span></mat-card-header>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>{{planeacion.descripcion}} --- {{planeacion.ano}}</span></mat-card-header>
         <mat-card-title>
             <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">
                 <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
@@ -8,7 +8,7 @@
                 </mat-expansion-panel-header>
                 <mat-button-toggle-group>
                     <div class="flex flex-auto flex-wrap">
-                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of _planeacion.pbrCuestionario; trackBy:trackByFn" [value]="pbr" (change)="cambioDeSeleccion($event)">
+                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of cuestionariosPbr(); trackBy:trackByFn" [value]="pbr" (change)="cambioDeSeleccion($event)">
                             <span class="text-left">{{pbr?.idIndicador}}</span>
                         </mat-button-toggle>
                     </div>

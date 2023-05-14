@@ -11,9 +11,8 @@ import {NgxUiLoaderModule} from 'ngx-ui-loader';
 import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {actCuestionario, avancesPbr, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
+import {actCuestionario, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
-import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
@@ -41,18 +40,13 @@ export class ListaPbrComponent
     @Input() desEliminarReg: boolean = false;
     @Input() desSumatoria: boolean = false;
 
-    _planeacion: IPlaneacion = null;
     loader = ngxLoaderPbr();
+    cuestionariosPbr = this.planeacionQuery.compCuestionariopbr;
     elementoPbr = this.planeacionQuery.cuestionarioPbr;
 
     constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private ngxToast: NgxToastService)
     {
-    }
-
-    @Input({required: true}) set planeacion(valor: IPlaneacion)
-    {
-        this._planeacion = valor;
     }
 
     cambioDeSeleccion(e: MatButtonToggleChange): void
@@ -79,7 +73,6 @@ export class ListaPbrComponent
             this.ngxToast.alertaToast('No hay elementos', 'PBR');
             return;
         }
-        avancesPbr([this._planeacion._id, this.elementoPbr().idIndicador]);
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
     }
 

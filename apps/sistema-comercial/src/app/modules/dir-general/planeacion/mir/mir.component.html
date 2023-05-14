@@ -5,7 +5,7 @@
         </ng-container>
     </mat-drawer>
     <mat-drawer-content>
-        <app-acciones-mir-pbr [habCentroGestor]="true" (centroGestor)="filCentroGestorMir($event)">
+        <app-acciones-mir-pbr [habCentroGestor]="true">
             <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle (click)="regSeleccion()" value="bold">
@@ -23,10 +23,9 @@
                 </mat-button-toggle-group>
             </ng-container>
         </app-acciones-mir-pbr>
-        <ng-container *ngIf="planeacion">
-            <article class="flex flex-col flex-auto">
-                <app-lista-tab-mir [planeacion]="planeacion"></app-lista-tab-mir>
-            </article>
-        </ng-container>
+
+        <article class="flex flex-col flex-auto">
+            <app-lista-tab-mir></app-lista-tab-mir>
+        </article>
     </mat-drawer-content>
 </mat-drawer-container>

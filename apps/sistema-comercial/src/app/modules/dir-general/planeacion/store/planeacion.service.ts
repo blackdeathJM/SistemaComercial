@@ -17,7 +17,7 @@ import {GeneralService} from '@s-services/general.service';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {FormGroup} from '@angular/forms';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
@@ -27,9 +27,7 @@ import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
 export const actCuestionario = makeVar<boolean>(false);
-
-//_id, idIndicador
-export const avancesPbr = makeVar<[string, string]>([null, null]);
+export const usuarioFil = makeVar<string>(null);
 
 export enum ValoresCamposMod
 {
@@ -54,9 +52,9 @@ export class PlaneacionService
     {
         return this.filTodosGQL.fetch().pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res && res.data)
+            if (isNotNil(res) && isNotNil(res.data))
             {
-                const planeacion = res.data.filTodos as IPlaneacion[];
+                const planeacion = $cast<IPlaneacion[]>(res.data.filTodos);
                 this.planeacionStore.set(planeacion);
             }
         }));
@@ -66,10 +64,9 @@ export class PlaneacionService
     {
         return this.inicializarPlaneacionGQL.mutate({input}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res && res.data)
+            if (isNotNil(res) && isNotNil(res.data))
             {
-                const planeacionInicializado = res.data.inicializarPlaneacion as IPlaneacion;
-
+                const planeacionInicializado = res.data.inicializarPlaneacion;
                 this.planeacionStore.add(planeacionInicializado);
                 this.ngxToast.satisfactorioToast('Se ha inicializado un nuevo elemento MIR', 'Nva inicializacion MIR');
             }
@@ -82,8 +79,9 @@ export class PlaneacionService
         {
             if (isNotNil(res) && isNotNil(res.data))
             {
-                const {_id, ...cambio} = res.data.regMir as IPlaneacion;
+                const {_id, ...cambio} = <IPlaneacion>res.data.regMir;
                 this.planeacionStore.update(_id, cambio);
+                this.planeacionQuery.cuestionarioMirV.set(cambio.mirCuestionario);
                 this.ngxToast.satisfactorioToast('El guardado ha sido exitoso', 'MIR');
             }
         }));
@@ -97,6 +95,7 @@ export class PlaneacionService
             {
                 const {_id, ...cambios} = res.data.regPbr as IPlaneacion;
                 this.planeacionStore.update(_id, cambios);
+                this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
                 this.ngxToast.satisfactorioToast('El elemento fue guardado con exito', 'PBR');
             }
         }));
@@ -121,6 +120,8 @@ export class PlaneacionService
                         {
                             const {_id, ...cambios} = res.data.eliminarElemento as IPlaneacion;
                             this.planeacionStore.update(_id, cambios);
+                            this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                            this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
                             this.ngxToast.satisfactorioToast('Un elemento se ha removido con exito', 'Planeacion');
                         }
                     })).subscribe();
@@ -161,6 +162,8 @@ export class PlaneacionService
                     {
                         const {_id, ...cambios} = res.data.actualizarResponsable as IPlaneacion;
                         this.planeacionStore.update(_id, cambios);
+                        this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
+                        this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
                     }
                 }));
             }
@@ -176,7 +179,8 @@ export class PlaneacionService
                 {
                     const {_id, ...cambios} = res.data.regAvancePbr as IPlaneacion;
                     this.planeacionStore.update(_id, cambios);
-                    this.ngxToast.satisfactorioToast('El avance se ha registrado con exito', 'Registro de avances');
+                    this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                    this.ngxToast.satisfactorioToast('El avance se ha relizado con exito', 'Registro de avances');
                 }
             }));
     }
@@ -189,6 +193,7 @@ export class PlaneacionService
             {
                 const {_id, ...cambios} = res.data.sumatoriaPbr as IPlaneacion;
                 this.planeacionStore.update(_id, {...cambios});
+                this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
                 this.ngxToast.satisfactorioToast('La sumatoria se ha creado con exito', 'Sumatoria');
             }
         }));

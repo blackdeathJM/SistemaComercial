@@ -160,3 +160,11 @@ export class ActFormaDeCalculoPbr extends PickType(MirCuestionarioDto, ['idIndic
     @Field(() => ID, {nullable: true})
     _id: string;
 }
+
+@InputType('RecalcularPbrInput')
+export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGestor', 'tipoOperacion'])
+{
+    @IsNotEmpty({message: 'El id es necesario'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+}

@@ -10,12 +10,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
-import {PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
-import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
+import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from "@s-fuse/public-api";
 import {Subscription} from "rxjs";
-import {isNil} from "@angular-ru/cdk/utils";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -28,19 +26,13 @@ export const abrirPanelMir = signal<boolean>(false)
     styleUrls: ['./mir.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class MirComponent implements OnInit, OnDestroy
+export default class MirComponent implements OnDestroy
 {
-    planeacion: IPlaneacion = null;
     abrirPanel = abrirPanelMir;
     sub: Subscription = new Subscription();
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private planeacionService: PlaneacionService, private planeacionQuery: PlaneacionQuery)
+    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add(this.planeacionQuery.selectActive().subscribe(res => this.planeacion = res))
     }
 
     regSeleccion(): void
@@ -53,19 +45,9 @@ export default class MirComponent implements OnInit, OnDestroy
         this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
 
-    filCentroGestorMir(centroGestor: string): void
-    {
-        if (isNil(this.planeacion))
-        {
-            this.ngxToast.alertaToast('Es necesario que selecciones el año', 'Selecciona un año');
-            return;
-        }
-        this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.mirCuestionario, ValoresCamposMod.centroGestor, centroGestor);
-    }
 
     ngOnDestroy(): void
     {
-        this.sub.unsubscribe();
         abrirPanelMir.set(false);
     }
 }

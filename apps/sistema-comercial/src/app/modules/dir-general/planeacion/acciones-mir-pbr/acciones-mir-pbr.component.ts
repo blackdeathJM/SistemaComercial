@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
@@ -21,10 +21,6 @@ export class AccionesMirPbrComponent
 {
     @Input() habCentroGestor = false;
 
-    // consultas
-    @Output() centroGestor = new EventEmitter<string>();
-    @Output() planeacionSeleccionado: EventEmitter<boolean> = new EventEmitter<boolean>();
-
     constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore)
     {
     }
@@ -32,12 +28,13 @@ export class AccionesMirPbrComponent
     seleccionarPlaneacion(e: IPlaneacion): void
     {
         this.planeacionStore.setActive(e._id);
-        this.planeacionSeleccionado.emit(true);
+        this.planeacionQuery.cuestionarioPbrV.set(e.pbrCuestionario);
+        this.planeacionQuery.cuestionarioMirV.set(e.mirCuestionario);
     }
 
     filCentroGestor(e: string): void
     {
-        this.centroGestor.emit(e);
+        this.planeacionQuery.centroGestor.set(e);
     }
 
     trackByFn(index: number, elemento: string): number | string
