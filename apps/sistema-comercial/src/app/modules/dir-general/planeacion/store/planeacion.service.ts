@@ -5,7 +5,7 @@ import {
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
-    InicializarPlaneacionMutation, RegAvancePbrGQL, RegAvancePbrMutation,
+    InicializarPlaneacionMutation, RecalcularPbrGQL, RecalcularPbrMutation, RegAvancePbrGQL, RegAvancePbrMutation,
     RegMirGQL,
     RegMirMutation, RegPbrGQL, RegPbrMutation, SumatoriaPbrGQL, SumatoriaPbrMutation
 } from '#/libs/datos/src';
@@ -18,7 +18,7 @@ import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {TRecalcularPbr, TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {FormGroup} from '@angular/forms';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -44,7 +44,7 @@ export class PlaneacionService
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarElementoGQL: EliminarElementoGQL,
                 private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService,
-                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL)
+                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL, private recalcularPbrGQL: RecalcularPbrGQL)
     {
     }
 
@@ -129,7 +129,7 @@ export class PlaneacionService
         });
     }
 
-    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): Observable<SingleExecutionResult<ActualizarResponsableMutation>>
+    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): void
     {
         if (form.get('idEmpleado').invalid)
         {
@@ -155,7 +155,6 @@ export class PlaneacionService
                         responsable: form.get('responsable').value,
                         cuestionario
                     };
-
                 this.actualizarResponsableGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
                 {
                     if (isNotNil(res) && isNotNil(res.data))
@@ -164,8 +163,9 @@ export class PlaneacionService
                         this.planeacionStore.update(_id, cambios);
                         this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
                         this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                        this.ngxToast.satisfactorioToast('El responsable fue actualizado con exito para todo el centro gestor', 'Cambio de responsable');
                     }
-                }));
+                })).subscribe();
             }
         });
     }
@@ -195,6 +195,20 @@ export class PlaneacionService
                 this.planeacionStore.update(_id, {...cambios});
                 this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
                 this.ngxToast.satisfactorioToast('La sumatoria se ha creado con exito', 'Sumatoria');
+            }
+        }));
+    }
+
+    recalcularPbr(args: TRecalcularPbr): Observable<SingleExecutionResult<RecalcularPbrMutation>>
+    {
+        return this.recalcularPbrGQL.mutate({args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        {
+            if (isNotNil(res) && isNotNil(res.data))
+            {
+                const {_id, ...cambios} = $cast<IPlaneacion>(res.data.recalcularPbr);
+                this.planeacionStore.update(_id, cambios);
+                this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                this.ngxToast.satisfactorioToast('Se han recalculado todo correctamente', 'Recalcular multiples campos');
             }
         }));
     }

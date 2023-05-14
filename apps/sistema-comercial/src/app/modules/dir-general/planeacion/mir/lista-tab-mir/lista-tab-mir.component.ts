@@ -18,6 +18,8 @@ import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/bu
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {NgxToastService} from "@s-services/ngx-toast.service";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -36,7 +38,8 @@ export class ListaTabMirComponent
     cuestionarioMir = this.planeacionQuery.cuestionarioMir;
     cuestionarioMirArray = this.planeacionQuery.compCuestionarioMir;
 
-    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService)
+    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
+                private ngxToast: NgxToastService)
     {
     }
 
@@ -53,13 +56,31 @@ export class ListaTabMirComponent
 
     editarRegistro(): void
     {
+        if (this.validarPbr())
+        {
+            return;
+        }
         actCuestionario(true);
         abrirPanelMir.set(true);
     }
 
     eliminarReg(): void
     {
+        if (this.validarPbr())
+        {
+            return;
+        }
         this.planeacionService.eliminarElemento(this.cuestionarioMir().idIndicador, ValoresCamposMod.mirCuestionario);
+    }
+
+    validarPbr(): boolean
+    {
+        if (isNil(this.cuestionarioMir()))
+        {
+            this.ngxToast.alertaToast('No hay elemento seleccionado para poder continuar', 'PBR')
+            return true;
+        }
+        return false;
     }
 
     imprimirMir(): void

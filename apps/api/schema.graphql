@@ -462,7 +462,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1684082155
+  tiempo: Int = 1684086691
   titulo: String
   usarRouter: Boolean = false
 }
@@ -584,7 +584,7 @@ input ValoresAdicionalesInput {
 }
 
 input FormUnoInput {
-  id: String = "78aebb34-d345-4fca-8001-9b5353baf355"
+  id: String = "e7868a1f-ed68-4b2f-8c81-8ee4fafb036d"
   idIndicador: String = null
 }
 
@@ -743,7 +743,7 @@ type Mutation {
   eliminarElemento(_id: ID, idIndicador: String, cuestionario: String): PlaneacionType!
   regAvancePbr(datos: RegAvancesPbrInput!): PlaneacionType!
   sumatoriaPbr(datos: SumPbrInput!, actualizar: Boolean!): PlaneacionType!
-  recalcularPbr(args: RegAvancesPbrInput!): PlaneacionType!
+  recalcularPbr(args: RecalcularPbrInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -904,6 +904,10 @@ input SumPbrInput {
   trim2: Float = 0
   trim3: Float = 0
   trim4: Float = 0
+  _id: ID
+}
+
+input RecalcularPbrInput {
   _id: ID
 }
 

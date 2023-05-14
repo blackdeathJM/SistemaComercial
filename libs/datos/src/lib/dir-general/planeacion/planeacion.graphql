@@ -54,3 +54,11 @@ mutation sumatoriaPbr($datos: SumPbrInput!, $actualizar: Boolean!)
         ...fragPlaneacion
     }
 }
+
+mutation recalcularPbr($args: RecalcularPbrInput!)
+{
+    recalcularPbr(args: $args)
+    {
+        ...fragPlaneacion
+    }
+}

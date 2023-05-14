@@ -168,3 +168,5 @@ export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGesto
     @Field(() => ID, {nullable: true})
     _id: string;
 }
+
+export type TRecalcularPbr = RecalcularPbrDto;

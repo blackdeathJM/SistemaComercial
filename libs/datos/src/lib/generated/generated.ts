@@ -597,6 +597,7 @@ export type Mutation = {
   inicializarPlaneacion: PlaneacionType;
   login?: Maybe<LoginRespuestaType>;
   reasignarUsuario: DocumentoType;
+  recalcularPbr: PlaneacionType;
   regAvancePbr: PlaneacionType;
   regDoc: DocumentoType;
   regInstalacion: UnionTele;
@@ -781,6 +782,11 @@ export type MutationLoginArgs = {
 
 export type MutationReasignarUsuarioArgs = {
   usuarios: DocReasignarUsuarioInput;
+};
+
+
+export type MutationRecalcularPbrArgs = {
+  args: RecalcularPbrInput;
 };
 
 
@@ -1087,6 +1093,10 @@ export type QueryNotificacionesArgs = {
 
 export type QueryRolesAsigArgs = {
   idEmpleado?: InputMaybe<Scalars['ID']>;
+};
+
+export type RecalcularPbrInput = {
+  _id?: InputMaybe<Scalars['ID']>;
 };
 
 export type RecibosInput = {
@@ -1751,6 +1761,13 @@ export type SumatoriaPbrMutationVariables = Exact<{
 
 
 export type SumatoriaPbrMutation = { __typename?: 'Mutation', sumatoriaPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null, componente?: { __typename?: 'ComponenteType', trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, formulaTrim?: string | null, tipoForm?: number | null, formUno?: Array<{ __typename?: 'FormUnoType', id?: string | null, idIndicador?: string | null }> | null, valoresAdicionales?: Array<{ __typename?: 'ValoresAdicionalesType', campo?: string | null, valor?: number | null }> | null } | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
+
+export type RecalcularPbrMutationVariables = Exact<{
+  args: RecalcularPbrInput;
+}>;
+
+
+export type RecalcularPbrMutation = { __typename?: 'Mutation', recalcularPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null, componente?: { __typename?: 'ComponenteType', trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, formulaTrim?: string | null, tipoForm?: number | null, formUno?: Array<{ __typename?: 'FormUnoType', id?: string | null, idIndicador?: string | null }> | null, valoresAdicionales?: Array<{ __typename?: 'ValoresAdicionalesType', campo?: string | null, valor?: number | null }> | null } | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
 
 export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
@@ -3238,6 +3255,24 @@ export const SumatoriaPbrDocument = gql`
   })
   export class SumatoriaPbrGQL extends Apollo.Mutation<SumatoriaPbrMutation, SumatoriaPbrMutationVariables> {
     document = SumatoriaPbrDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RecalcularPbrDocument = gql`
+    mutation recalcularPbr($args: RecalcularPbrInput!) {
+  recalcularPbr(args: $args) {
+    ...fragPlaneacion
+  }
+}
+    ${FragPlaneacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RecalcularPbrGQL extends Apollo.Mutation<RecalcularPbrMutation, RecalcularPbrMutationVariables> {
+    document = RecalcularPbrDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -94,6 +94,7 @@ export class PlaneacionService
 
     async actualizarResponsable(args: ActualizarResponsableDto): Promise<PlaneacionDto>
     {
+        console.log(args);
         try
         {
             return await this.planeacion.findByIdAndUpdate(args._id,

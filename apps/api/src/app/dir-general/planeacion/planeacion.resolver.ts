@@ -3,7 +3,7 @@ import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto} from '#api
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
-import {RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 
 @Resolver(() => PlaneacionDto)
@@ -62,7 +62,7 @@ export class PlaneacionResolver
     }
 
     @Mutation(() => PlaneacionDto)
-    async recalcularPbr(@Args('args') args: RegAvancesPbrDto): Promise<PlaneacionDto>
+    async recalcularPbr(@Args('args') args: RecalcularPbrDto): Promise<PlaneacionDto>
     {
         return await this.planeacionService.recalcularPbr(args);
     }

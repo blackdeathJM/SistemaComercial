@@ -12,7 +12,7 @@
                 <mat-select formControlName="idEmpleado" (selectionChange)="empleadoSele($event.value)">
                     <div class="flex flex-col flex-auto">
                         <mat-form-field>
-                            <input matInput #filEmpleado placeholder="Filtrar empleados" (keyup)="filtrarEmpleados($event.target['value'])">
+                            <input matInput placeholder="Filtrar empleados" (keyup)="filtrarEmpleados($event.target['value'])">
                         </mat-form-field>
                     </div>
                     <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
