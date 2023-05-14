@@ -75,7 +75,14 @@ export class PlaneacionService
         {
             if (esActualizar)
             {
-                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario': resto.idIndicador}, {$set: {'pbrCuestionario.$': resto}}, {new: true}).exec();
+                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.idIndicador': resto.idIndicador}, {
+                        $set: {
+                            'pbrCuestionario.$.responsable': resto.responsable, 'pbrCuestionario.$.correo': resto.correo, 'pbrCuestionario.$.idEmpleado': resto.idEmpleado, 'pbrCuestionario.$.variableOrigen': resto.variableOrigen,
+                            'pbrCuestionario.$.unidad': resto.unidad, 'pbrCuestionario.$.centroGestor': resto.centroGestor, 'pbrCuestionario.$.dato': resto.dato, 'pbrCuestionario.$.descripcion': resto.descripcion,
+                            'pbrCuestionario.$.tipoOperacion': resto.tipoOperacion
+                        }
+                    },
+                    {new: true}).exec();
             } else
             {
                 return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
@@ -107,12 +114,7 @@ export class PlaneacionService
         }
     }
 
-    async actFormaDeCalculoPbr(): Promise<void>
-    {
-
-    }
-
-    async calcularAvancerPbr(_id: string, centroGestor: string, tipoOperacion: string, trimestres: number[][], recalcular: boolean): Promise<[number[], number]>
+    async calcularAvancerPbr(_id: string, idIndicador: string, centroGestor: string, tipoOperacion: string, trimestres: number[][], recalcular: boolean): Promise<PlaneacionDto>
     {
         let total: number = 0;
         const valoresTrim: number[] = [];
@@ -123,10 +125,11 @@ export class PlaneacionService
             const filtrarDatos = datosActuales.pbrCuestionario.filter(value => value.centroGestor === centroGestor);
 
             //Agrupar los meses del arreglo por trimestre
-            filtrarDatos.map(value => trimestres.push([value.enero, value.febrero, value.marzo], [value.abril, value.mayo, value.junio],
-                [value.julio, value.agosto, value.septiembre], [value.octubre, value.noviembre, value.diciembre]));
+            filtrarDatos.forEach(value => trimestres.push([value.marzo, value.febrero, value.enero], [value.junio, value.mayo, value.abril],
+                [value.septiembre, value.agosto, value.julio], [value.diciembre, value.noviembre, value.octubre]));
         }
 
+        const meses = trimestres.map((value, index) => trimestres[index]).flat();
         switch (tipoOperacion)
         {
             case TipoOperaciones.suma:
@@ -134,53 +137,55 @@ export class PlaneacionService
                 total = valoresTrim.reduce((acc, act) => acc + act);
                 break;
             case TipoOperaciones.ultimo:
-                trimestres.forEach(value => valoresTrim.push(value.find(ultimoValor => ultimoValor !== 0)));
-                // total = [diciembre, noviembre, octubre, septiembre, agosto, julio, junio, mayo, abril, marzo, febrero, enero].find(value => value !== 0);
-                total = valoresTrim.reverse().find(ultimoValorPorTrim => ultimoValorPorTrim !== 0);
+                trimestres.forEach(value => valoresTrim.push(Math.max(...value)));
+                const voltearValores = valoresTrim.slice();
+                total = voltearValores.reverse().find(value => value !== 0);
                 break;
             case  TipoOperaciones.promedio:
-                trimestres.forEach(value => valoresTrim.push(value.reduce((acc, act) => (acc + act) / 3)));
-                total = valoresTrim.reduce((acc, act) => (acc + act) / 4);
+                // trimestres.forEach(value => valoresTrim.push(value.reduce((acc, act) => (acc + act) / 3)));
+                trimestres.forEach(value =>
+                {
+                    const resultado = value.reduce((acc, act) => acc + act);
+                    valoresTrim.push(resultado / 3);
+                });
+                const sumarMeses = meses.reduce((acc, act) => acc + act);
+                total = sumarMeses / meses.length;
                 break;
         }
-        return [valoresTrim, total];
+        return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
+            {
+                $set: {
+                    'pbrCuestionario.$.enero': meses[2], 'pbrCuestionario.$.febrero': meses[1], 'pbrCuestionario.$.marzo': meses[0], 'pbrCuestionario.$.trim1': valoresTrim[0],
+                    'pbrCuestionario.$.abril': meses[5], 'pbrCuestionario.$.mayo': meses[4], 'pbrCuestionario.$.junio': meses[3], 'pbrCuestionario.$.trim2': valoresTrim[1],
+                    'pbrCuestionario.$.julio': meses[8], 'pbrCuestionario.$.agosto': meses[7], 'pbrCuestionario.$.septiembre': meses[6], 'pbrCuestionario.$.trim3': valoresTrim[2],
+                    'pbrCuestionario.$.octubre': meses[11], 'pbrCuestionario.$.noviembre': meses[10], 'pbrCuestionario.$.diciembre': meses[9], 'pbrCuestionario.$.trim4': valoresTrim[3],
+                    'pbrCuestionario.$.total': total,
+                }
+            }, {new: true}).exec();
     }
 
-    async regAvancePbr(datos: RegAvancesPbrDto, centroGestor: string): Promise<PlaneacionDto>
+    async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
         const {
-            _id, tipoOperacion, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
+            _id, tipoOperacion, centroGestor, recalcular, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
             septiembre, octubre, noviembre, diciembre
         } = datos;
 
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
 
-        const valoresTrim = await this.calcularAvancerPbr(_id, centroGestor, tipoOperacion, trimestres, false)[0];
+        const nvoDocumento = await this.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres, recalcular);
 
-        let total: number = await this.calcularAvancerPbr(_id, centroGestor, tipoOperacion, trimestres, false)[1];
-
-        const actualizarPbr = await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
-            {
-                $set: {
-                    'pbrCuestionario.$.enero': enero, 'pbrCuestionario.$.febrero': febrero, 'pbrCuestionario.$.marzo': marzo, 'pbrCuestionario.$.trim1': valoresTrim[0],
-                    'pbrCuestionario.$.abril': abril, 'pbrCuestionario.$.mayo': mayo, 'pbrCuestionario.$.junio': junio, 'pbrCuestionario.$.trim2': valoresTrim[1],
-                    'pbrCuestionario.$.julio': julio, 'pbrCuestionario.$.agosto': agosto, 'pbrCuestionario.$.septiembre': septiembre, 'pbrCuestionario.$.trim3': valoresTrim[2],
-                    'pbrCuestionario.$.octubre': octubre, 'pbrCuestionario.$.noviembre': noviembre, 'pbrCuestionario.$.diciembre': diciembre, 'pbrCuestionario.$.trim4': valoresTrim[3],
-                    'pbrCuestionario.$.total': total,
-                }
-            }, {new: true}).exec();
-// Actualizamos la sumatoria del centro gestor por si tiene
-
-        if (actualizarPbr.pbrSumatoria && actualizarPbr.pbrSumatoria.length > 0)
+        // Actualizamos la sumatoria del centro gestor por si tiene
+        if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
         {
             const datos: TSumPbr =
                 {
-                    _id: actualizarPbr._id,
-                    ...actualizarPbr.pbrSumatoria
+                    _id: nvoDocumento._id,
+                    ...nvoDocumento.pbrSumatoria
                 }
             return await this.sumatoriaPbr(datos, true);
         }
-        return actualizarPbr;
+        return nvoDocumento;
     }
 
     async matrizDeValoresMeses(_id: string, ids: string[]): Promise<number[][][][]>
@@ -198,7 +203,7 @@ export class PlaneacionService
         {
             nvoArreglo.push(valorMatrizMeses[i].flat());
         }
-        return nvoArreglo.reduce((valorAcumulado, valorActual) => valorAcumulado.map((num, i) => num + valorActual[i]));
+        return nvoArreglo.reduce((acc, act) => acc.map((num, i) => num + act[i]));
     }
 
     async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean): Promise<PlaneacionDto>

@@ -26,8 +26,10 @@ import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
-export const actCuestionario = makeVar<[boolean, string]>([false, null]);
-export const avancesPbr = makeVar<[string, number]>([null, null]);
+export const actCuestionario = makeVar<boolean>(false);
+
+//_id, idIndicador
+export const avancesPbr = makeVar<[string, string]>([null, null]);
 
 export enum ValoresCamposMod
 {
@@ -78,10 +80,10 @@ export class PlaneacionService
     {
         return this.regMirGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res && res.data)
+            if (isNotNil(res) && isNotNil(res.data))
             {
                 const {_id, ...cambio} = res.data.regMir as IPlaneacion;
-                this.planeacionStore.update(_id, {mirCuestionario: cambio.mirCuestionario});
+                this.planeacionStore.update(_id, cambio);
                 this.ngxToast.satisfactorioToast('El guardado ha sido exitoso', 'MIR');
             }
         }));
@@ -173,7 +175,7 @@ export class PlaneacionService
                 if (isNotNil(res) && isNotNil(res.data))
                 {
                     const {_id, ...cambios} = res.data.regAvancePbr as IPlaneacion;
-                    this.planeacionStore.update(_id, {...cambios});
+                    this.planeacionStore.update(_id, cambios);
                     this.ngxToast.satisfactorioToast('El avance se ha registrado con exito', 'Registro de avances');
                 }
             }));

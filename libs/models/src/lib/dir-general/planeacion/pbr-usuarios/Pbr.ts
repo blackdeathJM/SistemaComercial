@@ -38,7 +38,6 @@ export class Pbr implements TRegPbr
     @email()
     correo: string;
 
-    @prop({defaultValue: false})
     esActualizar: boolean;
 
     @required()
@@ -50,11 +49,11 @@ export class AvancesPbr implements TRegAvancesPbr
     _id: string;
 
     idIndicador: string;
+    centroGestor: string;
+    recalcular: boolean;
 
     @required()
     tipoOperacion: string;
-
-    esSumatoriaTotal: boolean;
 
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     enero: number;

@@ -462,7 +462,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1683979832
+  tiempo: Int = 1684054424
   titulo: String
   usarRouter: Boolean = false
 }
@@ -584,7 +584,7 @@ input ValoresAdicionalesInput {
 }
 
 input FormUnoInput {
-  id: String = "f9fbb9b7-7a71-4a9b-aba0-a6e34a2c81d1"
+  id: String = "d6661f8a-c959-4793-a7cd-0955748ae433"
   idIndicador: String = null
 }
 
@@ -870,9 +870,11 @@ input RegAvancesPbrInput {
   octubre: Float = 0
   noviembre: Float = 0
   diciembre: Float = 0
+  centroGestor: String
   idIndicador: String
   tipoOperacion: String = "suma"
   _id: ID
+  recalcular: Boolean = false
 }
 
 input SumPbrInput {

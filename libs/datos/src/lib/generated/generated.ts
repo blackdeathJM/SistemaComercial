@@ -1114,6 +1114,7 @@ export type RegAvancesPbrInput = {
   _id?: InputMaybe<Scalars['ID']>;
   abril?: InputMaybe<Scalars['Float']>;
   agosto?: InputMaybe<Scalars['Float']>;
+  centroGestor?: InputMaybe<Scalars['String']>;
   diciembre?: InputMaybe<Scalars['Float']>;
   enero?: InputMaybe<Scalars['Float']>;
   febrero?: InputMaybe<Scalars['Float']>;
@@ -1124,6 +1125,7 @@ export type RegAvancesPbrInput = {
   mayo?: InputMaybe<Scalars['Float']>;
   noviembre?: InputMaybe<Scalars['Float']>;
   octubre?: InputMaybe<Scalars['Float']>;
+  recalcular?: InputMaybe<Scalars['Boolean']>;
   septiembre?: InputMaybe<Scalars['Float']>;
   tipoOperacion?: InputMaybe<Scalars['String']>;
 };

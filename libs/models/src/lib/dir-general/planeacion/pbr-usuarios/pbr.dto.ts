@@ -140,11 +140,15 @@ export type TRegPbr = RegPbrDto;
 
 @InputType('RegAvancesPbrInput')
 export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
-    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'tipoOperacion'], InputType)
+    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'tipoOperacion', 'centroGestor'], InputType)
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id es necesario'})
     _id: string;
+
+    @IsOptional()
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    recalcular: boolean;
 }
 
 export type TRegAvancesPbr = RegAvancesPbrDto;

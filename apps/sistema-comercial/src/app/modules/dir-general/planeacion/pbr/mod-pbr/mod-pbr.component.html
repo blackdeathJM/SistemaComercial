@@ -61,14 +61,19 @@
             <textarea matInput formControlName="descripcion"></textarea>
             <mat-error>{{formPbr.controls.descripcion['errorMessage']}}</mat-error>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Forma de calcular el trimestre</mat-label>
-            <mat-select formControlName="tipoOperacion">
-                <mat-option [value]="tipoOperacion.suma">Sumatoria de los meses del trimestre</mat-option>
-                <mat-option [value]="tipoOperacion.ultimo">Promedio de los meses del trimestre</mat-option>
-                <mat-option [value]="tipoOperacion.promedio">Ultimo valor del mes</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Forma de calcular el trimestre</mat-label>
+                <mat-select formControlName="tipoOperacion">
+                    <mat-option [value]="tipoOperacion.suma">Sumatoria de los meses del trimestre</mat-option>
+                    <mat-option [value]="tipoOperacion.promedio">Promedio de los meses del trimestre</mat-option>
+                    <mat-option [value]="tipoOperacion.ultimo">Ultimo valor del mes</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-mini-fab color="warn" (click)="recalcular()" matTooltip="Modifica la forma de calculo para los trimestres de todo un centro gestor" *ngIf="actualizar">
+                <mat-icon svgIcon="mat_solid:calculate"></mat-icon>
+            </button>
+        </div>
     </section>
 </form>
 

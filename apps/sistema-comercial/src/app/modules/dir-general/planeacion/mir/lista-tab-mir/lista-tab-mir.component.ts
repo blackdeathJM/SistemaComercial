@@ -22,7 +22,6 @@ import {MatDividerModule} from "@angular/material/divider";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {isNil} from "@angular-ru/cdk/utils";
-import {PlaneacionStore} from "@s-dir-general/store/planeacion.store";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -57,14 +56,14 @@ export class ListaTabMirComponent
 
     nuevoElemento(): void
     {
-        actCuestionario([false, null]);
+        actCuestionario(false);
         abrirPanelMir.set(true)
     }
 
     editarRegistro(): void
     {
         this.validacionesParaLista();
-        actCuestionario([true, this.elementoMir.idIndicador]);
+        actCuestionario(true);
         abrirPanelMir.set(true);
     }
 

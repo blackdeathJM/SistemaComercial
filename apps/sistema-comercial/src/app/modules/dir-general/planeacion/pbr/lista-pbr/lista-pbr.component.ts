@@ -20,19 +20,20 @@ import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-p
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {isNil} from "@angular-ru/cdk/utils";
-import {DefaultValuePipeModule} from "@angular-ru/cdk/pipes";
+import {DefaultValuePipeModule, NumberFormatPipeModule} from "@angular-ru/cdk/pipes";
 
 @Component({
     selector: 'app-lista-pbr',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr, ListaSumPbrComponent, MatButtonToggleModule, MatExpansionModule, DefaultValuePipeModule, DefaultValuePipeModule],
+    imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr,
+        ListaSumPbrComponent, MatButtonToggleModule, MatExpansionModule, DefaultValuePipeModule, DefaultValuePipeModule, NumberFormatPipeModule],
     templateUrl: './lista-pbr.component.html',
     styleUrls: ['./lista-pbr.component.scss'],
     animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class ListaPbrComponent
 {
     @Input() desNuevoReg: boolean = false;
@@ -42,7 +43,7 @@ export class ListaPbrComponent
 
     _planeacion: IPlaneacion = null;
     loader = ngxLoaderPbr();
-    elementosPbr: IPbrCuestionario = null;
+    elementoPbr = this.planeacionQuery.cuestionarioPbr;
 
     constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private ngxToast: NgxToastService)
@@ -56,25 +57,35 @@ export class ListaPbrComponent
 
     cambioDeSeleccion(e: MatButtonToggleChange): void
     {
-        this.elementosPbr = e.value;
+        this.planeacionQuery.cuestionarioPbr.set(e.value);
+    }
+
+    editarPbr(): void
+    {
+        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementoPbr()))
+        {
+            this.ngxToast.alertaToast('No hay elementos', 'PBR');
+            return;
+        }
+
+        actCuestionario(true);
+        abrirPanelPbr.set(true);
     }
 
     regAvances(): void
     {
-        avancesPbr([this._planeacion._id, 0]);
+        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementoPbr()))
+        {
+            this.ngxToast.alertaToast('No hay elementos', 'PBR');
+            return;
+        }
+        avancesPbr([this._planeacion._id, this.elementoPbr().idIndicador]);
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
     }
 
     nvoElemento(): void
     {
-        actCuestionario([false, null]);
-        abrirPanelPbr.set(true);
-    }
-
-    editarPbr(): void
-    {
-        this.validarElemento();
-        actCuestionario([true, this.elementosPbr.idIndicador]);
+        actCuestionario(false);
         abrirPanelPbr.set(true);
     }
 
@@ -85,16 +96,11 @@ export class ListaPbrComponent
 
     eliminarPbr(): void
     {
-        this.validarElemento();
-        this.planeacionService.eliminarElemento(this.elementosPbr.idIndicador, ValoresCamposMod.pbrCuestionario);
-    }
-
-    validarElemento(): void
-    {
-        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementosPbr))
+        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementoPbr()))
         {
             this.ngxToast.alertaToast('No hay elementos', 'PBR');
             return;
         }
+        this.planeacionService.eliminarElemento(this.elementoPbr().idIndicador, ValoresCamposMod.pbrCuestionario);
     }
 }

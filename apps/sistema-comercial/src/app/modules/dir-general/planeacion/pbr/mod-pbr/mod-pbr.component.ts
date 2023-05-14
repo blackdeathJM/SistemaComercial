@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, effect, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,7 +19,8 @@ import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-gener
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
-import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {IPbrCuestionario, TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {isNotNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-mod-pbr',
@@ -31,14 +32,15 @@ import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-
     styleUrls: ['./mod-pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
+export class ModPbrComponent implements OnInit, OnDestroy
 {
-    formPbr: FormGroup;
+    formPbr: FormGroup = this.fb.formGroup(new Pbr());
     cargando = false;
     empleados: IResolveEmpleado[];
     centrosGestores: string[] = [];
     actualizar = false;
     empleadoAnterior: string;
+    cuestionarioPbr = this.planeacionQuery.cuestionarioPbr;
     tipoOperacion = TipoOperaciones;
     sub: Subscription = new Subscription();
 
@@ -52,14 +54,19 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
                 'email': 'El texto no cumple con la estructura de email'
             }
         });
+
+        effect(() =>
+        {
+            if (actCuestionario() && isNotNil(this.cuestionarioPbr()))
+            {
+                this.empleadoAnterior = this.cuestionarioPbr().idEmpleado;
+                this.formPbr.patchValue(this.cuestionarioPbr());
+                this.actualizar = true;
+            }
+        })
     }
 
     ngOnInit(): void
-    {
-        this.formPbr = this.fb.formGroup(new Pbr());
-    }
-
-    ngAfterContentInit(): void
     {
         this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
         this.sub.add(this.seleccionQuery.select().subscribe((res) =>
@@ -68,27 +75,16 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         }));
     }
 
-    ngAfterViewInit(): void
-    {
-        if (actCuestionario()[0])
-        {
-            const cuestionarioPbr = this.planeacionQuery.getActive().pbrCuestionario.find(value => value.idIndicador === actCuestionario()[1]);
-            this.empleadoAnterior = cuestionarioPbr.idEmpleado;
-            this.formPbr.patchValue(cuestionarioPbr);
-            this.actualizar = true;
-        }
-    }
-
     regPbr(): void
     {
         this.cargando = true;
         const datos: TRegPbr =
             {
                 _id: this.planeacionQuery.getActive()._id,
+                esActualizar: this.actualizar,
                 ...this.formPbr.value
             };
         this.formPbr.disable();
-
         this.planeacionService.regPbr(datos).pipe(finalize(() =>
         {
             this.cargando = false;
@@ -102,7 +98,7 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
                 }
             });
             abrirPanelPbr.set(!this.actualizar);
-        })).subscribe();
+        })).subscribe(res => this.planeacionQuery.cuestionarioPbr.set(<IPbrCuestionario>res.data.regPbr.pbrCuestionario.find((value: IPbrCuestionario) => value.idIndicador === this.cuestionarioPbr().idIndicador)));
     }
 
     actLaFormaDeCalculo(): void
@@ -128,15 +124,20 @@ export class ModPbrComponent implements OnInit, AfterContentInit, AfterViewInit,
         this.empleados = this.empleadoQuery.filEmpleados(e);
     }
 
-    cerrar(): void
-    {
-        abrirPanelPbr.set(false);
-    }
-
     actualizarResponsable(): void
     {
         this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario).pipe(finalize(() =>
             abrirPanelPbr.set(!this.actualizar))).subscribe();
+    }
+
+    recalcular(): void
+    {
+
+    }
+
+    cerrar(): void
+    {
+        abrirPanelPbr.set(false);
     }
 
     ngOnDestroy(): void
