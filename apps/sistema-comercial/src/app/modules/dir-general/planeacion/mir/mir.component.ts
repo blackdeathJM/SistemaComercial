@@ -12,12 +12,13 @@ import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-regi
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from "@s-fuse/public-api";
 import {Subscription} from "rxjs";
+import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
     selector: 'app-mir',
     standalone: true,
-    imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent],
+    imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent, ComponentesComponent],
     providers: [],
     templateUrl: './mir.component.html',
     animations: [fuseAnimations],
