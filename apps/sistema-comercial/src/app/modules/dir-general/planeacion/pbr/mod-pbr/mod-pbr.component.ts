@@ -13,14 +13,15 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {finalize, Subscription} from 'rxjs';
+import {finalize, forkJoin, Subscription} from 'rxjs';
 import {TRecalcularPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
-import {IPbrCuestionario, TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {isNotNil} from "@angular-ru/cdk/utils";
+import {ConfirmacionService} from "@s-services/confirmacion.service";
 
 @Component({
     selector: 'app-mod-pbr',
@@ -45,7 +46,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
     sub: Subscription = new Subscription();
 
     constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery,
-                private planeacionService: PlaneacionService)
+                private planeacionService: PlaneacionService, private confService: ConfirmacionService)
     {
         ReactiveFormConfig.set({
             'validationMessage': {
@@ -100,12 +101,31 @@ export class ModPbrComponent implements OnInit, OnDestroy
             });
 
             abrirPanelPbr.set(!this.actualizar);
-        })).subscribe(res => this.planeacionQuery.cuestionarioPbr.set(<IPbrCuestionario>res.data.regPbr.pbrCuestionario.find((value: IPbrCuestionario) => value.idIndicador === this.cuestionarioPbr().idIndicador)));
+        })).subscribe();
     }
 
     actLaFormaDeCalculo(): void
     {
-
+        this.cargando = true;
+        this.confService.abrir().afterClosed().subscribe((config) =>
+        {
+            if (config === 'confirmed')
+            {
+                const args: TRecalcularPbr =
+                    {
+                        _id: this.planeacionQuery.getActive()._id,
+                        centroGestor: this.planeacionQuery.centroGestor(),
+                        tipoOperacion: this.formPbr.get('tipoOperacion').value
+                    };
+                this.formPbr.disable();
+                this.planeacionService.recalcularPbr(args).pipe(finalize(() =>
+                {
+                    this.cargando = false;
+                    this.formPbr.enable();
+                    abrirPanelPbr.set(!this.actualizar);
+                })).subscribe();
+            }
+        });
     }
 
     empleadoSele(e: string): void
@@ -132,17 +152,6 @@ export class ModPbrComponent implements OnInit, OnDestroy
         //     abrirPanelPbr.set(!this.actualizar))).subscribe();
 
         this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario);
-    }
-
-    recalcular(): void
-    {
-        const args: TRecalcularPbr =
-            {
-                _id: this.planeacionQuery.getActive()._id,
-                centroGestor: this.planeacionQuery.centroGestor(),
-                tipoOperacion: this.formPbr.get('tipoOperacion').value
-            }
-        this.planeacionService.recalcularPbr(args).subscribe();
     }
 
     cerrar(): void

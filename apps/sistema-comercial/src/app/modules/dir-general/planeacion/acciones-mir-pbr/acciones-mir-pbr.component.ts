@@ -30,6 +30,7 @@ export class AccionesMirPbrComponent
         this.planeacionStore.setActive(e._id);
         this.planeacionQuery.cuestionarioPbrV.set(e.pbrCuestionario);
         this.planeacionQuery.cuestionarioMirV.set(e.mirCuestionario);
+        this.planeacionQuery.sumatoriaPbrV.set(e.pbrSumatoria);
     }
 
     filCentroGestor(e: string): void

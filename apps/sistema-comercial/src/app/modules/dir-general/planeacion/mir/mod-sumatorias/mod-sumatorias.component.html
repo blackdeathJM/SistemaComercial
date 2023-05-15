@@ -10,11 +10,11 @@
             </mat-form-field>
         </ng-container>
 
-        <ng-container *ngIf="planeacion">
+        <ng-container *ngIf="cuestionarioPbr">
             <mat-form-field class="flex-auto mt-5">
                 <mat-label>Selecciona los campos que deseas sumar</mat-label>
                 <mat-select formControlName="ids" placeholder="Seleccionar" multiple>
-                    <mat-option *ngFor="let pbr of planeacion.pbrCuestionario" [value]="pbr.idIndicador">{{pbr.descripcion}}</mat-option>
+                    <mat-option *ngFor="let pbr of cuestionarioPbr()" [value]="pbr.idIndicador">{{pbr.idIndicador}}</mat-option>
                 </mat-select>
                 <mat-error>{{formSum.controls.ids['errorMessage']}}</mat-error>
             </mat-form-field>
@@ -42,4 +42,4 @@
     </section>
 </form>
 
-<app-registros (cancelar)="mdr.close()" (registro)="resSumatoria()"></app-registros>
+<app-registros (cancelar)="mdr.close()" (registro)="resSumatoria()" [cargando]="cargando" [deshabilitar]="cargando || formSum.invalid"></app-registros>

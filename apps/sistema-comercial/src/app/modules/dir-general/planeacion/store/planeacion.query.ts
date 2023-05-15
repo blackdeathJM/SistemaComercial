@@ -2,7 +2,7 @@ import {computed, Injectable, Signal, signal} from '@angular/core';
 import {IPlaneacionState, PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {QueryEntity} from '@datorama/akita';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {usuarioFil} from "@s-dir-general/store/planeacion.service";
 import {isNotNil} from "@angular-ru/cdk/utils";
@@ -14,16 +14,18 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     public cuestionarioPbrV = signal<IPbrCuestionario[]>([]);
     public cuestionarioMir = signal<IMirCuestionario>(null);
     public cuestionarioMirV = signal<IMirCuestionario[]>([]);
+    public sumatoriaPbrV = signal<ISumatorias[]>([])
     public centroGestor = signal<string>(null);
 
-    public compCuestionariopbr: Signal<IPbrCuestionario[]> = computed(() =>
+    public compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed(() =>
     {
+        console.log('pbr');
         const cuestionarioOriginal = this.cuestionarioPbrV().slice();
         if (isNotNil(usuarioFil()))
         {
             return cuestionarioOriginal.filter(value => value.idEmpleado === usuarioFil())
         }
-        if (isNotNil(this.centroGestor()))
+        if (this.centroGestor())
         {
             return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
         }
@@ -32,12 +34,25 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 
     public compCuestionarioMir: Signal<IMirCuestionario[]> = computed(() =>
     {
+        console.log('mir');
         const cuestionarioOriginal = this.cuestionarioMirV().slice();
         if (this.centroGestor())
         {
             return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
         }
         return this.cuestionarioMirV();
+    });
+
+    public compSumatoriasPbr: Signal<ISumatorias[]> = computed(() =>
+    {
+        console.log('sum');
+        const cuestionarioOriginal = this.sumatoriaPbrV().slice();
+        if (this.centroGestor())
+        {
+            console.log('===========', cuestionarioOriginal);
+            return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
+        }
+        return [];
     });
 
     constructor(protected planeacionStore: PlaneacionStore)

@@ -74,7 +74,7 @@ export class PlaneacionService
         {
             if (esActualizar)
             {
-                return await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.idIndicador': resto.idIndicador}, {
+                const respuesta = await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.idIndicador': resto.idIndicador}, {
                         $set: {
                             'pbrCuestionario.$.responsable': resto.responsable, 'pbrCuestionario.$.correo': resto.correo, 'pbrCuestionario.$.idEmpleado': resto.idEmpleado, 'pbrCuestionario.$.variableOrigen': resto.variableOrigen,
                             'pbrCuestionario.$.unidad': resto.unidad, 'pbrCuestionario.$.centroGestor': resto.centroGestor, 'pbrCuestionario.$.dato': resto.dato, 'pbrCuestionario.$.descripcion': resto.descripcion,
@@ -82,6 +82,14 @@ export class PlaneacionService
                         }
                     },
                     {new: true}).exec();
+                // Filtramos el resultado de la consulta para obtener solo el documento que fue actualizado
+                const cuestionarioActualizado = respuesta.pbrCuestionario.find(value => value.idIndicador === resto.idIndicador);
+
+                const trimestres = [[cuestionarioActualizado.marzo, cuestionarioActualizado.febrero, cuestionarioActualizado.enero], [cuestionarioActualizado.junio, cuestionarioActualizado.mayo, cuestionarioActualizado.abril],
+                    [cuestionarioActualizado.septiembre, cuestionarioActualizado.agosto, cuestionarioActualizado.julio], [cuestionarioActualizado.diciembre, cuestionarioActualizado.noviembre, cuestionarioActualizado.octubre]];
+
+                return await this.calcularAvancerPbr(respuesta._id, resto.idIndicador, resto.centroGestor, resto.tipoOperacion, trimestres);
+
             } else
             {
                 return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
@@ -94,7 +102,6 @@ export class PlaneacionService
 
     async actualizarResponsable(args: ActualizarResponsableDto): Promise<PlaneacionDto>
     {
-        console.log(args);
         try
         {
             return await this.planeacion.findByIdAndUpdate(args._id,
@@ -116,37 +123,29 @@ export class PlaneacionService
 
     async recalcularPbr(args: RecalcularPbrDto): Promise<PlaneacionDto>
     {
-        const idsPbr: string[] = [];
-        const consulta = await this.planeacion.findByIdAndUpdate(args._id, {$set: {'pbrCuestionario.[elem].suma': args.tipoOperacion}},
+        // Actualizamos el tipo de operacion y retornamos el valor de la consulta actualizada
+        const consulta = await this.planeacion.findByIdAndUpdate(args._id, {$set: {'pbrCuestionario.$[elem].tipoOperacion': args.tipoOperacion}},
             {arrayFilters: [{'elem.centroGestor': args.centroGestor}], new: true}).exec();
-        consulta.pbrCuestionario.forEach(value =>
+
+        // Obtenemos todos los ids del cuestionario y los agregamos a un array
+        const resp = consulta.pbrCuestionario.map(async value =>
         {
             if (value.centroGestor === args.centroGestor)
             {
-                idsPbr.push(value.idIndicador);
+                const trimestres = [[value.marzo, value.febrero, value.enero], [value.junio, value.mayo, value.abril],
+                    [value.septiembre, value.agosto, value.julio], [value.diciembre, value.noviembre, value.octubre]];
+
+                return await this.calcularAvancerPbr(args._id, value.idIndicador, args.centroGestor, args.tipoOperacion, trimestres)
             }
         });
-        const resp = idsPbr.map(async value =>
-        {
-            return await this.calcularAvancerPbr(args._id, value, args.centroGestor, args.tipoOperacion, [], true)
-        });
+
         return resp[resp.length];
     }
 
-    async calcularAvancerPbr(_id: string, idIndicador: string, centroGestor: string, tipoOperacion: string, trimestres: number[][], recalcular: boolean): Promise<PlaneacionDto>
+    async calcularAvancerPbr(_id: string, idIndicador: string, centroGestor: string, tipoOperacion: string, trimestres: number[][]): Promise<PlaneacionDto>
     {
         let total: number = 0;
         const valoresTrim: number[] = [];
-
-        if (recalcular)
-        {
-            const datosActuales = await this.planeacion.findById(_id).exec();
-            const filtrarDatos = datosActuales.pbrCuestionario.filter(value => value.centroGestor === centroGestor);
-
-            //Agrupar los meses del arreglo por trimestre
-            filtrarDatos.forEach(value => trimestres.push([value.marzo, value.febrero, value.enero], [value.junio, value.mayo, value.abril],
-                [value.septiembre, value.agosto, value.julio], [value.diciembre, value.noviembre, value.octubre]));
-        }
 
         const meses = trimestres.map((value, index) => trimestres[index]).flat();
         switch (tipoOperacion)
@@ -186,13 +185,13 @@ export class PlaneacionService
     async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
     {
         const {
-            _id, tipoOperacion, centroGestor, recalcular, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
+            _id, tipoOperacion, centroGestor, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
             septiembre, octubre, noviembre, diciembre
         } = datos;
 
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
 
-        const nvoDocumento = await this.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres, recalcular);
+        const nvoDocumento = await this.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
 
         // Actualizamos la sumatoria del centro gestor por si tiene
         if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
@@ -269,7 +268,6 @@ export class PlaneacionService
         if (actualizar)
         {
             return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
-            // return await this.planeacion.replaceOne({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {pbrSumatoria}, {new: true})
         } else
         {
             return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();

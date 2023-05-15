@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -29,11 +29,10 @@ export const abrirPanelPbr = signal<boolean>(false);
     styleUrls: ['./pbr.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PbrComponent
+export class PbrComponent implements OnDestroy
 {
-    pbrSumatorias: ISumatorias[] = [];
+    pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
     abrirPanel = abrirPanelPbr;
-    sub: Subscription = new Subscription();
 
     constructor(private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private mdr: MatDialog)
     {
@@ -52,6 +51,11 @@ export class PbrComponent
                 idSumatoria: null,
                 actualizar: false
             }
-        this.mdr.open(ModSumatoriasComponent, {width: '40%', data});
+        this.mdr.open(ModSumatoriasComponent, {width: '40%', data, hasBackdrop: false, disableClose: true});
+    }
+
+    ngOnDestroy(): void
+    {
+        this.planeacionQuery.centroGestor.set(null);
     }
 }

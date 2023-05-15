@@ -23,8 +23,6 @@ import {MatTabsModule} from "@angular/material/tabs";
 })
 export class ListaSumPbrComponent
 {
-    indice = 0;
-
     @Input({required: true}) set sumatoriasPbr(v: ISumatorias)
     {
         this._sumatoria = v;
@@ -44,10 +42,5 @@ export class ListaSumPbrComponent
                 actualizar: true
             }
         this.mdr.open(ModSumatoriasComponent, {width: '40%', data, hasBackdrop: true, disableClose: true})
-    }
-
-    cambioIndice(e: number): void
-    {
-        this.indice = e;
     }
 }

@@ -138,7 +138,10 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     actualizarResponsable(): void
     {
-        this.planeacionService.actualizarResponsable(this.formMir, this.idEmpleadoAnterior, ValoresCamposMod.mirCuestionario);
+        this.planeacionService.actualizarResponsable(this.formMir, this.idEmpleadoAnterior, ValoresCamposMod.mirCuestionario).pipe(finalize(() =>
+        {
+            this.actualizar = true;
+        })).subscribe();
     }
 
     cerrar(): void

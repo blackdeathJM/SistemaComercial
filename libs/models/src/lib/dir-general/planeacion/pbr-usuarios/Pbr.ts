@@ -50,7 +50,6 @@ export class AvancesPbr implements TRegAvancesPbr
 
     idIndicador: string;
     centroGestor: string;
-    recalcular: boolean;
 
     @required()
     tipoOperacion: string;
@@ -111,6 +110,6 @@ export class RegSumPbr implements TSumPbr
     @required({message: 'Este campo es requerido'})
     sumTrim: boolean;
 
-    @required({message: 'Este campo es requerido'})
+    @prop()
     sumTotal: boolean;
 }

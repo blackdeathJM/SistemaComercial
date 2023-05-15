@@ -47,7 +47,6 @@ export class ModAvancesPbrComponent
         const datos: TRegAvancesPbr =
             {
                 _id: planeacion._id,
-                recalcular: false,
                 centroGestor: this.pbrCuestionario().centroGestor,
                 tipoOperacion: this.pbrCuestionario().tipoOperacion,
                 idIndicador: this.pbrCuestionario().idIndicador,

@@ -43,7 +43,6 @@
                     "apps/sistema-comercial/src/styles/styles.scss",
                     "apps/sistema-comercial/src/styles/vendors.scss",
                     "apps/sistema-comercial/src/styles/tailwind.scss",
-                    "node_modules/ngx-toastr/toastr.css",
                     "node_modules/ngx-lightbox/lightbox.css"
                 ],
                 "scripts": [

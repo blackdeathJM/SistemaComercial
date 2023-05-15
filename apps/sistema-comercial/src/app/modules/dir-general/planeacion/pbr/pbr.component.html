@@ -21,8 +21,7 @@
 
             <article class="flex flex-auto flex-col">
                 <app-lista-pbr></app-lista-pbr>
-                <mat-divider class="my-4"></mat-divider>
-                <app-lista-sum-pbr [sumatoriasPbr]="sum" *ngFor="let sum of pbrSumatorias"></app-lista-sum-pbr>
+                <app-lista-sum-pbr [sumatoriasPbr]="sum" *ngFor="let sum of pbrSumatorias()"></app-lista-sum-pbr>
             </article>
         </section>
     </mat-drawer-content>

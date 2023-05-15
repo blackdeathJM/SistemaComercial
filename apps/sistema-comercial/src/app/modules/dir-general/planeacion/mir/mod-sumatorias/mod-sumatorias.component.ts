@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatOptionModule} from '@angular/material/core';
@@ -12,10 +12,10 @@ import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validat
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TSumPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {RegSumPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
-import {PlaneacionService, ValoresCamposMod} from "@s-dir-general/store/planeacion.service";
-import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-mod-sumatorias',
@@ -25,11 +25,11 @@ import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usua
     styleUrls: ['./mod-sumatorias.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModSumatoriasComponent implements OnInit, AfterContentInit
+export class ModSumatoriasComponent implements OnInit
 {
-    planeacion: IPlaneacion = null;
-    sumatoria: ISumatorias = null;
-    formSum: FormGroup;
+    cargando = false;
+    cuestionarioPbr = this.planeacionQuery.compCuestionarioPbr;
+    formSum: FormGroup = this.fb.formGroup(new RegSumPbr());
 
     constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModSumatoriasComponent>, private fb: RxFormBuilder,
                 private planeacionService: PlaneacionService, @Inject(MAT_DIALOG_DATA) private data: IEditarSumatoriaPBR)
@@ -38,38 +38,40 @@ export class ModSumatoriasComponent implements OnInit, AfterContentInit
 
     ngOnInit(): void
     {
-        this.formSum = this.fb.formGroup(new RegSumPbr());
-    }
-
-    ngAfterContentInit(): void
-    {
         if (this.data.actualizar)
         {
-            this.planeacion = this.planeacionQuery.getActive();
-            this.sumatoria = this.planeacion.pbrSumatoria.find(value => value.idSumatoria === this.data.idSumatoria);
-            this.formSum.patchValue(this.sumatoria);
+            const planeacion = this.planeacionQuery.getActive();
+            const sumatoria: ISumatorias = planeacion.pbrSumatoria.find(value => value.idSumatoria === this.data.idSumatoria);
+            this.formSum.patchValue(sumatoria);
         }
-    }
-
-    filCentroGestor(e: string): void
-    {
-        this.planeacion = this.planeacionQuery.filPlaneacionDinamica(ValoresCamposMod.pbrCuestionario, ValoresCamposMod.centroGestor, e);
-        console.log(this.planeacion);
     }
 
     resSumatoria(): void
     {
+        this.cargando = true;
         const datos: TSumPbr =
             {
+                ...this.formSum.value,
                 _id: this.planeacionQuery.getActive()._id,
                 idSumatoria: this.data.idSumatoria,
-                ...this.formSum.value,
+                sumTotal: false
             };
-
-        this.planeacionService.sumatoriaPbr(datos, this.data.actualizar).subscribe();
+        this.formSum.disable();
+        this.planeacionService.sumatoriaPbr(datos, this.data.actualizar).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.formSum.enable();
+            this.mdr.close();
+        })).subscribe();
     }
+
     trackByFn(index: number, elemento: string): number | string
     {
         return index || elemento;
+    }
+
+    filCentroGestor(e: string): void
+    {
+        this.planeacionQuery.centroGestor.set(e);
     }
 }

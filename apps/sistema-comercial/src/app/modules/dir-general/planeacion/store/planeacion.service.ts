@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
 import {
-    ActualizarResponsableGQL, ActualizarResponsableMutation, EliminarElementoGQL,
+    ActualizarResponsableGQL, EliminarElementoGQL,
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
@@ -129,7 +129,7 @@ export class PlaneacionService
         });
     }
 
-    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): void
+    actualizarResponsable(form: FormGroup, idEmpleadoAnterior: string, cuestionario: string): Observable<any>
     {
         if (form.get('idEmpleado').invalid)
         {
@@ -142,9 +142,9 @@ export class PlaneacionService
             return;
         }
         const message: string = 'Al realizar esta accion vas a cambiar el responsable para todo el centro gestor el cual tenga asignado';
-        this.confirmacionService.abrir({message}).afterClosed().subscribe((conf) =>
+        return this.confirmacionService.abrir({message}).afterClosed().pipe(tap((config) =>
         {
-            if (conf === 'confirmed')
+            if (config === 'confirmed')
             {
                 const args: TActualizarResponsable =
                     {
@@ -167,7 +167,7 @@ export class PlaneacionService
                     }
                 })).subscribe();
             }
-        });
+        }));
     }
 
     regAvancePbr(datos: TRegAvancesPbr): Observable<SingleExecutionResult<RegAvancePbrMutation>>
@@ -180,6 +180,7 @@ export class PlaneacionService
                     const {_id, ...cambios} = res.data.regAvancePbr as IPlaneacion;
                     this.planeacionStore.update(_id, cambios);
                     this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                    this.planeacionQuery.sumatoriaPbrV.set(cambios.pbrSumatoria);
                     this.ngxToast.satisfactorioToast('El avance se ha relizado con exito', 'Registro de avances');
                 }
             }));
@@ -194,6 +195,7 @@ export class PlaneacionService
                 const {_id, ...cambios} = res.data.sumatoriaPbr as IPlaneacion;
                 this.planeacionStore.update(_id, {...cambios});
                 this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                this.planeacionQuery.sumatoriaPbrV.set(cambios.pbrSumatoria);
                 this.ngxToast.satisfactorioToast('La sumatoria se ha creado con exito', 'Sumatoria');
             }
         }));
@@ -208,6 +210,8 @@ export class PlaneacionService
                 const {_id, ...cambios} = $cast<IPlaneacion>(res.data.recalcularPbr);
                 this.planeacionStore.update(_id, cambios);
                 this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                this.planeacionQuery.sumatoriaPbrV.set(cambios.pbrSumatoria);
+
                 this.ngxToast.satisfactorioToast('Se han recalculado todo correctamente', 'Recalcular multiples campos');
             }
         }));

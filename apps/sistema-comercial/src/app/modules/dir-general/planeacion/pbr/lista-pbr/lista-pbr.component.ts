@@ -16,11 +16,11 @@ import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
-import {NgxToastService} from "@s-services/ngx-toast.service";
 import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {isNil} from "@angular-ru/cdk/utils";
 import {DefaultValuePipeModule, NumberFormatPipeModule} from "@angular-ru/cdk/pipes";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -41,11 +41,11 @@ export class ListaPbrComponent
     @Input() desSumatoria: boolean = false;
 
     loader = ngxLoaderPbr();
-    cuestionariosPbr = this.planeacionQuery.compCuestionariopbr;
+    cuestionariosPbr = this.planeacionQuery.compCuestionarioPbr;
     elementoPbr = this.planeacionQuery.cuestionarioPbr;
 
     constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
-                private ngxToast: NgxToastService)
+                private ngxToast: ToastrService)
     {
     }
 
@@ -56,21 +56,18 @@ export class ListaPbrComponent
 
     editarPbr(): void
     {
-        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementoPbr()))
+        if (this.validarElemPbr())
         {
-            this.ngxToast.alertaToast('No hay elementos', 'PBR');
             return;
         }
-
         actCuestionario(true);
         abrirPanelPbr.set(true);
     }
 
     regAvances(): void
     {
-        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementoPbr()))
+        if (this.validarElemPbr())
         {
-            this.ngxToast.alertaToast('No hay elementos', 'PBR');
             return;
         }
         this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
@@ -89,11 +86,20 @@ export class ListaPbrComponent
 
     eliminarPbr(): void
     {
-        if (this.planeacionQuery.getActive().pbrCuestionario.length === 0 || isNil(this.elementoPbr()))
+        if (this.validarElemPbr())
         {
-            this.ngxToast.alertaToast('No hay elementos', 'PBR');
             return;
         }
         this.planeacionService.eliminarElemento(this.elementoPbr().idIndicador, ValoresCamposMod.pbrCuestionario);
+    }
+
+    validarElemPbr(): boolean
+    {
+        if (isNil(this.elementoPbr()))
+        {
+            this.ngxToast.warning('No hay elemento Seleccionado', 'PBR');
+            return true
+        }
+        return false;
     }
 }

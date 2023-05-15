@@ -70,7 +70,7 @@
                     <mat-option [value]="tipoOperacion.ultimo">Ultimo valor del mes</mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-mini-fab color="warn" (click)="recalcular()" matTooltip="Modifica la forma de calculo para los trimestres de todo un centro gestor" *ngIf="actualizar">
+            <button mat-mini-fab color="warn" (click)="actLaFormaDeCalculo()" matTooltip="Modifica la forma de calculo para los trimestres de todo un centro gestor" *ngIf="actualizar">
                 <mat-icon svgIcon="mat_solid:calculate"></mat-icon>
             </button>
         </div>
@@ -83,7 +83,7 @@
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()">
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()" [disabled]="cargando">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
             Guardar datos
         </button>

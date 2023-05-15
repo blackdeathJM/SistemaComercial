@@ -145,10 +145,6 @@ export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id es necesario'})
     _id: string;
-
-    @IsOptional()
-    @Field(() => Boolean, {nullable: true, defaultValue: false})
-    recalcular: boolean;
 }
 
 export type TRegAvancesPbr = RegAvancesPbrDto;
@@ -162,7 +158,7 @@ export class ActFormaDeCalculoPbr extends PickType(MirCuestionarioDto, ['idIndic
 }
 
 @InputType('RecalcularPbrInput')
-export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGestor', 'tipoOperacion'])
+export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGestor', 'tipoOperacion'], InputType)
 {
     @IsNotEmpty({message: 'El id es necesario'})
     @Field(() => ID, {nullable: true})

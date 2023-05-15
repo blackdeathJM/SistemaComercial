@@ -29,6 +29,7 @@ export default class PbrUsuarioComponent implements OnInit, AfterViewInit, OnDes
     {
         //Obtenermos el usuario que ha iniciado sesion y la asignamos a una variable para usarla en el componente lista del pbr
         usuarioFil(this.authQuery.getValue()._id);
+        // Pasamos el valor del centro gestor a null, por si el usuario accede a
     }
 
     ngAfterViewInit(): void
