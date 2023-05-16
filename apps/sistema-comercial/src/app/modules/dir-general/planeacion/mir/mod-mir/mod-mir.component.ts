@@ -158,4 +158,9 @@ export class ModMirComponent implements OnInit, OnDestroy
     {
         this.sub.unsubscribe();
     }
+
+    seleccionar($event: Event)
+    {
+
+    }
 }

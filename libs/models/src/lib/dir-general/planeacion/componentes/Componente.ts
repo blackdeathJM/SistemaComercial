@@ -8,8 +8,4 @@ export class Componente implements TRegComponente
 
     @required({message: 'El necesario establecer un valor para la cabecera establecida'})
     valor: string[];
-
-    trimValor: number;
-    trimestre: string;
-
 }

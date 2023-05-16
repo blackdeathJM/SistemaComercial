@@ -2,7 +2,7 @@
 
     <ng-container *ngIf="planeacionQuery.selectAll() | async as planeaciones">
         <mat-form-field class="flex-auto mt-5">
-            <mat-select (valueChange)="seleccionarPlaneacion($event)">
+            <mat-select (selectionChange)="seleccionarPlaneacion($event.value)">
                 <mat-option *ngFor="let planeacion of planeaciones" [value]="planeacion">{{planeacion.ano}}</mat-option>
             </mat-select>
         </mat-form-field>

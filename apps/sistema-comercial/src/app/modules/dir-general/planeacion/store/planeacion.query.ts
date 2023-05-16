@@ -14,12 +14,11 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     public cuestionarioPbrV = signal<IPbrCuestionario[]>([]);
     public cuestionarioMir = signal<IMirCuestionario>(null);
     public cuestionarioMirV = signal<IMirCuestionario[]>([]);
-    public sumatoriaPbrV = signal<ISumatorias[]>([])
+    public sumatoriaPbrV = signal<ISumatorias[]>([]);
     public centroGestor = signal<string>(null);
 
     public compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed(() =>
     {
-        console.log('pbr');
         const cuestionarioOriginal = this.cuestionarioPbrV().slice();
         if (isNotNil(usuarioFil()))
         {
@@ -34,7 +33,6 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 
     public compCuestionarioMir: Signal<IMirCuestionario[]> = computed(() =>
     {
-        console.log('mir');
         const cuestionarioOriginal = this.cuestionarioMirV().slice();
         if (this.centroGestor())
         {
@@ -45,11 +43,9 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 
     public compSumatoriasPbr: Signal<ISumatorias[]> = computed(() =>
     {
-        console.log('sum');
         const cuestionarioOriginal = this.sumatoriaPbrV().slice();
         if (this.centroGestor())
         {
-            console.log('===========', cuestionarioOriginal);
             return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
         }
         return [];
@@ -60,14 +56,14 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         super(planeacionStore);
     }
 
-    public filPlaneacionDinamica(cuestionario: string, filtro: string, valorFiltrar: string): IPlaneacion
-    {
-        const entidad = this.getActive();
-        const cuestionarioOriginal = entidad[cuestionario].slice();
-
-        return {
-            ...entidad,
-            [cuestionario]: cuestionarioOriginal.filter(value => value[filtro] === valorFiltrar)
-        };
-    }
+    // public filPlaneacionDinamica(cuestionario: string, filtro: string, valorFiltrar: string): IPlaneacion
+    // {
+    //     const entidad = this.getActive();
+    //     const cuestionarioOriginal = entidad[cuestionario].slice();
+    //
+    //     return {
+    //         ...entidad,
+    //         [cuestionario]: cuestionarioOriginal.filter(value => value[filtro] === valorFiltrar)
+    //     };
+    // }
 }
