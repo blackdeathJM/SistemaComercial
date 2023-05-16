@@ -243,25 +243,13 @@ type SeleccionType {
   tipo: [String!]
 }
 
-type ValoresAdicionalesType {
-  campo: String
-  valor: Float
-}
-
-type FormUnoType {
-  id: String
-  idIndicador: String
-}
-
 type ComponenteType {
-  formulaTrim: String
-  tipoForm: Int
-  formUno: [FormUnoType!]
-  trim1: Float
-  trim2: Float
-  trim3: Float
-  trim4: Float
-  valoresAdicionales: [ValoresAdicionalesType!]
+  id: String
+  cabecera: [String!]
+  valor: [String!]
+  trimValor: Float
+  trimestre: String
+  etiqueta: String
 }
 
 type MirCuestionarioType {
@@ -302,7 +290,7 @@ type MirCuestionarioType {
   correo: String
   responsable: String
   idEmpleado: String
-  componente: ComponenteType
+  componente: [ComponenteType!]
 }
 
 type PbrType {
@@ -462,7 +450,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1684164161
+  tiempo: Int = 1684225446
   titulo: String
   usarRouter: Boolean = false
 }
@@ -578,25 +566,13 @@ input SeleccionInput {
   tipo: [String!] = []
 }
 
-input ValoresAdicionalesInput {
-  campo: String = null
-  valor: Float = 0
-}
-
-input FormUnoInput {
-  id: String = "f578eff5-82de-4c1b-a5b9-e8b2bcf74fb8"
-  idIndicador: String = null
-}
-
 input ComponenteInput {
-  formulaTrim: String = null
-  tipoForm: Int = 1
-  formUno: [FormUnoInput!] = []
-  trim1: Float = 0
-  trim2: Float = 0
-  trim3: Float = 0
-  trim4: Float = 0
-  valoresAdicionales: [ValoresAdicionalesInput!] = []
+  id: String = "bda8cdd9-8bcd-4c25-bd07-5cfdc5117280"
+  cabecera: [String!] = []
+  valor: [String!] = []
+  trimValor: Float = 0
+  trimestre: String = null
+  etiqueta: String = null
 }
 
 input MirCuestionarioInput {
@@ -637,7 +613,7 @@ input MirCuestionarioInput {
   correo: String = null
   responsable: String
   idEmpleado: String
-  componente: ComponenteInput = null
+  componente: [ComponenteInput!] = []
 }
 
 input PbrInput {
@@ -819,7 +795,7 @@ input RegMirInput {
   correo: String = null
   responsable: String
   idEmpleado: String
-  componente: ComponenteInput = null
+  componente: [ComponenteInput!] = []
   _id: ID
   esActualizar: Boolean = false
 }

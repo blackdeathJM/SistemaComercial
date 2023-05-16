@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, Signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from "@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
@@ -14,6 +14,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ModComponentesComponent} from "@s-dir-general/componentes/mod-componentes/mod-componentes.component";
 import {TRegComp} from "@s-dir-general/store/planeacion.interface";
 import {MatCardModule} from "@angular/material/card";
+import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-componentes',
@@ -26,14 +27,7 @@ import {MatCardModule} from "@angular/material/card";
 })
 export class ComponentesComponent
 {
-    // mirCuestionario: IMirCuestionario[] = [];
-    // pbrCuestionario: IPbrCuestionario[] = [];
-    @Input({required: true}) set mirCuestionario(v: IMirCuestionario)
-    {
-        this._mirCuestionario = v;
-    }
-
-    _mirCuestionario: IMirCuestionario = null;
+    cuestionarioMir = this.planeacionQuery.cuestionarioMir;
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
     constructor(private planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog)
@@ -48,13 +42,7 @@ export class ComponentesComponent
     // }
     regComponente(): void
     {
-        const data: TRegComp =
-            {
-                _id: this.planeacionQuery.getActive()._id,
-                idIndicador: this._mirCuestionario.idIndicador,
-                centroGestor: this._mirCuestionario.centroGestor
-            };
-        this.mdr.open(ModComponentesComponent, {width: '50%', data});
+        this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
     }
 
     nuevoElemento(): void

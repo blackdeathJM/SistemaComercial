@@ -122,6 +122,10 @@ export interface ICamposAdicionales
 
 export interface IComponente
 {
+    id: string;
     cabecera: string[];
     valor: string[];
+    trimValor: number;
+    trimestre: string;
+    etiqueta: string;
 }

@@ -1,0 +1,8 @@
+fragment fragComponente on ComponenteType
+{
+    id
+    cabecera
+    valor
+    trimValor
+    trimestre
+}

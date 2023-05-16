@@ -167,9 +167,9 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({message: 'Es necesario el id del encargado'})
     idEmpleado: string;
 
-    @Field(() => ComponenteDto, {nullable: true, defaultValue: null})
+    @Field(() => [ComponenteDto], {nullable: true, defaultValue: []})
     @IsOptional()
-    componente: ComponenteDto;
+    componente: ComponenteDto[];
 
 }
 

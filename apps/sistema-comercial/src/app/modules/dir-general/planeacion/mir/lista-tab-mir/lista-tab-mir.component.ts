@@ -18,7 +18,7 @@ import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/bu
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 
 @Component({

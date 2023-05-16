@@ -1,7 +1,7 @@
 <section class="flex flex-auto flex-col">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4 flex-auto" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
-            <span class="text-xl">{{_mirCuestionario.nivel}}</span>
+            <span class="text-xl">{{cuestionarioMir()?.nivel}}</span>
         </mat-card-header>
         <mat-card-content>
             <article class="flex flex-col flex-auto">
@@ -9,33 +9,33 @@
                     <span class="detalle-span">Fecha</span>
                     <span class="border-b-2">{{fecha}}</span>
                     <span class="detalle-span">ID INDICADOR</span>
-                    <span class="border-b-2">{{_mirCuestionario?.idIndicador}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.idIndicador}}</span>
                     <span class="detalle-span">Programa presupuestal</span>
-                    <span class="border-b-2">{{_mirCuestionario?.programaFinanciacion}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.programaFinanciacion}}</span>
 
                     <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">FUNCIONARIO RESPONSABLE</span>
                     <span class="detalle-span">Responsable</span>
-                    <span class="border-b-2">{{_mirCuestionario?.responsable}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.responsable}}</span>
                     <span class="detalle-span">Centro gestor</span>
-                    <span class="border-b-2">{{_mirCuestionario?.centroGestor}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.centroGestor}}</span>
                     <span class="detalle-span">Correo electronico</span>
-                    <span class="border-b-2">{{_mirCuestionario?.correo}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.correo}}</span>
 
                     <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Nombre del indicador</span>
-                    <span class="border-b-2 col-span-full text-center">{{_mirCuestionario?.resumenNarrativo}}</span>
+                    <span class="border-b-2 col-span-full text-center">{{cuestionarioMir()?.resumenNarrativo}}</span>
 
                     <span class="detalle-span col-start-5">Unidad de medida</span>
-                    <span class="border-b-2">{{_mirCuestionario?.unidadDeMedida}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.unidadDeMedida}}</span>
                     <span class="detalle-span col-start-5">Nivel</span>
-                    <span class="border-b-2">{{_mirCuestionario?.nivel}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.nivel}}</span>
                     <span class="detalle-span col-start-5">Linea base</span>
-                    <span class="border-b-2">{{_mirCuestionario?.lineaBaseValor}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.lineaBaseValor}}</span>
                     <span class="detalle-span col-start-5">Meta</span>
-                    <span class="border-b-2">{{_mirCuestionario?.meta}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.meta}}</span>
                     <span class="detalle-span col-start-5">Sentido del indicador</span>
-                    <span class="border-b-2">{{_mirCuestionario?.sentidoDelIndicador}}</span>
+                    <span class="border-b-2">{{cuestionarioMir()?.sentidoDelIndicador}}</span>
                     <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Metodo de calculo</span>
-                    <span class="border-b-2 col-span-full text-center">{{_mirCuestionario?.metodoCalculo}}</span>
+                    <span class="border-b-2 col-span-full text-center">{{cuestionarioMir()?.metodoCalculo}}</span>
                 </section>
             </article>
         </mat-card-content>

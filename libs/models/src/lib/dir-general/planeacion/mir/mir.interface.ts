@@ -40,5 +40,5 @@ export interface IMirCuestionario
     formulaTrim4: string;
     formulaAnual: string;
 
-    componente: IComponente;
+    componente: IComponente[];
 }

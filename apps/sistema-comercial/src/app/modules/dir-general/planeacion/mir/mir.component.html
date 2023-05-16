@@ -26,7 +26,9 @@
 
         <article class="flex flex-col flex-auto">
             <app-lista-tab-mir></app-lista-tab-mir>
-            <app-componentes></app-componentes>
+            <ng-container *ngIf="planeacionQuery.cuestionarioMir()">
+                <app-componentes></app-componentes>
+            </ng-container>
         </article>
     </mat-drawer-content>
 </mat-drawer-container>

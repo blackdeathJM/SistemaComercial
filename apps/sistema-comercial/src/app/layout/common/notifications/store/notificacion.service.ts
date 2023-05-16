@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { NgxToastService } from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import { EliminarNotGQL, EliminarNotMutation, EliminarTodosGQL, EliminarTodosMutation, NotificacionesGQL, NotificacionesQuery, NotificarGQL, NotificarSubscription } from '#/libs/datos/src';
-import { catchError, Observable, tap } from 'rxjs';
-import { ApolloQueryResult, SingleExecutionResult } from '@apollo/client';
-import { INotificacion } from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
-import { SubscriptionResult } from 'apollo-angular';
-import { AuthQuery } from '@s-core/auth/store/auth.query';
-import { NotificacionStore } from '@s-layout/notifications/store/notificacion.store';
-import { GeneralService } from '@s-services/general.service';
+import {Injectable} from '@angular/core';
+import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
+import {EliminarNotGQL, EliminarNotMutation, EliminarTodosGQL, EliminarTodosMutation, NotificacionesGQL, NotificacionesQuery, NotificarGQL, NotificarSubscription} from '#/libs/datos/src';
+import {catchError, Observable, tap} from 'rxjs';
+import {ApolloQueryResult, SingleExecutionResult} from '@apollo/client';
+import {INotificacion} from '#/libs/models/src/lib/general/notificacion/notificacion.interface';
+import {SubscriptionResult} from 'apollo-angular';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
+import {NotificacionStore} from '@s-layout/notifications/store/notificacion.store';
+import {GeneralService} from '@s-services/general.service';
+import {isNotNil} from "@angular-ru/cdk/utils";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class NotificacionService
 {
     idUsuario: string = null;
@@ -22,7 +23,7 @@ export class NotificacionService
 
     notificaciones(): Observable<ApolloQueryResult<NotificacionesQuery>>
     {
-        return this.notificacionesGQL.fetch({ idUsuario: this.idUsuario }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.notificacionesGQL.fetch({idUsuario: this.idUsuario}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res && res.data)
             {
@@ -35,21 +36,21 @@ export class NotificacionService
 
     notificar(): Observable<SubscriptionResult<NotificarSubscription>>
     {
-        return this.notificarGQL.subscribe({ idUsuario: this.idUsuario }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.notificarGQL.subscribe({idUsuario: this.idUsuario}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (res && res.data)
+            if (isNotNil(res) && isNotNil(res.data))
             {
                 const nvaNotificacion = res.data.notificar as INotificacion;
                 // this.entityNotificacion.addOne(nvaNotificacion);
                 this.notificacionStore.add(nvaNotificacion);
-                this.ngxToast.infoToast(res.data.notificar.descripcion, res.data.notificar.titulo, { closeButton: true, disableTimeOut: true });
+                this.ngxToast.infoToast(res.data.notificar.descripcion, res.data.notificar.titulo, {closeButton: true, disableTimeOut: true});
             }
         }));
     }
 
     eliminarTodas(): Observable<SingleExecutionResult<EliminarTodosMutation>>
     {
-        return this.eliminarTodosGQL.mutate({ idUsuario: this.idUsuario }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.eliminarTodosGQL.mutate({idUsuario: this.idUsuario}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res.data.eliminarTodos !== 0)
             {
@@ -61,7 +62,7 @@ export class NotificacionService
 
     eliminar(notificacion: INotificacion): Observable<SingleExecutionResult<EliminarNotMutation>>
     {
-        return this.eliminarNotGQL.mutate({ _id: notificacion._id }).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        return this.eliminarNotGQL.mutate({_id: notificacion._id}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (res && res.data)
             {
