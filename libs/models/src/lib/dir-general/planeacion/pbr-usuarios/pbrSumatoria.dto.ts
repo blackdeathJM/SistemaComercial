@@ -2,7 +2,6 @@ import {ISumatorias} from './pbr.interface';
 import {Field, Float, ID, InputType, ObjectType, PartialType} from '@nestjs/graphql';
 import {IsBoolean, IsNotEmpty, IsOptional} from 'class-validator';
 
-
 @ObjectType('PbrSumatoriaType')
 @InputType('PbrSumatoriaInput')
 export class PbrSumatoriaDto implements ISumatorias

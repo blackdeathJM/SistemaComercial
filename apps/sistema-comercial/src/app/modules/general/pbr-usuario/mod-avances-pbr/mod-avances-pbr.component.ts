@@ -63,6 +63,7 @@ export class ModAvancesPbrComponent
                 noviembre: +noviembre,
                 diciembre: +diciembre
             };
+        console.log('Datos', datos);
         this.formAvances.disable();
 
         this.planeacionService.regAvancePbr(datos).pipe(finalize(() =>

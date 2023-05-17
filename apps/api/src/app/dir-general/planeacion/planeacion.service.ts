@@ -188,30 +188,42 @@ export class PlaneacionService
             _id, tipoOperacion, centroGestor, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
             septiembre, octubre, noviembre, diciembre
         } = datos;
-
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
+
 
         const nvoDocumento = await this.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
 
         // Actualizamos la sumatoria del centro gestor por si tiene
         if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
         {
-            const datos: TSumPbr =
-                {
-                    _id: nvoDocumento._id,
-                    ...nvoDocumento.pbrSumatoria
-                }
-            return await this.sumatoriaPbr(datos, true);
+
+            const respuesta = nvoDocumento.pbrSumatoria.map(async value =>
+            {
+                const datos: TSumPbr =
+                    {
+                        ...value,
+                        _id
+                    }
+                return await this.sumatoriaPbr(datos, true);
+            })
+            return respuesta[respuesta.length];
         }
+
+
         return nvoDocumento;
     }
 
-    async matrizDeValoresMeses(_id: string, ids: string[]): Promise<number[][][][]>
+    async matrizDeValoresMeses(_id: string, ids: string[]): Promise<number[][][]>
     {
         const docPlaneacion = await this.planeacion.findById(_id).exec();
-        return ids.map(idIndicador =>
-            docPlaneacion.pbrCuestionario.filter(pbr => pbr.idIndicador === idIndicador).map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
-                [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]));
+
+        const filtro = docPlaneacion.pbrCuestionario.filter(value => value.idIndicador);
+        return filtro.map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
+            [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]);
+
+        // return ids.map(idIndicador =>
+        //     docPlaneacion.pbrCuestionario.filter(pbr => pbr.idIndicador === idIndicador).map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
+        //         [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]))
     }
 
     sumarValoresDelMismoMes(valorMatrizMeses: number[][][]): number[]
@@ -227,12 +239,13 @@ export class PlaneacionService
     async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean): Promise<PlaneacionDto>
     {
         const {_id, ids, centroGestor, descripcion, nombreSumatoria, idSumatoria, sumTrim, sumTotal} = datos;
+
         const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids);
 
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 
         //Sumatoria de los meses en vertical empezando por diciembre, se hizo asi para asignar el último valor a los trimestres que lo requieran
-        const sumatoriaMeses = this.sumarValoresDelMismoMes(valoresMatrizMeses.flat());
+        const sumatoriaMeses = this.sumarValoresDelMismoMes(valoresMatrizMeses);
 
         const ultimoValorDelMes = sumatoriaMeses.slice();
 

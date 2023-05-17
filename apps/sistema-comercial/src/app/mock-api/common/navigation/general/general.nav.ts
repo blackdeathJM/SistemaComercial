@@ -81,7 +81,8 @@ export const GENERAL: FuseNavigationItem[] =
                     },
                     {
                         id: 'mirUsuario',
-                        title: 'PBR',
+                        title: 'Av. Actividades',
+                        tooltip: 'Registro de avance de activides',
                         type: 'basic',
                         icon: 'mat_solid:microwave',
                         oculto: false,

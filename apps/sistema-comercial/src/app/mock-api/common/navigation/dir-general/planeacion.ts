@@ -32,7 +32,7 @@ export const PLANEACION: FuseNavigationItem =
                 },
                 {
                     id: 'depto-pbr',
-                    title: 'PBR',
+                    title: 'Avance de actividades',
                     type: 'basic',
                     icon: 'add_to_photos',
                     oculto: false,

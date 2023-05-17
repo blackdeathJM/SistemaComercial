@@ -450,7 +450,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1684234084
+  tiempo: Int = 1684293242
   titulo: String
   usarRouter: Boolean = false
 }
@@ -567,7 +567,7 @@ input SeleccionInput {
 }
 
 input ComponenteInput {
-  id: String = "22983783-3ab2-4a94-b4ed-60943cb49cf1"
+  id: String = "42119834-a276-430f-a84b-21d4a97331e6"
   cabecera: [String!] = []
   valor: [String!] = []
   trimValor: Float = 0
