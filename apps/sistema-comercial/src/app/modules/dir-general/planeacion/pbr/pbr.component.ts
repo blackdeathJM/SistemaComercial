@@ -12,11 +12,10 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
-import {ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
 import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
-import {Subscription} from "rxjs";
+import {fuseAnimations} from "@s-fuse/public-api";
 
 export const abrirPanelPbr = signal<boolean>(false);
 
@@ -27,6 +26,7 @@ export const abrirPanelPbr = signal<boolean>(false);
     providers: [],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PbrComponent implements OnDestroy

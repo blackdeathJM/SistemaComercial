@@ -148,6 +148,8 @@ export class PlaneacionService
         const valoresTrim: number[] = [];
 
         const meses = trimestres.map((value, index) => trimestres[index]).flat();
+
+
         switch (tipoOperacion)
         {
             case TipoOperaciones.suma:
@@ -203,13 +205,11 @@ export class PlaneacionService
                     {
                         ...value,
                         _id
-                    }
-                return await this.sumatoriaPbr(datos, true);
-            })
+                    };
+                return this.sumatoriaPbr(datos, true)
+            });
             return respuesta[respuesta.length];
         }
-
-
         return nvoDocumento;
     }
 
@@ -217,18 +217,22 @@ export class PlaneacionService
     {
         const docPlaneacion = await this.planeacion.findById(_id).exec();
 
-        const filtro = docPlaneacion.pbrCuestionario.filter(value => value.idIndicador);
-        return filtro.map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
-            [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]);
+        const filtroIds = ids.map(idIndicador =>
+        {
+            return docPlaneacion.pbrCuestionario.filter(v => v.idIndicador === idIndicador)
+        });
 
-        // return ids.map(idIndicador =>
-        //     docPlaneacion.pbrCuestionario.filter(pbr => pbr.idIndicador === idIndicador).map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
-        //         [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]))
+        const regresar = filtroIds.filter(value => value)
+
+
+        // return filtro.map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
+        //     [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]);
     }
 
     sumarValoresDelMismoMes(valorMatrizMeses: number[][][]): number[]
     {
         const nvoArreglo: number[][] = [];
+
         for (let i = 0; i < valorMatrizMeses.length; i++)
         {
             nvoArreglo.push(valorMatrizMeses[i].flat());
@@ -240,7 +244,7 @@ export class PlaneacionService
     {
         const {_id, ids, centroGestor, descripcion, nombreSumatoria, idSumatoria, sumTrim, sumTotal} = datos;
 
-        const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids);
+        const valoresMatrizMeses = await this.matrizDeValoresMeses(_id);
 
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 

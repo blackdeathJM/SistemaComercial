@@ -14,7 +14,7 @@
             <mat-form-field class="flex-auto mt-5">
                 <mat-label>Selecciona los campos que deseas sumar</mat-label>
                 <mat-select formControlName="ids" placeholder="Seleccionar" multiple>
-                    <mat-option *ngFor="let pbr of cuestionarioPbr()" [value]="pbr.idIndicador">{{pbr.idIndicador}}</mat-option>
+                    <mat-option *ngFor="let pbr of cuestionarioPbr()" [value]="pbr.idIndicador">{{pbr.dato}}</mat-option>
                 </mat-select>
                 <mat-error>{{formSum.controls.ids['errorMessage']}}</mat-error>
             </mat-form-field>
