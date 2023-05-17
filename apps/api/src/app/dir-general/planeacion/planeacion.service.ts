@@ -213,7 +213,7 @@ export class PlaneacionService
         return nvoDocumento;
     }
 
-    async matrizDeValoresMeses(_id: string, ids: string[]): Promise<number[][][]>
+    async matrizDeValoresMeses(_id: string, ids: string[]): Promise<number[][][][]>
     {
         const docPlaneacion = await this.planeacion.findById(_id).exec();
 
@@ -222,11 +222,11 @@ export class PlaneacionService
             return docPlaneacion.pbrCuestionario.filter(v => v.idIndicador === idIndicador)
         });
 
-        const regresar = filtroIds.filter(value => value)
-
-
-        // return filtro.map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
-        //     [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]]);
+        return filtroIds.map(value =>
+        {
+            return value.map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
+                [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]])
+        });
     }
 
     sumarValoresDelMismoMes(valorMatrizMeses: number[][][]): number[]
