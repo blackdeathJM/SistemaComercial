@@ -1,6 +1,6 @@
 import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
@@ -45,12 +45,10 @@ export class PlaneacionService
 
             const {_id, ...resto} = nvo;
             return await this.planeacion.findByIdAndUpdate(_id, {$set: {...resto}}, {new: true}).exec();
-
-        } else
-        {
-
-            return new this.planeacion(planeacion).save();
         }
+
+        return new this.planeacion(planeacion).save();
+
     }
 
     async regMir(datos: RegMirDto): Promise<PlaneacionDto>
@@ -60,65 +58,50 @@ export class PlaneacionService
         if (esActualizar)
         {
             return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': resto.idIndicador}, {$set: {'mirCuestionario.$': resto}}, {new: true}).exec();
-        } else
-        {
-            return await this.planeacion.findByIdAndUpdate(_id, {$push: {mirCuestionario: resto}}, {new: true}).exec();
         }
+        return await this.planeacion.findByIdAndUpdate(_id, {$push: {mirCuestionario: resto}}, {new: true}).exec();
     }
 
     async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
     {
         const {_id, esActualizar, ...resto} = datos;
-
-        try
+        if (esActualizar)
         {
-            if (esActualizar)
-            {
-                const respuesta = await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.idIndicador': resto.idIndicador}, {
-                        $set: {
-                            'pbrCuestionario.$.responsable': resto.responsable, 'pbrCuestionario.$.correo': resto.correo, 'pbrCuestionario.$.idEmpleado': resto.idEmpleado, 'pbrCuestionario.$.variableOrigen': resto.variableOrigen,
-                            'pbrCuestionario.$.unidad': resto.unidad, 'pbrCuestionario.$.centroGestor': resto.centroGestor, 'pbrCuestionario.$.dato': resto.dato, 'pbrCuestionario.$.descripcion': resto.descripcion,
-                            'pbrCuestionario.$.tipoOperacion': resto.tipoOperacion
-                        }
-                    },
-                    {new: true}).exec();
-                // Filtramos el resultado de la consulta para obtener solo el documento que fue actualizado
-                const cuestionarioActualizado = respuesta.pbrCuestionario.find(value => value.idIndicador === resto.idIndicador);
+            const respuesta = await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.idIndicador': resto.idIndicador}, {
+                    $set: {
+                        'pbrCuestionario.$.responsable': resto.responsable, 'pbrCuestionario.$.correo': resto.correo, 'pbrCuestionario.$.idEmpleado': resto.idEmpleado, 'pbrCuestionario.$.variableOrigen': resto.variableOrigen,
+                        'pbrCuestionario.$.unidad': resto.unidad, 'pbrCuestionario.$.centroGestor': resto.centroGestor, 'pbrCuestionario.$.dato': resto.dato, 'pbrCuestionario.$.descripcion': resto.descripcion,
+                        'pbrCuestionario.$.tipoOperacion': resto.tipoOperacion
+                    }
+                },
+                {new: true}).exec();
+            // Filtramos el resultado de la consulta para obtener solo el documento que fue actualizado
+            const cuestionarioActualizado = respuesta.pbrCuestionario.find(value => value.idIndicador === resto.idIndicador);
 
-                const trimestres = [[cuestionarioActualizado.marzo, cuestionarioActualizado.febrero, cuestionarioActualizado.enero], [cuestionarioActualizado.junio, cuestionarioActualizado.mayo, cuestionarioActualizado.abril],
-                    [cuestionarioActualizado.septiembre, cuestionarioActualizado.agosto, cuestionarioActualizado.julio], [cuestionarioActualizado.diciembre, cuestionarioActualizado.noviembre, cuestionarioActualizado.octubre]];
+            const trimestres = [[cuestionarioActualizado.marzo, cuestionarioActualizado.febrero, cuestionarioActualizado.enero], [cuestionarioActualizado.junio, cuestionarioActualizado.mayo, cuestionarioActualizado.abril],
+                [cuestionarioActualizado.septiembre, cuestionarioActualizado.agosto, cuestionarioActualizado.julio], [cuestionarioActualizado.diciembre, cuestionarioActualizado.noviembre, cuestionarioActualizado.octubre]];
 
-                return await this.calcularAvancerPbr(respuesta._id, resto.idIndicador, resto.centroGestor, resto.tipoOperacion, trimestres);
+            return await this.calcularAvancerPbr(respuesta._id, resto.idIndicador, resto.centroGestor, resto.tipoOperacion, trimestres);
 
-            } else
-            {
-                return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
-            }
-        } catch (e)
-        {
-            throw new InternalServerErrorException(e);
         }
+        return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
+
+
     }
 
     async actualizarResponsable(args: ActualizarResponsableDto): Promise<PlaneacionDto>
     {
-        try
-        {
-            return await this.planeacion.findByIdAndUpdate(args._id,
-                {
-                    $set: {
-                        [`${args.cuestionario}.$[elem].idEmpleado`]: args.idEmpleado,
-                        [`${args.cuestionario}.$[elem].responsable`]: args.responsable,
-                        [`${args.cuestionario}.$[elem].correo`]: args.correo,
-                    }
-                },
-                {
-                    arrayFilters: [{'elem.idEmpleado': args.idEmpleadoAnterior}], new: true
-                }).exec();
-        } catch (e)
-        {
-            throw new InternalServerErrorException(e);
-        }
+        return await this.planeacion.findByIdAndUpdate(args._id,
+            {
+                $set: {
+                    [`${args.cuestionario}.$[elem].idEmpleado`]: args.idEmpleado,
+                    [`${args.cuestionario}.$[elem].responsable`]: args.responsable,
+                    [`${args.cuestionario}.$[elem].correo`]: args.correo,
+                }
+            },
+            {
+                arrayFilters: [{'elem.idEmpleado': args.idEmpleadoAnterior}], new: true
+            }).exec();
     }
 
     async recalcularPbr(args: RecalcularPbrDto): Promise<PlaneacionDto>
@@ -148,8 +131,6 @@ export class PlaneacionService
         const valoresTrim: number[] = [];
 
         const meses = trimestres.map((value, index) => trimestres[index]).flat();
-
-
         switch (tipoOperacion)
         {
             case TipoOperaciones.suma:
