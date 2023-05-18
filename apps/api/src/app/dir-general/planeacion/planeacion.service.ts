@@ -6,8 +6,9 @@ import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir
 import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {isEmpty} from "lodash";
-import {TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class PlaneacionService
@@ -85,8 +86,6 @@ export class PlaneacionService
 
         }
         return await this.planeacion.findByIdAndUpdate(_id, {$push: {pbrCuestionario: resto}}, {new: true}).exec();
-
-
     }
 
     async actualizarResponsable(args: ActualizarResponsableDto): Promise<PlaneacionDto>
@@ -122,7 +121,7 @@ export class PlaneacionService
             }
         });
 
-        return resp[resp.length];
+        return resp[resp.length - 1];
     }
 
     async calcularAvancerPbr(_id: string, idIndicador: string, centroGestor: string, tipoOperacion: string, trimestres: number[][]): Promise<PlaneacionDto>
@@ -173,13 +172,11 @@ export class PlaneacionService
         } = datos;
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
 
-
         const nvoDocumento = await this.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
 
         // Actualizamos la sumatoria del centro gestor por si tiene
         if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
         {
-
             const respuesta = nvoDocumento.pbrSumatoria.map(async value =>
             {
                 const datos: TSumPbr =
@@ -189,7 +186,7 @@ export class PlaneacionService
                     };
                 return this.sumatoriaPbr(datos, true)
             });
-            return respuesta[respuesta.length];
+            return respuesta[respuesta.length - 1];
         }
         return nvoDocumento;
     }
@@ -242,10 +239,7 @@ export class PlaneacionService
 
     sumarMeses(matrizMeses: number[][][]): number[][]
     {
-        return matrizMeses.map((fila) =>
-        {
-            return fila.map(ele => ele.reduce((acc, act) => acc + act, 0));
-        });
+        return matrizMeses.map((fila) => fila.map(ele => ele.reduce((acc, act) => acc + act, 0)));
     }
 
     async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean): Promise<PlaneacionDto>
@@ -254,49 +248,43 @@ export class PlaneacionService
 
         const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids);
         const sumatoriaMeses = this.sumarMeses(valoresMatrizMeses);
-
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 
-        // const ultimoValorDelMes = sumatoriaMeses.slice();
-        //
-        // const arrayTrim = chunk(ultimoValorDelMes, 3);
-        //
-        // const pbrSumatoria: ISumatorias = {
-        //     enero: sumatoriaMeses[11],
-        //     febrero: sumatoriaMeses[10],
-        //     marzo: sumatoriaMeses[9],
-        //     trim1: sumTrim ? arrayTrim[3].reduce((acc, act) => acc + act) : arrayTrim[3].find(value => value !== 0),
-        //     abril: sumatoriaMeses[8],
-        //     mayo: sumatoriaMeses[7],
-        //     junio: sumatoriaMeses[6],
-        //     trim2: sumTrim ? arrayTrim[2].reduce((acc, act) => acc + act) : arrayTrim[2].find(value => value !== 0),
-        //     julio: sumatoriaMeses[5],
-        //     agosto: sumatoriaMeses[4],
-        //     septiembre: sumatoriaMeses[3],
-        //     trim3: sumTrim ? arrayTrim[1].reduce((acc, act) => acc + act) : arrayTrim[1].find(value => value !== 0),
-        //     octubre: sumatoriaMeses[2],
-        //     noviembre: sumatoriaMeses[1],
-        //     diciembre: sumatoriaMeses[0],
-        //     trim4: sumTrim ? arrayTrim[0].reduce((acc, act) => acc + act) : arrayTrim[0].find(value => value !== 0),
-        //     total: sumTrim ? sumatoriaMeses.reduce((acc, act) => acc + act) : sumatoriaMeses[0],
-        //     ano: 0,
-        //     ids,
-        //     centroGestor,
-        //     descripcion,
-        //     nombreSumatoria,
-        //     sumTotal,
-        //     sumTrim,
-        //     idSumatoria: actualizar ? idSumatoria : uuidv4()
-        // };
+        const total = sumatoriaMeses.flat(2);
+        const pbrSumatoria: ISumatorias = {
+            enero: sumatoriaMeses[3][2],
+            febrero: sumatoriaMeses[3][1],
+            marzo: sumatoriaMeses[3][0],
+            trim1: sumTrim ? sumatoriaMeses[3].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[3].find(value => value !== 0),
+            abril: sumatoriaMeses[2][2],
+            mayo: sumatoriaMeses[2][1],
+            junio: sumatoriaMeses[2][0],
+            trim2: sumTrim ? sumatoriaMeses[2].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[2].find(value => value !== 0),
+            julio: sumatoriaMeses[1][2],
+            agosto: sumatoriaMeses[1][1],
+            septiembre: sumatoriaMeses[1][0],
+            trim3: sumTrim ? sumatoriaMeses[1].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[1].find(value => value !== 0),
+            octubre: sumatoriaMeses[0][2],
+            noviembre: sumatoriaMeses[0][1],
+            diciembre: sumatoriaMeses[0][0],
+            trim4: sumTrim ? sumatoriaMeses[0].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[0].find(value => value !== 0),
 
-        return null;
-        // if (actualizar)
-        // {
-        //     return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
-        // } else
-        // {
-        //     return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
-        // }
+            total: sumTrim ? total.reduce((acc, act) => acc + act, 0) : total.find(value => value !== 0),
+            ano: 0,
+            ids,
+            centroGestor,
+            descripcion,
+            nombreSumatoria,
+            sumTotal,
+            sumTrim,
+            idSumatoria: actualizar ? idSumatoria : uuidv4()
+        };
+
+        if (actualizar)
+        {
+            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
+        }
+        return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
     }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
