@@ -5,9 +5,8 @@ import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
-import {chunk} from "lodash";
-import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
-import {v4 as uuidv4} from 'uuid';
+import {isEmpty} from "lodash";
+import {TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Injectable()
@@ -214,34 +213,58 @@ export class PlaneacionService
         return nvoDocumento;
     }
 
-    async matrizDeValoresMeses(_id: string, ids: string[], doc: IPlaneacion = null): Promise<number[][][][]>
+    async matrizDeValoresMeses(_id: string, ids: string[], doc: IPlaneacion = null): Promise<number[][][]>
     {
-        const docPlaneacion = await this.planeacion.findById(_id).exec();
+        let documento: IPlaneacion = {...doc};
+
+        if (isEmpty(documento))
+        {
+            documento = await this.planeacion.findById(_id).exec();
+        }
 
         const filtroIds = ids.map(idIndicador =>
         {
-            return docPlaneacion.pbrCuestionario.filter(v => v.idIndicador === idIndicador)
+            return documento.pbrCuestionario.filter(v => v.idIndicador === idIndicador)
         });
 
-        return filtroIds.map(value =>
+        const meses: Record<string, number[]> = {
+            enero: [],
+            febrero: [],
+            marzo: [],
+            abril: [],
+            mayo: [],
+            junio: [],
+            julio: [],
+            agosto: [],
+            septiembre: [],
+            octubre: [],
+            noviembre: [],
+            diciembre: []
+        };
+
+        filtroIds.forEach((value) =>
         {
-            return value.map(pbr => [[pbr.diciembre, pbr.noviembre, pbr.octubre], [pbr.septiembre, pbr.agosto, pbr.julio],
-                [pbr.junio, pbr.mayo, pbr.abril], [pbr.marzo, pbr.febrero, pbr.enero]])
+            value.forEach((mes) =>
+            {
+                Object.entries(mes).forEach(([propiedad, valor]) =>
+                {
+                    if (meses[propiedad])
+                    {
+                        meses[propiedad].push(valor);
+                    }
+                });
+            });
         });
+
+        return [[meses.diciembre, meses.noviembre, meses.octubre], [meses.septiembre, meses.agosto, meses.julio], [meses.junio, meses.mayo, meses.abril], [meses.marzo, meses.febrero, meses.enero]];
     }
 
-    sumarValoresDelMismoMes(valorMatrizMeses: number[][][]): number[]
+    sumarMeses(matrizMeses: number[][][]): number[][]
     {
-        const nvoArreglo: number[][] = [];
-        console.log(valorMatrizMeses);
-        const agruparMismosMeses = valorMatrizMeses.map((value, index) =>
+        return matrizMeses.map((fila) =>
         {
-            console.log(value)
-            return value[index];
+            return fila.map(ele => ele.reduce((acc, act) => acc + act, 0));
         });
-        console.log(agruparMismosMeses)
-        // return nvoArreglo.reduce((acc, act) => acc.map((num, i) => num + act[i]));
-        return [];
     }
 
     async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean): Promise<PlaneacionDto>
@@ -249,13 +272,10 @@ export class PlaneacionService
         const {_id, ids, centroGestor, descripcion, nombreSumatoria, idSumatoria, sumTrim, sumTotal} = datos;
 
         const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids);
+        const sumatoriaMeses = this.sumarMeses(valoresMatrizMeses);
 
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 
-        //Sumatoria de los meses en vertical empezando por diciembre, se hizo asi para asignar el último valor a los trimestres que lo requieran
-        const sumatoriaMeses = this.sumarValoresDelMismoMes(valoresMatrizMeses.flat());
-        console.log(sumatoriaMeses);
-        //
         // const ultimoValorDelMes = sumatoriaMeses.slice();
         //
         // const arrayTrim = chunk(ultimoValorDelMes, 3);

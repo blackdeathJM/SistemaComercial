@@ -2,6 +2,6 @@
     <app-acciones-mir-pbr [habCentroGestor]="false"></app-acciones-mir-pbr>
 
     <ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
-        <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true" [planeacion]="planeacion"></app-lista-pbr>
+        <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true"></app-lista-pbr>
     </ng-container>
 </section>
