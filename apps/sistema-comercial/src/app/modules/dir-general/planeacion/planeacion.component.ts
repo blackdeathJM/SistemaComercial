@@ -28,6 +28,6 @@ export class PlaneacionComponent implements OnInit
             this.seleccionService.selecciones(),
             this.empleadoService.empleadosConSesion(),
             this.planeacionService.filTodos()
-        ]).subscribe(res => console.log(res[2]));
+        ]).subscribe();
     }
 }

@@ -19,14 +19,14 @@ import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-p
 import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {isNil} from "@angular-ru/cdk/utils";
-import {DefaultValuePipeModule, NumberFormatPipeModule} from "@angular-ru/cdk/pipes";
+import {DefaultValuePipeModule} from "@angular-ru/cdk/pipes";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-lista-pbr',
     standalone: true,
     imports: [CommonModule, MatCardModule, MatTabsModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, MatInputModule, MatSidenavModule, CalculosPipePbr,
-        ListaSumPbrComponent, MatButtonToggleModule, MatExpansionModule, DefaultValuePipeModule, DefaultValuePipeModule, NumberFormatPipeModule],
+        ListaSumPbrComponent, MatButtonToggleModule, MatExpansionModule, DefaultValuePipeModule],
     templateUrl: './lista-pbr.component.html',
     styleUrls: ['./lista-pbr.component.scss'],
     animations: [fuseAnimations],
@@ -44,14 +44,17 @@ export class ListaPbrComponent
     cuestionariosPbr = this.planeacionQuery.compCuestionarioPbr;
     elementoPbr = this.planeacionQuery.cuestionarioPbr;
 
+    indice: number;
+
     constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private ngxToast: ToastrService)
     {
     }
 
-    cambioDeSeleccion(e: MatButtonToggleChange): void
+    cambioDeSeleccion(e: MatButtonToggleChange, i: number): void
     {
         this.planeacionQuery.cuestionarioPbr.set(e.value);
+        this.indice = i;
     }
 
     editarPbr(): void
@@ -101,5 +104,24 @@ export class ListaPbrComponent
             return true
         }
         return false;
+    }
+
+    cambiarDireccion(direccion: string): void
+    {
+        const arreglo = this.cuestionariosPbr();
+        if (direccion === 'siguiente' && this.indice < arreglo.length - 1)
+        {
+            this.indice++;
+        }
+
+        if (direccion === 'anterior' && this.indice > 0)
+        {
+            this.indice--;
+        }
+        // if (isNil(this.indice))
+        // {
+        //     this.indice = 0;
+        // }
+        this.planeacionQuery.cuestionarioPbr.set(arreglo[this.indice]);
     }
 }

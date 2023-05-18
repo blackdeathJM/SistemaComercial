@@ -37,14 +37,16 @@ export class ListaTabMirComponent
     loader = ngxLoaderMir();
     cuestionarioMir = this.planeacionQuery.cuestionarioMir;
     cuestionarioMirArray = this.planeacionQuery.compCuestionarioMir;
+    indice: number;
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private ngxToast: NgxToastService)
     {
     }
 
-    cambioDeSeleccion(e: MatButtonToggleChange): void
+    cambioDeSeleccion(e: MatButtonToggleChange, i: number): void
     {
+        this.indice = i;
         this.planeacionQuery.cuestionarioMir.set(e.value);
     }
 
@@ -90,5 +92,24 @@ export class ListaTabMirComponent
     trackByFn(index: number): number
     {
         return index;
+    }
+
+    cambiarDireccion(dir: string): void
+    {
+        const arregloMir = this.cuestionarioMirArray();
+        if (dir === 'siguiente' && this.indice < arregloMir.length - 1)
+        {
+            this.indice++;
+        }
+        if (dir === 'anterior' && this.indice > 0)
+        {
+            this.indice--;
+        }
+        // if (isNil(this.indice))
+        // {
+        //     this.indice = 0;
+        // }
+
+        this.planeacionQuery.cuestionarioMir.set(arregloMir[this.indice]);
     }
 }

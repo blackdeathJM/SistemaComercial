@@ -58,7 +58,7 @@ export class PlaneacionResolver
     @Mutation(() => PlaneacionDto)
     async sumatoriaPbr(@Args('datos') datos: SumPbrDto, @Args('actualizar') actualizar: boolean): Promise<PlaneacionDto>
     {
-        return await this.planeacionService.sumatoriaPbr(datos, actualizar);
+        return await this.planeacionService.sumatoriaPbr(datos, actualizar, null);
     }
 
     @Mutation(() => PlaneacionDto)

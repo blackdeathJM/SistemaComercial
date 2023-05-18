@@ -11,7 +11,7 @@
                     </mat-expansion-panel-header>
                     <mat-button-toggle-group>
                         <div class="flex flex-auto flex-wrap">
-                            <mat-button-toggle class="rounded-none" *ngFor="let mir of cuestionarioMirArray(); trackBy:trackByFn" [value]="mir" (change)="cambioDeSeleccion($event)">
+                            <mat-button-toggle class="rounded-none" *ngFor="let mir of cuestionarioMirArray(); trackBy:trackByFn; let i=index" [value]="mir" (change)="cambioDeSeleccion($event, i)">
                                 <span class="text-left">{{mir?.idIndicador}}</span>
                             </mat-button-toggle>
                         </div>
@@ -20,7 +20,7 @@
             </mat-card-title>
             <mat-card-content>
                 <div class="grid grid-cols-8 gap-4">
-                    <!--                <span class="border-b-2 text-xl text-green-600 text-center">{{elementoMir?.idIndicador}}</span>-->
+                    <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{cuestionarioMir()?.idIndicador}}</span>
                     <span class="detalle-span">Nivel</span>
                     <span class="border-b-2">{{cuestionarioMir()?.nivel}}</span>
                     <span class="detalle-span">Programa financiacion</span>
@@ -98,6 +98,14 @@
                         <mat-icon svgIcon="mat_outline:delete"></mat-icon>
                         Eliminar registro
                     </button>
+                    <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">
+                        <mat-icon svgIcon="mat_solid:arrow_back"></mat-icon>
+                        Anterior
+                    </button>
+                    <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">
+                        Siguiente
+                        <mat-icon svgIcon="mat_solid:arrow_forward"></mat-icon>
+                    </button>
                     <button mat-raised-button color="accent" class="flex-auto" (click)="imprimirMir()">
                         <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                         Imprimir
@@ -106,7 +114,7 @@
             </mat-card-actions>
         </mat-card>
         <ng-container *ngIf="cuestionarioMir">
-<!--            <app-componentes [mirCuestionario]="cuestionarioMir"></app-componentes>-->
+            <!--            <app-componentes [mirCuestionario]="cuestionarioMir"></app-componentes>-->
         </ng-container>
     </article>
 </ng-container>

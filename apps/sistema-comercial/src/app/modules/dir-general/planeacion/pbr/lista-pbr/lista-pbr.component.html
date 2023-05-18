@@ -6,9 +6,9 @@
                 <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
                     <mat-panel-title>Presupuesto basado en resultados</mat-panel-title>
                 </mat-expansion-panel-header>
-                <mat-button-toggle-group>
+                <mat-button-toggle-group [tabIndex]="indicePbrActual">
                     <div class="flex flex-auto flex-wrap">
-                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of cuestionariosPbr(); trackBy:trackByFn" [value]="pbr" (change)="cambioDeSeleccion($event)">
+                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of cuestionariosPbr(); trackBy:trackByFn; let i=index" [value]="pbr" (change)="cambioDeSeleccion($event, i)">
                             <span class="text-left">{{pbr?.idIndicador}}</span>
                         </mat-button-toggle>
                     </div>
@@ -90,6 +90,14 @@
                 <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">
                     <mat-icon svgIcon="assignment"></mat-icon>
                     Registrar avances
+                </button>
+                <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">
+                    <mat-icon svgIcon="mat_solid:arrow_back"></mat-icon>
+                    Anterior
+                </button>
+                <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">
+                    Siguiente
+                    <mat-icon svgIcon="mat_solid:arrow_forward"></mat-icon>
                 </button>
                 <button mat-flat-button color="accent" class="flex-auto">
                     <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>

@@ -24,7 +24,8 @@ export class PlaneacionService
 
     async inicializarPlaneacion(planeacion: PlaneacionDto): Promise<PlaneacionDto>
     {
-        if (planeacion._id)
+        const {_id, ...resto} = planeacion;
+        if (_id)
         {
             const copia = await this.planeacion.findById(planeacion._id).exec();
 
@@ -32,23 +33,20 @@ export class PlaneacionService
                 enero: 0.00, febrero: 0.00, marzo: 0.00, abril: 0.00, mayo: 0.00, junio: 0.00, julio: 0.00,
                 agosto: 0.00, septiembre: 0.00, octubre: 0.00, noviembre: 0.00, diciembre: 0.00, trim1: 0.00, trim2: 0.00, trim3: 0.00, trim4: 0.00, total: 0.00
             }
+
             const nvaInicializacion: TPlaneacionType = {
                 _id: null,
-                ano: planeacion.ano,
+                ano: resto.ano,
                 copia: true,
-                descripcion: planeacion.descripcion,
+                descripcion: resto.descripcion,
                 mirCuestionario: copia.mirCuestionario,
                 pbrCuestionario: copia.pbrCuestionario.map(p => ({...p, ...inicializarMeses})),
                 pbrSumatoria: copia.pbrSumatoria.map(s => ({...s, ...inicializarMeses}))
             };
-
-            const nvo = await new this.planeacion(nvaInicializacion).save();
-
-            const {_id, ...resto} = nvo;
-            return await this.planeacion.findByIdAndUpdate(_id, {$set: {...resto}}, {new: true}).exec();
+            return await new this.planeacion(nvaInicializacion).save();
         }
 
-        return new this.planeacion(planeacion).save();
+        return new this.planeacion(resto).save();
 
     }
 
@@ -184,17 +182,17 @@ export class PlaneacionService
                         ...value,
                         _id
                     };
-                return this.sumatoriaPbr(datos, true)
+                return this.sumatoriaPbr(datos, true, nvoDocumento);
             });
             return respuesta[respuesta.length - 1];
         }
         return nvoDocumento;
     }
 
+//Funcion creada para obtener la matriz de los valores de los meses y aquí sé procera y se devolvera una matriz con
     async matrizDeValoresMeses(_id: string, ids: string[], doc: IPlaneacion = null): Promise<number[][][]>
     {
-        let documento: IPlaneacion = {...doc};
-
+        let documento: IPlaneacion = doc;
         if (isEmpty(documento))
         {
             documento = await this.planeacion.findById(_id).exec();
@@ -242,11 +240,11 @@ export class PlaneacionService
         return matrizMeses.map((fila) => fila.map(ele => ele.reduce((acc, act) => acc + act, 0)));
     }
 
-    async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean): Promise<PlaneacionDto>
+    async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean, doc: IPlaneacion): Promise<PlaneacionDto>
     {
         const {_id, ids, centroGestor, descripcion, nombreSumatoria, idSumatoria, sumTrim, sumTotal} = datos;
 
-        const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids);
+        const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids, doc);
         const sumatoriaMeses = this.sumarMeses(valoresMatrizMeses);
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 
