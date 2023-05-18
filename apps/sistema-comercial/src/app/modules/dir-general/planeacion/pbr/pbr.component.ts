@@ -22,14 +22,15 @@ export const abrirPanelPbr = signal<boolean>(false);
 @Component({
     selector: 'app-pbr',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule, ListaPbrComponent, MatButtonModule, ListaSumPbrComponent],
+    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule,
+        ListaPbrComponent, MatButtonModule, ListaSumPbrComponent],
     providers: [],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],
     animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PbrComponent implements OnDestroy
+export default class PbrComponent implements OnDestroy
 {
     pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
     abrirPanel = abrirPanelPbr;

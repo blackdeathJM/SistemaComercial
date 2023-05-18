@@ -92,7 +92,7 @@ export const GENERAL: FuseNavigationItem[] =
                         disabled: false,
                         puedeAsigPermisos: false,
                         acceso: false,
-                        link: rutaGeneral + 'pbr'
+                        link: rutaGeneral + 'avance-de-actividades'
                     }
                 ]
         }

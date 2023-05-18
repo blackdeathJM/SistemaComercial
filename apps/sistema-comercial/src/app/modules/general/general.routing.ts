@@ -25,7 +25,7 @@ export const generalRouting: Routes =
                         loadComponent: () => import('@s-general/sesion/sesion.component').then(c => c.SesionComponent)
                     },
                     {
-                        path: 'pbr',
+                        path: 'avance-de-actividades',
                         loadComponent: () => import('@s-general/pbr-usuario/pbr-usuario.component')
                     }
                 ]

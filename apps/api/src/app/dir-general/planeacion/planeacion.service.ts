@@ -8,6 +8,7 @@ import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacio
 import {chunk} from "lodash";
 import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {v4 as uuidv4} from 'uuid';
+import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Injectable()
 export class PlaneacionService
@@ -213,7 +214,7 @@ export class PlaneacionService
         return nvoDocumento;
     }
 
-    async matrizDeValoresMeses(_id: string, ids: string[]): Promise<number[][][][]>
+    async matrizDeValoresMeses(_id: string, ids: string[], doc: IPlaneacion = null): Promise<number[][][][]>
     {
         const docPlaneacion = await this.planeacion.findById(_id).exec();
 
@@ -232,63 +233,69 @@ export class PlaneacionService
     sumarValoresDelMismoMes(valorMatrizMeses: number[][][]): number[]
     {
         const nvoArreglo: number[][] = [];
-
-        for (let i = 0; i < valorMatrizMeses.length; i++)
+        console.log(valorMatrizMeses);
+        const agruparMismosMeses = valorMatrizMeses.map((value, index) =>
         {
-            nvoArreglo.push(valorMatrizMeses[i].flat());
-        }
-        return nvoArreglo.reduce((acc, act) => acc.map((num, i) => num + act[i]));
+            console.log(value)
+            return value[index];
+        });
+        console.log(agruparMismosMeses)
+        // return nvoArreglo.reduce((acc, act) => acc.map((num, i) => num + act[i]));
+        return [];
     }
 
     async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean): Promise<PlaneacionDto>
     {
         const {_id, ids, centroGestor, descripcion, nombreSumatoria, idSumatoria, sumTrim, sumTotal} = datos;
 
-        const valoresMatrizMeses = await this.matrizDeValoresMeses(_id);
+        const valoresMatrizMeses = await this.matrizDeValoresMeses(_id, ids);
 
         // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
 
         //Sumatoria de los meses en vertical empezando por diciembre, se hizo asi para asignar el último valor a los trimestres que lo requieran
-        const sumatoriaMeses = this.sumarValoresDelMismoMes(valoresMatrizMeses);
+        const sumatoriaMeses = this.sumarValoresDelMismoMes(valoresMatrizMeses.flat());
+        console.log(sumatoriaMeses);
+        //
+        // const ultimoValorDelMes = sumatoriaMeses.slice();
+        //
+        // const arrayTrim = chunk(ultimoValorDelMes, 3);
+        //
+        // const pbrSumatoria: ISumatorias = {
+        //     enero: sumatoriaMeses[11],
+        //     febrero: sumatoriaMeses[10],
+        //     marzo: sumatoriaMeses[9],
+        //     trim1: sumTrim ? arrayTrim[3].reduce((acc, act) => acc + act) : arrayTrim[3].find(value => value !== 0),
+        //     abril: sumatoriaMeses[8],
+        //     mayo: sumatoriaMeses[7],
+        //     junio: sumatoriaMeses[6],
+        //     trim2: sumTrim ? arrayTrim[2].reduce((acc, act) => acc + act) : arrayTrim[2].find(value => value !== 0),
+        //     julio: sumatoriaMeses[5],
+        //     agosto: sumatoriaMeses[4],
+        //     septiembre: sumatoriaMeses[3],
+        //     trim3: sumTrim ? arrayTrim[1].reduce((acc, act) => acc + act) : arrayTrim[1].find(value => value !== 0),
+        //     octubre: sumatoriaMeses[2],
+        //     noviembre: sumatoriaMeses[1],
+        //     diciembre: sumatoriaMeses[0],
+        //     trim4: sumTrim ? arrayTrim[0].reduce((acc, act) => acc + act) : arrayTrim[0].find(value => value !== 0),
+        //     total: sumTrim ? sumatoriaMeses.reduce((acc, act) => acc + act) : sumatoriaMeses[0],
+        //     ano: 0,
+        //     ids,
+        //     centroGestor,
+        //     descripcion,
+        //     nombreSumatoria,
+        //     sumTotal,
+        //     sumTrim,
+        //     idSumatoria: actualizar ? idSumatoria : uuidv4()
+        // };
 
-        const ultimoValorDelMes = sumatoriaMeses.slice();
-
-        const arrayTrim = chunk(ultimoValorDelMes, 3);
-
-        const pbrSumatoria: ISumatorias = {
-            enero: sumatoriaMeses[11],
-            febrero: sumatoriaMeses[10],
-            marzo: sumatoriaMeses[9],
-            trim1: sumTrim ? arrayTrim[3].reduce((acc, act) => acc + act) : arrayTrim[3].find(value => value !== 0),
-            abril: sumatoriaMeses[8],
-            mayo: sumatoriaMeses[7],
-            junio: sumatoriaMeses[6],
-            trim2: sumTrim ? arrayTrim[2].reduce((acc, act) => acc + act) : arrayTrim[2].find(value => value !== 0),
-            julio: sumatoriaMeses[5],
-            agosto: sumatoriaMeses[4],
-            septiembre: sumatoriaMeses[3],
-            trim3: sumTrim ? arrayTrim[1].reduce((acc, act) => acc + act) : arrayTrim[1].find(value => value !== 0),
-            octubre: sumatoriaMeses[2],
-            noviembre: sumatoriaMeses[1],
-            diciembre: sumatoriaMeses[0],
-            trim4: sumTrim ? arrayTrim[0].reduce((acc, act) => acc + act) : arrayTrim[0].find(value => value !== 0),
-            total: sumTrim ? sumatoriaMeses.reduce((acc, act) => acc + act) : sumatoriaMeses[0],
-            ano: 0,
-            ids,
-            centroGestor,
-            descripcion,
-            nombreSumatoria,
-            sumTotal,
-            sumTrim,
-            idSumatoria: actualizar ? idSumatoria : uuidv4()
-        };
-        if (actualizar)
-        {
-            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
-        } else
-        {
-            return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
-        }
+        return null;
+        // if (actualizar)
+        // {
+        //     return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
+        // } else
+        // {
+        //     return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
+        // }
     }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>

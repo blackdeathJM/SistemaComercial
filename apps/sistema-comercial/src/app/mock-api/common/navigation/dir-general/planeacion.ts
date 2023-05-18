@@ -42,7 +42,7 @@ export const PLANEACION: FuseNavigationItem =
                     disabled: false,
                     puedeAsigPermisos: true,
                     acceso: true,
-                    link: dirGeneral + 'planeacion/pbr'
+                    link: dirGeneral + 'planeacion/avance-de-actividades'
                 }
             ]
     };
