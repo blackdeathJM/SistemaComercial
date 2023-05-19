@@ -30,7 +30,7 @@ export const abrirPanelPbr = signal<boolean>(false);
     animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class PbrComponent implements OnDestroy
+export class PbrComponent implements OnDestroy
 {
     pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
     abrirPanel = abrirPanelPbr;

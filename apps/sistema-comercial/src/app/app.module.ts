@@ -31,7 +31,6 @@ import {configLoader} from '@s-core/configLoader';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {PaginacionEs} from '@s-core/paginacion-es';
 import {ApolloConfigModule} from '@s-apollo/apollo-config.module';
-import {AkitaNgDevtools} from '@datorama/akita-ngdevtools';
 import {provideAkitaDevtools} from "#/apps/sistema-comercial/src/store/config-devtools-akita";
 
 const routerConfig: ExtraOptions =

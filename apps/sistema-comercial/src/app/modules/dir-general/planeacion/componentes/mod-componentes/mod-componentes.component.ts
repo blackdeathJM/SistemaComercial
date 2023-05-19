@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatRadioModule} from "@angular/material/radio";
-import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -11,90 +11,61 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {RxFormBuilder, RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
-import {Componente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/Componente";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatSelectModule} from "@angular/material/select";
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
     imports: [CommonModule, MatRadioModule, FormsModule, MatInputModule, RegistrosComponent, MatGridListModule, MatTooltipModule, MatButtonModule,
-        MatIconModule, RxReactiveFormsModule, ReactiveFormsModule, MatDividerModule, MatSelectModule],
+        MatIconModule, ReactiveFormsModule, MatDividerModule, MatSelectModule],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModComponentesComponent
 {
-    cabecera: string[] = [];
-    valores: string[] = [];
-    meses: string[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    formComponente: FormGroup = this.fb.formGroup(new Componente());
-    cuestionarioPbr = this.planeacionQuery.compCuestionarioPbr;
-    pbrSeleccionado = this.planeacionQuery.cuestionarioPbr;
-    mostrarMes = false;
-    mostrarTrim = false;
-    tipoValor: number = 0;
+    cabeceras: object[] = [];
+    titulos: string[] = [];
+    formComponente = this.fb.group({
+        titulo: ['', [Validators.required, Validators.minLength(3)]],
+        valor: this.fb.array([], [Validators.required])
+    });
+    ctrlValor: FormControl = new FormControl<string>('', Validators.required);
 
-    constructor(private planeacionQuery: PlaneacionQuery, @Inject(MAT_DIALOG_DATA) private data: TRegComp, private fb: RxFormBuilder)
+    constructor(private planeacionQuery: PlaneacionQuery, @Inject(MAT_DIALOG_DATA) private data: TRegComp, private fb: FormBuilder)
     {
-    }
-
-    agregarElemCabecera(): void
-    {
-        this.cabecera.push(this.formComponente.get('cabecera').value);
-        this.valores.push(this.formComponente.get('valor').value)
-        this.formComponente.reset();
-    }
-
-    eliminarElemCabecera(): void
-    {
-        if (this.cabecera.length > 0)
-        {
-            this.cabecera.pop();
-        }
     }
 
     registro(): void
     {
-        console.log(this.formComponente.value);
+
     }
 
-    cambioSeleccionPbr(e: IPbrCuestionario): void
+    get valor()
     {
-        this.planeacionQuery.cuestionarioPbr.set(e);
-        if (this.tipoValor === 0)
-        {
-            const idVariable = this.pbrSeleccionado().idIndicador;
-            this.formComponente.get('valor').setValue(idVariable);
-        }
-        if (this.tipoValor === 1)
-        {
-            const descripcion = this.pbrSeleccionado().dato;
-            this.formComponente.get('valor').setValue(descripcion);
-        }
+        return this.formComponente.get('valor') as FormArray;
     }
 
-    cambioTipoValor(e: number): void
+    removerValor(index: number): void
     {
-        this.mostrarMes = e === 2;
-        this.mostrarTrim = e === 3;
-        this.tipoValor = e;
+        this.valor.removeAt(index);
     }
 
-    cambioMes(e: string): void
+    agTitulo(): void
     {
-        // Buscamos el valor en el pbr seleccionado en este caso traemos el valor del mes que se haya seleccionado;
-        const valorMes = this.pbrSeleccionado()[e.toLowerCase()];
-        this.formComponente.get('valor').setValue(valorMes);
+        // this.cabeceras.push();
+        if (this.ctrlValor.invalid) return;
+        const nvoValor = this.ctrlValor.value;
+
+        this.valor.push(this.fb.control(nvoValor, Validators.required));
+        this.ctrlValor.reset();
     }
 
-    cambioTrim(e: string): void
+    agregarAlArreglo():void
     {
-
-        const valorTrim = this.pbrSeleccionado()[e.toLowerCase()];
-        this.formComponente.get('valor').setValue(valorTrim);
+        this.cabeceras.push(this.formComponente.value);
+        this.titulos.push(this.formComponente.get('titulo').value);
+        console.log(this.cabeceras);
     }
 }

@@ -1,68 +1,43 @@
-<article class="flex flex-col flex-auto">
-    <form [formGroup]="formComponente">
-        <section class="flex flex-col flex-auto">
-            <mat-grid-list [cols]="cabecera.length" rowHeight="25px">
-                <mat-grid-tile class="text-lg text-green-600" *ngFor="let col of cabecera">{{col}}</mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list [cols]="cabecera.length" rowHeight="25px">
-                <mat-grid-tile class="text-lg text-amber-600" *ngFor="let valor of valores">{{valor}}</mat-grid-tile>
-            </mat-grid-list>
+<form [formGroup]="formComponente">
+    <section class="flex flex-col flex-auto">
+        <mat-grid-list class="flex-auto text-green-600" [cols]="titulos.length" rowHeight="25px">
+            <mat-grid-tile *ngFor="let elemento of titulos">{{elemento}}</mat-grid-tile>
+        </mat-grid-list>
 
-            <mat-divider class="my-2 border-2"></mat-divider>
+        <mat-form-field class="flex-auto">
+            <mat-label>Titulo</mat-label>
+            <input matInput formControlName="titulo">
+        </mat-form-field>
 
-            <mat-form-field class="flex-auto" matTooltip="Ingresa las cabecera que conformaran la tabla con la informacion para el calculo del componente">
-                <mat-label>Ingresa la cabecera</mat-label>
-                <input matInput formControlName="cabecera">
+        <!--Ctrl para agregar al array del form valores-->
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Valor</mat-label>
+                <input matInput [formControl]="ctrlValor">
             </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="agTitulo()">
+                <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>
+            </button>
+        </div>
 
-            <mat-form-field class="flex-auto" matTooltip="Ingresa las cabecera que conformaran la tabla con la informacion para el calculo del componente">
-                <mat-label>Ingresa el valor</mat-label>
-                <input matInput formControlName="valor">
-            </mat-form-field>
-
-            <div class="flex flex-auto gap-4 items-center content-center">
-                <mat-form-field class="flex-grow">
-                    <mat-label>Tipo de valor</mat-label>
-                    <mat-select (valueChange)="cambioTipoValor($event)">
-                        <mat-option [value]="0">ID variable</mat-option>
-                        <mat-option [value]="1">Descripcion</mat-option>
-                        <mat-option [value]="2">Mes</mat-option>
-                        <mat-option [value]="3">Trimestre</mat-option>
-                    </mat-select>
+        <!--* Lista de valores-->
+        <ng-container formArrayName="valor">
+            <div class="flex flex-auto gap-4 items-center content-center" *ngFor="let valor of valor.controls; let i=index">
+                <mat-form-field class="flex-auto">
+                    <input matInput [formControlName]="i.toString()">
                 </mat-form-field>
-
-                <mat-form-field class="basis-1/2">
-                    <mat-label>Selecciona el elemento que deseas agregar</mat-label>
-                    <mat-select (valueChange)="cambioSeleccionPbr($event)">
-                        <mat-option *ngFor="let elem of cuestionarioPbr()" [value]="elem">{{elem.idIndicador}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field *ngIf="mostrarMes" class="flex-grow">
-                    <mat-label>Selecciona el mes</mat-label>
-                    <mat-select (valueChange)="cambioMes($event)">
-                        <mat-option *ngFor="let mes of meses" [value]="mes">{{mes}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field *ngIf="mostrarTrim" class="flex-grow">
-                    <mat-label>Selecciona el trimestre</mat-label>
-                    <mat-select (valueChange)="cambioTrim($event)">
-                        <mat-option [value]="'trim1'">Trimestre 1</mat-option>
-                        <mat-option [value]="'trim2'">Trimestre 2</mat-option>
-                        <mat-option [value]="'trim3'">Trimestre 3</mat-option>
-                        <mat-option [value]="'trim4'">Trimestre 4</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <button mat-mini-fab color="primary" matTooltip="Agrega un elemento de la cabecera a una lista" (click)="agregarElemCabecera()" [disabled]="formComponente.invalid">
-                    <mat-icon svgIcon="heroicons_solid:plus-circle"></mat-icon>
-                </button>
-                <button mat-mini-fab color="warn" matTooltip="Eliminar el ultimo elemento agregado a la lista" (click)="eliminarElemCabecera()">
-                    <mat-icon svgIcon="heroicons_solid:minus-circle"></mat-icon>
+                <button mat-mini-fab color="warn" (click)="removerValor(i)">
+                    <mat-icon svgIcon="mat_solid:remove_circle"></mat-icon>
                 </button>
             </div>
-        </section>
-    </form>
-</article>
-<app-registros (registro)="registro()"></app-registros>
+        </ng-container>
+
+    </section>
+</form>
+
+<app-registros (registro)="registro()">
+    <button mat-raised-button class="bg-green-700 flex-auto disabled:bg-accent" (click)="agregarAlArreglo()">
+        <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>
+        Agregar otra columna
+    </button>
+</app-registros>
