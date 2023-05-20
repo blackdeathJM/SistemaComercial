@@ -1,12 +1,24 @@
 export interface IFormPlanta
 {
-    idIndicador: string;
+    tipoForm: number;
     ptarE: string;
     sstE: number;
     dqoE: number;
     grasasAceitesE: number;
 }
 
+export interface IformComun
+{
+    idVariable: string;
+    descripcion: string;
+    //Estos valores son recogidos de los trimestres establecidos en pbr
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number;
+
+    avanceTrim1: number;
+}
 //La forma que se va a calcular el Avance trimestral es dividiento el idIndicador entre el otro idIndicador
 export interface IForm1
 {
@@ -27,6 +39,7 @@ export interface IForm1
     avanceTrim4: number;
     etiquetaTrim: string;
 }
+
 export interface IForm2 extends IForm1
 {
     campoAntTrim1: IDefCampoValor;
@@ -41,6 +54,7 @@ export interface IDefCampoValor
     defCampo: string;
     valorCampo: number;
 }
+
 export interface ICamposAdicionales
 {
     titulo: string;

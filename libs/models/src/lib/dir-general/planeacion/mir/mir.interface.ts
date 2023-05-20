@@ -23,17 +23,20 @@ export interface IMirCuestionario
     lineaBaseValor: string;
     meta: number;
     sentidoDelIndicador: string;
+
     semefVerde: number;
     semefVerdeV: number;
     semefAmarillo: number;
     semefAmarilloV: number;
     semefRojo: number;
     semefRojoV: number;
+
     avanceTrim1: number;
     avanceTrim2: number;
     avanceTrim3: number;
     avanceTrim4: number;
     avanceAnual: number;
+
     formulaTrim1: string;
     formulaTrim2: string;
     formulaTrim3: string;

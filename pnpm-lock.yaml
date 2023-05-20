@@ -408,9 +408,6 @@ devDependencies:
   '@types/graphql-upload':
     specifier: ^16.0.0
     version: 16.0.0
-  '@types/jasmine':
-    specifier: 4.3.1
-    version: 4.3.1
   '@types/jest':
     specifier: 29.5.1
     version: 29.5.1
@@ -474,9 +471,6 @@ devDependencies:
   eslint-plugin-prefer-arrow:
     specifier: 1.2.3
     version: 1.2.3(eslint@8.41.0)
-  jasmine-core:
-    specifier: 5.0.0
-    version: 5.0.0
   jest:
     specifier: 29.5.0
     version: 29.5.0(@types/node@20.2.1)(ts-node@10.9.1)
@@ -8571,10 +8565,6 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jasmine@4.3.1:
-    resolution: {integrity: sha512-Vu8l+UGcshYmV1VWwULgnV/2RDbBaO6i2Ptx7nd//oJPIZGhoI1YLST4VKagD2Pq/Bc2/7zvtvhM7F3p4SN7kQ==}
-    dev: true
-
   /@types/jest@29.5.1:
     resolution: {integrity: sha512-tEuVcHrpaixS36w7hpsfLBLpjtMRJUE09/MHXn923LOVojDwyC14cWcfc0rDs0VEfUyYmt/+iX1kxxp+gZMcaQ==}
     dependencies:
@@ -14329,10 +14319,6 @@ packages:
       chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
-    dev: true
-
-  /jasmine-core@5.0.0:
-    resolution: {integrity: sha512-BJLxZlSVyWPN/oyaS1IIvIjChghI9/xWsLAIJqL9J5Fz47CN3JNr8Lmik3S2S7QS2RxclYjvSVSXP7IR35PAmg==}
     dev: true
 
   /javascript-natural-sort@0.7.1:
