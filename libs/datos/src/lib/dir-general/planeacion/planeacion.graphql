@@ -4,6 +4,13 @@ query filTodos
         ...fragPlaneacion
     }
 }
+query filPorAno($ano: Int!)
+{
+    filPorAno(ano: $ano)
+    {
+        ...fragPlaneacion
+    }
+}
 
 mutation inicializarPlaneacion($input: PlaneacionInput!)
 {

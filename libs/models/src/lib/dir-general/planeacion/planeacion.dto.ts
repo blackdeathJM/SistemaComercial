@@ -1,5 +1,5 @@
 import {IPlaneacion} from './planeacion.interface';
-import {ArgsType, Field, ID, InputType, Int, ObjectType} from '@nestjs/graphql';
+import {ArgsType, Field, ID, InputType, Int, ObjectType, PickType} from '@nestjs/graphql';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {IsNotEmpty, IsOptional} from 'class-validator';
 import {MirCuestionarioDto} from './mir/mir.dto';
@@ -97,3 +97,11 @@ export class ActualizarResponsableDto
 }
 
 export type TActualizarResponsable = ActualizarResponsableDto;
+
+@ArgsType()
+export class FilPorAnoDto extends PickType(PlaneacionDto, ['ano'], ArgsType)
+{
+
+}
+
+export type TFilPorAno = FilPorAnoDto;

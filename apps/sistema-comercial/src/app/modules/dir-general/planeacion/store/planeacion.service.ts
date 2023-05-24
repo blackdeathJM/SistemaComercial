@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
 import {
-    ActualizarResponsableGQL, EliminarElementoGQL,
+    ActualizarResponsableGQL, EliminarElementoGQL, FilPorAnoGQL, FilPorAnoQuery,
     FilTodosGQL,
     FilTodosQuery,
     InicializarPlaneacionGQL,
@@ -11,7 +11,7 @@ import {
 } from '#/libs/datos/src';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {makeVar, SingleExecutionResult} from '@apollo/client';
-import {TActualizarResponsable, TEliminarElemento, TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {TActualizarResponsable, TEliminarElemento, TFilPorAno, TPlaneacionType} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {GeneralService} from '@s-services/general.service';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
@@ -44,7 +44,8 @@ export class PlaneacionService
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarElementoGQL: EliminarElementoGQL,
                 private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService,
-                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL, private recalcularPbrGQL: RecalcularPbrGQL)
+                private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL, private recalcularPbrGQL: RecalcularPbrGQL,
+                private filPorAnoGQL: FilPorAnoGQL)
     {
     }
 
@@ -58,6 +59,11 @@ export class PlaneacionService
                 this.planeacionStore.set(planeacion);
             }
         }));
+    }
+
+    filPorAno(args: TFilPorAno): Observable<SingleExecutionResult<FilPorAnoQuery>>
+    {
+        return this.filPorAnoGQL.fetch({ano: args.ano});
     }
 
     inicializarPlaneacion(input: TPlaneacionType): Observable<SingleExecutionResult<InicializarPlaneacionMutation>>

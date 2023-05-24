@@ -1,0 +1,67 @@
+<form [formGroup]="formComun">
+    <section class="flex flex-col flex-auto">
+        <mat-form-field>
+            <mat-label>Id Variable</mat-label>
+            <input matInput formControlName="idIndicador">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="dato">
+        </mat-form-field>
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 1</mat-label>
+                <input matInput formControlName="trim1">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 2</mat-label>
+                <input matInput formControlName="trim2">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 3</mat-label>
+                <input matInput formControlName="trim3">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 4</mat-label>
+                <input matInput formControlName="trim4">
+            </mat-form-field>
+        </div>
+        <mat-checkbox color="primary" [disabled]="formComun.invalid">Obtener valores del periodo anterior</mat-checkbox>
+    </section>
+</form>
+
+<form [formGroup]="formTrimAnterior" *ngIf="periodoAnt">
+    <section class="flex flex-col flex-auto">
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 1</mat-label>
+                <input matInput formControlName="trim1">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 2</mat-label>
+                <input matInput formControlName="trim2">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 3</mat-label>
+                <input matInput formControlName="trim3">
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 4</mat-label>
+                <input matInput formControlName="trim4">
+            </mat-form-field>
+        </div>
+    </section>
+</form>
+<app-registros (registro)="registrar()">
+    <button mat-raised-button class="bg-green-700 flex-auto disabled:bg-accent" (click)="agregarAlArreglo()">
+        <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>
+        Agregar otro elemento
+    </button>
+</app-registros>

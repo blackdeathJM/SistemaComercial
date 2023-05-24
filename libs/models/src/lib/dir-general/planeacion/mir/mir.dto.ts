@@ -1,5 +1,5 @@
 import {IMirCuestionario} from './mir.interface';
-import {Field, ID, Int, Float, ObjectType, InputType, PartialType} from '@nestjs/graphql';
+import {Field, ID, Float, ObjectType, InputType, PartialType} from '@nestjs/graphql';
 import {Prop} from '@nestjs/mongoose';
 import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
 import {ComponenteDto} from "../componentes/componente.dto";

@@ -9,7 +9,6 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {TRegAvancesPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {IPbrCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {finalize} from 'rxjs';
 import {isNotNil} from "@angular-ru/cdk/utils";
 

@@ -1,43 +1,27 @@
-<form [formGroup]="formComponente">
-    <section class="flex flex-col flex-auto">
-        <mat-grid-list class="flex-auto text-green-600" [cols]="titulos.length" rowHeight="25px">
-            <mat-grid-tile *ngFor="let elemento of titulos">{{elemento}}</mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-form-field class="flex-auto">
-            <mat-label>Titulo</mat-label>
-            <input matInput formControlName="titulo">
-        </mat-form-field>
-
-        <!--Ctrl para agregar al array del form valores-->
-        <div class="flex flex-auto gap-4 items-center content-center">
-            <mat-form-field class="flex-auto">
-                <mat-label>Valor</mat-label>
-                <input matInput [formControl]="ctrlValor">
+<article class="flex flex-col flex-auto">
+    <mat-button-toggle-group>
+        <mat-button-toggle (click)="tipoFormulario = 1">Formulariod comun</mat-button-toggle>
+        <mat-button-toggle (click)="tipoFormulario = 2">Formulario PTAR</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-divider class="my-2 border-2"></mat-divider>
+    <div class="flex flex-auto gap-4 items-center content-center">
+        <ng-container *ngIf="seleccionQuery.select() | async as seleccion">
+            <mat-form-field class="flex-1">
+                <mat-label>Centro gestor</mat-label>
+                <mat-select (valueChange)="filCentroGestor($event)">
+                    <mat-option *ngFor="let centroGestor of seleccion.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
+                </mat-select>
             </mat-form-field>
-            <button mat-mini-fab color="primary" (click)="agTitulo()">
-                <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>
-            </button>
-        </div>
-
-        <!--* Lista de valores-->
-        <ng-container formArrayName="valor">
-            <div class="flex flex-auto gap-4 items-center content-center" *ngFor="let valor of valor.controls; let i=index">
-                <mat-form-field class="flex-auto">
-                    <input matInput [formControlName]="i.toString()">
-                </mat-form-field>
-                <button mat-mini-fab color="warn" (click)="removerValor(i)">
-                    <mat-icon svgIcon="mat_solid:remove_circle"></mat-icon>
-                </button>
-            </div>
         </ng-container>
 
-    </section>
-</form>
-
-<app-registros (registro)="registro()">
-    <button mat-raised-button class="bg-green-700 flex-auto disabled:bg-accent" (click)="agregarAlArreglo()">
-        <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>
-        Agregar otra columna
-    </button>
-</app-registros>
+        <mat-form-field class="flex-auto">
+            <mat-label>Selecciona el elemento a calcular</mat-label>
+            <mat-select (valueChange)="elementoSeleccionado($event)">
+                <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">{{pbr.dato}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <ng-container [ngSwitch]="tipoFormulario">
+        <app-mod-comp-comun *ngSwitchCase="1" [cuestionarioPbr]="cuestionarioPbr"></app-mod-comp-comun>
+    </ng-container>
+</article>

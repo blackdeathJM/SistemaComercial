@@ -1,5 +1,5 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, FilPorAnoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
@@ -17,6 +17,12 @@ export class PlaneacionResolver
     async filTodos(): Promise<PlaneacionDto[]>
     {
         return await this.planeacionService.filTodos();
+    }
+
+    @Query(() => PlaneacionDto)
+    async filPorAno(@Args() args: FilPorAnoDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacionService.filPorAno(args);
     }
 
     @Mutation(() => PlaneacionDto)

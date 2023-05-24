@@ -1,8 +1,25 @@
 fragment fragComponente on ComponenteType
 {
-    id
-    cabecera
-    valor
-    trimValor
-    trimestre
+    formComun {
+        ...fragFormComun
+    }
+    formPlanta {
+        sstE
+        dqoE
+        grasasAceitesE
+        ptarE
+    }
+}
+fragment fragFormComun on FormComunType
+{
+    idIndicador
+    dato
+    trim1
+    trim2
+    trim3
+    trim4
+    trim1Anterior
+    trim2Anterior
+    trim3Anterior
+    trim4Anterior
 }

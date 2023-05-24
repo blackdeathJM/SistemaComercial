@@ -1,4 +1,4 @@
-import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, FilPorAnoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
@@ -283,6 +283,11 @@ export class PlaneacionService
             return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
         }
         return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
+    }
+
+    async filPorAno(args: FilPorAnoDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacion.findOne({ano: args.ano}).exec();
     }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
