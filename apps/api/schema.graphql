@@ -267,6 +267,11 @@ type ComponenteType {
   formPlanta: [FormPlantaType!]
   formComun: [FormComunType!]
   etiqueta: String
+  periodoAnt: Boolean
+  avanceTrim1: Float
+  avanceTrim2: Float
+  avanceTrim3: Float
+  avanceTrim4: Float
 }
 
 type MirCuestionarioType {
@@ -467,7 +472,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1684917172
+  tiempo: Int = 1684925973
   titulo: String
   usarRouter: Boolean = false
 }
@@ -607,6 +612,11 @@ input ComponenteInput {
   formPlanta: [FormPlantaInput!] = []
   formComun: [FormComunInput!] = []
   etiqueta: String = null
+  periodoAnt: Boolean = false
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
 }
 
 input MirCuestionarioInput {
@@ -723,7 +733,6 @@ input PlaneacionInput {
 type Query {
   selecciones: SeleccionType
   filTodos: [PlaneacionType!]!
-  filPorAno(ano: Int = 2023): PlaneacionType!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
@@ -755,6 +764,7 @@ type Mutation {
   regAvancePbr(datos: RegAvancesPbrInput!): PlaneacionType!
   sumatoriaPbr(datos: SumPbrInput!, actualizar: Boolean!): PlaneacionType!
   recalcularPbr(args: RecalcularPbrInput!): PlaneacionType!
+  regComponente(datos: RegComponenteInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -921,6 +931,19 @@ input RecalcularPbrInput {
   centroGestor: String
   tipoOperacion: String = "suma"
   _id: ID
+}
+
+input RegComponenteInput {
+  formPlanta: [FormPlantaInput!] = []
+  formComun: [FormComunInput!] = []
+  etiqueta: String = null
+  periodoAnt: Boolean = false
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
+  _id: ID
+  idIndicadorMir: String
 }
 
 input CambioContrasenaInput {

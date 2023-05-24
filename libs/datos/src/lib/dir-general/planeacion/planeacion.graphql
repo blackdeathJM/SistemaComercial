@@ -4,13 +4,6 @@ query filTodos
         ...fragPlaneacion
     }
 }
-query filPorAno($ano: Int!)
-{
-    filPorAno(ano: $ano)
-    {
-        ...fragPlaneacion
-    }
-}
 
 mutation inicializarPlaneacion($input: PlaneacionInput!)
 {
@@ -65,6 +58,13 @@ mutation sumatoriaPbr($datos: SumPbrInput!, $actualizar: Boolean!)
 mutation recalcularPbr($args: RecalcularPbrInput!)
 {
     recalcularPbr(args: $args)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation regComponente($datos: RegComponenteInput!)
+{
+    regComponente(datos: $datos)
     {
         ...fragPlaneacion
     }

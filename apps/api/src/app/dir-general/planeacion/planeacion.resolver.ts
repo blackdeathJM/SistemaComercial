@@ -1,15 +1,15 @@
 import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
-import {ActualizarResponsableDto, EliminarElementoDto, FilPorAnoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {EmpleadoService} from '#api/apps/api/src/app/dir-admon-finanzas/recursos-humanos/empleado/empleado.service';
 import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
+import {RegComponenteDto} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 
 @Resolver(() => PlaneacionDto)
 export class PlaneacionResolver
 {
-    constructor(private planeacionService: PlaneacionService, private empleadoService: EmpleadoService)
+    constructor(private planeacionService: PlaneacionService)
     {
     }
 
@@ -17,12 +17,6 @@ export class PlaneacionResolver
     async filTodos(): Promise<PlaneacionDto[]>
     {
         return await this.planeacionService.filTodos();
-    }
-
-    @Query(() => PlaneacionDto)
-    async filPorAno(@Args() args: FilPorAnoDto): Promise<PlaneacionDto>
-    {
-        return await this.planeacionService.filPorAno(args);
     }
 
     @Mutation(() => PlaneacionDto)
@@ -71,5 +65,11 @@ export class PlaneacionResolver
     async recalcularPbr(@Args('args') args: RecalcularPbrDto): Promise<PlaneacionDto>
     {
         return await this.planeacionService.recalcularPbr(args);
+    }
+
+    @Mutation(() => PlaneacionDto)
+    async regComponente(@Args('datos') datos: RegComponenteDto): Promise<PlaneacionDto>
+    {
+        return this.planeacionService.regComponente(datos);
     }
 }

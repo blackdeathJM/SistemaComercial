@@ -122,16 +122,26 @@ export type CambioContrasenaInput = {
 };
 
 export type ComponenteInput = {
+  avanceTrim1?: InputMaybe<Scalars['Float']['input']>;
+  avanceTrim2?: InputMaybe<Scalars['Float']['input']>;
+  avanceTrim3?: InputMaybe<Scalars['Float']['input']>;
+  avanceTrim4?: InputMaybe<Scalars['Float']['input']>;
   etiqueta?: InputMaybe<Scalars['String']['input']>;
   formComun?: InputMaybe<Array<FormComunInput>>;
   formPlanta?: InputMaybe<Array<FormPlantaInput>>;
+  periodoAnt?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ComponenteType = {
   __typename?: 'ComponenteType';
+  avanceTrim1?: Maybe<Scalars['Float']['output']>;
+  avanceTrim2?: Maybe<Scalars['Float']['output']>;
+  avanceTrim3?: Maybe<Scalars['Float']['output']>;
+  avanceTrim4?: Maybe<Scalars['Float']['output']>;
   etiqueta?: Maybe<Scalars['String']['output']>;
   formComun?: Maybe<Array<FormComunType>>;
   formPlanta?: Maybe<Array<FormPlantaType>>;
+  periodoAnt?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type CrearRolInput = {
@@ -622,6 +632,7 @@ export type Mutation = {
   reasignarUsuario: DocumentoType;
   recalcularPbr: PlaneacionType;
   regAvancePbr: PlaneacionType;
+  regComponente: PlaneacionType;
   regDoc: DocumentoType;
   regInstalacion: UnionTele;
   regMir: PlaneacionType;
@@ -815,6 +826,11 @@ export type MutationRecalcularPbrArgs = {
 
 export type MutationRegAvancePbrArgs = {
   datos: RegAvancesPbrInput;
+};
+
+
+export type MutationRegComponenteArgs = {
+  datos: RegComponenteInput;
 };
 
 
@@ -1064,7 +1080,6 @@ export type Query = {
   docsUsuarioProceso: Array<DocumentoType>;
   empleados: Array<EmpleadoType>;
   empleadosSesion: Array<EmpleadoType>;
-  filPorAno: PlaneacionType;
   filTodos: Array<PlaneacionType>;
   filtrarDeptos: Array<DeptoType>;
   instalaciones: Array<TelemetriaType>;
@@ -1102,11 +1117,6 @@ export type QueryDocsUsuarioProcesoArgs = {
   esEnviadoPor?: InputMaybe<Scalars['Boolean']['input']>;
   proceso?: InputMaybe<Scalars['String']['input']>;
   usuario?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryFilPorAnoArgs = {
-  ano?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1168,6 +1178,19 @@ export type RegAvancesPbrInput = {
   octubre?: InputMaybe<Scalars['Float']['input']>;
   septiembre?: InputMaybe<Scalars['Float']['input']>;
   tipoOperacion?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type RegComponenteInput = {
+  _id?: InputMaybe<Scalars['ID']['input']>;
+  avanceTrim1?: InputMaybe<Scalars['Float']['input']>;
+  avanceTrim2?: InputMaybe<Scalars['Float']['input']>;
+  avanceTrim3?: InputMaybe<Scalars['Float']['input']>;
+  avanceTrim4?: InputMaybe<Scalars['Float']['input']>;
+  etiqueta?: InputMaybe<Scalars['String']['input']>;
+  formComun?: InputMaybe<Array<FormComunInput>>;
+  formPlanta?: InputMaybe<Array<FormPlantaInput>>;
+  idIndicadorMir?: InputMaybe<Scalars['String']['input']>;
+  periodoAnt?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type RegEmpleadoInput = {
@@ -1722,13 +1745,6 @@ export type FilTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FilTodosQuery = { __typename?: 'Query', filTodos: Array<{ __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null, componente?: Array<{ __typename?: 'ComponenteType', formComun?: Array<{ __typename?: 'FormComunType', idIndicador?: string | null, dato?: string | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, trim1Anterior?: number | null, trim2Anterior?: number | null, trim3Anterior?: number | null, trim4Anterior?: number | null }> | null, formPlanta?: Array<{ __typename?: 'FormPlantaType', sstE?: number | null, dqoE?: number | null, grasasAceitesE?: number | null, ptarE?: string | null }> | null }> | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null }> };
 
-export type FilPorAnoQueryVariables = Exact<{
-  ano: Scalars['Int']['input'];
-}>;
-
-
-export type FilPorAnoQuery = { __typename?: 'Query', filPorAno: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null, componente?: Array<{ __typename?: 'ComponenteType', formComun?: Array<{ __typename?: 'FormComunType', idIndicador?: string | null, dato?: string | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, trim1Anterior?: number | null, trim2Anterior?: number | null, trim3Anterior?: number | null, trim4Anterior?: number | null }> | null, formPlanta?: Array<{ __typename?: 'FormPlantaType', sstE?: number | null, dqoE?: number | null, grasasAceitesE?: number | null, ptarE?: string | null }> | null }> | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
-
 export type InicializarPlaneacionMutationVariables = Exact<{
   input: PlaneacionInput;
 }>;
@@ -1792,6 +1808,13 @@ export type RecalcularPbrMutationVariables = Exact<{
 
 
 export type RecalcularPbrMutation = { __typename?: 'Mutation', recalcularPbr: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null, componente?: Array<{ __typename?: 'ComponenteType', formComun?: Array<{ __typename?: 'FormComunType', idIndicador?: string | null, dato?: string | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, trim1Anterior?: number | null, trim2Anterior?: number | null, trim3Anterior?: number | null, trim4Anterior?: number | null }> | null, formPlanta?: Array<{ __typename?: 'FormPlantaType', sstE?: number | null, dqoE?: number | null, grasasAceitesE?: number | null, ptarE?: string | null }> | null }> | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
+
+export type RegComponenteMutationVariables = Exact<{
+  datos: RegComponenteInput;
+}>;
+
+
+export type RegComponenteMutation = { __typename?: 'Mutation', regComponente: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, formulaTrim1?: string | null, formulaTrim2?: string | null, formulaTrim3?: string | null, formulaTrim4?: string | null, formulaAnual?: string | null, componente?: Array<{ __typename?: 'ComponenteType', formComun?: Array<{ __typename?: 'FormComunType', idIndicador?: string | null, dato?: string | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, trim1Anterior?: number | null, trim2Anterior?: number | null, trim3Anterior?: number | null, trim4Anterior?: number | null }> | null, formPlanta?: Array<{ __typename?: 'FormPlantaType', sstE?: number | null, dqoE?: number | null, grasasAceitesE?: number | null, ptarE?: string | null }> | null }> | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
 
 export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
@@ -3145,24 +3168,6 @@ export const FilTodosDocument = gql`
       super(apollo);
     }
   }
-export const FilPorAnoDocument = gql`
-    query filPorAno($ano: Int!) {
-  filPorAno(ano: $ano) {
-    ...fragPlaneacion
-  }
-}
-    ${FragPlaneacionFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FilPorAnoGQL extends Apollo.Query<FilPorAnoQuery, FilPorAnoQueryVariables> {
-    document = FilPorAnoDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const InicializarPlaneacionDocument = gql`
     mutation inicializarPlaneacion($input: PlaneacionInput!) {
   inicializarPlaneacion(input: $input) {
@@ -3313,6 +3318,24 @@ export const RecalcularPbrDocument = gql`
   })
   export class RecalcularPbrGQL extends Apollo.Mutation<RecalcularPbrMutation, RecalcularPbrMutationVariables> {
     document = RecalcularPbrDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegComponenteDocument = gql`
+    mutation regComponente($datos: RegComponenteInput!) {
+  regComponente(datos: $datos) {
+    ...fragPlaneacion
+  }
+}
+    ${FragPlaneacionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RegComponenteGQL extends Apollo.Mutation<RegComponenteMutation, RegComponenteMutationVariables> {
+    document = RegComponenteDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

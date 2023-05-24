@@ -58,7 +58,7 @@ export class ListaTabMirComponent
 
     editarRegistro(): void
     {
-        if (this.validarPbr())
+        if (this.validarMir())
         {
             return;
         }
@@ -68,14 +68,14 @@ export class ListaTabMirComponent
 
     eliminarReg(): void
     {
-        if (this.validarPbr())
+        if (this.validarMir())
         {
             return;
         }
         this.planeacionService.eliminarElemento(this.cuestionarioMir().idIndicador, ValoresCamposMod.mirCuestionario);
     }
 
-    validarPbr(): boolean
+    validarMir(): boolean
     {
         if (isNil(this.cuestionarioMir()))
         {

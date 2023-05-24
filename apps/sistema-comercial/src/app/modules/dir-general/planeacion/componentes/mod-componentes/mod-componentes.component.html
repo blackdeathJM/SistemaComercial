@@ -1,10 +1,5 @@
 <article class="flex flex-col flex-auto">
-    <mat-button-toggle-group>
-        <mat-button-toggle (click)="tipoFormulario = 1">Formulariod comun</mat-button-toggle>
-        <mat-button-toggle (click)="tipoFormulario = 2">Formulario PTAR</mat-button-toggle>
-    </mat-button-toggle-group>
-    <mat-divider class="my-2 border-2"></mat-divider>
-    <div class="flex flex-auto gap-4 items-center content-center">
+    <div class="flex flex-auto gap-4 items-center content-center px-6">
         <ng-container *ngIf="seleccionQuery.select() | async as seleccion">
             <mat-form-field class="flex-1">
                 <mat-label>Centro gestor</mat-label>
@@ -21,7 +16,21 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <ng-container [ngSwitch]="tipoFormulario">
-        <app-mod-comp-comun *ngSwitchCase="1" [cuestionarioPbr]="cuestionarioPbr"></app-mod-comp-comun>
+    <ng-container>
+        <mat-tab-group [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndice($event)">
+            <div>
+                contenido general
+            </div>
+            <mat-tab label="Form comun">
+                <ng-container *ngIf="indice === 0">
+                    <app-mod-comp-comun [cuestionarioPbr]="cuestionarioPbr" [tipoForm]="TiposFormulario.COMUN"></app-mod-comp-comun>
+                </ng-container>
+            </mat-tab>
+            <mat-tab label="Form PTAR">
+                <ng-container *ngIf="indice === 1">
+
+                </ng-container>
+            </mat-tab>
+        </mat-tab-group>
     </ng-container>
 </article>

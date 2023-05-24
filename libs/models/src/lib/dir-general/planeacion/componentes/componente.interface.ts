@@ -1,3 +1,9 @@
+export enum TiposFormulario
+{
+    COMUN = 'comun',
+    PTAR = 'ptar'
+}
+
 export interface IFormPlanta
 {
     ptarE: string;
@@ -25,6 +31,12 @@ export interface IformComun
 export interface IComponente
 {
     formComun: IformComun[];
+    periodoAnt: boolean;
     formPlanta: IFormPlanta[];
     etiqueta: string;
+
+    avanceTrim1: number;
+    avanceTrim2: number;
+    avanceTrim3: number;
+    avanceTrim4: number;
 }

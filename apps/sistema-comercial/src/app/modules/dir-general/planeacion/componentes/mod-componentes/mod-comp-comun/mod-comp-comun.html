@@ -1,10 +1,16 @@
 <form [formGroup]="formComun">
     <section class="flex flex-col flex-auto">
-        <mat-form-field>
-            <mat-label>Id Variable</mat-label>
-            <input matInput formControlName="idIndicador">
-        </mat-form-field>
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Id Variable</mat-label>
+                <input matInput formControlName="idIndicador">
+            </mat-form-field>
 
+            <mat-form-field>
+                <mat-label>Etiqueta</mat-label>
+                <input matInput formControlName="etiqueta">
+            </mat-form-field>
+        </div>
         <mat-form-field>
             <mat-label>Descripcion</mat-label>
             <input matInput formControlName="dato">
@@ -30,7 +36,7 @@
                 <input matInput formControlName="trim4">
             </mat-form-field>
         </div>
-        <mat-checkbox color="primary" [disabled]="formComun.invalid">Obtener valores del periodo anterior</mat-checkbox>
+        <mat-checkbox color="primary" [disabled]="formComun.invalid" (change)="periodoAntCheck($event)">Obtener valores del periodo anterior</mat-checkbox>
     </section>
 </form>
 

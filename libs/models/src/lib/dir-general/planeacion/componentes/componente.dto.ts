@@ -1,4 +1,4 @@
-import {Field, Float, InputType, ObjectType, PartialType} from "@nestjs/graphql";
+import {Field, Float, ID, InputType, ObjectType, PartialType} from "@nestjs/graphql";
 import {IComponente, IformComun, IFormPlanta} from "./componente.interface";
 // import {v4 as uuidv4} from 'uuid'
 import {IsNotEmpty, IsNumber, IsOptional} from "class-validator";
@@ -84,10 +84,38 @@ export class ComponenteDto implements IComponente
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: null})
     etiqueta: string;
+
+    @IsOptional()
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    periodoAnt: boolean;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    avanceTrim1: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    avanceTrim2: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    avanceTrim3: number;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    avanceTrim4: number;
 }
 
+@InputType('RegComponenteInput')
 export class RegComponenteDto extends PartialType(ComponenteDto, InputType)
 {
+    @IsNotEmpty({message: 'Es requerido el id principal'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+
+    @IsNotEmpty({message: 'Es necesario el id del MIR'})
+    @Field(() => String, {nullable: true})
+    idIndicadorMir: string;
 }
 
 export type TRegComponente = RegComponenteDto;

@@ -5,7 +5,8 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {usuarioFil} from "@s-dir-general/store/planeacion.service";
-import {isNotNil} from "@angular-ru/cdk/utils";
+import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {NgxToastService} from "@s-services/ngx-toast.service";
 
 @Injectable({providedIn: 'root'})
 export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
@@ -51,7 +52,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         return [];
     });
 
-    constructor(protected planeacionStore: PlaneacionStore)
+    constructor(protected planeacionStore: PlaneacionStore, private ngxToast: NgxToastService)
     {
         super(planeacionStore);
     }
@@ -60,18 +61,12 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     public filPorAno(anoActual: number, idIndicador: string): IPbrCuestionario
     {
         const planeacion = this.getAll().slice();
-        return planeacion.find(value => value.ano === anoActual - 1)
-            .pbrCuestionario.find(value => value.idIndicador === idIndicador);
+        const filtrarElAno = planeacion.find(value => value.ano === (anoActual - 1));
+        if (isNil(filtrarElAno))
+        {
+            this.ngxToast.alertaToast('No se encontraron valores de un año anterior, puedes establecer valores manualmente', 'PBR');
+            return null;
+        }
+        return filtrarElAno.pbrCuestionario.find(value => value.idIndicador === idIndicador);
     }
-
-    // public filPlaneacionDinamica(cuestionario: string, filtro: string, valorFiltrar: string): IPlaneacion
-    // {
-    //     const entidad = this.getActive();
-    //     const cuestionarioOriginal = entidad[cuestionario].slice();
-    //
-    //     return {
-    //         ...entidad,
-    //         [cuestionario]: cuestionarioOriginal.filter(value => value[filtro] === valorFiltrar)
-    //     };
-    // }
 }

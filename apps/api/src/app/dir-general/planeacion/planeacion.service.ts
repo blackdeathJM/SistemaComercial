@@ -1,4 +1,4 @@
-import {ActualizarResponsableDto, EliminarElementoDto, FilPorAnoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
@@ -9,6 +9,7 @@ import {isEmpty} from "lodash";
 import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 import {v4 as uuidv4} from 'uuid';
+import {TRegComponente} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 
 @Injectable()
 export class PlaneacionService
@@ -285,9 +286,11 @@ export class PlaneacionService
         return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
     }
 
-    async filPorAno(args: FilPorAnoDto): Promise<PlaneacionDto>
+
+    async regComponente(datos: TRegComponente): Promise<PlaneacionDto>
     {
-        return await this.planeacion.findOne({ano: args.ano}).exec();
+        console.log(datos);
+        return null;
     }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
