@@ -44,12 +44,12 @@ export class ModCompComun implements OnChanges
         trim4: [0, this.validadorNumerico]
     });
 
-    // formTrimAnterior: FormGroup = this.fb.group({
-    //     trim1: [0, this.validadorNumerico],
-    //     trim2: [0, this.validadorNumerico],
-    //     trim3: [0, this.validadorNumerico],
-    //     trim4: [0, this.validadorNumerico]
-    // });
+    formTrimAnterior: FormGroup = this.fb.group({
+        trim1: [0, this.validadorNumerico],
+        trim2: [0, this.validadorNumerico],
+        trim3: [0, this.validadorNumerico],
+        trim4: [0, this.validadorNumerico]
+    });
 
     constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService)
     {
