@@ -1,15 +1,15 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
-import { ConfigService } from '@nestjs/config';
-import { graphqlUploadExpress } from 'graphql-upload-ts';
-import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/excepciones';
+import {Logger, ValidationPipe} from '@nestjs/common';
+import {NestFactory} from '@nestjs/core';
+import {AppModule} from './app/app.module';
+import {ConfigService} from '@nestjs/config';
+import {graphqlUploadExpress} from 'graphql-upload-ts';
+import {ExcepcionesMongoose} from '#api/apps/api/src/exceptions/excepciones';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 async function bootstrap(): Promise<void>
 {
     const app = await NestFactory.create(AppModule);
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+    app.useGlobalPipes(new ValidationPipe({whitelist: true, forbidNonWhitelisted: true}));
 
     // const { httpAdapter } = app.get(HttpAdapterHost);
     app.useGlobalFilters(new ExcepcionesMongoose());
@@ -18,7 +18,7 @@ async function bootstrap(): Promise<void>
     app.enableCors();
     app.setGlobalPrefix('/graphql');
     const configService = app.get(ConfigService);
-    const PORT = configService.get('PORT');
+    const PORT = configService.get('config.port');
     await app.listen(PORT);
     Logger.log(`🚀 Application is running on: http://localhost:${PORT}/graphql`);
 }

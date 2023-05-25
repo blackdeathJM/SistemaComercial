@@ -15,12 +15,13 @@ import { DirAdmonFinanzasModule } from '#api/apps/api/src/app/dir-admon-finanzas
 import { DirGeneralModule } from '#api/apps/api/src/app/dir-general/dir-general.module';
 import { APP_FILTER } from '@nestjs/core';
 import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/excepciones';
+import * as process from "process";
 
 @Module({
     imports:
         [
             ConfigModule.forRoot({
-                envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true
+                envFilePath: `${process.env.NODE_ENV}.env`, load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
@@ -55,7 +56,7 @@ import { ExcepcionesMongoose } from '#api/apps/api/src/exceptions/excepciones';
                 inject: [ConfigService],
                 useFactory: async (configService: ConfigService) => (
                     {
-                        uri: configService.get('URI_MONGO'),
+                        uri: configService.get('config.uriMongo'),
                         useNewUrlParser: true
                     }
                 )

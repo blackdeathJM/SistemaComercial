@@ -7,13 +7,11 @@
   "scripts": {
     "ng": "nx",
     "front": "nx serve",
-    "api": "nx serve api",
+    "api": "cross-env NODE_ENV=dev nx serve api",
     "g": "npx graphql-codegen --config libs/datos/codegen.yml",
     "build": "nx build",
-    "build:api": "nest build",
+    "build:api": "cross-env NODE_ENV=prod nx serve api",
     "start:prod-api": "node dist/apps/api/main",
-    "update": "nx update @nrwl/workspace",
-    "watch": "nx build --watch --configuration development",
     "lint": "nx lint"
   },
   "dependencies": {
@@ -64,6 +62,7 @@
     "body-parser": "^1.20.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cross-env": "^7.0.3",
     "crypto-js": "4.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
