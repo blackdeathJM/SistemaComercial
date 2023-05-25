@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="datosOrigen">
+<table mat-table [dataSource]="_origenDatos">
     <ng-container *ngFor="let columna of columnasTabla" [matColumnDef]="columna.def">
         <th mat-header-cell *matHeaderCellDef>{{columna.etiqueta}}</th>
         <td mat-cell *matCellDef="let fila">{{fila | valorColumnaPipe: columna}}</td>

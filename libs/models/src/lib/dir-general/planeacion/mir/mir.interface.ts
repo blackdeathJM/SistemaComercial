@@ -37,11 +37,5 @@ export interface IMirCuestionario
     avanceTrim4: number;
     avanceAnual: number;
 
-    formulaTrim1: string;
-    formulaTrim2: string;
-    formulaTrim3: string;
-    formulaTrim4: string;
-    formulaAnual: string;
-
-    componente: IComponente[];
+    componente: IComponente;
 }

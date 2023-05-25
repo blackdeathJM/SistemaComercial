@@ -1,5 +1,14 @@
 fragment fragComponente on ComponenteType
 {
+    periodoAnt
+    etiqueta
+    tipoForm
+
+    avanceTrim1
+    avanceTrim2
+    avanceTrim3
+    avanceTrim4
+
     formComun {
         ...fragFormComun
     }

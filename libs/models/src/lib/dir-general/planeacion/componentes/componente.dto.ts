@@ -85,6 +85,10 @@ export class ComponenteDto implements IComponente
     @Field(() => String, {nullable: true, defaultValue: null})
     etiqueta: string;
 
+    @IsNotEmpty({message: 'Es necesario el tipo de formulario'})
+    @Field(() => String, {nullable: true, defaultValue: null})
+    tipoForm: string;
+
     @IsOptional()
     @Field(() => Boolean, {nullable: true, defaultValue: false})
     periodoAnt: boolean;

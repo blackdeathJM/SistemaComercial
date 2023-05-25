@@ -37,6 +37,19 @@
                     <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Metodo de calculo</span>
                     <span class="border-b-2 col-span-full text-center">{{cuestionarioMir()?.metodoCalculo}}</span>
                 </section>
+
+                <app-tabla-mat [datos]="" [columnas]=""></app-tabla-mat>
+
+                <section class="grid grid-cols-8 gap-4 mt-2 text-lg">
+                    <span class="detalle-span">Avance trimestre 1</span>
+                    <span class="border-b-2">----</span>
+                    <span class="detalle-span">Avance trimestre 2</span>
+                    <span class="border-b-2">----</span>
+                    <span class="detalle-span">Avance trimestre 3</span>
+                    <span class="border-b-2">----</span>
+                    <span class="detalle-span">Avance trimestre 4</span>
+                    <span class="border-b-2">----</span>
+                </section>
             </article>
         </mat-card-content>
         <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
@@ -45,11 +58,7 @@
                     <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
                     Registrar nuevos calculos
                 </button>
-                <button mat-raised-button color="accent" class="flex-auto">
-                    <mat-icon svgIcon="mat_outline:edit"></mat-icon>
-                    Editar Calculo
-                </button>
-                <button mat-raised-button color="accent" class="flex-auto">
+                <button mat-raised-button color="accent" class="flex-auto" (click)="imprimirComp()">
                     <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                     Imprimir
                 </button>

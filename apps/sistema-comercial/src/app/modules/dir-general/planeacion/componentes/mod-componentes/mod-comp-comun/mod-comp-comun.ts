@@ -109,17 +109,19 @@ export class ModCompComun implements OnInit, OnChanges, OnDestroy
 
     registrar(): void
     {
-        if (this.datos.length === 0)
+        if (this.datos.length <= 1)
         {
-            this.ngxToast.errorToast('No se puedo procesar con el registro porque no se proporciono ningun tipo de informacion', 'Componente');
+            this.ngxToast.errorToast('No se puede continuar con el proceso de registro porque la lista esta vacia o debe tener por lo menos dos elementos', 'Componente');
             return;
         }
+
         this.cargando = true;
         const regComponente: TRegComponente =
             {
                 _id: this.planeacionQuery.getActive()._id,
                 idIndicadorMir: this.planeacionQuery.cuestionarioMir().idIndicador,
                 formComun: this.datos,
+                tipoForm: TiposFormulario.COMUN,
                 periodoAnt: this.periodoAnt,
                 etiqueta: this.formComun.get('etiqueta').value,
             }

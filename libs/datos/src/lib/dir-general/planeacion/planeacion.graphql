@@ -69,3 +69,10 @@ mutation regComponente($datos: RegComponenteInput!)
         ...fragPlaneacion
     }
 }
+mutation reemplazarComp($_id: ID!, $idIndicador: String!)
+{
+    reemplazarComp(_id: $_id, idIndicador: $idIndicador)
+    {
+        ...fragPlaneacion
+    }
+}

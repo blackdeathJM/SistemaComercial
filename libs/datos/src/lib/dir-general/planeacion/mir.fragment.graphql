@@ -32,11 +32,6 @@ fragment fragMir on MirCuestionarioType
     avanceTrim3
     avanceAnual
     avanceTrim4
-    formulaTrim1
-    formulaTrim2
-    formulaTrim3
-    formulaTrim4
-    formulaAnual
     componente {
         ...fragComponente
     }

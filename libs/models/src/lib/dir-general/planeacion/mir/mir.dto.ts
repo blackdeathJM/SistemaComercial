@@ -137,26 +137,6 @@ export class MirCuestionarioDto implements IMirCuestionario
 
     @Field(() => String, {nullable: true, defaultValue: null})
     @IsOptional()
-    formulaTrim1: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    formulaTrim2: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    formulaTrim3: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    formulaTrim4: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    formulaAnual: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
     correo: string;
 
     @Field(() => String, {nullable: true})
@@ -167,10 +147,9 @@ export class MirCuestionarioDto implements IMirCuestionario
     @IsNotEmpty({message: 'Es necesario el id del encargado'})
     idEmpleado: string;
 
-    @Field(() => [ComponenteDto], {nullable: true, defaultValue: []})
+    @Field(() => ComponenteDto, {nullable: true, defaultValue: null})
     @IsOptional()
-    componente: ComponenteDto[];
-
+    componente: ComponenteDto;
 }
 
 @InputType('RegMirInput')

@@ -34,6 +34,7 @@ export interface IComponente
     periodoAnt: boolean;
     formPlanta: IFormPlanta[];
     etiqueta: string;
+    tipoForm: string;
 
     avanceTrim1: number;
     avanceTrim2: number;

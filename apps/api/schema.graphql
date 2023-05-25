@@ -267,6 +267,7 @@ type ComponenteType {
   formPlanta: [FormPlantaType!]
   formComun: [FormComunType!]
   etiqueta: String
+  tipoForm: String
   periodoAnt: Boolean
   avanceTrim1: Float
   avanceTrim2: Float
@@ -304,15 +305,10 @@ type MirCuestionarioType {
   avanceTrim3: Float
   avanceTrim4: Float
   avanceAnual: Float
-  formulaTrim1: String
-  formulaTrim2: String
-  formulaTrim3: String
-  formulaTrim4: String
-  formulaAnual: String
   correo: String
   responsable: String
   idEmpleado: String
-  componente: [ComponenteType!]
+  componente: ComponenteType
 }
 
 type PbrType {
@@ -472,7 +468,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1684999731
+  tiempo: Int = 1685013850
   titulo: String
   usarRouter: Boolean = false
 }
@@ -612,6 +608,7 @@ input ComponenteInput {
   formPlanta: [FormPlantaInput!] = []
   formComun: [FormComunInput!] = []
   etiqueta: String = null
+  tipoForm: String = null
   periodoAnt: Boolean = false
   avanceTrim1: Float = 0
   avanceTrim2: Float = 0
@@ -649,15 +646,10 @@ input MirCuestionarioInput {
   avanceTrim3: Float = 0
   avanceTrim4: Float = 0
   avanceAnual: Float = 0
-  formulaTrim1: String = null
-  formulaTrim2: String = null
-  formulaTrim3: String = null
-  formulaTrim4: String = null
-  formulaAnual: String = null
   correo: String = null
   responsable: String
   idEmpleado: String
-  componente: [ComponenteInput!] = []
+  componente: ComponenteInput = null
 }
 
 input PbrInput {
@@ -765,6 +757,7 @@ type Mutation {
   sumatoriaPbr(datos: SumPbrInput!, actualizar: Boolean!): PlaneacionType!
   recalcularPbr(args: RecalcularPbrInput!): PlaneacionType!
   regComponente(datos: RegComponenteInput!): PlaneacionType!
+  reemplazarComp(_id: ID, idIndicador: String): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -832,15 +825,10 @@ input RegMirInput {
   avanceTrim3: Float = 0
   avanceTrim4: Float = 0
   avanceAnual: Float = 0
-  formulaTrim1: String = null
-  formulaTrim2: String = null
-  formulaTrim3: String = null
-  formulaTrim4: String = null
-  formulaAnual: String = null
   correo: String = null
   responsable: String
   idEmpleado: String
-  componente: [ComponenteInput!] = []
+  componente: ComponenteInput = null
   _id: ID
   esActualizar: Boolean = false
 }
@@ -937,6 +925,7 @@ input RegComponenteInput {
   formPlanta: [FormPlantaInput!] = []
   formComun: [FormComunInput!] = []
   etiqueta: String = null
+  tipoForm: String = null
   periodoAnt: Boolean = false
   avanceTrim1: Float = 0
   avanceTrim2: Float = 0

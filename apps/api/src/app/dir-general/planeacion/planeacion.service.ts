@@ -1,4 +1,4 @@
-import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, ReemplazarCompDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
@@ -289,13 +289,22 @@ export class PlaneacionService
 
     async regComponente(datos: TRegComponente): Promise<PlaneacionDto>
     {
-        console.log(datos);
-        return null;
+        //* Realizar cambios al momento que se registra el avance
+        const {_id, idIndicadorMir, ...resto} = datos;
+
+        return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': idIndicadorMir},
+            {$set: {'mirCuestionario.$.componente': resto}}, {new: true}).exec();
     }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
     {
         const {_id, idIndicador, cuestionario} = args;
         return await this.planeacion.findByIdAndUpdate(_id, {$pull: {[cuestionario]: {idIndicador}}}, {new: true}).exec();
+    }
+
+    async reemplazarComp(args: ReemplazarCompDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacion.findOneAndUpdate({_id: args._id, 'mirCuestionario.idIndicador': args.idIndicador},
+            {$set: {'mirCuestionario.$.componente': null}}, {new: true}).exec();
     }
 }

@@ -23,6 +23,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 export class ModComponentesComponent
 {
     cuestionarioPbr: IPbrCuestionario = null;
+    protected readonly TiposFormulario = TiposFormulario;
     indice: number = 0;
 
     constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery)
@@ -38,8 +39,6 @@ export class ModComponentesComponent
     {
         this.cuestionarioPbr = e;
     }
-
-    protected readonly TiposFormulario = TiposFormulario;
 
     cambioIndice(e: number): void
     {

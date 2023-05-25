@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {ITabla} from '@s-shared/components/tabla-mat/tabla-interface';
 import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
+import {IformComun, IFormPlanta} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 
 
 @Component({
@@ -15,17 +16,19 @@ import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pip
 })
 export class TablaMatComponent
 {
-    origenDatos: MatTableDataSource<any>;
-    columnasAMostrar: string[] = [];
-    columnasTabla: ITabla[] = [];
-    datosOrigen: any;
 
-    @Input() set datos(data: MatTableDataSource<any>)
+    _origenDatos: MatTableDataSource<IformComun[] | IFormPlanta[]>;
+
+    columnasAMostrar: string[] = [];
+
+    columnasTabla: ITabla[] = [];
+
+    @Input({required: true}) set datos(data: MatTableDataSource<IformComun[] | IFormPlanta[]>)
     {
-        this.origenDatos = data;
+        this._origenDatos = data;
     }
 
-    @Input() set columnas(columnas: ITabla[])
+    @Input({required: true}) set columnas(columnas: ITabla[])
     {
         this.columnasTabla = columnas;
         this.columnasAMostrar = this.columnas.map(col => col.def);

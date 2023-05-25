@@ -105,10 +105,6 @@ export class ListaTabMirComponent
         {
             this.indice--;
         }
-        // if (isNil(this.indice))
-        // {
-        //     this.indice = 0;
-        // }
 
         this.planeacionQuery.cuestionarioMir.set(arregloMir[this.indice]);
     }
