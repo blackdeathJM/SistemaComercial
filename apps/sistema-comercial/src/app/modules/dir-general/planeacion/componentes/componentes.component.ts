@@ -13,13 +13,14 @@ import {MatDialog} from "@angular/material/dialog";
 import {ModComponentesComponent} from "@s-dir-general/componentes/mod-componentes/mod-componentes.component";
 import {MatCardModule} from "@angular/material/card";
 import {ConfirmacionService} from "@s-services/confirmacion.service";
-import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {isNil} from "@angular-ru/cdk/utils";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {TReemplazarComp} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
 import {IComponente, IformComun, IFormPlanta} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {ITabla} from "@s-shared/components/tabla-mat/tabla-interface";
+import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-componentes',
@@ -36,7 +37,7 @@ export class ComponentesComponent implements OnChanges
     cuestionarioMir = this.planeacionQuery.cuestionarioMir;
 
     columnas: ITabla[] = [];
-    datosTable: IformComun[] | IFormPlanta[];
+    datosTable: IformComun[] | IFormPlanta[] = [];
 
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
@@ -47,7 +48,10 @@ export class ComponentesComponent implements OnChanges
 
     nuevoElemento(): void
     {
-        if (isNotNil(this.cuestionarioMir().componente))
+        if (isNil(this.cuestionarioMir().componente))
+        {
+            this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
+        } else
         {
             const message = 'Ya existe un componente para este indicador, si deseas reemplazar este componente confirma que deseas hacerlo';
             this.confirmacionService.abrir({message, title: 'Reemplazar componente'}).afterClosed().subscribe(res =>
@@ -59,11 +63,10 @@ export class ComponentesComponent implements OnChanges
                             _id: this.planeacionQuery.getActive()._id,
                             idIndicador: this.planeacionQuery.cuestionarioMir().idIndicador
                         };
-                    this.planeacionService.reemplazarComp(args).subscribe();
+                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.mdr.open(ModComponentesComponent, {width: '50%', data: null}))).subscribe();
                 }
             });
         }
-        this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
     }
 
     ngOnChanges(changes: SimpleChanges): void
@@ -84,31 +87,37 @@ export class ComponentesComponent implements OnChanges
                     etiqueta: 'Id indicador',
                     def: 'idIndicador',
                     llaveDato: 'idIndicador',
+                    width: '10%'
                 },
                 {
                     etiqueta: 'Dato',
                     def: 'dato',
-                    llaveDato: 'dato'
+                    llaveDato: 'dato',
+                    width: '50%'
                 },
                 {
-                    etiqueta: 'Trimestre 1',
+                    etiqueta: 'Trim 1',
                     def: 'trim1',
-                    llaveDato: 'trim1'
+                    llaveDato: 'trim1',
+                    width: '10%'
                 },
                 {
-                    etiqueta: 'Trimestre 2',
+                    etiqueta: 'Trime 2',
                     def: 'trim2',
-                    llaveDato: 'trim2'
+                    llaveDato: 'trim2',
+                    width: '10%'
                 },
                 {
-                    etiqueta: 'Trimestre 3',
+                    etiqueta: 'Trim 3',
                     def: 'trim3',
-                    llaveDato: 'trim3'
+                    llaveDato: 'trim3',
+                    width: '10%'
                 },
                 {
-                    etiqueta: 'Trimestre 4',
+                    etiqueta: 'Trim 4',
                     def: 'trim4',
-                    llaveDato: 'trim4'
+                    llaveDato: 'trim4',
+                    width: '10%'
                 },
             ];
         this.datosTable = componente.formComun;

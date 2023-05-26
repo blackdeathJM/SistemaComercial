@@ -30,5 +30,7 @@ export class ValorColumnaPipe implements PipeTransform
                 });
                 mostrarValor = valorActual;
         }
+
+        return mostrarValor;
     }
 }

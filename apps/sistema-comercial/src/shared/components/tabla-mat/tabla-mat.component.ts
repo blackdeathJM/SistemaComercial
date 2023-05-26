@@ -31,6 +31,6 @@ export class TablaMatComponent
     @Input({required: true}) set columnas(columnas: ITabla[])
     {
         this.columnasTabla = columnas;
-        this.columnasAMostrar = this.columnas.map(col => col.def);
+        this.columnasAMostrar = this.columnasTabla.map(col => col.def);
     }
 }
