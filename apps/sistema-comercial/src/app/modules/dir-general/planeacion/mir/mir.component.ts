@@ -11,7 +11,6 @@ import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from "@s-fuse/public-api";
-import {Subscription} from "rxjs";
 import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
 
 export const abrirPanelMir = signal<boolean>(false)
@@ -28,8 +27,6 @@ export const abrirPanelMir = signal<boolean>(false)
 export default class MirComponent implements OnDestroy
 {
     abrirPanel = abrirPanelMir;
-    sub: Subscription = new Subscription();
-
     constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
     {
     }

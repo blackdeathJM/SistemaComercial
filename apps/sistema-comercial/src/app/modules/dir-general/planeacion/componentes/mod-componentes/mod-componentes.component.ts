@@ -9,7 +9,6 @@ import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {MatListModule} from "@angular/material/list";
 import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
-import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTabsModule} from "@angular/material/tabs";
 
 @Component({
@@ -22,8 +21,6 @@ import {MatTabsModule} from "@angular/material/tabs";
 })
 export class ModComponentesComponent
 {
-    cuestionarioPbr: IPbrCuestionario = null;
-    protected readonly TiposFormulario = TiposFormulario;
     indice: number = 0;
 
     constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery)
@@ -35,9 +32,9 @@ export class ModComponentesComponent
         this.planeacionQuery.centroGestor.set(e);
     }
 
-    elementoSeleccionado(e: IPbrCuestionario): void
+    pbrSeleccionado(e: IPbrCuestionario): void
     {
-        this.cuestionarioPbr = e;
+        this.planeacionQuery.cuestionarioPbr.set(e);
     }
 
     cambioIndice(e: number): void

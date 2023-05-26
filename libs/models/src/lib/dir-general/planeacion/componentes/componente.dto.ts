@@ -90,10 +90,6 @@ export class ComponenteDto implements IComponente
     tipoForm: string;
 
     @IsOptional()
-    @Field(() => Boolean, {nullable: true, defaultValue: false})
-    periodoAnt: boolean;
-
-    @IsOptional()
     @Field(() => Float, {nullable: true, defaultValue: 0.00})
     avanceTrim1: number;
 

@@ -38,17 +38,18 @@
                     <span class="border-b-2 col-span-full text-center">{{cuestionarioMir()?.metodoCalculo}}</span>
                 </section>
 
-                <app-tabla-mat [datos]="datosTable" [columnas]="columnas"></app-tabla-mat>
+                <app-tabla-mat [columnas]="columnas"></app-tabla-mat>
 
-                <section class="grid grid-cols-8 gap-4 mt-2 text-lg">
-                    <span class="detalle-span">Avance trimestre 1</span>
-                    <span class="border-b-2">----</span>
-                    <span class="detalle-span">Avance trimestre 2</span>
-                    <span class="border-b-2">----</span>
-                    <span class="detalle-span">Avance trimestre 3</span>
-                    <span class="border-b-2">----</span>
-                    <span class="detalle-span">Avance trimestre 4</span>
-                    <span class="border-b-2">----</span>
+                <mat-divider class="my-4 border-4 border-lime-900 dark:border-lime-400"></mat-divider>
+                <section class="grid grid-cols-8 gap-4 text-lg">
+                    <span class="detalle-span">Avance trim 1</span>
+                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim1'} }}</span>
+                    <span class="detalle-span">Avance trim 2</span>
+                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim2'} }}</span>
+                    <span class="detalle-span">Avance trim 3</span>
+                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim3'} }}</span>
+                    <span class="detalle-span">Avance trim 4</span>
+                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim4'} }}</span>
                 </section>
             </article>
         </mat-card-content>

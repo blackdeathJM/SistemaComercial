@@ -1,6 +1,5 @@
 fragment fragComponente on ComponenteType
 {
-    periodoAnt
     etiqueta
     tipoForm
 

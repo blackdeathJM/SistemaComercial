@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from "@angular/core";
+import {ChangeDetectionStrategy, Component, effect, signal} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -14,7 +14,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
-import {finalize, Subscription} from "rxjs";
+import {finalize} from "rxjs";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 import {MatDialogRef} from "@angular/material/dialog";
 import {NgxToastService} from "@s-services/ngx-toast.service";
@@ -28,16 +28,15 @@ import {NgxToastService} from "@s-services/ngx-toast.service";
     styleUrls: ['./mod-comp-comun.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModCompComun implements OnInit, OnChanges, OnDestroy
+export class ModCompComun
 {
-    @Input({required: true}) cuestionarioPbr: IPbrCuestionario = null;
-    @Input({required: true}) tipoForm: TiposFormulario;
+    pbrCuestionario = this.planeacionQuery.cuestionarioPbr;
 
     datos: IformComun[] = [];
-    periodoAnt: boolean = false;
 
-    sub: Subscription = new Subscription();
+    periodoAnt = signal<boolean>(false);
     cargando = false;
+
     validadorNumerico = [RxwebValidators.required, RxwebValidators.numeric({allowDecimal: true, message: 'El valor debe ser numerico'})];
     formComun: FormGroup = this.fb.group({
         idIndicador: ['', RxwebValidators.required({message: 'El id del indicador es requerido'})],
@@ -59,22 +58,21 @@ export class ModCompComun implements OnInit, OnChanges, OnDestroy
     constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private mdr: MatDialogRef<ModCompComun>,
                 private ngxToast: NgxToastService)
     {
-
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add(this.formComun.valueChanges.subscribe(res =>
+        effect(() =>
         {
-            if (this.periodoAnt)
+            if (isNotNil(this.pbrCuestionario()))
             {
-                const periodoAnterior = this.obtenerPeriodoAnterior(res.idIndicador);
+                this.formComun.patchValue(this.pbrCuestionario());
+            }
+            if (this.periodoAnt())
+            {
+                const periodoAnterior = this.obtenerPeriodoAnterior(this.formComun.get('idIndicador').value);
                 if (isNotNil(periodoAnterior))
                 {
                     this.formTrimAnterior.patchValue(periodoAnterior);
                 }
             }
-        }));
+        });
     }
 
     obtenerPeriodoAnterior(idIndicador: string): IPbrCuestionario
@@ -85,19 +83,15 @@ export class ModCompComun implements OnInit, OnChanges, OnDestroy
     agregarAlArreglo(): void
     {
         const {idIndicador} = this.formComun.value;
-        if (this.periodoAnt)
-        {
-            const periodoAnt = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, idIndicador)
-            this.formTrimAnterior.patchValue(periodoAnt);
-        }
+
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
         this.datos.push({
             idIndicador,
             dato: this.formComun.get('dato').value,
-            trim1: +this.cuestionarioPbr.trim1,
-            trim2: +this.cuestionarioPbr.trim2,
-            trim3: +this.cuestionarioPbr.trim3,
-            trim4: +this.cuestionarioPbr.trim4,
+            trim1: +this.pbrCuestionario().trim1,
+            trim2: +this.pbrCuestionario().trim2,
+            trim3: +this.pbrCuestionario().trim3,
+            trim4: +this.pbrCuestionario().trim4,
             trim1Anterior: this.periodoAnt ? +trim1 : 0,
             trim2Anterior: this.periodoAnt ? +trim2 : 0,
             trim3Anterior: this.periodoAnt ? +trim3 : 0,
@@ -115,14 +109,15 @@ export class ModCompComun implements OnInit, OnChanges, OnDestroy
             return;
         }
 
+
         this.cargando = true;
+
         const regComponente: TRegComponente =
             {
                 _id: this.planeacionQuery.getActive()._id,
                 idIndicadorMir: this.planeacionQuery.cuestionarioMir().idIndicador,
                 formComun: this.datos,
-                tipoForm: TiposFormulario.COMUN,
-                periodoAnt: this.periodoAnt,
+                tipoForm: this.periodoAnt() ? TiposFormulario.PERIODO_ANT : TiposFormulario.COMUN,
                 etiqueta: this.formComun.get('etiqueta').value,
             }
         this.formComun.disable();
@@ -137,32 +132,11 @@ export class ModCompComun implements OnInit, OnChanges, OnDestroy
         })).subscribe();
     }
 
-    ngOnChanges(changes: SimpleChanges): void
-    {
-        if (isNotNil(changes.cuestionarioPbr))
-        {
-            this.formComun.patchValue(changes.cuestionarioPbr.currentValue);
-        }
-    }
-
     periodoAntCheck(e: MatCheckboxChange): void
     {
         if (this.datos.length === 0)
         {
-            this.periodoAnt = e.checked;
+            this.periodoAnt.set(e.checked);
         }
-        if (this.periodoAnt)
-        {
-            const periodoAnterior = this.obtenerPeriodoAnterior(this.formComun.get('idIndicador').value);
-            if (isNotNil(periodoAnterior))
-            {
-                this.formTrimAnterior.patchValue(periodoAnterior);
-            }
-        }
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
     }
 }

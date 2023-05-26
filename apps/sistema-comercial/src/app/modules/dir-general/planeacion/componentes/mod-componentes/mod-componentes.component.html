@@ -11,7 +11,7 @@
 
         <mat-form-field class="flex-auto">
             <mat-label>Selecciona el elemento a calcular</mat-label>
-            <mat-select (valueChange)="elementoSeleccionado($event)">
+            <mat-select (valueChange)="pbrSeleccionado($event)">
                 <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">{{pbr.dato}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -23,7 +23,7 @@
             </div>
             <mat-tab label="Form comun">
                 <ng-container *ngIf="indice === 0">
-                    <app-mod-comp-comun [cuestionarioPbr]="cuestionarioPbr" [tipoForm]="TiposFormulario.COMUN"></app-mod-comp-comun>
+                    <app-mod-comp-comun></app-mod-comp-comun>
                 </ng-container>
             </mat-tab>
             <mat-tab label="Form PTAR">

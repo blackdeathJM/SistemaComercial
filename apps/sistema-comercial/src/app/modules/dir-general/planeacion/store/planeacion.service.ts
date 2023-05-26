@@ -224,6 +224,7 @@ export class PlaneacionService
                 const {_id, ...cambios} = <IPlaneacion>res.data.regComponente;
                 this.planeacionStore.update(_id, cambios);
                 this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
+                this.ngxToast.satisfactorioToast('Haz registrado un nuevo componente', 'Registro de componente');
             }
         }));
     }

@@ -1,3 +1,4 @@
+
 <form [formGroup]="formComun">
     <section class="flex flex-col flex-auto">
         <div class="flex flex-auto gap-4 items-center content-center">
@@ -40,7 +41,7 @@
     </section>
 </form>
 
-<form [formGroup]="formTrimAnterior" *ngIf="periodoAnt">
+<form [formGroup]="formTrimAnterior" *ngIf="periodoAnt()">
     <section class="flex flex-col flex-auto">
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">

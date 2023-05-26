@@ -1,15 +1,15 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {ITabla} from '@s-shared/components/tabla-mat/tabla-interface';
 import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
 import {IformComun, IFormPlanta} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {MatTableModule} from "@angular/material/table";
 
 
 @Component({
     selector: 'app-tabla-mat',
     standalone: true,
-    imports: [CommonModule, MatTableModule, ValorColumnaPipe],
+    imports: [CommonModule, MatTableModule, ValorColumnaPipe, MatTableModule],
     templateUrl: './tabla-mat.component.html',
     styleUrls: ['./tabla-mat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,13 +17,13 @@ import {IformComun, IFormPlanta} from "#/libs/models/src/lib/dir-general/planeac
 export class TablaMatComponent
 {
 
-    _origenDatos: MatTableDataSource<IformComun[] | IFormPlanta[]>;
+    _origenDatos: IformComun[] | IFormPlanta[] = [];
 
     columnasAMostrar: string[] = [];
 
     columnasTabla: ITabla[] = [];
 
-    @Input({required: true}) set datos(data: MatTableDataSource<IformComun[] | IFormPlanta[]>)
+    @Input({required: true}) set datos(data: IformComun[] | IFormPlanta[])
     {
         this._origenDatos = data;
     }
@@ -32,5 +32,9 @@ export class TablaMatComponent
     {
         this.columnasTabla = columnas;
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);
+    }
+
+    constructor()
+    {
     }
 }

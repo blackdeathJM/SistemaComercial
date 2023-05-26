@@ -268,7 +268,6 @@ type ComponenteType {
   formComun: [FormComunType!]
   etiqueta: String
   tipoForm: String
-  periodoAnt: Boolean
   avanceTrim1: Float
   avanceTrim2: Float
   avanceTrim3: Float
@@ -468,7 +467,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685057930
+  tiempo: Int = 1685100773
   titulo: String
   usarRouter: Boolean = false
 }
@@ -609,7 +608,6 @@ input ComponenteInput {
   formComun: [FormComunInput!] = []
   etiqueta: String = null
   tipoForm: String = null
-  periodoAnt: Boolean = false
   avanceTrim1: Float = 0
   avanceTrim2: Float = 0
   avanceTrim3: Float = 0
@@ -926,7 +924,6 @@ input RegComponenteInput {
   formComun: [FormComunInput!] = []
   etiqueta: String = null
   tipoForm: String = null
-  periodoAnt: Boolean = false
   avanceTrim1: Float = 0
   avanceTrim2: Float = 0
   avanceTrim3: Float = 0
