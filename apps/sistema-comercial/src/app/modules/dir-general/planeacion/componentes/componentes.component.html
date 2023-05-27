@@ -1,4 +1,4 @@
-<section class="flex flex-auto flex-col" *ngIf="cuestionarioMir().componente">
+<section class="flex flex-auto flex-col" *ngIf="cuestionarioMir() && cuestionarioMir().componente">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4 flex-auto" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
             <span class="text-xl">{{cuestionarioMir()?.nivel}}</span>
@@ -40,7 +40,7 @@
 
                 <app-tabla-mat [datos]="datosTable" [columnas]="columnas"></app-tabla-mat>
 
-                <mat-divider class="my-4 border-4 border-lime-900 dark:border-lime-400"></mat-divider>
+                <mat-divider class="border-4 mb-4 border-lime-900 dark:border-lime-400"></mat-divider>
                 <section class="grid grid-cols-8 gap-4 text-lg">
                     <span class="detalle-span">Avance trim 1</span>
                     <span class="border-b-2 text-green-700">{{avanceTrim1}}</span>

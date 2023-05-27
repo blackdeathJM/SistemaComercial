@@ -16,7 +16,6 @@ import {MatTableModule} from "@angular/material/table";
 })
 export class TablaMatComponent
 {
-
     _origenDatos: IformComun[] | IFormPlanta[] = [];
 
     columnasAMostrar: string[] = [];
@@ -27,7 +26,6 @@ export class TablaMatComponent
     {
         this._origenDatos = data;
     }
-
     @Input({required: true}) set columnas(columnas: ITabla[])
     {
         this.columnasTabla = columnas;

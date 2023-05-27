@@ -6,7 +6,6 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {RegistrosComponent} from "@s-shared/registros/registros.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNotNil} from "@angular-ru/cdk/utils";
 import {IformComun, TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
@@ -67,7 +66,10 @@ export class ModCompComun
             }
             if (this.periodoAnt())
             {
-                const periodoAnterior = this.obtenerPeriodoAnterior(this.formComun.get('idIndicador').value);
+
+                const idIndicador = this.formComun.get('idIndicador').value;
+                const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, idIndicador);
+
                 if (isNotNil(periodoAnterior))
                 {
                     this.formTrimAnterior.patchValue(periodoAnterior);
@@ -75,12 +77,6 @@ export class ModCompComun
             }
         });
     }
-
-    obtenerPeriodoAnterior(idIndicador: string): IPbrCuestionario
-    {
-        return this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, idIndicador);
-    }
-
     agregarAlArreglo(): void
     {
         const {idIndicador} = this.formComun.value;
@@ -117,6 +113,7 @@ export class ModCompComun
         {
             this.tipoForm = TiposFormulario.UN_VALOR;
         }
+
         if (this.datos.length === 2)
         {
             this.tipoForm = TiposFormulario.COMUN
