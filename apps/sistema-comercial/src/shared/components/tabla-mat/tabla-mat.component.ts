@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ITabla} from '@s-shared/components/tabla-mat/tabla-interface';
 import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
@@ -32,9 +32,5 @@ export class TablaMatComponent
     {
         this.columnasTabla = columnas;
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);
-    }
-
-    constructor()
-    {
     }
 }

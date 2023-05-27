@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from "@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
@@ -17,7 +17,7 @@ import {isNil} from "@angular-ru/cdk/utils";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {TReemplazarComp} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
-import {IformComun} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {IformComun, TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {ITabla} from "@s-shared/components/tabla-mat/tabla-interface";
 import {finalize} from "rxjs";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
@@ -31,18 +31,55 @@ import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
     animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ComponentesComponent implements OnChanges
+export class ComponentesComponent
 {
     cuestionarioMir = this.planeacionQuery.cuestionarioMir;
 
     columnas: ITabla[] = [];
+
     datosTable: IformComun[];
 
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
+    avanceTrim1: string = '0';
+    avanceTrim2: string = '0';
+    avanceTrim3: string = '0';
+    avanceTrim4: string = '0';
+
     constructor(private planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog, private confirmacionService: ConfirmacionService,
                 private planeacionService: PlaneacionService)
     {
+        effect(() =>
+        {
+            if (isNil(this.cuestionarioMir().componente))
+            {
+                return;
+            }
+
+            switch (this.cuestionarioMir().componente.tipoForm)
+            {
+                case TiposFormulario.UN_VALOR:
+                    this.columnas = this.columnasComun();
+                    this.avanceTrim1 = this.cuestionarioMir().componente.formComun[0].trim1.toFixed(2);
+                    this.avanceTrim2 = this.cuestionarioMir().componente.formComun[0].trim2.toFixed(2);
+                    this.avanceTrim3 = this.cuestionarioMir().componente.formComun[0].trim3.toFixed(2);
+                    this.avanceTrim4 = this.cuestionarioMir().componente.formComun[0].trim4.toFixed(2);
+                    break;
+                case TiposFormulario.COMUN:
+                    this.columnas = this.columnasComun();
+                    this.avanceTrim1 = (this.cuestionarioMir().componente.formComun[0].trim1 / this.cuestionarioMir().componente.formComun[1].trim1).toFixed(2);
+                    this.avanceTrim2 = (this.cuestionarioMir().componente.formComun[0].trim2 / this.cuestionarioMir().componente.formComun[1].trim2).toFixed(2);
+                    this.avanceTrim3 = (this.cuestionarioMir().componente.formComun[0].trim3 / this.cuestionarioMir().componente.formComun[1].trim3).toFixed(2);
+                    this.avanceTrim4 = (this.cuestionarioMir().componente.formComun[0].trim4 / this.cuestionarioMir().componente.formComun[1].trim4).toFixed(2);
+                    break;
+
+                case TiposFormulario.PERIODO_ANT:
+
+                    break;
+            }
+
+            this.datosTable = this.cuestionarioMir().componente.formComun;
+        })
     }
 
     nuevoElemento(): void
@@ -68,51 +105,46 @@ export class ComponentesComponent implements OnChanges
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void
+    columnasComun(): ITabla[]
     {
-        /* *Recibimos el valor por un input para estar en espera de cualquier cambio y poder mandar los datos personalizados a la mat-table y asi
-         *mostrar los datos dependiendo la forma que se haya registrado, se hubiera porder recibir directamente del signal el problema es que no se puede
-         * realizar una funcion para hacer las adecuaciones necesarias */
-
-        this.columnas =
-            [
-                {
-                    etiqueta: 'Id indicador',
-                    def: 'idIndicador',
-                    llaveDato: 'idIndicador',
-                    width: '10%'
-                },
-                {
-                    etiqueta: 'Dato',
-                    def: 'dato',
-                    llaveDato: 'dato',
-                    width: '50%'
-                },
-                {
-                    etiqueta: 'Trim 1',
-                    def: 'trim1',
-                    llaveDato: 'trim1',
-                    width: '10%'
-                },
-                {
-                    etiqueta: 'Trime 2',
-                    def: 'trim2',
-                    llaveDato: 'trim2',
-                    width: '10%'
-                },
-                {
-                    etiqueta: 'Trim 3',
-                    def: 'trim3',
-                    llaveDato: 'trim3',
-                    width: '10%'
-                },
-                {
-                    etiqueta: 'Trim 4',
-                    def: 'trim4',
-                    llaveDato: 'trim4',
-                    width: '10%'
-                },
-            ];
+        return [
+            {
+                etiqueta: 'Id indicador',
+                def: 'idIndicador',
+                llaveDato: 'idIndicador',
+                width: '10%'
+            },
+            {
+                etiqueta: 'Dato',
+                def: 'dato',
+                llaveDato: 'dato',
+                width: '50%'
+            },
+            {
+                etiqueta: 'Trim 1',
+                def: 'trim1',
+                llaveDato: 'trim1',
+                width: '10%'
+            },
+            {
+                etiqueta: 'Trime 2',
+                def: 'trim2',
+                llaveDato: 'trim2',
+                width: '10%'
+            },
+            {
+                etiqueta: 'Trim 3',
+                def: 'trim3',
+                llaveDato: 'trim3',
+                width: '10%'
+            },
+            {
+                etiqueta: 'Trim 4',
+                def: 'trim4',
+                llaveDato: 'trim4',
+                width: '10%'
+            },
+        ];
     }
 
     imprimirComp(): void

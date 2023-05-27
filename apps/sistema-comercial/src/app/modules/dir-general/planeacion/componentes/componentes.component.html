@@ -1,4 +1,4 @@
-<section class="flex flex-auto flex-col">
+<section class="flex flex-auto flex-col" *ngIf="cuestionarioMir().componente">
     <mat-card class="bg-gray-300 dark:bg-gray-800 m-4 flex-auto" @zoomIn>
         <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
             <span class="text-xl">{{cuestionarioMir()?.nivel}}</span>
@@ -38,18 +38,18 @@
                     <span class="border-b-2 col-span-full text-center">{{cuestionarioMir()?.metodoCalculo}}</span>
                 </section>
 
-                <app-tabla-mat [columnas]="columnas"></app-tabla-mat>
+                <app-tabla-mat [datos]="datosTable" [columnas]="columnas"></app-tabla-mat>
 
                 <mat-divider class="my-4 border-4 border-lime-900 dark:border-lime-400"></mat-divider>
                 <section class="grid grid-cols-8 gap-4 text-lg">
                     <span class="detalle-span">Avance trim 1</span>
-                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim1'} }}</span>
+                    <span class="border-b-2 text-green-700">{{avanceTrim1}}</span>
                     <span class="detalle-span">Avance trim 2</span>
-                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim2'} }}</span>
+                    <span class="border-b-2 text-green-700">{{avanceTrim2}}</span>
                     <span class="detalle-span">Avance trim 3</span>
-                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim3'} }}</span>
+                    <span class="border-b-2 text-green-700">{{avanceTrim3}}</span>
                     <span class="detalle-span">Avance trim 4</span>
-                    <span class="border-b-2 text-green-700">{{datosTable | componentes: {tipoForm: cuestionarioMir()?.componente?.tipoForm, trim: 'trim4'} }}</span>
+                    <span class="border-b-2 text-green-700">{{avanceTrim4}}</span>
                 </section>
             </article>
         </mat-card-content>

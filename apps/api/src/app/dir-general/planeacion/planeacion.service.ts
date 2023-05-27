@@ -307,4 +307,9 @@ export class PlaneacionService
         return await this.planeacion.findOneAndUpdate({_id: args._id, 'mirCuestionario.idIndicador': args.idIndicador},
             {$set: {'mirCuestionario.$.componente': null}}, {new: true}).exec();
     }
+
+    async calcularAvanceTrim(): Promise<PlaneacionDto>
+    {
+        return null;
+    }
 }

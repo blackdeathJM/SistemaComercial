@@ -35,6 +35,7 @@ export class ModCompComun
     datos: IformComun[] = [];
 
     periodoAnt = signal<boolean>(false);
+    tipoForm: TiposFormulario;
     cargando = false;
 
     validadorNumerico = [RxwebValidators.required, RxwebValidators.numeric({allowDecimal: true, message: 'El valor debe ser numerico'})];
@@ -103,21 +104,30 @@ export class ModCompComun
 
     registrar(): void
     {
-        if (this.datos.length <= 1)
+        if (this.datos.length === 0)
         {
-            this.ngxToast.errorToast('No se puede continuar con el proceso de registro porque la lista esta vacia o debe tener por lo menos dos elementos', 'Componente');
+            this.ngxToast.errorToast('No se puede continuar con el proceso de registro porque la lista esta vacia', 'Componente');
             return;
         }
 
 
         this.cargando = true;
 
+        if (this.datos.length === 1)
+        {
+            this.tipoForm = TiposFormulario.UN_VALOR;
+        }
+        if (this.datos.length === 2)
+        {
+            this.tipoForm = TiposFormulario.COMUN
+        }
+
         const regComponente: TRegComponente =
             {
                 _id: this.planeacionQuery.getActive()._id,
                 idIndicadorMir: this.planeacionQuery.cuestionarioMir().idIndicador,
                 formComun: this.datos,
-                tipoForm: this.periodoAnt() ? TiposFormulario.PERIODO_ANT : TiposFormulario.COMUN,
+                tipoForm: this.tipoForm,
                 etiqueta: this.formComun.get('etiqueta').value,
             }
         this.formComun.disable();
@@ -137,6 +147,7 @@ export class ModCompComun
         if (this.datos.length === 0)
         {
             this.periodoAnt.set(e.checked);
+            this.tipoForm = TiposFormulario.PERIODO_ANT;
         }
     }
 }
