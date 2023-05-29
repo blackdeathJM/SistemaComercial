@@ -154,8 +154,9 @@ export class PlaneacionService
                 break;
         }
 
+        // Actualizar los componentes con los trimestres del pbr
 
-        return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
+        const respuesta = await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
             {
                 $set: {
                     'pbrCuestionario.$.enero': meses[2], 'pbrCuestionario.$.febrero': meses[1], 'pbrCuestionario.$.marzo': meses[0], 'pbrCuestionario.$.trim1': valoresTrim[0],
@@ -165,6 +166,9 @@ export class PlaneacionService
                     'pbrCuestionario.$.total': total,
                 }
             }, {new: true}).exec();
+
+        await this.actualizarPbrComp(respuesta, idIndicador);
+        return respuesta;
     }
 
     async regAvancePbr(datos: RegAvancesPbrDto): Promise<PlaneacionDto>
@@ -173,6 +177,7 @@ export class PlaneacionService
             _id, tipoOperacion, centroGestor, idIndicador, enero, febrero, marzo, abril, mayo, junio, julio, agosto,
             septiembre, octubre, noviembre, diciembre
         } = datos;
+
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
 
         const nvoDocumento = await this.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
@@ -192,12 +197,41 @@ export class PlaneacionService
             return respuesta[respuesta.length - 1];
         }
 
-        // Actualizar datos del componente en el mir
 
+        // Actualizar datos del componente en el mir con los datos del PBR
 
-
-        //TODO: Actualizar los campos de el componete que estan en el mir y realizar el calculo en los avances trimestraes del mir
         return nvoDocumento;
+    }
+
+    async actualizarPbrComp(doc: PlaneacionDto, idIndicadorPbr: string, trim1: number, trim2: number, trim3: number, trim4: number): Promise<void>
+    {
+        let docARegresar: IPlaneacion = null;
+
+        for (const mir of doc.mirCuestionario)
+        {
+            if (mir.componente)
+            {
+                if (mir.componente.formComun.length > 0)
+                {
+                    for (const componente of mir.componente.formComun)
+                    {
+                        if (componente.idIndicador === idIndicadorPbr)
+                        {
+                            docARegresar = await this.planeacion.findOneAndUpdate({_id: doc._id, 'mirCuestionario.componente.formComun.idIndicador': idIndicadorPbr},
+                                {'mirCuestionario.$.componente.$.trim1': trim1}).exec();
+                        }
+                    }
+                }
+
+                if (mir.componente.formPlanta.length > 0)
+                {
+                    for (const componente of mir.componente.formPlanta)
+                    {
+                    }
+                }
+            }
+            //Aqui se van ir colocando los componentes
+        }
     }
 
 //Funcion creada para obtener la matriz de los valores de los meses y aquí sé procera y se devolvera una matriz con
@@ -302,7 +336,7 @@ export class PlaneacionService
         //* Realizar cambios al momento que se registra el avance
         const {_id, idIndicadorMir, ...resto} = datos;
 
-        const avanceTrimestres = await this.calculoComponente(datos);
+        const avanceTrimestres = await this.calculoComponente(datos.tipoForm, datos.formComun);
 
         return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': idIndicadorMir},
             {
@@ -313,28 +347,29 @@ export class PlaneacionService
             }, {new: true}).exec();
     }
 
-    async calculoComponente(datos: TRegComponente): Promise<number[]>
+
+    async calculoComponente(tipoForm: string, formComun: IformComun[] = []): Promise<number[]>
     {
         let avanceTrim1 = 0, avanceTrim2 = 0, avanceTrim3 = 0, avanceTrim4 = 0;
-        switch (datos.tipoForm)
+        switch (tipoForm)
         {
             case TiposFormulario.UN_VALOR:
-                avanceTrim1 = datos.formComun[0].trim1;
-                avanceTrim2 = datos.formComun[0].trim2;
-                avanceTrim3 = datos.formComun[0].trim3;
-                avanceTrim4 = datos.formComun[0].trim4;
+                avanceTrim1 = formComun[0].trim1;
+                avanceTrim2 = formComun[0].trim2;
+                avanceTrim3 = formComun[0].trim3;
+                avanceTrim4 = formComun[0].trim4;
                 break;
             case TiposFormulario.COMUN:
-                avanceTrim1 = Number((datos.formComun[0].trim1 / datos.formComun[1].trim1).toFixed(2));
-                avanceTrim2 = Number((datos.formComun[0].trim2 / datos.formComun[1].trim2).toFixed(2));
-                avanceTrim3 = Number((datos.formComun[0].trim3 / datos.formComun[1].trim3).toFixed(2));
-                avanceTrim4 = Number((datos.formComun[0].trim4 / datos.formComun[1].trim4).toFixed(2));
+                avanceTrim1 = Number((formComun[0].trim1 / formComun[1].trim1).toFixed(2));
+                avanceTrim2 = Number((formComun[0].trim2 / formComun[1].trim2).toFixed(2));
+                avanceTrim3 = Number((formComun[0].trim3 / formComun[1].trim3).toFixed(2));
+                avanceTrim4 = Number((formComun[0].trim4 / formComun[1].trim4).toFixed(2));
                 break;
             case TiposFormulario.PERIODO_ANT:
-                avanceTrim1 = this.sumarValoresTrimPeriodoAnt('trim1', datos.formComun);
-                avanceTrim2 = this.sumarValoresTrimPeriodoAnt('trim2', datos.formComun);
-                avanceTrim3 = this.sumarValoresTrimPeriodoAnt('trim3', datos.formComun);
-                avanceTrim4 = this.sumarValoresTrimPeriodoAnt('trim4', datos.formComun);
+                avanceTrim1 = this.sumarValoresTrimPeriodoAnt('trim1', formComun);
+                avanceTrim2 = this.sumarValoresTrimPeriodoAnt('trim2', formComun);
+                avanceTrim3 = this.sumarValoresTrimPeriodoAnt('trim3', formComun);
+                avanceTrim4 = this.sumarValoresTrimPeriodoAnt('trim4', formComun);
                 break;
             case TiposFormulario.PTAR:
                 break;

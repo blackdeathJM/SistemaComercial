@@ -12,8 +12,6 @@ export class SeleccionService
 
     async regSeleccion(input: SeleccionDto): Promise<SeleccionDto>
     {
-        //TODO revisar el codigo porque no funciona correctamente
-
         const {_id, ...resto} = input;
         let id = '';
         const contarDocumentos = await this.seleccion.countDocuments().exec();

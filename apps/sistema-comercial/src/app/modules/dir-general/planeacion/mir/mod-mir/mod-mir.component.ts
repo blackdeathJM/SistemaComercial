@@ -60,7 +60,6 @@ export class ModMirComponent implements OnInit, OnDestroy
         });
         effect(() =>
         {
-            // TODO: Cambiar a forma reactiva el patch del form
             // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
             if (actCuestionario() && isNotNil(this.cuestionarioMir()))
             {
