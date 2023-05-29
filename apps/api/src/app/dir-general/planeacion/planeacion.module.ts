@@ -8,6 +8,8 @@ import {EmpleadoDto, SCHEMA_EMPLEADO} from '#api/libs/models/src/lib/dir-admon-f
 import {PlaneacionDto, SCHEMA_PLANEACION} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {PlaneacionService} from "#api/apps/api/src/app/dir-general/planeacion/planeacion.service";
 import {PlaneacionResolver} from "#api/apps/api/src/app/dir-general/planeacion/planeacion.resolver";
+import {CalculosPbrService} from "#api/apps/api/src/app/dir-general/planeacion/calculosPbr.service";
+import {ComponenteService} from "#api/apps/api/src/app/dir-general/planeacion/componente.service";
 
 @Module({
     imports:
@@ -18,7 +20,7 @@ import {PlaneacionResolver} from "#api/apps/api/src/app/dir-general/planeacion/p
                 {name: EmpleadoDto.name, schema: SCHEMA_EMPLEADO}
             ])
         ],
-    providers: [SeleccionService, SeleccionResolver, EmpleadoService, PlaneacionService, PlaneacionResolver]
+    providers: [SeleccionService, SeleccionResolver, EmpleadoService, PlaneacionService, PlaneacionResolver, CalculosPbrService, ComponenteService]
 })
 export class PlaneacionModule
 {
