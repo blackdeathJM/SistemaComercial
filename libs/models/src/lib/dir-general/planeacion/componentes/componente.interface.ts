@@ -36,9 +36,4 @@ export interface IComponente
     formPlanta: IFormPlanta[];
     etiqueta: string;
     tipoForm: string;
-
-    avanceTrim1: number;
-    avanceTrim2: number;
-    avanceTrim3: number;
-    avanceTrim4: number;
 }

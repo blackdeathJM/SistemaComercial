@@ -13,7 +13,7 @@ import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-emp
 import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {finalize, forkJoin, Subscription} from 'rxjs';
+import {finalize, Subscription} from 'rxjs';
 import {TRecalcularPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -148,8 +148,6 @@ export class ModPbrComponent implements OnInit, OnDestroy
 
     actualizarResponsable(): void
     {
-        // this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario).pipe(finalize(() =>
-        //     abrirPanelPbr.set(!this.actualizar))).subscribe();
 
         this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario);
     }

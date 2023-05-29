@@ -10,6 +10,7 @@ import {ISumatorias, TipoOperaciones} from "#api/libs/models/src/lib/dir-general
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 import {v4 as uuidv4} from 'uuid';
 import {TRegComponente} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
+import {IformComun, TiposFormulario} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 
 @Injectable()
 export class PlaneacionService
@@ -129,6 +130,7 @@ export class PlaneacionService
         const valoresTrim: number[] = [];
 
         const meses = trimestres.map((value, index) => trimestres[index]).flat();
+
         switch (tipoOperacion)
         {
             case TipoOperaciones.suma:
@@ -141,7 +143,7 @@ export class PlaneacionService
                 total = voltearValores.reverse().find(value => value !== 0);
                 break;
             case  TipoOperaciones.promedio:
-                // trimestres.forEach(value => valoresTrim.push(value.reduce((acc, act) => (acc + act) / 3)));
+
                 trimestres.forEach(value =>
                 {
                     const resultado = value.reduce((acc, act) => acc + act);
@@ -151,6 +153,8 @@ export class PlaneacionService
                 total = sumarMeses / meses.length;
                 break;
         }
+
+
         return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},
             {
                 $set: {
@@ -187,6 +191,12 @@ export class PlaneacionService
             });
             return respuesta[respuesta.length - 1];
         }
+
+        // Actualizar datos del componente en el mir
+
+
+
+        //TODO: Actualizar los campos de el componete que estan en el mir y realizar el calculo en los avances trimestraes del mir
         return nvoDocumento;
     }
 
@@ -292,8 +302,58 @@ export class PlaneacionService
         //* Realizar cambios al momento que se registra el avance
         const {_id, idIndicadorMir, ...resto} = datos;
 
+        const avanceTrimestres = await this.calculoComponente(datos);
+
         return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': idIndicadorMir},
-            {$set: {'mirCuestionario.$.componente': resto}}, {new: true}).exec();
+            {
+                $set: {
+                    'mirCuestionario.$.componente': resto, 'mirCuestionario.$.avanceTrim1': avanceTrimestres[0], 'mirCuestionario.$.avanceTrim2': avanceTrimestres[1], 'mirCuestionario.$.avanceTrim3': avanceTrimestres[2],
+                    'mirCuestionario.$.avanceTrim4': avanceTrimestres[3]
+                }
+            }, {new: true}).exec();
+    }
+
+    async calculoComponente(datos: TRegComponente): Promise<number[]>
+    {
+        let avanceTrim1 = 0, avanceTrim2 = 0, avanceTrim3 = 0, avanceTrim4 = 0;
+        switch (datos.tipoForm)
+        {
+            case TiposFormulario.UN_VALOR:
+                avanceTrim1 = datos.formComun[0].trim1;
+                avanceTrim2 = datos.formComun[0].trim2;
+                avanceTrim3 = datos.formComun[0].trim3;
+                avanceTrim4 = datos.formComun[0].trim4;
+                break;
+            case TiposFormulario.COMUN:
+                avanceTrim1 = Number((datos.formComun[0].trim1 / datos.formComun[1].trim1).toFixed(2));
+                avanceTrim2 = Number((datos.formComun[0].trim2 / datos.formComun[1].trim2).toFixed(2));
+                avanceTrim3 = Number((datos.formComun[0].trim3 / datos.formComun[1].trim3).toFixed(2));
+                avanceTrim4 = Number((datos.formComun[0].trim4 / datos.formComun[1].trim4).toFixed(2));
+                break;
+            case TiposFormulario.PERIODO_ANT:
+                avanceTrim1 = this.sumarValoresTrimPeriodoAnt('trim1', datos.formComun);
+                avanceTrim2 = this.sumarValoresTrimPeriodoAnt('trim2', datos.formComun);
+                avanceTrim3 = this.sumarValoresTrimPeriodoAnt('trim3', datos.formComun);
+                avanceTrim4 = this.sumarValoresTrimPeriodoAnt('trim4', datos.formComun);
+                break;
+            case TiposFormulario.PTAR:
+                break;
+        }
+
+        return [avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4];
+    }
+
+    sumarValoresTrimPeriodoAnt(trim: string, form: IformComun[]): number
+    {
+        if (form.length === 1)
+        {
+            const restar = form[0][trim] - form[1][trim];
+            const dividir = restar / form[1][trim];
+            return Number(dividir.toFixed(2));
+        } else
+        {
+            return form.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
+        }
     }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
@@ -308,8 +368,4 @@ export class PlaneacionService
             {$set: {'mirCuestionario.$.componente': null}}, {new: true}).exec();
     }
 
-    async calcularAvanceTrim(): Promise<PlaneacionDto>
-    {
-        return null;
-    }
 }

@@ -35,8 +35,6 @@ import {NgxToastService} from "@s-services/ngx-toast.service";
 export class ListaTabMirComponent
 {
     loader = ngxLoaderMir();
-    cuestionarioMir = this.planeacionQuery.cuestionarioMir;
-    cuestionarioMirArray = this.planeacionQuery.compCuestionarioMir;
     indice: number;
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
@@ -47,7 +45,7 @@ export class ListaTabMirComponent
     cambioDeSeleccion(e: MatButtonToggleChange, i: number): void
     {
         this.indice = i;
-        this.planeacionQuery.cuestionarioMir.set(e.value);
+        this.planeacionQuery.cuestionarioMir.set({...e.value});
     }
 
     nuevoElemento(): void
@@ -72,12 +70,12 @@ export class ListaTabMirComponent
         {
             return;
         }
-        this.planeacionService.eliminarElemento(this.cuestionarioMir().idIndicador, ValoresCamposMod.mirCuestionario);
+        this.planeacionService.eliminarElemento(this.planeacionQuery.cuestionarioMir().idIndicador, ValoresCamposMod.mirCuestionario);
     }
 
     validarMir(): boolean
     {
-        if (isNil(this.cuestionarioMir()))
+        if (isNil(this.planeacionQuery.cuestionarioMir()))
         {
             this.ngxToast.alertaToast('No hay elemento seleccionado para poder continuar', 'PBR')
             return true;
@@ -96,7 +94,7 @@ export class ListaTabMirComponent
 
     cambiarDireccion(dir: string): void
     {
-        const arregloMir = this.cuestionarioMirArray();
+        const arregloMir = this.planeacionQuery.cuestionarioMirV();
         if (dir === 'siguiente' && this.indice < arregloMir.length - 1)
         {
             this.indice++;

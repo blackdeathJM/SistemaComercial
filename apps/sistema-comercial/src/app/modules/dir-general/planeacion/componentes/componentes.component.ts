@@ -34,11 +34,9 @@ import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
 export class ComponentesComponent
 {
     cuestionarioMir = this.planeacionQuery.cuestionarioMir;
-
     columnas: ITabla[] = [];
 
     datosTable: IformComun[];
-
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
     sumaTrim1: number = 0;
@@ -61,26 +59,31 @@ export class ComponentesComponent
     {
         effect(() =>
         {
-            if (isNil(this.cuestionarioMir().componente))
+            console.log('Entrando al effect');
+            if (isNil(this.cuestionarioMir()) || isNil(this.cuestionarioMir().componente))
             {
                 return;
             }
-
             switch (this.cuestionarioMir().componente.tipoForm)
             {
                 case TiposFormulario.UN_VALOR:
+                    // this.cuestionarioMir.mutate(act =>
+                    // {
+                    //     act.avanceTrim1 = act.componente.formComun[0].trim1;
+                    //     act.avanceTrim2 = act.componente.formComun[0].trim2;
+                    //     act.avanceTrim3 = act.componente.formComun[0].trim3;
+                    //     act.avanceTrim4 = act.componente.formComun[0].trim4;
+                    // });
                     this.columnas = this.columnasComun();
-                    this.avanceTrim1 = this.cuestionarioMir().componente.formComun[0].trim1.toFixed(2);
-                    this.avanceTrim2 = this.cuestionarioMir().componente.formComun[0].trim2.toFixed(2);
-                    this.avanceTrim3 = this.cuestionarioMir().componente.formComun[0].trim3.toFixed(2);
-                    this.avanceTrim4 = this.cuestionarioMir().componente.formComun[0].trim4.toFixed(2);
                     break;
                 case TiposFormulario.COMUN:
-                    this.columnas = this.columnasComun();
+
                     this.avanceTrim1 = (this.cuestionarioMir().componente.formComun[0].trim1 / this.cuestionarioMir().componente.formComun[1].trim1).toFixed(2);
                     this.avanceTrim2 = (this.cuestionarioMir().componente.formComun[0].trim2 / this.cuestionarioMir().componente.formComun[1].trim2).toFixed(2);
                     this.avanceTrim3 = (this.cuestionarioMir().componente.formComun[0].trim3 / this.cuestionarioMir().componente.formComun[1].trim3).toFixed(2);
                     this.avanceTrim4 = (this.cuestionarioMir().componente.formComun[0].trim4 / this.cuestionarioMir().componente.formComun[1].trim4).toFixed(2);
+
+                    this.columnas = this.columnasComun();
                     break;
 
                 case TiposFormulario.PERIODO_ANT:
@@ -110,8 +113,9 @@ export class ComponentesComponent
             }
 
             this.datosTable = this.cuestionarioMir().componente.formComun;
-        })
+        }, {allowSignalWrites: true})
     }
+
 
     nuevoElemento(): void
     {
@@ -267,6 +271,23 @@ export class ComponentesComponent
 
     imprimirComp(): void
     {
+        // this.planeacionQuery.cuestionarioMir.mutate(value =>
+        // {
+        //     value.avanceTrim1 = 10;
+        // });
+        // this.cuestionarioMir.mutate(sumAvance =>
+        // {
+        //     // const {avanceTrim1, ...resto} = sumAvance;
+        //     // const objModificado = {...resto, avanceTrim1: 10};
+        //     // console.log(objModificado);
+        //     // return objModificado;
+        //     sumAvance.avanceTrim1 = 50;
+        //     console.log(sumAvance);
+        //     // sumAvance.componente.avanceTrim2 = (sumAvance.componente.formComun[0].trim2 / sumAvance.componente.formComun[1].trim2);
+        //     // sumAvance.componente.avanceTrim3 = (sumAvance.componente.formComun[0].trim3 / sumAvance.componente.formComun[1].trim3);
+        //     // sumAvance.componente.avanceTrim4 = (sumAvance.componente.formComun[0].trim4 / sumAvance.componente.formComun[1].trim4);
+        // });
 
+        this.planeacionQuery.cuestionarioMir.mutate(value => value.avanceTrim1 = 10);
     }
 }

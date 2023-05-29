@@ -88,22 +88,6 @@ export class ComponenteDto implements IComponente
     @IsNotEmpty({message: 'Es necesario el tipo de formulario'})
     @Field(() => String, {nullable: true, defaultValue: null})
     tipoForm: string;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim1: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim2: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim3: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    avanceTrim4: number;
 }
 
 @InputType('RegComponenteInput')

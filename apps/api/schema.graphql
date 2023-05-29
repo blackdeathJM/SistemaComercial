@@ -268,10 +268,6 @@ type ComponenteType {
   formComun: [FormComunType!]
   etiqueta: String
   tipoForm: String
-  avanceTrim1: Float
-  avanceTrim2: Float
-  avanceTrim3: Float
-  avanceTrim4: Float
 }
 
 type MirCuestionarioType {
@@ -467,7 +463,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685182498
+  tiempo: Int = 1685326619
   titulo: String
   usarRouter: Boolean = false
 }
@@ -608,10 +604,6 @@ input ComponenteInput {
   formComun: [FormComunInput!] = []
   etiqueta: String = null
   tipoForm: String = null
-  avanceTrim1: Float = 0
-  avanceTrim2: Float = 0
-  avanceTrim3: Float = 0
-  avanceTrim4: Float = 0
 }
 
 input MirCuestionarioInput {
@@ -924,10 +916,6 @@ input RegComponenteInput {
   formComun: [FormComunInput!] = []
   etiqueta: String = null
   tipoForm: String = null
-  avanceTrim1: Float = 0
-  avanceTrim2: Float = 0
-  avanceTrim3: Float = 0
-  avanceTrim4: Float = 0
   _id: ID
   idIndicadorMir: String
 }

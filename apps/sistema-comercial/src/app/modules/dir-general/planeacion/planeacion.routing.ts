@@ -1,22 +1,19 @@
 import {Routes} from '@angular/router';
-import {PlaneacionComponent} from '@s-dir-general/planeacion.component';
-import MirComponent from '@s-dir-general/mir/mir.component';
-import {PbrComponent} from "@s-dir-general/pbr/pbr.component";
 
 export const planeacionRouting: Routes =
     [
         {
             path: '',
-            component: PlaneacionComponent,
+            loadComponent: () => import('@s-dir-general/planeacion.component').then(c => c.PlaneacionComponent),
             children:
                 [
                     {
                         path: 'mir',
-                        component: MirComponent
+                        loadComponent: () => import('@s-dir-general/mir/mir.component')
                     },
                     {
                         path: 'avance-de-actividades',
-                        component: PbrComponent
+                        loadComponent: () => import('@s-dir-general/pbr/pbr.component').then(c => c.PbrComponent)
                     }
                 ]
         }

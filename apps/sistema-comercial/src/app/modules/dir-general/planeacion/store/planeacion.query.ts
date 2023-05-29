@@ -1,4 +1,4 @@
-import {computed, Injectable, Signal, signal, WritableSignal} from '@angular/core';
+import {computed, Injectable, signal, WritableSignal} from '@angular/core';
 import {IPlaneacionState, PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {QueryEntity} from '@datorama/akita';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
@@ -11,14 +11,14 @@ import {NgxToastService} from "@s-services/ngx-toast.service";
 @Injectable({providedIn: 'root'})
 export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 {
-    public cuestionarioPbr: WritableSignal<IPbrCuestionario> = signal<IPbrCuestionario>(null);
-    public cuestionarioPbrV = signal<IPbrCuestionario[]>([]);
-    public cuestionarioMir = signal<IMirCuestionario>(null);
-    public cuestionarioMirV = signal<IMirCuestionario[]>([]);
-    public sumatoriaPbrV = signal<ISumatorias[]>([]);
-    public centroGestor = signal<string>(null);
+    cuestionarioPbr: WritableSignal<IPbrCuestionario> = signal<IPbrCuestionario>(null);
+    cuestionarioPbrV: WritableSignal<IPbrCuestionario[]> = signal<IPbrCuestionario[]>([]);
+    cuestionarioMir: WritableSignal<IMirCuestionario> = signal<IMirCuestionario>(null);
+    cuestionarioMirV: WritableSignal<IMirCuestionario[]> = signal<IMirCuestionario[]>([]);
+    sumatoriaPbrV: WritableSignal<ISumatorias[]> = signal<ISumatorias[]>([]);
+    centroGestor: WritableSignal<string> = signal<string>(null);
 
-    public compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>
+    compCuestionarioPbr = computed((): IPbrCuestionario[] =>
     {
         const cuestionarioOriginal: IPbrCuestionario[] = this.cuestionarioPbrV().slice();
         if (isNotNil(usuarioFil()))
@@ -32,7 +32,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         return this.cuestionarioPbrV();
     });
 
-    public compCuestionarioMir: Signal<IMirCuestionario[]> = computed(() =>
+    compCuestionarioMir = computed((): IMirCuestionario[] =>
     {
         const cuestionarioOriginal = this.cuestionarioMirV().slice();
         if (this.centroGestor())
@@ -42,7 +42,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         return this.cuestionarioMirV();
     });
 
-    public compSumatoriasPbr: Signal<ISumatorias[]> = computed(() =>
+    compSumatoriasPbr = computed(() =>
     {
         const cuestionarioOriginal = this.sumatoriaPbrV().slice();
         if (this.centroGestor())
