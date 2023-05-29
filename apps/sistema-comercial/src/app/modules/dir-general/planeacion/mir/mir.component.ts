@@ -27,6 +27,7 @@ export const abrirPanelMir = signal<boolean>(false)
 export default class MirComponent implements OnDestroy
 {
     abrirPanel = abrirPanelMir;
+
     constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
     {
     }
@@ -46,5 +47,7 @@ export default class MirComponent implements OnDestroy
     {
         abrirPanelMir.set(false);
         this.planeacionQuery.centroGestor.set(null);
+        this.planeacionQuery.cuestionarioMir.set(null);
+        this.planeacionQuery.cuestionarioMirV.set([]);
     }
 }

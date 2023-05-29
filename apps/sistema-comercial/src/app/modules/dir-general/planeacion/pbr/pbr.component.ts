@@ -24,7 +24,6 @@ export const abrirPanelPbr = signal<boolean>(false);
     standalone: true,
     imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule,
         ListaPbrComponent, MatButtonModule, ListaSumPbrComponent],
-    providers: [],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],
     animations: [fuseAnimations],
@@ -58,5 +57,7 @@ export class PbrComponent implements OnDestroy
     ngOnDestroy(): void
     {
         this.planeacionQuery.centroGestor.set(null);
+        this.planeacionQuery.cuestionarioPbr.set(null);
+        this.planeacionQuery.cuestionarioPbrV.set([]);
     }
 }

@@ -104,6 +104,6 @@ export class ListaTabMirComponent
             this.indice--;
         }
 
-        this.planeacionQuery.cuestionarioMir.set(arregloMir[this.indice]);
+        this.planeacionQuery.cuestionarioMir.set({...arregloMir[this.indice]});
     }
 }

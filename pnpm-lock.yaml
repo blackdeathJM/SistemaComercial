@@ -108,10 +108,10 @@ dependencies:
     version: 0.0.1
   '@sweetalert2/ngx-sweetalert2':
     specifier: ^12.1.0
-    version: 12.1.0(@angular/common@16.0.3)(@angular/core@16.0.3)(sweetalert2@11.7.6)
+    version: 12.1.0(@angular/common@16.0.3)(@angular/core@16.0.3)(sweetalert2@11.7.8)
   '@sweetalert2/themes':
     specifier: ^5.0.15
-    version: 5.0.15(sweetalert2@11.7.6)
+    version: 5.0.15(sweetalert2@11.7.8)
   apexcharts:
     specifier: 3.40.0
     version: 3.40.0
@@ -164,8 +164,8 @@ dependencies:
     specifier: ^16.6.0
     version: 16.6.0
   graphql-scalars:
-    specifier: ^1.22.0
-    version: 1.22.0(graphql@16.6.0)
+    specifier: ^1.22.1
+    version: 1.22.1(graphql@16.6.0)
   graphql-subscriptions:
     specifier: ^2.0.0
     version: 2.0.0(graphql@16.6.0)
@@ -266,8 +266,8 @@ dependencies:
     specifier: 7.8.1
     version: 7.8.1
   sweetalert2:
-    specifier: ^11.7.6
-    version: 11.7.6
+    specifier: ^11.7.8
+    version: 11.7.8
   tslib:
     specifier: 2.5.2
     version: 2.5.2
@@ -8212,7 +8212,7 @@ packages:
       '@sinonjs/commons': 2.0.0
     dev: true
 
-  /@sweetalert2/ngx-sweetalert2@12.1.0(@angular/common@16.0.3)(@angular/core@16.0.3)(sweetalert2@11.7.6):
+  /@sweetalert2/ngx-sweetalert2@12.1.0(@angular/common@16.0.3)(@angular/core@16.0.3)(sweetalert2@11.7.8):
     resolution: {integrity: sha512-jECRdLhdw7dsEDv22uJHVbsgQEQVOY64BPRicTfKzEqsIyLwbl3kHh24lCg3UFlD2zLFuqRHrROohU9Wz7q74Q==}
     peerDependencies:
       '@angular/common': ^14.0.0 || ^15.0.0
@@ -8221,16 +8221,16 @@ packages:
     dependencies:
       '@angular/common': 16.0.3(@angular/core@16.0.3)(rxjs@7.8.1)
       '@angular/core': 16.0.3(rxjs@7.8.1)(zone.js@0.13.0)
-      sweetalert2: 11.7.6
+      sweetalert2: 11.7.8
       tslib: 2.5.2
     dev: false
 
-  /@sweetalert2/themes@5.0.15(sweetalert2@11.7.6):
+  /@sweetalert2/themes@5.0.15(sweetalert2@11.7.8):
     resolution: {integrity: sha512-uGU7CynpjRc3cllTqZEvXiZTpfQ6MN4faG+Tf0VFW81bLysCQm00iHS3NJLZx5STRfxpM5SzqeVXpAzJyTG/WA==}
     peerDependencies:
       sweetalert2: ^11.0.0
     dependencies:
-      sweetalert2: 11.7.6
+      sweetalert2: 11.7.8
     dev: false
 
   /@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.3.2):
@@ -13397,8 +13397,8 @@ packages:
       - encoding
     dev: true
 
-  /graphql-scalars@1.22.0(graphql@16.6.0):
-    resolution: {integrity: sha512-t3r6c/cMF6OP64oN+YYVwempyMA4tbI/JdWWDdPN1U45IgpIfPZmJdO+wvPPoptxL9Lr/7jmgRFRsAUg66DFmA==}
+  /graphql-scalars@1.22.1(graphql@16.6.0):
+    resolution: {integrity: sha512-PurWR2/a78EpYapRyPttBDfjIdsSg7q5or6cTaaGyZSV/VDh3o/6m6/BIpvGKGvmE3sY94UrLOZaCHskF5MuiA==}
     engines: {node: '>=10'}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
@@ -18883,8 +18883,8 @@ packages:
       tslib: 2.5.2
     dev: true
 
-  /sweetalert2@11.7.6:
-    resolution: {integrity: sha512-EvM+YlyTcQIIxK1w44l/cscaWSC2F1pNJedkP/wHPdTWk67AZ1SOCm1BN6VEkccEIsZ9umb/GLPBx5dOgg8hoA==}
+  /sweetalert2@11.7.8:
+    resolution: {integrity: sha512-s6WMsK0DogOZ2fj21tM5LjeBcQm7sPf+Z0sksxhZFs9HeIKAnLz8NMeIIOgcB/wS7/ZzP95d3jxzE6FbSau6eA==}
     dev: false
 
   /symbol-observable@1.2.0:

@@ -8,7 +8,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {MatListModule} from "@angular/material/list";
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatTabsModule} from "@angular/material/tabs";
 
 @Component({
@@ -35,6 +35,11 @@ export class ModComponentesComponent
     pbrSeleccionado(e: IPbrCuestionario): void
     {
         this.planeacionQuery.cuestionarioPbr.set(e);
+    }
+
+    sumatoriaSeleccionada(e: ISumatorias): void
+    {
+        this.planeacionQuery.sumatoriaPbr.set(e);
     }
 
     cambioIndice(e: number): void

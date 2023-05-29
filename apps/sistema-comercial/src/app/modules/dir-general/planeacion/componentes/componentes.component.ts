@@ -33,93 +33,89 @@ import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
 })
 export class ComponentesComponent
 {
-    cuestionarioMir = this.planeacionQuery.cuestionarioMir;
     columnas: ITabla[] = [];
 
     datosTable: IformComun[];
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
-    sumaTrim1: number = 0;
-    sumaTrim2: number = 0;
-    sumaTrim3: number = 0;
-    sumaTrim4: number = 0;
-
-    sumaTrim1Ant: number = 0;
-    sumaTrim2Ant: number = 0;
-    sumaTrim3Ant: number = 0;
-    sumaTrim4Ant: number = 0;
-
-    avanceTrim1: string = '0';
-    avanceTrim2: string = '0';
-    avanceTrim3: string = '0';
-    avanceTrim4: string = '0';
-
-    constructor(private planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog, private confirmacionService: ConfirmacionService,
+    constructor(public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog, private confirmacionService: ConfirmacionService,
                 private planeacionService: PlaneacionService)
     {
         effect(() =>
         {
             console.log('Entrando al effect');
-            if (isNil(this.cuestionarioMir()) || isNil(this.cuestionarioMir().componente))
+            if (isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
             {
                 return;
             }
-            switch (this.cuestionarioMir().componente.tipoForm)
+            switch (this.planeacionQuery.cuestionarioMir().componente.tipoForm)
             {
-                case TiposFormulario.UN_VALOR:
-                    // this.cuestionarioMir.mutate(act =>
-                    // {
-                    //     act.avanceTrim1 = act.componente.formComun[0].trim1;
-                    //     act.avanceTrim2 = act.componente.formComun[0].trim2;
-                    //     act.avanceTrim3 = act.componente.formComun[0].trim3;
-                    //     act.avanceTrim4 = act.componente.formComun[0].trim4;
-                    // });
-                    this.columnas = this.columnasComun();
-                    break;
                 case TiposFormulario.COMUN:
-
-                    this.avanceTrim1 = (this.cuestionarioMir().componente.formComun[0].trim1 / this.cuestionarioMir().componente.formComun[1].trim1).toFixed(2);
-                    this.avanceTrim2 = (this.cuestionarioMir().componente.formComun[0].trim2 / this.cuestionarioMir().componente.formComun[1].trim2).toFixed(2);
-                    this.avanceTrim3 = (this.cuestionarioMir().componente.formComun[0].trim3 / this.cuestionarioMir().componente.formComun[1].trim3).toFixed(2);
-                    this.avanceTrim4 = (this.cuestionarioMir().componente.formComun[0].trim4 / this.cuestionarioMir().componente.formComun[1].trim4).toFixed(2);
-
+                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+                    {
+                        this.planeacionQuery.cuestionarioMir.mutate(act =>
+                        {
+                            act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));
+                            act.avanceTrim2 = Number(act.componente.formComun[0].trim2.toFixed(2));
+                            act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
+                            act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
+                        });
+                    } else
+                    {
+                        this.planeacionQuery.cuestionarioMir.mutate(act =>
+                        {
+                            act.avanceTrim1 = Number(this.calcularComun('trim1'));
+                            act.avanceTrim2 = Number(this.calcularComun('trim2'));
+                            act.avanceTrim3 = Number(this.calcularComun('trim3'));
+                            act.avanceTrim4 = Number(this.calcularComun('trim4'));
+                        });
+                    }
                     this.columnas = this.columnasComun();
                     break;
-
                 case TiposFormulario.PERIODO_ANT:
-                    if (this.cuestionarioMir().componente.formComun.length === 1)
+                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
                     {
-                        this.avanceTrim1 = ((this.cuestionarioMir().componente.formComun[0].trim1 - this.cuestionarioMir().componente.formComun[0].trim1Anterior) / this.cuestionarioMir().componente.formComun[0].trim1Anterior).toFixed(2);
-                        this.avanceTrim2 = ((this.cuestionarioMir().componente.formComun[0].trim2 - this.cuestionarioMir().componente.formComun[0].trim2Anterior) / this.cuestionarioMir().componente.formComun[0].trim2Anterior).toFixed(2);
-                        this.avanceTrim3 = ((this.cuestionarioMir().componente.formComun[0].trim3 - this.cuestionarioMir().componente.formComun[0].trim3Anterior) / this.cuestionarioMir().componente.formComun[0].trim3Anterior).toFixed(2);
-                        this.avanceTrim4 = ((this.cuestionarioMir().componente.formComun[0].trim4 - this.cuestionarioMir().componente.formComun[0].trim4Anterior) / this.cuestionarioMir().componente.formComun[0].trim4Anterior).toFixed(2);
-                        return;
+                        this.planeacionQuery.cuestionarioMir.mutate(act =>
+                        {
+                            act.avanceTrim1 = Number(this.calculoPeriodoAnt('trim1', 'trim1Anterior').toFixed(2));
+                            act.avanceTrim2 = Number(this.calculoPeriodoAnt('trim2', 'trim2Anterior').toFixed(2));
+                            act.avanceTrim3 = Number(this.calculoPeriodoAnt('trim3', 'trim3Anterior').toFixed(2));
+                            act.avanceTrim4 = Number(this.calculoPeriodoAnt('trim4', 'trim4Anterior').toFixed(2));
+                        });
+                    } else
+                    {
+                        const sumaTrim1 = this.calcularTotal('trim1');
+                        const sumaTrim2 = this.calcularTotal('trim2');
+                        const sumaTrim3 = this.calcularTotal('trim3');
+                        const sumaTrim4 = this.calcularTotal('trim4');
+
+                        const sumaTrim1Ant = this.calcularTotal('trim1Anterior');
+                        const sumaTrim2Ant = this.calcularTotal('trim2Anterior');
+                        const sumaTrim3Ant = this.calcularTotal('trim3Anterior');
+                        const sumaTrim4Ant = this.calcularTotal('trim4Anterior');
+
+                        this.planeacionQuery.cuestionarioMir.mutate(act =>
+                        {
+                            act.avanceTrim1 = Number(((sumaTrim1 - sumaTrim1Ant) / sumaTrim1Ant).toFixed(2));
+                            act.avanceTrim2 = Number(((sumaTrim2 - sumaTrim2Ant) / sumaTrim2Ant).toFixed(2));
+                            act.avanceTrim3 = Number(((sumaTrim3 - sumaTrim3Ant) / sumaTrim3Ant).toFixed(2));
+                            act.avanceTrim4 = Number(((sumaTrim4 - sumaTrim4Ant) / sumaTrim4Ant).toFixed(2));
+                        });
+
+                        this.columnas = this.columnasPeriodoAnt(sumaTrim1.toFixed(2), sumaTrim1Ant.toFixed(2), sumaTrim2.toFixed(2), sumaTrim2Ant.toFixed(2),
+                            sumaTrim3.toFixed(2), sumaTrim3Ant.toFixed(2), sumaTrim4.toFixed(2), sumaTrim4Ant.toFixed(2));
                     }
-                    this.sumaTrim1 = this.calcularTotal('trim1');
-                    this.sumaTrim2 = this.calcularTotal('trim2');
-                    this.sumaTrim3 = this.calcularTotal('trim3');
-                    this.sumaTrim4 = this.calcularTotal('trim4');
-
-                    this.sumaTrim1Ant = this.calcularTotal('trim1Ant');
-                    this.sumaTrim2Ant = this.calcularTotal('trim2Ant');
-                    this.sumaTrim3Ant = this.calcularTotal('trim3Ant');
-                    this.sumaTrim4Ant = this.calcularTotal('trim4Ant');
-
-                    this.avanceTrim1 = ((this.sumaTrim1 - this.sumaTrim1Ant) / this.sumaTrim1Ant).toFixed(2);
-
-                    this.columnasPeriodoAnt(this.sumaTrim1.toFixed(2), this.sumaTrim1Ant.toFixed(2), this.sumaTrim2.toFixed(2), this.sumaTrim2Ant.toFixed(2),
-                        this.sumaTrim3.toFixed(2), this.sumaTrim3Ant.toFixed(2), this.sumaTrim4.toFixed(2), this.sumaTrim4Ant.toFixed(2));
                     break;
             }
 
-            this.datosTable = this.cuestionarioMir().componente.formComun;
+            this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
         }, {allowSignalWrites: true})
     }
 
 
     nuevoElemento(): void
     {
-        if (isNil(this.cuestionarioMir().componente))
+        if (isNil(this.planeacionQuery.cuestionarioMir().componente))
         {
             this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
         } else
@@ -266,28 +262,28 @@ export class ComponentesComponent
 
     calcularTotal(trim: string): number
     {
-        return this.cuestionarioMir().componente.formComun.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
+        return this.planeacionQuery.cuestionarioMir().componente.formComun.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
+    }
+
+    calcularComun(trim: string): string
+    {
+        return (this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] / this.planeacionQuery.cuestionarioMir().componente.formComun[1][trim]).toFixed(2);
+    }
+
+    calculoPeriodoAnt(trim: string, trimAnt: string): number
+    {
+        if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+        {
+            const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
+            return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
+        } else
+        {
+
+        }
     }
 
     imprimirComp(): void
     {
-        // this.planeacionQuery.cuestionarioMir.mutate(value =>
-        // {
-        //     value.avanceTrim1 = 10;
-        // });
-        // this.cuestionarioMir.mutate(sumAvance =>
-        // {
-        //     // const {avanceTrim1, ...resto} = sumAvance;
-        //     // const objModificado = {...resto, avanceTrim1: 10};
-        //     // console.log(objModificado);
-        //     // return objModificado;
-        //     sumAvance.avanceTrim1 = 50;
-        //     console.log(sumAvance);
-        //     // sumAvance.componente.avanceTrim2 = (sumAvance.componente.formComun[0].trim2 / sumAvance.componente.formComun[1].trim2);
-        //     // sumAvance.componente.avanceTrim3 = (sumAvance.componente.formComun[0].trim3 / sumAvance.componente.formComun[1].trim3);
-        //     // sumAvance.componente.avanceTrim4 = (sumAvance.componente.formComun[0].trim4 / sumAvance.componente.formComun[1].trim4);
-        // });
 
-        this.planeacionQuery.cuestionarioMir.mutate(value => value.avanceTrim1 = 10);
     }
 }

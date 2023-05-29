@@ -4,16 +4,18 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
-import {TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
-import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {TRegComponente} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
-import {IformComun, TiposFormulario} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {CalculosPbrService} from "#api/apps/api/src/app/dir-general/planeacion/calculosPbr.service";
+import {ComponenteService} from "#api/apps/api/src/app/dir-general/planeacion/componente.service";
+import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {ISumatorias} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class PlaneacionService
 {
-    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private calculosPbrService: CalculosPbrService)
+    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private calculosPbrService: CalculosPbrService, private componenteService: ComponenteService)
     {
     }
 
@@ -132,7 +134,6 @@ export class PlaneacionService
         const trimestres = [[marzo, febrero, enero], [junio, mayo, abril], [septiembre, agosto, julio], [diciembre, noviembre, octubre]];
 
         const nvoDocumento = await this.calculosPbrService.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
-
         // Actualizamos la sumatoria del centro gestor por si tiene
         if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
         {
@@ -144,15 +145,57 @@ export class PlaneacionService
                         _id
                     };
                 // return this.sumatoriaPbr(datos, true, nvoDocumento);
-                return this.calculosPbrService.sumatoriaPbr(datos, true, nvoDocumento);
+                return this.sumatoriaPbr(datos, true, nvoDocumento);
             });
             return respuesta[respuesta.length - 1];
         }
-
-
-        // Actualizar datos del componente en el mir con los datos del PBR
-
         return nvoDocumento;
+    }
+
+    async sumatoriaPbr(datos: SumPbrDto, actualizar: boolean, doc: IPlaneacion): Promise<PlaneacionDto>
+    {
+        const {_id, ids, centroGestor, descripcion, nombreSumatoria, idSumatoria, sumTrim, sumTotal} = datos;
+
+        const valoresMatrizMeses = await this.calculosPbrService.matrizDeValoresMeses(_id, ids, doc);
+
+        const sumatoriaMeses = this.calculosPbrService.sumarMeses(valoresMatrizMeses);
+        // const sumatoriaMeses: number[][] = Array.from({length: 12}, () => []);
+
+        const total = sumatoriaMeses.flat(2);
+        const pbrSumatoria: ISumatorias = {
+            enero: sumatoriaMeses[3][2],
+            febrero: sumatoriaMeses[3][1],
+            marzo: sumatoriaMeses[3][0],
+            trim1: sumTrim ? sumatoriaMeses[3].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[3].find(value => value !== 0),
+            abril: sumatoriaMeses[2][2],
+            mayo: sumatoriaMeses[2][1],
+            junio: sumatoriaMeses[2][0],
+            trim2: sumTrim ? sumatoriaMeses[2].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[2].find(value => value !== 0),
+            julio: sumatoriaMeses[1][2],
+            agosto: sumatoriaMeses[1][1],
+            septiembre: sumatoriaMeses[1][0],
+            trim3: sumTrim ? sumatoriaMeses[1].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[1].find(value => value !== 0),
+            octubre: sumatoriaMeses[0][2],
+            noviembre: sumatoriaMeses[0][1],
+            diciembre: sumatoriaMeses[0][0],
+            trim4: sumTrim ? sumatoriaMeses[0].reduce((acc, act) => acc + act, 0) : sumatoriaMeses[0].find(value => value !== 0),
+
+            total: sumTrim ? total.reduce((acc, act) => acc + act, 0) : total.find(value => value !== 0),
+            ano: 0,
+            ids,
+            centroGestor,
+            descripcion,
+            nombreSumatoria,
+            sumTotal,
+            sumTrim,
+            idSumatoria: actualizar ? idSumatoria : uuidv4()
+        };
+
+        if (actualizar)
+        {
+            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
+        }
+        return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
     }
 
 //Funcion creada para obtener la matriz de los valores de los meses y aquí sé procera y se devolvera una matriz con
@@ -162,7 +205,7 @@ export class PlaneacionService
         //* Realizar cambios al momento que se registra el avance
         const {_id, idIndicadorMir, ...resto} = datos;
 
-        const avanceTrimestres = await this.calculoComponente(datos.tipoForm, datos.formComun);
+        const avanceTrimestres = await this.componenteService.calculoComponente(datos.tipoForm, datos.formComun);
 
         return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': idIndicadorMir},
             {
@@ -173,49 +216,6 @@ export class PlaneacionService
             }, {new: true}).exec();
     }
 
-
-    async calculoComponente(tipoForm: string, formComun: IformComun[] = []): Promise<number[]>
-    {
-        let avanceTrim1 = 0, avanceTrim2 = 0, avanceTrim3 = 0, avanceTrim4 = 0;
-        switch (tipoForm)
-        {
-            case TiposFormulario.UN_VALOR:
-                avanceTrim1 = formComun[0].trim1;
-                avanceTrim2 = formComun[0].trim2;
-                avanceTrim3 = formComun[0].trim3;
-                avanceTrim4 = formComun[0].trim4;
-                break;
-            case TiposFormulario.COMUN:
-                avanceTrim1 = Number((formComun[0].trim1 / formComun[1].trim1).toFixed(2));
-                avanceTrim2 = Number((formComun[0].trim2 / formComun[1].trim2).toFixed(2));
-                avanceTrim3 = Number((formComun[0].trim3 / formComun[1].trim3).toFixed(2));
-                avanceTrim4 = Number((formComun[0].trim4 / formComun[1].trim4).toFixed(2));
-                break;
-            case TiposFormulario.PERIODO_ANT:
-                avanceTrim1 = this.sumarValoresTrimPeriodoAnt('trim1', formComun);
-                avanceTrim2 = this.sumarValoresTrimPeriodoAnt('trim2', formComun);
-                avanceTrim3 = this.sumarValoresTrimPeriodoAnt('trim3', formComun);
-                avanceTrim4 = this.sumarValoresTrimPeriodoAnt('trim4', formComun);
-                break;
-            case TiposFormulario.PTAR:
-                break;
-        }
-
-        return [avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4];
-    }
-
-    sumarValoresTrimPeriodoAnt(trim: string, form: IformComun[]): number
-    {
-        if (form.length === 1)
-        {
-            const restar = form[0][trim] - form[1][trim];
-            const dividir = restar / form[1][trim];
-            return Number(dividir.toFixed(2));
-        } else
-        {
-            return form.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
-        }
-    }
 
     async eliminiarElemento(args: EliminarElementoDto): Promise<PlaneacionDto>
     {

@@ -1,4 +1,4 @@
-import {computed, Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, Injectable, Signal, signal, WritableSignal} from '@angular/core';
 import {IPlaneacionState, PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {QueryEntity} from '@datorama/akita';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
@@ -13,14 +13,19 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 {
     cuestionarioPbr: WritableSignal<IPbrCuestionario> = signal<IPbrCuestionario>(null);
     cuestionarioPbrV: WritableSignal<IPbrCuestionario[]> = signal<IPbrCuestionario[]>([]);
+
     cuestionarioMir: WritableSignal<IMirCuestionario> = signal<IMirCuestionario>(null);
     cuestionarioMirV: WritableSignal<IMirCuestionario[]> = signal<IMirCuestionario[]>([]);
+
     sumatoriaPbrV: WritableSignal<ISumatorias[]> = signal<ISumatorias[]>([]);
+    sumatoriaPbr: WritableSignal<ISumatorias> = signal<ISumatorias>(null);
+
     centroGestor: WritableSignal<string> = signal<string>(null);
 
-    compCuestionarioPbr = computed((): IPbrCuestionario[] =>
+    compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>
     {
         const cuestionarioOriginal: IPbrCuestionario[] = this.cuestionarioPbrV().slice();
+
         if (isNotNil(usuarioFil()))
         {
             return cuestionarioOriginal.filter(value => value.idEmpleado === usuarioFil())
@@ -32,7 +37,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         return this.cuestionarioPbrV();
     });
 
-    compCuestionarioMir = computed((): IMirCuestionario[] =>
+    compCuestionarioMir: Signal<IMirCuestionario[]> = computed((): IMirCuestionario[] =>
     {
         const cuestionarioOriginal = this.cuestionarioMirV().slice();
         if (this.centroGestor())
@@ -42,7 +47,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         return this.cuestionarioMirV();
     });
 
-    compSumatoriasPbr = computed(() =>
+    compSumatoriasPbr: Signal<ISumatorias[]> = computed((): ISumatorias[] =>
     {
         const cuestionarioOriginal = this.sumatoriaPbrV().slice();
         if (this.centroGestor())
@@ -58,7 +63,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     }
 
     // Filtrar planeacion por año para enctrar el CuestionarioPbr que el usuario está registrando y traer el año anterior
-    public filPorAno(anoActual: number, idIndicador: string): IPbrCuestionario
+    public filPorAno(anoActual: number, id: string, filSumatoria: boolean): IPbrCuestionario | ISumatorias
     {
         const planeacion = this.getAll().slice();
         const filtrarElAno = planeacion.find(value => value.ano === (anoActual - 1));
@@ -67,6 +72,25 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
             this.ngxToast.alertaToast('No se encontraron valores de un año anterior, puedes establecer valores manualmente', 'PBR');
             return null;
         }
-        return filtrarElAno.pbrCuestionario.find(value => value.idIndicador === idIndicador);
+
+        if (filSumatoria)
+        {
+            const res = filtrarElAno.pbrSumatoria.find(value => value.idSumatoria === id);
+            if (isNil(res))
+            {
+                this.ngxToast.alertaToast('No se encontraron valores para la sumatoria', 'Sumatoria');
+                return null;
+            }
+            return res;
+        } else
+        {
+            const res = filtrarElAno.pbrCuestionario.find(value => value.idIndicador === id);
+            if (isNil(res))
+            {
+                this.ngxToast.alertaToast('No se encontraron valores para el PBR', 'PBR');
+                return null;
+            }
+            return res;
+        }
     }
 }

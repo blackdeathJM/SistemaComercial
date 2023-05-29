@@ -6,7 +6,7 @@
                 <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
                     <mat-panel-title>Presupuesto basado en resultados</mat-panel-title>
                 </mat-expansion-panel-header>
-                <mat-button-toggle-group [tabIndex]="indicePbrActual">
+                <mat-button-toggle-group [tabIndex]="indice">
                     <div class="flex flex-auto flex-wrap">
                         <mat-button-toggle class="rounded-none" *ngFor="let pbr of cuestionariosPbr(); trackBy:trackByFn; let i=index" [value]="pbr" (change)="cambioDeSeleccion($event, i)">
                             <span class="text-left">{{pbr?.idIndicador}}</span>

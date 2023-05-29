@@ -1,7 +1,6 @@
 export enum TiposFormulario
 {
     COMUN = 'comun',
-    UN_VALOR = 'unValor',
     PERIODO_ANT = 'periodoAnt',
     PTAR = 'ptar'
 }

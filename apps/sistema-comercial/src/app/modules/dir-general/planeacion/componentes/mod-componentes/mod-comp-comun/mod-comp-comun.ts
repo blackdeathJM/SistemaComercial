@@ -29,13 +29,12 @@ import {NgxToastService} from "@s-services/ngx-toast.service";
 })
 export class ModCompComun
 {
-    pbrCuestionario = this.planeacionQuery.cuestionarioPbr;
-
     datos: IformComun[] = [];
 
     periodoAnt = signal<boolean>(false);
     tipoForm: TiposFormulario;
     cargando = false;
+    valoresPeriodoAnt: boolean = false;
 
     validadorNumerico = [RxwebValidators.required, RxwebValidators.numeric({allowDecimal: true, message: 'El valor debe ser numerico'})];
     formComun: FormGroup = this.fb.group({
@@ -60,16 +59,30 @@ export class ModCompComun
     {
         effect(() =>
         {
-            if (isNotNil(this.pbrCuestionario()))
+            if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
             {
-                this.formComun.patchValue(this.pbrCuestionario());
+                this.valoresPeriodoAnt = false;
+                this.formComun.patchValue(this.planeacionQuery.cuestionarioPbr());
             }
+        });
+
+        effect(() =>
+        {
+            this.valoresPeriodoAnt = true;
+            this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
+            this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().descripcion);
+            this.formComun.get('trim1').setValue(this.planeacionQuery.sumatoriaPbr().trim1);
+            this.formComun.get('trim2').setValue(this.planeacionQuery.sumatoriaPbr().trim2);
+            this.formComun.get('trim3').setValue(this.planeacionQuery.sumatoriaPbr().trim3);
+            this.formComun.get('trim4').setValue(this.planeacionQuery.sumatoriaPbr().trim4);
+        });
+
+        effect(() =>
+        {
             if (this.periodoAnt())
             {
-
-                const idIndicador = this.formComun.get('idIndicador').value;
-                const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, idIndicador);
-
+                const id = this.formComun.get('idIndicador').value;
+                const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.valoresPeriodoAnt);
                 if (isNotNil(periodoAnterior))
                 {
                     this.formTrimAnterior.patchValue(periodoAnterior);
@@ -77,6 +90,7 @@ export class ModCompComun
             }
         });
     }
+
     agregarAlArreglo(): void
     {
         const {idIndicador} = this.formComun.value;
@@ -85,10 +99,10 @@ export class ModCompComun
         this.datos.push({
             idIndicador,
             dato: this.formComun.get('dato').value,
-            trim1: +this.pbrCuestionario().trim1,
-            trim2: +this.pbrCuestionario().trim2,
-            trim3: +this.pbrCuestionario().trim3,
-            trim4: +this.pbrCuestionario().trim4,
+            trim1: +this.planeacionQuery.cuestionarioPbr().trim1,
+            trim2: +this.planeacionQuery.cuestionarioPbr().trim2,
+            trim3: +this.planeacionQuery.cuestionarioPbr().trim3,
+            trim4: +this.planeacionQuery.cuestionarioPbr().trim4,
             trim1Anterior: this.periodoAnt ? +trim1 : 0,
             trim2Anterior: this.periodoAnt ? +trim2 : 0,
             trim3Anterior: this.periodoAnt ? +trim3 : 0,
@@ -105,19 +119,7 @@ export class ModCompComun
             this.ngxToast.errorToast('No se puede continuar con el proceso de registro porque la lista esta vacia', 'Componente');
             return;
         }
-
-
         this.cargando = true;
-
-        if (this.datos.length === 1)
-        {
-            this.tipoForm = TiposFormulario.UN_VALOR;
-        }
-
-        if (this.datos.length === 2)
-        {
-            this.tipoForm = TiposFormulario.COMUN
-        }
 
         const regComponente: TRegComponente =
             {
@@ -144,7 +146,7 @@ export class ModCompComun
         if (this.datos.length === 0)
         {
             this.periodoAnt.set(e.checked);
-            this.tipoForm = TiposFormulario.PERIODO_ANT;
+            this.tipoForm =e ? TiposFormulario.PERIODO_ANT : TiposFormulario.COMUN;
         }
     }
 }
