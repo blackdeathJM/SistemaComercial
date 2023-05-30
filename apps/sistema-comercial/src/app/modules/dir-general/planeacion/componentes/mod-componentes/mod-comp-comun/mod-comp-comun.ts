@@ -69,7 +69,7 @@ export class ModCompComun
         effect(() =>
         {
             this.valoresPeriodoAnt = true;
-            this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
+            this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
             this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().descripcion);
             this.formComun.get('trim1').setValue(this.planeacionQuery.sumatoriaPbr().trim1);
             this.formComun.get('trim2').setValue(this.planeacionQuery.sumatoriaPbr().trim2);

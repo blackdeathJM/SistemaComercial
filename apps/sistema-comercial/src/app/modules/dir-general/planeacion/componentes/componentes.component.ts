@@ -43,11 +43,11 @@ export class ComponentesComponent
     {
         effect(() =>
         {
-            console.log('Entrando al effect');
             if (isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
             {
                 return;
             }
+
             switch (this.planeacionQuery.cuestionarioMir().componente.tipoForm)
             {
                 case TiposFormulario.COMUN:
@@ -82,6 +82,7 @@ export class ComponentesComponent
                             act.avanceTrim3 = Number(this.calculoPeriodoAnt('trim3', 'trim3Anterior').toFixed(2));
                             act.avanceTrim4 = Number(this.calculoPeriodoAnt('trim4', 'trim4Anterior').toFixed(2));
                         });
+                        this.columnas = this.columnasPeriodoAnt('---', '---', '---', '---', '---', '---', '---', '---');
                     } else
                     {
                         const sumaTrim1 = this.calcularTotal('trim1');
@@ -101,13 +102,11 @@ export class ComponentesComponent
                             act.avanceTrim3 = Number(((sumaTrim3 - sumaTrim3Ant) / sumaTrim3Ant).toFixed(2));
                             act.avanceTrim4 = Number(((sumaTrim4 - sumaTrim4Ant) / sumaTrim4Ant).toFixed(2));
                         });
-
                         this.columnas = this.columnasPeriodoAnt(sumaTrim1.toFixed(2), sumaTrim1Ant.toFixed(2), sumaTrim2.toFixed(2), sumaTrim2Ant.toFixed(2),
                             sumaTrim3.toFixed(2), sumaTrim3Ant.toFixed(2), sumaTrim4.toFixed(2), sumaTrim4Ant.toFixed(2));
                     }
                     break;
             }
-
             this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
         }, {allowSignalWrites: true})
     }
@@ -184,7 +183,7 @@ export class ComponentesComponent
         ];
     }
 
-    columnasPeriodoAnt(trim1: string, trim1Ant: string, trim2: string, trim2Ant: string, trim3: string, trim3Ant: string, trim4: string, trim4Ant: string): ITabla[]
+    columnasPeriodoAnt(trim1: string = '', trim1Ant: string = '', trim2: string = '', trim2Ant: string = '', trim3: string = '', trim3Ant: string = '', trim4: string = '', trim4Ant: string = ''): ITabla[]
     {
         return [
             {
@@ -260,6 +259,15 @@ export class ComponentesComponent
         ];
     }
 
+    calculoPeriodoAnt(trim: string, trimAnt: string): number
+    {
+        if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+        {
+            const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
+            return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
+        }
+    }
+
     calcularTotal(trim: string): number
     {
         return this.planeacionQuery.cuestionarioMir().componente.formComun.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
@@ -270,20 +278,8 @@ export class ComponentesComponent
         return (this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] / this.planeacionQuery.cuestionarioMir().componente.formComun[1][trim]).toFixed(2);
     }
 
-    calculoPeriodoAnt(trim: string, trimAnt: string): number
-    {
-        if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
-        {
-            const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
-            return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
-        } else
-        {
-
-        }
-    }
-
     imprimirComp(): void
     {
-
+        console.log(this.columnas);
     }
 }
