@@ -8,6 +8,5 @@ export interface ITabla
     formato?: string;
     width: string;
     tipoDeDato?: 'date' | 'object' | 'number';
-    total: string;
     html?: string;
 }

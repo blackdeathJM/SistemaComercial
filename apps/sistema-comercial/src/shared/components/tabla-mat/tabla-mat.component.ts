@@ -43,7 +43,7 @@ export class TablaMatComponent
         {
             return 'Total';
         }
-        console.log(isNaN(Number(trim)));
+
         const res = this._origenDatos.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
         return res.toFixed(2);
     }

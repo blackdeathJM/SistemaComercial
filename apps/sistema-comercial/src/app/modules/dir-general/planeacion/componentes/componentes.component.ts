@@ -82,7 +82,6 @@ export class ComponentesComponent
                             act.avanceTrim3 = Number(this.calculoPeriodoAnt('trim3', 'trim3Anterior').toFixed(2));
                             act.avanceTrim4 = Number(this.calculoPeriodoAnt('trim4', 'trim4Anterior').toFixed(2));
                         });
-                        this.columnas = this.columnasPeriodoAnt('---', '---', '---', '---', '---', '---', '---', '---');
                     } else
                     {
                         const sumaTrim1 = this.calcularTotal('trim1');
@@ -102,11 +101,10 @@ export class ComponentesComponent
                             act.avanceTrim3 = Number(((sumaTrim3 - sumaTrim3Ant) / sumaTrim3Ant).toFixed(2));
                             act.avanceTrim4 = Number(((sumaTrim4 - sumaTrim4Ant) / sumaTrim4Ant).toFixed(2));
                         });
-                        this.columnas = this.columnasPeriodoAnt(sumaTrim1.toFixed(2), sumaTrim1Ant.toFixed(2), sumaTrim2.toFixed(2), sumaTrim2Ant.toFixed(2),
-                            sumaTrim3.toFixed(2), sumaTrim3Ant.toFixed(2), sumaTrim4.toFixed(2), sumaTrim4Ant.toFixed(2));
                     }
                     break;
             }
+            this.columnas = this.columnasPeriodoAnt();
             this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
         }, {allowSignalWrites: true})
     }
@@ -143,47 +141,41 @@ export class ComponentesComponent
                 def: 'idIndicador',
                 llaveDato: 'idIndicador',
                 width: '10%',
-                total: ''
             },
             {
                 etiqueta: 'Dato',
                 def: 'dato',
                 llaveDato: 'dato',
                 width: 'auto',
-                total: ''
             },
             {
                 etiqueta: 'Trimestre 1',
                 def: 'trim1',
                 llaveDato: 'trim1',
                 width: '10%',
-                total: ''
             },
             {
                 etiqueta: 'Trimestre 2',
                 def: 'trim2',
                 llaveDato: 'trim2',
                 width: '10%',
-                total: ''
             },
             {
                 etiqueta: 'Trimestre 3',
                 def: 'trim3',
                 llaveDato: 'trim3',
                 width: '10%',
-                total: ''
             },
             {
                 etiqueta: 'Trimestre 4',
                 def: 'trim4',
                 llaveDato: 'trim4',
                 width: '10%',
-                total: ''
             }
         ];
     }
 
-    columnasPeriodoAnt(trim1: string = '', trim1Ant: string = '', trim2: string = '', trim2Ant: string = '', trim3: string = '', trim3Ant: string = '', trim4: string = '', trim4Ant: string = ''): ITabla[]
+    columnasPeriodoAnt(): ITabla[]
     {
         return [
             {
@@ -191,70 +183,60 @@ export class ComponentesComponent
                 def: 'idIndicador',
                 llaveDato: 'idIndicador',
                 width: '10%',
-                total: 'Total'
             },
             {
                 etiqueta: 'Dato',
                 def: 'dato',
                 llaveDato: 'dato',
                 width: 'auto',
-                total: ''
             },
             {
                 etiqueta: 'Per. Act. 1',
                 def: 'trim1',
                 llaveDato: 'trim1',
                 width: '5%',
-                total: trim1
             },
             {
                 etiqueta: 'Per. Ant. 1',
                 def: 'trim1Anterior',
                 llaveDato: 'trim1Anterior',
                 width: '5%',
-                total: trim1Ant
             },
             {
                 etiqueta: 'Per. Act. 2',
                 def: 'trim2',
                 llaveDato: 'trim2',
                 width: '5%',
-                total: trim2
             },
             {
                 etiqueta: 'Per. Ant. 2',
                 def: 'trim2Anterior',
                 llaveDato: 'trim2Anterior',
                 width: '5%',
-                total: trim2Ant
             },
             {
                 etiqueta: 'Per. Act. 3',
                 def: 'trim3',
                 llaveDato: 'trim3',
                 width: '5%',
-                total: trim3
             },
             {
                 etiqueta: 'Per. Ant. 3',
                 def: 'trim3Anterior',
                 llaveDato: 'trim3Anterior',
                 width: '5%',
-                total: trim3Ant
             },
             {
                 etiqueta: 'Per. Act. 4',
                 def: 'trim4',
                 llaveDato: 'trim4',
                 width: '5%',
-                total: trim4
             },
             {
                 etiqueta: 'Per. Ant. 4',
                 def: 'trim4Anterior',
                 llaveDato: 'trim4Anterior',
                 width: '5%',
-                total: trim4Ant
             }
         ];
     }

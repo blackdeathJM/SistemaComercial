@@ -29,11 +29,6 @@ export class ComponentesPipe implements PipeTransform
 
     transform(datosComponente: any, columnas: ITabla): string
     {
-        console.log(columnas.total);
-        this.cdr.reattach();
-        return columnas.total;
-    }
-    constructor(private cdr: ChangeDetectorRef)
-    {
+        return '';
     }
 }

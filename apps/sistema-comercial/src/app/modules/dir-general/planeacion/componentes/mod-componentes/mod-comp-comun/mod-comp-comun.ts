@@ -32,7 +32,7 @@ export class ModCompComun
     datos: IformComun[] = [];
 
     periodoAnt = signal<boolean>(false);
-    tipoForm: TiposFormulario;
+    tipoForm: TiposFormulario = TiposFormulario.COMUN;
     cargando = false;
     valoresPeriodoAnt: boolean = false;
 
@@ -146,7 +146,7 @@ export class ModCompComun
         if (this.datos.length === 0)
         {
             this.periodoAnt.set(e.checked);
-            this.tipoForm =e ? TiposFormulario.PERIODO_ANT : TiposFormulario.COMUN;
+            this.tipoForm = e ? TiposFormulario.PERIODO_ANT : TiposFormulario.COMUN;
         }
     }
 }

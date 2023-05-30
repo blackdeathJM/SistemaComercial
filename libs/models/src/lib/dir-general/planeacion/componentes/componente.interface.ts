@@ -5,6 +5,18 @@ export enum TiposFormulario
     PTAR = 'ptar'
 }
 
+export interface ICampoStr
+{
+    def: string;
+    valor: string;
+}
+
+export interface ICampoNum
+{
+    def: string;
+    valor: number;
+}
+
 export interface IFormPlanta
 {
     ptarE: string;
@@ -15,18 +27,18 @@ export interface IFormPlanta
 
 export interface IformComun
 {
-    idIndicador: string;
-    dato: string;
+    idIndicador: ICampoStr;
+    dato: ICampoStr;
     //Estos valores son recogidos de los trimestres establecidos en pbr
-    trim1: number;
-    trim2: number;
-    trim3: number;
-    trim4: number;
+    trim1: ICampoNum;
+    trim2: ICampoNum;
+    trim3: ICampoNum;
+    trim4: ICampoNum;
 
-    trim1Anterior: number;
-    trim2Anterior: number;
-    trim3Anterior: number;
-    trim4Anterior: number;
+    trim1Anterior: ICampoNum;
+    trim2Anterior: ICampoNum;
+    trim3Anterior: ICampoNum;
+    trim4Anterior: ICampoNum;
 }
 
 export interface IComponente
