@@ -9,7 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNotNil} from "@angular-ru/cdk/utils";
 import {
-    IformComun,
+    IFormComun,
     TiposFormulario,
     TipoValores
 } from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
@@ -33,7 +33,7 @@ import {NgxToastService} from "@s-services/ngx-toast.service";
 })
 export class ModCompComun
 {
-    datos: IformComun[] = [];
+    datos: IFormComun[] = [];
     periodoAnt = signal<boolean>(false);
 
     tipoForm = TiposFormulario.COMUN;
@@ -46,7 +46,7 @@ export class ModCompComun
     def: string[] = ['datoDef', 'trim1Def', 'trim2Def', 'trim3Def', 'trim4Def'];
     valores = ['idIndicador', 'datoValor', 'trim1Valor', 'trim2Valor', 'trim3Valor', 'trim4Valor'];
 
-    validadorNumerico = [RxwebValidators.required, RxwebValidators.numeric({
+    validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
         allowDecimal: true,
         message: 'El valor debe ser numerico'
     })];

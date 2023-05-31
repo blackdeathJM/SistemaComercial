@@ -1,3 +1,5 @@
+import {ITabla} from "../../../tabla.interface";
+
 export enum TiposFormulario
 {
     COMUN = 'comun',
@@ -32,38 +34,35 @@ export interface IFormPlanta
     grasasAceitesE: number;
 }
 
-export interface IformComun
+export interface IFormComun
 {
-    idIndicador: ICampoStr;
-    dato: ICampoStr;
+    idIndicador: string;
+    dato: string;
     //Estos valores son recogidos de los trimestres establecidos en pbr
-    trim1: ICampoNum;
-    trim2: ICampoNum;
-    trim3: ICampoNum;
-    trim4: ICampoNum;
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number;
 
-    trim1Anterior: ICampoNum;
-    trim2Anterior: ICampoNum;
-    trim3Anterior: ICampoNum;
-    trim4Anterior: ICampoNum;
+    trim1Ant: number;
+    trim2Ant: number;
+    trim3Ant: number;
+    trim4Ant: number;
 
-    valorAdicional: ICampoNum;
-}
-
-export interface IFormComunCols
-{
-    def: string;
+    valorAdicional: number;
 }
 
 export interface IComponente
 {
-    formComun: IformComun[];
-    formComunCol: IFormComunCols[];
-
+    formComun: IFormComun[];
     formPlanta: IFormPlanta[];
+
+    tablaColumnas: ITabla[];
+
     tipoValorTrim: string;
     tipoValorAvance: string;
     valorAdicional: ICampoNum;
-    valorAdicionalUnico: boolean;
+    valorAdicionalB: boolean;
+
     tipoForm: string;
 }

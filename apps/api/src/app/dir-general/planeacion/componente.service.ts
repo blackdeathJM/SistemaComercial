@@ -2,7 +2,10 @@ import {Injectable} from "@nestjs/common";
 import {PlaneacionDto, TPlaneacionType} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
-import {IformComun, TiposFormulario} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {
+    IFormComun,
+    TiposFormulario
+} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 @Injectable()
@@ -56,7 +59,7 @@ export class ComponenteService
         return respuesta;
     }
 
-    async calculoComponente(tipoForm: string, formComun: IformComun[] = []): Promise<number[]>
+    async calculoComponente(tipoForm: string, formComun: IFormComun[] = []): Promise<number[]>
     {
         let avanceTrim1 = 0, avanceTrim2 = 0, avanceTrim3 = 0, avanceTrim4 = 0;
         switch (tipoForm)
@@ -86,7 +89,7 @@ export class ComponenteService
         return [avanceTrim1, avanceTrim2, avanceTrim3, avanceTrim4];
     }
 
-    sumarValoresTrimPeriodoAnt(trim: string, form: IformComun[]): number
+    sumarValoresTrimPeriodoAnt(trim: string, form: IFormComun[]): number
     {
         if (form.length === 1)
         {

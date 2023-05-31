@@ -18,12 +18,12 @@ import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {TReemplazarComp} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
 import {
-    IformComun,
+    IFormComun,
     TiposFormulario
 } from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
-import {ITabla} from "@s-shared/components/tabla-mat/tabla-interface";
 import {finalize} from "rxjs";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
+import {ITabla} from "#/libs/models/src/lib/tabla.interface";
 
 @Component({
     selector: 'app-componentes',
@@ -38,7 +38,7 @@ export class ComponentesComponent
 {
     columnas: ITabla[] = [];
 
-    datosTable: IformComun[];
+    datosTable: IFormComun[];
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
     constructor(public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog, private confirmacionService: ConfirmacionService,
@@ -46,7 +46,7 @@ export class ComponentesComponent
     {
         effect(() =>
         {
-            if (isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
+            if(isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
             {
                 return;
             }
@@ -54,15 +54,17 @@ export class ComponentesComponent
             switch (this.planeacionQuery.cuestionarioMir().componente.tipoForm)
             {
                 case TiposFormulario.COMUN:
-                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+                    if(this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
                     {
-                        this.planeacionQuery.cuestionarioMir.mutate(act =>
-                        {
-                            // act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));
-                            // act.avanceTrim2 = Number(act.componente.formComun[0].trim2.toFixed(2));
-                            // act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
-                            // act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
-                        });
+                        console.log(this.planeacionQuery.cuestionarioMir().componente);
+
+                        // this.planeacionQuery.cuestionarioMir.mutate(act =>
+                        // {
+                        //     // act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));
+                        //     // act.avanceTrim2 = Number(act.componente.formComun[0].trim2.toFixed(2));
+                        //     // act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
+                        //     // act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
+                        // });
 
                     } else
                     {
@@ -77,7 +79,7 @@ export class ComponentesComponent
                     this.columnas = this.columnasComun();
                     break;
                 case TiposFormulario.PERIODO_ANT:
-                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+                    if(this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
                     {
                         this.planeacionQuery.cuestionarioMir.mutate(act =>
                         {
@@ -109,14 +111,14 @@ export class ComponentesComponent
                     break;
             }
             // this.columnas = this.columnasPeriodoAnt();
-            // this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
+            this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
         }, {allowSignalWrites: true})
     }
 
 
     nuevoElemento(): void
     {
-        if (isNil(this.planeacionQuery.cuestionarioMir().componente))
+        if(isNil(this.planeacionQuery.cuestionarioMir().componente))
         {
             this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
         } else
@@ -124,14 +126,17 @@ export class ComponentesComponent
             const message = 'Ya existe un componente para este indicador, si deseas reemplazar este componente confirma que deseas hacerlo';
             this.confirmacionService.abrir({message, title: 'Reemplazar componente'}).afterClosed().subscribe(res =>
             {
-                if (res === 'confirmed')
+                if(res === 'confirmed')
                 {
                     const args: TReemplazarComp =
                         {
                             _id: this.planeacionQuery.getActive()._id,
                             idIndicador: this.planeacionQuery.cuestionarioMir().idIndicador
                         };
-                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.mdr.open(ModComponentesComponent, {width: '50%', data: null}))).subscribe();
+                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.mdr.open(ModComponentesComponent, {
+                        width: '50%',
+                        data: null
+                    }))).subscribe();
                 }
             });
         }
@@ -247,7 +252,7 @@ export class ComponentesComponent
 
     calculoPeriodoAnt(trim: string, trimAnt: string): number
     {
-        if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+        if(this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
         {
             const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
             return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];

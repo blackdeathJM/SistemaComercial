@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Pipe, PipeTransform} from '@angular/core';
-import {IformComun, IFormPlanta, TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {Pipe, PipeTransform} from '@angular/core';
 import {ITabla} from "@s-shared/components/tabla-mat/tabla-interface";
 
 @Pipe({

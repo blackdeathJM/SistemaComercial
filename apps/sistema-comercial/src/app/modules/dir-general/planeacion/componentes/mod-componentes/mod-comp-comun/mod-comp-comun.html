@@ -93,45 +93,53 @@
             <mat-form-field class="flex-auto">
                 <mat-label>Trimestre 1</mat-label>
                 <input matInput formControlName="trim1">
+                <mat-error>{{formTrimAnterior.controls.trim1['errorMessage']}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
                 <mat-label>Trimestre 2</mat-label>
                 <input matInput formControlName="trim2">
+                <mat-error>{{formTrimAnterior.controls.trim2['errorMessage']}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
                 <mat-label>Trimestre 3</mat-label>
                 <input matInput formControlName="trim3">
+                <mat-error>{{formTrimAnterior.controls.trim3['errorMessage']}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
                 <mat-label>Trimestre 4</mat-label>
                 <input matInput formControlName="trim4">
+                <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>
             </mat-form-field>
         </div>
     </section>
 </form>
-<form>
+<form [formGroup]="formComponente">
     <section class="flex flex-auto gap-4 items-center content-center">
         <mat-form-field class="flex-auto">
             <mat-label>Selecciona el tipo de valor definido para los trimestres</mat-label>
-            <mat-select>
+            <mat-select formControlName="tipoValorTrim">
                 <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
             </mat-select>
+            <mat-error>{{formComponente.controls.tipoValorTrim['errorMessage']}}</mat-error>
         </mat-form-field>
 
         <mat-form-field class="flex-auto">
             <mat-label>Selecciona el tipo de valor en el que se mostraran los avances</mat-label>
-            <mat-select>
+            <mat-select formControlName="tipoValorAvance">
                 <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
             </mat-select>
+            <mat-error>{{formComponente.controls.tipoValorAvance['errorMessage']}}</mat-error>
         </mat-form-field>
     </section>
 </form>
 
-<app-registros (registro)="registrar()">
-    <button mat-raised-button class="bg-green-700 flex-auto disabled:bg-accent" (click)="agregarAlArreglo()">
+<app-registros (registro)="registrar()"
+               [deshabilitar]="formComun.invalid || formTrimAnterior.invalid || formComponente.invalid">
+    <button mat-raised-button class="bg-green-700 flex-auto disabled:bg-accent" (click)="agregarAlArreglo()"
+            [disabled]="formComun.invalid || formTrimAnterior.invalid">
         <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>
         Agregar otro elemento
     </button>
