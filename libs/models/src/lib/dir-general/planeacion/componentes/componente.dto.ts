@@ -1,7 +1,33 @@
 import {Field, Float, ID, InputType, ObjectType, PartialType} from "@nestjs/graphql";
-import {IComponente, IformComun, IFormPlanta} from "./componente.interface";
+import {ICampoNum, ICampoStr, IComponente, IformComun, IFormPlanta} from "./componente.interface";
 // import {v4 as uuidv4} from 'uuid'
 import {IsNotEmpty, IsNumber, IsOptional} from "class-validator";
+
+@ObjectType('CampoStrType')
+@InputType('CampoStrInput')
+export class CampoStrDto implements ICampoStr
+{
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
+    def: string;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
+    valor: string;
+}
+
+@ObjectType('CampoNumType')
+@InputType('CampoNumInput')
+export class CampoNumDto implements ICampoNum
+{
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
+    def: string;
+
+    @IsOptional()
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    valor: number;
+}
 
 @ObjectType('FormPlantaType')
 @InputType('FormPlantaInput')
@@ -29,44 +55,44 @@ export class FormPlantaDto implements IFormPlanta
 export class FormComunDto implements IformComun
 {
     @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    idIndicador: string;
+    @Field(() => CampoStrDto, {nullable: true, defaultValue: null})
+    idIndicador: CampoStrDto;
 
     @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    dato: string;
+    @Field(() => CampoStrDto, {nullable: true, defaultValue: null})
+    dato: CampoStrDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim1: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim1: CampoNumDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim2: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim2: CampoNumDto;
     //
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim3: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim3: CampoNumDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim4: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim4: CampoNumDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim1Anterior: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim1Anterior: CampoNumDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim2Anterior: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim2Anterior: CampoNumDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim3Anterior: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim3Anterior: CampoNumDto;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim4Anterior: number;
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    trim4Anterior: CampoNumDto;
 }
 
 @ObjectType('ComponenteType')

@@ -5,6 +5,7 @@ import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pip
 import {IformComun, IFormPlanta} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTableModule} from "@angular/material/table";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
+import {isNotNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-tabla-mat',
@@ -35,16 +36,20 @@ export class TablaMatComponent
 
     obtenerTotal(trim: string): string
     {
-        if (trim === 'idIndicador')
+        console.log('****', trim);
+        if (isNotNil(trim))
         {
-            return '';
-        }
-        if (trim === 'dato')
-        {
-            return 'Total';
-        }
+            if (trim === 'idIndicador')
+            {
+                return '';
+            }
+            if (trim === 'dato')
+            {
+                return 'Total';
+            }
 
-        const res = this._origenDatos.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
-        return res.toFixed(2);
+            const res = this._origenDatos.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
+            return res.toFixed(2);
+        }
     }
 }

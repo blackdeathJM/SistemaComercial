@@ -1,42 +1,49 @@
-
 <form [formGroup]="formComun">
     <section class="flex flex-col flex-auto">
         <div class="flex flex-auto gap-4 items-center content-center">
             <mat-form-field class="flex-auto">
-                <mat-label>Id Variable</mat-label>
-                <input matInput formControlName="idIndicador">
+                <mat-label>Definicion</mat-label>
+                <input matInput formControlName="idIndicadorDef">
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="datoValor">
+            </mat-form-field>
+
+            <mat-form-field class="shrink-0">
                 <mat-label>Etiqueta</mat-label>
                 <input matInput formControlName="etiqueta">
             </mat-form-field>
         </div>
-        <mat-form-field>
-            <mat-label>Descripcion</mat-label>
-            <input matInput formControlName="dato">
-        </mat-form-field>
-        <div class="flex flex-auto gap-4">
-            <mat-form-field class="flex-auto">
-                <mat-label>Trimestre 1</mat-label>
-                <input matInput formControlName="trim1">
-            </mat-form-field>
+        <!--        <div class="flex-auto gap-4 items-center content-center">-->
+        <!--            <mat-form-field>-->
+        <!--                <mat-label>Definicion</mat-label>-->
+        <!--                <input matInput formControlName="">-->
+        <!--            </mat-form-field>-->
+        <!--        </div>-->
 
-            <mat-form-field class="flex-auto">
-                <mat-label>Trimestre 2</mat-label>
-                <input matInput formControlName="trim2">
-            </mat-form-field>
+        <!--        <div class="flex flex-auto gap-4">-->
+        <!--            <mat-form-field class="flex-auto">-->
+        <!--                <mat-label>Trimestre 1</mat-label>-->
+        <!--                <input matInput formControlName="trim1">-->
+        <!--            </mat-form-field>-->
 
-            <mat-form-field class="flex-auto">
-                <mat-label>Trimestre 3</mat-label>
-                <input matInput formControlName="trim3">
-            </mat-form-field>
+        <!--            <mat-form-field class="flex-auto">-->
+        <!--                <mat-label>Trimestre 2</mat-label>-->
+        <!--                <input matInput formControlName="trim2">-->
+        <!--            </mat-form-field>-->
 
-            <mat-form-field class="flex-auto">
-                <mat-label>Trimestre 4</mat-label>
-                <input matInput formControlName="trim4">
-            </mat-form-field>
-        </div>
+        <!--            <mat-form-field class="flex-auto">-->
+        <!--                <mat-label>Trimestre 3</mat-label>-->
+        <!--                <input matInput formControlName="trim3">-->
+        <!--            </mat-form-field>-->
+
+        <!--            <mat-form-field class="flex-auto">-->
+        <!--                <mat-label>Trimestre 4</mat-label>-->
+        <!--                <input matInput formControlName="trim4">-->
+        <!--            </mat-form-field>-->
+        <!--        </div>-->
         <mat-checkbox color="primary" [disabled]="formComun.invalid" (change)="periodoAntCheck($event)">Obtener valores del periodo anterior</mat-checkbox>
     </section>
 </form>

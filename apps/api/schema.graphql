@@ -243,6 +243,16 @@ type SeleccionType {
   tipo: [String!]
 }
 
+type CampoStrType {
+  def: String
+  valor: String
+}
+
+type CampoNumType {
+  def: String
+  valor: Float
+}
+
 type FormPlantaType {
   ptarE: String
   sstE: Float
@@ -251,16 +261,16 @@ type FormPlantaType {
 }
 
 type FormComunType {
-  idIndicador: String
-  dato: String
-  trim1: Float
-  trim2: Float
-  trim3: Float
-  trim4: Float
-  trim1Anterior: Float
-  trim2Anterior: Float
-  trim3Anterior: Float
-  trim4Anterior: Float
+  idIndicador: CampoStrType
+  dato: CampoStrType
+  trim1: CampoNumType
+  trim2: CampoNumType
+  trim3: CampoNumType
+  trim4: CampoNumType
+  trim1Anterior: CampoNumType
+  trim2Anterior: CampoNumType
+  trim3Anterior: CampoNumType
+  trim4Anterior: CampoNumType
 }
 
 type ComponenteType {
@@ -463,7 +473,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685469021
+  tiempo: Int = 1685471475
   titulo: String
   usarRouter: Boolean = false
 }
@@ -579,6 +589,16 @@ input SeleccionInput {
   tipo: [String!] = []
 }
 
+input CampoStrInput {
+  def: String = null
+  valor: String = null
+}
+
+input CampoNumInput {
+  def: String = null
+  valor: Float = 0
+}
+
 input FormPlantaInput {
   ptarE: String = null
   sstE: Float = 0
@@ -587,16 +607,16 @@ input FormPlantaInput {
 }
 
 input FormComunInput {
-  idIndicador: String = null
-  dato: String = null
-  trim1: Float = 0
-  trim2: Float = 0
-  trim3: Float = 0
-  trim4: Float = 0
-  trim1Anterior: Float = 0
-  trim2Anterior: Float = 0
-  trim3Anterior: Float = 0
-  trim4Anterior: Float = 0
+  idIndicador: CampoStrInput = null
+  dato: CampoStrInput = null
+  trim1: CampoNumInput = null
+  trim2: CampoNumInput = null
+  trim3: CampoNumInput = null
+  trim4: CampoNumInput = null
+  trim1Anterior: CampoNumInput = null
+  trim2Anterior: CampoNumInput = null
+  trim3Anterior: CampoNumInput = null
+  trim4Anterior: CampoNumInput = null
 }
 
 input ComponenteInput {

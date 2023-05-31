@@ -15,14 +15,58 @@ fragment fragComponente on ComponenteType
 }
 fragment fragFormComun on FormComunType
 {
-    idIndicador
-    dato
-    trim1
-    trim2
-    trim3
-    trim4
-    trim1Anterior
-    trim2Anterior
-    trim3Anterior
-    trim4Anterior
+    idIndicador {
+        ...fragDefValorStr
+    }
+    dato {
+        ...fragDefValorStr
+    }
+    trim1 {
+        ...fragDefValorNum
+    }
+    trim2 {
+        ...fragDefValorNum
+    }
+    trim3 {
+        ...fragDefValorNum
+    }
+    trim4 {
+        ...fragDefValorNum
+    }
+    trim1Anterior {
+        ...fragDefValorNum
+    }
+    trim2Anterior {
+        ...fragDefValorNum
+    }
+
+    trim3Anterior {
+        ...fragDefValorNum
+    }
+
+    trim4Anterior {
+        ...fragDefValorNum
+    }
+    #    idIndicador
+    #    dato
+    #    trim1
+    #    trim2
+    #    trim3
+    #    trim4
+    #    trim1Anterior
+    #    trim2Anterior
+    #    trim3Anterior
+    #    trim4Anterior
+}
+
+fragment fragDefValorStr on CampoStrType
+{
+    def
+    valor
+}
+
+fragment fragDefValorNum on CampoNumType
+{
+    def
+    valor
 }

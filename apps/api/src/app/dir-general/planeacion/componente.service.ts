@@ -25,7 +25,7 @@ export class ComponenteService
                 {
                     for (const form of mir.componente.formComun)
                     {
-                        if (form.idIndicador === idIndicadorPbr)
+                        if (form.idIndicador.valor === idIndicadorPbr)
                         {
                             await this.planeacion.findOneAndUpdate({'_id': _id, 'mirCuestionario.componente.formComun.idIndicador': idIndicadorPbr},
                                 {
@@ -68,16 +68,16 @@ export class ComponenteService
             //     avanceTrim4 = formComun[0].trim4;
             //     break;
             case TiposFormulario.COMUN:
-                avanceTrim1 = Number((formComun[0].trim1 / formComun[1].trim1).toFixed(2));
-                avanceTrim2 = Number((formComun[0].trim2 / formComun[1].trim2).toFixed(2));
-                avanceTrim3 = Number((formComun[0].trim3 / formComun[1].trim3).toFixed(2));
-                avanceTrim4 = Number((formComun[0].trim4 / formComun[1].trim4).toFixed(2));
+                // avanceTrim1 = Number((formComun[0].trim1 / formComun[1].trim1).toFixed(2));
+                // avanceTrim2 = Number((formComun[0].trim2 / formComun[1].trim2).toFixed(2));
+                // avanceTrim3 = Number((formComun[0].trim3 / formComun[1].trim3).toFixed(2));
+                // avanceTrim4 = Number((formComun[0].trim4 / formComun[1].trim4).toFixed(2));
                 break;
             case TiposFormulario.PERIODO_ANT:
-                avanceTrim1 = this.sumarValoresTrimPeriodoAnt('trim1', formComun);
-                avanceTrim2 = this.sumarValoresTrimPeriodoAnt('trim2', formComun);
-                avanceTrim3 = this.sumarValoresTrimPeriodoAnt('trim3', formComun);
-                avanceTrim4 = this.sumarValoresTrimPeriodoAnt('trim4', formComun);
+                // avanceTrim1 = this.sumarValoresTrimPeriodoAnt('trim1', formComun);
+                // avanceTrim2 = this.sumarValoresTrimPeriodoAnt('trim2', formComun);
+                // avanceTrim3 = this.sumarValoresTrimPeriodoAnt('trim3', formComun);
+                // avanceTrim4 = this.sumarValoresTrimPeriodoAnt('trim4', formComun);
                 break;
             case TiposFormulario.PTAR:
                 break;

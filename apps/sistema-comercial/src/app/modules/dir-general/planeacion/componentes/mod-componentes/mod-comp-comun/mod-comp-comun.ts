@@ -38,12 +38,12 @@ export class ModCompComun
 
     validadorNumerico = [RxwebValidators.required, RxwebValidators.numeric({allowDecimal: true, message: 'El valor debe ser numerico'})];
     formComun: FormGroup = this.fb.group({
-        idIndicador: ['', RxwebValidators.required({message: 'El id del indicador es requerido'})],
-        dato: ['', RxwebValidators.required],
-        trim1: [0, this.validadorNumerico],
-        trim2: [0, this.validadorNumerico],
-        trim3: [0, this.validadorNumerico],
-        trim4: [0, this.validadorNumerico],
+        idIndicadorDef: ['', RxwebValidators.required({message: 'El id del indicador es requerido'})],
+        datoValor: ['', RxwebValidators.required],
+        // trim1: [0, this.validadorNumerico],
+        // trim2: [0, this.validadorNumerico],
+        // trim3: [0, this.validadorNumerico],
+        // trim4: [0, this.validadorNumerico],
         etiqueta: ['']
     });
 
@@ -68,13 +68,13 @@ export class ModCompComun
 
         effect(() =>
         {
-            this.valoresPeriodoAnt = true;
-            this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
-            this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().descripcion);
-            this.formComun.get('trim1').setValue(this.planeacionQuery.sumatoriaPbr().trim1);
-            this.formComun.get('trim2').setValue(this.planeacionQuery.sumatoriaPbr().trim2);
-            this.formComun.get('trim3').setValue(this.planeacionQuery.sumatoriaPbr().trim3);
-            this.formComun.get('trim4').setValue(this.planeacionQuery.sumatoriaPbr().trim4);
+            // this.valoresPeriodoAnt = true;
+            // this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
+            // this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().descripcion);
+            // this.formComun.get('trim1').setValue(this.planeacionQuery.sumatoriaPbr().trim1);
+            // this.formComun.get('trim2').setValue(this.planeacionQuery.sumatoriaPbr().trim2);
+            // this.formComun.get('trim3').setValue(this.planeacionQuery.sumatoriaPbr().trim3);
+            // this.formComun.get('trim4').setValue(this.planeacionQuery.sumatoriaPbr().trim4);
         });
 
         effect(() =>
@@ -95,21 +95,25 @@ export class ModCompComun
     {
         const {idIndicador} = this.formComun.value;
 
-        const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
-        this.datos.push({
-            idIndicador,
-            dato: this.formComun.get('dato').value,
-            trim1: +this.planeacionQuery.cuestionarioPbr().trim1,
-            trim2: +this.planeacionQuery.cuestionarioPbr().trim2,
-            trim3: +this.planeacionQuery.cuestionarioPbr().trim3,
-            trim4: +this.planeacionQuery.cuestionarioPbr().trim4,
-            trim1Anterior: this.periodoAnt ? +trim1 : 0,
-            trim2Anterior: this.periodoAnt ? +trim2 : 0,
-            trim3Anterior: this.periodoAnt ? +trim3 : 0,
-            trim4Anterior: this.periodoAnt ? +trim4 : 0,
-        });
-        this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
-        this.formComun.reset();
+        console.log(this.formComun.value);
+        // const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
+        // this.datos.push({
+        //     idIndicador: {
+        //         def: this.formComun.get('idIndicador').value,
+        //         valor: this.formComun.get('valor').value
+        //     },
+        //     dato: this.formComun.get('dato').value,
+        //     trim1: +this.planeacionQuery.cuestionarioPbr().trim1,
+        //     trim2: +this.planeacionQuery.cuestionarioPbr().trim2,
+        //     trim3: +this.planeacionQuery.cuestionarioPbr().trim3,
+        //     trim4: +this.planeacionQuery.cuestionarioPbr().trim4,
+        //     trim1Anterior: this.periodoAnt ? +trim1 : 0,
+        //     trim2Anterior: this.periodoAnt ? +trim2 : 0,
+        //     trim3Anterior: this.periodoAnt ? +trim3 : 0,
+        //     trim4Anterior: this.periodoAnt ? +trim4 : 0,
+        // });
+        // this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
+        // this.formComun.reset();
     }
 
     registrar(): void

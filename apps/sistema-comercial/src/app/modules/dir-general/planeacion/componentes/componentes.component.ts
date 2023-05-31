@@ -55,10 +55,10 @@ export class ComponentesComponent
                     {
                         this.planeacionQuery.cuestionarioMir.mutate(act =>
                         {
-                            act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));
-                            act.avanceTrim2 = Number(act.componente.formComun[0].trim2.toFixed(2));
-                            act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
-                            act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
+                            // act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));
+                            // act.avanceTrim2 = Number(act.componente.formComun[0].trim2.toFixed(2));
+                            // act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
+                            // act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
                         });
                     } else
                     {
