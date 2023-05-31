@@ -5,6 +5,13 @@ export enum TiposFormulario
     PTAR = 'ptar'
 }
 
+export enum TipoValores
+{
+    PESOS = 'Pesos',
+    PORCENTAJE = 'Porcentaje',
+    NUMERO = 'Numero'
+}
+
 export interface ICampoStr
 {
     def: string;
@@ -39,12 +46,17 @@ export interface IformComun
     trim2Anterior: ICampoNum;
     trim3Anterior: ICampoNum;
     trim4Anterior: ICampoNum;
+
+    valorAdicional: ICampoNum;
 }
 
 export interface IComponente
 {
     formComun: IformComun[];
     formPlanta: IFormPlanta[];
-    etiqueta: string;
+    tipoValorTrim: string;
+    tipoValorAvance: string;
+    valorAdicional: ICampoNum;
+    valorAdicionalUnico: boolean;
     tipoForm: string;
 }

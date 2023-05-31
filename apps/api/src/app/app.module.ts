@@ -70,7 +70,6 @@ import * as process from "process";
             TecnicaOperativaModule
         ],
     providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService, {provide: APP_FILTER, useClass: ExcepcionesMongoose}],
-    // providers: [{ provide: 'PUB_SUB', useValue: new PubSub() }, AppService],
     exports: [AppService]
 })
 export class AppModule

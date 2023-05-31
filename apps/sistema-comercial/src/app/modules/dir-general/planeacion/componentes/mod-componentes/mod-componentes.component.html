@@ -1,10 +1,11 @@
-<article class="flex flex-col flex-auto">
+<article class="flex flex-col flex-auto overflow-y-auto">
     <div class="flex flex-auto gap-4 items-center content-center px-6">
         <ng-container *ngIf="seleccionQuery.select() | async as seleccion">
             <mat-form-field class="flex-auto">
                 <mat-label>Centro gestor</mat-label>
                 <mat-select (valueChange)="filCentroGestor($event)">
-                    <mat-option *ngFor="let centroGestor of seleccion.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
+                    <mat-option *ngFor="let centroGestor of seleccion.centroGestor"
+                                [value]="centroGestor">{{centroGestor}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </ng-container>
@@ -12,31 +13,28 @@
         <mat-form-field class="flex-auto">
             <mat-label>Selecciona el elemento a calcular</mat-label>
             <mat-select (valueChange)="pbrSeleccionado($event)">
-                <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">{{pbr.dato}}</mat-option>
+                <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()"
+                            [value]="pbr">{{pbr.dato}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="flex-auto" *ngIf="planeacionQuery.compSumatoriasPbr().length > 0">
             <mat-label>Selecciona sumatoria</mat-label>
             <mat-select (valueChange)="sumatoriaSeleccionada($event)">
-                <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">{{sumatoria.descripcion}}</mat-option>
+                <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()"
+                            [value]="sumatoria">{{sumatoria.descripcion}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
-    <ng-container>
-        <mat-tab-group [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndice($event)">
-            <div>
-                contenido general
-            </div>
-            <mat-tab label="Form comun">
-                <ng-container *ngIf="indice === 0">
-                    <app-mod-comp-comun></app-mod-comp-comun>
-                </ng-container>
-            </mat-tab>
-            <mat-tab label="Form PTAR">
-                <ng-container *ngIf="indice === 1">
+    <mat-tab-group [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndice($event)">
+        <mat-tab label="Form comun">
+            <ng-container *ngIf="indice === 0">
+                <app-mod-comp-comun></app-mod-comp-comun>
+            </ng-container>
+        </mat-tab>
+        <mat-tab label="Form PTAR">
+            <ng-container *ngIf="indice === 1">
 
-                </ng-container>
-            </mat-tab>
-        </mat-tab-group>
-    </ng-container>
+            </ng-container>
+        </mat-tab>
+    </mat-tab-group>
 </article>

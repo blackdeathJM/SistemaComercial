@@ -2,49 +2,88 @@
     <section class="flex flex-col flex-auto">
         <div class="flex flex-auto gap-4 items-center content-center">
             <mat-form-field class="flex-auto">
-                <mat-label>Definicion</mat-label>
-                <input matInput formControlName="idIndicadorDef">
+                <mat-label>Id indicador</mat-label>
+                <input matInput formControlName="idIndicador" class="text-green-700">
+                <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="basis-1/3">
+                <mat-label>Definicion descripcion</mat-label>
+                <input matInput formControlName="datoDef">
+                <mat-error>{{formComun.controls.datoDef['errorMessage']}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
-                <mat-label>Valor</mat-label>
-                <input matInput formControlName="datoValor">
-            </mat-form-field>
-
-            <mat-form-field class="shrink-0">
-                <mat-label>Etiqueta</mat-label>
-                <input matInput formControlName="etiqueta">
+                <mat-label>Valor descripcion</mat-label>
+                <input matInput formControlName="datoValor" class="text-green-700">
+                <mat-error>{{formComun.controls.datoValor['errorMessage']}}</mat-error>
             </mat-form-field>
         </div>
-        <!--        <div class="flex-auto gap-4 items-center content-center">-->
-        <!--            <mat-form-field>-->
-        <!--                <mat-label>Definicion</mat-label>-->
-        <!--                <input matInput formControlName="">-->
-        <!--            </mat-form-field>-->
-        <!--        </div>-->
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Definicion trim 1</mat-label>
+                <input matInput formControlName="trim1Def">
+                <mat-error>{{formComun.controls.trim1Def['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-shrink">
+                <mat-label>Valor trim 1</mat-label>
+                <input matInput formControlName="trim1Valor" class="text-green-700">
+                <mat-error>{{formComun.controls.trim1Valor['errorMessage']}}</mat-error>
+            </mat-form-field>
 
-        <!--        <div class="flex flex-auto gap-4">-->
-        <!--            <mat-form-field class="flex-auto">-->
-        <!--                <mat-label>Trimestre 1</mat-label>-->
-        <!--                <input matInput formControlName="trim1">-->
-        <!--            </mat-form-field>-->
+            <mat-form-field class="flex-auto">
+                <mat-label>Definicion trim 2</mat-label>
+                <input matInput formControlName="trim2Def">
+                <mat-error>{{formComun.controls.trim2Def['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-shrink">
+                <mat-label>Valor trim 2</mat-label>
+                <input matInput formControlName="trim2Valor" class="text-green-700">
+                <mat-error>{{formComun.controls.trim2Valor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
 
-        <!--            <mat-form-field class="flex-auto">-->
-        <!--                <mat-label>Trimestre 2</mat-label>-->
-        <!--                <input matInput formControlName="trim2">-->
-        <!--            </mat-form-field>-->
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Definicion trim 3</mat-label>
+                <input matInput formControlName="trim3Def">
+                <mat-error>{{formComun.controls.trim3Def['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-shrink">
+                <mat-label>valor Trim 3</mat-label>
+                <input matInput formControlName="trim3Valor" class="text-green-700">
+                <mat-error>{{formComun.controls.trim3Valor['errorMessage']}}</mat-error>
+            </mat-form-field>
 
-        <!--            <mat-form-field class="flex-auto">-->
-        <!--                <mat-label>Trimestre 3</mat-label>-->
-        <!--                <input matInput formControlName="trim3">-->
-        <!--            </mat-form-field>-->
-
-        <!--            <mat-form-field class="flex-auto">-->
-        <!--                <mat-label>Trimestre 4</mat-label>-->
-        <!--                <input matInput formControlName="trim4">-->
-        <!--            </mat-form-field>-->
-        <!--        </div>-->
-        <mat-checkbox color="primary" [disabled]="formComun.invalid" (change)="periodoAntCheck($event)">Obtener valores del periodo anterior</mat-checkbox>
+            <mat-form-field class="flex-auto">
+                <mat-label>Definicion trim 4</mat-label>
+                <input matInput formControlName="trim4Def">
+                <mat-error>{{formComun.controls.trim4Def['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-shrink">
+                <mat-label>Valor trim 4</mat-label>
+                <input matInput formControlName="trim4Valor" class="text-green-700">
+                <mat-error>{{formComun.controls.trim4Valor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Definicion valor adicional</mat-label>
+                <input matInput formControlName="valorAdicionalDef">
+                <mat-error>{{formComun.controls.valorAdicionalDef['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="flex-shrink">
+                <mat-label>valor adicional</mat-label>
+                <input matInput formControlName="valorAdicionalValor" class="text-green-700">
+                <mat-error>{{formComun.controls.valorAdicionalValor['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <mat-checkbox color="primary" (change)="establecerValorUnico($event)">Establecer como valor unico</mat-checkbox>
+        </div>
+        <mat-checkbox color="primary" [disabled]="formComun.invalid" (change)="periodoAntCheck($event)">Obtener
+            valores del periodo anterior
+        </mat-checkbox>
     </section>
 </form>
 
@@ -71,6 +110,23 @@
                 <input matInput formControlName="trim4">
             </mat-form-field>
         </div>
+    </section>
+</form>
+<form>
+    <section class="flex flex-auto gap-4 items-center content-center">
+        <mat-form-field class="flex-auto">
+            <mat-label>Selecciona el tipo de valor definido para los trimestres</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="flex-auto">
+            <mat-label>Selecciona el tipo de valor en el que se mostraran los avances</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </section>
 </form>
 

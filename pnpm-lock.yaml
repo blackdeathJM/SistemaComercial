@@ -50,8 +50,8 @@ dependencies:
     specifier: ^4.7.1
     version: 4.7.1(graphql@16.6.0)
   '@apollo/subgraph':
-    specifier: ^2.4.6
-    version: 2.4.6(graphql@16.6.0)
+    specifier: ^2.4.7
+    version: 2.4.7(graphql@16.6.0)
   '@auth0/angular-jwt':
     specifier: ^5.1.2
     version: 5.1.2(@angular/common@16.0.3)
@@ -60,7 +60,7 @@ dependencies:
     version: 8.0.1(rxjs@7.8.1)(tslib@2.5.2)
   '@nestjs/apollo':
     specifier: ^11.0.6
-    version: 11.0.6(@apollo/server@4.7.1)(@apollo/subgraph@2.4.6)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(@nestjs/graphql@11.0.6)(graphql@16.6.0)
+    version: 11.0.6(@apollo/server@4.7.1)(@apollo/subgraph@2.4.7)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(@nestjs/graphql@11.0.6)(graphql@16.6.0)
   '@nestjs/common':
     specifier: ^9.4.2
     version: 9.4.2(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
@@ -75,7 +75,7 @@ dependencies:
     version: 1.4.1(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(reflect-metadata@0.1.13)
   '@nestjs/graphql':
     specifier: ^11.0.6
-    version: 11.0.6(@apollo/subgraph@2.4.6)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0)
+    version: 11.0.6(@apollo/subgraph@2.4.7)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0)
   '@nestjs/jwt':
     specifier: ^10.0.3
     version: 10.0.3(@nestjs/common@9.4.2)
@@ -149,8 +149,8 @@ dependencies:
     specifier: 4.1.1
     version: 4.1.1
   dotenv:
-    specifier: ^16.1.0
-    version: 16.1.0
+    specifier: ^16.1.1
+    version: 16.1.1
   express:
     specifier: ^4.18.2
     version: 4.18.2
@@ -200,8 +200,8 @@ dependencies:
     specifier: ^6.0.0
     version: 6.0.0(@angular/core@16.0.3)(luxon@3.3.0)
   marked:
-    specifier: ^5.0.3
-    version: 5.0.3
+    specifier: ^5.0.4
+    version: 5.0.4
   mathjs:
     specifier: ^11.8.0
     version: 11.8.0
@@ -225,7 +225,7 @@ dependencies:
     version: 3.0.0(@types/file-saver@2.0.5)
   ngx-markdown:
     specifier: 16.0.0
-    version: 16.0.0(@angular/common@16.0.3)(@angular/core@16.0.3)(@angular/platform-browser@16.0.3)(@types/marked@5.0.0)(marked@5.0.3)(rxjs@7.8.1)(zone.js@0.13.0)
+    version: 16.0.0(@angular/common@16.0.3)(@angular/core@16.0.3)(@angular/platform-browser@16.0.3)(@types/marked@5.0.0)(marked@5.0.4)(rxjs@7.8.1)(zone.js@0.13.0)
   ngx-material-file-input:
     specifier: ^4.0.1
     version: 4.0.1(@angular/cdk@16.0.2)(@angular/common@16.0.3)(@angular/core@16.0.3)(@angular/material@16.0.2)
@@ -469,8 +469,8 @@ devDependencies:
     specifier: 2.27.5
     version: 2.27.5(@typescript-eslint/parser@5.59.8)(eslint@8.41.0)
   eslint-plugin-jsdoc:
-    specifier: 45.0.0
-    version: 45.0.0(eslint@8.41.0)
+    specifier: 46.0.0
+    version: 46.0.0(eslint@8.41.0)
   eslint-plugin-prefer-arrow:
     specifier: 1.2.3
     version: 1.2.3(eslint@8.41.0)
@@ -1174,8 +1174,8 @@ packages:
       tslib: 2.5.2
       zen-observable-ts: 1.2.5
 
-  /@apollo/federation-internals@2.4.6(graphql@16.6.0):
-    resolution: {integrity: sha512-CqNoUfSdGnz+GBK5gf73RihrHNPywGCNMNfBGWun/EJRsk1uIsa0LisfF6+qqo/5c8wV7u5QzLkYOPyf6Zk6dQ==}
+  /@apollo/federation-internals@2.4.7(graphql@16.6.0):
+    resolution: {integrity: sha512-a4iH+72yVd0zNGC5ZGEDfbqI81wktE7qAHjH4rQzJTqMQ74By3PoMD2DefOArcweonvd4b/h4oQJXGvLK2V4Ew==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
       graphql: ^16.5.0
@@ -1286,14 +1286,14 @@ packages:
       - supports-color
     dev: false
 
-  /@apollo/subgraph@2.4.6(graphql@16.6.0):
-    resolution: {integrity: sha512-Qk4VAL9FTLX35E+QBqeM7tAQxpqv3HobfXNFaRIhdN0keatx2iBMepmqMx4GaZQMjnz3dxCArhp/fjzLnVCE8Q==}
+  /@apollo/subgraph@2.4.7(graphql@16.6.0):
+    resolution: {integrity: sha512-2P6sROTIiu6hy8q8xCT1vznBctGG5PXclpmMcaEElBmkVfpBlrBsOCdge83onCJ4ODrolZZ6nmyJQFbxHCOiEA==}
     engines: {node: '>=14.15.0'}
     peerDependencies:
       graphql: ^16.5.0
     dependencies:
       '@apollo/cache-control-types': 1.0.2(graphql@16.6.0)
-      '@apollo/federation-internals': 2.4.6(graphql@16.6.0)
+      '@apollo/federation-internals': 2.4.7(graphql@16.6.0)
       graphql: 16.6.0
     dev: false
 
@@ -5200,7 +5200,7 @@ packages:
       '@whatwg-node/fetch': 0.9.0
       chalk: 4.1.2
       debug: 4.3.4(supports-color@8.1.1)
-      dotenv: 16.1.0
+      dotenv: 16.1.1
       graphql: 16.6.0
       graphql-request: 6.1.0(graphql@16.6.0)
       http-proxy-agent: 6.1.0
@@ -6419,7 +6419,7 @@ packages:
       tslib: 2.5.2
     dev: false
 
-  /@nestjs/apollo@11.0.6(@apollo/server@4.7.1)(@apollo/subgraph@2.4.6)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(@nestjs/graphql@11.0.6)(graphql@16.6.0):
+  /@nestjs/apollo@11.0.6(@apollo/server@4.7.1)(@apollo/subgraph@2.4.7)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(@nestjs/graphql@11.0.6)(graphql@16.6.0):
     resolution: {integrity: sha512-w9I8oZHkHcBdR2sXoag4USe5nCOqWVdINYZTAnsLq8tafIolkGQAI9O+o1cGLyyV+9wwh4GAty5b9+jx/x1sbA==}
     peerDependencies:
       '@apollo/gateway': ^2.0.0
@@ -6440,10 +6440,10 @@ packages:
     dependencies:
       '@apollo/server': 4.7.1(graphql@16.6.0)
       '@apollo/server-plugin-landing-page-graphql-playground': 4.0.0(@apollo/server@4.7.1)
-      '@apollo/subgraph': 2.4.6(graphql@16.6.0)
+      '@apollo/subgraph': 2.4.7(graphql@16.6.0)
       '@nestjs/common': 9.4.2(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
       '@nestjs/core': 9.4.2(@nestjs/common@9.4.2)(@nestjs/platform-express@9.4.2)(reflect-metadata@0.1.13)(rxjs@7.8.1)
-      '@nestjs/graphql': 11.0.6(@apollo/subgraph@2.4.6)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0)
+      '@nestjs/graphql': 11.0.6(@apollo/subgraph@2.4.7)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0)
       graphql: 16.6.0
       iterall: 1.3.0
       lodash.omit: 4.5.0
@@ -6568,7 +6568,7 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/graphql@11.0.6(@apollo/subgraph@2.4.6)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0):
+  /@nestjs/graphql@11.0.6(@apollo/subgraph@2.4.7)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0):
     resolution: {integrity: sha512-EGE4fhLHrQLPAAgER+AwIa034IM9FNJto3xg49cZmI6c7s1yo6pLw/JULCn2jE2hUDbg5Q3IORZMMG8EUiUyMw==}
     peerDependencies:
       '@apollo/subgraph': ^2.0.0
@@ -6589,7 +6589,7 @@ packages:
       ts-morph:
         optional: true
     dependencies:
-      '@apollo/subgraph': 2.4.6(graphql@16.6.0)
+      '@apollo/subgraph': 2.4.7(graphql@16.6.0)
       '@graphql-tools/merge': 9.0.0(graphql@16.6.0)
       '@graphql-tools/schema': 10.0.0(graphql@16.6.0)
       '@graphql-tools/utils': 10.0.0(graphql@16.6.0)
@@ -12020,8 +12020,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /dotenv@16.1.0:
-    resolution: {integrity: sha512-XiwP/4cqatBNLEnKe169vPZCrovUmYngyVA4DgZ3uIVLJfZaBgr4uT0EF2TrEQqgWDDlekGo0muEYme5SR78Ww==}
+  /dotenv@16.1.1:
+    resolution: {integrity: sha512-UGmzIqXU/4b6Vb3R1Vrfd/4vGgVlB+mO+vEixOdfRhLeppkyW2BMhuK7TL8d0el+q9c4lW9qK2wZYhNLFhXYLA==}
     engines: {node: '>=12'}
 
   /dset@3.1.2:
@@ -12364,8 +12364,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsdoc@45.0.0(eslint@8.41.0):
-    resolution: {integrity: sha512-l2+Jcs/Ps7oFA+SWY+0sweU/e5LgricnEl6EsDlyRTF5y0+NWL1y9Qwz9PHwHAxtdJq6lxPjEQWmYLMkvhzD4g==}
+  /eslint-plugin-jsdoc@46.0.0(eslint@8.41.0):
+    resolution: {integrity: sha512-xmB5WleBcPCFYlrFfdjrcfSKOJBLwyGmKa+i+fVqlIHp8g5aAoeQpBGugUzToFtQgd4hNZYlfIcP7QSxC9NYWQ==}
     engines: {node: '>=16'}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
@@ -15491,8 +15491,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /marked@5.0.3:
-    resolution: {integrity: sha512-KUONa43Uk74uUNWMxh6lfaNYmSAsRMiDAaX8QBCCRVXzEufR0zX6T33vrGbvTnQLL02ungDM3KSzZtO+chJaHg==}
+  /marked@5.0.4:
+    resolution: {integrity: sha512-r0W8/DK56fAkV0qfUCO9cEt/VlFWUzoJOqEigvijmsVkTuPOHckh7ZutNJepRO1AxHhK96/9txonHg4bWd/aLA==}
     engines: {node: '>= 18'}
     hasBin: true
     dev: false
@@ -15926,7 +15926,7 @@ packages:
       '@nestjs/graphql':
         optional: true
     dependencies:
-      '@nestjs/graphql': 11.0.6(@apollo/subgraph@2.4.6)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0)
+      '@nestjs/graphql': 11.0.6(@apollo/subgraph@2.4.7)(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(class-transformer@0.5.1)(class-validator@0.14.0)(graphql@16.6.0)(reflect-metadata@0.1.13)(ts-morph@18.0.0)
       accesscontrol: 2.2.1
     dev: false
 
@@ -15982,7 +15982,7 @@ packages:
       - '@types/file-saver'
     dev: false
 
-  /ngx-markdown@16.0.0(@angular/common@16.0.3)(@angular/core@16.0.3)(@angular/platform-browser@16.0.3)(@types/marked@5.0.0)(marked@5.0.3)(rxjs@7.8.1)(zone.js@0.13.0):
+  /ngx-markdown@16.0.0(@angular/common@16.0.3)(@angular/core@16.0.3)(@angular/platform-browser@16.0.3)(@types/marked@5.0.0)(marked@5.0.4)(rxjs@7.8.1)(zone.js@0.13.0):
     resolution: {integrity: sha512-/rlbXi+HBscJCDdwaTWIUrRkvwJicPnuAgeugOCZa0UbZ4VCWV3U0+uB1Zv6krRDF6FXJNXNLTUrMZV7yH8I6A==}
     peerDependencies:
       '@angular/common': ^16.0.0
@@ -15997,7 +15997,7 @@ packages:
       '@angular/core': 16.0.3(rxjs@7.8.1)(zone.js@0.13.0)
       '@angular/platform-browser': 16.0.3(@angular/animations@16.0.3)(@angular/common@16.0.3)(@angular/core@16.0.3)
       '@types/marked': 5.0.0
-      marked: 5.0.3
+      marked: 5.0.4
       rxjs: 7.8.1
       tslib: 2.5.2
       zone.js: 0.13.0

@@ -1,8 +1,12 @@
 fragment fragComponente on ComponenteType
 {
-    etiqueta
+    tipoValorTrim
+    tipoValorAvance
     tipoForm
-
+    valorAdicional {
+        ...fragDefValorNum
+    }
+    valorAdicionalUnico
     formComun {
         ...fragFormComun
     }
@@ -47,16 +51,9 @@ fragment fragFormComun on FormComunType
     trim4Anterior {
         ...fragDefValorNum
     }
-    #    idIndicador
-    #    dato
-    #    trim1
-    #    trim2
-    #    trim3
-    #    trim4
-    #    trim1Anterior
-    #    trim2Anterior
-    #    trim3Anterior
-    #    trim4Anterior
+    valorAdicional {
+        ...fragDefValorNum
+    }
 }
 
 fragment fragDefValorStr on CampoStrType

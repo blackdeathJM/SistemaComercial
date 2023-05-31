@@ -93,6 +93,10 @@ export class FormComunDto implements IformComun
     @IsOptional()
     @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
     trim4Anterior: CampoNumDto;
+
+    @IsOptional()
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    valorAdicional: CampoNumDto
 }
 
 @ObjectType('ComponenteType')
@@ -107,13 +111,25 @@ export class ComponenteDto implements IComponente
     @Field(() => [FormComunDto], {nullable: true, defaultValue: []})
     formComun: FormComunDto[];
 
-    @IsOptional()
+    @IsNotEmpty({message: 'Es necesario definir que tipo de valor son los trimestres'})
     @Field(() => String, {nullable: true, defaultValue: null})
-    etiqueta: string;
+    tipoValorTrim: string;
+
+    @IsNotEmpty({message: 'Es necesario definir el tipo de valor que se mostraran los avances trimestrales'})
+    @Field(() => String, {nullable: true, defaultValue: null})
+    tipoValorAvance: string;
 
     @IsNotEmpty({message: 'Es necesario el tipo de formulario'})
     @Field(() => String, {nullable: true, defaultValue: null})
     tipoForm: string;
+
+    @IsOptional()
+    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
+    valorAdicional: CampoNumDto;
+
+    @IsOptional()
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
+    valorAdicionalUnico: boolean;
 }
 
 @InputType('RegComponenteInput')

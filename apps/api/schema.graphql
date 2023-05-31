@@ -271,13 +271,17 @@ type FormComunType {
   trim2Anterior: CampoNumType
   trim3Anterior: CampoNumType
   trim4Anterior: CampoNumType
+  valorAdicional: CampoNumType
 }
 
 type ComponenteType {
   formPlanta: [FormPlantaType!]
   formComun: [FormComunType!]
-  etiqueta: String
+  tipoValorTrim: String
+  tipoValorAvance: String
   tipoForm: String
+  valorAdicional: CampoNumType
+  valorAdicionalUnico: Boolean
 }
 
 type MirCuestionarioType {
@@ -473,7 +477,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685471475
+  tiempo: Int = 1685533423
   titulo: String
   usarRouter: Boolean = false
 }
@@ -617,13 +621,17 @@ input FormComunInput {
   trim2Anterior: CampoNumInput = null
   trim3Anterior: CampoNumInput = null
   trim4Anterior: CampoNumInput = null
+  valorAdicional: CampoNumInput = null
 }
 
 input ComponenteInput {
   formPlanta: [FormPlantaInput!] = []
   formComun: [FormComunInput!] = []
-  etiqueta: String = null
+  tipoValorTrim: String = null
+  tipoValorAvance: String = null
   tipoForm: String = null
+  valorAdicional: CampoNumInput = null
+  valorAdicionalUnico: Boolean = true
 }
 
 input MirCuestionarioInput {
@@ -934,8 +942,11 @@ input RecalcularPbrInput {
 input RegComponenteInput {
   formPlanta: [FormPlantaInput!] = []
   formComun: [FormComunInput!] = []
-  etiqueta: String = null
+  tipoValorTrim: String = null
+  tipoValorAvance: String = null
   tipoForm: String = null
+  valorAdicional: CampoNumInput = null
+  valorAdicionalUnico: Boolean = true
   _id: ID
   idIndicadorMir: String
 }
