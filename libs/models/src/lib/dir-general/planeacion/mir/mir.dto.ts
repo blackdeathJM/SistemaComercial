@@ -1,8 +1,8 @@
 import {IMirCuestionario} from './mir.interface';
-import {Field, ID, Float, ObjectType, InputType, PartialType} from '@nestjs/graphql';
 import {Prop} from '@nestjs/mongoose';
-import {IsOptional, IsNotEmpty, IsNumber} from 'class-validator';
+import {IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {ComponenteDto} from "../componentes/componente.dto";
+import {Field, Float, ID, InputType, ObjectType, PartialType} from "@nestjs/graphql";
 
 // registerEnumType(AscDesc, {name: 'AscDesc'});
 @ObjectType('MirCuestionarioType')

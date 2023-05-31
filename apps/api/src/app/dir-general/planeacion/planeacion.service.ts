@@ -1,13 +1,22 @@
-import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, ReemplazarCompDto, TPlaneacionType} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
+import {
+    ActualizarResponsableDto,
+    EliminarElementoDto,
+    PlaneacionDto,
+    ReemplazarCompDto,
+    TPlaneacionType
+} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {
+    RecalcularPbrDto,
+    RegAvancesPbrDto,
+    RegPbrDto
+} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto, TSumPbr} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto';
 import {TRegComponente} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 import {CalculosPbrService} from "#api/apps/api/src/app/dir-general/planeacion/calculosPbr.service";
-import {ComponenteService} from "#api/apps/api/src/app/dir-general/planeacion/componente.service";
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 import {ISumatorias} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {v4 as uuidv4} from 'uuid';
@@ -15,7 +24,7 @@ import {v4 as uuidv4} from 'uuid';
 @Injectable()
 export class PlaneacionService
 {
-    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private calculosPbrService: CalculosPbrService, private componenteService: ComponenteService)
+    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private calculosPbrService: CalculosPbrService)
     {
     }
 
@@ -27,13 +36,28 @@ export class PlaneacionService
     async inicializarPlaneacion(planeacion: PlaneacionDto): Promise<PlaneacionDto>
     {
         const {_id, ...resto} = planeacion;
-        if (_id)
+        if(_id)
         {
             const copia = await this.planeacion.findById(planeacion._id).exec();
 
             const inicializarMeses = {
-                enero: 0.00, febrero: 0.00, marzo: 0.00, abril: 0.00, mayo: 0.00, junio: 0.00, julio: 0.00,
-                agosto: 0.00, septiembre: 0.00, octubre: 0.00, noviembre: 0.00, diciembre: 0.00, trim1: 0.00, trim2: 0.00, trim3: 0.00, trim4: 0.00, total: 0.00
+                enero: 0.00,
+                febrero: 0.00,
+                marzo: 0.00,
+                abril: 0.00,
+                mayo: 0.00,
+                junio: 0.00,
+                julio: 0.00,
+                agosto: 0.00,
+                septiembre: 0.00,
+                octubre: 0.00,
+                noviembre: 0.00,
+                diciembre: 0.00,
+                trim1: 0.00,
+                trim2: 0.00,
+                trim3: 0.00,
+                trim4: 0.00,
+                total: 0.00
             }
 
             const nvaInicializacion: TPlaneacionType = {
@@ -56,9 +80,12 @@ export class PlaneacionService
     {
         const {_id, esActualizar, ...resto} = datos;
 
-        if (esActualizar)
+        if(esActualizar)
         {
-            return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': resto.idIndicador}, {$set: {'mirCuestionario.$': resto}}, {new: true}).exec();
+            return await this.planeacion.findOneAndUpdate({
+                _id,
+                'mirCuestionario.idIndicador': resto.idIndicador
+            }, {$set: {'mirCuestionario.$': resto}}, {new: true}).exec();
         }
         return await this.planeacion.findByIdAndUpdate(_id, {$push: {mirCuestionario: resto}}, {new: true}).exec();
     }
@@ -66,12 +93,21 @@ export class PlaneacionService
     async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
     {
         const {_id, esActualizar, ...resto} = datos;
-        if (esActualizar)
+        if(esActualizar)
         {
-            const respuesta = await this.planeacion.findOneAndUpdate({_id, 'pbrCuestionario.idIndicador': resto.idIndicador}, {
+            const respuesta = await this.planeacion.findOneAndUpdate({
+                    _id,
+                    'pbrCuestionario.idIndicador': resto.idIndicador
+                }, {
                     $set: {
-                        'pbrCuestionario.$.responsable': resto.responsable, 'pbrCuestionario.$.correo': resto.correo, 'pbrCuestionario.$.idEmpleado': resto.idEmpleado, 'pbrCuestionario.$.variableOrigen': resto.variableOrigen,
-                        'pbrCuestionario.$.unidad': resto.unidad, 'pbrCuestionario.$.centroGestor': resto.centroGestor, 'pbrCuestionario.$.dato': resto.dato, 'pbrCuestionario.$.descripcion': resto.descripcion,
+                        'pbrCuestionario.$.responsable': resto.responsable,
+                        'pbrCuestionario.$.correo': resto.correo,
+                        'pbrCuestionario.$.idEmpleado': resto.idEmpleado,
+                        'pbrCuestionario.$.variableOrigen': resto.variableOrigen,
+                        'pbrCuestionario.$.unidad': resto.unidad,
+                        'pbrCuestionario.$.centroGestor': resto.centroGestor,
+                        'pbrCuestionario.$.dato': resto.dato,
+                        'pbrCuestionario.$.descripcion': resto.descripcion,
                         'pbrCuestionario.$.tipoOperacion': resto.tipoOperacion
                     }
                 },
@@ -112,7 +148,7 @@ export class PlaneacionService
         // Obtenemos todos los ids del cuestionario y los agregamos a un array
         const resp = consulta.pbrCuestionario.map(async value =>
         {
-            if (value.centroGestor === args.centroGestor)
+            if(value.centroGestor === args.centroGestor)
             {
                 const trimestres = [[value.marzo, value.febrero, value.enero], [value.junio, value.mayo, value.abril],
                     [value.septiembre, value.agosto, value.julio], [value.diciembre, value.noviembre, value.octubre]];
@@ -135,7 +171,7 @@ export class PlaneacionService
 
         const nvoDocumento = await this.calculosPbrService.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
         // Actualizamos la sumatoria del centro gestor por si tiene
-        if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
+        if(nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
         {
             const respuesta = nvoDocumento.pbrSumatoria.map(async value =>
             {
@@ -191,9 +227,12 @@ export class PlaneacionService
             idSumatoria: actualizar ? idSumatoria : uuidv4()
         };
 
-        if (actualizar)
+        if(actualizar)
         {
-            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
+            return await this.planeacion.findOneAndUpdate({
+                '_id': _id,
+                'pbrSumatoria.idSumatoria': idSumatoria
+            }, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
         }
         return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
     }
@@ -205,15 +244,8 @@ export class PlaneacionService
         //* Realizar cambios al momento que se registra el avance
         const {_id, idIndicadorMir, ...resto} = datos;
 
-        const avanceTrimestres = await this.componenteService.calculoComponente(datos.tipoForm, datos.formComun);
-
         return await this.planeacion.findOneAndUpdate({_id, 'mirCuestionario.idIndicador': idIndicadorMir},
-            {
-                $set: {
-                    'mirCuestionario.$.componente': resto, 'mirCuestionario.$.avanceTrim1': avanceTrimestres[0], 'mirCuestionario.$.avanceTrim2': avanceTrimestres[1], 'mirCuestionario.$.avanceTrim3': avanceTrimestres[2],
-                    'mirCuestionario.$.avanceTrim4': avanceTrimestres[3]
-                }
-            }, {new: true}).exec();
+            {$set: {'mirCuestionario.$.componente': resto}}, {new: true}).exec();
     }
 
 

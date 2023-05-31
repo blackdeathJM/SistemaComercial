@@ -15,29 +15,35 @@ import {isNotNil} from "@angular-ru/cdk/utils";
     styleUrls: ['./tabla-mat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TablaMatComponent {
+export class TablaMatComponent
+{
     _origenDatos: IformComun[] | IFormPlanta[] = [];
 
     columnasAMostrar: string[] = [];
 
     columnasTabla: ITabla[] = [];
 
-    @Input({required: true}) set datos(data: IformComun[] | IFormPlanta[]) {
+    @Input({required: true}) set datos(data: IformComun[] | IFormPlanta[])
+    {
         this._origenDatos = data;
     }
 
-    @Input({required: true}) set columnas(columnas: ITabla[]) {
+    @Input({required: true}) set columnas(columnas: ITabla[])
+    {
         this.columnasTabla = columnas;
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);
     }
 
-    obtenerTotal(trim: string): string {
-        console.log('****', trim);
-        if (isNotNil(trim)) {
-            if (trim === 'idIndicador') {
+    obtenerTotal(trim: string): string
+    {
+        if(isNotNil(trim))
+        {
+            if(trim === 'idIndicador')
+            {
                 return '';
             }
-            if (trim === 'dato') {
+            if(trim === 'dato')
+            {
                 return 'Total';
             }
             return this._origenDatos.map(value => value[trim]).reduce((acc, act) => acc + act, 0);

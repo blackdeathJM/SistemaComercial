@@ -17,7 +17,10 @@ import {isNil} from "@angular-ru/cdk/utils";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {TReemplazarComp} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
-import {IformComun, TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {
+    IformComun,
+    TiposFormulario
+} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {ITabla} from "@s-shared/components/tabla-mat/tabla-interface";
 import {finalize} from "rxjs";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
@@ -60,6 +63,7 @@ export class ComponentesComponent
                             // act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
                             // act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
                         });
+
                     } else
                     {
                         this.planeacionQuery.cuestionarioMir.mutate(act =>
@@ -104,8 +108,8 @@ export class ComponentesComponent
                     }
                     break;
             }
-            this.columnas = this.columnasPeriodoAnt();
-            this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
+            // this.columnas = this.columnasPeriodoAnt();
+            // this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
         }, {allowSignalWrites: true})
     }
 

@@ -2084,10 +2084,10 @@ export const FragComponenteFragmentDoc = gql`
   tipoValorTrim
   tipoValorAvance
   tipoForm
+  valorAdicionalUnico
   valorAdicional {
     ...fragDefValorNum
   }
-  valorAdicionalUnico
   formComun {
     ...fragFormComun
   }

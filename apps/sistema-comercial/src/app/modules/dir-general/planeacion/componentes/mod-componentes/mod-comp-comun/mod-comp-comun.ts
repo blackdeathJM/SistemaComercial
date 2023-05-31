@@ -10,7 +10,8 @@ import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNotNil} from "@angular-ru/cdk/utils";
 import {
     IformComun,
-    TiposFormulario, TipoValores
+    TiposFormulario,
+    TipoValores
 } from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
@@ -33,9 +34,10 @@ import {NgxToastService} from "@s-services/ngx-toast.service";
 export class ModCompComun
 {
     datos: IformComun[] = [];
-
     periodoAnt = signal<boolean>(false);
-    tipoForm: TiposFormulario = TiposFormulario.COMUN;
+
+    tipoForm = TiposFormulario.COMUN;
+
     cargando = false;
     valoresPeriodoAnt: boolean = false;
     valorAdicionalUnico: boolean = false;
@@ -209,15 +211,15 @@ export class ModCompComun
             {
                 _id: this.planeacionQuery.getActive()._id,
                 idIndicadorMir: this.planeacionQuery.cuestionarioMir().idIndicador,
-                formComun: this.datos,
                 tipoForm: this.tipoForm,
                 valorAdicionalUnico: this.valorAdicionalUnico,
                 valorAdicional: {
                     def: this.valorAdicionalUnico ? this.formComun.get('valorAdicionalDef').value : null,
                     valor: this.valorAdicionalUnico ? +this.formComun.get('valorAdicionalValor').value : 0
                 },
-                tipoValorTrim: this.formComponente.controls.tipoValorTrim.value,
-                tipoValorAvance: this.formComponente.controls.tipoValorAvance.value
+                tipoValorTrim: this.formComponente.get('tipoValorTrim').value,
+                tipoValorAvance: this.formComponente.get('tipoValorAvance').value,
+                formComun: this.datos
             }
         this.formComun.disable();
         this.formTrimAnterior.disable();

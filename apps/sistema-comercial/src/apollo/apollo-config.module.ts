@@ -21,7 +21,7 @@ export class ApolloConfigModule
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
         {
-            if (graphQLErrors)
+            if(graphQLErrors)
             {
                 console.log('ModuleApollo', graphQLErrors);
                 // graphQLErrors.map((value) =>
@@ -30,7 +30,7 @@ export class ApolloConfigModule
                 // });
             }
 
-            if (networkError)
+            if(networkError)
             {
                 Swal.fire('Error de conexion', networkError.message, 'error').then();
             }

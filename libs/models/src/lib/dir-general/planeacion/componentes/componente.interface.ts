@@ -50,9 +50,16 @@ export interface IformComun
     valorAdicional: ICampoNum;
 }
 
+export interface IFormComunCols
+{
+    def: string;
+}
+
 export interface IComponente
 {
     formComun: IformComun[];
+    formComunCol: IFormComunCols[];
+
     formPlanta: IFormPlanta[];
     tipoValorTrim: string;
     tipoValorAvance: string;

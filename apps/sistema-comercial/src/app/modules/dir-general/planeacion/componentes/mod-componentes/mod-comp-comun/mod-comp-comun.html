@@ -79,7 +79,7 @@
                 <input matInput formControlName="valorAdicionalValor" class="text-green-700">
                 <mat-error>{{formComun.controls.valorAdicionalValor['errorMessage']}}</mat-error>
             </mat-form-field>
-            <mat-checkbox color="primary" (change)="establecerValorUnico($event)">Establecer como valor unico</mat-checkbox>
+            <mat-checkbox color="primary" (change)="establecerValorUnico($event)">Multiples valores</mat-checkbox>
         </div>
         <mat-checkbox color="primary" [disabled]="formComun.invalid" (change)="periodoAntCheck($event)">Obtener
             valores del periodo anterior

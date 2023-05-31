@@ -3,10 +3,10 @@ fragment fragComponente on ComponenteType
     tipoValorTrim
     tipoValorAvance
     tipoForm
+    valorAdicionalUnico
     valorAdicional {
         ...fragDefValorNum
     }
-    valorAdicionalUnico
     formComun {
         ...fragFormComun
     }
