@@ -1,83 +1,45 @@
 <form [formGroup]="formComun">
     <section class="flex flex-col flex-auto">
-        <div class="flex flex-auto gap-4 items-center content-center">
-            <mat-form-field class="flex-auto">
-                <mat-label>Id indicador</mat-label>
-                <input matInput formControlName="idIndicador" class="text-green-700">
-                <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
-            </mat-form-field>
-        </div>
+        <mat-form-field class="flex-auto">
+            <mat-label>Id indicador</mat-label>
+            <input matInput formControlName="idIndicador" class="text-green-700">
+            <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+            <mat-label>Dato</mat-label>
+            <input matInput formControlName="dato">
+            <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
+        </mat-form-field>
 
         <div class="flex flex-auto gap-4 items-center content-center">
-            <mat-form-field class="basis-1/3">
-                <mat-label>Definicion descripcion</mat-label>
-                <input matInput formControlName="datoDef">
-                <mat-error>{{formComun.controls.datoDef['errorMessage']}}</mat-error>
-            </mat-form-field>
-
             <mat-form-field class="flex-auto">
-                <mat-label>Valor descripcion</mat-label>
-                <input matInput formControlName="datoValor" class="text-green-700">
-                <mat-error>{{formComun.controls.datoValor['errorMessage']}}</mat-error>
+                <mat-label>Trimestre 1</mat-label>
+                <input matInput formControlName="trim1" class="text-green-700">
+                <mat-error>{{formComun.controls.trim1['errorMessage']}}</mat-error>
             </mat-form-field>
-        </div>
-        <div class="flex flex-auto gap-4 items-center content-center">
             <mat-form-field class="flex-auto">
-                <mat-label>Definicion trim 1</mat-label>
-                <input matInput formControlName="trim1Def">
-                <mat-error>{{formComun.controls.trim1Def['errorMessage']}}</mat-error>
+                <mat-label>Trimestre 2</mat-label>
+                <input matInput formControlName="trim2" class="text-green-700">
+                <mat-error>{{formComun.controls.trim2['errorMessage']}}</mat-error>
             </mat-form-field>
-            <mat-form-field class="flex-shrink">
-                <mat-label>Valor trim 1</mat-label>
-                <input matInput formControlName="trim1Valor" class="text-green-700">
-                <mat-error>{{formComun.controls.trim1Valor['errorMessage']}}</mat-error>
+            <mat-form-field class="flex-auto">
+                <mat-label>Trimestre 3</mat-label>
+                <input matInput formControlName="trim3" class="text-green-700">
+                <mat-error>{{formComun.controls.trim3['errorMessage']}}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
-                <mat-label>Definicion trim 2</mat-label>
-                <input matInput formControlName="trim2Def">
-                <mat-error>{{formComun.controls.trim2Def['errorMessage']}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="flex-shrink">
-                <mat-label>Valor trim 2</mat-label>
-                <input matInput formControlName="trim2Valor" class="text-green-700">
-                <mat-error>{{formComun.controls.trim2Valor['errorMessage']}}</mat-error>
+                <mat-label>Trimestre 4</mat-label>
+                <input matInput formControlName="trim4" class="text-green-700">
+                <mat-error>{{formComun.controls.trim4['errorMessage']}}</mat-error>
             </mat-form-field>
         </div>
 
         <div class="flex flex-auto gap-4 items-center content-center">
             <mat-form-field class="flex-auto">
-                <mat-label>Definicion trim 3</mat-label>
-                <input matInput formControlName="trim3Def">
-                <mat-error>{{formComun.controls.trim3Def['errorMessage']}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="flex-shrink">
-                <mat-label>valor Trim 3</mat-label>
-                <input matInput formControlName="trim3Valor" class="text-green-700">
-                <mat-error>{{formComun.controls.trim3Valor['errorMessage']}}</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="flex-auto">
-                <mat-label>Definicion trim 4</mat-label>
-                <input matInput formControlName="trim4Def">
-                <mat-error>{{formComun.controls.trim4Def['errorMessage']}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="flex-shrink">
-                <mat-label>Valor trim 4</mat-label>
-                <input matInput formControlName="trim4Valor" class="text-green-700">
-                <mat-error>{{formComun.controls.trim4Valor['errorMessage']}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="flex flex-auto gap-4 items-center content-center">
-            <mat-form-field class="flex-auto">
-                <mat-label>Definicion valor adicional</mat-label>
-                <input matInput formControlName="valorAdicionalDef">
-                <mat-error>{{formComun.controls.valorAdicionalDef['errorMessage']}}</mat-error>
-            </mat-form-field>
-            <mat-form-field class="flex-shrink">
                 <mat-label>valor adicional</mat-label>
-                <input matInput formControlName="valorAdicionalValor" class="text-green-700">
-                <mat-error>{{formComun.controls.valorAdicionalValor['errorMessage']}}</mat-error>
+                <input matInput formControlName="valorAdicional" class="text-green-700">
+                <mat-error>{{formComun.controls.valorAdicional['errorMessage']}}</mat-error>
             </mat-form-field>
             <mat-checkbox color="primary" (change)="establecerValorUnico($event)">Multiples valores</mat-checkbox>
         </div>
@@ -136,8 +98,7 @@
     </section>
 </form>
 
-<app-registros (registro)="registrar()"
-               [deshabilitar]="formComun.invalid || formTrimAnterior.invalid || formComponente.invalid">
+<app-registros (registro)="registrar()" [deshabilitar]="formComponente.invalid" (cancelar)="mdr.close()">
     <button mat-raised-button class="bg-green-700 flex-auto disabled:bg-accent" (click)="agregarAlArreglo()"
             [disabled]="formComun.invalid || formTrimAnterior.invalid">
         <mat-icon svgIcon="mat_solid:add_circle"></mat-icon>

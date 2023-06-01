@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ITabla} from "@s-shared/components/tabla-mat/tabla-interface";
-
+import {ITabla} from "#/libs/models/src/lib/tabla.interface";
 @Pipe({name: 'valorColumnaPipe', standalone: true})
 export class ValorColumnaPipe implements PipeTransform
 {

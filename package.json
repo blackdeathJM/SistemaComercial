@@ -139,6 +139,8 @@
         "@nx/nest": "16.1.0",
         "@nx/node": "16.3.0",
         "@nx/webpack": "16.3.0",
+        "@nx/esbuild": "16.3.0",
+        "@nx/plugin": "16.3.0",
         "@nx/workspace": "16.3.0",
         "@schematics/angular": "^16.0.3",
         "@tailwindcss/aspect-ratio": "0.4.2",

@@ -3,18 +3,13 @@ fragment fragComponente on ComponenteType
     tipoValorTrim
     tipoValorAvance
     tipoForm
-    valorAdicionalUnico
-    valorAdicional {
-        ...fragDefValorNum
-    }
+    valorAdicionalB
+    valorAdicional
     formComun {
         ...fragFormComun
     }
     formPlanta {
-        sstE
-        dqoE
-        grasasAceitesE
-        ptarE
+        ...fragPlanta
     }
 }
 fragment fragFormComun on FormComunType
@@ -29,18 +24,13 @@ fragment fragFormComun on FormComunType
     trim2Ant
     trim3Ant
     trim4Ant
-
     valorAdicional
 }
 
-fragment fragDefValorStr on CampoStrType
+fragment fragPlanta on FormPlantaType
 {
-    def
-    valor
-}
-
-fragment fragDefValorNum on CampoNumType
-{
-    def
-    valor
+    sstE
+    dqoE
+    grasasAceitesE
+    ptarE
 }
