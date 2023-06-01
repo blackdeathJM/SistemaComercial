@@ -1,56 +1,44 @@
 import {Field, Float, ID, InputType, ObjectType, PartialType} from "@nestjs/graphql";
-import {ICampoNum, ICampoStr, IComponente, IFormComun, IFormPlanta} from "./componente.interface";
+import {IComponente, IFormComun, IFormPlanta} from "./componente.interface";
 // import {v4 as uuidv4} from 'uuid'
 import {IsNotEmpty, IsNumber, IsOptional} from "class-validator";
 import {ITabla} from "../../../tabla.interface";
 
 @ObjectType('TablaType')
 @InputType('TablaInput')
-export class TablaDto implements ITabla
-{
+export class TablaDto implements ITabla {
     @IsNotEmpty({message: 'Es necesaria la definicion para la columna'})
     @Field(() => String, {nullable: true, defaultValue: null})
     def: string;
 
-
+    @IsNotEmpty({message: 'Es necesario asignar una etiqueta para la columna'})
+    @Field(() => String, {nullable: true, defaultValue: null})
     etiqueta: string;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
     formato: string;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
     html: string;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
     llaveDato: string;
+
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
     tipoDeDato: "date" | "object" | "number";
+
+    @IsNotEmpty({message: 'Es necesario que asignes un ancho a la columna'})
+    @Field(() => String, {nullable: true, defaultValue: 'auto'})
     width: string;
-}
-
-@ObjectType('CampoStrType')
-@InputType('CampoStrInput')
-export class CampoStrDto implements ICampoStr
-{
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    def: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    valor: string;
-}
-
-@ObjectType('CampoNumType')
-@InputType('CampoNumInput')
-export class CampoNumDto implements ICampoNum
-{
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    def: string;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    valor: number;
 }
 
 @ObjectType('FormPlantaType')
 @InputType('FormPlantaInput')
-export class FormPlantaDto implements IFormPlanta
-{
+export class FormPlantaDto implements IFormPlanta {
     @IsNotEmpty({message: 'Es necesario el PTAR'})
     @Field(() => String, {nullable: true, defaultValue: null})
     ptarE: string;
@@ -70,8 +58,7 @@ export class FormPlantaDto implements IFormPlanta
 
 @ObjectType('FormComunType')
 @InputType('FormComunInput')
-export class FormComunDto implements IFormComun
-{
+export class FormComunDto implements IFormComun {
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: null})
     idIndicador: string;
@@ -119,8 +106,7 @@ export class FormComunDto implements IFormComun
 
 @ObjectType('ComponenteType')
 @InputType('ComponenteInput')
-export class ComponenteDto implements IComponente
-{
+export class ComponenteDto implements IComponente {
     @IsOptional()
     @Field(() => [FormPlantaDto], {nullable: true, defaultValue: []})
     formPlanta: FormPlantaDto[];
@@ -142,21 +128,20 @@ export class ComponenteDto implements IComponente
     tipoForm: string;
 
     @IsOptional()
-    @Field(() => CampoNumDto, {nullable: true, defaultValue: null})
-    valorAdicional: CampoNumDto;
+    @Field(() => Float, {nullable: true, defaultValue: null})
+    valorAdicional: number;
 
-@IsOptional()
-@Field(() => Boolean, {nullable: true, defaultValue: true});
+    @IsOptional()
+    @Field(() => Boolean, {nullable: true, defaultValue: true})
     valorAdicionalB: boolean;
 
     @IsOptional()
-    @Field()
-    tablaColumnas: ITabla[];
+    @Field(() => [TablaDto], {nullable: true, defaultValue: []})
+    tablaColumnas: TablaDto[];
 }
 
 @InputType('RegComponenteInput')
-export class RegComponenteDto extends PartialType(ComponenteDto, InputType)
-{
+export class RegComponenteDto extends PartialType(ComponenteDto, InputType) {
     @IsNotEmpty({message: 'Es requerido el id principal'})
     @Field(() => ID, {nullable: true})
     _id: string;

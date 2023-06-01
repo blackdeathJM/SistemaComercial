@@ -14,16 +14,13 @@ export enum TipoValores
     NUMERO = 'Numero'
 }
 
-export interface ICampoStr
+export enum TipoDatoTabla
 {
-    def: string;
-    valor: string;
-}
-
-export interface ICampoNum
-{
-    def: string;
-    valor: number;
+    fecha = 'fecha',
+    obj = 'obj',
+    numero = 'numero',
+    flotante = 'flotante',
+    porcentaje = 'porcentaje'
 }
 
 export interface IFormPlanta
@@ -38,7 +35,6 @@ export interface IFormComun
 {
     idIndicador: string;
     dato: string;
-    //Estos valores son recogidos de los trimestres establecidos en pbr
     trim1: number;
     trim2: number;
     trim3: number;
@@ -61,7 +57,7 @@ export interface IComponente
 
     tipoValorTrim: string;
     tipoValorAvance: string;
-    valorAdicional: ICampoNum;
+    valorAdicional: number;
     valorAdicionalB: boolean;
 
     tipoForm: string;

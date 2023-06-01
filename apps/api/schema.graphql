@@ -243,14 +243,14 @@ type SeleccionType {
   tipo: [String!]
 }
 
-type CampoStrType {
+type TablaType {
   def: String
-  valor: String
-}
-
-type CampoNumType {
-  def: String
-  valor: Float
+  etiqueta: String
+  formato: String
+  html: String
+  llaveDato: String
+  tipoDeDato: String
+  width: String
 }
 
 type FormPlantaType {
@@ -261,17 +261,17 @@ type FormPlantaType {
 }
 
 type FormComunType {
-  idIndicador: CampoStrType
-  dato: CampoStrType
-  trim1: CampoNumType
-  trim2: CampoNumType
-  trim3: CampoNumType
-  trim4: CampoNumType
-  trim1Anterior: CampoNumType
-  trim2Anterior: CampoNumType
-  trim3Anterior: CampoNumType
-  trim4Anterior: CampoNumType
-  valorAdicional: CampoNumType
+  idIndicador: String
+  dato: String
+  trim1: Float
+  trim2: Float
+  trim3: Float
+  trim4: Float
+  trim1Ant: Float
+  trim2Ant: Float
+  trim3Ant: Float
+  trim4Ant: Float
+  valorAdicional: Float
 }
 
 type ComponenteType {
@@ -280,8 +280,9 @@ type ComponenteType {
   tipoValorTrim: String
   tipoValorAvance: String
   tipoForm: String
-  valorAdicional: CampoNumType
-  valorAdicionalUnico: Boolean
+  valorAdicional: Float
+  valorAdicionalB: Boolean
+  tablaColumnas: [TablaType!]
 }
 
 type MirCuestionarioType {
@@ -477,7 +478,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685550095
+  tiempo: Int = 1685609013
   titulo: String
   usarRouter: Boolean = false
 }
@@ -593,14 +594,14 @@ input SeleccionInput {
   tipo: [String!] = []
 }
 
-input CampoStrInput {
+input TablaInput {
   def: String = null
-  valor: String = null
-}
-
-input CampoNumInput {
-  def: String = null
-  valor: Float = 0
+  etiqueta: String = null
+  formato: String = null
+  html: String = null
+  llaveDato: String = null
+  tipoDeDato: String = null
+  width: String = "auto"
 }
 
 input FormPlantaInput {
@@ -611,17 +612,17 @@ input FormPlantaInput {
 }
 
 input FormComunInput {
-  idIndicador: CampoStrInput = null
-  dato: CampoStrInput = null
-  trim1: CampoNumInput = null
-  trim2: CampoNumInput = null
-  trim3: CampoNumInput = null
-  trim4: CampoNumInput = null
-  trim1Anterior: CampoNumInput = null
-  trim2Anterior: CampoNumInput = null
-  trim3Anterior: CampoNumInput = null
-  trim4Anterior: CampoNumInput = null
-  valorAdicional: CampoNumInput = null
+  idIndicador: String = null
+  dato: String = null
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  trim1Ant: Float = 0
+  trim2Ant: Float = 0
+  trim3Ant: Float = 0
+  trim4Ant: Float = 0
+  valorAdicional: Float = 0
 }
 
 input ComponenteInput {
@@ -630,8 +631,9 @@ input ComponenteInput {
   tipoValorTrim: String = null
   tipoValorAvance: String = null
   tipoForm: String = null
-  valorAdicional: CampoNumInput = null
-  valorAdicionalUnico: Boolean = true
+  valorAdicional: Float = null
+  valorAdicionalB: Boolean = true
+  tablaColumnas: [TablaInput!] = []
 }
 
 input MirCuestionarioInput {
@@ -945,8 +947,9 @@ input RegComponenteInput {
   tipoValorTrim: String = null
   tipoValorAvance: String = null
   tipoForm: String = null
-  valorAdicional: CampoNumInput = null
-  valorAdicionalUnico: Boolean = true
+  valorAdicional: Float = null
+  valorAdicionalB: Boolean = true
+  tablaColumnas: [TablaInput!] = []
   _id: ID
   idIndicadorMir: String
 }
