@@ -1,5 +1,4 @@
 <mat-toolbar color="accent" class="border-b-4 border-b-orange-300 gap-8 items-center">
-
     <ng-container *ngIf="planeacionQuery.selectAll() | async as planeaciones">
         <mat-form-field class="flex-auto mt-5">
             <mat-select (selectionChange)="seleccionarPlaneacion($event.value)">

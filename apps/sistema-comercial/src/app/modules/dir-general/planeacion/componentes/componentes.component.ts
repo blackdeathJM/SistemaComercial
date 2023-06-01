@@ -10,7 +10,6 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
-import {ModComponentesComponent} from "@s-dir-general/componentes/mod-componentes/mod-componentes.component";
 import {MatCardModule} from "@angular/material/card";
 import {ConfirmacionService} from "@s-services/confirmacion.service";
 import {isNil} from "@angular-ru/cdk/utils";
@@ -21,7 +20,7 @@ import {IFormComun, TiposFormulario} from "#/libs/models/src/lib/dir-general/pla
 import {finalize} from "rxjs";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
 import {ITabla} from "#/libs/models/src/lib/tabla.interface";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-componentes',
@@ -40,11 +39,11 @@ export class ComponentesComponent
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
     constructor(public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog, private confirmacionService: ConfirmacionService,
-                private planeacionService: PlaneacionService, private router: Router)
+                private planeacionService: PlaneacionService, private router: Router, private activatedRoute: ActivatedRoute)
     {
         effect(() =>
         {
-            if(isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
+            if (isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
             {
                 return;
             }
@@ -52,7 +51,7 @@ export class ComponentesComponent
             switch (this.planeacionQuery.cuestionarioMir().componente.tipoForm)
             {
                 case TiposFormulario.COMUN:
-                    if(this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
                     {
                         console.log(this.planeacionQuery.cuestionarioMir().componente);
 
@@ -77,7 +76,7 @@ export class ComponentesComponent
                     this.columnas = this.columnasComun();
                     break;
                 case TiposFormulario.PERIODO_ANT:
-                    if(this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
                     {
                         this.planeacionQuery.cuestionarioMir.mutate(act =>
                         {
@@ -116,26 +115,22 @@ export class ComponentesComponent
 
     nuevoElemento(): void
     {
-        if(isNil(this.planeacionQuery.cuestionarioMir().componente))
+        if (isNil(this.planeacionQuery.cuestionarioMir().componente))
         {
-            // this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
-            this.router.navigateByUrl('./registro-componente').then()
+            this.router.navigate(['../registro-componente'], {relativeTo: this.activatedRoute}).then();
         } else
         {
             const message = 'Ya existe un componente para este indicador, si deseas reemplazar este componente confirma que deseas hacerlo';
             this.confirmacionService.abrir({message, title: 'Reemplazar componente'}).afterClosed().subscribe(res =>
             {
-                if(res === 'confirmed')
+                if (res === 'confirmed')
                 {
                     const args: TReemplazarComp =
                         {
                             _id: this.planeacionQuery.getActive()._id,
                             idIndicador: this.planeacionQuery.cuestionarioMir().idIndicador
                         };
-                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.mdr.open(ModComponentesComponent, {
-                        width: '50%',
-                        data: null
-                    }))).subscribe();
+                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.router.navigate(['../registro-componente'], {relativeTo: this.activatedRoute}))).subscribe();
                 }
             });
         }
@@ -251,7 +246,7 @@ export class ComponentesComponent
 
     calculoPeriodoAnt(trim: string, trimAnt: string): number
     {
-        if(this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
+        if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
         {
             const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
             return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];

@@ -10,13 +10,16 @@ import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {MatListModule} from "@angular/material/list";
 import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {fuseAnimations} from "@s-fuse/public-api";
 
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
-    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule],
+    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModComponentesComponent
@@ -29,16 +32,19 @@ export class ModComponentesComponent
 
     filCentroGestor(e: string): void
     {
+        console.log('selecciona centro gestor', e);
         this.planeacionQuery.centroGestor.set(e);
     }
 
     pbrSeleccionado(e: IPbrCuestionario): void
     {
+        console.log('PbrSeleccionado', e);
         this.planeacionQuery.cuestionarioPbr.set(e);
     }
 
     sumatoriaSeleccionada(e: ISumatorias): void
     {
+        console.log('Sumatoria seleccionada', e);
         this.planeacionQuery.sumatoriaPbr.set(e);
     }
 

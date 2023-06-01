@@ -13,16 +13,14 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {NumericValueType, RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {NgxToastService} from "@s-services/ngx-toast.service";
-import {ModComponenteTablaComponent} from "@s-dir-general/componentes/mod-componentes/mod-componente-tabla/mod-componente-tabla.component";
-import {ITabla} from "#/libs/models/src/lib/tabla.interface";
+import {MatCardModule} from "@angular/material/card";
 
 @Component({
     selector: 'app-mod-comp-comun',
     standalone: true,
     imports: [CommonModule, MatInputModule, MatSelectModule, RegistrosComponent, MatButtonModule, MatIconModule, ReactiveFormsModule, MatTooltipModule, MatCheckboxModule,
-        RxReactiveFormsModule],
+        RxReactiveFormsModule, MatCardModule],
     templateUrl: './mod-comp-comun.html',
     styleUrls: ['./mod-comp-comun.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -64,8 +62,7 @@ export class ModCompComun
         tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})]
     })
 
-    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, public mdr: MatDialogRef<ModCompComun>,
-                private ngxToast: NgxToastService, private md: MatDialog)
+    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
     {
         effect(() =>
         {
@@ -133,12 +130,6 @@ export class ModCompComun
             return;
         }
         this.cargando = true;
-        this.md.open(ModComponenteTablaComponent, {width: '40%', data: [this.periodoAnt(), this.valorAdicionalMulti, 10], hasBackdrop: true, disableClose: true}).afterClosed().subscribe((res) =>
-        {
-            let columnas: ITabla[] = [];
-            console.log(res);
-        });
-
         // const regComponente: TRegComponente =
         //     {
         //         _id: this.planeacionQuery.getActive()._id,
@@ -174,5 +165,10 @@ export class ModCompComun
     establecerValorUnico(e: MatCheckboxChange): void
     {
         this.valorAdicionalMulti = e.checked;
+    }
+
+    cancelar(): void
+    {
+
     }
 }
