@@ -5,6 +5,6 @@ export interface ITabla
     llaveDato: string;
     formato?: string;
     width: string;
-    tipoDeDato?: 'date' | 'object' | 'number';
+    tipoDeDato?: string;
     html?: string;
 }

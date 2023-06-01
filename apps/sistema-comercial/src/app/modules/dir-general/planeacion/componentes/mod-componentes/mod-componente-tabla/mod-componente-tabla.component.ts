@@ -17,19 +17,30 @@ import {MatInputModule} from "@angular/material/input";
 export class ModComponenteTablaComponent
 {
     formComun: FormGroup = this.fb.group({
-        idIndicador: ['Id variable', RxwebValidators.required({message: 'Es requerido este campo'})],
         dato: ['Descripcion', RxwebValidators.required({message: 'Es necesario asignar una descripcion para el DATO'})],
         trim1: ['Trimestre 1', RxwebValidators.required({message: 'Es necesario asignar como deseas mostrar la informacion del trimestre'})],
         valorAdicional: [],
     });
 
-    constructor(private mdr: MatDialogRef<ModComponenteTablaComponent>, private fb: RxFormBuilder, @Inject(MAT_DIALOG_DATA) private data: [boolean, boolean, number])
+    constructor(private mdr: MatDialogRef<ModComponenteTablaComponent>, private fb: RxFormBuilder, @Inject(MAT_DIALOG_DATA) public data: [boolean, boolean, number])
     {
     }
 
     regColumnasTabla(): void
     {
-        console.log(this.data);
-        this.mdr.close('Valor recibido')
+        if (this.data[0])
+        {
+            //Periodo anterior
+        }
+
+        if (this.data[1])
+        {
+
+        }
+    }
+
+    cancelar(): void
+    {
+        this.mdr.close(null);
     }
 }

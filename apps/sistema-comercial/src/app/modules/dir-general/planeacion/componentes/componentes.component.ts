@@ -17,13 +17,11 @@ import {isNil} from "@angular-ru/cdk/utils";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {TReemplazarComp} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.dto";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
-import {
-    IFormComun,
-    TiposFormulario
-} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {IFormComun, TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {finalize} from "rxjs";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
 import {ITabla} from "#/libs/models/src/lib/tabla.interface";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-componentes',
@@ -42,7 +40,7 @@ export class ComponentesComponent
     fecha = DateTime.local().toLocaleString(DateTime.DATE_SHORT);
 
     constructor(public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private mdr: MatDialog, private confirmacionService: ConfirmacionService,
-                private planeacionService: PlaneacionService)
+                private planeacionService: PlaneacionService, private router: Router)
     {
         effect(() =>
         {
@@ -120,7 +118,8 @@ export class ComponentesComponent
     {
         if(isNil(this.planeacionQuery.cuestionarioMir().componente))
         {
-            this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
+            // this.mdr.open(ModComponentesComponent, {width: '50%', data: null});
+            this.router.navigateByUrl('./registro-componente').then()
         } else
         {
             const message = 'Ya existe un componente para este indicador, si deseas reemplazar este componente confirma que deseas hacerlo';

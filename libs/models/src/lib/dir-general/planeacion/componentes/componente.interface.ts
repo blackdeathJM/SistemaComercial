@@ -45,7 +45,8 @@ export interface IFormComun
     trim3Ant: number;
     trim4Ant: number;
 
-    valorAdicional: number;
+    // esIdIndicador: boolean;
+    // valorAdicional: number;
 }
 
 export interface IComponente
@@ -57,6 +58,8 @@ export interface IComponente
 
     tipoValorTrim: string;
     tipoValorAvance: string;
+
+    // esIdIndicador: boolean;
     valorAdicional: number;
     valorAdicionalB: boolean;
 

@@ -1,10 +1,6 @@
 <form>
     <section class="flex flex-col flex-auto">
         <mat-form-field>
-            <mat-label>Id Variable</mat-label>
-            <input matInput readonly>
-        </mat-form-field>
-        <mat-form-field>
             <mat-label>Descripcion a mostrar para el DATO</mat-label>
             <input matInput>
         </mat-form-field>
@@ -12,10 +8,10 @@
             <mat-label>Trimestre</mat-label>
             <input matInput>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field *ngIf="data[2] !== 0">
             <mat-label>Valor adicional</mat-label>
             <input matInput>
         </mat-form-field>
     </section>
 </form>
-<app-registros (registro)="regColumnasTabla()"></app-registros>
+<app-registros (registro)="regColumnasTabla()" (cancelar)="cancelar()"></app-registros>

@@ -14,6 +14,10 @@ export const planeacionRouting: Routes =
                     {
                         path: 'avance-de-actividades',
                         loadComponent: () => import('@s-dir-general/pbr/pbr.component').then(c => c.PbrComponent)
+                    },
+                    {
+                        path: 'registro-componente',
+                        loadComponent: () => import('@s-dir-general/planeacion/componentes/mod-componentes/mod-componentes.component').then(c => c.ModComponentesComponent)
                     }
                 ]
         }

@@ -16,6 +16,7 @@ import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {ModComponenteTablaComponent} from "@s-dir-general/componentes/mod-componentes/mod-componente-tabla/mod-componente-tabla.component";
+import {ITabla} from "#/libs/models/src/lib/tabla.interface";
 
 @Component({
     selector: 'app-mod-comp-comun',
@@ -30,12 +31,9 @@ export class ModCompComun
 {
     datos: IFormComun[] = [];
     periodoAnt = signal<boolean>(false);
-
     tipoForm = TiposFormulario.COMUN;
-
     cargando = false;
     valoresPeriodoAnt: boolean = false;
-
     valorAdicionalMulti: boolean = false;
     tipoValores = Object.values(TipoValores);
 
@@ -107,19 +105,19 @@ export class ModCompComun
     agregarAlArreglo(): void
     {
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
-        this.datos.push({
-            idIndicador: this.formComun.get('idIndicador').value,
-            dato: this.formComun.get('dato').value,
-            trim1: +this.formComun.get('trim1').value,
-            trim2: +this.formComun.get('trim2').value,
-            trim3: +this.formComun.get('trim3').value,
-            trim4: +this.formComun.get('trim4').value,
-            trim1Ant: this.periodoAnt ? +trim1 : 0,
-            trim2Ant: this.periodoAnt ? +trim2 : 0,
-            trim3Ant: this.periodoAnt ? +trim3 : 0,
-            trim4Ant: this.periodoAnt ? +trim4 : 0,
-            valorAdicional: +this.formComun.get('valorAdicional').value
-        });
+        // this.datos.push({
+        //     idIndicador: this.formComun.get('idIndicador').value,
+        //     dato: this.formComun.get('dato').value,
+        //     trim1: +this.formComun.get('trim1').value,
+        //     trim2: +this.formComun.get('trim2').value,
+        //     trim3: +this.formComun.get('trim3').value,
+        //     trim4: +this.formComun.get('trim4').value,
+        //     trim1Ant: this.periodoAnt ? +trim1 : 0,
+        //     trim2Ant: this.periodoAnt ? +trim2 : 0,
+        //     trim3Ant: this.periodoAnt ? +trim3 : 0,
+        //     trim4Ant: this.periodoAnt ? +trim4 : 0,
+        //     valorAdicional: +this.formComun.get('valorAdicional').value
+        // });
 
         this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
 
@@ -135,8 +133,9 @@ export class ModCompComun
             return;
         }
         this.cargando = true;
-        this.md.open(ModComponenteTablaComponent, {width: '40%', data: [this.periodoAnt, this.valorAdicionalMulti, 10], hasBackdrop: true, disableClose: true}).afterClosed().subscribe((res) =>
+        this.md.open(ModComponenteTablaComponent, {width: '40%', data: [this.periodoAnt(), this.valorAdicionalMulti, 10], hasBackdrop: true, disableClose: true}).afterClosed().subscribe((res) =>
         {
+            let columnas: ITabla[] = [];
             console.log(res);
         });
 
