@@ -3,36 +3,44 @@ import {CommonModule} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {RegistrosComponent} from "@s-shared/registros/registros.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNotNil} from "@angular-ru/cdk/utils";
 import {IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
-import {NumericValueType, RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
+import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {MatCardModule} from "@angular/material/card";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {fuseAnimations} from "@s-fuse/public-api";
+import {DisableControlModule} from "@angular-ru/cdk/directives";
+import {MatRadioChange, MatRadioModule} from "@angular/material/radio";
+import {FuseAlertModule} from "@s-fuse/alert";
+import * as math from 'mathjs';
 
 @Component({
     selector: 'app-mod-comp-comun',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatSelectModule, RegistrosComponent, MatButtonModule, MatIconModule, ReactiveFormsModule, MatTooltipModule, MatCheckboxModule,
-        RxReactiveFormsModule, MatCardModule],
+    imports: [CommonModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatTooltipModule, MatCheckboxModule,
+        RxReactiveFormsModule, MatCardModule, MatToolbarModule, DisableControlModule, MatRadioModule, FuseAlertModule],
     templateUrl: './mod-comp-comun.html',
     styleUrls: ['./mod-comp-comun.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [fuseAnimations]
 })
 export class ModCompComun
 {
     datos: IFormComun[] = [];
     periodoAnt = signal<boolean>(false);
+
     tipoForm = TiposFormulario.COMUN;
+
     cargando = false;
-    valoresPeriodoAnt: boolean = false;
     valorAdicionalMulti: boolean = false;
+
     tipoValores = Object.values(TipoValores);
 
     validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
@@ -40,14 +48,15 @@ export class ModCompComun
         message: 'El valor debe ser numerico'
     })];
 
+    ctrlValorAdicional = new FormControl(0);
+
     formComun: FormGroup = this.fb.group({
-        idIndicador: ['', RxwebValidators.required({message: 'El id del indicador es requerido'})],
-        dato: ['Descripcion', RxwebValidators.required({message: 'Es necesario la definicion para este campo'})],
+        idIndicador: [null, RxwebValidators.required({message: 'El id del indicador es requerido'})],
+        dato: [null, RxwebValidators.required({message: 'Es necesario la definicion para este campo'})],
         trim1: [0, this.validadorNumerico],
         trim2: [0, this.validadorNumerico],
         trim3: [0, this.validadorNumerico],
-        trim4: [0, this.validadorNumerico],
-        valorAdicional: [0, RxwebValidators.numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber, persistZero: true})],
+        trim4: [0, this.validadorNumerico]
     });
 
     formTrimAnterior: FormGroup = this.fb.group({
@@ -68,8 +77,8 @@ export class ModCompComun
         {
             if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
             {
-                this.valoresPeriodoAnt = false;
                 this.formComun.patchValue(this.planeacionQuery.cuestionarioPbr());
+                this.formComun.disable();
             }
         });
 
@@ -77,8 +86,6 @@ export class ModCompComun
         {
             if (isNotNil(this.planeacionQuery.sumatoriaPbr()))
             {
-                this.valoresPeriodoAnt = true;
-
                 this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
                 this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
                 this.formComun.patchValue(this.planeacionQuery.sumatoriaPbr());
@@ -90,7 +97,7 @@ export class ModCompComun
             if (this.periodoAnt())
             {
                 const id = this.formComun.get('idIndicador').value;
-                const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.valoresPeriodoAnt);
+                const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.periodoAnt());
                 if (isNotNil(periodoAnterior))
                 {
                     this.formTrimAnterior.patchValue(periodoAnterior);
@@ -102,6 +109,8 @@ export class ModCompComun
     agregarAlArreglo(): void
     {
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
+
+        console.log(this.formComun.value);
         // this.datos.push({
         //     idIndicador: this.formComun.get('idIndicador').value,
         //     dato: this.formComun.get('dato').value,
@@ -153,21 +162,27 @@ export class ModCompComun
         // })).subscribe();
     }
 
-    periodoAntCheck(e: MatCheckboxChange): void
-    {
-        if (this.datos.length === 0)
-        {
-            this.periodoAnt.set(e.checked);
-            this.tipoForm = e ? TiposFormulario.PERIODO_ANT : TiposFormulario.COMUN;
-        }
-    }
-
     establecerValorUnico(e: MatCheckboxChange): void
     {
         this.valorAdicionalMulti = e.checked;
     }
 
     cancelar(): void
+    {
+        const obj =
+            {
+                variable: 5,
+                otraVariable: 10,
+                valor3: 15
+            };
+        const arreglo = ['10', '20'];
+        const formula = `(valor1 - valor2) / valor3 *3`;
+
+        const resultado = math.evaluate(formula, arreglo);
+        console.log(resultado);
+    }
+
+    cambioSeleccionRdb(e: MatRadioChange): void
     {
 
     }

@@ -16,14 +16,6 @@ fragment fragFormComun on FormComunType
 {
     idIndicador
     dato
-    trim1
-    trim2
-    trim3
-    trim4
-    trim1Ant
-    trim2Ant
-    trim3Ant
-    trim4Ant
     valorAdicional
 }
 

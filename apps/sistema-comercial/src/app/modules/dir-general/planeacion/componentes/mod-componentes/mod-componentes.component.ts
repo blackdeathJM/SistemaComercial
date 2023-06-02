@@ -32,19 +32,16 @@ export class ModComponentesComponent
 
     filCentroGestor(e: string): void
     {
-        console.log('selecciona centro gestor', e);
         this.planeacionQuery.centroGestor.set(e);
     }
 
     pbrSeleccionado(e: IPbrCuestionario): void
     {
-        console.log('PbrSeleccionado', e);
         this.planeacionQuery.cuestionarioPbr.set(e);
     }
 
     sumatoriaSeleccionada(e: ISumatorias): void
     {
-        console.log('Sumatoria seleccionada', e);
         this.planeacionQuery.sumatoriaPbr.set(e);
     }
 

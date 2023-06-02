@@ -6,7 +6,8 @@ import {ITabla} from "../../../tabla.interface";
 
 @ObjectType('TablaType')
 @InputType('TablaInput')
-export class TablaDto implements ITabla {
+export class TablaDto implements ITabla
+{
     @IsNotEmpty({message: 'Es necesaria la definicion para la columna'})
     @Field(() => String, {nullable: true, defaultValue: null})
     def: string;
@@ -38,7 +39,8 @@ export class TablaDto implements ITabla {
 
 @ObjectType('FormPlantaType')
 @InputType('FormPlantaInput')
-export class FormPlantaDto implements IFormPlanta {
+export class FormPlantaDto implements IFormPlanta
+{
     @IsNotEmpty({message: 'Es necesario el PTAR'})
     @Field(() => String, {nullable: true, defaultValue: null})
     ptarE: string;
@@ -58,7 +60,8 @@ export class FormPlantaDto implements IFormPlanta {
 
 @ObjectType('FormComunType')
 @InputType('FormComunInput')
-export class FormComunDto implements IFormComun {
+export class FormComunDto implements IFormComun
+{
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: null})
     idIndicador: string;
@@ -68,45 +71,14 @@ export class FormComunDto implements IFormComun {
     dato: string;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim1: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim2: number;
-    //
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim3: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim4: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim1Ant: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim2Ant: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim3Ant: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    trim4Ant: number;
-
-    @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    valorAdicional: number
+    @Field(() => String, {nullable: true, defaultValue: null})
+    valorAdicional: string;
 }
 
 @ObjectType('ComponenteType')
 @InputType('ComponenteInput')
-export class ComponenteDto implements IComponente {
+export class ComponenteDto implements IComponente
+{
     @IsOptional()
     @Field(() => [FormPlantaDto], {nullable: true, defaultValue: []})
     formPlanta: FormPlantaDto[];
@@ -141,7 +113,8 @@ export class ComponenteDto implements IComponente {
 }
 
 @InputType('RegComponenteInput')
-export class RegComponenteDto extends PartialType(ComponenteDto, InputType) {
+export class RegComponenteDto extends PartialType(ComponenteDto, InputType)
+{
     @IsNotEmpty({message: 'Es requerido el id principal'})
     @Field(() => ID, {nullable: true})
     _id: string;

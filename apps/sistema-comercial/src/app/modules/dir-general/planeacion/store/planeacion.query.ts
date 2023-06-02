@@ -24,7 +24,6 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 
     compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>
     {
-        console.log('signal pbrCuestionario');
         const cuestionarioOriginal: IPbrCuestionario[] = this.cuestionarioPbrV().slice();
 
         if (isNotNil(usuarioFil()))

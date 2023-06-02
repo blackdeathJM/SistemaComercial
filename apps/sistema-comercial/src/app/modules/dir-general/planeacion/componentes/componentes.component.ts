@@ -53,8 +53,6 @@ export class ComponentesComponent
                 case TiposFormulario.COMUN:
                     if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
                     {
-                        console.log(this.planeacionQuery.cuestionarioMir().componente);
-
                         // this.planeacionQuery.cuestionarioMir.mutate(act =>
                         // {
                         //     // act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));

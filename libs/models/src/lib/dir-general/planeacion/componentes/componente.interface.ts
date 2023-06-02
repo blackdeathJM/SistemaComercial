@@ -4,23 +4,16 @@ export enum TiposFormulario
 {
     COMUN = 'comun',
     PERIODO_ANT = 'periodoAnt',
+    CON_OTRO_ID_PBR = 'conOtroDatoPbr',
     PTAR = 'ptar'
 }
 
 export enum TipoValores
 {
-    PESOS = 'Pesos',
-    PORCENTAJE = 'Porcentaje',
-    NUMERO = 'Numero'
-}
-
-export enum TipoDatoTabla
-{
-    fecha = 'fecha',
-    obj = 'obj',
-    numero = 'numero',
-    flotante = 'flotante',
-    porcentaje = 'porcentaje'
+    PESOS = 'pesos',
+    PORCENTAJE = 'porcentaje',
+    NUMERO = 'numero',
+    FECHA = 'fecha'
 }
 
 export interface IFormPlanta
@@ -34,17 +27,8 @@ export interface IFormPlanta
 export interface IFormComun
 {
     idIndicador: string;
+
     dato: string;
-    trim1: number;
-    trim2: number;
-    trim3: number;
-    trim4: number;
-
-    trim1Ant: number;
-    trim2Ant: number;
-    trim3Ant: number;
-    trim4Ant: number;
-
     // esIdIndicador: boolean;
     // valorAdicional: number;
 }
