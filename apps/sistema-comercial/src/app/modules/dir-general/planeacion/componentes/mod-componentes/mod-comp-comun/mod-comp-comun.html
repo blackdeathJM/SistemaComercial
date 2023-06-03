@@ -2,16 +2,33 @@
     <mat-card-content>
         <form [formGroup]="formComun">
             <section class="flex flex-col flex-auto">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Id indicador</mat-label>
-                    <input matInput formControlName="idIndicador">
-                    <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
-                </mat-form-field>
-                <mat-form-field class="flex-auto">
-                    <mat-label>Dato</mat-label>
-                    <input matInput formControlName="dato">
-                    <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
-                </mat-form-field>
+                <div class="flex flex-auto gap-4">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Id indicador</mat-label>
+                        <input matInput formControlName="idIndicador" (focus)="focoIndicador()" (blur)="perdioFoco()">
+                        <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Id indicador adicional (Opcional)</mat-label>
+                        <input matInput formControlName="idIndicadorAd" (focus)="focoIndicador()" (blur)="perdioFoco()">
+                        <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-auto gap-4">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Dato</mat-label>
+                        <input matInput formControlName="dato">
+                        <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Dato (Opcional)</mat-label>
+                        <input matInput formControlName="datoAd">
+                        <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                </div>
 
                 <div class="flex flex-auto gap-4 items-center content-center">
                     <mat-form-field class="flex-auto">

@@ -30,10 +30,12 @@ export interface IFormComun {
 }
 
 export interface IComponente {
-    formComun: IFormComun[];
     formPlanta: IFormPlanta[];
+    formComun: IFormComun[];
 
     tablaColumnas: ITabla[];
+
+    formula: string;
 
     tipoValorTrim: string;
     tipoValorAvance: string;

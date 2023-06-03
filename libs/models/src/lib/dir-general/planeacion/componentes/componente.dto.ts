@@ -29,7 +29,7 @@ export class TablaDto implements ITabla {
 
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: null})
-    tipoDeDato: "date" | "object" | "number";
+    tipoDeDato: string;
 
     @IsNotEmpty({message: 'Es necesario que asignes un ancho a la columna'})
     @Field(() => String, {nullable: true, defaultValue: 'auto'})
@@ -67,8 +67,12 @@ export class FormComunDto implements IFormComun {
     @Field(() => String, {nullable: true, defaultValue: null})
     dato: string;
 
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
     idIndicadorAd: string;
 
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: null})
     datoAd: string;
 }
 
@@ -96,16 +100,12 @@ export class ComponenteDto implements IComponente {
     tipoForm: string;
 
     @IsOptional()
-    @Field(() => Float, {nullable: true, defaultValue: null})
-    valorAdicional: number;
-
-    @IsOptional()
-    @Field(() => Boolean, {nullable: true, defaultValue: true})
-    valorAdicionalB: boolean;
-
-    @IsOptional()
     @Field(() => [TablaDto], {nullable: true, defaultValue: []})
     tablaColumnas: TablaDto[];
+
+    @IsNotEmpty({message: 'Es necesario definir la formula para calcular el trimestre'})
+    @Field(() => String, {nullable: true, defaultValue: null})
+    formula: string;
 }
 
 @InputType('RegComponenteInput')

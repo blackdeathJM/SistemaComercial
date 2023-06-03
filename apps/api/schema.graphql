@@ -263,7 +263,8 @@ type FormPlantaType {
 type FormComunType {
   idIndicador: String
   dato: String
-  valorAdicional: String
+  idIndicadorAd: String
+  datoAd: String
 }
 
 type ComponenteType {
@@ -272,9 +273,8 @@ type ComponenteType {
   tipoValorTrim: String
   tipoValorAvance: String
   tipoForm: String
-  valorAdicional: Float
-  valorAdicionalB: Boolean
   tablaColumnas: [TablaType!]
+  formula: String
 }
 
 type MirCuestionarioType {
@@ -470,7 +470,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685713418
+  tiempo: Int = 1685782318
   titulo: String
   usarRouter: Boolean = false
 }
@@ -606,7 +606,8 @@ input FormPlantaInput {
 input FormComunInput {
   idIndicador: String = null
   dato: String = null
-  valorAdicional: String = null
+  idIndicadorAd: String = null
+  datoAd: String = null
 }
 
 input ComponenteInput {
@@ -615,9 +616,8 @@ input ComponenteInput {
   tipoValorTrim: String = null
   tipoValorAvance: String = null
   tipoForm: String = null
-  valorAdicional: Float = null
-  valorAdicionalB: Boolean = true
   tablaColumnas: [TablaInput!] = []
+  formula: String = null
 }
 
 input MirCuestionarioInput {
@@ -931,9 +931,8 @@ input RegComponenteInput {
   tipoValorTrim: String = null
   tipoValorAvance: String = null
   tipoForm: String = null
-  valorAdicional: Float = null
-  valorAdicionalB: Boolean = true
   tablaColumnas: [TablaInput!] = []
+  formula: String = null
   _id: ID
   idIndicadorMir: String
 }

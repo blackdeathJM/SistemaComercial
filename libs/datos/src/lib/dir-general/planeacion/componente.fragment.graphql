@@ -3,8 +3,6 @@ fragment fragComponente on ComponenteType
     tipoValorTrim
     tipoValorAvance
     tipoForm
-    valorAdicionalB
-    valorAdicional
     formComun {
         ...fragFormComun
     }
@@ -16,7 +14,9 @@ fragment fragFormComun on FormComunType
 {
     idIndicador
     dato
-    valorAdicional
+
+    idIndicadorAd
+    datoAd
 }
 
 fragment fragPlanta on FormPlantaType

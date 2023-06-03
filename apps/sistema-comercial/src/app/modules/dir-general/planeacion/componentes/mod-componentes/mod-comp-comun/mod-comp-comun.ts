@@ -53,6 +53,10 @@ export class ModCompComun
     formComun: FormGroup = this.fb.group({
         idIndicador: [null, RxwebValidators.required({message: 'El id del indicador es requerido'})],
         dato: [null, RxwebValidators.required({message: 'Es necesario la definicion para este campo'})],
+        idIndicadorAd: [null],
+        datoAd: [null],
+
+
         trim1: [0, this.validadorNumerico],
         trim2: [0, this.validadorNumerico],
         trim3: [0, this.validadorNumerico],
@@ -185,5 +189,15 @@ export class ModCompComun
     cambioSeleccionRdb(e: MatRadioChange): void
     {
 
+    }
+
+    focoIndicador(): void
+    {
+        console.log('foco');
+    }
+
+    perdioFoco(): void
+    {
+        console.log('perdio el foco');
     }
 }
