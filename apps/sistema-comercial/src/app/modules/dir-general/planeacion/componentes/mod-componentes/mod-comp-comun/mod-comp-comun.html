@@ -2,33 +2,17 @@
     <mat-card-content>
         <form [formGroup]="formComun">
             <section class="flex flex-col flex-auto">
-                <div class="flex flex-auto gap-4">
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Id indicador</mat-label>
-                        <input matInput formControlName="idIndicador" (focus)="focoIndicador()" (blur)="perdioFoco()">
-                        <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
-                    </mat-form-field>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Id indicador</mat-label>
+                    <input matInput formControlName="idIndicador" (focus)="focoIndicador()" (blur)="perdioFoco()">
+                    <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Id indicador adicional (Opcional)</mat-label>
-                        <input matInput formControlName="idIndicadorAd" (focus)="focoIndicador()" (blur)="perdioFoco()">
-                        <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="flex flex-auto gap-4">
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Dato</mat-label>
-                        <input matInput formControlName="dato">
-                        <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Dato (Opcional)</mat-label>
-                        <input matInput formControlName="datoAd">
-                        <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
-                    </mat-form-field>
-                </div>
+                <mat-form-field class="flex-auto">
+                    <mat-label>Dato</mat-label>
+                    <input matInput formControlName="dato">
+                    <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
+                </mat-form-field>
 
                 <div class="flex flex-auto gap-4 items-center content-center">
                     <mat-form-field class="flex-auto">
@@ -50,91 +34,65 @@
                     </mat-form-field>
                 </div>
 
-                <mat-radio-group color="primary" (change)="cambioSeleccionRdb($event)">
-                    <mat-radio-button value="1">obtener valores del periodo anterior</mat-radio-button>
-                    <mat-radio-button value="2">Agregar valores adicionales como parte de la tabla</mat-radio-button>
+                <mat-radio-group color="primary" (change)="cambioSeleccionRdb($event)" [disabled]="deshabilitar">
+                    <mat-radio-button [value]="TiposFormulario.PERIODO_ANT">Obtener valores del periodo anterior</mat-radio-button>
+                    <mat-radio-button [value]="TiposFormulario.CON_OTRO_ID_PBR">Agregar valores adicionales como parte de la tabla</mat-radio-button>
                 </mat-radio-group>
-
-                <mat-form-field class="flex-auto">
-                    <mat-label>valor adicional</mat-label>
-                    <input matInput [formControl]="ctrlValorAdicional">
-                    <mat-error>{{ctrlValorAdicional['errorMessage']}}</mat-error>
-                </mat-form-field>
-
-                <!--                <mat-form-field class="flex-auto">-->
-                <!--                    <mat-label>valor adicional</mat-label>-->
-                <!--                    <input matInput [formControl]="ctrlValorAdicional">-->
-                <!--                    <mat-error>{{ctrlValorAdicional['errorMessage']}}</mat-error>-->
-                <!--                </mat-form-field>-->
 
             </section>
         </form>
+
     </mat-card-content>
-    <!--    <mat-card-content>-->
-    <!--        <form [formGroup]="formTrimAnterior" *ngIf="periodoAnt()">-->
-    <!--            <section class="flex flex-col flex-auto">-->
-    <!--                <div class="flex flex-auto gap-4">-->
-    <!--                    <mat-form-field class="flex-auto">-->
-    <!--                        <mat-label>Trimestre 1</mat-label>-->
-    <!--                        <input matInput formControlName="trim1">-->
-    <!--                        <mat-error>{{formTrimAnterior.controls.trim1['errorMessage']}}</mat-error>-->
-    <!--                    </mat-form-field>-->
+    <mat-card-content *ngIf="tipoForm === TiposFormulario.PERIODO_ANT">
+        <form [formGroup]="formTrimAnterior">
+            <section class="flex flex-col flex-auto">
+                <div class="flex flex-auto gap-4">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trim. Ant 1</mat-label>
+                        <input matInput formControlName="trim1">
+                        <mat-error>{{formTrimAnterior.controls.trim1['errorMessage']}}</mat-error>
+                    </mat-form-field>
 
-    <!--                    <mat-form-field class="flex-auto">-->
-    <!--                        <mat-label>Trimestre 2</mat-label>-->
-    <!--                        <input matInput formControlName="trim2">-->
-    <!--                        <mat-error>{{formTrimAnterior.controls.trim2['errorMessage']}}</mat-error>-->
-    <!--                    </mat-form-field>-->
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trim. Ant. 2</mat-label>
+                        <input matInput formControlName="trim2">
+                        <mat-error>{{formTrimAnterior.controls.trim2['errorMessage']}}</mat-error>
+                    </mat-form-field>
 
-    <!--                    <mat-form-field class="flex-auto">-->
-    <!--                        <mat-label>Trimestre 3</mat-label>-->
-    <!--                        <input matInput formControlName="trim3">-->
-    <!--                        <mat-error>{{formTrimAnterior.controls.trim3['errorMessage']}}</mat-error>-->
-    <!--                    </mat-form-field>-->
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trim. Ant. 3</mat-label>
+                        <input matInput formControlName="trim3">
+                        <mat-error>{{formTrimAnterior.controls.trim3['errorMessage']}}</mat-error>
+                    </mat-form-field>
 
-    <!--                    <mat-form-field class="flex-auto">-->
-    <!--                        <mat-label>Trimestre 4</mat-label>-->
-    <!--                        <input matInput formControlName="trim4">-->
-    <!--                        <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>-->
-    <!--                    </mat-form-field>-->
-    <!--                </div>-->
-    <!--            </section>-->
-    <!--        </form>-->
-    <!--    </mat-card-content>-->
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trim. Ant. 4</mat-label>
+                        <input matInput formControlName="trim4">
+                        <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </section>
+        </form>
+    </mat-card-content>
 
-    <!--    <mat-card-content>-->
-    <!--        <fuse-alert [type]="'warn'" [appearance]="'border'" class="my-4">-->
-    <!--            <span fuseAlertTitle>Calculo de Avances trimestrales</span>-->
-    <!--            Para obtener los valores selecciona el centro gestor y su pbr o sumatoria-->
-    <!--        </fuse-alert>-->
-    <!--        <form>-->
-    <!--            <section class="flex flex-auto gap-4">-->
-    <!--                <mat-form-field class="flex-auto">-->
-    <!--                    <mat-label>Avance Trim1</mat-label>-->
-    <!--                    <input matInput>-->
-    <!--                    &lt;!&ndash;                    <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>&ndash;&gt;-->
-    <!--                </mat-form-field>-->
 
-    <!--                <mat-form-field class="flex-auto">-->
-    <!--                    <mat-label>Avance Trim1</mat-label>-->
-    <!--                    <input matInput>-->
-    <!--                    &lt;!&ndash;                    <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>&ndash;&gt;-->
-    <!--                </mat-form-field>-->
+    <mat-card-content *ngIf="tipoForm === TiposFormulario.CON_OTRO_ID_PBR">
+        <form [formGroup]="formAd">
+            <section class="flex flex-col flex-auto">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Id indicador</mat-label>
+                    <input matInput formControlName="idIndicador" (focus)="focoIndicador()" (blur)="perdioFoco()">
+                    <mat-error>{{formAd.controls.idIndicador['errorMessage']}}</mat-error>
+                </mat-form-field>
 
-    <!--                <mat-form-field class="flex-auto">-->
-    <!--                    <mat-label>Avance Trim2</mat-label>-->
-    <!--                    <input matInput>-->
-    <!--                    &lt;!&ndash;                    <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>&ndash;&gt;-->
-    <!--                </mat-form-field>-->
-
-    <!--                <mat-form-field class="flex-auto">-->
-    <!--                    <mat-label>Avance Trim3</mat-label>-->
-    <!--                    <input matInput>-->
-    <!--                    &lt;!&ndash;                    <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>&ndash;&gt;-->
-    <!--                </mat-form-field>-->
-    <!--            </section>-->
-    <!--        </form>-->
-    <!--    </mat-card-content>-->
+                <mat-form-field class="flex-auto">
+                    <mat-label>Dato</mat-label>
+                    <input matInput formControlName="dato">
+                    <mat-error>{{formAd.controls.dato['errorMessage']}}</mat-error>
+                </mat-form-field>
+            </section>
+        </form>
+    </mat-card-content>
 
 
     <mat-card-title>
@@ -149,21 +107,34 @@
 
     <mat-card-content>
         <form [formGroup]="formComponente">
-            <section class="flex flex-auto gap-4 items-center content-center">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Selecciona el tipo de valor definido para los trimestres</mat-label>
-                    <mat-select formControlName="tipoValorTrim">
-                        <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
-                    </mat-select>
-                    <mat-error>{{formComponente.controls.tipoValorTrim['errorMessage']}}</mat-error>
-                </mat-form-field>
+            <section class="flex flex-auto flex-col">
+                <div class="flex flex-auto gap-4 items-center content-center">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Selecciona el tipo de valor definido para los trimestres</mat-label>
+                        <mat-select formControlName="tipoValorTrim">
+                            <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
+                        </mat-select>
+                        <mat-error>{{formComponente.controls.tipoValorTrim['errorMessage']}}</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field class="flex-auto">
-                    <mat-label>Selecciona el tipo de valor en el que se mostraran los avances</mat-label>
-                    <mat-select formControlName="tipoValorAvance">
-                        <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
-                    </mat-select>
-                    <mat-error>{{formComponente.controls.tipoValorAvance['errorMessage']}}</mat-error>
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Selecciona el tipo de valor en el que se mostraran los avances</mat-label>
+                        <mat-select formControlName="tipoValorAvance">
+                            <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
+                        </mat-select>
+                        <mat-error>{{formComponente.controls.tipoValorAvance['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!--                <fuse-alert [type]="'info'" [appearance]="'outline'" class="my-4">-->
+                <!--                    <span fuseAlertTitle>Forma de realizar calculos</span>-->
+                <!--                    1.- Da click en las variables que estan en la parte-->
+                <!--                </fuse-alert>-->
+                <mat-button-toggle-group>
+                    <mat-button-toggle></mat-button-toggle>
+                </mat-button-toggle-group>
+                <mat-form-field>
+                    <mat-label>Formula para calcular avance trimestral</mat-label>
+                    <input matInput>
                 </mat-form-field>
             </section>
         </form>

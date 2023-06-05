@@ -1,15 +1,15 @@
-import {ChangeDetectionStrategy, Component, effect, signal} from "@angular/core";
+import {ChangeDetectionStrategy, Component, effect, OnDestroy, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNotNil} from "@angular-ru/cdk/utils";
 import {IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {NgxToastService} from "@s-services/ngx-toast.service";
@@ -20,47 +20,48 @@ import {DisableControlModule} from "@angular-ru/cdk/directives";
 import {MatRadioChange, MatRadioModule} from "@angular/material/radio";
 import {FuseAlertModule} from "@s-fuse/alert";
 import * as math from 'mathjs';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-mod-comp-comun',
     standalone: true,
     imports: [CommonModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatTooltipModule, MatCheckboxModule,
-        RxReactiveFormsModule, MatCardModule, MatToolbarModule, DisableControlModule, MatRadioModule, FuseAlertModule],
+        RxReactiveFormsModule, MatCardModule, MatToolbarModule, DisableControlModule, MatRadioModule, FuseAlertModule, MatButtonToggleModule],
     templateUrl: './mod-comp-comun.html',
     styleUrls: ['./mod-comp-comun.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [fuseAnimations]
 })
-export class ModCompComun
+export class ModCompComun implements OnInit, OnDestroy
 {
+    protected readonly TiposFormulario = TiposFormulario;
     datos: IFormComun[] = [];
-    periodoAnt = signal<boolean>(false);
-
     tipoForm = TiposFormulario.COMUN;
-
     cargando = false;
-    valorAdicionalMulti: boolean = false;
-
     tipoValores = Object.values(TipoValores);
+    deshabilitar = true;
 
+    sub = new Subscription();
     validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
         allowDecimal: true,
         message: 'El valor debe ser numerico'
     })];
 
-    ctrlValorAdicional = new FormControl(0);
-
     formComun: FormGroup = this.fb.group({
         idIndicador: [null, RxwebValidators.required({message: 'El id del indicador es requerido'})],
         dato: [null, RxwebValidators.required({message: 'Es necesario la definicion para este campo'})],
-        idIndicadorAd: [null],
-        datoAd: [null],
-
 
         trim1: [0, this.validadorNumerico],
         trim2: [0, this.validadorNumerico],
         trim3: [0, this.validadorNumerico],
         trim4: [0, this.validadorNumerico]
+    });
+
+    formAd: FormGroup = this.fb.group({
+        idIndicador: [null, RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
+        dato: [null, this.validadorNumerico]
     });
 
     formTrimAnterior: FormGroup = this.fb.group({
@@ -75,39 +76,68 @@ export class ModCompComun
         tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})]
     })
 
-    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
+    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, private activatedRoute: ActivatedRoute)
     {
         effect(() =>
         {
-            if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
+            switch (this.tipoForm)
             {
-                this.formComun.patchValue(this.planeacionQuery.cuestionarioPbr());
-                this.formComun.disable();
+                case TiposFormulario.COMUN:
+                    if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
+                    {
+                        this.formComun.patchValue(this.planeacionQuery.cuestionarioPbr());
+                        this.formComun.disable();
+                        this.deshabilitar = false;
+                    }
+                    break;
+                case TiposFormulario.CON_OTRO_ID_PBR:
+                    if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
+                    {
+                        this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
+                    }
+                    break;
             }
         });
 
         effect(() =>
         {
-            if (isNotNil(this.planeacionQuery.sumatoriaPbr()))
+            switch (this.tipoForm)
             {
-                this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
-                this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
-                this.formComun.patchValue(this.planeacionQuery.sumatoriaPbr());
+                case TiposFormulario.COMUN:
+                    if (isNotNil(this.planeacionQuery.sumatoriaPbr()))
+                    {
+                        this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
+                        this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
+                        this.formComun.patchValue(this.planeacionQuery.sumatoriaPbr());
+                    }
+                    break;
+                case TiposFormulario.CON_OTRO_ID_PBR:
+                    if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
+                    {
+                        this.formAd.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
+                        this.formAd.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
+                    }
+                    break;
             }
         });
 
         effect(() =>
         {
-            if (this.periodoAnt())
+            const id = this.formComun.get('idIndicador').value;
+            const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, false);
+            if (isNotNil(periodoAnterior))
             {
-                const id = this.formComun.get('idIndicador').value;
-                const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.periodoAnt());
-                if (isNotNil(periodoAnterior))
-                {
-                    this.formTrimAnterior.patchValue(periodoAnterior);
-                }
+                this.formTrimAnterior.patchValue(periodoAnterior);
             }
         });
+    }
+
+    ngOnInit(): void
+    {
+        this.sub.add(this.activatedRoute.params.subscribe(params =>
+        {
+            console.log('Parametros en la ruta', params);
+        }));
     }
 
     agregarAlArreglo(): void
@@ -166,11 +196,6 @@ export class ModCompComun
         // })).subscribe();
     }
 
-    establecerValorUnico(e: MatCheckboxChange): void
-    {
-        this.valorAdicionalMulti = e.checked;
-    }
-
     cancelar(): void
     {
         const obj =
@@ -188,7 +213,7 @@ export class ModCompComun
 
     cambioSeleccionRdb(e: MatRadioChange): void
     {
-
+        this.tipoForm = e.value;
     }
 
     focoIndicador(): void
@@ -199,5 +224,10 @@ export class ModCompComun
     perdioFoco(): void
     {
         console.log('perdio el foco');
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

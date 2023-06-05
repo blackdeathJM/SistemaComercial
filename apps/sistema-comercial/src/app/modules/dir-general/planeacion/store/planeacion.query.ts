@@ -67,6 +67,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     {
         const planeacion = this.getAll().slice();
         const filtrarElAno = planeacion.find(value => value.ano === (anoActual - 1));
+
         if (isNil(filtrarElAno))
         {
             this.ngxToast.alertaToast('No se encontraron valores de un año anterior, puedes establecer valores manualmente', 'PBR');

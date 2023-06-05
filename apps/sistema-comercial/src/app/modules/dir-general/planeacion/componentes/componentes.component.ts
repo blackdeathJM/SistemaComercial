@@ -111,7 +111,7 @@ export class ComponentesComponent
     }
 
 
-    nuevoElemento(): void
+    nuevoComponente(): void
     {
         if (isNil(this.planeacionQuery.cuestionarioMir().componente))
         {

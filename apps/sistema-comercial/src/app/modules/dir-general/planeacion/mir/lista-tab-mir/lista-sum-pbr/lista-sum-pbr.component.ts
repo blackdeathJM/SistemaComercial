@@ -27,7 +27,6 @@ export class ListaSumPbrComponent
     {
         this._sumatoria = v;
     }
-
     _sumatoria: ISumatorias = null
 
     constructor(private mdr: MatDialog)
