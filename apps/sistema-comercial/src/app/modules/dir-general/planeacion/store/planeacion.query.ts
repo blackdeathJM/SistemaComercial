@@ -8,6 +8,7 @@ import {usuarioFil} from "@s-dir-general/store/planeacion.service";
 import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {AuthQuery} from "@s-core/auth/store/auth.query";
+import {makeVar} from "@apollo/client";
 
 @Injectable({providedIn: 'root'})
 export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
@@ -22,6 +23,10 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     sumatoriaPbr: WritableSignal<ISumatorias> = signal<ISumatorias>(null);
 
     centroGestor: WritableSignal<string> = signal<string>(null);
+
+    selectPrincipal = makeVar<boolean>(true);
+
+    asignarValorPrincipal = makeVar<boolean>(true);
 
     compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>
     {

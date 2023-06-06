@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule, Location} from '@angular/common';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ModCompComun} from "@s-dir-general/componentes/mod-componentes/mod-comp-comun/mod-comp-comun";
@@ -13,22 +13,26 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {fuseAnimations} from "@s-fuse/public-api";
 import {ActivatedRoute} from "@angular/router";
-import {isNil} from "@angular-ru/cdk/utils";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {Subscription} from "rxjs";
+import {isNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
-    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule, MatButtonModule, MatIconModule, MatTooltipModule],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
     animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModComponentesComponent implements OnInit
+export class ModComponentesComponent implements OnInit, OnDestroy
 {
     indice: number = 0;
+    esPbrPrincipal = true;
+    sub = new Subscription();
 
     constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private activatedRoute: ActivatedRoute, private location: Location)
     {
@@ -62,8 +66,13 @@ export class ModComponentesComponent implements OnInit
         this.indice = e;
     }
 
-    seleccionarElemento(pbr: IPbrCuestionario, b: boolean)
+    seleccionarPbr(b: boolean): void
     {
-        console.log()
+        this.planeacionQuery.asignarValorPrincipal(b);
+    }
+
+    ngOnDestroy(): void
+    {
+        this.sub.unsubscribe();
     }
 }

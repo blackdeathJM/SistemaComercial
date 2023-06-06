@@ -8,14 +8,44 @@
         </mat-form-field>
 
         <mat-form-field class="flex-auto">
-            <mat-select (valueChange)="pbrSeleccionado($event)" placeholder="Selecciona un elemento">
-                <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">{{pbr.dato}}</mat-option>
+            <mat-select (valueChange)="pbrSeleccionado($event)" placeholder="Selecciona un elemento" [hideSingleSelectionIndicator]="!planeacionQuery.selectPrincipal()">
+                <ng-container *ngIf="planeacionQuery.selectPrincipal()">
+                    <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">{{pbr.dato}}</mat-option>
+                </ng-container>
+                <ng-container *ngIf="!planeacionQuery.selectPrincipal()">
+                    <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">
+                        <div class="flex gap-8 items-center">
+                            <span class="flex-grow">{{pbr.dato}}</span>
+                            <button mat-icon-button color="primary" (click)="seleccionarPbr(true)" matTooltip="Asignarlo al id principal">
+                                <mat-icon svgIcon="feather:chevron-right"></mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" (click)="seleccionarPbr( false)" matTooltip="Asignar al id adcional">
+                                <mat-icon svgIcon="feather:chevrons-right"></mat-icon>
+                            </button>
+                        </div>
+                    </mat-option>
+                </ng-container>
             </mat-select>
         </mat-form-field>
-
+        <div>{{planeacionQuery.selectPrincipal()}}</div>
         <mat-form-field class="basis-1/4" *ngIf="planeacionQuery.compSumatoriasPbr().length > 0">
             <mat-select (valueChange)="sumatoriaSeleccionada($event)" placeholder="Selecciona una sumatoria">
-                <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">{{sumatoria.descripcion}}</mat-option>
+                <!--                <ng-container>-->
+                <!--                    <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">-->
+                <!--                        <div class="flex gap-8 items-center">-->
+                <!--                            <span class="flex-grow">{{sumatoria.descripcion}}</span>-->
+                <!--                            <button mat-icon-button color="primary" (click)="seleccionarPbr(true)" matTooltip="Asignarlo al id principal">-->
+                <!--                                <mat-icon svgIcon="feather:arrow-right"></mat-icon>-->
+                <!--                            </button>-->
+                <!--                            <button mat-icon-button color="primary" (click)="seleccionarPbr( false)" matTooltip="Asignar al id adcional">-->
+                <!--                                <mat-icon svgIcon="feather:arrow-down"></mat-icon>-->
+                <!--                            </button>-->
+                <!--                        </div>-->
+                <!--                    </mat-option>-->
+                <!--                </ng-container>-->
+                <ng-container>
+                    <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">{{sumatoria.descripcion}}</mat-option>
+                </ng-container>
             </mat-select>
         </mat-form-field>
     </mat-toolbar>

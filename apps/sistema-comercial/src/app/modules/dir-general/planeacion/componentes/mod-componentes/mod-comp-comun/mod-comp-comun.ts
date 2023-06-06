@@ -6,7 +6,7 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {isNotNil} from "@angular-ru/cdk/utils";
+import {isNil, isNotNil} from "@angular-ru/cdk/utils";
 import {IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -20,7 +20,8 @@ import {DisableControlModule} from "@angular-ru/cdk/directives";
 import {MatRadioChange, MatRadioModule} from "@angular/material/radio";
 import {FuseAlertModule} from "@s-fuse/alert";
 import * as math from 'mathjs';
-import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 
 @Component({
     selector: 'app-mod-comp-comun',
@@ -78,64 +79,50 @@ export class ModCompComun
         formula: ['', RxwebValidators.required({message: 'Es necesario que coloques la formula para calcular los avances trimestrales'})]
     })
 
-    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
+    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, public seleccionQuery: SeleccionQuery)
     {
         effect(() =>
         {
             this.esSumatoria = false;
-            switch (this.tipoForm)
+            const cuestionarioPbr = this.planeacionQuery.cuestionarioPbr();
+            if (isNil(cuestionarioPbr))
             {
-                case TiposFormulario.COMUN:
-                    if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
-                    {
-                        this.formComun.patchValue(this.planeacionQuery.cuestionarioPbr());
-                        this.formComun.disable();
-                        if (this.datos.length === 0)
-                        {
-                            this.deshabilitarRadioBtn = false;
-                        }
-                    }
-                    break;
-                case TiposFormulario.CON_OTRO_ID_PBR:
-                    if (this.cambiaAAd)
-                    {
-                        if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
-                        {
-                            this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
-                        } else
-                        {
+                return;
+            }
 
-                        }
-                    }
-                    break;
+            if (planeacionQuery.asignarValorPrincipal())
+            {
+                this.formComun.patchValue(cuestionarioPbr);
+                this.formComun.disable();
+                if (this.datos.length === 0)
+                {
+                    this.deshabilitarRadioBtn = false;
+                }
+            } else
+            {
+                this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
             }
         });
 
         effect(() =>
         {
             this.esSumatoria = true;
-            switch (this.tipoForm)
+            const sumatoria = this.planeacionQuery.sumatoriaPbr();
+
+            if (isNil(sumatoria))
             {
-                case TiposFormulario.COMUN:
-                    if (isNotNil(this.planeacionQuery.sumatoriaPbr()))
-                    {
-                        this.formComun.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
-                        this.formComun.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
-                        this.formComun.patchValue(this.planeacionQuery.sumatoriaPbr());
-                    }
-                    break;
-                case TiposFormulario.CON_OTRO_ID_PBR:
+                return;
+            }
 
-                    if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
-                    {
-                        this.formAd.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
-                        this.formAd.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
-                    }
-                    break;
-
-                case TiposFormulario.PERIODO_ANT:
-                    this.formConValoresDelPeriodoAnt();
-                    break;
+            if (planeacionQuery.asignarValorPrincipal())
+            {
+                this.formComun.get('idIndicador').setValue(sumatoria.idSumatoria);
+                this.formComun.get('dato').setValue(sumatoria.nombreSumatoria);
+                this.formComun.patchValue(sumatoria);
+            } else
+            {
+                this.formAd.get('idIndicador').setValue(sumatoria.idSumatoria);
+                this.formAd.get('dato').setValue(sumatoria.nombreSumatoria);
             }
         });
     }
@@ -225,6 +212,7 @@ export class ModCompComun
     cambioSeleccionRdb(e: MatRadioChange): void
     {
         this.tipoForm = e.value;
+        this.planeacionQuery.selectPrincipal(e.value !== TiposFormulario.CON_OTRO_ID_PBR);
         this.cambiaAAd = this.tipoForm === TiposFormulario.CON_OTRO_ID_PBR;
         //Mostramos trimestres del año anterior, obtenido los trimestres o las sumatorias pbrCuestionario o sumatoria
         this.formConValoresDelPeriodoAnt();
@@ -244,12 +232,4 @@ export class ModCompComun
             }
         }
     }
-
-    // agregarAFormula(e: MatButtonToggleChange): void
-    // {
-    //     // const valorAlmacenado = this.formTipoValores.get('formula').value;
-    //     // this.formTipoValores.get('formula').setValue(valorAlmacenado + e.value);
-    //
-    //     this.formTipoValores.get('formula').setValue()
-    // }
 }

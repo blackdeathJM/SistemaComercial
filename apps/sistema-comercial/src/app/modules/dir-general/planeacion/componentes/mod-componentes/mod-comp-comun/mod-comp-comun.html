@@ -1,12 +1,6 @@
 <mat-card>
     <mat-card-content>
         <form [formGroup]="formComun">
-            <mat-button-toggle-group class="flex flex-auto mb-2">
-                <mat-button-toggle class="flex-auto">Asignar valor principal</mat-button-toggle>
-                <mat-button-toggle class="flex-auto">Asignar valor adicional</mat-button-toggle>
-            </mat-button-toggle-group>
-
-
             <section class="flex flex-col flex-auto">
                 <mat-form-field class="flex-auto">
                     <mat-label>Id indicador</mat-label>
@@ -135,9 +129,9 @@
                 <!--                    <span fuseAlertTitle>Forma de realizar calculos</span>-->
                 <!--                    1.- Da click en las variables que estan en la parte-->
                 <!--                </fuse-alert>-->
-<!--                <mat-button-toggle-group multiple (change)="agregarAFormula($event)">-->
-<!--                    <mat-button-toggle *ngFor="let id of ids" [value]="id">{{id}}</mat-button-toggle>-->
-<!--                </mat-button-toggle-group>-->
+                <!--                <mat-button-toggle-group multiple (change)="agregarAFormula($event)">-->
+                <!--                    <mat-button-toggle *ngFor="let id of ids" [value]="id">{{id}}</mat-button-toggle>-->
+                <!--                </mat-button-toggle-group>-->
 
                 <mat-form-field>
                     <mat-label>Formula para calcular avance trimestral</mat-label>
