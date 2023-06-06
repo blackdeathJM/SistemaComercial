@@ -28,8 +28,9 @@ export class AccionesMirPbrComponent
     seleccionarPlaneacion(e: IPlaneacion): void
     {
         this.planeacionStore.setActive(e._id);
-        this.planeacionQuery.cuestionarioPbrV.set(e.pbrCuestionario);
+
         this.planeacionQuery.cuestionarioMirV.set(e.mirCuestionario);
+        this.planeacionQuery.cuestionarioPbrV.set(e.pbrCuestionario);
         this.planeacionQuery.sumatoriaPbrV.set(e.pbrSumatoria);
     }
 

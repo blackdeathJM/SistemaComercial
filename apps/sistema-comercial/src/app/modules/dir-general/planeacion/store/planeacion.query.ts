@@ -5,8 +5,9 @@ import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeaci
 import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {usuarioFil} from "@s-dir-general/store/planeacion.service";
-import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
+import {AuthQuery} from "@s-core/auth/store/auth.query";
 
 @Injectable({providedIn: 'root'})
 export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
@@ -25,16 +26,11 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>
     {
         const cuestionarioOriginal: IPbrCuestionario[] = this.cuestionarioPbrV().slice();
-
-        if (isNotNil(usuarioFil()))
+        if (usuarioFil())
         {
-            return cuestionarioOriginal.filter(value => value.idEmpleado === usuarioFil())
+            return cuestionarioOriginal.filter(value => value.idEmpleado === this.authQuery.getValue()._id);
         }
-        if (this.centroGestor())
-        {
-            return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
-        }
-        return this.cuestionarioPbrV();
+        return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
     });
 
     compCuestionarioMir: Signal<IMirCuestionario[]> = computed((): IMirCuestionario[] =>
@@ -57,7 +53,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         return [];
     });
 
-    constructor(protected planeacionStore: PlaneacionStore, private ngxToast: NgxToastService)
+    constructor(protected planeacionStore: PlaneacionStore, private ngxToast: NgxToastService, private authQuery: AuthQuery)
     {
         super(planeacionStore);
     }

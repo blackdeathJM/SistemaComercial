@@ -20,11 +20,12 @@ import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
+import {AuthQuery} from "@s-core/auth/store/auth.query";
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
 export const actCuestionario = makeVar<boolean>(false);
-export const usuarioFil = makeVar<string>(null);
+export const usuarioFil = makeVar<boolean>(false);
 
 export enum ValoresCamposMod
 {

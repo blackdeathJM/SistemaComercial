@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {CommonModule, Location} from '@angular/common';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ModCompComun} from "@s-dir-general/componentes/mod-componentes/mod-comp-comun/mod-comp-comun";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -12,22 +12,34 @@ import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/p
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {fuseAnimations} from "@s-fuse/public-api";
+import {ActivatedRoute} from "@angular/router";
+import {isNil} from "@angular-ru/cdk/utils";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
-    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule],
+    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule, MatButtonModule, MatIconModule],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
     animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModComponentesComponent
+export class ModComponentesComponent implements OnInit
 {
     indice: number = 0;
 
-    constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery)
+    constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private activatedRoute: ActivatedRoute, private location: Location)
     {
+    }
+
+    ngOnInit(): void
+    {
+        if (isNil(this.planeacionQuery.getActive()))
+        {
+            this.location.back();
+        }
     }
 
     filCentroGestor(e: string): void
@@ -48,5 +60,10 @@ export class ModComponentesComponent
     cambioIndice(e: number): void
     {
         this.indice = e;
+    }
+
+    seleccionarElemento(pbr: IPbrCuestionario, b: boolean)
+    {
+        console.log()
     }
 }

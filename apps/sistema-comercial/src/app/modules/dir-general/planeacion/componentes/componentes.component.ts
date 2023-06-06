@@ -113,9 +113,11 @@ export class ComponentesComponent
 
     nuevoComponente(): void
     {
-        if (isNil(this.planeacionQuery.cuestionarioMir().componente))
+        const mir = this.planeacionQuery.cuestionarioMir();
+        const _id = this.planeacionQuery.getActive()._id;
+        if (isNil(mir.componente))
         {
-            this.router.navigate(['../registro-componente'], {relativeTo: this.activatedRoute}).then();
+            this.router.navigate(['registro-componente', _id, mir.idIndicador], {relativeTo: this.activatedRoute}).then();
         } else
         {
             const message = 'Ya existe un componente para este indicador, si deseas reemplazar este componente confirma que deseas hacerlo';
@@ -126,9 +128,10 @@ export class ComponentesComponent
                     const args: TReemplazarComp =
                         {
                             _id: this.planeacionQuery.getActive()._id,
-                            idIndicador: this.planeacionQuery.cuestionarioMir().idIndicador
+                            idIndicador: mir.idIndicador
                         };
-                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.router.navigate(['../registro-componente'], {relativeTo: this.activatedRoute}))).subscribe();
+                    this.planeacionService.reemplazarComp(args).pipe(finalize(() => this.router.navigate(['registro-componente', _id, mir.idIndicador],
+                        {relativeTo: this.activatedRoute}).then())).subscribe();
                 }
             });
         }

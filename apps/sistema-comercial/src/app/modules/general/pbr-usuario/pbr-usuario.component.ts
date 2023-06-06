@@ -5,9 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import {ModAvancesPbrComponent} from '@s-general/pbr-usuario/mod-avances-pbr/mod-avances-pbr.component';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {PlaneacionService, usuarioFil} from '@s-dir-general/store/planeacion.service';
-import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     selector: 'app-pbr-usuario',
@@ -19,15 +17,14 @@ import {AuthQuery} from '@s-core/auth/store/auth.query';
 })
 export default class PbrUsuarioComponent implements OnInit, AfterViewInit, OnDestroy
 {
-    constructor(private planeacionService: PlaneacionService, private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery,
-                private authQuery: AuthQuery)
+    constructor(private planeacionService: PlaneacionService, public planeacionQuery: PlaneacionQuery)
     {
     }
 
     ngOnInit(): void
     {
         //Obtenermos el usuario que ha iniciado sesion y la asignamos a una variable para usarla en el componente lista del pbr
-        usuarioFil(this.authQuery.getValue()._id);
+        usuarioFil(true);
         // Pasamos el valor del centro gestor a null, por si el usuario accede a
     }
 
@@ -39,6 +36,6 @@ export default class PbrUsuarioComponent implements OnInit, AfterViewInit, OnDes
     }
     ngOnDestroy(): void
     {
-        usuarioFil(null);
+        usuarioFil(false);
     }
 }

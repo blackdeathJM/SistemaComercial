@@ -265,6 +265,10 @@ type FormComunType {
   dato: String
   idIndicadorAd: String
   datoAd: String
+  trim1Ant: Float
+  trim2Ant: Float
+  trim3Ant: Float
+  trim4Ant: Float
 }
 
 type ComponenteType {
@@ -470,7 +474,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1685979656
+  tiempo: Int = 1686047215
   titulo: String
   usarRouter: Boolean = false
 }
@@ -608,6 +612,10 @@ input FormComunInput {
   dato: String = null
   idIndicadorAd: String = null
   datoAd: String = null
+  trim1Ant: Float = 0
+  trim2Ant: Float = 0
+  trim3Ant: Float = 0
+  trim4Ant: Float = 0
 }
 
 input ComponenteInput {

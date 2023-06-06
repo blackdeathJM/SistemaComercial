@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, effect} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -20,9 +20,7 @@ import {DisableControlModule} from "@angular-ru/cdk/directives";
 import {MatRadioChange, MatRadioModule} from "@angular/material/radio";
 import {FuseAlertModule} from "@s-fuse/alert";
 import * as math from 'mathjs';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
+import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @Component({
     selector: 'app-mod-comp-comun',
@@ -34,16 +32,19 @@ import {Subscription} from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [fuseAnimations]
 })
-export class ModCompComun implements OnInit, OnDestroy
+export class ModCompComun
 {
     protected readonly TiposFormulario = TiposFormulario;
     datos: IFormComun[] = [];
+    ids: string[] = [];
     tipoForm = TiposFormulario.COMUN;
     cargando = false;
+    esSumatoria = false;
     tipoValores = Object.values(TipoValores);
-    deshabilitar = true;
+    deshabilitarRadioBtn = true;
 
-    sub = new Subscription();
+    cambiaAAd = false;
+
     validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
         allowDecimal: true,
         message: 'El valor debe ser numerico'
@@ -60,8 +61,8 @@ export class ModCompComun implements OnInit, OnDestroy
     });
 
     formAd: FormGroup = this.fb.group({
-        idIndicador: [null, RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
-        dato: [null, this.validadorNumerico]
+        idIndicador: ['', RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
+        dato: ['', this.validadorNumerico]
     });
 
     formTrimAnterior: FormGroup = this.fb.group({
@@ -71,15 +72,17 @@ export class ModCompComun implements OnInit, OnDestroy
         trim4: [0, this.validadorNumerico]
     });
 
-    formComponente: FormGroup = this.fb.group({
+    formTipoValores: FormGroup = this.fb.group({
         tipoValorTrim: [null, RxwebValidators.required({message: 'Es necesario seleccionar que tipo de valor son los trimestres'})],
-        tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})]
+        tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})],
+        formula: ['', RxwebValidators.required({message: 'Es necesario que coloques la formula para calcular los avances trimestrales'})]
     })
 
-    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, private activatedRoute: ActivatedRoute)
+    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService)
     {
         effect(() =>
         {
+            this.esSumatoria = false;
             switch (this.tipoForm)
             {
                 case TiposFormulario.COMUN:
@@ -87,13 +90,22 @@ export class ModCompComun implements OnInit, OnDestroy
                     {
                         this.formComun.patchValue(this.planeacionQuery.cuestionarioPbr());
                         this.formComun.disable();
-                        this.deshabilitar = false;
+                        if (this.datos.length === 0)
+                        {
+                            this.deshabilitarRadioBtn = false;
+                        }
                     }
                     break;
                 case TiposFormulario.CON_OTRO_ID_PBR:
-                    if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
+                    if (this.cambiaAAd)
                     {
-                        this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
+                        if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
+                        {
+                            this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
+                        } else
+                        {
+
+                        }
                     }
                     break;
             }
@@ -101,6 +113,7 @@ export class ModCompComun implements OnInit, OnDestroy
 
         effect(() =>
         {
+            this.esSumatoria = true;
             switch (this.tipoForm)
             {
                 case TiposFormulario.COMUN:
@@ -112,57 +125,56 @@ export class ModCompComun implements OnInit, OnDestroy
                     }
                     break;
                 case TiposFormulario.CON_OTRO_ID_PBR:
+
                     if (isNotNil(this.planeacionQuery.cuestionarioPbr()))
                     {
                         this.formAd.get('idIndicador').setValue(this.planeacionQuery.sumatoriaPbr().idSumatoria);
                         this.formAd.get('dato').setValue(this.planeacionQuery.sumatoriaPbr().nombreSumatoria);
                     }
                     break;
+
+                case TiposFormulario.PERIODO_ANT:
+                    this.formConValoresDelPeriodoAnt();
+                    break;
             }
         });
-
-        effect(() =>
-        {
-            const id = this.formComun.get('idIndicador').value;
-            const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, false);
-            if (isNotNil(periodoAnterior))
-            {
-                this.formTrimAnterior.patchValue(periodoAnterior);
-            }
-        });
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add(this.activatedRoute.params.subscribe(params =>
-        {
-            console.log('Parametros en la ruta', params);
-        }));
     }
 
     agregarAlArreglo(): void
     {
+        const {idIndicador, dato} = this.formComun.value;
+
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
 
-        console.log(this.formComun.value);
-        // this.datos.push({
-        //     idIndicador: this.formComun.get('idIndicador').value,
-        //     dato: this.formComun.get('dato').value,
-        //     trim1: +this.formComun.get('trim1').value,
-        //     trim2: +this.formComun.get('trim2').value,
-        //     trim3: +this.formComun.get('trim3').value,
-        //     trim4: +this.formComun.get('trim4').value,
-        //     trim1Ant: this.periodoAnt ? +trim1 : 0,
-        //     trim2Ant: this.periodoAnt ? +trim2 : 0,
-        //     trim3Ant: this.periodoAnt ? +trim3 : 0,
-        //     trim4Ant: this.periodoAnt ? +trim4 : 0,
-        //     valorAdicional: +this.formComun.get('valorAdicional').value
-        // });
+        const idIndicadorAd: string = this.formAd.get('idIndicador').value;
+        const datoAd: string = this.formAd.get('dato').value;
 
+        this.datos.push({
+            idIndicador,
+            idIndicadorAd,
+            dato,
+            datoAd,
+
+            trim1Ant: +trim1,
+            trim2Ant: +trim2,
+            trim3Ant: +trim3,
+            trim4Ant: +trim4
+        });
+
+        this.ids.push(idIndicador)
+        if (idIndicadorAd)
+        {
+            this.ids.push(idIndicadorAd);
+        }
+
+        this.formTipoValores.get('formula').setValue(this.ids);
+
+        this.deshabilitarRadioBtn = true;
         this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
 
         this.formComun.reset();
         this.formTrimAnterior.reset();
+        this.formAd.reset();
     }
 
     registrar(): void
@@ -208,26 +220,36 @@ export class ModCompComun implements OnInit, OnDestroy
         const formula = `(valor1 - valor2) / valor3 *3`;
 
         const resultado = math.evaluate(formula, arreglo);
-        console.log(resultado);
     }
 
     cambioSeleccionRdb(e: MatRadioChange): void
     {
         this.tipoForm = e.value;
+        this.cambiaAAd = this.tipoForm === TiposFormulario.CON_OTRO_ID_PBR;
+        //Mostramos trimestres del año anterior, obtenido los trimestres o las sumatorias pbrCuestionario o sumatoria
+        this.formConValoresDelPeriodoAnt();
     }
 
-    focoIndicador(): void
+    formConValoresDelPeriodoAnt(): void
     {
-        console.log('foco');
+        if (this.tipoForm === TiposFormulario.PERIODO_ANT)
+        {
+            this.formAd.reset();
+            const id = this.formComun.get('idIndicador').value;
+            const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.esSumatoria);
+
+            if (isNotNil(periodoAnterior))
+            {
+                this.formTrimAnterior.patchValue(periodoAnterior);
+            }
+        }
     }
 
-    perdioFoco(): void
-    {
-        console.log('perdio el foco');
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
-    }
+    // agregarAFormula(e: MatButtonToggleChange): void
+    // {
+    //     // const valorAlmacenado = this.formTipoValores.get('formula').value;
+    //     // this.formTipoValores.get('formula').setValue(valorAlmacenado + e.value);
+    //
+    //     this.formTipoValores.get('formula').setValue()
+    // }
 }

@@ -17,8 +17,12 @@ fragment fragFormComun on FormComunType
 
     idIndicadorAd
     datoAd
-}
 
+    trim1Ant
+    trim2Ant
+    trim3Ant
+    trim4Ant
+}
 fragment fragPlanta on FormPlantaType
 {
     sstE
