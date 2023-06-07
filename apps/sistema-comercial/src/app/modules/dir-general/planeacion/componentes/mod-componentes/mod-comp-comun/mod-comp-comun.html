@@ -4,33 +4,33 @@
             <section class="flex flex-col flex-auto">
                 <mat-form-field class="flex-auto">
                     <mat-label>Id indicador</mat-label>
-                    <input matInput formControlName="idIndicador">
+                    <input matInput formControlName="idIndicador" readonly>
                     <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="flex-auto">
                     <mat-label>Dato</mat-label>
-                    <input matInput formControlName="dato">
+                    <input matInput formControlName="dato" readonly>
                     <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
                 </mat-form-field>
 
                 <div class="flex flex-auto gap-4 items-center content-center">
                     <mat-form-field class="flex-auto">
                         <mat-label>Trimestre 1</mat-label>
-                        <input matInput formControlName="trim1">
+                        <input matInput formControlName="trim1" readonly>
                     </mat-form-field>
                     <mat-form-field class="flex-auto">
                         <mat-label>Trimestre 2</mat-label>
-                        <input matInput formControlName="trim2">
+                        <input matInput formControlName="trim2" readonly>
                     </mat-form-field>
                     <mat-form-field class="flex-auto">
                         <mat-label>Trimestre 3</mat-label>
-                        <input matInput formControlName="trim3">
+                        <input matInput formControlName="trim3" readonly>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trimestre 4</mat-label>
-                        <input matInput formControlName="trim4">
+                        <input matInput formControlName="trim4" readonly>
                     </mat-form-field>
                 </div>
 
@@ -49,25 +49,25 @@
                 <div class="flex flex-auto gap-4">
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant 1</mat-label>
-                        <input matInput formControlName="trim1">
+                        <input matInput formControlName="trim1" readonly>
                         <mat-error>{{formTrimAnterior.controls.trim1['errorMessage']}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant. 2</mat-label>
-                        <input matInput formControlName="trim2">
+                        <input matInput formControlName="trim2" readonly>
                         <mat-error>{{formTrimAnterior.controls.trim2['errorMessage']}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant. 3</mat-label>
-                        <input matInput formControlName="trim3">
+                        <input matInput formControlName="trim3" readonly>
                         <mat-error>{{formTrimAnterior.controls.trim3['errorMessage']}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant. 4</mat-label>
-                        <input matInput formControlName="trim4">
+                        <input matInput formControlName="trim4" readonly>
                         <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -90,6 +90,26 @@
                     <input matInput formControlName="dato">
                     <mat-error>{{formAd.controls.dato['errorMessage']}}</mat-error>
                 </mat-form-field>
+
+                <div class="flex flex-auto gap-4 items-center content-center">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trimestre 1</mat-label>
+                        <input matInput formControlName="trim1" readonly>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trimestre 2</mat-label>
+                        <input matInput formControlName="trim2" readonly>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trimestre 3</mat-label>
+                        <input matInput formControlName="trim3" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Trimestre 4</mat-label>
+                        <input matInput formControlName="trim4" readonly>
+                    </mat-form-field>
+                </div>
             </section>
         </form>
     </mat-card-content>
@@ -132,7 +152,6 @@
                 <!--                <mat-button-toggle-group multiple (change)="agregarAFormula($event)">-->
                 <!--                    <mat-button-toggle *ngFor="let id of ids" [value]="id">{{id}}</mat-button-toggle>-->
                 <!--                </mat-button-toggle-group>-->
-
                 <mat-form-field>
                     <mat-label>Formula para calcular avance trimestral</mat-label>
                     <input matInput formControlName="formula">
@@ -148,7 +167,7 @@
                 <mat-icon svgIcon="mat_solid:cancel"></mat-icon>
                 Cancelar
             </button>
-            <button mat-raised-button class="flex-auto" color="primary">
+            <button mat-raised-button class="flex-auto" color="primary" (click)="registrar()" [disabled]="cargando || formTipoValores.invalid">
                 <mat-icon svgIcon="mat_solid:save"></mat-icon>
                 Registrar componente
             </button>

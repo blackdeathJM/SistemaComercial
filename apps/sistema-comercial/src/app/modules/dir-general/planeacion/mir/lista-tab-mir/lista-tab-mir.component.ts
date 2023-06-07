@@ -20,6 +20,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Component({
     selector: 'app-lista-tab-mir',
@@ -45,7 +46,8 @@ export class ListaTabMirComponent
     cambioDeSeleccion(e: MatButtonToggleChange, i: number): void
     {
         this.indice = i;
-        this.planeacionQuery.cuestionarioMir.set({...e.value});
+        const cuestionarioMir = e.value as IMirCuestionario;
+        this.planeacionQuery.cuestionarioMir.set(cuestionarioMir);
     }
 
     nuevoElemento(): void
@@ -87,14 +89,9 @@ export class ListaTabMirComponent
     {
     }
 
-    trackByFn(index: number): number
-    {
-        return index;
-    }
-
     cambiarDireccion(dir: string): void
     {
-        const arregloMir = this.planeacionQuery.cuestionarioMirV();
+        const arregloMir = this.planeacionQuery.compCuestionarioMir();
         if (dir === 'siguiente' && this.indice < arregloMir.length - 1)
         {
             this.indice++;
@@ -103,7 +100,11 @@ export class ListaTabMirComponent
         {
             this.indice--;
         }
+        this.planeacionQuery.cuestionarioMir.set(arregloMir[this.indice]);
+    }
 
-        this.planeacionQuery.cuestionarioMir.set({...arregloMir[this.indice]});
+    trackByFn(index: number): number
+    {
+        return index;
     }
 }

@@ -8,44 +8,41 @@
         </mat-form-field>
 
         <mat-form-field class="flex-auto">
-            <mat-select (valueChange)="pbrSeleccionado($event)" placeholder="Selecciona un elemento" [hideSingleSelectionIndicator]="!planeacionQuery.selectPrincipal()">
-                <ng-container *ngIf="planeacionQuery.selectPrincipal()">
-                    <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">{{pbr.dato}}</mat-option>
-                </ng-container>
-                <ng-container *ngIf="!planeacionQuery.selectPrincipal()">
-                    <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">
-                        <div class="flex gap-8 items-center">
-                            <span class="flex-grow">{{pbr.dato}}</span>
-                            <button mat-icon-button color="primary" (click)="seleccionarPbr(true)" matTooltip="Asignarlo al id principal">
-                                <mat-icon svgIcon="feather:chevron-right"></mat-icon>
-                            </button>
-                            <button mat-icon-button color="primary" (click)="seleccionarPbr( false)" matTooltip="Asignar al id adcional">
-                                <mat-icon svgIcon="feather:chevrons-right"></mat-icon>
-                            </button>
-                        </div>
-                    </mat-option>
-                </ng-container>
+            <mat-select placeholder="Selecciona un elemento" hideSingleSelectionIndicator>
+                <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">
+                    <div class="flex gap-2 items-center">
+                        <span class="flex-grow">{{pbr.dato}}</span>
+                        <button mat-icon-button color="primary" (click)="seleccionarPbr(pbr,asignacion.principal)" matTooltip="Asignarlo al id principal">
+                            <mat-icon svgIcon="feather:chevron-right"></mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)="seleccionarPbr( pbr,asignacion.adicional)" matTooltip="Asignar al id adcional" [disabled]="planeacionQuery.desactivarBtnFormAd()">
+                            <mat-icon svgIcon="feather:chevrons-right"></mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)="seleccionarPbr( pbr,asignacion.formula)" matTooltip="Asignar al id a la formula">
+                            <mat-icon svgIcon="mat_solid:power_input"></mat-icon>
+                        </button>
+                    </div>
+                </mat-option>
             </mat-select>
         </mat-form-field>
-        <div>{{planeacionQuery.selectPrincipal()}}</div>
+
         <mat-form-field class="basis-1/4" *ngIf="planeacionQuery.compSumatoriasPbr().length > 0">
-            <mat-select (valueChange)="sumatoriaSeleccionada($event)" placeholder="Selecciona una sumatoria">
-                <!--                <ng-container>-->
-                <!--                    <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">-->
-                <!--                        <div class="flex gap-8 items-center">-->
-                <!--                            <span class="flex-grow">{{sumatoria.descripcion}}</span>-->
-                <!--                            <button mat-icon-button color="primary" (click)="seleccionarPbr(true)" matTooltip="Asignarlo al id principal">-->
-                <!--                                <mat-icon svgIcon="feather:arrow-right"></mat-icon>-->
-                <!--                            </button>-->
-                <!--                            <button mat-icon-button color="primary" (click)="seleccionarPbr( false)" matTooltip="Asignar al id adcional">-->
-                <!--                                <mat-icon svgIcon="feather:arrow-down"></mat-icon>-->
-                <!--                            </button>-->
-                <!--                        </div>-->
-                <!--                    </mat-option>-->
-                <!--                </ng-container>-->
-                <ng-container>
-                    <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">{{sumatoria.descripcion}}</mat-option>
-                </ng-container>
+            <mat-select placeholder="Selecciona una sumatoria" hideSingleSelectionIndicator>
+                <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">
+                    <div class="flex gap-2 items-center">
+                        <span class="flex-grow">{{sumatoria.descripcion}}</span>
+                        <button mat-icon-button color="primary" (click)="seleccionarSumatoria(sumatoria ,asignacion.principal)" matTooltip="Asignarlo al id principal">
+                            <mat-icon svgIcon="feather:chevron-right"></mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)="seleccionarSumatoria( sumatoria,asignacion.adicional)" matTooltip="Asignar al id adcional" [disabled]="planeacionQuery.desactivarBtnFormAd()">
+                            <mat-icon svgIcon="feather:chevrons-right"></mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="primary" (click)="seleccionarSumatoria( sumatoria,asignacion.formula)" matTooltip="Asignar id a la formula">
+                            <mat-icon svgIcon="mat_solid:power_input"></mat-icon>
+                        </button>
+                    </div>
+                </mat-option>
             </mat-select>
         </mat-form-field>
     </mat-toolbar>
@@ -56,7 +53,7 @@
                 <mat-tab-group [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndice($event)">
                     <mat-tab label="Form comun">
                         <ng-container *ngIf="indice === 0">
-                            <app-mod-comp-comun></app-mod-comp-comun>
+                            <app-mod-comp-comun [idIndicadorMir]="idIndicadorMir"></app-mod-comp-comun>
                         </ng-container>
                     </mat-tab>
                     <mat-tab label="Form PTAR">

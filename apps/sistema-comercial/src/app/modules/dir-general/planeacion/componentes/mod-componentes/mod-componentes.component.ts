@@ -16,8 +16,9 @@ import {ActivatedRoute} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {Subscription} from "rxjs";
 import {isNil} from "@angular-ru/cdk/utils";
+import {AsigFormsComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-mod-componentes',
@@ -31,7 +32,8 @@ import {isNil} from "@angular-ru/cdk/utils";
 export class ModComponentesComponent implements OnInit, OnDestroy
 {
     indice: number = 0;
-    esPbrPrincipal = true;
+    idIndicadorMir = null;
+    protected readonly asignacion = AsigFormsComponente;
     sub = new Subscription();
 
     constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private activatedRoute: ActivatedRoute, private location: Location)
@@ -44,6 +46,7 @@ export class ModComponentesComponent implements OnInit, OnDestroy
         {
             this.location.back();
         }
+        this.activatedRoute.params.subscribe(params => this.idIndicadorMir = params.idMir);
     }
 
     filCentroGestor(e: string): void
@@ -51,24 +54,21 @@ export class ModComponentesComponent implements OnInit, OnDestroy
         this.planeacionQuery.centroGestor.set(e);
     }
 
-    pbrSeleccionado(e: IPbrCuestionario): void
-    {
-        this.planeacionQuery.cuestionarioPbr.set(e);
-    }
-
-    sumatoriaSeleccionada(e: ISumatorias): void
-    {
-        this.planeacionQuery.sumatoriaPbr.set(e);
-    }
-
     cambioIndice(e: number): void
     {
         this.indice = e;
     }
 
-    seleccionarPbr(b: boolean): void
+    seleccionarPbr(pbr: IPbrCuestionario, asig: AsigFormsComponente): void
     {
-        this.planeacionQuery.asignarValorPrincipal(b);
+        this.planeacionQuery.asigForm(asig);
+        this.planeacionQuery.cuestionarioPbr.set(pbr);
+    }
+
+    seleccionarSumatoria(sumatoria: ISumatorias, asig: AsigFormsComponente): void
+    {
+        this.planeacionQuery.asigForm(asig);
+        this.planeacionQuery.sumatoriaPbr.set(sumatoria)
     }
 
     ngOnDestroy(): void

@@ -97,7 +97,7 @@ dependencies:
     version: 3.0.1(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(express@4.18.2)
   '@ngneat/transloco':
     specifier: 4.2.7
-    version: 4.2.7(@angular/core@16.0.4)(fs-extra@11.1.1)(glob@10.2.6)(rxjs@7.8.1)
+    version: 4.2.7(@angular/core@16.0.4)(fs-extra@11.1.1)(glob@10.2.7)(rxjs@7.8.1)
   '@rxweb/generics':
     specifier: ^0.0.1-4
     version: 0.0.1-4
@@ -162,8 +162,8 @@ dependencies:
     specifier: ^11.1.1
     version: 11.1.1
   glob:
-    specifier: ^10.2.6
-    version: 10.2.6
+    specifier: ^10.2.7
+    version: 10.2.7
   graphql:
     specifier: ^16.6.0
     version: 16.6.0
@@ -204,8 +204,8 @@ dependencies:
     specifier: ^6.0.0
     version: 6.0.0(@angular/core@16.0.4)(luxon@3.3.0)
   marked:
-    specifier: ^5.0.4
-    version: 5.0.4
+    specifier: ^5.0.5
+    version: 5.0.5
   mathjs:
     specifier: ^11.8.0
     version: 11.8.0
@@ -229,7 +229,7 @@ dependencies:
     version: 3.0.0(@types/file-saver@2.0.5)
   ngx-markdown:
     specifier: 16.0.0
-    version: 16.0.0(@angular/common@16.0.4)(@angular/core@16.0.4)(@angular/platform-browser@16.0.4)(@types/marked@5.0.0)(marked@5.0.4)(rxjs@7.8.1)(zone.js@0.13.0)
+    version: 16.0.0(@angular/common@16.0.4)(@angular/core@16.0.4)(@angular/platform-browser@16.0.4)(@types/marked@5.0.0)(marked@5.0.5)(rxjs@7.8.1)(zone.js@0.13.0)
   ngx-material-file-input:
     specifier: ^4.0.1
     version: 4.0.1(@angular/cdk@16.0.3)(@angular/common@16.0.4)(@angular/core@16.0.4)(@angular/material@16.0.3)
@@ -6771,7 +6771,7 @@ packages:
       tslib: 2.5.3
     dev: false
 
-  /@ngneat/transloco@4.2.7(@angular/core@16.0.4)(fs-extra@11.1.1)(glob@10.2.6)(rxjs@7.8.1):
+  /@ngneat/transloco@4.2.7(@angular/core@16.0.4)(fs-extra@11.1.1)(glob@10.2.7)(rxjs@7.8.1):
     resolution: {integrity: sha512-NMrIoDfeqQhqZlt6uFOuV9OvpHAwNKC2fOAYkTsLGRs6JhcsRdJX+jYY1PL/9Wziv5HartcUTFdbAJ/czHRGRQ==}
     peerDependencies:
       '@angular/core': '>=13.0.0'
@@ -6783,7 +6783,7 @@ packages:
       '@ngneat/transloco-utils': 3.0.5
       flat: 5.0.2
       fs-extra: 11.1.1
-      glob: 10.2.6
+      glob: 10.2.7
       lodash.kebabcase: 4.1.1
       ora: 5.4.1
       replace-in-file: 6.3.5
@@ -10476,7 +10476,7 @@ packages:
     dependencies:
       '@npmcli/fs': 3.1.0
       fs-minipass: 3.0.0
-      glob: 10.2.6
+      glob: 10.2.7
       lru-cache: 7.14.1
       minipass: 5.0.0
       minipass-collect: 1.0.2
@@ -13431,8 +13431,8 @@ packages:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
     dev: true
 
-  /glob@10.2.6:
-    resolution: {integrity: sha512-U/rnDpXJGF414QQQZv5uVsabTVxMSwzS5CH0p3DRCIV6ownl4f7PzGnkGmvlum2wB+9RlJWJZ6ACU1INnBqiPA==}
+  /glob@10.2.7:
+    resolution: {integrity: sha512-jTKehsravOJo8IJxUGfZILnkvVJM/MOfHRs8QcXolVef2zNI9Tqyy5+SeuOAZd3upViEZQLyFpQhYiHLrMUNmA==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
     dependencies:
@@ -15718,8 +15718,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /marked@5.0.4:
-    resolution: {integrity: sha512-r0W8/DK56fAkV0qfUCO9cEt/VlFWUzoJOqEigvijmsVkTuPOHckh7ZutNJepRO1AxHhK96/9txonHg4bWd/aLA==}
+  /marked@5.0.5:
+    resolution: {integrity: sha512-auTmKJTBwZM/GLVFOhmkY7pL8v/0DxiDaXRC2kEyajcNJ0XXn9NphLD0106dbWrbPwcyD4Y0Dus16OkCzUMkfg==}
     engines: {node: '>= 18'}
     hasBin: true
     dev: false
@@ -16209,7 +16209,7 @@ packages:
       - '@types/file-saver'
     dev: false
 
-  /ngx-markdown@16.0.0(@angular/common@16.0.4)(@angular/core@16.0.4)(@angular/platform-browser@16.0.4)(@types/marked@5.0.0)(marked@5.0.4)(rxjs@7.8.1)(zone.js@0.13.0):
+  /ngx-markdown@16.0.0(@angular/common@16.0.4)(@angular/core@16.0.4)(@angular/platform-browser@16.0.4)(@types/marked@5.0.0)(marked@5.0.5)(rxjs@7.8.1)(zone.js@0.13.0):
     resolution: {integrity: sha512-/rlbXi+HBscJCDdwaTWIUrRkvwJicPnuAgeugOCZa0UbZ4VCWV3U0+uB1Zv6krRDF6FXJNXNLTUrMZV7yH8I6A==}
     peerDependencies:
       '@angular/common': ^16.0.0
@@ -16224,7 +16224,7 @@ packages:
       '@angular/core': 16.0.4(rxjs@7.8.1)(zone.js@0.13.0)
       '@angular/platform-browser': 16.0.4(@angular/animations@16.0.4)(@angular/common@16.0.4)(@angular/core@16.0.4)
       '@types/marked': 5.0.0
-      marked: 5.0.4
+      marked: 5.0.5
       rxjs: 7.8.1
       tslib: 2.5.3
       zone.js: 0.13.0

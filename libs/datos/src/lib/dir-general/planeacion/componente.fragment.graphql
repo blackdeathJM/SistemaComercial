@@ -3,6 +3,7 @@ fragment fragComponente on ComponenteType
     tipoValorTrim
     tipoValorAvance
     tipoForm
+    ids
     formComun {
         ...fragFormComun
     }

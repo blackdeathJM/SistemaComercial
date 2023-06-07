@@ -1,41 +1,7 @@
 import {Field, Float, ID, InputType, ObjectType, PartialType} from "@nestjs/graphql";
 import {IComponente, IFormComun, IFormPlanta} from "./componente.interface";
 // import {v4 as uuidv4} from 'uuid'
-import {IsNotEmpty, IsNumber, IsOptional} from "class-validator";
-import {ITabla} from "../../../tabla.interface";
-
-@ObjectType('TablaType')
-@InputType('TablaInput')
-export class TablaDto implements ITabla
-{
-    @IsNotEmpty({message: 'Es necesaria la definicion para la columna'})
-    @Field(() => String, {nullable: true, defaultValue: null})
-    def: string;
-
-    @IsNotEmpty({message: 'Es necesario asignar una etiqueta para la columna'})
-    @Field(() => String, {nullable: true, defaultValue: null})
-    etiqueta: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    formato: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    html: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    llaveDato: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    tipoDeDato: string;
-
-    @IsNotEmpty({message: 'Es necesario que asignes un ancho a la columna'})
-    @Field(() => String, {nullable: true, defaultValue: 'auto'})
-    width: string;
-}
+import {IsArray, IsNotEmpty, IsNumber, IsOptional} from "class-validator";
 
 @ObjectType('FormPlantaType')
 @InputType('FormPlantaInput')
@@ -119,13 +85,13 @@ export class ComponenteDto implements IComponente
     @Field(() => String, {nullable: true, defaultValue: null})
     tipoForm: string;
 
-    @IsOptional()
-    @Field(() => [TablaDto], {nullable: true, defaultValue: []})
-    tablaColumnas: TablaDto[];
-
     @IsNotEmpty({message: 'Es necesario definir la formula para calcular el trimestre'})
     @Field(() => String, {nullable: true, defaultValue: null})
     formula: string;
+
+    @IsArray({message: 'Los ids debe ser un array'})
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    ids: string[];
 }
 
 @InputType('RegComponenteInput')

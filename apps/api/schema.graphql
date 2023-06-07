@@ -243,16 +243,6 @@ type SeleccionType {
   tipo: [String!]
 }
 
-type TablaType {
-  def: String
-  etiqueta: String
-  formato: String
-  html: String
-  llaveDato: String
-  tipoDeDato: String
-  width: String
-}
-
 type FormPlantaType {
   ptarE: String
   sstE: Float
@@ -277,8 +267,8 @@ type ComponenteType {
   tipoValorTrim: String
   tipoValorAvance: String
   tipoForm: String
-  tablaColumnas: [TablaType!]
   formula: String
+  ids: [String!]
 }
 
 type MirCuestionarioType {
@@ -474,7 +464,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1686074007
+  tiempo: Int = 1686128040
   titulo: String
   usarRouter: Boolean = false
 }
@@ -590,16 +580,6 @@ input SeleccionInput {
   tipo: [String!] = []
 }
 
-input TablaInput {
-  def: String = null
-  etiqueta: String = null
-  formato: String = null
-  html: String = null
-  llaveDato: String = null
-  tipoDeDato: String = null
-  width: String = "auto"
-}
-
 input FormPlantaInput {
   ptarE: String = null
   sstE: Float = 0
@@ -624,8 +604,8 @@ input ComponenteInput {
   tipoValorTrim: String = null
   tipoValorAvance: String = null
   tipoForm: String = null
-  tablaColumnas: [TablaInput!] = []
   formula: String = null
+  ids: [String!] = []
 }
 
 input MirCuestionarioInput {
@@ -939,8 +919,8 @@ input RegComponenteInput {
   tipoValorTrim: String = null
   tipoValorAvance: String = null
   tipoForm: String = null
-  tablaColumnas: [TablaInput!] = []
   formula: String = null
+  ids: [String!] = []
   _id: ID
   idIndicadorMir: String
 }

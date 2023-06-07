@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, effect} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import {ChangeDetectionStrategy, Component, effect, Input} from "@angular/core";
+import {CommonModule, Location} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -7,7 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNil, isNotNil} from "@angular-ru/cdk/utils";
-import {IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {AsigFormsComponente, IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
@@ -19,9 +19,11 @@ import {fuseAnimations} from "@s-fuse/public-api";
 import {DisableControlModule} from "@angular-ru/cdk/directives";
 import {MatRadioChange, MatRadioModule} from "@angular/material/radio";
 import {FuseAlertModule} from "@s-fuse/alert";
-import * as math from 'mathjs';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
+import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
+import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
+import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-mod-comp-comun',
@@ -35,6 +37,7 @@ import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 })
 export class ModCompComun
 {
+    @Input({required: true}) idIndicadorMir: string = null;
     protected readonly TiposFormulario = TiposFormulario;
     datos: IFormComun[] = [];
     ids: string[] = [];
@@ -42,9 +45,8 @@ export class ModCompComun
     cargando = false;
     esSumatoria = false;
     tipoValores = Object.values(TipoValores);
-    deshabilitarRadioBtn = true;
 
-    cambiaAAd = false;
+    deshabilitarRadioBtn = true;
 
     validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
         allowDecimal: true,
@@ -63,7 +65,12 @@ export class ModCompComun
 
     formAd: FormGroup = this.fb.group({
         idIndicador: ['', RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
-        dato: ['', this.validadorNumerico]
+        dato: ['', this.validadorNumerico],
+
+        trim1: [0, this.validadorNumerico],
+        trim2: [0, this.validadorNumerico],
+        trim3: [0, this.validadorNumerico],
+        trim4: [0, this.validadorNumerico]
     });
 
     formTrimAnterior: FormGroup = this.fb.group({
@@ -79,50 +86,66 @@ export class ModCompComun
         formula: ['', RxwebValidators.required({message: 'Es necesario que coloques la formula para calcular los avances trimestrales'})]
     })
 
-    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, public seleccionQuery: SeleccionQuery)
+    constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, public seleccionQuery: SeleccionQuery,
+                private localizado: Location)
     {
         effect(() =>
         {
             this.esSumatoria = false;
             const cuestionarioPbr = this.planeacionQuery.cuestionarioPbr();
+            //================================================================================================================================================================
             if (isNil(cuestionarioPbr))
             {
                 return;
             }
 
-            if (planeacionQuery.asignarValorPrincipal())
+            switch (this.planeacionQuery.asigForm())
             {
-                this.formComun.patchValue(cuestionarioPbr);
-                this.formComun.disable();
-                if (this.datos.length === 0)
-                {
-                    this.deshabilitarRadioBtn = false;
-                }
-            } else
-            {
-                this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
+                case AsigFormsComponente.principal:
+                    this.formComun.patchValue(cuestionarioPbr);
+                    this.formConValoresDelPeriodoAnt();
+
+                    if (this.datos.length === 0)
+                    {
+                        this.deshabilitarRadioBtn = false;
+                    }
+                    break;
+                case AsigFormsComponente.adicional:
+                    this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
+                    break;
+                case AsigFormsComponente.formula:
+                    this.ids.push(cuestionarioPbr.idIndicador);
+                    this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm));
+                    break;
             }
         });
 
         effect(() =>
         {
-            this.esSumatoria = true;
             const sumatoria = this.planeacionQuery.sumatoriaPbr();
-
+            //=================================================================================================================================================================
             if (isNil(sumatoria))
             {
                 return;
             }
 
-            if (planeacionQuery.asignarValorPrincipal())
+            switch (this.planeacionQuery.asigForm())
             {
-                this.formComun.get('idIndicador').setValue(sumatoria.idSumatoria);
-                this.formComun.get('dato').setValue(sumatoria.nombreSumatoria);
-                this.formComun.patchValue(sumatoria);
-            } else
-            {
-                this.formAd.get('idIndicador').setValue(sumatoria.idSumatoria);
-                this.formAd.get('dato').setValue(sumatoria.nombreSumatoria);
+                case AsigFormsComponente.principal:
+                    this.formComun.get('idIndicador').setValue(sumatoria.idSumatoria);
+                    this.formComun.get('dato').setValue(sumatoria.nombreSumatoria);
+                    this.formComun.patchValue(sumatoria);
+                    this.formConValoresDelPeriodoAnt();
+                    break;
+                case AsigFormsComponente.adicional:
+                    this.formAd.get('idIndicador').setValue(sumatoria.idSumatoria);
+                    this.formAd.get('dato').setValue(sumatoria.nombreSumatoria);
+                    this.formAd.patchValue(sumatoria);
+                    break;
+                case AsigFormsComponente.formula:
+                    this.ids.push(sumatoria.idSumatoria);
+                    this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm));
+                    break;
             }
         });
     }
@@ -153,8 +176,7 @@ export class ModCompComun
         {
             this.ids.push(idIndicadorAd);
         }
-
-        this.formTipoValores.get('formula').setValue(this.ids);
+        this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm));
 
         this.deshabilitarRadioBtn = true;
         this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
@@ -172,49 +194,37 @@ export class ModCompComun
             return;
         }
         this.cargando = true;
-        // const regComponente: TRegComponente =
-        //     {
-        //         _id: this.planeacionQuery.getActive()._id,
-        //         idIndicadorMir: this.planeacionQuery.cuestionarioMir().idIndicador,
-        //
-        //         tipoForm: this.tipoForm,
-        //         valorAdicional: this.valorAdicionalUnico ? +this.formComun.get('valorAdicionalValor').value : 0,
-        //         tipoValorTrim: this.formComponente.get('tipoValorTrim').value,
-        //         tipoValorAvance: this.formComponente.get('tipoValorAvance').value,
-        //         formComun: this.datos
-        //     }
-        // this.formComun.disable();
-        // this.formTrimAnterior.disable();
-        //
-        // this.planeacionService.regComponente(regComponente).pipe(finalize(() =>
-        // {
-        //     this.cargando = false;
-        //     this.formComun.enable();
-        //     this.formTrimAnterior.enable();
-        //     this.mdr.close();
-        // })).subscribe();
-    }
 
-    cancelar(): void
-    {
-        const obj =
+        console.log(this.planeacionQuery.cuestionarioMir());
+        const regComponente: TRegComponente =
             {
-                variable: 5,
-                otraVariable: 10,
-                valor3: 15
+                _id: this.planeacionQuery.getActive()._id,
+                idIndicadorMir: this.idIndicadorMir,
+                ids: this.ids,
+                tipoForm: this.tipoForm,
+                tipoValorTrim: this.formTipoValores.get('tipoValorTrim').value,
+                tipoValorAvance: this.formTipoValores.get('tipoValorAvance').value,
+                formula: this.formTipoValores.get('formula').value,
+                formComun: this.datos
             };
-        const arreglo = ['10', '20'];
-        const formula = `(valor1 - valor2) / valor3 *3`;
 
-        const resultado = math.evaluate(formula, arreglo);
+        this.formComun.disable();
+        this.formTrimAnterior.disable();
+
+        this.planeacionService.regComponente(regComponente).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.formComun.enable();
+            this.formTrimAnterior.enable();
+            this.localizado.back();
+
+        })).subscribe();
     }
 
     cambioSeleccionRdb(e: MatRadioChange): void
     {
-        this.tipoForm = e.value;
-        this.planeacionQuery.selectPrincipal(e.value !== TiposFormulario.CON_OTRO_ID_PBR);
-        this.cambiaAAd = this.tipoForm === TiposFormulario.CON_OTRO_ID_PBR;
-        //Mostramos trimestres del año anterior, obtenido los trimestres o las sumatorias pbrCuestionario o sumatoria
+        this.tipoForm = e.value as TiposFormulario;
+        this.planeacionQuery.desactivarBtnFormAd(this.tipoForm !== TiposFormulario.CON_OTRO_ID_PBR);
         this.formConValoresDelPeriodoAnt();
     }
 
@@ -231,5 +241,10 @@ export class ModCompComun
                 this.formTrimAnterior.patchValue(periodoAnterior);
             }
         }
+    }
+
+    cancelar(): void
+    {
+        this.localizado.back();
     }
 }

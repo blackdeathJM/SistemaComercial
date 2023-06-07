@@ -1,11 +1,16 @@
-import {ITabla} from "../../../tabla.interface";
-
 export enum TiposFormulario
 {
     COMUN = 'comun',
     PERIODO_ANT = 'periodoAnt',
     CON_OTRO_ID_PBR = 'conOtroDatoPbr',
     PTAR = 'ptar'
+}
+
+export enum AsigFormsComponente
+{
+    principal,
+    adicional,
+    formula
 }
 
 export enum TipoValores
@@ -44,9 +49,7 @@ export interface IComponente
 {
     formPlanta: IFormPlanta[];
     formComun: IFormComun[];
-
-    tablaColumnas: ITabla[];
-
+    ids: string[];
     formula: string;
 
     tipoValorTrim: string;

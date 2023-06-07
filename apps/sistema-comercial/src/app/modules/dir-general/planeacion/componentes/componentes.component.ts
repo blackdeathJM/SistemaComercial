@@ -115,6 +115,7 @@ export class ComponentesComponent
     {
         const mir = this.planeacionQuery.cuestionarioMir();
         const _id = this.planeacionQuery.getActive()._id;
+
         if (isNil(mir.componente))
         {
             this.router.navigate(['registro-componente', _id, mir.idIndicador], {relativeTo: this.activatedRoute}).then();
