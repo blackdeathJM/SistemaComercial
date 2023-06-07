@@ -21,6 +21,7 @@ import {finalize} from "rxjs";
 import {ComponentesPipe} from "@s-dir-general/componentes/componentes.pipe";
 import {ITabla} from "#/libs/models/src/lib/tabla.interface";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
 
 @Component({
     selector: 'app-componentes',
@@ -43,69 +44,32 @@ export class ComponentesComponent
     {
         effect(() =>
         {
-            if (isNil(this.planeacionQuery.cuestionarioMir()) || isNil(this.planeacionQuery.cuestionarioMir().componente))
+            const mir = this.planeacionQuery.cuestionarioMir();
+            if (isNil(this.planeacionQuery.getActive()))
+            {
+                return;
+            }
+            const pbr = this.planeacionQuery.getActive().pbrCuestionario;
+            const sumatoria = this.planeacionQuery.getActive().pbrSumatoria;
+
+            if (isNil(mir) || isNil(mir.componente))
             {
                 return;
             }
 
-            switch (this.planeacionQuery.cuestionarioMir().componente.tipoForm)
+
+            switch (mir.componente.tipoForm)
             {
                 case TiposFormulario.COMUN:
-                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
-                    {
-                        // this.planeacionQuery.cuestionarioMir.mutate(act =>
-                        // {
-                        //     // act.avanceTrim1 = Number(act.componente.formComun[0].trim1.toFixed(2));
-                        //     // act.avanceTrim2 = Number(act.componente.formComun[0].trim2.toFixed(2));
-                        //     // act.avanceTrim3 = Number(act.componente.formComun[0].trim3.toFixed(2));
-                        //     // act.avanceTrim4 = Number(act.componente.formComun[0].trim4.toFixed(2));
-                        // });
+                    const trimestres = ComponentesService.objFormula(pbr, mir.componente.ids);
+                    const tabla = [];
 
-                    } else
+                    mir.componente.formComun.forEach(value =>
                     {
-                        this.planeacionQuery.cuestionarioMir.mutate(act =>
-                        {
-                            act.avanceTrim1 = Number(this.calcularComun('trim1'));
-                            act.avanceTrim2 = Number(this.calcularComun('trim2'));
-                            act.avanceTrim3 = Number(this.calcularComun('trim3'));
-                            act.avanceTrim4 = Number(this.calcularComun('trim4'));
-                        });
-                    }
-                    this.columnas = this.columnasComun();
-                    break;
-                case TiposFormulario.PERIODO_ANT:
-                    if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
-                    {
-                        this.planeacionQuery.cuestionarioMir.mutate(act =>
-                        {
-                            act.avanceTrim1 = Number(this.calculoPeriodoAnt('trim1', 'trim1Anterior').toFixed(2));
-                            act.avanceTrim2 = Number(this.calculoPeriodoAnt('trim2', 'trim2Anterior').toFixed(2));
-                            act.avanceTrim3 = Number(this.calculoPeriodoAnt('trim3', 'trim3Anterior').toFixed(2));
-                            act.avanceTrim4 = Number(this.calculoPeriodoAnt('trim4', 'trim4Anterior').toFixed(2));
-                        });
-                    } else
-                    {
-                        const sumaTrim1 = this.calcularTotal('trim1');
-                        const sumaTrim2 = this.calcularTotal('trim2');
-                        const sumaTrim3 = this.calcularTotal('trim3');
-                        const sumaTrim4 = this.calcularTotal('trim4');
 
-                        const sumaTrim1Ant = this.calcularTotal('trim1Anterior');
-                        const sumaTrim2Ant = this.calcularTotal('trim2Anterior');
-                        const sumaTrim3Ant = this.calcularTotal('trim3Anterior');
-                        const sumaTrim4Ant = this.calcularTotal('trim4Anterior');
-
-                        this.planeacionQuery.cuestionarioMir.mutate(act =>
-                        {
-                            act.avanceTrim1 = Number(((sumaTrim1 - sumaTrim1Ant) / sumaTrim1Ant).toFixed(2));
-                            act.avanceTrim2 = Number(((sumaTrim2 - sumaTrim2Ant) / sumaTrim2Ant).toFixed(2));
-                            act.avanceTrim3 = Number(((sumaTrim3 - sumaTrim3Ant) / sumaTrim3Ant).toFixed(2));
-                            act.avanceTrim4 = Number(((sumaTrim4 - sumaTrim4Ant) / sumaTrim4Ant).toFixed(2));
-                        });
-                    }
+                    });
                     break;
             }
-            // this.columnas = this.columnasPeriodoAnt();
             this.datosTable = this.planeacionQuery.cuestionarioMir().componente.formComun;
         }, {allowSignalWrites: true})
     }
@@ -246,24 +210,20 @@ export class ComponentesComponent
         ];
     }
 
-    calculoPeriodoAnt(trim: string, trimAnt: string): number
-    {
-        if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1)
-        {
-            const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
-            return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
-        }
-    }
-
-    calcularTotal(trim: string): number
-    {
-        return this.planeacionQuery.cuestionarioMir().componente.formComun.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
-    }
-
-    calcularComun(trim: string): string
-    {
-        return (this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] / this.planeacionQuery.cuestionarioMir().componente.formComun[1][trim]).toFixed(2);
-    }
+    // calculoPeriodoAnt(trim: string, trimAnt: string): number {
+    //     if (this.planeacionQuery.cuestionarioMir().componente.formComun.length === 1) {
+    //         const resta = this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] - this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
+    //         return resta / this.planeacionQuery.cuestionarioMir().componente.formComun[0][trimAnt];
+    //     }
+    // }
+    //
+    // calcularTotal(trim: string): number {
+    //     return this.planeacionQuery.cuestionarioMir().componente.formComun.map(trimestre => trimestre[trim]).reduce((acc, act) => acc + act, 0);
+    // }
+    //
+    // calcularComun(trim: string): string {
+    //     return (this.planeacionQuery.cuestionarioMir().componente.formComun[0][trim] / this.planeacionQuery.cuestionarioMir().componente.formComun[1][trim]).toFixed(2);
+    // }
 
     imprimirComp(): void
     {

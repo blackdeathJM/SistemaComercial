@@ -8,3 +8,22 @@ export interface ITabla
     tipoDeDato?: string;
     html?: string;
 }
+
+export interface IDatosTablaComun
+{
+    idIndicador: string;
+    dato: string;
+
+    idIndicadorAd: string;
+    datoAd: string;
+
+    trim1: number;
+    trim2: number;
+    trim3: number;
+    trim4: number
+
+    trim1Ant: number;
+    trim2Ant: number;
+    trim3Ant: number;
+    trim4Ant: number;
+}
