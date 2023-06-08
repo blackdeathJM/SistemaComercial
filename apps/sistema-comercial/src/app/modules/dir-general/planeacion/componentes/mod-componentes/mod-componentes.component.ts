@@ -46,7 +46,7 @@ export class ModComponentesComponent implements OnInit, OnDestroy
         {
             this.location.back();
         }
-        this.activatedRoute.params.subscribe(params => this.idIndicadorMir = params.idMir);
+        this.sub.add(this.activatedRoute.params.subscribe(params => this.idIndicadorMir = params.idMir));
     }
 
     filCentroGestor(e: string): void

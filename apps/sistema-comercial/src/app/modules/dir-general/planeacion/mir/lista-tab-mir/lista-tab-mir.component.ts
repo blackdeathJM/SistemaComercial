@@ -21,13 +21,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {isNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
-import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
+import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
     imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule,
-        ComponentesComponent, MatButtonToggleModule, MatGridListModule, MatDividerModule, MatExpansionModule, ValorColumnaPipe],
+        ComponentesComponent, MatButtonToggleModule, MatGridListModule, MatDividerModule, MatExpansionModule, MultiplesFormatosPipe],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
@@ -38,7 +38,7 @@ export class ListaTabMirComponent
 {
     loader = ngxLoaderMir();
     indice: number;
-    _avancesTrimestrales: string[] = ['','','',''];
+    _avancesTrimestrales: string[] = ['', '', '', ''];
     @Input({required: true}) set avancesTrimestrales(v: string[])
     {
         this._avancesTrimestrales = v;

@@ -70,13 +70,13 @@
                     <span class="border-b-2 text-red-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefRojoV) / 100}}</span>
 
                     <span class="detalle-span">Avance trim1</span>
-                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[0] | valorColumnaPipe: mirSelec.componente.tipoValorAvance}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim2</span>
-                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[1]}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim3</span>
-                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[2]}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim4</span>
-                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[3]}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
 
 
                     <span class="detalle-span col-start-7">Avance anual</span>

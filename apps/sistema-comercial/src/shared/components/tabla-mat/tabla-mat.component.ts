@@ -1,16 +1,14 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
-import {IFormComun, IFormPlanta} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {MatTableModule} from '@angular/material/table';
-import {ComponentesPipe} from '@s-dir-general/componentes/componentes.pipe';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNotNil} from '@angular-ru/cdk/utils';
+import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 
 @Component({
     selector: 'app-tabla-mat',
     standalone: true,
-    imports: [CommonModule, MatTableModule, ValorColumnaPipe, MatTableModule, ComponentesPipe],
+    imports: [CommonModule, MatTableModule, MatTableModule, MultiplesFormatosPipe],
     templateUrl: './tabla-mat.component.html',
     styleUrls: ['./tabla-mat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,14 +32,14 @@ export class TablaMatComponent
 
     obtenerTotal(trim: string): string
     {
-        if(isNotNil(trim))
+        if (isNotNil(trim))
         {
-            if(trim === 'idIndicador')
+            if (trim === 'idIndicador')
             {
                 return '';
             }
 
-            if(trim === 'dato')
+            if (trim === 'dato')
             {
                 return 'Total';
             }

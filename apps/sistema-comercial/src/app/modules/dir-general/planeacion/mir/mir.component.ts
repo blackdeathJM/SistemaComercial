@@ -13,7 +13,7 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
-import {DateTime} from 'luxon';
+
 import {isNil} from '@angular-ru/cdk/utils';
 import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
@@ -53,21 +53,21 @@ export default class MirComponent implements OnDestroy
                 return;
             }
 
+            const trimObjCalcular = ComponentesService.objFormula(pbr, mir.componente.ids);
+            this.datosTabla = this.componentesService.construirDatosTabla(pbr, mir.componente.formComun);
+            this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
+            this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
+            this.avancesTrimestrales[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
+            this.avancesTrimestrales[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
+
             switch (mir.componente.tipoForm)
             {
                 case TiposFormulario.COMUN:
-                    const trimObjCalcular = ComponentesService.objFormula(pbr, mir.componente.ids);
-
-                    this.datosTabla = this.componentesService.construirDatosTabla(pbr, mir.componente.formComun);
-                    this.columnas = ComponentesService.columnasComun(mir.componente.tipoValorTrim);
-
-                    this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
-                    this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
-                    this.avancesTrimestrales[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
-                    this.avancesTrimestrales[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
-
+                    this.columnas = ComponentesService.colComun(mir.componente.tipoValorTrim);
                     break;
+
                 case TiposFormulario.CON_OTRO_ID_PBR:
+                    this.columnas = ComponentesService.colConValorAd(mir.componente.tipoValorTrim);
                     break;
                 case TiposFormulario.PERIODO_ANT:
                     break;

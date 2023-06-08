@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, effect, Input, OnDestroy} from "@angular/core";
 import {CommonModule, Location} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -35,7 +35,7 @@ import {finalize} from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [fuseAnimations]
 })
-export class ModCompComun
+export class ModCompComun implements OnDestroy
 {
     @Input({required: true}) idIndicadorMir: string = null;
     protected readonly TiposFormulario = TiposFormulario;
@@ -115,7 +115,7 @@ export class ModCompComun
                     break;
                 case AsigFormsComponente.formula:
                     this.ids.push(cuestionarioPbr.idIndicador);
-                    this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm));
+                    this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
                     break;
             }
         });
@@ -144,7 +144,7 @@ export class ModCompComun
                     break;
                 case AsigFormsComponente.formula:
                     this.ids.push(sumatoria.idSumatoria);
-                    this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm));
+                    this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
                     break;
             }
         });
@@ -153,7 +153,6 @@ export class ModCompComun
     agregarAlArreglo(): void
     {
         const {idIndicador} = this.formComun.value;
-
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
 
         const idIndicadorAd: string = this.formAd.get('idIndicador').value;
@@ -173,7 +172,7 @@ export class ModCompComun
         {
             this.ids.push(idIndicadorAd);
         }
-        this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm));
+        this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
 
         this.deshabilitarRadioBtn = true;
         this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
@@ -243,5 +242,10 @@ export class ModCompComun
     cancelar(): void
     {
         this.localizado.back();
+    }
+
+    ngOnDestroy(): void
+    {
+        this.planeacionQuery.cuestionarioPbr.set(null);
     }
 }

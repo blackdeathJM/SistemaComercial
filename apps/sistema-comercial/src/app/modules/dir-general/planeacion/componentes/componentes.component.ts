@@ -14,14 +14,15 @@ import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
 import {TReemplazarComp} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {TablaMatComponent} from '@s-shared/components/tabla-mat/tabla-mat.component';
 import {finalize} from 'rxjs';
-import {ComponentesPipe} from '@s-dir-general/componentes/componentes.pipe';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
+import {DateTime} from 'luxon';
+import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 
 @Component({
     selector: 'app-componentes',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, ComponentesPipe],
+    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe],
     templateUrl: './componentes.component.html',
     styleUrls: ['./componentes.component.scss'],
     animations: [fuseAnimations],
@@ -31,7 +32,8 @@ export class ComponentesComponent
 {
     _columnas: ITabla[] = [];
     _datosTabla: IDatosTablaComun[] = []
-    _avancesTrimestrales: string[] = ['','','',''];
+    _avancesTrimestrales: string[] = ['', '', '', ''];
+    fecha = DateTime.now();
 
     @Input({required: true}) set columnas(v: ITabla[])
     {
