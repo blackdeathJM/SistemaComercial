@@ -38,20 +38,22 @@
                     <span class="border-b-2 col-span-full text-center">{{planeacionQuery.cuestionarioMir()?.metodoCalculo}}</span>
                 </section>
 
-                <app-tabla-mat [datos]="datosTable" [columnas]="columnas" *ngIf="planeacionQuery.cuestionarioMir().componente"></app-tabla-mat>
+                <app-tabla-mat [datos]="_datosTabla" [columnas]="_columnas"></app-tabla-mat>
+
                 <mat-divider class="border-4 mb-4 border-lime-900 dark:border-lime-400"></mat-divider>
                 <section class="grid grid-cols-8 gap-4 text-lg">
                     <span class="detalle-span">Avance trim 1</span>
-                    <span class="border-b-2 text-green-700">{{planeacionQuery.cuestionarioMir()?.avanceTrim1}}</span>
+                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[0]}}</span>
                     <span class="detalle-span">Avance trim 2</span>
-                    <span class="border-b-2 text-green-700">{{planeacionQuery.cuestionarioMir()?.avanceTrim2}}</span>
+                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[1]}}</span>
                     <span class="detalle-span">Avance trim 3</span>
-                    <span class="border-b-2 text-green-700">{{planeacionQuery.cuestionarioMir()?.avanceTrim3}}</span>
+                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[2]}}</span>
                     <span class="detalle-span">Avance trim 4</span>
-                    <span class="border-b-2 text-green-700">{{planeacionQuery.cuestionarioMir()?.avanceTrim4}}</span>
+                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[3]}}</span>
                 </section>
             </article>
         </mat-card-content>
+
         <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
             <div class="flex flex-auto gap-4">
                 <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoComponente()">
@@ -64,5 +66,6 @@
                 </button>
             </div>
         </mat-card-actions>
+
     </mat-card>
 </section>

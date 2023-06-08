@@ -252,9 +252,7 @@ type FormPlantaType {
 
 type FormComunType {
   idIndicador: String
-  dato: String
   idIndicadorAd: String
-  datoAd: String
   trim1Ant: Float
   trim2Ant: Float
   trim3Ant: Float
@@ -464,7 +462,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1686160484
+  tiempo: Int = 1686208728
   titulo: String
   usarRouter: Boolean = false
 }
@@ -589,9 +587,7 @@ input FormPlantaInput {
 
 input FormComunInput {
   idIndicador: String = null
-  dato: String = null
   idIndicadorAd: String = null
-  datoAd: String = null
   trim1Ant: Float = 0
   trim2Ant: Float = 0
   trim3Ant: Float = 0

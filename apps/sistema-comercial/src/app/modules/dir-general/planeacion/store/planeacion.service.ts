@@ -20,7 +20,6 @@ import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {TSumPbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
-import {AuthQuery} from "@s-core/auth/store/auth.query";
 
 export const ngxLoaderMir = makeVar<string>('ngxLoaderMir');
 export const ngxLoaderPbr = makeVar<string>('ngxLoaderPbr');
@@ -80,6 +79,7 @@ export class PlaneacionService
             {
                 const {_id, ...cambio} = <IPlaneacion>res.data.regMir;
                 this.planeacionStore.update(_id, cambio);
+                this.planeacionStore.update(_id, {});
                 this.planeacionQuery.cuestionarioMirV.set(cambio.mirCuestionario);
                 this.ngxToast.satisfactorioToast('El guardado ha sido exitoso', 'MIR');
             }

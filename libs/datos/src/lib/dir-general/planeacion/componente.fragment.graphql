@@ -4,6 +4,7 @@ fragment fragComponente on ComponenteType
     tipoValorAvance
     tipoForm
     ids
+    formula
     formComun {
         ...fragFormComun
     }
@@ -14,11 +15,7 @@ fragment fragComponente on ComponenteType
 fragment fragFormComun on FormComunType
 {
     idIndicador
-    dato
-
     idIndicadorAd
-    datoAd
-
     trim1Ant
     trim2Ant
     trim3Ant

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, OnDestroy, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -10,8 +10,13 @@ import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-m
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
-import {fuseAnimations} from "@s-fuse/public-api";
-import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
+import {fuseAnimations} from '@s-fuse/public-api';
+import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
+import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
+import {DateTime} from 'luxon';
+import {isNil} from '@angular-ru/cdk/utils';
+import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
+import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -27,9 +32,47 @@ export const abrirPanelMir = signal<boolean>(false)
 export default class MirComponent implements OnDestroy
 {
     abrirPanel = abrirPanelMir;
+    columnas: ITabla[] = [];
+    datosTabla: IDatosTablaComun[];
+    avancesTrimestrales: string[] = [];
 
-    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery)
+    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService)
     {
+        effect(() =>
+        {
+            const mir = this.planeacionQuery.cuestionarioMir();
+            if (isNil(this.planeacionQuery.getActive()))
+            {
+                return;
+            }
+            const pbr = this.planeacionQuery.getActive().pbrCuestionario;
+            const sumatoria = this.planeacionQuery.getActive().pbrSumatoria;
+
+            if (isNil(mir) || isNil(mir.componente))
+            {
+                return;
+            }
+
+            switch (mir.componente.tipoForm)
+            {
+                case TiposFormulario.COMUN:
+                    const trimObjCalcular = ComponentesService.objFormula(pbr, mir.componente.ids);
+
+                    this.datosTabla = this.componentesService.construirDatosTabla(pbr, mir.componente.formComun);
+                    this.columnas = ComponentesService.columnasComun(mir.componente.tipoValorTrim);
+
+                    this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
+                    this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
+                    this.avancesTrimestrales[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
+                    this.avancesTrimestrales[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
+
+                    break;
+                case TiposFormulario.CON_OTRO_ID_PBR:
+                    break;
+                case TiposFormulario.PERIODO_ANT:
+                    break;
+            }
+        }, {allowSignalWrites: true});
     }
 
     regSeleccion(): void

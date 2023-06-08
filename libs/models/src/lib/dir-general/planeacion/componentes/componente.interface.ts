@@ -18,6 +18,7 @@ export enum TipoValores
     PESOS = 'pesos',
     PORCENTAJE = 'porcentaje',
     NUMERO = 'numero',
+    DECIMAL = 'decimal',
     FECHA = 'fecha'
 }
 
@@ -32,10 +33,7 @@ export interface IFormPlanta
 export interface IFormComun
 {
     idIndicador: string;
-    dato: string;
-
     idIndicadorAd: string;
-    datoAd: string;
 
     trim1Ant: number;
     trim2Ant: number;

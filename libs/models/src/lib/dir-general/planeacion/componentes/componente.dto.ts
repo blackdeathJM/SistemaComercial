@@ -34,15 +34,7 @@ export class FormComunDto implements IFormComun
 
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: null})
-    dato: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
     idIndicadorAd: string;
-
-    @IsOptional()
-    @Field(() => String, {nullable: true, defaultValue: null})
-    datoAd: string;
 
     @IsNumber({allowNaN: false}, {message: 'El valor debe ser numerico'})
     @Field(() => Float, {nullable: true, defaultValue: 0.00})

@@ -152,18 +152,15 @@ export class ModCompComun
 
     agregarAlArreglo(): void
     {
-        const {idIndicador, dato} = this.formComun.value;
+        const {idIndicador} = this.formComun.value;
 
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
 
         const idIndicadorAd: string = this.formAd.get('idIndicador').value;
-        const datoAd: string = this.formAd.get('dato').value;
 
         this.datos.push({
             idIndicador,
             idIndicadorAd,
-            dato,
-            datoAd,
 
             trim1Ant: +trim1,
             trim2Ant: +trim2,

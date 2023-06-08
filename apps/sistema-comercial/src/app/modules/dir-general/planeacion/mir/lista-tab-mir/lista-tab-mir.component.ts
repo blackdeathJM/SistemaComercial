@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
@@ -12,21 +12,22 @@ import {actCuestionario, ngxLoaderMir, PlaneacionService, ValoresCamposMod} from
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
-import {ComponentesComponent} from "@s-dir-general/componentes/componentes.component";
-import {MatButtonToggleChange, MatButtonToggleModule} from "@angular/material/button-toggle";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatDividerModule} from "@angular/material/divider";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {isNil} from "@angular-ru/cdk/utils";
-import {NgxToastService} from "@s-services/ngx-toast.service";
-import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {abrirPanelMir} from '@s-dir-general/mir/mir.component';
+import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
+import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {isNil} from '@angular-ru/cdk/utils';
+import {NgxToastService} from '@s-services/ngx-toast.service';
+import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
+import {ValorColumnaPipe} from '@s-shared/components/tabla-mat/valor-columna.pipe';
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
     imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule,
-        ComponentesComponent, MatButtonToggleModule, MatGridListModule, MatDividerModule, MatExpansionModule],
+        ComponentesComponent, MatButtonToggleModule, MatGridListModule, MatDividerModule, MatExpansionModule, ValorColumnaPipe],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
@@ -37,6 +38,11 @@ export class ListaTabMirComponent
 {
     loader = ngxLoaderMir();
     indice: number;
+    _avancesTrimestrales: string[] = ['','','',''];
+    @Input({required: true}) set avancesTrimestrales(v: string[])
+    {
+        this._avancesTrimestrales = v;
+    }
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private ngxToast: NgxToastService)

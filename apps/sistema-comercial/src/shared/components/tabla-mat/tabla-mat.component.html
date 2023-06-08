@@ -1,7 +1,8 @@
 <table mat-table [dataSource]="_origenDatos">
     <ng-container *ngFor="let columna of columnasTabla" [matColumnDef]="columna.def">
         <th mat-header-cell *matHeaderCellDef [width]="columna.width">{{columna.etiqueta}}</th>
-        <td mat-cell *matCellDef="let fila">{{fila | valorColumnaPipe: columna}}</td>
+        <!--        <td mat-cell *matCellDef="let fila">{{fila[columna.def]}}</td>-->
+        <td mat-cell *matCellDef="let fila">{{fila[columna.llaveDato] | valorColumnaPipe: columna.formato}}</td>
         <td mat-footer-cell *matFooterCellDef class="text-amber-500">{{obtenerTotal(columna.def)}}</td>
     </ng-container>
 

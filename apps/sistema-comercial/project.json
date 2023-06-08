@@ -7,7 +7,9 @@
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:browser",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "outputPath": "dist/apps/sistema-comercial",
                 "index": "apps/sistema-comercial/src/index.html",
@@ -21,7 +23,13 @@
                     "subscriptions-transport-ws",
                     "flat",
                     "sweetalert2",
-                    "quill"
+                    "quill",
+                    "typed-function",
+                    "seedrandom",
+                    "javascript-natural-sort",
+                    "complex.js",
+                    "fraction.js",
+                    "escape-latex"
                 ],
                 "assets": [
                     "apps/sistema-comercial/src/favicon-16x16.png",
@@ -34,7 +42,9 @@
                     }
                 ],
                 "stylePreprocessorOptions": {
-                    "includePaths": ["apps/sistema-comercial/src/@fuse/styles"]
+                    "includePaths": [
+                        "apps/sistema-comercial/src/@fuse/styles"
+                    ]
                 },
                 "styles": [
                     "apps/sistema-comercial/src/@fuse/styles/tailwind.scss",
@@ -45,7 +55,9 @@
                     "apps/sistema-comercial/src/styles/tailwind.scss",
                     "node_modules/ngx-lightbox/lightbox.css"
                 ],
-                "scripts": ["node_modules/apexcharts/dist/apexcharts.min.js"]
+                "scripts": [
+                    "node_modules/apexcharts/dist/apexcharts.min.js"
+                ]
             },
             "configurations": {
                 "production": {
@@ -103,7 +115,9 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
             "options": {
                 "jestConfig": "jest.config.ts",
                 "passWithNoTest": true
@@ -111,7 +125,9 @@
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
+            "outputs": [
+                "{options.outputFile}"
+            ],
             "options": {
                 "lintFilePatterns": [
                     "apps/sistema-comercial/**/*.ts",

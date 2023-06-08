@@ -18,69 +18,69 @@
                     </mat-button-toggle-group>
                 </mat-expansion-panel>
             </mat-card-title>
-            <mat-card-content>
+            <mat-card-content *ngIf="planeacionQuery?.cuestionarioMir() as mirSelec">
                 <div class="grid grid-cols-8 gap-4">
-                    <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{planeacionQuery?.cuestionarioMir()?.idIndicador}}</span>
+                    <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{mirSelec?.idIndicador}}</span>
                     <span class="detalle-span">Nivel</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.nivel}}</span>
+                    <span class="border-b-2">{{mirSelec?.nivel}}</span>
                     <span class="detalle-span">Programa financiacion</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.programaFinanciacion}}</span>
+                    <span class="border-b-2">{{mirSelec?.programaFinanciacion}}</span>
                     <span class="detalle-span">CentroGestor</span>
-                    <span class="border-b-2 col-span-3">{{planeacionQuery?.cuestionarioMir()?.centroGestor}}</span>
+                    <span class="border-b-2 col-span-3">{{mirSelec?.centroGestor}}</span>
 
                     <span class="detalle-span">Definicion del indicador</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.definicionIndicador}}</span>
+                    <span class="border-b-2">{{mirSelec?.definicionIndicador}}</span>
                     <span class="detalle-span">Medios de verificacion</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.mediosVerificacion}}</span>
+                    <span class="border-b-2">{{mirSelec?.mediosVerificacion}}</span>
                     <span class="detalle-span">Supuestos</span>
-                    <span class="border-b-2 col-span-3">{{planeacionQuery?.cuestionarioMir()?.supuestos}}</span>
+                    <span class="border-b-2 col-span-3">{{mirSelec?.supuestos}}</span>
 
                     <span class="detalle-span">Resumen narrativo</span>
-                    <span class="border-b-2 col-span-7">{{planeacionQuery?.cuestionarioMir()?.resumenNarrativo}}</span>
+                    <span class="border-b-2 col-span-7">{{mirSelec?.resumenNarrativo}}</span>
 
                     <span class="detalle-span">tipo</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.tipo}}</span>
+                    <span class="border-b-2">{{mirSelec?.tipo}}</span>
                     <span class="detalle-span">Dimension</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.dimension}}</span>
+                    <span class="border-b-2">{{mirSelec?.dimension}}</span>
                     <span class="detalle-span">Unidad medida</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.unidadDeMedida}}</span>
+                    <span class="border-b-2">{{mirSelec?.unidadDeMedida}}</span>
                     <span class="detalle-span">Frecuencia de med</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.frecuenciaMedicion}}</span>
+                    <span class="border-b-2">{{mirSelec?.frecuenciaMedicion}}</span>
 
                     <span class="detalle-span">Nombre del indicador</span>
-                    <span class="border-b-2 col-span-7">{{planeacionQuery?.cuestionarioMir()?.nombreDelIndicador}}</span>
+                    <span class="border-b-2 col-span-7">{{mirSelec?.nombreDelIndicador}}</span>
 
                     <span class="detalle-span">Metodo de calculo</span>
-                    <span class="border-b-2 col-span-7 text-green-600">{{planeacionQuery?.cuestionarioMir()?.metodoCalculo}}</span>
+                    <span class="border-b-2 col-span-7 text-green-600">{{mirSelec?.metodoCalculo}}</span>
 
                     <span class="detalle-span">Linea base año</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.lineaBaseAno}}</span>
+                    <span class="border-b-2">{{mirSelec?.lineaBaseAno}}</span>
                     <span class="detalle-span">Linea base valor</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.lineaBaseValor}}</span>
+                    <span class="border-b-2">{{mirSelec?.lineaBaseValor}}</span>
                     <span class="detalle-span">Meta</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.meta}}</span>
+                    <span class="border-b-2">{{mirSelec?.meta}}</span>
                     <span class="detalle-span">Sentido del indicador</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.sentidoDelIndicador}}</span>
+                    <span class="border-b-2">{{mirSelec?.sentidoDelIndicador}}</span>
 
                     <span class="detalle-span col-start-3">Semaforo verde</span>
-                    <span class="border-b-2 text-green-600 text-lg">{{(planeacionQuery?.cuestionarioMir()?.meta * planeacionQuery?.cuestionarioMir()?.semefVerdeV) / 100}}</span>
+                    <span class="border-b-2 text-green-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefVerdeV) / 100}}</span>
                     <span class="detalle-span">Semaforo amarillo</span>
-                    <span class="border-b-2 text-amber-600 text-lg">{{(planeacionQuery?.cuestionarioMir()?.meta * planeacionQuery?.cuestionarioMir()?.semefAmarilloV) / 100}}</span>
+                    <span class="border-b-2 text-amber-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefAmarilloV) / 100}}</span>
                     <span class="detalle-span">Semaforo rojo</span>
-                    <span class="border-b-2 text-red-600 text-lg">{{(planeacionQuery?.cuestionarioMir()?.meta * planeacionQuery?.cuestionarioMir()?.semefRojoV) / 100}}</span>
+                    <span class="border-b-2 text-red-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefRojoV) / 100}}</span>
 
                     <span class="detalle-span">Avance trim1</span>
-                    <span class="border-b-2 text-cyan-500">{{planeacionQuery?.cuestionarioMir()?.avanceTrim1}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[0] | valorColumnaPipe: mirSelec.componente.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim2</span>
-                    <span class="border-b-2 text-cyan-500">{{planeacionQuery?.cuestionarioMir()?.avanceTrim2}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[1]}}</span>
                     <span class="detalle-span">Avance trim3</span>
-                    <span class="border-b-2 text-cyan-500">{{planeacionQuery?.cuestionarioMir()?.avanceTrim3}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[2]}}</span>
                     <span class="detalle-span">Avance trim4</span>
-                    <span class="border-b-2 text-cyan-500">{{planeacionQuery?.cuestionarioMir()?.avanceTrim4}}</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[3]}}</span>
 
 
                     <span class="detalle-span col-start-7">Avance anual</span>
-                    <span class="border-b-2">{{planeacionQuery?.cuestionarioMir()?.avanceAnual}}</span>
+                    <span class="border-b-2">{{mirSelec?.avanceAnual}}</span>
                 </div>
                 <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
             </mat-card-content>
