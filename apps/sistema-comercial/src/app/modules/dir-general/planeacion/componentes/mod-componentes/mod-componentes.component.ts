@@ -20,11 +20,12 @@ import {isNil} from "@angular-ru/cdk/utils";
 import {AsigFormsComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {Subscription} from "rxjs";
 import {FuseAlertModule} from "@s-fuse/alert";
+import {ModCompPtar} from "@s-dir-general/componentes/mod-componentes/mod-comp-ptar/mod-comp-ptar";
 
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
-    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule, MatButtonModule, MatIconModule, MatTooltipModule, FuseAlertModule],
+    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule, MatButtonModule, MatIconModule, MatTooltipModule, FuseAlertModule, ModCompPtar],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
     animations: [fuseAnimations],
@@ -57,6 +58,10 @@ export class ModComponentesComponent implements OnInit, AfterContentInit, OnDest
         //TODO: checar con las actualizaciones de angular si las signals no tienen error y siguen teniendo el valor despues de hacer el navigate para reemplazar este codigo por la signla
         // que tiene asignado el elemento mir este codigo es provicional para que funcione
 
+        if (isNil(this.planeacionQuery.getActive()))
+        {
+            return;
+        }
         const mirBuscado = this.planeacionQuery.getActive().mirCuestionario.find(x => x.idIndicador === this.idIndicadorMir);
         this.definicionIndicador = mirBuscado.nombreDelIndicador;
         this.metodoCalculo = mirBuscado.metodoCalculo;

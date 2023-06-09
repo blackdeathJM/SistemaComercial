@@ -54,7 +54,6 @@ export default class MirComponent implements OnDestroy
             }
 
             const trimObjCalcular = ComponentesService.objFormula(pbrS, mir.componente.ids, mir.componente.formComun, sumatorias);
-
             this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
             this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);

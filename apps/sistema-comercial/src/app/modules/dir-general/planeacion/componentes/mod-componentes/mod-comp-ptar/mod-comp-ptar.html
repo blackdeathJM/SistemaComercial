@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-title>
+
+    </mat-card-title>
+    <mat-card-content>
+        <form class="mt-2">
+            <section class="flex flex-auto flex-col">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Define las cabeceras para las columnas</mat-label>
+                    <mat-chip-grid #chipGrid (change)="cambioValor($event)">
+                        <mat-chip-row color="primary" *ngFor="let cabecera of cabeceraColumna; let i=index" (removed)="remover(cabecera)" [editable]="true" (edited)="editar(cabecera, $event)">
+                            {{cabecera}}
+                            <button matChipRemove [disabled]="i === 0 || i === 1">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip-row>
+                        <input placeholder="Nueva columna" [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separador" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="agregar($event)">
+                    </mat-chip-grid>
+                </mat-form-field>
+            </section>
+        </form>
+    </mat-card-content>
+</mat-card>

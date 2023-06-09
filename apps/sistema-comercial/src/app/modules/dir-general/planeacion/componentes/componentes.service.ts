@@ -14,11 +14,14 @@ export class ComponentesService
     {
         if (ids.length === 1 && tipoForm === TiposFormulario.COMUN)
         {
-            return ids[0] + '/100';
+            const valor = ids[0];
+            return `${valor} * 100`
         }
         if (ids.length === 2 && tipoForm === TiposFormulario.COMUN)
         {
-            return '(' + '(' + ids[0] + '/' + ids[1] + ')' + '*100' + ')' + '/100';
+            const valor1 = ids[0];
+            const valor2 = ids[1];
+            return `( ${valor1} / ${valor2}) * 100`;
         }
 
         if (ids.length > 2 && tipoForm === TiposFormulario.COMUN)
@@ -28,16 +31,22 @@ export class ComponentesService
 
         if (ids.length === 1 && tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            return '(' + ids[0] + '/' + ids[0] + 'Ant' + ')' + '/100';
+            const periodoActual = ids.join('+');
+            const periodoAnt = ids.join('+Ant') + 'Ant';
+            return `((${periodoActual} - ${periodoAnt})) / ${periodoAnt} * 100`
         }
         if (ids.length > 1 && tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            return '((' + ids.join('+') + ')' + '/' + '(' + ids.join('Ant+') + 'Ant' + '))/100';
+            const periodoActual = ids.join('+');
+            const periodoAnt = ids.join('+Ant') + 'Ant';
+            return `(( ${periodoActual} - ${periodoAnt}) / ${periodoAnt}) *100`;
         }
 
         if (ids.length === 2 && tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
         {
-            return '((' + ids[0] + '/' + ids[1] + '))/100'
+            // const valor1 = ids[0];
+            // const valor2 = ids[1];
+            return '((' + ids[0] + '/' + ids[1] + ')) *100'
         }
 
         if (datos.length >= 2)
@@ -50,7 +59,7 @@ export class ComponentesService
                 idsForm.push(value.idIndicador);
                 idsAd.push(value.idIndicadorAd);
             });
-            return '((' + idsForm.join('+') + ')' + '/' + '(' + idsAd.join('+') + '))/100';
+            return '((' + idsForm.join('+') + ')' + '/' + '(' + idsAd.join('+') + '))*100';
         }
         return '';
     }
@@ -110,7 +119,7 @@ export class ComponentesService
                 trim4[elemento.idSumatoria + 'Ant'] = i.trim4Ant;
             }
         });
-
+        console.log('Objectos para el calculo', trim1, trim2, trim3, trim4);
         return [trim1, trim2, trim3, trim4];
     }
 
@@ -150,17 +159,21 @@ export class ComponentesService
                 trim3Ant: 0,
                 trim4Ant: 0,
             };
+            const pbrElemento = pbr.find(x => x.idIndicador === i.idIndicador);
 
-            const pbrPricipal = pbr.find(x => x.idIndicador === i.idIndicador);
-
-            if (isNotNil(pbrPricipal))
+            if (isNotNil(pbrElemento))
             {
-                datos.idIndicador = pbrPricipal.idIndicador;
-                datos.dato = pbrPricipal.dato;
-                datos.trim1 = pbrPricipal.trim1;
-                datos.trim2 = pbrPricipal.trim2;
-                datos.trim3 = pbrPricipal.trim3;
-                datos.trim4 = pbrPricipal.trim4;
+                datos.idIndicador = pbrElemento.idIndicador;
+                datos.dato = pbrElemento.dato;
+                datos.trim1 = pbrElemento.trim1;
+                datos.trim2 = pbrElemento.trim2;
+                datos.trim3 = pbrElemento.trim3;
+                datos.trim4 = pbrElemento.trim4;
+
+                datos.trim1Ant = i.trim1Ant;
+                datos.trim2Ant = i.trim2Ant;
+                datos.trim3Ant = i.trim3Ant;
+                datos.trim4Ant = i.trim4Ant;
             }
 
             const pbrAd = pbr.find((x) => x.idIndicador === i.idIndicadorAd);
@@ -315,18 +328,16 @@ export class ComponentesService
     {
         return [
             {
-                etiqueta: 'Variable',
+                etiqueta: 'Indicador',
                 def: 'idIndicador',
                 llaveDato: 'idIndicador',
-                width: '70%',
-                formato
+                width: '6%',
             },
             {
                 etiqueta: 'Dato',
                 def: 'dato',
                 llaveDato: 'dato',
                 width: 'Auto',
-                formato
             },
             {
                 etiqueta: 'Actual',

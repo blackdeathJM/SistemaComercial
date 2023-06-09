@@ -152,11 +152,18 @@
                 <!--                <mat-button-toggle-group multiple (change)="agregarAFormula($event)">-->
                 <!--                    <mat-button-toggle *ngFor="let id of ids" [value]="id">{{id}}</mat-button-toggle>-->
                 <!--                </mat-button-toggle-group>-->
-                <mat-form-field>
-                    <mat-label>Formula para calcular avance trimestral</mat-label>
-                    <input matInput formControlName="formula">
-                    <mat-error>{{formTipoValores.controls.formula['errorMessage']}}</mat-error>
-                </mat-form-field>
+                <div class="flex flex-auto gap-4">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Formula para calcular avance trimestral</mat-label>
+                        <input matInput formControlName="formula">
+                        <mat-error>{{formTipoValores.controls.formula['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>Etiqueta</mat-label>
+                        <input matInput formControlName="etiqueta">
+                    </mat-form-field>
+                </div>
+
             </section>
         </form>
     </mat-card-content>
