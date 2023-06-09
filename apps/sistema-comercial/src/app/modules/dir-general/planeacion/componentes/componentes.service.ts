@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {IFormComun, TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
-import {IPbrCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
+import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
 import * as math from 'mathjs';
-import {isNil} from '@angular-ru/cdk/utils';
+import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 
 @Injectable({
     providedIn: 'root'
@@ -28,22 +28,23 @@ export class ComponentesService
 
         if (ids.length === 1 && tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            return '(' + ids[0] + '/' + 'trimAnt' + ')' + '/100';
+            return '(' + ids[0] + '/' + ids[0] + 'Ant' + ')' + '/100';
         }
-
         if (ids.length > 1 && tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            return '(' + ids.join('+') + ')/100';
+            return '((' + ids.join('+') + ')' + '/' + '(' + ids.join('Ant+') + 'Ant' + '))/100';
         }
 
         if (ids.length === 2 && tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
         {
             return '((' + ids[0] + '/' + ids[1] + '))/100'
         }
+
         if (datos.length >= 2)
         {
             const idsForm: string[] = [];
             const idsAd: string[] = [];
+
             datos.forEach(value =>
             {
                 idsForm.push(value.idIndicador);
@@ -54,23 +55,62 @@ export class ComponentesService
         return '';
     }
 
-    static objFormula(pbr: IPbrCuestionario[], ids: string[]): object[]
+    static objFormula(pbr: IPbrCuestionario[], ids: string[], form: IFormComun[], sumatorias: ISumatorias[]): object[]
     {
         const trim1 = {};
         const trim2 = {};
         const trim3 = {};
         const trim4 = {};
 
-        for (const ele of pbr)
+        form.forEach((i) =>
         {
-            if (ids.includes(ele.idIndicador))
+            const elemento = pbr.find(x => x.idIndicador === i.idIndicador);
+            if (isNotNil(elemento))
             {
-                trim1[ele.idIndicador] = ele.trim1;
-                trim2[ele.idIndicador] = ele.trim2;
-                trim3[ele.idIndicador] = ele.trim3;
-                trim4[ele.idIndicador] = ele.trim4;
+                trim1[elemento.idIndicador] = elemento.trim1;
+                trim2[elemento.idIndicador] = elemento.trim2;
+                trim3[elemento.idIndicador] = elemento.trim3;
+                trim4[elemento.idIndicador] = elemento.trim4;
+
+                trim1[elemento.idIndicador + 'Ant'] = i.trim1Ant;
+                trim2[elemento.idIndicador + 'Ant'] = i.trim2Ant;
+                trim3[elemento.idIndicador + 'Ant'] = i.trim3Ant;
+                trim4[elemento.idIndicador + 'Ant'] = i.trim4Ant;
             }
-        }
+        });
+        //Filtramos los ids que se utilizan en la fórmula porque no necesariamente tienen que ir todos en el form y solo dejamos los que no están en el formulario para asi
+        // optimizar el renidimiento de la aplicacion y no realice busquedas inecesarias.
+        const idsRestantes = ids.filter((id) => !form.some(form => form.idIndicador === id));
+
+        idsRestantes.forEach((i) =>
+        {
+            const elemento = pbr.find(x => x.idIndicador === i);
+            if (isNotNil(elemento))
+            {
+                trim1[elemento.idIndicador] = elemento.trim1;
+                trim2[elemento.idIndicador] = elemento.trim2;
+                trim3[elemento.idIndicador] = elemento.trim3;
+                trim4[elemento.idIndicador] = elemento.trim4;
+            }
+        });
+
+        form.forEach((i) =>
+        {
+            const elemento = sumatorias.find(x => x.idSumatoria === i.idIndicador);
+            if (isNotNil(elemento))
+            {
+                trim1[elemento.idSumatoria] = elemento.trim1;
+                trim2[elemento.idSumatoria] = elemento.trim2;
+                trim3[elemento.idSumatoria] = elemento.trim3;
+                trim4[elemento.idSumatoria] = elemento.trim4;
+
+                trim1[elemento.idSumatoria + 'Ant'] = i.trim1Ant;
+                trim2[elemento.idSumatoria + 'Ant'] = i.trim2Ant;
+                trim3[elemento.idSumatoria + 'Ant'] = i.trim3Ant;
+                trim4[elemento.idSumatoria + 'Ant'] = i.trim4Ant;
+            }
+        });
+
         return [trim1, trim2, trim3, trim4];
     }
 
@@ -80,52 +120,72 @@ export class ComponentesService
         {
             return '0';
         }
-
         return math.evaluate(formula, obj);
     }
 
-    construirDatosTabla(pbr: IPbrCuestionario[], form: IFormComun[]): IDatosTablaComun[]
+    construirDatosTabla(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaComun[]
     {
         const tablaValores: IDatosTablaComun[] = [];
-        for (const elePbr of pbr)
+
+        for (const i of form)
         {
-            for (const v of form)
+            const datos: IDatosTablaComun = {
+
+                idIndicador: '',
+                dato: '',
+                trim1: 0,
+                trim2: 0,
+                trim3: 0,
+                trim4: 0,
+
+                idIndicadorAd: '',
+                datoAd: '',
+                trim1Ad: 0,
+                trim2Ad: 0,
+                trim3Ad: 0,
+                trim4Ad: 0,
+
+                trim1Ant: 0,
+                trim2Ant: 0,
+                trim3Ant: 0,
+                trim4Ant: 0,
+            };
+
+            const pbrPricipal = pbr.find(x => x.idIndicador === i.idIndicador);
+
+            if (isNotNil(pbrPricipal))
             {
-                if (elePbr.idIndicador === v.idIndicador)
-                {
-                    const datos: IDatosTablaComun = {
-                        idIndicador: elePbr.idIndicador,
-                        dato: elePbr.dato,
-                        trim1: elePbr.trim1,
-                        trim2: elePbr.trim2,
-                        trim3: elePbr.trim3,
-                        trim4: elePbr.trim4,
-                        idIndicadorAd: '',
-                        datoAd: '',
-                        trim1Ad: 0,
-                        trim2Ad: 0,
-                        trim3Ad: 0,
-                        trim4Ad: 0,
-                        trim1Ant: 0,
-                        trim2Ant: 0,
-                        trim3Ant: 0,
-                        trim4Ant: 0,
-                    };
-
-                    const pbrAd = pbr.find((x) => x.idIndicador === v.idIndicadorAd);
-                    if (pbrAd)
-                    {
-                        datos.idIndicadorAd = pbrAd.idIndicador;
-                        datos.datoAd = pbrAd.dato;
-                        datos.trim1Ad = pbrAd.trim1;
-                        datos.trim2Ad = pbrAd.trim2;
-                        datos.trim3Ad = pbrAd.trim3;
-                        datos.trim4Ad = pbrAd.trim4;
-                    }
-
-                    tablaValores.push(datos);
-                }
+                datos.idIndicador = pbrPricipal.idIndicador;
+                datos.dato = pbrPricipal.dato;
+                datos.trim1 = pbrPricipal.trim1;
+                datos.trim2 = pbrPricipal.trim2;
+                datos.trim3 = pbrPricipal.trim3;
+                datos.trim4 = pbrPricipal.trim4;
             }
+
+            const pbrAd = pbr.find((x) => x.idIndicador === i.idIndicadorAd);
+
+            if (isNotNil(pbrAd))
+            {
+                datos.idIndicadorAd = pbrAd.idIndicador;
+                datos.datoAd = pbrAd.dato;
+                datos.trim1Ad = pbrAd.trim1;
+                datos.trim2Ad = pbrAd.trim2;
+                datos.trim3Ad = pbrAd.trim3;
+                datos.trim4Ad = pbrAd.trim4;
+            }
+            const sumatoria = sumatorias.find(y => y.idSumatoria === i.idIndicador);
+
+            if (isNotNil(sumatoria))
+            {
+                datos.idIndicador = sumatoria.idSumatoria;
+                datos.dato = sumatoria.nombreSumatoria;
+                datos.trim1 = sumatoria.trim1;
+                datos.trim2 = sumatoria.trim2;
+                datos.trim3 = sumatoria.trim3;
+                datos.trim4 = sumatoria.trim4;
+            }
+            tablaValores.push(datos);
         }
         return tablaValores;
     }
@@ -182,9 +242,9 @@ export class ComponentesService
         return [
             {
                 etiqueta: 'Variable',
-                def: 'idIndicador',
+                def: 'Ind',
                 llaveDato: 'idIndicador',
-                width: '10%',
+                width: '6%',
             },
             {
                 etiqueta: 'Dato',
@@ -196,123 +256,133 @@ export class ComponentesService
                 etiqueta: 'Trim 1',
                 def: 'trim1',
                 llaveDato: 'trim1',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
-                etiqueta: 'TrimAd 1',
+                etiqueta: 'Ad',
                 def: 'trim1Ad',
                 llaveDato: 'trim1Ad',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
                 etiqueta: 'Trim 2',
                 def: 'trim2',
                 llaveDato: 'trim2',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
-                etiqueta: 'TrimAd 2',
+                etiqueta: 'Ad',
                 def: 'trim2Ad',
                 llaveDato: 'trim2Ad',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
                 etiqueta: 'Trim 3',
                 def: 'trim3',
                 llaveDato: 'trim3',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
-                etiqueta: 'TrimAd 3',
+                etiqueta: 'Ad',
                 def: 'trim3Ad',
                 llaveDato: 'trim3Ad',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
                 etiqueta: 'Trim 4',
                 def: 'trim4',
                 llaveDato: 'trim4',
-                width: '5%',
+                width: '6%',
                 formato
             },
             {
-                etiqueta: 'TrimAd 4',
+                etiqueta: 'Ad',
                 def: 'trim4Ad',
                 llaveDato: 'trim4Ad',
-                width: '5%',
+                width: '6%',
                 formato
             }
         ];
     }
 
-    static colPeriodoAnt(): ITabla[]
+    static colPeriodoAnt(formato: string): ITabla[]
     {
         return [
             {
                 etiqueta: 'Variable',
                 def: 'idIndicador',
                 llaveDato: 'idIndicador',
-                width: '10%',
+                width: '70%',
+                formato
             },
             {
                 etiqueta: 'Dato',
                 def: 'dato',
                 llaveDato: 'dato',
-                width: 'auto',
+                width: 'Auto',
+                formato
             },
             {
-                etiqueta: 'Per. Act. 1',
+                etiqueta: 'Actual',
                 def: 'trim1',
                 llaveDato: 'trim1',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Ant. 1',
+                etiqueta: 'Anterior',
                 def: 'trim1Ant',
                 llaveDato: 'trim1Ant',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Act. 2',
+                etiqueta: 'Actual',
                 def: 'trim2',
                 llaveDato: 'trim2',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Ant. 2',
+                etiqueta: 'Anterior',
                 def: 'trim2Ant',
                 llaveDato: 'trim2Ant',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Act. 3',
+                etiqueta: 'Actual',
                 def: 'trim3',
                 llaveDato: 'trim3',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Ant. 3',
+                etiqueta: 'Anterior',
                 def: 'trim3Ant',
                 llaveDato: 'trim3Ant',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Act. 4',
+                etiqueta: 'Actual',
                 def: 'trim4',
                 llaveDato: 'trim4',
-                width: '5%',
+                width: '7%',
+                formato
             },
             {
-                etiqueta: 'Per. Ant. 4',
+                etiqueta: 'Anterior',
                 def: 'trim4Ant',
                 llaveDato: 'trim4Ant',
-                width: '5%',
+                width: '7%',
+                formato
             }
         ];
     }

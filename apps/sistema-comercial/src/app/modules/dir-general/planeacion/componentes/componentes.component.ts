@@ -55,7 +55,6 @@ export class ComponentesComponent
     {
     }
 
-
     nuevoComponente(): void
     {
         const mir = this.planeacionQuery.cuestionarioMir();
@@ -85,6 +84,6 @@ export class ComponentesComponent
 
     imprimirComp(): void
     {
-        // console.log(this.columnas);
+        console.log(this.planeacionQuery.cuestionarioMir());
     }
 }

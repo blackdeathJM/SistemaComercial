@@ -13,7 +13,7 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
-
+import {v4 as uuidv4} from 'uuid';
 import {isNil} from '@angular-ru/cdk/utils';
 import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
@@ -45,16 +45,17 @@ export default class MirComponent implements OnDestroy
             {
                 return;
             }
-            const pbr = this.planeacionQuery.getActive().pbrCuestionario;
-            const sumatoria = this.planeacionQuery.getActive().pbrSumatoria;
+            const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
+            const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
 
             if (isNil(mir) || isNil(mir.componente))
             {
                 return;
             }
 
-            const trimObjCalcular = ComponentesService.objFormula(pbr, mir.componente.ids);
-            this.datosTabla = this.componentesService.construirDatosTabla(pbr, mir.componente.formComun);
+            const trimObjCalcular = ComponentesService.objFormula(pbrS, mir.componente.ids, mir.componente.formComun, sumatorias);
+
+            this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
             this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
             this.avancesTrimestrales[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
@@ -70,6 +71,7 @@ export default class MirComponent implements OnDestroy
                     this.columnas = ComponentesService.colConValorAd(mir.componente.tipoValorTrim);
                     break;
                 case TiposFormulario.PERIODO_ANT:
+                    this.columnas = ComponentesService.colPeriodoAnt(mir.componente.tipoValorTrim);
                     break;
             }
         }, {allowSignalWrites: true});
@@ -92,5 +94,10 @@ export default class MirComponent implements OnDestroy
         this.planeacionQuery.centroGestor.set(null);
         this.planeacionQuery.cuestionarioMir.set(null);
         this.planeacionQuery.cuestionarioMirV.set([]);
+    }
+
+    imprimir(): void
+    {
+        console.log(uuidv4().toString().substring(0, 7).toUpperCase());
     }
 }

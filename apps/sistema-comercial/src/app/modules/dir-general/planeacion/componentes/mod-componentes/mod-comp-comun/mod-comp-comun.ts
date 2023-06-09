@@ -152,6 +152,35 @@ export class ModCompComun implements OnDestroy
 
     agregarAlArreglo(): void
     {
+        console.log('formComun', this.formComun.invalid);
+        console.log('formAd', this.formAd.invalid);
+
+        if (this.tipoForm === TiposFormulario.COMUN)
+        {
+            if (this.formComun.invalid)
+            {
+                this.ngxToast.alertaToast('Valida que la informacion este correctamente llenada', 'Agregar a lista');
+                return;
+            }
+        }
+        if (this.tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
+        {
+            if (this.formComun.invalid && this.formAd.invalid)
+            {
+                this.ngxToast.alertaToast('Valida que la informacion este correctamente llenada', 'Agregar a lista');
+                return;
+            }
+        }
+
+        if (this.tipoForm === TiposFormulario.PERIODO_ANT)
+        {
+            if (this.formComun.invalid && this.formTrimAnterior.invalid)
+            {
+                this.ngxToast.alertaToast('Valida que la informacion este correctamente llenada', 'Agregar A lista');
+                return;
+            }
+        }
+
         const {idIndicador} = this.formComun.value;
         const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
 
@@ -191,7 +220,6 @@ export class ModCompComun implements OnDestroy
         }
         this.cargando = true;
 
-        console.log(this.planeacionQuery.cuestionarioMir());
         const regComponente: TRegComponente =
             {
                 _id: this.planeacionQuery.getActive()._id,
@@ -206,7 +234,6 @@ export class ModCompComun implements OnDestroy
 
         this.formComun.disable();
         this.formTrimAnterior.disable();
-
         this.planeacionService.regComponente(regComponente).pipe(finalize(() =>
         {
             this.cargando = false;
@@ -221,6 +248,8 @@ export class ModCompComun implements OnDestroy
     {
         this.tipoForm = e.value as TiposFormulario;
         this.planeacionQuery.desactivarBtnFormAd(this.tipoForm !== TiposFormulario.CON_OTRO_ID_PBR);
+        this.formAd.reset();
+        this.formTrimAnterior.reset();
         this.formConValoresDelPeriodoAnt();
     }
 
@@ -228,7 +257,6 @@ export class ModCompComun implements OnDestroy
     {
         if (this.tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            this.formAd.reset();
             const id = this.formComun.get('idIndicador').value;
             const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.esSumatoria);
 

@@ -36,7 +36,7 @@ export class PlaneacionService
     async inicializarPlaneacion(planeacion: PlaneacionDto): Promise<PlaneacionDto>
     {
         const {_id, ...resto} = planeacion;
-        if(_id)
+        if (_id)
         {
             const copia = await this.planeacion.findById(planeacion._id).exec();
 
@@ -80,7 +80,7 @@ export class PlaneacionService
     {
         const {_id, esActualizar, ...resto} = datos;
 
-        if(esActualizar)
+        if (esActualizar)
         {
             return await this.planeacion.findOneAndUpdate({
                 _id,
@@ -93,7 +93,7 @@ export class PlaneacionService
     async regPbr(datos: RegPbrDto): Promise<PlaneacionDto>
     {
         const {_id, esActualizar, ...resto} = datos;
-        if(esActualizar)
+        if (esActualizar)
         {
             const respuesta = await this.planeacion.findOneAndUpdate({
                     _id,
@@ -148,7 +148,7 @@ export class PlaneacionService
         // Obtenemos todos los ids del cuestionario y los agregamos a un array
         const resp = consulta.pbrCuestionario.map(async value =>
         {
-            if(value.centroGestor === args.centroGestor)
+            if (value.centroGestor === args.centroGestor)
             {
                 const trimestres = [[value.marzo, value.febrero, value.enero], [value.junio, value.mayo, value.abril],
                     [value.septiembre, value.agosto, value.julio], [value.diciembre, value.noviembre, value.octubre]];
@@ -171,7 +171,7 @@ export class PlaneacionService
 
         const nvoDocumento = await this.calculosPbrService.calcularAvancerPbr(_id, idIndicador, centroGestor, tipoOperacion, trimestres);
         // Actualizamos la sumatoria del centro gestor por si tiene
-        if(nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
+        if (nvoDocumento.pbrSumatoria && nvoDocumento.pbrSumatoria.length > 0)
         {
             const respuesta = nvoDocumento.pbrSumatoria.map(async value =>
             {
@@ -224,10 +224,9 @@ export class PlaneacionService
             nombreSumatoria,
             sumTotal,
             sumTrim,
-            idSumatoria: actualizar ? idSumatoria : uuidv4()
+            idSumatoria: actualizar ? idSumatoria : uuidv4().toString().substring(0, 7)
         };
-
-        if(actualizar)
+        if (actualizar)
         {
             return await this.planeacion.findOneAndUpdate({
                 '_id': _id,
@@ -260,5 +259,4 @@ export class PlaneacionService
         return await this.planeacion.findOneAndUpdate({_id: args._id, 'mirCuestionario.idIndicador': args.idIndicador},
             {$set: {'mirCuestionario.$.componente': null}}, {new: true}).exec();
     }
-
 }

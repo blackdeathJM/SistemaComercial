@@ -91,10 +91,6 @@ export class ListaTabMirComponent
         return false;
     }
 
-    imprimirMir(): void
-    {
-    }
-
     cambiarDireccion(dir: string): void
     {
         const arregloMir = this.planeacionQuery.compCuestionarioMir();

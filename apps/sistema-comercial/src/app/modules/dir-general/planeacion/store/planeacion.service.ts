@@ -218,7 +218,7 @@ export class PlaneacionService
 
     regComponente(datos: TRegComponente): Observable<SingleExecutionResult<RegComponenteMutation>>
     {
-        return this.regComponenteGQL.mutate({datos}).pipe(tap((res) =>
+        return this.regComponenteGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (isNotNil(res) && isNotNil(res.data))
             {
@@ -232,7 +232,7 @@ export class PlaneacionService
 
     reemplazarComp(args: TReemplazarComp): Observable<SingleExecutionResult<ReemplazarCompMutation>>
     {
-        return this.reemplazarCompGQL.mutate({...args}).pipe(tap((res) =>
+        return this.reemplazarCompGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
             if (isNotNil(res) && isNotNil(res.data))
             {

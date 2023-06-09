@@ -1,12 +1,10 @@
 <section class="flex flex-col flex-auto min-w-0" @zoomIn>
-
     <mat-toolbar color="accent" class="flex flex-auto border-b-4 border-b-cyan-500 items-center pt-5 gap-4">
         <mat-form-field class="basis-1/4" *ngIf="seleccionQuery.select() | async as seleccion">
             <mat-select (valueChange)="filCentroGestor($event)" placeholder="Selecciona un centro gestor">
                 <mat-option *ngFor="let centroGestor of seleccion.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
             </mat-select>
         </mat-form-field>
-
         <mat-form-field class="flex-auto">
             <mat-select placeholder="Selecciona un elemento" hideSingleSelectionIndicator>
                 <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">
@@ -25,7 +23,6 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-
         <mat-form-field class="basis-1/4" *ngIf="planeacionQuery.compSumatoriasPbr().length > 0">
             <mat-select placeholder="Selecciona una sumatoria" hideSingleSelectionIndicator>
                 <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">
@@ -49,6 +46,10 @@
     <article class="flex-auto p-2 sm:p-4">
         <div class="h-400 min-h-400 max-h-400">
             <article class="flex flex-col flex-auto">
+                <fuse-alert [type]="'info'" appearance="border" class="mx-5">
+                    <span fuseAlertTitle>{{definicionIndicador}}</span>
+                    {{metodoCalculo}}
+                </fuse-alert>
                 <mat-tab-group [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndice($event)">
                     <mat-tab label="Form comun">
                         <ng-container *ngIf="indice === 0">
