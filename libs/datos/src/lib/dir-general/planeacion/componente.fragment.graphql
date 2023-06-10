@@ -8,9 +8,7 @@ fragment fragComponente on ComponenteType
     formComun {
         ...fragFormComun
     }
-    formPlanta {
-        ...fragPlanta
-    }
+    formDinamico
 }
 fragment fragFormComun on FormComunType
 {
@@ -20,11 +18,4 @@ fragment fragFormComun on FormComunType
     trim2Ant
     trim3Ant
     trim4Ant
-}
-fragment fragPlanta on FormPlantaType
-{
-    sstE
-    dqoE
-    grasasAceitesE
-    ptarE
 }

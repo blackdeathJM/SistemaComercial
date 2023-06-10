@@ -33,9 +33,9 @@ mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $re
         ...fragPlaneacion
     }
 }
-mutation eliminarElemento($_id: ID!, $idIndicador: String!, $cuestionario: String!)
+mutation eliminarComponente($_id: ID!, $idIndicador: String!, $cuestionario: String!)
 {
-    eliminarElemento(_id: $_id, idIndicador: $idIndicador, cuestionario: $cuestionario)
+    eliminarComponente(_id: $_id, idIndicador: $idIndicador, cuestionario: $cuestionario)
     {
         ...fragPlaneacion
     }
@@ -72,6 +72,14 @@ mutation regComponente($datos: RegComponenteInput!)
 mutation reemplazarComp($_id: ID!, $idIndicador: String!)
 {
     reemplazarComp(_id: $_id, idIndicador: $idIndicador)
+    {
+        ...fragPlaneacion
+    }
+}
+
+mutation regCompDinamico($datos: RegComponenteInput!)
+{
+    regCompDinamico(datos: $datos)
     {
         ...fragPlaneacion
     }

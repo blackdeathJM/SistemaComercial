@@ -24,6 +24,7 @@ import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 import {finalize} from "rxjs";
+import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-mod-comp-comun',
@@ -39,6 +40,7 @@ export class ModCompComun implements OnDestroy
 {
     @Input({required: true}) idIndicadorMir: string = null;
     protected readonly TiposFormulario = TiposFormulario;
+    protected readonly asignacion = AsigFormsComponente;
     datos: IFormComun[] = [];
     ids: string[] = [];
     tipoForm = TiposFormulario.COMUN;
@@ -268,6 +270,23 @@ export class ModCompComun implements OnDestroy
         }
     }
 
+
+    filCentroGestor(e: string): void
+    {
+        this.planeacionQuery.centroGestor.set(e);
+    }
+
+    seleccionarPbr(pbr: IPbrCuestionario, asig: AsigFormsComponente): void
+    {
+        this.planeacionQuery.asigForm(asig);
+        this.planeacionQuery.cuestionarioPbr.set(pbr);
+    }
+
+    seleccionarSumatoria(sumatoria: ISumatorias, asig: AsigFormsComponente): void
+    {
+        this.planeacionQuery.asigForm(asig);
+        this.planeacionQuery.sumatoriaPbr.set(sumatoria)
+    }
     cancelar(): void
     {
         this.localizado.back();

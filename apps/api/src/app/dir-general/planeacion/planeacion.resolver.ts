@@ -44,9 +44,9 @@ export class PlaneacionResolver
     }
 
     @Mutation(() => PlaneacionDto)
-    async eliminarElemento(@Args() args: EliminarElementoDto): Promise<PlaneacionDto>
+    async eliminarComponente(@Args() args: EliminarElementoDto): Promise<PlaneacionDto>
     {
-        return await this.planeacionService.eliminiarElemento(args);
+        return await this.planeacionService.eliminarComponente(args);
     }
 
     @Mutation(() => PlaneacionDto)
@@ -77,5 +77,11 @@ export class PlaneacionResolver
     async reemplazarComp(@Args() args: ReemplazarCompDto): Promise<PlaneacionDto>
     {
         return this.planeacionService.reemplazarComp(args);
+    }
+
+    @Mutation(() => PlaneacionDto)
+    async regCompDinamico(@Args('datos') datos: RegComponenteDto): Promise<PlaneacionDto>
+    {
+        return this.planeacionService.regCompDinamico(datos);
     }
 }

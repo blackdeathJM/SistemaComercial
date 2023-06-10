@@ -1,48 +1,4 @@
 <section class="flex flex-col flex-auto min-w-0" @zoomIn>
-    <mat-toolbar color="accent" class="flex flex-auto border-b-4 border-b-cyan-500 items-center pt-5 gap-4">
-        <mat-form-field class="basis-1/4" *ngIf="seleccionQuery.select() | async as seleccion">
-            <mat-select (valueChange)="filCentroGestor($event)" placeholder="Selecciona un centro gestor">
-                <mat-option *ngFor="let centroGestor of seleccion.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-            <mat-select placeholder="Selecciona un elemento" hideSingleSelectionIndicator>
-                <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">
-                    <div class="flex gap-2 items-center">
-                        <span class="flex-grow">{{pbr.dato}}</span>
-                        <button mat-icon-button color="primary" (click)="seleccionarPbr(pbr,asignacion.principal)" matTooltip="Asignarlo al id principal">
-                            <mat-icon svgIcon="feather:chevron-right"></mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" (click)="seleccionarPbr( pbr,asignacion.adicional)" matTooltip="Asignar al id adcional" [disabled]="planeacionQuery.desactivarBtnFormAd()">
-                            <mat-icon svgIcon="feather:chevrons-right"></mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" (click)="seleccionarPbr( pbr,asignacion.formula)" matTooltip="Asignar al id a la formula">
-                            <mat-icon svgIcon="mat_solid:power_input"></mat-icon>
-                        </button>
-                    </div>
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field class="basis-1/4" *ngIf="planeacionQuery.compSumatoriasPbr().length > 0">
-            <mat-select placeholder="Selecciona una sumatoria" hideSingleSelectionIndicator>
-                <mat-option *ngFor="let sumatoria of planeacionQuery.compSumatoriasPbr()" [value]="sumatoria">
-                    <div class="flex gap-2 items-center">
-                        <span class="flex-grow">{{sumatoria.descripcion}}</span>
-                        <button mat-icon-button color="primary" (click)="seleccionarSumatoria(sumatoria ,asignacion.principal)" matTooltip="Asignarlo al id principal">
-                            <mat-icon svgIcon="feather:chevron-right"></mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" (click)="seleccionarSumatoria( sumatoria,asignacion.adicional)" matTooltip="Asignar al id adcional" [disabled]="planeacionQuery.desactivarBtnFormAd()">
-                            <mat-icon svgIcon="feather:chevrons-right"></mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" (click)="seleccionarSumatoria( sumatoria,asignacion.formula)" matTooltip="Asignar id a la formula">
-                            <mat-icon svgIcon="mat_solid:power_input"></mat-icon>
-                        </button>
-                    </div>
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </mat-toolbar>
-
     <article class="flex-auto p-2 sm:p-4">
         <div class="h-400 min-h-400 max-h-400">
             <article class="flex flex-col flex-auto">
@@ -58,12 +14,11 @@
                     </mat-tab>
                     <mat-tab label="Form PTAR">
                         <ng-container *ngIf="indice === 1">
-                            <app-mod-comp-ptar></app-mod-comp-ptar>
+                            <app-mod-comp-ptar [idIndicadorMir]="idIndicadorMir"></app-mod-comp-ptar>
                         </ng-container>
                     </mat-tab>
                 </mat-tab-group>
             </article>
-
         </div>
     </article>
 </section>

@@ -1,9 +1,28 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
 import {
-    ActualizarResponsableGQL, EliminarElementoGQL, FilTodosGQL, FilTodosQuery, InicializarPlaneacionGQL,
-    InicializarPlaneacionMutation, RecalcularPbrGQL, RecalcularPbrMutation, ReemplazarCompGQL, ReemplazarCompMutation, RegAvancePbrGQL, RegAvancePbrMutation, RegComponenteGQL, RegComponenteMutation, RegMirGQL,
-    RegMirMutation, RegPbrGQL, RegPbrMutation, SumatoriaPbrGQL, SumatoriaPbrMutation
+    ActualizarResponsableGQL,
+    EliminarComponenteGQL,
+    FilTodosGQL,
+    FilTodosQuery,
+    InicializarPlaneacionGQL,
+    InicializarPlaneacionMutation,
+    RecalcularPbrGQL,
+    RecalcularPbrMutation,
+    ReemplazarCompGQL,
+    ReemplazarCompMutation,
+    RegAvancePbrGQL,
+    RegAvancePbrMutation,
+    RegCompDinamicoGQL,
+    RegCompDinamicoMutation,
+    RegComponenteGQL,
+    RegComponenteMutation,
+    RegMirGQL,
+    RegMirMutation,
+    RegPbrGQL,
+    RegPbrMutation,
+    SumatoriaPbrGQL,
+    SumatoriaPbrMutation
 } from '#/libs/datos/src';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
 import {makeVar, SingleExecutionResult} from '@apollo/client';
@@ -39,10 +58,10 @@ export enum ValoresCamposMod
 export class PlaneacionService
 {
     constructor(private filTodosGQL: FilTodosGQL, private inicializarPlaneacionGQL: InicializarPlaneacionGQL, private planeacionStore: PlaneacionStore, private ngxToast: NgxToastService,
-                private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarElementoGQL: EliminarElementoGQL,
+                private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarComponenteGQL: EliminarComponenteGQL,
                 private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService, private regComponenteGQL: RegComponenteGQL,
                 private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL, private recalcularPbrGQL: RecalcularPbrGQL,
-                private reemplazarCompGQL: ReemplazarCompGQL)
+                private reemplazarCompGQL: ReemplazarCompGQL, private regCompDinamicoGQL: RegCompDinamicoGQL)
     {
     }
 
@@ -112,7 +131,7 @@ export class PlaneacionService
                         idIndicador: this.planeacionQuery.getActive()[cuestionario].find(va => va.idIndicador === idIndicador),
                         cuestionario
                     };
-                this.eliminarElementoGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)),
+                this.eliminarComponenteGQL.mutate({...args}).pipe(catchError(err => this.generalService.cacharError(err)),
                     tap((res) =>
                     {
                         if (isNotNil(res) && isNotNil(res.data))
@@ -239,6 +258,20 @@ export class PlaneacionService
                 const {_id, ...cambios} = <IPlaneacion>res.data.reemplazarComp;
                 this.planeacionStore.update(_id, cambios);
                 this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
+            }
+        }));
+    }
+
+    regCompDinamico(datos: TRegComponente): Observable<SingleExecutionResult<RegCompDinamicoMutation>>
+    {
+        return this.regCompDinamicoGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
+        {
+            if (isNotNil(res) && isNotNil(res.data))
+            {
+                const {_id, ...cambios} = <IPlaneacion>res.data.regCompDinamico;
+                this.planeacionStore.update(_id, cambios);
+                this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
+                this.ngxToast.satisfactorioToast('Se ha registrado un nuevo componente con exito', 'Registro Componentes');
             }
         }));
     }

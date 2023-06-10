@@ -1,28 +1,8 @@
 import {Field, Float, ID, InputType, ObjectType, PartialType} from "@nestjs/graphql";
-import {IComponente, IFormComun, IFormPlanta} from "./componente.interface";
+import {IComponente, IFormComun} from "./componente.interface";
 // import {v4 as uuidv4} from 'uuid'
 import {IsArray, IsNotEmpty, IsNumber, IsOptional} from "class-validator";
-
-@ObjectType('FormPlantaType')
-@InputType('FormPlantaInput')
-export class FormPlantaDto implements IFormPlanta
-{
-    @IsNotEmpty({message: 'Es necesario el PTAR'})
-    @Field(() => String, {nullable: true, defaultValue: null})
-    ptarE: string;
-
-    @IsNumber({allowNaN: false}, {message: 'El SST debe ser un valor numerico'})
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    sstE: number;
-
-    @IsNumber({allowNaN: false}, {message: 'El DQO debe ser un valor numerico'})
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    dqoE: number;
-
-    @IsNumber({allowNaN: false}, {message: 'Las grasas y aceites deben ser un valor numerico'})
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    grasasAceitesE: number;
-}
+import {GraphQLJSON} from "graphql-scalars";
 
 @ObjectType('FormComunType')
 @InputType('FormComunInput')
@@ -58,8 +38,8 @@ export class FormComunDto implements IFormComun
 export class ComponenteDto implements IComponente
 {
     @IsOptional()
-    @Field(() => [FormPlantaDto], {nullable: true, defaultValue: []})
-    formPlanta: FormPlantaDto[];
+    @Field(() => [GraphQLJSON], {nullable: true, defaultValue: []})
+    formDinamico: object[];
 
     @IsOptional()
     @Field(() => [FormComunDto], {nullable: true, defaultValue: []})

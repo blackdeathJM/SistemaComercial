@@ -1,23 +1,61 @@
-<mat-card>
-    <mat-card-title>
+<form class="mt-2">
+    <article class="flex flex-auto gap-4">
 
-    </mat-card-title>
-    <mat-card-content>
-        <form class="mt-2">
-            <section class="flex flex-auto flex-col">
-                <mat-form-field class="flex-auto">
-                    <mat-label>Define las cabeceras para las columnas</mat-label>
-                    <mat-chip-grid #chipGrid (change)="cambioValor($event)">
-                        <mat-chip-row color="primary" *ngFor="let cabecera of cabeceraColumna; let i=index" (removed)="remover(cabecera)" [editable]="true" (edited)="editar(cabecera, $event)">
-                            {{cabecera}}
-                            <button matChipRemove [disabled]="i === 0 || i === 1">
-                                <mat-icon>cancel</mat-icon>
-                            </button>
-                        </mat-chip-row>
-                        <input placeholder="Nueva columna" [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separador" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="agregar($event)">
-                    </mat-chip-grid>
-                </mat-form-field>
-            </section>
-        </form>
-    </mat-card-content>
-</mat-card>
+        <mat-card class="basis-1/2">
+            <mat-card-content>
+                <section class="flex flex-col">
+                    <mat-form-field class="flex-auto" *ngIf="seleccionQuery.select() | async as deptos">
+                        <mat-label>Seleccionar departamento</mat-label>
+                        <mat-select (valueChange)="cambioDepto($event)">
+                            <mat-option *ngFor="let depto of deptos.centroGestor" [value]="depto">{{depto}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-selection-list class="flex-auto overflow-y-auto border-2 rounded-lg h-160" color="primary" multiple="false">
+                        <mat-list-option class="border-b-2" *ngFor="let pbr of filCuestionarioPbr" value="pbr" (dblclick)="dobleClick(pbr)">{{pbr.dato}}</mat-list-option>
+                    </mat-selection-list>
+                </section>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="flex-auto h-fit">
+            <mat-card-content>
+                <section class="flex flex-col">
+                    <mat-form-field>
+                        <mat-label>Define las cabeceras para las columnas</mat-label>
+                        <mat-chip-grid #chipGrid (change)="cambioValorChipColumnas($event.value)">
+                            <mat-chip-row color="primary" *ngFor="let cabecera of cabeceraColumna; let i=index" (removed)="remover(cabecera)" [editable]="i !==0" (edited)="editar(cabecera, $event)">
+                                {{cabecera}}
+                                <button matChipRemove [disabled]="i === 0 || i === 1">
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip-row>
+                            <input placeholder="Nueva columna" [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separador" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="agregar($event)">
+                        </mat-chip-grid>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Variable</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Dato</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </section>
+            </mat-card-content>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+                <div class="flex flex-auto gap-4">
+                    <button mat-raised-button color="accent" class="flex-auto" (click)="agregarLista()">
+                        <mat-icon svgIcon="mat_outline:edit"></mat-icon>
+                        Agregar a lista
+                    </button>
+                    <button mat-raised-button color="warn" class="flex-auto" (click)="regComponente()">
+                        <mat-icon svgIcon="mat_outline:delete"></mat-icon>
+                        Registrar componente
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </article>
+</form>

@@ -8,16 +8,13 @@ import {MatSelectModule} from "@angular/material/select";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {MatListModule} from "@angular/material/list";
-import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatTabsModule} from "@angular/material/tabs";
-import {MatToolbarModule} from "@angular/material/toolbar";
 import {fuseAnimations} from "@s-fuse/public-api";
 import {ActivatedRoute} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {isNil} from "@angular-ru/cdk/utils";
-import {AsigFormsComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {Subscription} from "rxjs";
 import {FuseAlertModule} from "@s-fuse/alert";
 import {ModCompPtar} from "@s-dir-general/componentes/mod-componentes/mod-comp-ptar/mod-comp-ptar";
@@ -25,7 +22,8 @@ import {ModCompPtar} from "@s-dir-general/componentes/mod-componentes/mod-comp-p
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
-    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatToolbarModule, MatButtonModule, MatIconModule, MatTooltipModule, FuseAlertModule, ModCompPtar],
+    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatButtonModule, MatIconModule, MatTooltipModule, FuseAlertModule,
+        ModCompPtar],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
     animations: [fuseAnimations],
@@ -37,7 +35,6 @@ export class ModComponentesComponent implements OnInit, AfterContentInit, OnDest
     idIndicadorMir = null;
     definicionIndicador = '';
     metodoCalculo = '';
-    protected readonly asignacion = AsigFormsComponente;
     sub = new Subscription();
 
     constructor(public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private activatedRoute: ActivatedRoute, private location: Location)
@@ -67,26 +64,9 @@ export class ModComponentesComponent implements OnInit, AfterContentInit, OnDest
         this.metodoCalculo = mirBuscado.metodoCalculo;
     }
 
-    filCentroGestor(e: string): void
-    {
-        this.planeacionQuery.centroGestor.set(e);
-    }
-
     cambioIndice(e: number): void
     {
         this.indice = e;
-    }
-
-    seleccionarPbr(pbr: IPbrCuestionario, asig: AsigFormsComponente): void
-    {
-        this.planeacionQuery.asigForm(asig);
-        this.planeacionQuery.cuestionarioPbr.set(pbr);
-    }
-
-    seleccionarSumatoria(sumatoria: ISumatorias, asig: AsigFormsComponente): void
-    {
-        this.planeacionQuery.asigForm(asig);
-        this.planeacionQuery.sumatoriaPbr.set(sumatoria)
     }
 
     ngOnDestroy(): void

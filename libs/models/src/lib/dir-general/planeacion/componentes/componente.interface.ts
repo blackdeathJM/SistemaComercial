@@ -23,15 +23,6 @@ export enum TipoValores
     LTS = 'litros',
     MT3 = 'mt3'
 }
-
-export interface IFormPlanta
-{
-    ptarE: string;
-    sstE: number;
-    dqoE: number;
-    grasasAceitesE: number;
-}
-
 export interface IFormComun
 {
     idIndicador: string;
@@ -47,8 +38,9 @@ export interface IFormComun
 
 export interface IComponente
 {
-    formPlanta: IFormPlanta[];
+    formDinamico: object[];
     formComun: IFormComun[];
+
     ids: string[];
     formula: string;
 
