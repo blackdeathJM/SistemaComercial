@@ -13,7 +13,6 @@ import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
-import {v4 as uuidv4} from 'uuid';
 import {isNil} from '@angular-ru/cdk/utils';
 import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
@@ -98,14 +97,22 @@ export default class MirComponent implements OnDestroy
 
     imprimirTablaMir(): void
     {
-        const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo', 'Medios de verificacion', 'Supuestos', 'U. de medida', 'Frecuencia de medicion',
-            'L. Base año', 'L. Base valor', 'Meta', 'S. Indicador', 'Sem. Verde', 'Sem. Amarillo', 'Sem. Rojo', 'A. Trim1', 'A. Trim2', 'A. Trim3', 'A. Trim4'];
-        const planeacionActiva = this.planeacionQuery.getActive();
-        const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + planeacionActiva.ano;
-        const cuerpo = planeacionActiva.mirCuestionario.map(x =>
+        // const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo', 'Medios de verificacion', 'Supuestos', 'U. de medida', 'Frecuencia de medicion',
+        //     'L. Base año', 'L. Base valor', 'Meta', 'S. Indicador', 'Sem. Verde', 'Sem. Amarillo', 'Sem. Rojo', 'A. Trim1', 'A. Trim2', 'A. Trim3', 'A. Trim4'];
+
+        const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo', 'Medios de verificacion', 'Supuestos', 'U. de medida', 'Frec. de medicion',
+            'L. Base año', 'L. Base valor', 'Meta', 'S. Indicador', 'Sem. Verde', 'Sem. Amarillo', 'Sem. Rojo', 'Av. Trim1', 'Av. Trim2', 'Av. Trim3', 'Av. Trim4'];
+
+        // const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo'];
+        const ano = this.planeacionQuery.getActive().ano;
+        const mirsActivo = this.planeacionQuery.cuestionarioMirV();
+        const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
+        const cuerpo = mirsActivo.map(x =>
         {
-            return [x.nivel, x.resumenNarrativo, x.centroGestor, x.metodoCalculo]
+            return [x.nivel, x.resumenNarrativo, x.centroGestor, x.metodoCalculo, x.mediosVerificacion, x.supuestos, x.unidadDeMedida, x.frecuenciaMedicion, x.lineaBaseAno, x.lineaBaseValor, x.meta, x.sentidoDelIndicador,
+                x.semefVerdeV, x.semefAmarilloV, x.semefRojoV, x.avanceTrim1, x.avanceTrim2, x.avanceTrim3, x.avanceTrim4];
         });
+
         PlaneacionImprimirService.imprimir(encabezado, cuerpo, subtitulo);
     }
 }
