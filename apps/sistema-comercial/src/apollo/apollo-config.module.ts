@@ -4,6 +4,7 @@ import {Apollo, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
+// import {WebSocketLink} from 'apollo-link-ws';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {createUploadLink} from 'apollo-upload-client';
 import {environment} from '@s-environments/environment';

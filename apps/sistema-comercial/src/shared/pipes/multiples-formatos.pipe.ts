@@ -17,7 +17,6 @@ export class MultiplesFormatosPipe implements PipeTransform
         {
             return mostrarValor;
         }
-
         switch (formato)
         {
             case TipoValores.FECHA:

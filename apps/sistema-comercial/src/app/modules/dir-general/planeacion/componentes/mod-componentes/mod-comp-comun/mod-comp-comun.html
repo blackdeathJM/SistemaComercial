@@ -163,7 +163,7 @@
     <mat-card-title>
         <mat-toolbar class="flex border-y-2 border-y-amber-300 my-4">
             <button mat-raised-button (click)="agregarAlArreglo()" class="flex-auto" color="primary">
-                <mat-icon></mat-icon>
+                <mat-icon svgIcon="feather:chevrons-up"></mat-icon>
                 Agregar a lista
             </button>
         </mat-toolbar>
@@ -190,13 +190,6 @@
                         <mat-error>{{formTipoValores.controls.tipoValorAvance['errorMessage']}}</mat-error>
                     </mat-form-field>
                 </div>
-                <!--                <fuse-alert [type]="'info'" [appearance]="'outline'" class="my-4">-->
-                <!--                    <span fuseAlertTitle>Forma de realizar calculos</span>-->
-                <!--                    1.- Da click en las variables que estan en la parte-->
-                <!--                </fuse-alert>-->
-                <!--                <mat-button-toggle-group multiple (change)="agregarAFormula($event)">-->
-                <!--                    <mat-button-toggle *ngFor="let id of ids" [value]="id">{{id}}</mat-button-toggle>-->
-                <!--                </mat-button-toggle-group>-->
                 <div class="flex flex-auto gap-4">
                     <mat-form-field class="flex-auto">
                         <mat-label>Formula para calcular avance trimestral</mat-label>
@@ -208,7 +201,6 @@
                         <input matInput formControlName="etiqueta">
                     </mat-form-field>
                 </div>
-
             </section>
         </form>
     </mat-card-content>

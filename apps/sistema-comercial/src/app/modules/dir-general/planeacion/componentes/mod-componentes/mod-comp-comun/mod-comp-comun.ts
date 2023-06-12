@@ -8,7 +8,6 @@ import {MatIconModule} from "@angular/material/icon";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNil, isNotNil} from "@angular-ru/cdk/utils";
 import {AsigFormsComponente, IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
-import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
@@ -29,8 +28,11 @@ import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/p
 @Component({
     selector: 'app-mod-comp-comun',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatTooltipModule, MatCheckboxModule,
-        RxReactiveFormsModule, MatCardModule, MatToolbarModule, DisableControlModule, MatRadioModule, FuseAlertModule, MatButtonToggleModule],
+    imports:
+        [
+            CommonModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatCheckboxModule, RxReactiveFormsModule, MatCardModule, MatToolbarModule, DisableControlModule,
+            MatRadioModule, FuseAlertModule, MatButtonToggleModule
+        ],
     templateUrl: './mod-comp-comun.html',
     styleUrls: ['./mod-comp-comun.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -87,7 +89,7 @@ export class ModCompComun implements OnDestroy
         tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})],
         formula: ['', RxwebValidators.required({message: 'Es necesario que coloques la formula para calcular los avances trimestrales'})],
         etiqueta: ['']
-    })
+    });
 
     constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, public seleccionQuery: SeleccionQuery,
                 private localizado: Location)
@@ -155,9 +157,6 @@ export class ModCompComun implements OnDestroy
 
     agregarAlArreglo(): void
     {
-        console.log('formComun', this.formComun.invalid);
-        console.log('formAd', this.formAd.invalid);
-
         if (this.tipoForm === TiposFormulario.COMUN)
         {
             if (this.formComun.invalid)
@@ -287,6 +286,7 @@ export class ModCompComun implements OnDestroy
         this.planeacionQuery.asigForm(asig);
         this.planeacionQuery.sumatoriaPbr.set(sumatoria)
     }
+
     cancelar(): void
     {
         this.localizado.back();

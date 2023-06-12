@@ -105,8 +105,8 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1(@nestjs/common@9.4.2)(@nestjs/core@9.4.2)(express@4.18.2)
   '@ngneat/transloco':
-    specifier: 4.2.7
-    version: 4.2.7(@angular/core@16.0.5)(fs-extra@11.1.1)(glob@10.2.7)(rxjs@7.8.1)
+    specifier: 4.3.0
+    version: 4.3.0(@angular/core@16.0.5)(fs-extra@11.1.1)(glob@10.2.7)(rxjs@7.8.1)
   '@rxweb/generics':
     specifier: ^0.0.1-4
     version: 0.0.1-4
@@ -206,6 +206,9 @@ dependencies:
   luxon-angular:
     specifier: ^6.0.0
     version: 6.0.0(@angular/core@16.0.5)(luxon@3.3.0)
+  magic-string:
+    specifier: ^0.30.0
+    version: 0.30.0
   marked:
     specifier: ^5.1.0
     version: 5.1.0
@@ -219,8 +222,8 @@ dependencies:
     specifier: ^2.2.0
     version: 2.2.0(@nestjs/graphql@11.0.6)
   ng-apexcharts:
-    specifier: 1.7.6
-    version: 1.7.6(@angular/common@16.0.5)(@angular/core@16.0.5)(apexcharts@3.41.0)(rxjs@7.8.1)
+    specifier: 1.7.7
+    version: 1.7.7(@angular/common@16.0.5)(@angular/core@16.0.5)(apexcharts@3.41.0)(rxjs@7.8.1)
   ngx-image-cropper:
     specifier: ^7.0.0
     version: 7.0.0(@angular/common@16.0.5)(@angular/core@16.0.5)
@@ -452,8 +455,8 @@ devDependencies:
     specifier: ^1.0.35
     version: 1.0.35
   '@types/react':
-    specifier: ^18.2.9
-    version: 18.2.9
+    specifier: ^18.2.11
+    version: 18.2.11
   '@typescript-eslint/eslint-plugin':
     specifier: 5.59.9
     version: 5.59.9(@typescript-eslint/parser@5.59.9)(eslint@8.42.0)(typescript@5.0.4)
@@ -6643,8 +6646,8 @@ packages:
       tslib: 2.5.3
     dev: false
 
-  /@ngneat/transloco@4.2.7(@angular/core@16.0.5)(fs-extra@11.1.1)(glob@10.2.7)(rxjs@7.8.1):
-    resolution: {integrity: sha512-NMrIoDfeqQhqZlt6uFOuV9OvpHAwNKC2fOAYkTsLGRs6JhcsRdJX+jYY1PL/9Wziv5HartcUTFdbAJ/czHRGRQ==}
+  /@ngneat/transloco@4.3.0(@angular/core@16.0.5)(fs-extra@11.1.1)(glob@10.2.7)(rxjs@7.8.1):
+    resolution: {integrity: sha512-KUhGvp1ki+jvrM2PO27Tgzme1HkFmvDgS+7VyGxHta35wZEyoH6/r/EAXvfurPeYgaP6IaEMhUvAVT1WDgYwUg==}
     peerDependencies:
       '@angular/core': '>=13.0.0'
       fs-extra: '>=9.1.0'
@@ -8654,8 +8657,8 @@ packages:
   /@types/range-parser@1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
 
-  /@types/react@18.2.9:
-    resolution: {integrity: sha512-pL3JAesUkF7PEQGxh5XOwdXGV907te6m1/Qe1ERJLgomojS6Ne790QiA7GUl434JEkFA2aAaB6qJ5z4e1zJn/w==}
+  /@types/react@18.2.11:
+    resolution: {integrity: sha512-+hsJr9hmwyDecSMQAmX7drgbDpyE+EgSF6t7+5QEBAn1tQK7kl1vWZ4iRf6SjQ8lk7dyEULxUmZOIpN0W5baZA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -15878,8 +15881,8 @@ packages:
       accesscontrol: 2.2.1
     dev: false
 
-  /ng-apexcharts@1.7.6(@angular/common@16.0.5)(@angular/core@16.0.5)(apexcharts@3.41.0)(rxjs@7.8.1):
-    resolution: {integrity: sha512-XzW0gLRG9x9ntJ+Ena3dbrGB6lLPuIgVP21Qcv82zbebnYncG9aOyQk48fd2P56jDychanAVTYrNUuK0pMUM1g==}
+  /ng-apexcharts@1.7.7(@angular/common@16.0.5)(@angular/core@16.0.5)(apexcharts@3.41.0)(rxjs@7.8.1):
+    resolution: {integrity: sha512-sj0jAsLLb8/6057vewZHzupjxnApmFs3nSSRnnR6imdz/Ao36kCmqNa12cG4xX7o6j6p7rO/nMO0qkUo/Nl2sQ==}
     peerDependencies:
       '@angular/common': '>=13.0.0'
       '@angular/core': '>=13.0.0'

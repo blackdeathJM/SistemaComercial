@@ -1,61 +1,111 @@
-<form class="mt-2">
-    <article class="flex flex-auto gap-4">
+<mat-card class="mb-4">
+    <mat-card-content>
+        <section class="flex flex-col">
+            <mat-form-field class="flex-auto" *ngIf="seleccionQuery.select() | async as deptos">
+                <mat-label>Seleccionar departamento</mat-label>
+                <mat-select (valueChange)="cambioDepto($event)">
+                    <mat-option *ngFor="let depto of deptos.centroGestor" [value]="depto">{{depto}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="flex flex-auto gap-4">
+                <mat-selection-list class="flex-auto overflow-y-auto border-2 rounded-lg h-100" color="primary" multiple="false">
+                    <mat-list-option class="border-b-2" *ngFor="let pbr of filCuestionarioPbr" [value]="pbr" (dblclick)="dobleClickPbr(pbr)" (click)="clickValorPbr(pbr)">
+                        {{pbr.idIndicador}} - {{pbr.dato}}</mat-list-option>
+                </mat-selection-list>
 
-        <mat-card class="basis-1/2">
-            <mat-card-content>
-                <section class="flex flex-col">
-                    <mat-form-field class="flex-auto" *ngIf="seleccionQuery.select() | async as deptos">
-                        <mat-label>Seleccionar departamento</mat-label>
-                        <mat-select (valueChange)="cambioDepto($event)">
-                            <mat-option *ngFor="let depto of deptos.centroGestor" [value]="depto">{{depto}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-selection-list class="flex-auto overflow-y-auto border-2 rounded-lg h-160" color="primary" multiple="false">
-                        <mat-list-option class="border-b-2" *ngFor="let pbr of filCuestionarioPbr" value="pbr" (dblclick)="dobleClick(pbr)">{{pbr.dato}}</mat-list-option>
-                    </mat-selection-list>
-                </section>
-            </mat-card-content>
-        </mat-card>
+                <mat-selection-list *ngIf="filSumatorias.length > 0" class="flex-auto overflow-y-auto border-2 rounded-lg h-100" color="primary" multiple="false">
+                    <mat-list-option class="border-b-2" *ngFor="let sumatoria of filSumatorias" value="pbr" (dblclick)="dobleClickSumatoria(sumatoria)" (click)="clickSumatoria(sumatoria)">
+                        {{sumatoria.idSumatoria}} - {{sumatoria.nombreSumatoria}}</mat-list-option>
+                </mat-selection-list>
+            </div>
+        </section>
+    </mat-card-content>
+</mat-card>
 
-        <mat-card class="flex-auto h-fit">
-            <mat-card-content>
-                <section class="flex flex-col">
-                    <mat-form-field>
-                        <mat-label>Define las cabeceras para las columnas</mat-label>
-                        <mat-chip-grid #chipGrid (change)="cambioValorChipColumnas($event.value)">
-                            <mat-chip-row color="primary" *ngFor="let cabecera of cabeceraColumna; let i=index" (removed)="remover(cabecera)" [editable]="i !==0" (edited)="editar(cabecera, $event)">
-                                {{cabecera}}
-                                <button matChipRemove [disabled]="i === 0 || i === 1">
-                                    <mat-icon>cancel</mat-icon>
-                                </button>
-                            </mat-chip-row>
-                            <input placeholder="Nueva columna" [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separador" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="agregar($event)">
-                        </mat-chip-grid>
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Variable</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Dato</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </section>
-            </mat-card-content>
-            <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+<mat-card>
+    <mat-card-content>
+        <section class="flex flex-col">
+            <mat-form-field>
+                <mat-label>Define las cabeceras para las columnas</mat-label>
+                <mat-chip-grid #chipGrid [disabled]="deshabilitarChips">
+                    <mat-chip-row color="primary" *ngFor="let cabecera of tituloColumnas; let i=index" (removed)="remover(cabecera)" [editable]="false">
+                        {{cabecera}}
+                        <button matChipRemove [disabled]="i === 0 || i === 1">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                    <input placeholder="Nueva columna" [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separador" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="agregar($event)">
+                </mat-chip-grid>
+            </mat-form-field>
+            <form [formGroup]="formComp" *ngIf="formComp">
                 <div class="flex flex-auto gap-4">
-                    <button mat-raised-button color="accent" class="flex-auto" (click)="agregarLista()">
-                        <mat-icon svgIcon="mat_outline:edit"></mat-icon>
-                        Agregar a lista
-                    </button>
-                    <button mat-raised-button color="warn" class="flex-auto" (click)="regComponente()">
-                        <mat-icon svgIcon="mat_outline:delete"></mat-icon>
-                        Registrar componente
-                    </button>
+                    <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
+                        <mat-label>{{formCtrlNombre}}</mat-label>
+                        <input matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre)" [readonly]="formCtrlNombre === 'dato'" (dblclick)="dblAsigValCtrl()">
+                    </mat-form-field>
                 </div>
-            </mat-card-actions>
-        </mat-card>
-    </article>
-</form>
+            </form>
+        </section>
+    </mat-card-content>
+    <mat-card-content>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="expander = true" (closed)="expander = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Tabla de ids
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Acontinuacion puedes ver la iformacion que haz añadido, realiza tus calculos con los ids estos hacen referencia a todos sus trimestres que corresponden
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-tabla-mat [columnas]="columnas" [datos]="compDinamico"></app-tabla-mat>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-content>
+    <mat-card-content>
+        <form [formGroup]="formTipoValores">
+            <section class="flex flex-auto flex-col">
+                <div class="flex flex-auto gap-4 items-center content-center">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Selecciona el tipo de valor definido para los trimestres</mat-label>
+                        <mat-select formControlName="tipoValorTrim">
+                            <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
+                        </mat-select>
+                        <mat-error>{{formTipoValores.controls.tipoValorTrim['errorMessage']}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Selecciona el tipo de valor en el que se mostraran los avances</mat-label>
+                        <mat-select formControlName="tipoValorAvance">
+                            <mat-option *ngFor="let valor of tipoValores" [value]="valor">{{valor}}</mat-option>
+                        </mat-select>
+                        <mat-error>{{formTipoValores.controls.tipoValorAvance['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-auto gap-4">
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Formula para calcular avance trimestral</mat-label>
+                        <input matInput formControlName="formula">
+                        <mat-error>{{formTipoValores.controls.formula['errorMessage']}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>Etiqueta</mat-label>
+                        <input matInput formControlName="etiqueta">
+                    </mat-form-field>
+                </div>
+            </section>
+        </form>
+    </mat-card-content>
+    <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+        <div class="flex flex-auto gap-4">
+            <button mat-raised-button color="primary" class="flex-auto" (click)="agregarLista()" [disabled]="cargando">
+                <mat-icon svgIcon="feather:chevrons-up"></mat-icon>
+                Agregar a lista
+            </button>
+            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()">
+                <mat-icon svgIcon="mat_solid:save"></mat-icon>
+                Registrar componente
+            </button>
+        </div>
+    </mat-card-actions>
+</mat-card>

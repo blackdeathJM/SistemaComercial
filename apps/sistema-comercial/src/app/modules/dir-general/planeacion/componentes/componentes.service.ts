@@ -203,7 +203,6 @@ export class ComponentesService
         return tablaValores;
     }
 
-
     static colComun(formato: string): ITabla[]
     {
         return [
@@ -396,5 +395,32 @@ export class ComponentesService
                 formato
             }
         ];
+    }
+
+    static colCompDinamico(columnas: string[], formato: string): ITabla[]
+    {
+        const columnasTabla: ITabla[] = [];
+        columnas.forEach(x =>
+        {
+            const tituloColumna = x.split('-');
+            const etiqueta = tituloColumna.shift();
+            const def = tituloColumna.pop();
+            const columnaTabla: ITabla =
+                {
+                    etiqueta,
+                    def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                    formato,
+                    llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                    width: etiqueta === 'dato' ? 'auto' : '7%'
+
+                };
+            columnasTabla.push(columnaTabla);
+        });
+        return columnasTabla;
+    }
+
+    static datosCompDinamicoReg(listaDeValores: object[]): object[]
+    {
+        return [listaDeValores.reduce((acc, act) => Object.assign(acc, act), {})];
     }
 }
