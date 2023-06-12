@@ -181,13 +181,16 @@ export class ModCompPtar
             this.ngxToastService.satisfactorioToast('No se detactaron elementos en el formulario', 'Componente dinamico');
             return;
         }
-        const objecto: Record<string, string> = {}
+        const objecto: Record<string, string> = {};
+
         this.tituloColumnas.forEach(x =>
         {
             const idObtenido = x.split('-').pop();
             objecto[idObtenido] = this.formComp.get(idObtenido).value;
 
         });
+
+        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'sin formato');
         this.compDinamico.push(objecto);
 
         this.deshabilitarChips = true;
@@ -214,9 +217,6 @@ export class ModCompPtar
 
     regComponente(): void
     {
-        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'sin formato');
-        console.log(this.compDinamico);
-        this.datos = ComponentesService.datosCompDinamicoReg(this.compDinamico);
     }
 
     trackByCtrls(indice: number, elemento: string): string | number

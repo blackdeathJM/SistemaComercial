@@ -17,6 +17,7 @@ import {v4 as uuidv4} from 'uuid';
 import {isNil} from '@angular-ru/cdk/utils';
 import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
+import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -95,8 +96,16 @@ export default class MirComponent implements OnDestroy
         this.planeacionQuery.cuestionarioMirV.set([]);
     }
 
-    imprimir(): void
+    imprimirTablaMir(): void
     {
-        console.log(uuidv4().toString().substring(0, 7).toUpperCase());
+        const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo', 'Medios de verificacion', 'Supuestos', 'U. de medida', 'Frecuencia de medicion',
+            'L. Base año', 'L. Base valor', 'Meta', 'S. Indicador', 'Sem. Verde', 'Sem. Amarillo', 'Sem. Rojo', 'A. Trim1', 'A. Trim2', 'A. Trim3', 'A. Trim4'];
+        const planeacionActiva = this.planeacionQuery.getActive();
+        const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + planeacionActiva.ano;
+        const cuerpo = planeacionActiva.mirCuestionario.map(x =>
+        {
+            return [x.nivel, x.resumenNarrativo, x.centroGestor, x.metodoCalculo]
+        });
+        PlaneacionImprimirService.imprimir(encabezado, cuerpo, subtitulo);
     }
 }
