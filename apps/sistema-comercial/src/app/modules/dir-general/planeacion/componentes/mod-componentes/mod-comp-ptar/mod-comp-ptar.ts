@@ -49,10 +49,10 @@ export class ModCompPtar
         {
             idIndicador: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
             dato: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
-            trim1: [0],
-            trim2: [0],
-            trim3: [0],
-            trim4: [0]
+            // trim1: [0],
+            // trim2: [0],
+            // trim3: [0],
+            // trim4: [0]
         };
 
     filCuestionarioPbr: IPbrCuestionario[] = [];

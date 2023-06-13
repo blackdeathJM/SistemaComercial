@@ -113,7 +113,7 @@ export default class MirComponent implements OnDestroy
         };
 
         const ano = this.planeacionQuery.getActive().ano;
-        const mirsActivo = this.planeacionQuery.cuestionarioMirV();
+        const mirsActivo = this.planeacionQuery.compCuestionarioMir();
         const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
 
         PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo);

@@ -38,32 +38,32 @@
                 </mat-chip-grid>
             </mat-form-field>
             <form [formGroup]="formComp" *ngIf="formComp">
-                <div class="flex flex-auto gap-4">
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>Indicador</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Descripcion</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>trimestre 1</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>trimestre 2</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>trimestre 3</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>trimestre 4</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </div>
+<!--                <div class="flex flex-auto gap-4">-->
+<!--                    <mat-form-field class="flex-shrink">-->
+<!--                        <mat-label>Indicador</mat-label>-->
+<!--                        <input matInput>-->
+<!--                    </mat-form-field>-->
+<!--                    <mat-form-field class="flex-auto">-->
+<!--                        <mat-label>Descripcion</mat-label>-->
+<!--                        <input matInput>-->
+<!--                    </mat-form-field>-->
+<!--                    <mat-form-field class="flex-shrink">-->
+<!--                        <mat-label>trimestre 1</mat-label>-->
+<!--                        <input matInput>-->
+<!--                    </mat-form-field>-->
+<!--                    <mat-form-field class="flex-shrink">-->
+<!--                        <mat-label>trimestre 2</mat-label>-->
+<!--                        <input matInput>-->
+<!--                    </mat-form-field>-->
+<!--                    <mat-form-field class="flex-shrink">-->
+<!--                        <mat-label>trimestre 3</mat-label>-->
+<!--                        <input matInput>-->
+<!--                    </mat-form-field>-->
+<!--                    <mat-form-field class="flex-shrink">-->
+<!--                        <mat-label>trimestre 4</mat-label>-->
+<!--                        <input matInput>-->
+<!--                    </mat-form-field>-->
+<!--                </div>-->
                 <div class="flex flex-auto gap-4">
                     <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
                         <mat-label>{{formCtrlNombre}}</mat-label>

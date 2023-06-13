@@ -205,6 +205,10 @@ export class ModCompComun implements OnDestroy
             this.ids.push(idIndicadorAd);
         }
 
+        // this.objFormula[idIndicador] = idIndicador;
+        // this.objFormula[trim1]
+        // this.objFormula[idIndicadorAd] = idIndicadorAd;
+
         this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
 
         this.deshabilitarRadioBtn = true;
