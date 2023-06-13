@@ -23,6 +23,7 @@ export enum TipoValores
     LTS = 'litros',
     MT3 = 'mt3'
 }
+
 export interface IFormComun
 {
     idIndicador: string;
@@ -43,6 +44,7 @@ export interface IComponente
 
     ids: string[];
     formula: string;
+    objFormula: object;
 
     tipoValorTrim: string;
     tipoValorAvance: string;

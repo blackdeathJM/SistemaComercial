@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -18,6 +18,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
 import {DateTime} from 'luxon';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
+import {jsPDF} from "jspdf";
+import html2PDF from 'jspdf-html2canvas';
+import html2canvas from "html2canvas";
 
 @Component({
     selector: 'app-componentes',
@@ -30,10 +33,12 @@ import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 })
 export class ComponentesComponent
 {
+    @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
+
     _columnas: ITabla[] = [];
     _datosTabla: IDatosTablaComun[] = []
     _avancesTrimestrales: string[] = ['', '', '', ''];
-    fecha = DateTime.now();
+    fecha = DateTime.now().toLocaleString();
 
     @Input({required: true}) set columnas(v: ITabla[])
     {
@@ -84,6 +89,22 @@ export class ComponentesComponent
 
     imprimirComp(): void
     {
-        console.log(this.planeacionQuery.cuestionarioMir());
+        const componente = this.componenteRef.nativeElement;
+        componente.style.color = 'black';
+        html2canvas(componente).then(canvas =>
+        {
+            const img = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'pt', 'a4');
+
+            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+            pdf.setFontSize(8);
+            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+            const imgProps = pdf.getImageProperties(img);
+            const pdfAncho = pdf.internal.pageSize.getWidth();
+            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+            pdf.save('componente.pdf');
+            componente.style.color = '';
+        });
     }
 }

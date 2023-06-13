@@ -4,7 +4,7 @@
             <span class="text-xl">{{mirSelec?.nivel}}</span>
         </mat-card-header>
         <mat-card-content>
-            <article class="flex flex-col flex-auto">
+            <article class="flex flex-col flex-auto" #componente>
                 <section class="grid grid-cols-6 gap-4 m-4 text-lg">
                     <span class="detalle-span">Fecha</span>
                     <span class="border-b-2">{{fecha}}</span>
@@ -13,7 +13,7 @@
                     <span class="detalle-span">Programa presupuestal</span>
                     <span class="border-b-2">{{mirSelec?.programaFinanciacion}}</span>
 
-                    <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">FUNCIONARIO RESPONSABLE</span>
+                    <span class="detalle-span font-semibold text-black col-span-full py-2 bg-blue-200 text-center">FUNCIONARIO RESPONSABLE</span>
                     <span class="detalle-span">Responsable</span>
                     <span class="border-b-2">{{mirSelec?.responsable}}</span>
                     <span class="detalle-span">Centro gestor</span>
@@ -21,7 +21,7 @@
                     <span class="detalle-span">Correo electronico</span>
                     <span class="border-b-2">{{mirSelec?.correo}}</span>
 
-                    <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Nombre del indicador</span>
+                    <span class="detalle-span font-semibold text-black col-span-full py-2 bg-blue-200 text-center">INDICADOR</span>
                     <span class="border-b-2 col-span-full text-center">{{mirSelec?.resumenNarrativo}}</span>
 
                     <span class="detalle-span col-start-5">Unidad de medida</span>
@@ -34,7 +34,7 @@
                     <span class="border-b-2">{{mirSelec?.meta}}</span>
                     <span class="detalle-span col-start-5">Sentido del indicador</span>
                     <span class="border-b-2">{{mirSelec?.sentidoDelIndicador}}</span>
-                    <span class="detalle-span col-span-full bg-blue-300 dark:bg-blue-700 text-center">Metodo de calculo</span>
+                    <span class="detalle-span font-semibold text-black py-2 col-span-full bg-blue-200 text-center">METODO DE CALCULO</span>
                     <span class="border-b-2 col-span-full text-center">{{mirSelec?.metodoCalculo}}</span>
                 </section>
 

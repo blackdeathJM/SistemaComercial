@@ -260,6 +260,7 @@ type ComponenteType {
   tipoForm: String
   formula: String
   ids: [String!]
+  objFormula: JSON
 }
 
 type MirCuestionarioType {
@@ -455,7 +456,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1686583668
+  tiempo: Int = 1686659556
   titulo: String
   usarRouter: Boolean = false
 }
@@ -588,6 +589,7 @@ input ComponenteInput {
   tipoForm: String = null
   formula: String = null
   ids: [String!] = []
+  objFormula: JSON = null
 }
 
 input MirCuestionarioInput {
@@ -904,6 +906,7 @@ input RegComponenteInput {
   tipoForm: String = null
   formula: String = null
   ids: [String!] = []
+  objFormula: JSON = null
   _id: ID
   idIndicadorMir: String
 }

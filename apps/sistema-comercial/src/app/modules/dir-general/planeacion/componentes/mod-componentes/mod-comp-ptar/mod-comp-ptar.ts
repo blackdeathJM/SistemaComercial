@@ -22,9 +22,9 @@ import {isNil} from "@angular-ru/cdk/utils";
 import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
-import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {ITabla} from "#/libs/models/src/lib/tabla.interface";
+import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
 
 @Component({
     selector: 'app-mod-comp-ptar',
@@ -48,15 +48,21 @@ export class ModCompPtar
     objFormulario =
         {
             idIndicador: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
-            dato: ['', RxwebValidators.required({message: 'Este campo es requerido'})]
+            dato: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
+            trim1: [0],
+            trim2: [0],
+            trim3: [0],
+            trim4: [0]
         };
+
     filCuestionarioPbr: IPbrCuestionario[] = [];
     filSumatorias: ISumatorias[] = [];
     tituloColumnas: string[] = ['idIndicador', 'dato'];
 
     compDinamico: object[] = [];
     columnas: ITabla[] = [];
-    datos: object[] = [];
+
+    objDatosFormula: object = {};
 
     formComp: FormGroup;
     ctrlNombre = null;
@@ -120,8 +126,18 @@ export class ModCompPtar
         {
             this.formComp.get('idIndicador').setValue(pbr.idIndicador);
             this.formComp.get('dato').setValue(pbr.dato);
+
+            // this.formComp.get('trim1').setValue(pbr.trim1);
+            // this.formComp.get('trim2').setValue(pbr.trim2);
+            // this.formComp.get('trim3').setValue(pbr.trim3);
+            // this.formComp.get('trim4').setValue(pbr.trim4);
             return;
         }
+        // this.formComp.get('trim1').setValue(pbr.trim1);
+        // this.formComp.get('trim2').setValue(pbr.trim2);
+        // this.formComp.get('trim3').setValue(pbr.trim3);
+        // this.formComp.get('trim4').setValue(pbr.trim4);
+
         this.formComp.get(this.ctrlNombre).setValue(pbr.idIndicador);
     }
 
@@ -136,8 +152,16 @@ export class ModCompPtar
         {
             this.formComp.get('idIndicador').setValue(sumatoria.idSumatoria);
             this.formComp.get('dato').setValue(sumatoria.nombreSumatoria);
+            // this.formComp.get('trim1').setValue(sumatoria.trim1);
+            // this.formComp.get('trim2').setValue(sumatoria.trim2);
+            // this.formComp.get('trim3').setValue(sumatoria.trim3);
+            // this.formComp.get('trim4').setValue(sumatoria.trim4);
             return;
         }
+        // this.formComp.get('trim1').setValue(sumatoria.trim1);
+        // this.formComp.get('trim2').setValue(sumatoria.trim2);
+        // this.formComp.get('trim3').setValue(sumatoria.trim3);
+        // this.formComp.get('trim4').setValue(sumatoria.trim4);
         this.formComp.get(this.ctrlNombre).setValue(sumatoria.idSumatoria);
     }
 
@@ -186,33 +210,15 @@ export class ModCompPtar
         this.tituloColumnas.forEach(x =>
         {
             const idObtenido = x.split('-').pop();
-            objecto[idObtenido] = this.formComp.get(idObtenido).value;
-
+            const valorFormulario = this.formComp.get(idObtenido).value;
+            objecto[idObtenido] = valorFormulario;
+            this.objDatosFormula[valorFormulario] = valorFormulario;
         });
 
         this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'sin formato');
         this.compDinamico.push(objecto);
-
         this.deshabilitarChips = true;
-
-        // const valorFormula = this.formTipoValores.get('formula').value;
-        // const agregandoValoresAFormula = valorFormula +
-
-
-        // const datos: TRegComponente =
-        //     {
-        //         _id: 'idCocumento',
-        //         formula: 'formula',
-        //         ids: ['Ids para la formula'],
-        //         idIndicadorMir: 'IdIndicadorMir',
-        //         tipoForm: 'formDinamico',
-        //         formComun: [],
-        //         tipoValorAvance: 'TipoValorAvance',
-        //         tipoValorTrim: 'ValorParaTrimestre',
-        //         formDinamico: [this.obj]
-        //     };
-
-        // this.planeacionService.regCompDinamico(datos).subscribe();
+        this.formComp.reset();
     }
 
     regComponente(): void

@@ -39,6 +39,32 @@
             </mat-form-field>
             <form [formGroup]="formComp" *ngIf="formComp">
                 <div class="flex flex-auto gap-4">
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>Indicador</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Descripcion</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>trimestre 1</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>trimestre 2</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>trimestre 3</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="flex-shrink">
+                        <mat-label>trimestre 4</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-auto gap-4">
                     <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
                         <mat-label>{{formCtrlNombre}}</mat-label>
                         <input matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre)" [readonly]="formCtrlNombre === 'dato'" (dblclick)="dblAsigValCtrl()">
@@ -47,13 +73,18 @@
             </form>
         </section>
     </mat-card-content>
+    <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+        <div class="flex flex-auto flex-col">
+            <button mat-raised-button color="primary" class="flex-auto" (click)="agregarLista()" [disabled]="cargando">
+                <mat-icon svgIcon="feather:chevrons-up"></mat-icon>
+                Agregar a lista
+            </button>
+        </div>
+    </mat-card-actions>
     <mat-card-content>
         <mat-accordion>
-            <mat-expansion-panel (opened)="expander = true" (closed)="expander = false">
+            <mat-expansion-panel (opened)="expander = true" (closed)="expander = false" class="bg-zinc-900 mb-2">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Tabla de ids
-                    </mat-panel-title>
                     <mat-panel-description>
                         Acontinuacion puedes ver la iformacion que haz añadido, realiza tus calculos con los ids estos hacen referencia a todos sus trimestres que corresponden
                     </mat-panel-description>
@@ -98,11 +129,7 @@
     </mat-card-content>
     <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
         <div class="flex flex-auto gap-4">
-            <button mat-raised-button color="primary" class="flex-auto" (click)="agregarLista()" [disabled]="cargando">
-                <mat-icon svgIcon="feather:chevrons-up"></mat-icon>
-                Agregar a lista
-            </button>
-            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()">
+            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()" [disabled]="cargando || formTipoValores.invalid">
                 <mat-icon svgIcon="mat_solid:save"></mat-icon>
                 Registrar componente
             </button>

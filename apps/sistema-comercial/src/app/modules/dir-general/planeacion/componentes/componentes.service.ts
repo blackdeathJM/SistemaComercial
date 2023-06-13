@@ -400,11 +400,13 @@ export class ComponentesService
     static colCompDinamico(columnas: string[], formato: string): ITabla[]
     {
         const columnasTabla: ITabla[] = [];
+
         columnas.forEach(x =>
         {
             const tituloColumna = x.split('-');
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
+
             const columnaTabla: ITabla =
                 {
                     etiqueta,
@@ -417,10 +419,5 @@ export class ComponentesService
             columnasTabla.push(columnaTabla);
         });
         return columnasTabla;
-    }
-
-    static datosCompDinamicoReg(listaDeValores: object[]): object[]
-    {
-        return [listaDeValores.reduce((acc, act) => Object.assign(acc, act), {})];
     }
 }

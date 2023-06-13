@@ -43,6 +43,10 @@ export class TablaMatComponent
             {
                 return 'Total';
             }
+            if (isNaN(Number(trim)))
+            {
+                return '--';
+            }
             return this._origenDatos.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
         }
         return '----';

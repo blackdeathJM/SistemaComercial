@@ -17,6 +17,7 @@ import {isNil} from '@angular-ru/cdk/utils';
 import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
 import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
+import {RowInput, Styles} from "jspdf-autotable";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -97,22 +98,24 @@ export default class MirComponent implements OnDestroy
 
     imprimirTablaMir(): void
     {
-        // const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo', 'Medios de verificacion', 'Supuestos', 'U. de medida', 'Frecuencia de medicion',
-        //     'L. Base año', 'L. Base valor', 'Meta', 'S. Indicador', 'Sem. Verde', 'Sem. Amarillo', 'Sem. Rojo', 'A. Trim1', 'A. Trim2', 'A. Trim3', 'A. Trim4'];
+        const columnas = [{header: 'Ind', dataKey: 'idIndicador'}, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'}, {header: 'Centro gestor', dataKey: 'centroGestor'},
+            {header: 'Metodo de calculo', dataKey: 'metodoCalculo'}, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'}, {header: 'Supuestos', dataKey: 'supuestos'},
+            {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {header: 'Frec. medicion', dataKey: 'frecuenciaMedicion'}, {header: 'L.B Año', dataKey: 'lineaBaseAno'}, {header: 'L.B. valor', dataKey: 'lineaBaseValor'},
+            {header: 'Meta', dataKey: 'meta'}, {header: 'Sentido Ind', dataKey: 'sentidoDelIndicador'}, {header: 'Sem. Verde', dataKey: 'semefVerdeV'}, {header: 'Sem. Amarillo', dataKey: 'semefAmarilloV'},
+            {header: 'Sem. Rojo', dataKey: 'semefRojoV'}, {header: 'A. Trim1', dataKey: 'avanceTrim1'}, {header: 'A. Trim2', dataKey: 'avanceTrim2'}, {header: 'A. Trim3', dataKey: 'avanceTrim3'},
+            {header: 'A. Trim4', dataKey: 'avanceTrim4'}];
 
-        const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo', 'Medios de verificacion', 'Supuestos', 'U. de medida', 'Frec. de medicion',
-            'L. Base año', 'L. Base valor', 'Meta', 'S. Indicador', 'Sem. Verde', 'Sem. Amarillo', 'Sem. Rojo', 'Av. Trim1', 'Av. Trim2', 'Av. Trim3', 'Av. Trim4'];
+        const styles: Partial<Styles> = {fontSize: 6, font: 'helvetica', minCellWidth: 7, overflow: 'linebreak', cellWidth: 'auto', lineWidth: .5};
 
-        // const encabezado = ['Nivel', 'Resumen narrativo', 'Centro gestor', 'Metodo de calculo'];
+        const columnStyles: { [p: string]: Partial<Styles> } = {
+            resumenNarrativo: {cellWidth: 45}, centroGestor: {cellWidth: 20}, metodoCalculo: {cellWidth: 45}, mediosVerificacion: {cellWidth: 30},
+            supuestos: {cellWidth: 30}, unidadDeMedida: {cellWidth: 15},
+        };
+
         const ano = this.planeacionQuery.getActive().ano;
         const mirsActivo = this.planeacionQuery.cuestionarioMirV();
         const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
-        const cuerpo = mirsActivo.map(x =>
-        {
-            return [x.nivel, x.resumenNarrativo, x.centroGestor, x.metodoCalculo, x.mediosVerificacion, x.supuestos, x.unidadDeMedida, x.frecuenciaMedicion, x.lineaBaseAno, x.lineaBaseValor, x.meta, x.sentidoDelIndicador,
-                x.semefVerdeV, x.semefAmarilloV, x.semefRojoV, x.avanceTrim1, x.avanceTrim2, x.avanceTrim3, x.avanceTrim4];
-        });
 
-        PlaneacionImprimirService.imprimir(encabezado, cuerpo, subtitulo);
+        PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo);
     }
 }

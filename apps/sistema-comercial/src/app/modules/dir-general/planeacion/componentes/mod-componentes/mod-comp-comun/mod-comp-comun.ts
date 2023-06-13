@@ -49,6 +49,7 @@ export class ModCompComun implements OnDestroy
     cargando = false;
     esSumatoria = false;
     tipoValores = Object.values(TipoValores);
+    objFormula: object;
 
     deshabilitarRadioBtn = true;
 
@@ -198,11 +199,12 @@ export class ModCompComun implements OnDestroy
             trim4Ant: +trim4
         });
 
-        this.ids.push(idIndicador)
+        this.ids.push(idIndicador);
         if (idIndicadorAd)
         {
             this.ids.push(idIndicadorAd);
         }
+
         this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
 
         this.deshabilitarRadioBtn = true;
