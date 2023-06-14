@@ -27,6 +27,7 @@ export enum TipoValores
 export interface IFormComun
 {
     idIndicador: string;
+
     idIndicadorAd: string;
 
     trim1Ant: number;

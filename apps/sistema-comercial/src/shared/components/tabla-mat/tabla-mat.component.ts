@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
-import {ITabla} from '#/libs/models/src/lib/tabla.interface';
+import {ITablaGen} from '#/libs/models/src/lib/tabla.interface';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 
@@ -17,14 +17,14 @@ export class TablaMatComponent
 {
     _origenDatos: any[];
     columnasAMostrar: string[] = [];
-    columnasTabla: ITabla[] = [];
+    columnasTabla: ITablaGen[] = [];
 
     @Input({required: true}) set datos(data: any[])
     {
         this._origenDatos = data;
     }
 
-    @Input({required: true}) set columnas(columnas: ITabla[])
+    @Input({required: true}) set columnas(columnas: ITablaGen[])
     {
         this.columnasTabla = columnas;
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);

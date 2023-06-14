@@ -12,12 +12,12 @@ import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-regi
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
-import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
+import {ITablaGen} from '#/libs/models/src/lib/tabla.interface';
 import {isNil} from '@angular-ru/cdk/utils';
-import {TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
 import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
-import {RowInput, Styles} from "jspdf-autotable";
+import {Styles} from "jspdf-autotable";
+import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -33,8 +33,9 @@ export const abrirPanelMir = signal<boolean>(false)
 export default class MirComponent implements OnDestroy
 {
     abrirPanel = abrirPanelMir;
-    columnas: ITabla[] = [];
+    columnas: ITablaGen[] = [];
     datosTabla: IDatosTablaComun[];
+
     avancesTrimestrales: string[] = [];
 
     constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService)
@@ -55,25 +56,14 @@ export default class MirComponent implements OnDestroy
             }
 
             const trimObjCalcular = ComponentesService.objFormula(pbrS, mir.componente.ids, mir.componente.formComun, sumatorias);
+
             this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
+
             this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
             this.avancesTrimestrales[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
             this.avancesTrimestrales[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
 
-            switch (mir.componente.tipoForm)
-            {
-                case TiposFormulario.COMUN:
-                    this.columnas = ComponentesService.colComun(mir.componente.tipoValorTrim);
-                    break;
-
-                case TiposFormulario.CON_OTRO_ID_PBR:
-                    this.columnas = ComponentesService.colConValorAd(mir.componente.tipoValorTrim);
-                    break;
-                case TiposFormulario.PERIODO_ANT:
-                    this.columnas = ComponentesService.colPeriodoAnt(mir.componente.tipoValorTrim);
-                    break;
-            }
         }, {allowSignalWrites: true});
     }
 
@@ -87,14 +77,6 @@ export default class MirComponent implements OnDestroy
         this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
 
-
-    ngOnDestroy(): void
-    {
-        abrirPanelMir.set(false);
-        this.planeacionQuery.centroGestor.set(null);
-        this.planeacionQuery.cuestionarioMir.set(null);
-        this.planeacionQuery.cuestionarioMirV.set([]);
-    }
 
     imprimirTablaMir(): void
     {
@@ -117,5 +99,12 @@ export default class MirComponent implements OnDestroy
         const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
 
         PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo);
+    }
+    ngOnDestroy(): void
+    {
+        abrirPanelMir.set(false);
+        this.planeacionQuery.centroGestor.set(null);
+        this.planeacionQuery.cuestionarioMir.set(null);
+        this.planeacionQuery.cuestionarioMirV.set([]);
     }
 }

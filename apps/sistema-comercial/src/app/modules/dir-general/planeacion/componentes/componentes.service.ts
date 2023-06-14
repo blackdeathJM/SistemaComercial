@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {IFormComun, TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
-import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
+import {ITablaGen} from '#/libs/models/src/lib/tabla.interface';
 import * as math from 'mathjs';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
+import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 
 @Injectable({
     providedIn: 'root'
@@ -12,42 +13,38 @@ export class ComponentesService
 {
     static formula(ids: string[], tipoForm: TiposFormulario, datos: IFormComun[]): string
     {
-        if (ids.length === 1 && tipoForm === TiposFormulario.COMUN)
+        if (tipoForm === TiposFormulario.COMUN && ids.length === 1)
         {
             const valor = ids[0];
-            return `${valor} * 100`
+            return `(${valor}) * 100`;
         }
-        if (ids.length === 2 && tipoForm === TiposFormulario.COMUN)
+
+        if (tipoForm === TiposFormulario.COMUN && ids.length === 2)
         {
             const valor1 = ids[0];
             const valor2 = ids[1];
             return `( ${valor1} / ${valor2}) * 100`;
         }
 
-        if (ids.length > 2 && tipoForm === TiposFormulario.COMUN)
+        if (tipoForm === TiposFormulario.COMUN && ids.length > 2)
         {
-            return '(' + ids.join('+') + ')' + '/100';
+            const trim = ids.join('+');
+            return `(${trim}) / 100`;
         }
 
-        if (ids.length === 1 && tipoForm === TiposFormulario.PERIODO_ANT)
+        if (tipoForm === TiposFormulario.PERIODO_ANT)
         {
             const periodoActual = ids.join('+');
-            const periodoAnt = ids.join('+Ant') + 'Ant';
-            return `((${periodoActual} - ${periodoAnt})) / ${periodoAnt} * 100`
-        }
-        if (ids.length > 1 && tipoForm === TiposFormulario.PERIODO_ANT)
-        {
-            const periodoActual = ids.join('+');
-            const periodoAnt = ids.join('+Ant') + 'Ant';
-            return `(( ${periodoActual} - ${periodoAnt}) / ${periodoAnt}) *100`;
+            const periodoAnt = ids.join('+') + 'Ant';
+            return `((${periodoActual}) - (${periodoAnt})/ ${periodoAnt}) * 100`;
         }
 
-        if (ids.length === 2 && tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
-        {
-            // const valor1 = ids[0];
-            // const valor2 = ids[1];
-            return '((' + ids[0] + '/' + ids[1] + ')) *100'
-        }
+        // if (tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
+        // {
+        //     const valor1 = ids[0];
+        //     const valor2 = ids[1];
+        //     return '((' + ids[0] + '/' + ids[1] + ')) *100'
+        // }
 
         if (datos.length >= 2)
         {
@@ -59,6 +56,7 @@ export class ComponentesService
                 idsForm.push(value.idIndicador);
                 idsAd.push(value.idIndicadorAd);
             });
+
             return '((' + idsForm.join('+') + ')' + '/' + '(' + idsAd.join('+') + '))*100';
         }
         return '';
@@ -119,7 +117,6 @@ export class ComponentesService
                 trim4[elemento.idSumatoria + 'Ant'] = i.trim4Ant;
             }
         });
-        console.log('Objectos para el calculo', trim1, trim2, trim3, trim4);
         return [trim1, trim2, trim3, trim4];
     }
 
@@ -159,6 +156,7 @@ export class ComponentesService
                 trim3Ant: 0,
                 trim4Ant: 0,
             };
+
             const pbrElemento = pbr.find(x => x.idIndicador === i.idIndicador);
 
             if (isNotNil(pbrElemento))
@@ -203,203 +201,9 @@ export class ComponentesService
         return tablaValores;
     }
 
-    static colComun(formato: string): ITabla[]
+    static colCompDinamico(columnas: string[], formato: string): ITablaGen[]
     {
-        return [
-            {
-                etiqueta: 'Variable',
-                def: 'idIndicador',
-                llaveDato: 'idIndicador',
-                width: '10%',
-            },
-            {
-                etiqueta: 'Dato',
-                def: 'dato',
-                llaveDato: 'dato',
-                width: 'auto',
-            },
-            {
-                etiqueta: 'Trimestre 1',
-                def: 'trim1',
-                llaveDato: 'trim1',
-                width: '10%',
-                formato
-            },
-            {
-                etiqueta: 'Trimestre 2',
-                def: 'trim2',
-                llaveDato: 'trim2',
-                width: '10%',
-                formato
-            },
-            {
-                etiqueta: 'Trimestre 3',
-                def: 'trim3',
-                llaveDato: 'trim3',
-                width: '10%',
-                formato
-            },
-            {
-                etiqueta: 'Trimestre 4',
-                def: 'trim4',
-                llaveDato: 'trim4',
-                width: '10%',
-                formato
-            }
-        ];
-    }
-
-    static colConValorAd(formato: string): ITabla[]
-    {
-        return [
-            {
-                etiqueta: 'Variable',
-                def: 'Ind',
-                llaveDato: 'idIndicador',
-                width: '6%',
-            },
-            {
-                etiqueta: 'Dato',
-                def: 'dato',
-                llaveDato: 'dato',
-                width: 'auto',
-            },
-            {
-                etiqueta: 'Trim 1',
-                def: 'trim1',
-                llaveDato: 'trim1',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Ad',
-                def: 'trim1Ad',
-                llaveDato: 'trim1Ad',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Trim 2',
-                def: 'trim2',
-                llaveDato: 'trim2',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Ad',
-                def: 'trim2Ad',
-                llaveDato: 'trim2Ad',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Trim 3',
-                def: 'trim3',
-                llaveDato: 'trim3',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Ad',
-                def: 'trim3Ad',
-                llaveDato: 'trim3Ad',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Trim 4',
-                def: 'trim4',
-                llaveDato: 'trim4',
-                width: '6%',
-                formato
-            },
-            {
-                etiqueta: 'Ad',
-                def: 'trim4Ad',
-                llaveDato: 'trim4Ad',
-                width: '6%',
-                formato
-            }
-        ];
-    }
-
-    static colPeriodoAnt(formato: string): ITabla[]
-    {
-        return [
-            {
-                etiqueta: 'Indicador',
-                def: 'idIndicador',
-                llaveDato: 'idIndicador',
-                width: '6%',
-            },
-            {
-                etiqueta: 'Dato',
-                def: 'dato',
-                llaveDato: 'dato',
-                width: 'Auto',
-            },
-            {
-                etiqueta: 'Actual',
-                def: 'trim1',
-                llaveDato: 'trim1',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Anterior',
-                def: 'trim1Ant',
-                llaveDato: 'trim1Ant',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Actual',
-                def: 'trim2',
-                llaveDato: 'trim2',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Anterior',
-                def: 'trim2Ant',
-                llaveDato: 'trim2Ant',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Actual',
-                def: 'trim3',
-                llaveDato: 'trim3',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Anterior',
-                def: 'trim3Ant',
-                llaveDato: 'trim3Ant',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Actual',
-                def: 'trim4',
-                llaveDato: 'trim4',
-                width: '7%',
-                formato
-            },
-            {
-                etiqueta: 'Anterior',
-                def: 'trim4Ant',
-                llaveDato: 'trim4Ant',
-                width: '7%',
-                formato
-            }
-        ];
-    }
-
-    static colCompDinamico(columnas: string[], formato: string): ITabla[]
-    {
-        const columnasTabla: ITabla[] = [];
+        const columnasTabla: ITablaGen[] = [];
 
         columnas.forEach(x =>
         {
@@ -407,7 +211,7 @@ export class ComponentesService
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
 
-            const columnaTabla: ITabla =
+            const columnaTabla: ITablaGen =
                 {
                     etiqueta,
                     def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,

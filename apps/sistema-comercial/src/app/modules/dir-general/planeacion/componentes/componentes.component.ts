@@ -15,12 +15,11 @@ import {TReemplazarComp} from '#/libs/models/src/lib/dir-general/planeacion/plan
 import {TablaMatComponent} from '@s-shared/components/tabla-mat/tabla-mat.component';
 import {finalize} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IDatosTablaComun, ITabla} from '#/libs/models/src/lib/tabla.interface';
 import {DateTime} from 'luxon';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 import {jsPDF} from "jspdf";
-import html2PDF from 'jspdf-html2canvas';
 import html2canvas from "html2canvas";
+import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 
 @Component({
     selector: 'app-componentes',
@@ -35,16 +34,6 @@ export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
 
-    _columnas: ITabla[] = [];
-    _datosTabla: IDatosTablaComun[] = []
-    _avancesTrimestrales: string[] = ['', '', '', ''];
-    fecha = DateTime.now().toLocaleString();
-
-    @Input({required: true}) set columnas(v: ITabla[])
-    {
-        this._columnas = v;
-    }
-
     @Input({required: true}) set datosTabla(v: IDatosTablaComun[])
     {
         this._datosTabla = v;
@@ -54,6 +43,11 @@ export class ComponentesComponent
     {
         this._avancesTrimestrales = v;
     }
+
+    _datosTabla: IDatosTablaComun[] = [];
+    _avancesTrimestrales: string[] = ['', '', '', ''];
+
+    fecha = DateTime.now().toLocaleString();
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
                 private router: Router, private activatedRoute: ActivatedRoute)
