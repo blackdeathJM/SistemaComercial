@@ -24,6 +24,7 @@ import {ComponentesService} from "@s-dir-general/componentes/componentes.service
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 import {finalize} from "rxjs";
 import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
     selector: 'app-mod-comp-comun',
@@ -31,7 +32,7 @@ import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/p
     imports:
         [
             CommonModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatCheckboxModule, RxReactiveFormsModule, MatCardModule, MatToolbarModule, DisableControlModule,
-            MatRadioModule, FuseAlertModule, MatButtonToggleModule
+            MatRadioModule, FuseAlertModule, MatButtonToggleModule, MatTooltipModule
         ],
     templateUrl: './mod-comp-comun.html',
     styleUrls: ['./mod-comp-comun.scss'],
@@ -49,7 +50,7 @@ export class ModCompComun implements OnDestroy
     cargando = false;
     esSumatoria = false;
     tipoValores = Object.values(TipoValores);
-    objFormula: object;
+    objFormula: object[];
 
     deshabilitarRadioBtn = true;
 
@@ -69,20 +70,20 @@ export class ModCompComun implements OnDestroy
     });
 
     formAd: FormGroup = this.fb.group({
-        idIndicador: ['', RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
-        dato: ['', this.validadorNumerico],
+        idIndicadorAd: ['', RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
+        datoAd: ['', this.validadorNumerico],
 
-        trim1: [0, this.validadorNumerico],
-        trim2: [0, this.validadorNumerico],
-        trim3: [0, this.validadorNumerico],
-        trim4: [0, this.validadorNumerico]
+        trim1Ad: [0, this.validadorNumerico],
+        trim2Ad: [0, this.validadorNumerico],
+        trim3Ad: [0, this.validadorNumerico],
+        trim4Ad: [0, this.validadorNumerico]
     });
 
-    formTrimAnterior: FormGroup = this.fb.group({
-        trim1: [0, this.validadorNumerico],
-        trim2: [0, this.validadorNumerico],
-        trim3: [0, this.validadorNumerico],
-        trim4: [0, this.validadorNumerico]
+    formTrimAnt: FormGroup = this.fb.group({
+        trim1Ant: [0, this.validadorNumerico],
+        trim2Ant: [0, this.validadorNumerico],
+        trim3Ant: [0, this.validadorNumerico],
+        trim4Ant: [0, this.validadorNumerico]
     });
 
     formTipoValores: FormGroup = this.fb.group({
@@ -110,18 +111,22 @@ export class ModCompComun implements OnDestroy
                 case AsigFormsComponente.principal:
                     this.formComun.patchValue(cuestionarioPbr);
                     this.formConValoresDelPeriodoAnt();
-
                     if (this.datos.length === 0)
                     {
                         this.deshabilitarRadioBtn = false;
                     }
                     break;
                 case AsigFormsComponente.adicional:
-                    this.formAd.patchValue(this.planeacionQuery.cuestionarioPbr());
+                    this.setearValoresTrim(cuestionarioPbr.trim1, cuestionarioPbr.trim2, cuestionarioPbr.trim3, cuestionarioPbr.trim4, false, cuestionarioPbr.idIndicador,
+                        cuestionarioPbr.dato);
                     break;
                 case AsigFormsComponente.formula:
                     this.ids.push(cuestionarioPbr.idIndicador);
                     this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
+                    this.objFormula[0][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim1;
+                    this.objFormula[1][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim2;
+                    this.objFormula[2][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim3;
+                    this.objFormula[3][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim4;
                     break;
             }
         });
@@ -129,6 +134,7 @@ export class ModCompComun implements OnDestroy
         effect(() =>
         {
             const sumatoria = this.planeacionQuery.sumatoriaPbr();
+            this.esSumatoria = true;
             //=================================================================================================================================================================
             if (isNil(sumatoria))
             {
@@ -144,9 +150,7 @@ export class ModCompComun implements OnDestroy
                     this.formConValoresDelPeriodoAnt();
                     break;
                 case AsigFormsComponente.adicional:
-                    this.formAd.get('idIndicador').setValue(sumatoria.idSumatoria);
-                    this.formAd.get('dato').setValue(sumatoria.nombreSumatoria);
-                    this.formAd.patchValue(sumatoria);
+                    this.setearValoresTrim(sumatoria.trim1, sumatoria.trim2, sumatoria.trim3, sumatoria.trim4, false, sumatoria.idSumatoria, sumatoria.nombreSumatoria);
                     break;
                 case AsigFormsComponente.formula:
                     this.ids.push(sumatoria.idSumatoria);
@@ -177,45 +181,60 @@ export class ModCompComun implements OnDestroy
 
         if (this.tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            if (this.formComun.invalid && this.formTrimAnterior.invalid)
+            if (this.formComun.invalid && this.formTrimAnt.invalid)
             {
                 this.ngxToast.alertaToast('Valida que la informacion este correctamente llenada', 'Agregar A lista');
                 return;
             }
         }
 
-        const {idIndicador} = this.formComun.value;
-        const {trim1, trim2, trim3, trim4} = this.formTrimAnterior.value;
+        const {idIndicador, dato, trim1, trim2, trim3, trim4} = this.formComun.value;
+        const {idIndicadorAd, datoAd, trim1Ad, trim2Ad, trim3Ad, trim4Ad} = this.formAd.value;
+        const {idIndicadorAnt, datoAnt, trim1Ant, trim2Ant, trim3Ant, trim4Ant} = this.formTrimAnt.value;
 
-        const idIndicadorAd: string = this.formAd.get('idIndicador').value;
+        const mjsIdDuplicado: string = `No puedes agregar elementos que tengan el mismo id si requieres el mismo dato para realizar la formula solo necesitas aplicarlo en tu
+                formula cuantas veces necesites`;
 
+        if (this.ids.includes(idIndicador))
+        {
+            this.ngxToast.alertaToast(mjsIdDuplicado, 'Id duplicado');
+            return;
+        }
         this.datos.push({
             idIndicador,
             idIndicadorAd,
 
-            trim1Ant: +trim1,
-            trim2Ant: +trim2,
-            trim3Ant: +trim3,
-            trim4Ant: +trim4
+            trim1Ant: +trim1Ant,
+            trim2Ant: +trim2Ant,
+            trim3Ant: +trim3Ant,
+            trim4Ant: +trim4Ant
         });
 
         this.ids.push(idIndicador);
+
         if (idIndicadorAd)
         {
+            if (this.ids.includes(idIndicadorAd))
+            {
+                this.ngxToast.alertaToast(mjsIdDuplicado, 'Id duplicado');
+                return;
+            }
             this.ids.push(idIndicadorAd);
         }
 
-        // this.objFormula[idIndicador] = idIndicador;
-        // this.objFormula[trim1]
-        // this.objFormula[idIndicadorAd] = idIndicadorAd;
+        this.objFormula[0][idIndicador] = trim1;
+        this.objFormula[1][idIndicador] = trim2;
+        this.objFormula[2][idIndicador] = trim3;
+        this.objFormula[3][idIndicador] = trim4;
 
         this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
 
         this.deshabilitarRadioBtn = true;
+
         this.ngxToast.infoToast('Se ha agregado un elemento a la lista para su registro', 'Componente');
 
         this.formComun.reset();
-        this.formTrimAnterior.reset();
+        this.formTrimAnt.reset();
         this.formAd.reset();
     }
 
@@ -241,12 +260,12 @@ export class ModCompComun implements OnDestroy
             };
 
         this.formComun.disable();
-        this.formTrimAnterior.disable();
+        this.formTrimAnt.disable();
         this.planeacionService.regComponente(regComponente).pipe(finalize(() =>
         {
             this.cargando = false;
             this.formComun.enable();
-            this.formTrimAnterior.enable();
+            this.formTrimAnt.enable();
             this.localizado.back();
 
         })).subscribe();
@@ -257,7 +276,7 @@ export class ModCompComun implements OnDestroy
         this.tipoForm = e.value as TiposFormulario;
         this.planeacionQuery.desactivarBtnFormAd(this.tipoForm !== TiposFormulario.CON_OTRO_ID_PBR);
         this.formAd.reset();
-        this.formTrimAnterior.reset();
+        this.formTrimAnt.reset();
         this.formConValoresDelPeriodoAnt();
     }
 
@@ -270,11 +289,30 @@ export class ModCompComun implements OnDestroy
 
             if (isNotNil(periodoAnterior))
             {
-                this.formTrimAnterior.patchValue(periodoAnterior);
+                this.setearValoresTrim(periodoAnterior.trim1, periodoAnterior.trim2, periodoAnterior.trim3, periodoAnterior.trim4, true);
             }
         }
     }
 
+    setearValoresTrim(trim1: number, trim2: number, trim3: number, trim4: number, ant: boolean, id?: string, dato?: string): void
+    {
+        if (ant)
+        {
+            this.formTrimAnt.get('trim1Ant').setValue(trim1);
+            this.formTrimAnt.get('trim2Ant').setValue(trim2);
+            this.formTrimAnt.get('trim3Ant').setValue(trim3);
+            this.formTrimAnt.get('trim4Ant').setValue(trim4);
+        } else
+        {
+            const idMod = id + 'ad';
+            this.formAd.get('idIndicadorAd').setValue(idMod);
+            this.formAd.get('datoAd').setValue(dato);
+            this.formAd.get('trim1Ad').setValue(trim1);
+            this.formAd.get('trim2Ad').setValue(trim2);
+            this.formAd.get('trim3Ad').setValue(trim3);
+            this.formAd.get('trim4Ad').setValue(trim4);
+        }
+    }
 
     filCentroGestor(e: string): void
     {

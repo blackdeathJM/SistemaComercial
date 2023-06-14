@@ -46,8 +46,8 @@
         </mat-toolbar>
 
         <form [formGroup]="formComun">
-            <section class="flex flex-col flex-auto">
-                <mat-form-field class="flex-auto">
+            <section class="flex flex-auto gap-4">
+                <mat-form-field class="flex-shrink">
                     <mat-label>Id indicador</mat-label>
                     <input matInput formControlName="idIndicador" readonly>
                     <mat-error>{{formComun.controls.idIndicador['errorMessage']}}</mat-error>
@@ -60,20 +60,20 @@
                 </mat-form-field>
 
                 <div class="flex flex-auto gap-4 items-center content-center">
-                    <mat-form-field class="flex-auto">
+                    <mat-form-field class="flex-shrink">
                         <mat-label>Trimestre 1</mat-label>
                         <input matInput formControlName="trim1" readonly>
                     </mat-form-field>
-                    <mat-form-field class="flex-auto">
+                    <mat-form-field class="flex-shrink">
                         <mat-label>Trimestre 2</mat-label>
                         <input matInput formControlName="trim2" readonly>
                     </mat-form-field>
-                    <mat-form-field class="flex-auto">
+                    <mat-form-field class="flex-shrink">
                         <mat-label>Trimestre 3</mat-label>
                         <input matInput formControlName="trim3" readonly>
                     </mat-form-field>
 
-                    <mat-form-field class="flex-auto">
+                    <mat-form-field class="flex-shrink">
                         <mat-label>Trimestre 4</mat-label>
                         <input matInput formControlName="trim4" readonly>
                     </mat-form-field>
@@ -89,31 +89,31 @@
 
     </mat-card-content>
     <mat-card-content *ngIf="tipoForm === TiposFormulario.PERIODO_ANT">
-        <form [formGroup]="formTrimAnterior">
+        <form [formGroup]="formTrimAnt">
             <section class="flex flex-col flex-auto">
                 <div class="flex flex-auto gap-4">
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant 1</mat-label>
-                        <input matInput formControlName="trim1">
-                        <mat-error>{{formTrimAnterior.controls.trim1['errorMessage']}}</mat-error>
+                        <input matInput formControlName="trim1Ant">
+                        <mat-error>{{formTrimAnt.controls.trim1Ant['errorMessage']}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant. 2</mat-label>
-                        <input matInput formControlName="trim2">
-                        <mat-error>{{formTrimAnterior.controls.trim2['errorMessage']}}</mat-error>
+                        <input matInput formControlName="trim2Ant">
+                        <mat-error>{{formTrimAnt.controls.trim2Ant['errorMessage']}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant. 3</mat-label>
-                        <input matInput formControlName="trim3">
-                        <mat-error>{{formTrimAnterior.controls.trim3['errorMessage']}}</mat-error>
+                        <input matInput formControlName="trim3Ant">
+                        <mat-error>{{formTrimAnt.controls.trim3Ant['errorMessage']}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="flex-auto">
                         <mat-label>Trim. Ant. 4</mat-label>
-                        <input matInput formControlName="trim4">
-                        <mat-error>{{formTrimAnterior.controls.trim4['errorMessage']}}</mat-error>
+                        <input matInput formControlName="trim4Ant">
+                        <mat-error>{{formTrimAnt.controls.trim4Ant['errorMessage']}}</mat-error>
                     </mat-form-field>
                 </div>
             </section>
@@ -123,7 +123,7 @@
 
     <mat-card-content *ngIf="tipoForm === TiposFormulario.CON_OTRO_ID_PBR">
         <form [formGroup]="formAd">
-            <section class="flex flex-col flex-auto">
+            <section class="flex flex-auto gap-4">
                 <mat-form-field class="flex-auto">
                     <mat-label>Id indicador</mat-label>
                     <input matInput formControlName="idIndicador">
