@@ -59,107 +59,100 @@
                     <mat-error>{{formComun.controls.dato['errorMessage']}}</mat-error>
                 </mat-form-field>
 
-                <div class="flex flex-auto gap-4 items-center content-center">
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>Trimestre 1</mat-label>
-                        <input matInput formControlName="trim1" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>Trimestre 2</mat-label>
-                        <input matInput formControlName="trim2" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>Trimestre 3</mat-label>
-                        <input matInput formControlName="trim3" readonly>
-                    </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 1</mat-label>
+                    <input matInput formControlName="trim1" readonly>
+                </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 2</mat-label>
+                    <input matInput formControlName="trim2" readonly>
+                </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 3</mat-label>
+                    <input matInput formControlName="trim3" readonly>
+                </mat-form-field>
 
-                    <mat-form-field class="flex-shrink">
-                        <mat-label>Trimestre 4</mat-label>
-                        <input matInput formControlName="trim4" readonly>
-                    </mat-form-field>
-                </div>
-
-                <mat-radio-group color="primary" (change)="cambioSeleccionRdb($event)" [disabled]="deshabilitarRadioBtn">
-                    <mat-radio-button [value]="TiposFormulario.PERIODO_ANT">Obtener valores del periodo anterior</mat-radio-button>
-                    <mat-radio-button [value]="TiposFormulario.CON_OTRO_ID_PBR">Agregar valores adicionales como parte de la tabla</mat-radio-button>
-                </mat-radio-group>
-
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 4</mat-label>
+                    <input matInput formControlName="trim4" readonly>
+                </mat-form-field>
             </section>
         </form>
-
     </mat-card-content>
+
     <mat-card-content *ngIf="tipoForm === TiposFormulario.PERIODO_ANT">
         <form [formGroup]="formTrimAnt">
-            <section class="flex flex-col flex-auto">
-                <div class="flex flex-auto gap-4">
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trim. Ant 1</mat-label>
-                        <input matInput formControlName="trim1Ant">
-                        <mat-error>{{formTrimAnt.controls.trim1Ant['errorMessage']}}</mat-error>
-                    </mat-form-field>
+            <section class="flex flex-auto gap-4 justify-end">
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trim. Ant 1</mat-label>
+                    <input matInput formControlName="trim1Ant">
+                    <mat-error>{{formTrimAnt.controls.trim1Ant['errorMessage']}}</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trim. Ant. 2</mat-label>
-                        <input matInput formControlName="trim2Ant">
-                        <mat-error>{{formTrimAnt.controls.trim2Ant['errorMessage']}}</mat-error>
-                    </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trim. Ant. 2</mat-label>
+                    <input matInput formControlName="trim2Ant">
+                    <mat-error>{{formTrimAnt.controls.trim2Ant['errorMessage']}}</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trim. Ant. 3</mat-label>
-                        <input matInput formControlName="trim3Ant">
-                        <mat-error>{{formTrimAnt.controls.trim3Ant['errorMessage']}}</mat-error>
-                    </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trim. Ant. 3</mat-label>
+                    <input matInput formControlName="trim3Ant">
+                    <mat-error>{{formTrimAnt.controls.trim3Ant['errorMessage']}}</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trim. Ant. 4</mat-label>
-                        <input matInput formControlName="trim4Ant">
-                        <mat-error>{{formTrimAnt.controls.trim4Ant['errorMessage']}}</mat-error>
-                    </mat-form-field>
-                </div>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trim. Ant. 4</mat-label>
+                    <input matInput formControlName="trim4Ant">
+                    <mat-error>{{formTrimAnt.controls.trim4Ant['errorMessage']}}</mat-error>
+                </mat-form-field>
             </section>
         </form>
     </mat-card-content>
-
 
     <mat-card-content *ngIf="tipoForm === TiposFormulario.CON_OTRO_ID_PBR">
         <form [formGroup]="formAd">
             <section class="flex flex-auto gap-4">
-                <mat-form-field class="flex-auto">
+                <mat-form-field class="flex-shrink">
                     <mat-label>Id indicador</mat-label>
-                    <input matInput formControlName="idIndicador">
-                    <mat-error>{{formAd.controls.idIndicador['errorMessage']}}</mat-error>
+                    <input matInput formControlName="idIndicadorAd" readonly>
+                    <mat-error>{{formAd.controls.idIndicadorAd['errorMessage']}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="flex-auto">
                     <mat-label>Dato</mat-label>
-                    <input matInput formControlName="dato">
-                    <mat-error>{{formAd.controls.dato['errorMessage']}}</mat-error>
+                    <input matInput formControlName="datoAd" readonly>
+                    <mat-error>{{formAd.controls.datoAd['errorMessage']}}</mat-error>
                 </mat-form-field>
 
-                <div class="flex flex-auto gap-4 items-center content-center">
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trimestre 1</mat-label>
-                        <input matInput formControlName="trim1" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trimestre 2</mat-label>
-                        <input matInput formControlName="trim2" readonly>
-                    </mat-form-field>
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trimestre 3</mat-label>
-                        <input matInput formControlName="trim3" readonly>
-                    </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 1</mat-label>
+                    <input matInput formControlName="trim1Ad" readonly>
+                </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 2</mat-label>
+                    <input matInput formControlName="trim2Ad" readonly>
+                </mat-form-field>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 3</mat-label>
+                    <input matInput formControlName="trim3Ad" readonly>
+                </mat-form-field>
 
-                    <mat-form-field class="flex-auto">
-                        <mat-label>Trimestre 4</mat-label>
-                        <input matInput formControlName="trim4" readonly>
-                    </mat-form-field>
-                </div>
+                <mat-form-field class="flex-shrink">
+                    <mat-label>Trimestre 4</mat-label>
+                    <input matInput formControlName="trim4Ad" readonly>
+                </mat-form-field>
             </section>
         </form>
     </mat-card-content>
-
-
+    <mat-card-content>
+        <section class="flex flex-auto gap-4">
+            <mat-radio-group color="primary" (change)="cambioSeleccionRdb($event)" [disabled]="deshabilitarRadioBtn">
+                <mat-radio-button [value]="TiposFormulario.PERIODO_ANT">Obtener valores del periodo anterior</mat-radio-button>
+                <mat-radio-button [value]="TiposFormulario.CON_OTRO_ID_PBR">Agregar valores adicionales como parte de la tabla</mat-radio-button>
+            </mat-radio-group>
+        </section>
+    </mat-card-content>
     <mat-card-title>
         <mat-toolbar class="flex border-y-2 border-y-amber-300 my-4">
             <button mat-raised-button (click)="agregarAlArreglo()" class="flex-auto" color="primary">

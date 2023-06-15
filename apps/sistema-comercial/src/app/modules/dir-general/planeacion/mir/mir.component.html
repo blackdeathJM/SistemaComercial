@@ -1,7 +1,7 @@
 <mat-drawer-container class="w-full">
     <mat-drawer class="w-96" [opened]="abrirPanel()" mode="side" autoFocus="true" position="end">
         <ng-container *ngIf="abrirPanel()">
-            <app-mod-mir></app-mod-mir>
+            <app-mod-mir/>
         </ng-container>
     </mat-drawer>
     <mat-drawer-content>
@@ -9,15 +9,15 @@
             <ng-container acciones>
                 <mat-button-toggle-group>
                     <mat-button-toggle (click)="regSeleccion()" value="bold">
-                        <mat-icon svgIcon="add"></mat-icon>
+                        <mat-icon svgIcon="add"/>
                         Agregar lista de opciones
                     </mat-button-toggle>
                     <mat-button-toggle (click)="inicializarPlaneacion()">
-                        <mat-icon svgIcon="heroicons_outline:collection"></mat-icon>
+                        <mat-icon svgIcon="heroicons_outline:collection"/>
                         Inicializar nuevo mir
                     </mat-button-toggle>
                     <mat-button-toggle (click)="imprimirTablaMir()">
-                        <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                        <mat-icon svgIcon="heroicons_outline:printer"/>
                         Imprimir
                     </mat-button-toggle>
                 </mat-button-toggle-group>
@@ -25,8 +25,8 @@
         </app-acciones-mir-pbr>
 
         <article class="flex flex-col flex-auto">
-            <app-lista-tab-mir [avancesTrimestrales]="avancesTrimestrales"></app-lista-tab-mir>
-            <app-componentes [avancesTrimestrales]="avancesTrimestrales" [columnas]="columnas" [datosTabla]="datosTabla"></app-componentes>
+            <app-lista-tab-mir [avancesTrimestrales]="avancesTrimestrales"/>
+            <app-componentes [avancesTrimestrales]="avancesTrimestrales" [datosTabla]="datosTabla"/>
         </article>
     </mat-drawer-content>
 </mat-drawer-container>

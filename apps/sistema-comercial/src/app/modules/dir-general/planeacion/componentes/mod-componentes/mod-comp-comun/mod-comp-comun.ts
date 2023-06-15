@@ -46,14 +46,16 @@ export class ModCompComun implements OnDestroy
     protected readonly asignacion = AsigFormsComponente;
     datos: IFormComun[] = [];
     ids: string[] = [];
+
     tipoForm = TiposFormulario.COMUN;
+
     cargando = false;
     esSumatoria = false;
     tipoValores = Object.values(TipoValores);
-    objFormula: object[];
 
     deshabilitarRadioBtn = true;
-
+    mjsIdDuplicado: string = `No puedes agregar elementos que tengan el mismo id si requieres el mismo dato para realizar la formula solo necesitas aplicarlo en tu
+                formula cuantas veces necesites`;
     validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
         allowDecimal: true,
         message: 'El valor debe ser numerico'
@@ -71,7 +73,7 @@ export class ModCompComun implements OnDestroy
 
     formAd: FormGroup = this.fb.group({
         idIndicadorAd: ['', RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
-        datoAd: ['', this.validadorNumerico],
+        datoAd: [''],
 
         trim1Ad: [0, this.validadorNumerico],
         trim2Ad: [0, this.validadorNumerico],
@@ -121,12 +123,13 @@ export class ModCompComun implements OnDestroy
                         cuestionarioPbr.dato);
                     break;
                 case AsigFormsComponente.formula:
+                    if (this.ids.includes(cuestionarioPbr.idIndicador))
+                    {
+                        this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
+                        return;
+                    }
                     this.ids.push(cuestionarioPbr.idIndicador);
                     this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
-                    this.objFormula[0][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim1;
-                    this.objFormula[1][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim2;
-                    this.objFormula[2][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim3;
-                    this.objFormula[3][cuestionarioPbr.idIndicador] = cuestionarioPbr.trim4;
                     break;
             }
         });
@@ -153,6 +156,11 @@ export class ModCompComun implements OnDestroy
                     this.setearValoresTrim(sumatoria.trim1, sumatoria.trim2, sumatoria.trim3, sumatoria.trim4, false, sumatoria.idSumatoria, sumatoria.nombreSumatoria);
                     break;
                 case AsigFormsComponente.formula:
+                    if (this.ids.includes(sumatoria.idSumatoria))
+                    {
+                        this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
+                        return;
+                    }
                     this.ids.push(sumatoria.idSumatoria);
                     this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
                     break;
@@ -162,6 +170,7 @@ export class ModCompComun implements OnDestroy
 
     agregarAlArreglo(): void
     {
+        //Verificamos que todos los formularios sean válidos para poder continuar
         if (this.tipoForm === TiposFormulario.COMUN)
         {
             if (this.formComun.invalid)
@@ -178,7 +187,6 @@ export class ModCompComun implements OnDestroy
                 return;
             }
         }
-
         if (this.tipoForm === TiposFormulario.PERIODO_ANT)
         {
             if (this.formComun.invalid && this.formTrimAnt.invalid)
@@ -188,44 +196,38 @@ export class ModCompComun implements OnDestroy
             }
         }
 
-        const {idIndicador, dato, trim1, trim2, trim3, trim4} = this.formComun.value;
-        const {idIndicadorAd, datoAd, trim1Ad, trim2Ad, trim3Ad, trim4Ad} = this.formAd.value;
-        const {idIndicadorAnt, datoAnt, trim1Ant, trim2Ant, trim3Ant, trim4Ant} = this.formTrimAnt.value;
-
-        const mjsIdDuplicado: string = `No puedes agregar elementos que tengan el mismo id si requieres el mismo dato para realizar la formula solo necesitas aplicarlo en tu
-                formula cuantas veces necesites`;
+        const {idIndicador} = this.formComun.value;
+        const {idIndicadorAd} = this.formAd.value;
+        const {trim1Ant, trim2Ant, trim3Ant, trim4Ant} = this.formTrimAnt.value;
 
         if (this.ids.includes(idIndicador))
         {
-            this.ngxToast.alertaToast(mjsIdDuplicado, 'Id duplicado');
+            this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
             return;
         }
+
+        if (isNotNil(idIndicadorAd))
+        {
+            if (this.ids.includes(idIndicadorAd))
+            {
+                this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
+                return;
+            }
+            this.ids.push(idIndicadorAd + '-Ad');
+        }
+
+        this.ids.push(idIndicador);
+
         this.datos.push({
             idIndicador,
-            idIndicadorAd,
+
+            idIndicadorAd: idIndicadorAd,
 
             trim1Ant: +trim1Ant,
             trim2Ant: +trim2Ant,
             trim3Ant: +trim3Ant,
             trim4Ant: +trim4Ant
         });
-
-        this.ids.push(idIndicador);
-
-        if (idIndicadorAd)
-        {
-            if (this.ids.includes(idIndicadorAd))
-            {
-                this.ngxToast.alertaToast(mjsIdDuplicado, 'Id duplicado');
-                return;
-            }
-            this.ids.push(idIndicadorAd);
-        }
-
-        this.objFormula[0][idIndicador] = trim1;
-        this.objFormula[1][idIndicador] = trim2;
-        this.objFormula[2][idIndicador] = trim3;
-        this.objFormula[3][idIndicador] = trim4;
 
         this.formTipoValores.get('formula').setValue(ComponentesService.formula(this.ids, this.tipoForm, this.datos));
 
@@ -304,8 +306,7 @@ export class ModCompComun implements OnDestroy
             this.formTrimAnt.get('trim4Ant').setValue(trim4);
         } else
         {
-            const idMod = id + 'ad';
-            this.formAd.get('idIndicadorAd').setValue(idMod);
+            this.formAd.get('idIndicadorAd').setValue(id);
             this.formAd.get('datoAd').setValue(dato);
             this.formAd.get('trim1Ad').setValue(trim1);
             this.formAd.get('trim2Ad').setValue(trim2);

@@ -19,12 +19,14 @@ import {DateTime} from 'luxon';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
-import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
+import {IDatosTablaComun, TablaComunComponent} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
+import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
+import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 
 @Component({
     selector: 'app-componentes',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe],
+    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe, TablaComunComponent, MatCheckboxModule],
     templateUrl: './componentes.component.html',
     styleUrls: ['./componentes.component.scss'],
     animations: [fuseAnimations],
@@ -100,5 +102,10 @@ export class ComponentesComponent
             pdf.save('componente.pdf');
             componente.style.color = '';
         });
+    }
+
+    cambioChkTrim(e: MatCheckboxChange, numTrim: number, tipoForm: TiposFormulario): void
+    {
+        console.log(e.checked, numTrim, tipoForm);
     }
 }

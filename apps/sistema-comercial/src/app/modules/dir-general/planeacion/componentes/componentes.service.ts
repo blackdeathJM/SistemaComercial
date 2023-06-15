@@ -38,14 +38,6 @@ export class ComponentesService
             const periodoAnt = ids.join('+') + 'Ant';
             return `((${periodoActual}) - (${periodoAnt})/ ${periodoAnt}) * 100`;
         }
-
-        // if (tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
-        // {
-        //     const valor1 = ids[0];
-        //     const valor2 = ids[1];
-        //     return '((' + ids[0] + '/' + ids[1] + ')) *100'
-        // }
-
         if (datos.length >= 2)
         {
             const idsForm: string[] = [];
@@ -62,62 +54,46 @@ export class ComponentesService
         return '';
     }
 
-    static objFormula(pbr: IPbrCuestionario[], ids: string[], form: IFormComun[], sumatorias: ISumatorias[]): object[]
+    static crearObjFormula(pbr: IPbrCuestionario[], ids: string[], sumatorias: ISumatorias[], formComun: IFormComun[]): object[]
     {
-        const trim1 = {};
-        const trim2 = {};
-        const trim3 = {};
-        const trim4 = {};
+        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
 
-        form.forEach((i) =>
+        ids.forEach((id) =>
         {
-            const elemento = pbr.find(x => x.idIndicador === i.idIndicador);
-            if (isNotNil(elemento))
-            {
-                trim1[elemento.idIndicador] = elemento.trim1;
-                trim2[elemento.idIndicador] = elemento.trim2;
-                trim3[elemento.idIndicador] = elemento.trim3;
-                trim4[elemento.idIndicador] = elemento.trim4;
+            const idDivididoEnArray = id.split('-');
+            const nvoId = idDivididoEnArray.shift();
+            const sufijo = isNotNil(idDivididoEnArray.pop()) ? '-Ad' : '';
 
-                trim1[elemento.idIndicador + 'Ant'] = i.trim1Ant;
-                trim2[elemento.idIndicador + 'Ant'] = i.trim2Ant;
-                trim3[elemento.idIndicador + 'Ant'] = i.trim3Ant;
-                trim4[elemento.idIndicador + 'Ant'] = i.trim4Ant;
+            const pbrEncontrado = pbr.find(x => x.idIndicador === nvoId);
+            if (isNotNil(pbrEncontrado))
+            {
+                objFormula[0][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim1;
+                objFormula[1][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim2;
+                objFormula[2][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim3;
+                objFormula[3][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim3;
+            }
+            const sumatoria = sumatorias.find(x => x.idSumatoria === nvoId);
+            //Obtener los valores de los trimestres anteriores, solo se buscan en el idPrincipal, ya que el idIndicador-Ad no va a tener trimestres anteriores
+            formComun.forEach(x =>
+            {
+                if (x.idIndicador === id)
+                {
+                    objFormula[0]['trim1Ant'] = x.trim1Ant;
+                    objFormula[1]['trim2Ant'] = x.trim2Ant;
+                    objFormula[2]['trim3Ant'] = x.trim3Ant;
+                    objFormula[3]['trim4Ant'] = x.trim4Ant;
+                }
+            });
+
+            if (isNotNil(sumatoria))
+            {
+                objFormula[0][sumatoria.idSumatoria + sufijo] = sumatoria.trim1;
+                objFormula[1][sumatoria.idSumatoria + sufijo] = sumatoria.trim2;
+                objFormula[2][sumatoria.idSumatoria + sufijo] = sumatoria.trim3;
+                objFormula[3][sumatoria.idSumatoria + sufijo] = sumatoria.trim4;
             }
         });
-        //Filtramos los ids que se utilizan en la fórmula porque no necesariamente tienen que ir todos en el form y solo dejamos los que no están en el formulario para asi
-        // optimizar el renidimiento de la aplicacion y no realice busquedas inecesarias.
-        const idsRestantes = ids.filter((id) => !form.some(form => form.idIndicador === id));
-
-        idsRestantes.forEach((i) =>
-        {
-            const elemento = pbr.find(x => x.idIndicador === i);
-            if (isNotNil(elemento))
-            {
-                trim1[elemento.idIndicador] = elemento.trim1;
-                trim2[elemento.idIndicador] = elemento.trim2;
-                trim3[elemento.idIndicador] = elemento.trim3;
-                trim4[elemento.idIndicador] = elemento.trim4;
-            }
-        });
-
-        form.forEach((i) =>
-        {
-            const elemento = sumatorias.find(x => x.idSumatoria === i.idIndicador);
-            if (isNotNil(elemento))
-            {
-                trim1[elemento.idSumatoria] = elemento.trim1;
-                trim2[elemento.idSumatoria] = elemento.trim2;
-                trim3[elemento.idSumatoria] = elemento.trim3;
-                trim4[elemento.idSumatoria] = elemento.trim4;
-
-                trim1[elemento.idSumatoria + 'Ant'] = i.trim1Ant;
-                trim2[elemento.idSumatoria + 'Ant'] = i.trim2Ant;
-                trim3[elemento.idSumatoria + 'Ant'] = i.trim3Ant;
-                trim4[elemento.idSumatoria + 'Ant'] = i.trim4Ant;
-            }
-        });
-        return [trim1, trim2, trim3, trim4];
+        return objFormula;
     }
 
     static calcAvances(formula: string, obj: object): string
@@ -158,7 +134,6 @@ export class ComponentesService
             };
 
             const pbrElemento = pbr.find(x => x.idIndicador === i.idIndicador);
-
             if (isNotNil(pbrElemento))
             {
                 datos.idIndicador = pbrElemento.idIndicador;
@@ -175,7 +150,6 @@ export class ComponentesService
             }
 
             const pbrAd = pbr.find((x) => x.idIndicador === i.idIndicadorAd);
-
             if (isNotNil(pbrAd))
             {
                 datos.idIndicadorAd = pbrAd.idIndicador;
@@ -185,8 +159,8 @@ export class ComponentesService
                 datos.trim3Ad = pbrAd.trim3;
                 datos.trim4Ad = pbrAd.trim4;
             }
-            const sumatoria = sumatorias.find(y => y.idSumatoria === i.idIndicador);
 
+            const sumatoria = sumatorias.find(y => y.idSumatoria === i.idIndicador);
             if (isNotNil(sumatoria))
             {
                 datos.idIndicador = sumatoria.idSumatoria;
@@ -195,6 +169,17 @@ export class ComponentesService
                 datos.trim2 = sumatoria.trim2;
                 datos.trim3 = sumatoria.trim3;
                 datos.trim4 = sumatoria.trim4;
+            }
+            const sumatoriaAd = sumatorias.find(z => z.idSumatoria === i.idIndicadorAd);
+
+            if (isNotNil(sumatoriaAd))
+            {
+                datos.idIndicadorAd = sumatoriaAd.idSumatoria;
+                datos.datoAd = sumatoriaAd.idSumatoria;
+                datos.trim1 = sumatoriaAd.trim1;
+                datos.trim2 = sumatoriaAd.trim2;
+                datos.trim3 = sumatoriaAd.trim3;
+                datos.trim4 = sumatoriaAd.trim4;
             }
             tablaValores.push(datos);
         }
