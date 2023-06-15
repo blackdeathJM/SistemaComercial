@@ -72,8 +72,8 @@ export class ModCompComun implements OnDestroy
     });
 
     formAd: FormGroup = this.fb.group({
-        idIndicadorAd: ['', RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
-        datoAd: [''],
+        idIndicadorAd: [null, RxwebValidators.required({message: 'Es necesario seleccionar el id'})],
+        datoAd: [null],
 
         trim1Ad: [0, this.validadorNumerico],
         trim2Ad: [0, this.validadorNumerico],
@@ -219,8 +219,8 @@ export class ModCompComun implements OnDestroy
         this.ids.push(idIndicador);
 
         this.datos.push({
-            idIndicador,
 
+            idIndicador,
             idIndicadorAd: idIndicadorAd,
 
             trim1Ant: +trim1Ant,

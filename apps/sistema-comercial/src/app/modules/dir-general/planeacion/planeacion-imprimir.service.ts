@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {jsPDF} from 'jspdf'
-import autoTable, {applyPlugin, CellHook, CellHookData, Styles} from "jspdf-autotable";
-import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
-import {$cast, isNotNil} from "@angular-ru/cdk/utils";
+import autoTable, {applyPlugin, CellHook, Styles} from "jspdf-autotable";
 
 applyPlugin(jsPDF);
 
@@ -35,18 +33,7 @@ export class PlaneacionImprimirService
             tableWidth: 'auto',
             columns: columnas,
             columnStyles,
-            didParseCell: (data: CellHookData) =>
-            {
-                if (data.section === 'body')
-                {
-                    const mir = $cast<IMirCuestionario>(data.row.raw);
-                    if (isNotNil(mir.componente))
-                    {
-
-                    }
-                    data.row.cells.avanceTrim1.text = ['50'];
-                }
-            },
+            didParseCell,
             styles,
             theme: 'striped',
             useCss: true,

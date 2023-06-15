@@ -13,31 +13,20 @@ export class ComponentesService
 {
     static formula(ids: string[], tipoForm: TiposFormulario, datos: IFormComun[]): string
     {
-        if (tipoForm === TiposFormulario.COMUN && ids.length === 1)
+        if (tipoForm === TiposFormulario.COMUN)
         {
-            const valor = ids[0];
-            return `(${valor}) * 100`;
-        }
+            const valor1 = datos.map(x => x.idIndicador)
 
-        if (tipoForm === TiposFormulario.COMUN && ids.length === 2)
-        {
-            const valor1 = ids[0];
-            const valor2 = ids[1];
-            return `( ${valor1} / ${valor2}) * 100`;
-        }
-
-        if (tipoForm === TiposFormulario.COMUN && ids.length > 2)
-        {
-            const trim = ids.join('+');
-            return `(${trim}) / 100`;
+            return `${valor1}`;
         }
 
         if (tipoForm === TiposFormulario.PERIODO_ANT)
         {
             const periodoActual = ids.join('+');
-            const periodoAnt = ids.join('+') + 'Ant';
+            const periodoAnt = ids.join('+') + '-Ant';
             return `((${periodoActual}) - (${periodoAnt})/ ${periodoAnt}) * 100`;
         }
+
         if (datos.length >= 2)
         {
             const idsForm: string[] = [];

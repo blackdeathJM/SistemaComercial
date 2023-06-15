@@ -126,6 +126,7 @@ export type ComponenteInput = {
   formDinamico?: InputMaybe<Array<Scalars['JSON']['input']>>;
   formula?: InputMaybe<Scalars['String']['input']>;
   ids?: InputMaybe<Array<Scalars['String']['input']>>;
+  objFormula?: InputMaybe<Scalars['JSON']['input']>;
   tipoForm?: InputMaybe<Scalars['String']['input']>;
   tipoValorAvance?: InputMaybe<Scalars['String']['input']>;
   tipoValorTrim?: InputMaybe<Scalars['String']['input']>;
@@ -137,6 +138,7 @@ export type ComponenteType = {
   formDinamico?: Maybe<Array<Scalars['JSON']['output']>>;
   formula?: Maybe<Scalars['String']['output']>;
   ids?: Maybe<Array<Scalars['String']['output']>>;
+  objFormula?: Maybe<Scalars['JSON']['output']>;
   tipoForm?: Maybe<Scalars['String']['output']>;
   tipoValorAvance?: Maybe<Scalars['String']['output']>;
   tipoValorTrim?: Maybe<Scalars['String']['output']>;
@@ -1165,6 +1167,7 @@ export type RegComponenteInput = {
   formula?: InputMaybe<Scalars['String']['input']>;
   idIndicadorMir?: InputMaybe<Scalars['String']['input']>;
   ids?: InputMaybe<Array<Scalars['String']['input']>>;
+  objFormula?: InputMaybe<Scalars['JSON']['input']>;
   tipoForm?: InputMaybe<Scalars['String']['input']>;
   tipoValorAvance?: InputMaybe<Scalars['String']['input']>;
   tipoValorTrim?: InputMaybe<Scalars['String']['input']>;

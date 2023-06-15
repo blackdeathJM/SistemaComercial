@@ -45,7 +45,6 @@ export interface IComponente
 
     ids: string[];
     formula: string;
-    objFormula: object;
 
     tipoValorTrim: string;
     tipoValorAvance: string;

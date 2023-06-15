@@ -21,7 +21,6 @@ import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 import {IDatosTablaComun, TablaComunComponent} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
-import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 
 @Component({
     selector: 'app-componentes',
@@ -104,7 +103,7 @@ export class ComponentesComponent
         });
     }
 
-    cambioChkTrim(e: MatCheckboxChange, numTrim: number, tipoForm: TiposFormulario): void
+    cambioChkTrim(e: MatCheckboxChange, numTrim: number, tipoForm: string | null): void
     {
         console.log(e.checked, numTrim, tipoForm);
     }

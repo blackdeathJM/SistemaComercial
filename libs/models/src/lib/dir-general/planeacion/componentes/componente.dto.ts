@@ -64,10 +64,6 @@ export class ComponenteDto implements IComponente
     @IsArray({message: 'Los ids debe ser un array'})
     @Field(() => [String], {nullable: true, defaultValue: []})
     ids: string[];
-
-    @IsNotEmpty({message: 'Es necesario el objecto de formula para realizar los calculos'})
-    @Field(() => GraphQLJSON, {nullable: true, defaultValue: null})
-    objFormula: object;
 }
 
 @InputType('RegComponenteInput')

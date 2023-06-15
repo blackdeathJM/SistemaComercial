@@ -1,12 +1,11 @@
 <mat-card>
     <mat-card-content>
-        <mat-toolbar color="accent" class="flex flex-auto border-b-4 border-b-cyan-500 items-center pt-5 gap-4">
+        <section class="flex flex-auto border-b-4 border-b-cyan-500 items-center pt-5 gap-4 mb-2">
             <mat-form-field class="basis-1/4" *ngIf="seleccionQuery.select() | async as seleccion">
                 <mat-select (valueChange)="filCentroGestor($event)" placeholder="Selecciona un centro gestor">
                     <mat-option *ngFor="let centroGestor of seleccion.centroGestor" [value]="centroGestor">{{centroGestor}}</mat-option>
                 </mat-select>
             </mat-form-field>
-
             <mat-form-field class="flex-auto">
                 <mat-select placeholder="Selecciona un elemento" hideSingleSelectionIndicator>
                     <mat-option *ngFor="let pbr of planeacionQuery.compCuestionarioPbr()" [value]="pbr">
@@ -43,7 +42,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </mat-toolbar>
+        </section>
 
         <form [formGroup]="formComun">
             <section class="flex flex-auto gap-4">

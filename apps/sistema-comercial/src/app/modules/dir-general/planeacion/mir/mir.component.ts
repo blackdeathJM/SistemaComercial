@@ -12,12 +12,13 @@ import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-regi
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
-import {isNil} from '@angular-ru/cdk/utils';
+import {$cast, isNil, isNotNil} from '@angular-ru/cdk/utils';
 import {ComponentesService} from '@s-dir-general/componentes/componentes.service';
 import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
-import {Styles} from "jspdf-autotable";
+import {CellHook, CellHookData, Styles} from "jspdf-autotable";
 import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 import {NgxToastService} from "@s-services/ngx-toast.service";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 export const abrirPanelMir = signal<boolean>(false)
 @Component({
@@ -84,12 +85,12 @@ export default class MirComponent implements OnDestroy
             this.ngxToast.alertaToast('Selecciona un año para poder continuar', 'MIR');
             return;
         }
-        const columnas = [{header: 'Ind', dataKey: 'idIndicador'}, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'}, {header: 'Centro gestor', dataKey: 'centroGestor'},
-            {header: 'Metodo de calculo', dataKey: 'metodoCalculo'}, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'}, {header: 'Supuestos', dataKey: 'supuestos'},
-            {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {header: 'Frec. medicion', dataKey: 'frecuenciaMedicion'}, {header: 'L.B Año', dataKey: 'lineaBaseAno'}, {header: 'L.B. valor', dataKey: 'lineaBaseValor'},
-            {header: 'Meta', dataKey: 'meta'}, {header: 'Sentido Ind', dataKey: 'sentidoDelIndicador'}, {header: 'Sem. Verde', dataKey: 'semefVerdeV'}, {header: 'Sem. Ama', dataKey: 'semefAmarilloV'},
-            {header: 'Sem. Rojo', dataKey: 'semefRojoV'}, {header: 'A. Trim1', dataKey: 'avanceTrim1'}, {header: 'A. Trim2', dataKey: 'avanceTrim2'}, {header: 'A. Trim3', dataKey: 'avanceTrim3'},
-            {header: 'A. Trim4', dataKey: 'avanceTrim4'}, {header: 'Glob', dataKey: 'avanceAnual'}];
+        const columnas = [{header: 'Ind', dataKey: 'idIndicador'}, {header: 'Nivel', dataKey: 'nivel'}, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
+            {header: 'Centro gestor', dataKey: 'centroGestor'}, {header: 'Metodo de calculo', dataKey: 'metodoCalculo'}, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'},
+            {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {header: 'L.B Año', dataKey: 'lineaBaseAno'}, {header: 'L.B. valor', dataKey: 'lineaBaseValor'}, {header: 'Meta', dataKey: 'meta'},
+            {header: 'Sentido Ind', dataKey: 'sentidoDelIndicador'}, {header: 'Sem. Verde', dataKey: 'semefVerdeV'}, {header: 'Sem. Ama', dataKey: 'semefAmarilloV'}, {header: 'Sem. Rojo', dataKey: 'semefRojoV'},
+            {header: 'A. Trim1', dataKey: 'avanceTrim1'}, {header: 'A. Trim2', dataKey: 'avanceTrim2'}, {header: 'A. Trim3', dataKey: 'avanceTrim3'}, {header: 'A. Trim4', dataKey: 'avanceTrim4'},
+            {header: 'Glob', dataKey: 'avanceAnual'}];
 
         const styles: Partial<Styles> = {fontSize: 6, font: 'helvetica', minCellWidth: 7, overflow: 'linebreak', cellWidth: 'auto', lineWidth: .5};
 
@@ -101,8 +102,20 @@ export default class MirComponent implements OnDestroy
         const ano = this.planeacionQuery.getActive().ano;
         const mirsActivo = this.planeacionQuery.compCuestionarioMir();
         const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
+        const didParseCell: CellHook = ((data: CellHookData) =>
+        {
+            if (data.section === 'body')
+            {
+                const mir = $cast<IMirCuestionario>(data.row.raw);
+                if (isNotNil(mir.componente))
+                {
 
-        PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo);
+                }
+                data.row.cells.avanceTrim1.text = ['50'];
+            }
+        });
+
+        PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo, didParseCell);
     }
 
     ngOnDestroy(): void
