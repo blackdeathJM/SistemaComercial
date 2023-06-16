@@ -5,40 +5,32 @@ import {ITablaGen} from '#/libs/models/src/lib/tabla.interface';
 import * as math from 'mathjs';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
+import {pull} from "lodash-es";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ComponentesService
 {
-    static formula(ids: string[], tipoForm: TiposFormulario, datos: IFormComun[]): string
+    static formula(ids: string[], tipoForm: TiposFormulario, form: IFormComun[]): string
     {
+        const valFormComun = form.map(x => x.idIndicador);
+        const valor = valFormComun.join('+');
+        const valoresInclEnFormula = pull(ids, ...valFormComun).join('+');
+
         if (tipoForm === TiposFormulario.COMUN)
         {
-            const valor1 = datos.map(x => x.idIndicador)
-
-            return `${valor1}`;
+            return `(${valor}) *100 ${valoresInclEnFormula}`;
         }
-
         if (tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            const periodoActual = ids.join('+');
-            const periodoAnt = ids.join('+') + '-Ant';
-            return `((${periodoActual}) - (${periodoAnt})/ ${periodoAnt}) * 100`;
+            const valPeriodoAnt = form.map(x => x.idIndicador);
+            return `((${valor}) - (${valPeriodoAnt}) / ${valPeriodoAnt}) *100  ${valoresInclEnFormula}`;
         }
-
-        if (datos.length >= 2)
+        if (tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
         {
-            const idsForm: string[] = [];
-            const idsAd: string[] = [];
-
-            datos.forEach(value =>
-            {
-                idsForm.push(value.idIndicador);
-                idsAd.push(value.idIndicadorAd);
-            });
-
-            return '((' + idsForm.join('+') + ')' + '/' + '(' + idsAd.join('+') + '))*100';
+            const valFormAd = form.map(x => x.idIndicadorAd);
+            return `((${valor})-(${valFormAd}) / ${valFormAd}) * 100`
         }
         return '';
     }

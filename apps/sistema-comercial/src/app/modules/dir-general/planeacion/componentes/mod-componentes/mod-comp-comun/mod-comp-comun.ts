@@ -170,6 +170,16 @@ export class ModCompComun implements OnDestroy
 
     agregarAlArreglo(): void
     {
+        const {idIndicador} = this.formComun.value;
+        const {idIndicadorAd} = this.formAd.value;
+        const {trim1Ant, trim2Ant, trim3Ant, trim4Ant} = this.formTrimAnt.value;
+
+        if (this.ids.includes(idIndicador) || this.ids.includes(idIndicador + '-Ant') || this.ids.includes(idIndicadorAd + '-Ad'))
+        {
+            this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
+            return;
+        }
+
         //Verificamos que todos los formularios sean válidos para poder continuar
         if (this.tipoForm === TiposFormulario.COMUN)
         {
@@ -186,6 +196,7 @@ export class ModCompComun implements OnDestroy
                 this.ngxToast.alertaToast('Valida que la informacion este correctamente llenada', 'Agregar a lista');
                 return;
             }
+            this.ids.push(idIndicadorAd + '-Ad');
         }
         if (this.tipoForm === TiposFormulario.PERIODO_ANT)
         {
@@ -194,35 +205,12 @@ export class ModCompComun implements OnDestroy
                 this.ngxToast.alertaToast('Valida que la informacion este correctamente llenada', 'Agregar A lista');
                 return;
             }
+            this.ids.push(idIndicador + '-Ant');
         }
-
-        const {idIndicador} = this.formComun.value;
-        const {idIndicadorAd} = this.formAd.value;
-        const {trim1Ant, trim2Ant, trim3Ant, trim4Ant} = this.formTrimAnt.value;
-
-        if (this.ids.includes(idIndicador))
-        {
-            this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
-            return;
-        }
-
-        if (isNotNil(idIndicadorAd))
-        {
-            if (this.ids.includes(idIndicadorAd))
-            {
-                this.ngxToast.alertaToast(this.mjsIdDuplicado, 'Id duplicado');
-                return;
-            }
-            this.ids.push(idIndicadorAd + '-Ad');
-        }
-
         this.ids.push(idIndicador);
-
         this.datos.push({
-
             idIndicador,
             idIndicadorAd: idIndicadorAd,
-
             trim1Ant: +trim1Ant,
             trim2Ant: +trim2Ant,
             trim3Ant: +trim3Ant,
@@ -247,30 +235,30 @@ export class ModCompComun implements OnDestroy
             this.ngxToast.errorToast('No se puede continuar con el proceso de registro porque la lista esta vacia', 'Componente');
             return;
         }
-        this.cargando = true;
-
-        const regComponente: TRegComponente =
-            {
-                _id: this.planeacionQuery.getActive()._id,
-                idIndicadorMir: this.idIndicadorMir,
-                ids: this.ids,
-                tipoForm: this.tipoForm,
-                tipoValorTrim: this.formTipoValores.get('tipoValorTrim').value,
-                tipoValorAvance: this.formTipoValores.get('tipoValorAvance').value,
-                formula: this.formTipoValores.get('formula').value,
-                formComun: this.datos
-            };
-
-        this.formComun.disable();
-        this.formTrimAnt.disable();
-        this.planeacionService.regComponente(regComponente).pipe(finalize(() =>
-        {
-            this.cargando = false;
-            this.formComun.enable();
-            this.formTrimAnt.enable();
-            this.localizado.back();
-
-        })).subscribe();
+        console.log(this.ids);
+        // this.cargando = true;
+        // const regComponente: TRegComponente =
+        //     {
+        //         _id: this.planeacionQuery.getActive()._id,
+        //         idIndicadorMir: this.idIndicadorMir,
+        //         ids: this.ids,
+        //         tipoForm: this.tipoForm,
+        //         tipoValorTrim: this.formTipoValores.get('tipoValorTrim').value,
+        //         tipoValorAvance: this.formTipoValores.get('tipoValorAvance').value,
+        //         formula: this.formTipoValores.get('formula').value,
+        //         formComun: this.datos
+        //     };
+        //
+        // this.formComun.disable();
+        // this.formTrimAnt.disable();
+        // this.planeacionService.regComponente(regComponente).pipe(finalize(() =>
+        // {
+        //     this.cargando = false;
+        //     this.formComun.enable();
+        //     this.formTrimAnt.enable();
+        //     this.localizado.back();
+        //
+        // })).subscribe();
     }
 
     cambioSeleccionRdb(e: MatRadioChange): void
