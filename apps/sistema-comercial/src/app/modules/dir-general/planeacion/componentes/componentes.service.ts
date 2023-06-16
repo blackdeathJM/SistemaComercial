@@ -81,11 +81,8 @@ export class ComponentesService
         return objFormula;
     }
 
-    static calcAvances(formula: string, obj: object): string\uu
+    static calcAvances(formula: string, obj: object): string
     {
-        console.log(formula);
-        console.log(obj);
-
         const objeto = {
             id: 0,
             idsigue: 50
