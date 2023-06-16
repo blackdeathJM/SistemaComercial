@@ -5,7 +5,7 @@ import {ITablaGen} from '#/libs/models/src/lib/tabla.interface';
 import * as math from 'mathjs';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
-import {pull} from "lodash-es";
+import {exclude} from "@angular-ru/cdk/array";
 
 @Injectable({
     providedIn: 'root'
@@ -16,21 +16,25 @@ export class ComponentesService
     {
         const valFormComun = form.map(x => x.idIndicador);
         const valor = valFormComun.join('+');
-        const valoresInclEnFormula = pull(ids, ...valFormComun).join('+');
-
+        const valoresInclEnFormula = ids.filter(exclude(valFormComun));
         if (tipoForm === TiposFormulario.COMUN)
         {
             return `(${valor}) *100 ${valoresInclEnFormula}`;
         }
+
         if (tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            const valPeriodoAnt = form.map(x => x.idIndicador);
-            return `((${valor}) - (${valPeriodoAnt}) / ${valPeriodoAnt}) *100  ${valoresInclEnFormula}`;
+            const periodoAnt = form.map(x => x.idIndicador + '-Ant');
+            const unirValores = periodoAnt.join('+');
+            const excluirValoresAnt = valoresInclEnFormula.filter(exclude(periodoAnt));
+            return `(((${valor}) - (${unirValores})) / (${unirValores})) *100 ${excluirValoresAnt}`;
         }
         if (tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
         {
             const valFormAd = form.map(x => x.idIndicadorAd);
-            return `((${valor})-(${valFormAd}) / ${valFormAd}) * 100`
+            const unirValorAd = valFormAd.join('+');
+            const excluirValoresAd = valoresInclEnFormula.filter(exclude(valFormAd));
+            return `((${valor})-(${unirValorAd}) / ${unirValorAd}) * 100  ${excluirValoresAd}`;
         }
         return '';
     }
@@ -38,47 +42,54 @@ export class ComponentesService
     static crearObjFormula(pbr: IPbrCuestionario[], ids: string[], sumatorias: ISumatorias[], formComun: IFormComun[]): object[]
     {
         const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
-
         ids.forEach((id) =>
         {
-            const idDivididoEnArray = id.split('-');
+            const idDivididoEnArray = id.split('__');
             const nvoId = idDivididoEnArray.shift();
-            const sufijo = isNotNil(idDivididoEnArray.pop()) ? '-Ad' : '';
+            let sufijo = '__' + idDivididoEnArray.pop();
+            let trimestresAnt = [0, 0, 0, 0];
 
             const pbrEncontrado = pbr.find(x => x.idIndicador === nvoId);
+            if (sufijo === '__undefined')
+            {
+                sufijo = '';
+            }
+            if (sufijo === '__Ant')
+            {
+                const valoresTrim = formComun.find(x => x.idIndicador === pbrEncontrado.idIndicador);
+                trimestresAnt[0] = valoresTrim.trim1Ant;
+                trimestresAnt[1] = valoresTrim.trim2Ant;
+                trimestresAnt[2] = valoresTrim.trim3Ant;
+                trimestresAnt[3] = valoresTrim.trim4Ant;
+            }
             if (isNotNil(pbrEncontrado))
             {
-                objFormula[0][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim1;
-                objFormula[1][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim2;
-                objFormula[2][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim3;
-                objFormula[3][pbrEncontrado.idIndicador + sufijo] = pbrEncontrado.trim3;
+                objFormula[0][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : pbrEncontrado.trim1;
+                objFormula[1][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : pbrEncontrado.trim2;
+                objFormula[2][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : pbrEncontrado.trim3;
+                objFormula[3][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : pbrEncontrado.trim4;
             }
             const sumatoria = sumatorias.find(x => x.idSumatoria === nvoId);
-            //Obtener los valores de los trimestres anteriores, solo se buscan en el idPrincipal, ya que el idIndicador-Ad no va a tener trimestres anteriores
-            formComun.forEach(x =>
-            {
-                if (x.idIndicador === id)
-                {
-                    objFormula[0]['trim1Ant'] = x.trim1Ant;
-                    objFormula[1]['trim2Ant'] = x.trim2Ant;
-                    objFormula[2]['trim3Ant'] = x.trim3Ant;
-                    objFormula[3]['trim4Ant'] = x.trim4Ant;
-                }
-            });
-
             if (isNotNil(sumatoria))
             {
-                objFormula[0][sumatoria.idSumatoria + sufijo] = sumatoria.trim1;
-                objFormula[1][sumatoria.idSumatoria + sufijo] = sumatoria.trim2;
-                objFormula[2][sumatoria.idSumatoria + sufijo] = sumatoria.trim3;
-                objFormula[3][sumatoria.idSumatoria + sufijo] = sumatoria.trim4;
+                objFormula[0][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : sumatoria.trim1;
+                objFormula[1][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : sumatoria.trim2;
+                objFormula[2][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : sumatoria.trim3;
+                objFormula[3][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : sumatoria.trim4;
             }
         });
         return objFormula;
     }
 
-    static calcAvances(formula: string, obj: object): string
+    static calcAvances(formula: string, obj: object): string\uu
     {
+        console.log(formula);
+        console.log(obj);
+
+        const objeto = {
+            id: 0,
+            idsigue: 50
+        }
         if (isNil(formula) || Object.keys(obj).length === 0)
         {
             return '0';
