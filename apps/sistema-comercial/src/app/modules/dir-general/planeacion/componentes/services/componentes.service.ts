@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {IFormComun, TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
-import {ITablaGen} from '#/libs/models/src/lib/tabla.interface';
-import * as math from 'mathjs';
+import {IDatosTablaFormComun, IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
-import {IDatosTablaComun} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 import {exclude} from "@angular-ru/cdk/array";
+import * as math from 'mathjs';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +23,7 @@ export class ComponentesService
 
         if (tipoForm === TiposFormulario.PERIODO_ANT)
         {
-            const periodoAnt = form.map(x => x.idIndicador + '-Ant');
+            const periodoAnt = form.map(x => x.idIndicador + '__Ant');
             const unirValores = periodoAnt.join('+');
             const excluirValoresAnt = valoresInclEnFormula.filter(exclude(periodoAnt));
             return `(((${valor}) - (${unirValores})) / (${unirValores})) *100 ${excluirValoresAnt}`;
@@ -83,10 +82,6 @@ export class ComponentesService
 
     static calcAvances(formula: string, obj: object): string
     {
-        const objeto = {
-            id: 0,
-            idsigue: 50
-        }
         if (isNil(formula) || Object.keys(obj).length === 0)
         {
             return '0';
@@ -94,13 +89,13 @@ export class ComponentesService
         return math.evaluate(formula, obj);
     }
 
-    construirDatosTabla(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaComun[]
+    construirDatosTabla(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaFormComun[]
     {
-        const tablaValores: IDatosTablaComun[] = [];
+        const tablaValores: IDatosTablaFormComun[] = [];
 
         for (const i of form)
         {
-            const datos: IDatosTablaComun = {
+            const datos: IDatosTablaFormComun = {
 
                 idIndicador: '',
                 dato: '',
@@ -175,9 +170,9 @@ export class ComponentesService
         return tablaValores;
     }
 
-    static colCompDinamico(columnas: string[], formato: string): ITablaGen[]
+    static colCompDinamico(columnas: string[], formato: string): IGenerarColumnTabla[]
     {
-        const columnasTabla: ITablaGen[] = [];
+        const columnasTabla: IGenerarColumnTabla[] = [];
 
         columnas.forEach(x =>
         {
@@ -185,7 +180,7 @@ export class ComponentesService
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
 
-            const columnaTabla: ITablaGen =
+            const columnaTabla: IGenerarColumnTabla =
                 {
                     etiqueta,
                     def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,

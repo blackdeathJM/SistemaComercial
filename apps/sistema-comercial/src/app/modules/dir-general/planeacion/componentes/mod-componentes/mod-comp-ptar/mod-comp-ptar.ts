@@ -23,8 +23,8 @@ import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componen
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
 import {NgxToastService} from "@s-services/ngx-toast.service";
-import {ITablaGen} from "#/libs/models/src/lib/tabla.interface";
-import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
+import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
+import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 
 @Component({
     selector: 'app-mod-comp-ptar',
@@ -60,7 +60,7 @@ export class ModCompPtar
     tituloColumnas: string[] = ['idIndicador', 'dato'];
 
     compDinamico: object[] = [];
-    columnas: ITablaGen[] = [];
+    columnas: IGenerarColumnTabla[] = [];
 
     objDatosFormula: object = {};
 

@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {isNil} from "@angular-ru/cdk/utils";
 import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
-import {CurrencyPipe, DatePipe, DecimalPipe, PercentPipe} from "@angular/common";
+import {CurrencyPipe, DecimalPipe, PercentPipe} from "@angular/common";
 
 @Pipe({
     name: 'multiplesFormatos',
@@ -9,19 +9,17 @@ import {CurrencyPipe, DatePipe, DecimalPipe, PercentPipe} from "@angular/common"
 })
 export class MultiplesFormatosPipe implements PipeTransform
 {
-    transform(valor: string, formato: string): string
+    transform(valor: string, tipoDeDato: string): string
     {
         let mostrarValor = valor;
 
-        if (isNil(formato))
+        if (isNil(tipoDeDato))
         {
             return mostrarValor;
         }
-        switch (formato)
+
+        switch (tipoDeDato)
         {
-            case TipoValores.FECHA:
-                mostrarValor = new DatePipe('MX').transform(mostrarValor, 'DDMMYYYY');
-                break;
             case TipoValores.NUMERO:
                 mostrarValor = Math.round(Number(mostrarValor)).toString();
                 break;

@@ -1,8 +1,8 @@
-<table mat-table [dataSource]="_origenDatos">
+<table mat-table [dataSource]="_origenDatos" class="bg-transparent">
     <ng-container *ngFor="let columna of columnasTabla" [matColumnDef]="columna.def">
         <th mat-header-cell *matHeaderCellDef [width]="columna.width">{{columna.etiqueta}}</th>
-        <td mat-cell *matCellDef="let fila">{{fila[columna.llaveDato] | multiplesFormatos: columna.formato}}</td>
-        <td mat-footer-cell *matFooterCellDef class="text-amber-500">{{obtenerTotal(columna.def) | multiplesFormatos: columna.formato}}</td>
+        <td mat-cell *matCellDef="let fila">{{fila[columna.def] | multiplesFormatos: columna.tipoDeDato}}</td>
+        <td mat-footer-cell *matFooterCellDef class="text-amber-500">{{obtenerTotal(columna.def) | multiplesFormatos: columna.tipoDeDato}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>

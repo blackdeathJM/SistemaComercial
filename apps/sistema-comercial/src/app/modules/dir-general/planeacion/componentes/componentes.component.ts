@@ -19,13 +19,16 @@ import {DateTime} from 'luxon';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
-import {IDatosTablaComun, TablaComunComponent} from "@s-dir-general/componentes/tabla-comun/tabla-comun.component";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
+import {IDatosTablaFormComun, IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
+import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
 
 @Component({
     selector: 'app-componentes',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe, TablaComunComponent, MatCheckboxModule],
+    imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe,
+        MatCheckboxModule],
     templateUrl: './componentes.component.html',
     styleUrls: ['./componentes.component.scss'],
     animations: [fuseAnimations],
@@ -34,18 +37,36 @@ import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
+    mirElemento = this.planeacionQuery.cuestionarioMir();
 
-    @Input({required: true}) set datosTabla(v: IDatosTablaComun[])
+    @Input({required: true}) set datosTabla(v: IDatosTablaFormComun[])
     {
         this._datosTabla = v;
     }
+
+    columnas: IGenerarColumnTabla[] =
+        [
+            {
+                etiqueta: 'Indicador',
+                def: 'idIndicador',
+                llaveDato: 'idIndicador',
+                width: '7%'
+            },
+            {
+                etiqueta: 'Descripcion',
+                def: 'dato',
+                llaveDato: 'dato',
+                width: 'auto'
+            }
+        ];
 
     @Input({required: true}) set avancesTrimestrales(v: string[])
     {
         this._avancesTrimestrales = v;
     }
 
-    _datosTabla: IDatosTablaComun[] = [];
+    tipoForm: string = null;
+    _datosTabla: IDatosTablaFormComun[] = [];
     _avancesTrimestrales: string[] = ['', '', '', ''];
 
     fecha = DateTime.now().toLocaleString();
@@ -103,8 +124,40 @@ export class ComponentesComponent
         });
     }
 
-    cambioChkTrim(e: MatCheckboxChange, numTrim: number, tipoForm: string | null): void
+    cambioChkTrim1(e: MatCheckboxChange, tipoForm: string | null): void
     {
-        console.log(e.checked, numTrim, tipoForm);
+        const tipoDeDato = this.mirElemento.componente.tipoValorTrim;
+        switch (tipoForm)
+        {
+            case TiposFormulario.COMUN:
+                if (e.checked)
+                {
+                    const columna = TablaComponenteService.generarColFormComun(['Trim-1'], ['trim1'], ['6'], [tipoDeDato]);
+                    this.columnas.concat(columna);
+                } else
+                {
+
+                }
+                break;
+            case TiposFormulario.PERIODO_ANT:
+                break;
+            case TiposFormulario.CON_OTRO_ID_PBR:
+                break;
+        }
+    }
+
+    cambioChkTrim2(e: MatCheckboxChange, tipoForm: string | null): void
+    {
+        this.tipoForm = tipoForm;
+    }
+
+    cambioChkTrim3(e: MatCheckboxChange, tipoForm: string | null): void
+    {
+        this.tipoForm = tipoForm;
+    }
+
+    cambioChkTrim4(e: MatCheckboxChange, tipoForm: string | null): void
+    {
+        this.tipoForm = tipoForm;
     }
 }

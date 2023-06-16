@@ -37,25 +37,31 @@
                     <span class="detalle-span font-semibold text-black py-2 col-span-full bg-blue-200 text-center">METODO DE CALCULO</span>
                     <span class="border-b-2 col-span-full text-center">{{mirSelec?.metodoCalculo}}</span>
                 </section>
-                <!--                <app-tabla-comun [datos]="_datosTabla"></app-tabla-comun>-->
+
+<!--                <app-tabla-mat [datos]="_datosTabla" [columnas]="columnas" />-->
+
                 <mat-divider class="border-4 mb-4 border-lime-900 dark:border-lime-400"></mat-divider>
                 <section class="grid grid-cols-8 gap-4 text-lg">
                     <span class="detalle-span">Avance trim 1</span>
-                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span
+                        class="border-b-2 text-green-700">{{_avancesTrimestrales[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim 2</span>
-                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span
+                        class="border-b-2 text-green-700">{{_avancesTrimestrales[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim 3</span>
-                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span
+                        class="border-b-2 text-green-700">{{_avancesTrimestrales[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                     <span class="detalle-span">Avance trim 4</span>
-                    <span class="border-b-2 text-green-700">{{_avancesTrimestrales[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span
+                        class="border-b-2 text-green-700">{{_avancesTrimestrales[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                 </section>
 
             </article>
             <div class="flex flex-auto gap-8 mt-2">
-                <mat-checkbox color="primary" [checked]="true" (change)="cambioChkTrim($event, 1, mirSelec?.componente?.tipoForm)">Trimestre 1</mat-checkbox>
-                <mat-checkbox color="primary" (change)="cambioChkTrim($event,2, mirSelec?.componente?.tipoForm)">Trimestre 2</mat-checkbox>
-                <mat-checkbox color="primary">Trimestre 3</mat-checkbox>
-                <mat-checkbox color="primary">Trimestre 4</mat-checkbox>
+                <mat-checkbox color="primary" [checked]="true" (change)="cambioChkTrim1($event, mirSelec?.componente?.tipoForm)">Trimestre 1</mat-checkbox>
+                <mat-checkbox color="primary" (change)="cambioChkTrim2($event, mirSelec?.componente?.tipoForm)"> Trimestre 2</mat-checkbox>
+                <mat-checkbox color="primary" (change)="cambioChkTrim3($event, mirSelec?.componente?.tipoForm)">Trimestre 3</mat-checkbox>
+                <mat-checkbox color="primary" (change)="cambioChkTrim4($event, mirSelec?.componente?.tipoForm)">Trimestre 4</mat-checkbox>
             </div>
         </mat-card-content>
 

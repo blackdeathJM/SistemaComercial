@@ -20,7 +20,7 @@ import {MatRadioChange, MatRadioModule} from "@angular/material/radio";
 import {FuseAlertModule} from "@s-fuse/alert";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
-import {ComponentesService} from "@s-dir-general/componentes/componentes.service";
+import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 import {finalize} from "rxjs";
 import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";

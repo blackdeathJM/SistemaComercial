@@ -19,7 +19,6 @@ export enum TipoValores
     PORCENTAJE = 'porcentaje',
     NUMERO = 'numero',
     DECIMAL = 'decimal',
-    FECHA = 'fecha',
     LTS = 'litros',
     MT3 = 'mt3'
 }
