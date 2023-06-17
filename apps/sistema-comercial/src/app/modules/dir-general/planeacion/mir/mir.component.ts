@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, OnDestroy, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -34,36 +34,10 @@ export const abrirPanelMir = signal<boolean>(false)
 export default class MirComponent implements OnDestroy
 {
     abrirPanel = abrirPanelMir;
-    datosTabla: IDatosTablaFormComun[];
     avancesTrimestrales: string[] = [];
 
     constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService)
     {
-        effect(() =>
-        {
-            const mir = this.planeacionQuery.cuestionarioMir();
-            if (isNil(this.planeacionQuery.getActive()))
-            {
-                return;
-            }
-            const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
-            const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
-
-            if (isNil(mir) || isNil(mir.componente))
-            {
-                return;
-            }
-
-            const trimObjCalcular = ComponentesService.crearObjFormula(pbrS, mir.componente.ids, sumatorias, mir.componente.formComun);
-            this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
-
-            this.avancesTrimestrales[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
-            this.avancesTrimestrales[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
-            this.avancesTrimestrales[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
-            this.avancesTrimestrales[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
-
-
-        }, {allowSignalWrites: true});
     }
 
     regSeleccion(): void
@@ -76,7 +50,6 @@ export default class MirComponent implements OnDestroy
         this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
 
-
     imprimirTablaMir(): void
     {
         if (isNil(this.planeacionQuery.getActive()))
@@ -84,10 +57,10 @@ export default class MirComponent implements OnDestroy
             this.ngxToast.alertaToast('Selecciona un año para poder continuar', 'MIR');
             return;
         }
-        const columnas = [{header: 'Ind', dataKey: 'idIndicador'}, {
-            header: 'Nivel',
-            dataKey: 'nivel'
-        }, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
+        const columnas = [{header: 'Ind', dataKey: 'idIndicador'},
+            {
+                header: 'Nivel', dataKey: 'nivel'
+            }, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
             {header: 'Centro gestor', dataKey: 'centroGestor'}, {
                 header: 'Metodo de calculo',
                 dataKey: 'metodoCalculo'
@@ -141,6 +114,11 @@ export default class MirComponent implements OnDestroy
         });
 
         PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo, didParseCell);
+    }
+
+    avancesTrim(e: string[]): void
+    {
+        this.avancesTrimestrales = e;
     }
 
     ngOnDestroy(): void

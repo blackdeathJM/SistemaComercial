@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -21,8 +21,10 @@ import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {IDatosTablaFormComun, IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
-import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
+import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {isEqual, pullAllWith} from "lodash-es";
+import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 
 @Component({
     selector: 'app-componentes',
@@ -37,43 +39,55 @@ import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-
 export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
-    mirElemento = this.planeacionQuery.cuestionarioMir();
 
-    @Input({required: true}) set datosTabla(v: IDatosTablaFormComun[])
-    {
-        this._datosTabla = v;
-    }
+    @Output() avancesTrim = new EventEmitter<string[]>();
+    avTrim: string[] = ['', '', '', ''];
+    fecha = DateTime.now().toLocaleString();
 
+    datosTabla: IDatosTablaFormComun[] = [];
     columnas: IGenerarColumnTabla[] =
         [
             {
                 etiqueta: 'Indicador',
                 def: 'idIndicador',
                 llaveDato: 'idIndicador',
-                width: '7%'
+                width: '7%',
+                tipoDeDato: 'texto'
             },
             {
                 etiqueta: 'Descripcion',
                 def: 'dato',
                 llaveDato: 'dato',
-                width: 'auto'
+                width: 'auto',
+                tipoDeDato: 'texto'
             }
         ];
 
-    @Input({required: true}) set avancesTrimestrales(v: string[])
+    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef, private router: Router,
+                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService)
     {
-        this._avancesTrimestrales = v;
-    }
+        effect(() =>
+        {
+            const mir = this.planeacionQuery.cuestionarioMir();
+            if (isNil(mir) || isNil(mir.componente))
+            {
+                this.avTrim = ['0', '0', '0', '0'];
+                this.avancesTrim.emit(this.avTrim);
+                return;
+            }
 
-    tipoForm: string = null;
-    _datosTabla: IDatosTablaFormComun[] = [];
-    _avancesTrimestrales: string[] = ['', '', '', ''];
+            const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
+            const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
+            console.log('entra luego luego');
+            const trimObjCalcular = ComponentesService.crearObjFormula(pbrS, mir.componente.ids, sumatorias, mir.componente.formComun);
+            this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
 
-    fecha = DateTime.now().toLocaleString();
-
-    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
-                private router: Router, private activatedRoute: ActivatedRoute)
-    {
+            this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
+            this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
+            this.avTrim[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
+            this.avTrim[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
+            this.avancesTrim.emit(this.avTrim);
+        });
     }
 
     nuevoComponente(): void
@@ -124,40 +138,24 @@ export class ComponentesComponent
         });
     }
 
-    cambioChkTrim1(e: MatCheckboxChange, tipoForm: string | null): void
+    cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], def: string[]): void
     {
-        const tipoDeDato = this.mirElemento.componente.tipoValorTrim;
-        switch (tipoForm)
-        {
-            case TiposFormulario.COMUN:
-                if (e.checked)
-                {
-                    const columna = TablaComponenteService.generarColFormComun(['Trim-1'], ['trim1'], ['6'], [tipoDeDato]);
-                    this.columnas.concat(columna);
-                } else
-                {
+        const mir = this.planeacionQuery.cuestionarioMir();
+        const [trim, ant, ad, etiqueta4] = etiqueta;
+        const [defTrim, defAnt, defAd] = def;
 
-                }
-                break;
-            case TiposFormulario.PERIODO_ANT:
-                break;
-            case TiposFormulario.CON_OTRO_ID_PBR:
-                break;
-        }
-    }
+        const colsComun: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([trim], [defTrim], ['6%'], [mir.componente.tipoValorTrim]);
+        const colsAnt: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ant], [defAnt], ['6%'], [mir.componente.tipoValorTrim]);
+        const colsAd: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ad], [defAd], ['6%'], [mir.componente.tipoValorTrim]);
 
-    cambioChkTrim2(e: MatCheckboxChange, tipoForm: string | null): void
-    {
-        this.tipoForm = tipoForm;
-    }
-
-    cambioChkTrim3(e: MatCheckboxChange, tipoForm: string | null): void
-    {
-        this.tipoForm = tipoForm;
-    }
-
-    cambioChkTrim4(e: MatCheckboxChange, tipoForm: string | null): void
-    {
-        this.tipoForm = tipoForm;
+        const formConfig =
+            {
+                [TiposFormulario.COMUN]: colsComun,
+                [TiposFormulario.PERIODO_ANT]: colsComun.concat(colsAnt),
+                [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd)
+            };
+        const colAgregar = formConfig[tipoForm];
+        // e.checked ? this.columnas.push(...colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
+        e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
     }
 }

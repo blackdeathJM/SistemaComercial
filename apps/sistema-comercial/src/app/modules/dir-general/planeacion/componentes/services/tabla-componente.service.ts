@@ -4,7 +4,7 @@ import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 @Injectable({providedIn: 'root'})
 export class TablaComponenteService
 {
-    static generarColFormComun(etiqueta: string[], def: string[], width: string[], tipoDeDato: string[]): IGenerarColumnTabla[]
+    static genColFormComun(etiqueta: string[], def: string[], width: string[], tipoDeDato: string[]): IGenerarColumnTabla[]
     {
         const col: IGenerarColumnTabla[] = [];
 

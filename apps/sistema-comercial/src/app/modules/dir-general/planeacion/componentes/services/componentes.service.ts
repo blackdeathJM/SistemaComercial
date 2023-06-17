@@ -3,7 +3,6 @@ import {IFormComun, TiposFormulario} from '#/libs/models/src/lib/dir-general/pla
 import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {IDatosTablaFormComun, IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
-import {exclude} from "@angular-ru/cdk/array";
 import * as math from 'mathjs';
 
 @Injectable({
@@ -13,28 +12,41 @@ export class ComponentesService
 {
     static formula(ids: string[], tipoForm: TiposFormulario, form: IFormComun[]): string
     {
-        const valFormComun = form.map(x => x.idIndicador);
-        const valor = valFormComun.join('+');
-        const valoresInclEnFormula = ids.filter(exclude(valFormComun));
-        if (tipoForm === TiposFormulario.COMUN)
+
+        const formActions = {
+            [TiposFormulario.COMUN]: () =>
+            {
+                const valFormComun = form.map(x => x.idIndicador);
+                const valor = valFormComun.join('+');
+                const valoresInclEnFormula = ids.filter(id => !valFormComun.includes(id));
+                return `(${valor}) * 100 ${valoresInclEnFormula.join(' ')}`;
+            },
+            [TiposFormulario.PERIODO_ANT]: () =>
+            {
+                const valFormComun = form.map(x => x.idIndicador);
+                const valor = valFormComun.join('+');
+                const periodoAnt = form.map(x => x.idIndicador + '__Ant');
+                const unirValores = periodoAnt.join('+');
+                const excluirValoresAnt = ids.filter(id => !valFormComun.includes(id) && !periodoAnt.includes(id));
+                return `(((${valor}) - (${unirValores})) / (${unirValores})) * 100 ${excluirValoresAnt.join(' ')}`;
+            },
+            [TiposFormulario.CON_OTRO_ID_PBR]: () =>
+            {
+                const valFormComun = form.map(x => x.idIndicador);
+                const valor = valFormComun.join('+');
+                const valFormAd = form.map(x => x.idIndicadorAd);
+                const unirValorAd = valFormAd.join('+');
+                const excluirValoresAd = ids.filter(id => !valFormComun.includes(id) && !valFormAd.includes(id));
+                return `((${valor}) - (${unirValorAd}) / ${unirValorAd}) * 100 ${excluirValoresAd.join(' ')}`;
+            },
+        };
+
+        const formAction = formActions[tipoForm];
+        if (formAction)
         {
-            return `(${valor}) *100 ${valoresInclEnFormula}`;
+            return formAction();
         }
 
-        if (tipoForm === TiposFormulario.PERIODO_ANT)
-        {
-            const periodoAnt = form.map(x => x.idIndicador + '__Ant');
-            const unirValores = periodoAnt.join('+');
-            const excluirValoresAnt = valoresInclEnFormula.filter(exclude(periodoAnt));
-            return `(((${valor}) - (${unirValores})) / (${unirValores})) *100 ${excluirValoresAnt}`;
-        }
-        if (tipoForm === TiposFormulario.CON_OTRO_ID_PBR)
-        {
-            const valFormAd = form.map(x => x.idIndicadorAd);
-            const unirValorAd = valFormAd.join('+');
-            const excluirValoresAd = valoresInclEnFormula.filter(exclude(valFormAd));
-            return `((${valor})-(${unirValorAd}) / ${unirValorAd}) * 100  ${excluirValoresAd}`;
-        }
         return '';
     }
 
@@ -120,50 +132,60 @@ export class ComponentesService
             const pbrElemento = pbr.find(x => x.idIndicador === i.idIndicador);
             if (isNotNil(pbrElemento))
             {
-                datos.idIndicador = pbrElemento.idIndicador;
-                datos.dato = pbrElemento.dato;
-                datos.trim1 = pbrElemento.trim1;
-                datos.trim2 = pbrElemento.trim2;
-                datos.trim3 = pbrElemento.trim3;
-                datos.trim4 = pbrElemento.trim4;
+                Object.assign(datos, {
+                    idIndicador: pbrElemento.idIndicador,
+                    dato: pbrElemento.dato,
+                    trim1: pbrElemento.trim1,
+                    trim2: pbrElemento.trim2,
+                    trim3: pbrElemento.trim3,
+                    trim4: pbrElemento.trim4,
 
-                datos.trim1Ant = i.trim1Ant;
-                datos.trim2Ant = i.trim2Ant;
-                datos.trim3Ant = i.trim3Ant;
-                datos.trim4Ant = i.trim4Ant;
+                    trim1Ant: i.trim1Ant,
+                    trim2Ant: i.trim2Ant,
+                    trim3Ant: i.trim3Ant,
+                    trim4Ant: i.trim4Ant,
+                });
             }
 
             const pbrAd = pbr.find((x) => x.idIndicador === i.idIndicadorAd);
             if (isNotNil(pbrAd))
             {
-                datos.idIndicadorAd = pbrAd.idIndicador;
-                datos.datoAd = pbrAd.dato;
-                datos.trim1Ad = pbrAd.trim1;
-                datos.trim2Ad = pbrAd.trim2;
-                datos.trim3Ad = pbrAd.trim3;
-                datos.trim4Ad = pbrAd.trim4;
+                Object.assign(datos,
+                    {
+                        idIndicadorAd: pbrAd.idIndicador,
+                        datoAd: pbrAd.dato,
+                        trim1Ad: pbrAd.trim1,
+                        trim2Ad: pbrAd.trim2,
+                        trim3Ad: pbrAd.trim3,
+                        trim4Ad: pbrAd.trim4
+                    });
             }
 
             const sumatoria = sumatorias.find(y => y.idSumatoria === i.idIndicador);
             if (isNotNil(sumatoria))
             {
-                datos.idIndicador = sumatoria.idSumatoria;
-                datos.dato = sumatoria.nombreSumatoria;
-                datos.trim1 = sumatoria.trim1;
-                datos.trim2 = sumatoria.trim2;
-                datos.trim3 = sumatoria.trim3;
-                datos.trim4 = sumatoria.trim4;
+                Object.assign(datos, {
+                    idIndicador: sumatoria.idSumatoria,
+                    dato: sumatoria.nombreSumatoria,
+                    trim1: sumatoria.trim1,
+                    trim2: sumatoria.trim2,
+                    trim3: sumatoria.trim3,
+                    trim4: sumatoria.trim4
+                });
             }
             const sumatoriaAd = sumatorias.find(z => z.idSumatoria === i.idIndicadorAd);
 
             if (isNotNil(sumatoriaAd))
             {
-                datos.idIndicadorAd = sumatoriaAd.idSumatoria;
-                datos.datoAd = sumatoriaAd.idSumatoria;
-                datos.trim1 = sumatoriaAd.trim1;
-                datos.trim2 = sumatoriaAd.trim2;
-                datos.trim3 = sumatoriaAd.trim3;
-                datos.trim4 = sumatoriaAd.trim4;
+                Object.assign(datos,
+                    {
+                        idIndicadorAd: sumatoriaAd.idSumatoria,
+                        datoAd: sumatoriaAd.idSumatoria,
+                        trim1: sumatoriaAd.trim1,
+                        trim2: sumatoriaAd.trim2,
+                        trim3: sumatoriaAd.trim3,
+                        trim4: sumatoriaAd.trim4,
+                    });
             }
             tablaValores.push(datos);
         }
