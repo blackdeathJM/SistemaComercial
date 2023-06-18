@@ -23,32 +23,40 @@ import {isNotNil} from "@angular-ru/cdk/utils";
 export class ModAvancesPbrComponent
 {
     formAvances: FormGroup = this.fb.formGroup(new AvancesPbr());
-
-    pbrCuestionario = this.planeacionQuery.cuestionarioPbr;
     cargando = false;
-
     constructor(private fb: RxFormBuilder, private planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModAvancesPbrComponent>, private planeacionService: PlaneacionService)
     {
         effect(() =>
         {
-            if (isNotNil(this.pbrCuestionario()))
+            const pbr = this.planeacionQuery.cuestionarioPbr();
+            if (isNotNil(pbr))
             {
-                this.formAvances.patchValue(this.pbrCuestionario());
+                this.formAvances.patchValue(pbr);
+                Object.keys(this.formAvances.controls).forEach(x =>
+                {
+                    const ctrlNombre = this.formAvances.get(x);
+                    const ctrlValor = this.formAvances.get(x).value;
+                    if (ctrlValor !== 0)
+                    {
+                        ctrlNombre.disable();
+                    }
+                });
             }
         })
     }
 
     regAvancePbr(): void
     {
+        const pbr = this.planeacionQuery.cuestionarioPbr();
         const planeacion = this.planeacionQuery.getActive();
         this.cargando = true;
         const {enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre} = this.formAvances.value;
         const datos: TRegAvancesPbr =
             {
                 _id: planeacion._id,
-                centroGestor: this.pbrCuestionario().centroGestor,
-                tipoOperacion: this.pbrCuestionario().tipoOperacion,
-                idIndicador: this.pbrCuestionario().idIndicador,
+                centroGestor: pbr.centroGestor,
+                tipoOperacion: pbr.tipoOperacion,
+                idIndicador: pbr.idIndicador,
                 enero: +enero,
                 febrero: +febrero,
                 marzo: +marzo,
@@ -62,7 +70,6 @@ export class ModAvancesPbrComponent
                 noviembre: +noviembre,
                 diciembre: +diciembre
             };
-        console.log('Datos', datos);
         this.formAvances.disable();
 
         this.planeacionService.regAvancePbr(datos).pipe(finalize(() =>

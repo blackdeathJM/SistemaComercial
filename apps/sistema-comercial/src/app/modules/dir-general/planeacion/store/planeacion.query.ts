@@ -25,7 +25,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     centroGestor: WritableSignal<string> = signal<string>(null);
 
     desactivarBtnFormAd = makeVar<boolean>(true);
-
+    // abrirPanelPbr = makeVar<boolean>(false);
     asigForm = makeVar<number>(0);
 
     compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,7 +18,6 @@ import {TRecalcularPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeac
 import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {abrirPanelPbr} from "@s-dir-general/pbr/pbr.component";
 import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {isNotNil} from "@angular-ru/cdk/utils";
 import {ConfirmacionService} from "@s-services/confirmacion.service";
@@ -35,6 +34,7 @@ import {ConfirmacionService} from "@s-services/confirmacion.service";
 })
 export class ModPbrComponent implements OnInit, OnDestroy
 {
+    @Output() panelPbr = new EventEmitter<boolean>();
     formPbr: FormGroup = this.fb.formGroup(new Pbr());
     cargando = false;
     empleados: IResolveEmpleado[];
@@ -99,8 +99,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
                     ctrl.reset();
                 }
             });
-
-            abrirPanelPbr.set(!this.actualizar);
+            this.panelPbr.emit(!this.actualizar);
         })).subscribe();
     }
 
@@ -122,7 +121,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
                 {
                     this.cargando = false;
                     this.formPbr.enable();
-                    abrirPanelPbr.set(!this.actualizar);
+                    this.panelPbr.emit(!this.actualizar);
                 })).subscribe();
             }
         });
@@ -154,7 +153,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
 
     cerrar(): void
     {
-        abrirPanelPbr.set(false);
+        this.panelPbr.emit(false);
     }
 
     ngOnDestroy(): void

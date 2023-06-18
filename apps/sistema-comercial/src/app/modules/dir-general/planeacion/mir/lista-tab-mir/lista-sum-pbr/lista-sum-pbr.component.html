@@ -9,7 +9,7 @@
         </mat-grid-list>
     </mat-card-title>
     <mat-card-content>
-        <div class="grid grid-cols-8 gap-4 py-2">
+        <section class="grid grid-cols-8 gap-4 py-2">
             <span class="detalle-span">Enero</span>
             <span class="border-b-2">{{_sumatoria?.enero}}</span>
             <span class="detalle-span">Febrero</span>
@@ -48,7 +48,7 @@
 
             <span class="detalle-span col-start-7">Acumulado total</span>
             <span class="border-b-2">{{_sumatoria?.total}}</span>
-        </div>
+        </section>
     </mat-card-content>
     <mat-card-actions class="tarjeta-mat-acciones border-t-rose-200">
         <div class="flex flex-auto items-center content-center gap-4 flex-end">
@@ -56,10 +56,6 @@
                 <mat-icon svgIcon="edit"></mat-icon>
                 Modificar sumatoria
             </button>
-<!--            <button mat-stroked-button color="primary" class="flex-auto" (click)="editarSumatoriaPbr()">-->
-<!--                <mat-icon svgIcon="mat_outline:delete"></mat-icon>-->
-<!--                Eliminar-->
-<!--            </button>-->
             <button mat-stroked-button color="primary" class="flex-auto">
                 <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                 Imprimir

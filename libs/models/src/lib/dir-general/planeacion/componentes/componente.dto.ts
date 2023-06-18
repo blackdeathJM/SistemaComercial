@@ -64,6 +64,10 @@ export class ComponenteDto implements IComponente
     @IsArray({message: 'Los ids debe ser un array'})
     @Field(() => [String], {nullable: true, defaultValue: []})
     ids: string[];
+
+    @IsOptional()
+    @Field(() => String, {nullable: true, defaultValue: ''})
+    etiqueta: string;
 }
 
 @InputType('RegComponenteInput')

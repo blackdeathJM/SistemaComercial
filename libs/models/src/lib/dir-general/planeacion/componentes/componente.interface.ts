@@ -49,4 +49,5 @@ export interface IComponente
     tipoValorAvance: string;
 
     tipoForm: string;
+    etiqueta: string;
 }

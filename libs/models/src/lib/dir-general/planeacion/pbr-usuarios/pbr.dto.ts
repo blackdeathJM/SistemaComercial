@@ -1,6 +1,6 @@
-import {ObjectType, InputType, Field, Float, Int, PartialType, ID, ArgsType, PickType} from '@nestjs/graphql';
+import {ArgsType, Field, Float, ID, InputType, Int, ObjectType, PartialType, PickType} from '@nestjs/graphql';
 import {IPbrCuestionario} from './pbr.interface';
-import {IsBoolean, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {MirCuestionarioDto} from "../mir/mir.dto";
 
 @ObjectType('PbrType')
@@ -139,12 +139,11 @@ export class RegPbrDto extends PartialType(PbrCuestionarioDto, InputType)
 export type TRegPbr = RegPbrDto;
 
 @InputType('RegAvancesPbrInput')
-export class RegAvancesPbrDto extends PickType(PbrCuestionarioDto,
-    ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'idIndicador', 'tipoOperacion', 'centroGestor'], InputType)
+export class RegAvancesPbrDto extends PartialType(PbrCuestionarioDto, InputType)
 {
     @Field(() => ID, {nullable: true})
     @IsNotEmpty({message: 'El id es necesario'})
-    _id: string;
+    _id?: string;
 }
 
 export type TRegAvancesPbr = RegAvancesPbrDto;

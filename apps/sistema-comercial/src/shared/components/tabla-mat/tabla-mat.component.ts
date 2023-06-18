@@ -1,11 +1,9 @@
-import {ChangeDetectionStrategy, Component, Input, signal, WritableSignal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import {IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
-
-export const colTablaDin: WritableSignal<IGenerarColumnTabla[]> = signal<IGenerarColumnTabla[]>([]);
 
 @Component({
     selector: 'app-tabla-mat',
@@ -24,7 +22,6 @@ export class TablaMatComponent
 
     @Input({required: true}) set columnas(columnas: IGenerarColumnTabla[])
     {
-        console.log('En la tabla', columnas);
         this.columnasTabla = columnas;
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);
     }

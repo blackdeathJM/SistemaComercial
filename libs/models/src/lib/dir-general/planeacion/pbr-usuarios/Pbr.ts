@@ -46,14 +46,6 @@ export class Pbr implements TRegPbr
 
 export class AvancesPbr implements TRegAvancesPbr
 {
-    _id: string;
-
-    idIndicador: string;
-    centroGestor: string;
-
-    @required()
-    tipoOperacion: string;
-
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     enero: number;
 

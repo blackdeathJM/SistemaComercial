@@ -1,7 +1,7 @@
 <mat-drawer-container class="w-full">
-    <mat-drawer class="w-96" [opened]="abrirPanel()" [mode]="'side'" autoFocus="true" position="end">
-        <ng-container *ngIf="abrirPanel()">
-            <app-mod-pbr></app-mod-pbr>
+    <mat-drawer class="w-96" [opened]="abrirPanelPbr" [mode]="'side'" autoFocus="true" position="end">
+        <ng-container *ngIf="abrirPanelPbr">
+            <app-mod-pbr (panelPbr)="panelPbr($event)"></app-mod-pbr>
         </ng-container>
     </mat-drawer>
     <mat-drawer-content>

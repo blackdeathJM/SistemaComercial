@@ -1,11 +1,10 @@
 import {Routes} from '@angular/router';
-import {GeneralComponent} from '@s-general/general.component';
 
 export const generalRouting: Routes =
     [
         {
             path: '',
-            component: GeneralComponent,
+            loadComponent: () => import('@s-general/general.component').then(g => g.GeneralComponent),
             children:
                 [
                     {
@@ -26,7 +25,8 @@ export const generalRouting: Routes =
                     },
                     {
                         path: 'avance-de-actividades',
-                        loadComponent: () => import('@s-general/pbr-usuario/pbr-usuario.component')
+                        // loadComponent: () => import('@s-general/avance-actividades-pbr/avance-actividades-pbr.component').then(a => a.AvanceActividadesPbrComponent)
+                        loadComponent: () => import('@s-general/pbr-usuario/pbr-usuario.component').then(a => a.PbrUsuarioComponent)
                     }
                 ]
         }

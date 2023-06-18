@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -25,12 +25,14 @@ import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-
 import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {isEqual, pullAllWith} from "lodash-es";
 import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 
 @Component({
     selector: 'app-componentes',
     standalone: true,
     imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe,
-        MatCheckboxModule],
+        MatCheckboxModule, NgxUiLoaderModule],
     templateUrl: './componentes.component.html',
     styleUrls: ['./componentes.component.scss'],
     animations: [fuseAnimations],
@@ -39,11 +41,11 @@ import {ComponentesService} from "@s-dir-general/componentes/services/componente
 export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
-
     @Output() avancesTrim = new EventEmitter<string[]>();
+    ngxLoader = 'loaderComponentes';
     avTrim: string[] = ['', '', '', ''];
     fecha = DateTime.now().toLocaleString();
-
+    chkVisible: boolean[] = [false, false, false, false];
     datosTabla: IDatosTablaFormComun[] = [];
     columnas: IGenerarColumnTabla[] =
         [
@@ -64,7 +66,7 @@ export class ComponentesComponent
         ];
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef, private router: Router,
-                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService)
+                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService, private ngxUiLoaderService: NgxUiLoaderService)
     {
         effect(() =>
         {
@@ -78,7 +80,6 @@ export class ComponentesComponent
 
             const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
             const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
-            console.log('entra luego luego');
             const trimObjCalcular = ComponentesService.crearObjFormula(pbrS, mir.componente.ids, sumatorias, mir.componente.formComun);
             this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
 
@@ -117,15 +118,15 @@ export class ComponentesComponent
         }
     }
 
-    imprimirComp(): void
+    imprimirComp(mirSelec: IMirCuestionario): void
     {
+        this.ngxUiLoaderService.startLoader(this.ngxLoader);
         const componente = this.componenteRef.nativeElement;
         componente.style.color = 'black';
         html2canvas(componente).then(canvas =>
         {
             const img = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'pt', 'a4');
-
             pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
             pdf.setFontSize(8);
             pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
@@ -133,16 +134,21 @@ export class ComponentesComponent
             const pdfAncho = pdf.internal.pageSize.getWidth();
             const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
             pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+            pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
+            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
             pdf.save('componente.pdf');
             componente.style.color = '';
+            this.ngxUiLoaderService.stopLoader(this.ngxLoader);
         });
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], def: string[]): void
     {
         const mir = this.planeacionQuery.cuestionarioMir();
-        const [trim, ant, ad, etiqueta4] = etiqueta;
+        const [trim, ant, ad] = etiqueta;
         const [defTrim, defAnt, defAd] = def;
+        //Obtenemos el último caracter del ID asignando a cada checkbox para usarlo como índice del array que mostrara los avances trimestrales en el html
+        this.chkVisible[parseInt(e.source.id.charAt(e.source.id.length - 1), 10)] = e.checked;
 
         const colsComun: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([trim], [defTrim], ['6%'], [mir.componente.tipoValorTrim]);
         const colsAnt: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ant], [defAnt], ['6%'], [mir.componente.tipoValorTrim]);

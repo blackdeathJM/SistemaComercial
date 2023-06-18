@@ -1,10 +1,11 @@
 import {Routes} from '@angular/router';
+import {PlaneacionComponent} from "@s-dir-general/planeacion.component";
 
 export const planeacionRouting: Routes =
     [
         {
             path: '',
-            loadComponent: () => import('@s-dir-general/planeacion.component').then(c => c.PlaneacionComponent),
+            component: PlaneacionComponent,
             children:
                 [
                     {

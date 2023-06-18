@@ -243,7 +243,8 @@ export class ModCompComun implements OnDestroy
                 tipoValorTrim: this.formTipoValores.get('tipoValorTrim').value,
                 tipoValorAvance: this.formTipoValores.get('tipoValorAvance').value,
                 formula: this.formTipoValores.get('formula').value,
-                formComun: this.datos
+                formComun: this.datos,
+                etiqueta: this.formTipoValores.get('etiqueta').value
             };
 
         this.formComun.disable();

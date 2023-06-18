@@ -260,6 +260,7 @@ type ComponenteType {
   tipoForm: String
   formula: String
   ids: [String!]
+  etiqueta: String
 }
 
 type MirCuestionarioType {
@@ -455,7 +456,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1686986076
+  tiempo: Int = 1687097930
   titulo: String
   usarRouter: Boolean = false
 }
@@ -588,6 +589,7 @@ input ComponenteInput {
   tipoForm: String = null
   formula: String = null
   ids: [String!] = []
+  etiqueta: String = ""
 }
 
 input MirCuestionarioInput {
@@ -843,6 +845,8 @@ input RegPbrInput {
 }
 
 input RegAvancesPbrInput {
+  ano: Int = 0
+  fechaCompleta: String = null
   enero: Float = 0
   febrero: Float = 0
   marzo: Float = 0
@@ -855,8 +859,20 @@ input RegAvancesPbrInput {
   octubre: Float = 0
   noviembre: Float = 0
   diciembre: Float = 0
+  idEmpleado: ID
+  responsable: String
+  correo: String
+  descripcion: String
   centroGestor: String
+  variableOrigen: String
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  dato: String
   idIndicador: String
+  total: Float = 0
+  unidad: String
   tipoOperacion: String = "suma"
   _id: ID
 }
@@ -904,6 +920,7 @@ input RegComponenteInput {
   tipoForm: String = null
   formula: String = null
   ids: [String!] = []
+  etiqueta: String = ""
   _id: ID
   idIndicadorMir: String
 }

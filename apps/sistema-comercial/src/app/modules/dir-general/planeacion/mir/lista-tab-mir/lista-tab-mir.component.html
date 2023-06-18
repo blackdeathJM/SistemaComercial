@@ -80,7 +80,7 @@
 
 
                     <span class="detalle-span col-start-7">Avance anual</span>
-                    <span class="border-b-2">{{mirSelec?.avanceAnual}}</span>
+                    <span class="border-b-2">{{(_avancesTrimestrales[0] + _avancesTrimestrales[1] + _avancesTrimestrales[2] + _avancesTrimestrales[3]) | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
                 </div>
                 <ngx-ui-loader [loaderId]="loader"/>
             </mat-card-content>

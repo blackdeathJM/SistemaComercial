@@ -4,7 +4,7 @@
             <span class="text-xl">{{mirSelec?.nivel}}</span>
         </mat-card-header>
         <mat-card-content>
-            <article class="flex flex-col flex-auto" #componente>
+            <article class="flex flex-col flex-auto" #componente ngxUiLoaderBlurred="50">
                 <section class="grid grid-cols-6 gap-4 m-4 text-lg">
                     <span class="detalle-span">Fecha</span>
                     <span class="border-b-2">{{fecha}}</span>
@@ -42,22 +42,30 @@
 
                 <mat-divider class="border-4 mb-4 border-b-fuchsia-700 dark:border-fuchsia-950"></mat-divider>
                 <section class="grid grid-cols-8 gap-4 text-lg">
-                    <span class="detalle-span">Avance trim 1</span>
-                    <span class="border-b-2 text-green-700">{{avTrim[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}- <small>etiqueta</small></span>
-                    <span class="detalle-span">Avance trim 2</span>
-                    <span class="border-b-2 text-green-700">{{avTrim[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
-                    <span class="detalle-span">Avance trim 3</span>
-                    <span class="border-b-2 text-green-700">{{avTrim[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
-                    <span class="detalle-span">Avance trim 4</span>
-                    <span class="border-b-2 text-green-700">{{avTrim[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <ng-container *ngIf="chkVisible[0]">
+                        <span class="detalle-span">Avance trim 1</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                    <ng-container *ngIf="chkVisible[1]">
+                        <span class="detalle-span">Avance trim 2</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                    <ng-container *ngIf="chkVisible[2]">
+                        <span class="detalle-span">Avance trim 3</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                    <ng-container *ngIf="chkVisible[3]">
+                        <span class="detalle-span">Avance trim 4</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
                 </section>
-
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </article>
             <div class="flex flex-auto gap-8 mt-2" *ngIf="mirSelec?.componente">
-                <mat-checkbox color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['Trim 1', 'T. Ant 1', 'Ad 1'],['trim1', 'trim1Ant', 'trim1Ad'])">Trimestre 1</mat-checkbox>
-                <mat-checkbox color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['Trim 2', 'T. Ant 2', 'Ad 2'],['trim2', 'trim2Ant', 'trim2Ad'])">Trimestre 2</mat-checkbox>
-                <mat-checkbox color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['trim 3', 'T. Ant 3', 'Ad 3'],['trim3', 'trim3Ant', 'trim3Ad'])">Trimestre 3</mat-checkbox>
-                <mat-checkbox color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['trim 4', 'T. Ant 4', 'Ad 4'],['trim4', 'trim4Ant', 'trim4Ad'])">Trimestre 4</mat-checkbox>
+                <mat-checkbox id="chkTrim0" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['Trim 1', 'T. Ant 1', 'Ad 1'],['trim1', 'trim1Ant', 'trim1Ad'])">Trimestre 1</mat-checkbox>
+                <mat-checkbox id="chkTrim1" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['Trim 2', 'T. Ant 2', 'Ad 2'],['trim2', 'trim2Ant', 'trim2Ad'])">Trimestre 2</mat-checkbox>
+                <mat-checkbox id="chkTrim2" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['trim 3', 'T. Ant 3', 'Ad 3'],['trim3', 'trim3Ant', 'trim3Ad'])">Trimestre 3</mat-checkbox>
+                <mat-checkbox id="chkTrim3" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['trim 4', 'T. Ant 4', 'Ad 4'],['trim4', 'trim4Ant', 'trim4Ad'])">Trimestre 4</mat-checkbox>
             </div>
         </mat-card-content>
 
@@ -67,7 +75,7 @@
                     <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
                     Registrar nuevos calculos
                 </button>
-                <button mat-raised-button color="accent" class="flex-auto" (click)="imprimirComp()">
+                <button mat-raised-button color="accent" class="flex-auto" (click)="imprimirComp(mirSelec)">
                     <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
                     Imprimir
                 </button>

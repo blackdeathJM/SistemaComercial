@@ -46,8 +46,6 @@ export class ModMirComponent implements OnInit, OnDestroy
     sub = new Subscription();
     cargando = false;
 
-    cuestionarioMir = this.planeacionQuery.cuestionarioMir;
-
     constructor(private seleccionQuery: SeleccionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef,
                 private empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery)
     {
@@ -60,10 +58,11 @@ export class ModMirComponent implements OnInit, OnDestroy
         });
         effect(() =>
         {
-            // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va actualizar y el segundo es el
-            if (actCuestionario() && isNotNil(this.cuestionarioMir()))
+            const mir = this.planeacionQuery.cuestionarioMir();
+            // obtenemos a traves de una variable de apollo makeVar dos parametros el primero es un booleano que no idica si se va a actualizar y el segundo es el
+            if (actCuestionario() && isNotNil(mir))
             {
-                const cuestionarioMir = this.cuestionarioMir();
+                const cuestionarioMir = mir;
                 this.formMir.patchValue(cuestionarioMir);
                 this.idEmpleadoAnterior = cuestionarioMir.idEmpleado;
                 this.actualizar = true;
@@ -156,10 +155,5 @@ export class ModMirComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
-    }
-
-    seleccionar($event: Event)
-    {
-
     }
 }

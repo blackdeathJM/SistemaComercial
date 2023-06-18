@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -17,8 +17,6 @@ import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-suma
 import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {fuseAnimations} from "@s-fuse/public-api";
 
-export const abrirPanelPbr = signal<boolean>(false);
-
 @Component({
     selector: 'app-pbr',
     standalone: true,
@@ -31,8 +29,14 @@ export const abrirPanelPbr = signal<boolean>(false);
 })
 export class PbrComponent implements OnDestroy
 {
+    // @Input({required: true}) set abrirPanelPbr(v: boolean)
+    // {
+    //     this._abrirPanelPbr = v;
+    // }
+    //
+    // _abrirPanelPbr = false;
+    abrirPanelPbr = false;
     pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
-    abrirPanel = abrirPanelPbr;
 
     constructor(private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private mdr: MatDialog)
     {
@@ -59,5 +63,10 @@ export class PbrComponent implements OnDestroy
         this.planeacionQuery.centroGestor.set(null);
         this.planeacionQuery.cuestionarioPbr.set(null);
         this.planeacionQuery.cuestionarioPbrV.set([]);
+    }
+
+    panelPbr(e: boolean): void
+    {
+        this.abrirPanelPbr = e;
     }
 }
