@@ -29,12 +29,6 @@ import {fuseAnimations} from "@s-fuse/public-api";
 })
 export class PbrComponent implements OnDestroy
 {
-    // @Input({required: true}) set abrirPanelPbr(v: boolean)
-    // {
-    //     this._abrirPanelPbr = v;
-    // }
-    //
-    // _abrirPanelPbr = false;
     abrirPanelPbr = false;
     pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
 
@@ -66,6 +60,11 @@ export class PbrComponent implements OnDestroy
     }
 
     panelPbr(e: boolean): void
+    {
+        this.abrirPanelPbr = e;
+    }
+
+    panelPbrDeLista(e: boolean): void
     {
         this.abrirPanelPbr = e;
     }

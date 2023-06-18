@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -16,8 +16,10 @@ import {DefaultValuePipeModule} from "@angular-ru/cdk/pipes";
 import {MatDialog} from "@angular/material/dialog";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {ConfirmacionService} from "@s-services/confirmacion.service";
-import {actCuestionario, ngxLoaderPbr, PlaneacionService} from "@s-dir-general/store/planeacion.service";
+import {actCuestionario, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from "@s-dir-general/store/planeacion.service";
 import {ToastrService} from "ngx-toastr";
+import {ModAvancesPbrComponent} from "@s-general/pbr-usuario/mod-avances-pbr/mod-avances-pbr.component";
+import {isNil} from "@angular-ru/cdk/utils";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -37,6 +39,7 @@ export class ListaPbrComponent
     @Input() desEliminarReg: boolean = false;
     @Input() desSumatoria: boolean = false;
 
+    @Output() panelPbr = new EventEmitter<boolean>();
     loader = ngxLoaderPbr();
     cuestionariosPbr = this.planeacionQuery.compCuestionarioPbr;
     elementoPbr = this.planeacionQuery.cuestionarioPbr;
@@ -56,65 +59,65 @@ export class ListaPbrComponent
 
     editarPbr(): void
     {
-        // if (this.validarElemPbr())
-        // {
-        //     return;
-        // }
+        if (this.validarElemPbr())
+        {
+            return;
+        }
         actCuestionario(true);
-        // this.planeacionQuery.abrirPanelPbr(true);
+        this.panelPbr.emit(true);
     }
 
-    // regAvances(): void
-    // {
-    //     if (this.validarElemPbr())
-    //     {
-    //         return;
-    //     }
-    //     this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
-    // }
+    regAvances(): void
+    {
+        if (this.validarElemPbr())
+        {
+            return;
+        }
+        this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
+    }
 
-    // nvoElemento(): void
-    // {
-    //     actCuestionario(false);
-    //     abrirPanelPbr.set(true);
-    // }
+    nvoElemento(): void
+    {
+        actCuestionario(false);
+        this.panelPbr.emit(true);
+    }
 
-    // trackByFn(index: number): number
-    // {
-    //     return index;
-    // }
+    trackByFn(index: number): number
+    {
+        return index;
+    }
 
-    // eliminarPbr(): void
-    // {
-    //     if (this.validarElemPbr())
-    //     {
-    //         return;
-    //     }
-    //     this.planeacionService.eliminarElemento(this.elementoPbr().idIndicador, ValoresCamposMod.pbrCuestionario);
-    // }
+    eliminarPbr(): void
+    {
+        if (this.validarElemPbr())
+        {
+            return;
+        }
+        this.planeacionService.eliminarElemento(this.elementoPbr().idIndicador, ValoresCamposMod.pbrCuestionario);
+    }
 
-    // validarElemPbr(): boolean
-    // {
-    //     if (isNil(this.elementoPbr()))
-    //     {
-    //         this.ngxToast.warning('No hay elemento Seleccionado', 'PBR');
-    //         return true
-    //     }
-    //     return false;
-    // }
+    validarElemPbr(): boolean
+    {
+        if (isNil(this.elementoPbr()))
+        {
+            this.ngxToast.warning('No hay elemento Seleccionado', 'PBR');
+            return true
+        }
+        return false;
+    }
 
-    // cambiarDireccion(direccion: string): void
-    // {
-    //     const arreglo = this.cuestionariosPbr();
-    //     if (direccion === 'siguiente' && this.indice < arreglo.length - 1)
-    //     {
-    //         this.indice++;
-    //     }
-    //
-    //     if (direccion === 'anterior' && this.indice > 0)
-    //     {
-    //         this.indice--;
-    //     }
-    //     this.planeacionQuery.cuestionarioPbr.set(arreglo[this.indice]);
-    // }
+    cambiarDireccion(direccion: string): void
+    {
+        const arreglo = this.cuestionariosPbr();
+        if (direccion === 'siguiente' && this.indice < arreglo.length - 1)
+        {
+            this.indice++;
+        }
+
+        if (direccion === 'anterior' && this.indice > 0)
+        {
+            this.indice--;
+        }
+        this.planeacionQuery.cuestionarioPbr.set(arreglo[this.indice]);
+    }
 }

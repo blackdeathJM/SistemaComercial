@@ -1,109 +1,109 @@
-<!--<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">-->
-<!--    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>-->
-<!--        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>{{planeacion?.descripcion}} -&#45;&#45; {{planeacion?.ano}}</span></mat-card-header>-->
-<!--        <mat-card-title>-->
-<!--            <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">-->
-<!--                <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">-->
-<!--                    <mat-panel-title>Presupuesto basado en resultados</mat-panel-title>-->
-<!--                </mat-expansion-panel-header>-->
-<!--                <mat-button-toggle-group [tabIndex]="indice">-->
-<!--                    <div class="flex flex-auto flex-wrap">-->
-<!--                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of cuestionariosPbr(); trackBy:trackByFn; let i=index" [value]="pbr" (change)="cambioDeSeleccion($event, i)">-->
-<!--                            <span class="text-left">{{pbr?.idIndicador}}</span>-->
-<!--                        </mat-button-toggle>-->
-<!--                    </div>-->
-<!--                </mat-button-toggle-group>-->
-<!--            </mat-expansion-panel>-->
-<!--        </mat-card-title>-->
-<!--        <mat-card-content *ngIf="elementoPbr() as elemento">-->
-<!--            <section class="grid grid-cols-8 gap-4">-->
-<!--                <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{elemento?.idIndicador}}</span>-->
-<!--                <span class="detalle-span">Variable de origen</span>-->
-<!--                <span class="border-b-2">{{elemento?.variableOrigen}}</span>-->
-<!--                <span class="detalle-span">Dato</span>-->
-<!--                <span class="border-b-2 col-span-3">{{elementoPbr()?.dato | defaultValue: '-&#45;&#45;'}}</span>-->
-<!--                <span class="detalle-span">Unidad</span>-->
-<!--                <span class="border-b-2">{{elemento?.unidad | defaultValue: '-&#45;&#45;'}}</span>-->
+<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-rose-500"><span>{{planeacion?.descripcion}} --- {{planeacion?.ano}}</span></mat-card-header>
+        <mat-card-title>
+            <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">
+                <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
+                    <mat-panel-title>Presupuesto basado en resultados</mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-button-toggle-group [tabIndex]="indice">
+                    <div class="flex flex-auto flex-wrap">
+                        <mat-button-toggle class="rounded-none" *ngFor="let pbr of cuestionariosPbr(); trackBy:trackByFn; let i=index" [value]="pbr" (change)="cambioDeSeleccion($event, i)">
+                            <span class="text-left">{{pbr?.idIndicador}}</span>
+                        </mat-button-toggle>
+                    </div>
+                </mat-button-toggle-group>
+            </mat-expansion-panel>
+        </mat-card-title>
+        <mat-card-content *ngIf="elementoPbr() as elemento">
+            <section class="grid grid-cols-8 gap-4">
+                <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{elemento?.idIndicador}}</span>
+                <span class="detalle-span">Variable de origen</span>
+                <span class="border-b-2">{{elemento?.variableOrigen}}</span>
+                <span class="detalle-span">Dato</span>
+                <span class="border-b-2 col-span-3">{{elementoPbr()?.dato | defaultValue: '---'}}</span>
+                <span class="detalle-span">Unidad</span>
+                <span class="border-b-2">{{elemento?.unidad | defaultValue: '---'}}</span>
 
-<!--                <span class="detalle-span">Descripcion</span>-->
-<!--                <span class="border-b-2 col-span-7">{{elemento?.descripcion}}</span>-->
+                <span class="detalle-span">Descripcion</span>
+                <span class="border-b-2 col-span-7">{{elemento?.descripcion}}</span>
 
-<!--                <span class="detalle-span">Enero</span>-->
-<!--                <span class="border-b-2">{{elemento?.enero | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Febrero</span>-->
-<!--                <span class="border-b-2">{{ elemento?.febrero | number: '1.0-2' }}</span>-->
-<!--                <span class="detalle-span">Marzo</span>-->
-<!--                <span class="border-b-2">{{elemento?.marzo | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Trimestre 1</span>-->
-<!--                &lt;!&ndash;                        <span class="border-b-2">{{[pbr?.marzo, pbr?.febrero, pbr?.enero] | calculoPbr: pbr?.esSumatoriaTrim}}</span>&ndash;&gt;-->
-<!--                <span class="border-b-2">{{elemento?.trim1 | number: '1.0-2'}}</span>-->
+                <span class="detalle-span">Enero</span>
+                <span class="border-b-2">{{elemento?.enero | number: '1.0-2'}}</span>
+                <span class="detalle-span">Febrero</span>
+                <span class="border-b-2">{{ elemento?.febrero | number: '1.0-2' }}</span>
+                <span class="detalle-span">Marzo</span>
+                <span class="border-b-2">{{elemento?.marzo | number: '1.0-2'}}</span>
+                <span class="detalle-span">Trimestre 1</span>
+                <!--                        <span class="border-b-2">{{[pbr?.marzo, pbr?.febrero, pbr?.enero] | calculoPbr: pbr?.esSumatoriaTrim}}</span>-->
+                <span class="border-b-2">{{elemento?.trim1 | number: '1.0-2'}}</span>
 
-<!--                <span class="detalle-span">Abril</span>-->
-<!--                <span class="border-b-2">{{elemento?.abril | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Mayo</span>-->
-<!--                <span class="border-b-2">{{elemento?.mayo | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Junio</span>-->
-<!--                <span class="border-b-2">{{elemento?.junio | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Trimestre 2</span>-->
-<!--                <span class="border-b-2">{{elemento?.trim2 | number: '1.0-2'}}</span>-->
-
-
-<!--                <span class="detalle-span">Julio</span>-->
-<!--                <span class="border-b-2">{{elemento?.julio | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Agosto</span>-->
-<!--                <span class="border-b-2">{{elemento?.agosto | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Septiembre</span>-->
-<!--                <span class="border-b-2">{{elemento?.septiembre | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Trimestre 3</span>-->
-<!--                <span class="border-b-2">{{elemento?.trim3 | number: '1.0-2'}}</span>-->
+                <span class="detalle-span">Abril</span>
+                <span class="border-b-2">{{elemento?.abril | number: '1.0-2'}}</span>
+                <span class="detalle-span">Mayo</span>
+                <span class="border-b-2">{{elemento?.mayo | number: '1.0-2'}}</span>
+                <span class="detalle-span">Junio</span>
+                <span class="border-b-2">{{elemento?.junio | number: '1.0-2'}}</span>
+                <span class="detalle-span">Trimestre 2</span>
+                <span class="border-b-2">{{elemento?.trim2 | number: '1.0-2'}}</span>
 
 
-<!--                <span class="detalle-span">Octubre</span>-->
-<!--                <span class="border-b-2">{{elemento?.octubre | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Noviembre</span>-->
-<!--                <span class="border-b-2">{{elemento?.noviembre | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Diciembre</span>-->
-<!--                <span class="border-b-2">{{elemento?.diciembre | number: '1.0-2'}}</span>-->
-<!--                <span class="detalle-span">Trimestre 4</span>-->
-<!--                <span class="border-b-2">{{elemento?.trim4 | number: '1.0-2'}}</span>-->
+                <span class="detalle-span">Julio</span>
+                <span class="border-b-2">{{elemento?.julio | number: '1.0-2'}}</span>
+                <span class="detalle-span">Agosto</span>
+                <span class="border-b-2">{{elemento?.agosto | number: '1.0-2'}}</span>
+                <span class="detalle-span">Septiembre</span>
+                <span class="border-b-2">{{elemento?.septiembre | number: '1.0-2'}}</span>
+                <span class="detalle-span">Trimestre 3</span>
+                <span class="border-b-2">{{elemento?.trim3 | number: '1.0-2'}}</span>
 
-<!--                <span class="detalle-span col-start-7">Acumulado final</span>-->
-<!--                <span class="border-b-2">{{elemento?.total | number: '1.0-2'}}</span>-->
-<!--            </section>-->
-<!--            <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>-->
-<!--        </mat-card-content>-->
 
-<!--        <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">-->
-            <!--            <div class="flex flex-auto gap-4">-->
-            <!--                <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="nvoElemento()">-->
-            <!--                    <mat-icon svgIcon="add"></mat-icon>-->
-            <!--                    Nuevo registro-->
-            <!--                </button>-->
-            <!--                <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg" (click)="editarPbr()">-->
-            <!--                    <mat-icon svgIcon="edit"></mat-icon>-->
-            <!--                    Editar registro-->
-            <!--                </button>-->
-            <!--                <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg" (click)="eliminarPbr()">-->
-            <!--                    <mat-icon svgIcon="mat_outline:delete"></mat-icon>-->
-            <!--                    Eliminar registro-->
-            <!--                </button>-->
-            <!--                <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">-->
-            <!--                    <mat-icon svgIcon="assignment"></mat-icon>-->
-            <!--                    Registrar avances-->
-            <!--                </button>-->
-            <!--                <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">-->
-            <!--                    <mat-icon svgIcon="mat_solid:arrow_back"></mat-icon>-->
-            <!--                    Anterior-->
-            <!--                </button>-->
-            <!--                <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">-->
-            <!--                    Siguiente-->
-            <!--                    <mat-icon svgIcon="mat_solid:arrow_forward"></mat-icon>-->
-            <!--                </button>-->
-            <!--                <button mat-flat-button color="accent" class="flex-auto">-->
-            <!--                    <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>-->
-            <!--                    Imprimir-->
-            <!--                </button>-->
-            <!--            </div>-->
-<!--        </mat-card-actions>-->
-<!--    </mat-card>-->
-<!--</ng-container>-->
+                <span class="detalle-span">Octubre</span>
+                <span class="border-b-2">{{elemento?.octubre | number: '1.0-2'}}</span>
+                <span class="detalle-span">Noviembre</span>
+                <span class="border-b-2">{{elemento?.noviembre | number: '1.0-2'}}</span>
+                <span class="detalle-span">Diciembre</span>
+                <span class="border-b-2">{{elemento?.diciembre | number: '1.0-2'}}</span>
+                <span class="detalle-span">Trimestre 4</span>
+                <span class="border-b-2">{{elemento?.trim4 | number: '1.0-2'}}</span>
+
+                <span class="detalle-span col-start-7">Acumulado final</span>
+                <span class="border-b-2">{{elemento?.total | number: '1.0-2'}}</span>
+            </section>
+            <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
+        </mat-card-content>
+
+        <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
+                        <div class="flex flex-auto gap-4">
+                            <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="nvoElemento()">
+                                <mat-icon svgIcon="add"></mat-icon>
+                                Nuevo registro
+                            </button>
+                            <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg" (click)="editarPbr()">
+                                <mat-icon svgIcon="edit"></mat-icon>
+                                Editar registro
+                            </button>
+                            <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg" (click)="eliminarPbr()">
+                                <mat-icon svgIcon="mat_outline:delete"></mat-icon>
+                                Eliminar registro
+                            </button>
+                            <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">
+                                <mat-icon svgIcon="assignment"></mat-icon>
+                                Registrar avances
+                            </button>
+                            <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">
+                                <mat-icon svgIcon="mat_solid:arrow_back"></mat-icon>
+                                Anterior
+                            </button>
+                            <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">
+                                Siguiente
+                                <mat-icon svgIcon="mat_solid:arrow_forward"></mat-icon>
+                            </button>
+                            <button mat-flat-button color="accent" class="flex-auto">
+                                <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                                Imprimir
+                            </button>
+                        </div>
+        </mat-card-actions>
+    </mat-card>
+</ng-container>

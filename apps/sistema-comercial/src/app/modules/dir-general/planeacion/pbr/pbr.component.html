@@ -22,7 +22,7 @@
             </app-acciones-mir-pbr>
 
             <article class="flex flex-auto flex-col">
-                <app-lista-pbr></app-lista-pbr>
+                <app-lista-pbr (panelPbr)="panelPbrDeLista($event)"></app-lista-pbr>
                 <app-lista-sum-pbr [sumatoriasPbr]="sum" *ngFor="let sum of pbrSumatorias()"></app-lista-sum-pbr>
             </article>
         </section>
