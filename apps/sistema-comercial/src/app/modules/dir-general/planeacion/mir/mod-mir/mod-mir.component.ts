@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -21,7 +21,6 @@ import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query'
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {abrirPanelMir} from "@s-dir-general/mir/mir.component";
 import {isNotNil} from "@angular-ru/cdk/utils";
 
 @Component({
@@ -37,6 +36,7 @@ import {isNotNil} from "@angular-ru/cdk/utils";
 })
 export class ModMirComponent implements OnInit, OnDestroy
 {
+    @Output() panelMir = new EventEmitter<boolean>()
     selecciones: SeleccionType;
     empleados: IResolveEmpleado[];
     formMir: FormGroup = this.fb.formGroup(new Mir());
@@ -111,7 +111,7 @@ export class ModMirComponent implements OnInit, OnDestroy
                     ctrlNombre.reset();
                 }
             });
-            abrirPanelMir.set(!this.actualizar);
+            this.panelMir.emit(!this.actualizar);
             this.cdr.detectChanges();
         })).subscribe();
     }
@@ -144,7 +144,7 @@ export class ModMirComponent implements OnInit, OnDestroy
 
     cerrar(): void
     {
-        abrirPanelMir.set(false);
+        this.panelMir.emit(false);
     }
 
     trackByFn(index: number, elemento: any): number | string

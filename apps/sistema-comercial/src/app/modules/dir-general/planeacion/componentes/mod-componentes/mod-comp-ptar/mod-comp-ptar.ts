@@ -49,10 +49,6 @@ export class ModCompPtar
         {
             idIndicador: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
             dato: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
-            // trim1: [0],
-            // trim2: [0],
-            // trim3: [0],
-            // trim4: [0]
         };
 
     filCuestionarioPbr: IPbrCuestionario[] = [];
@@ -65,11 +61,12 @@ export class ModCompPtar
     objDatosFormula: object = {};
 
     formComp: FormGroup;
-    ctrlNombre = null;
+    ctrlNombre: string = null;
     ctrlValor: string = null;
     ctrlDato: string = null;
     cargando = false;
     tipoValores = Object.values(TipoValores);
+
     formTipoValores: FormGroup = this.rxFb.group({
         tipoValorTrim: [null, RxwebValidators.required({message: 'Es necesario seleccionar que tipo de valor son los trimestres'})],
         tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})],
@@ -83,6 +80,7 @@ export class ModCompPtar
 
     agregar(e: MatChipInputEvent): void
     {
+        //Agregamos un nuevo elemento al mat-chip
         let valor = (e.value || '').trim();
         if (valor)
         {
@@ -126,17 +124,8 @@ export class ModCompPtar
         {
             this.formComp.get('idIndicador').setValue(pbr.idIndicador);
             this.formComp.get('dato').setValue(pbr.dato);
-
-            // this.formComp.get('trim1').setValue(pbr.trim1);
-            // this.formComp.get('trim2').setValue(pbr.trim2);
-            // this.formComp.get('trim3').setValue(pbr.trim3);
-            // this.formComp.get('trim4').setValue(pbr.trim4);
             return;
         }
-        // this.formComp.get('trim1').setValue(pbr.trim1);
-        // this.formComp.get('trim2').setValue(pbr.trim2);
-        // this.formComp.get('trim3').setValue(pbr.trim3);
-        // this.formComp.get('trim4').setValue(pbr.trim4);
 
         this.formComp.get(this.ctrlNombre).setValue(pbr.idIndicador);
     }
@@ -177,11 +166,6 @@ export class ModCompPtar
         this.ctrlDato = sumatoria.nombreSumatoria;
     }
 
-    conFoco(formCtrlNombre: string): void
-    {
-        this.ctrlNombre = formCtrlNombre.split('-').pop();
-    }
-
     dblAsigValCtrl(): void
     {
         if (isNil(this.ctrlValor))
@@ -196,6 +180,27 @@ export class ModCompPtar
         }
 
         this.formComp.get(this.ctrlNombre).setValue(this.ctrlValor);
+    }
+
+    asignarIdsParaFormula(): void
+    {
+        const valorFormula = this.formTipoValores.get('formula').value;
+        this.formTipoValores.get('formula').setValue(valorFormula + this.ctrlValor);
+    }
+
+    dblFormula(): void
+    {
+        if (isNil(this.ctrlValor))
+        {
+            return;
+        }
+        this.asignarIdsParaFormula();
+    }
+
+
+    conFoco(formCtrlNombre: string): void
+    {
+        this.ctrlNombre = formCtrlNombre.split('-').pop();
     }
 
     agregarLista(): void
@@ -215,6 +220,7 @@ export class ModCompPtar
             this.objDatosFormula[valorFormulario] = valorFormulario;
         });
 
+        console.log('-----', objecto);
         this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'sin formato');
         this.compDinamico.push(objecto);
         this.deshabilitarChips = true;

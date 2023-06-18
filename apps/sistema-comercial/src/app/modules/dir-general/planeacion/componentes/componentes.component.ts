@@ -23,16 +23,17 @@ import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {IDatosTablaFormComun, IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
 import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
-import {isEqual, pullAllWith} from "lodash-es";
 import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {isEqual, pullAllWith} from "lodash-es";
 
 @Component({
     selector: 'app-componentes',
     standalone: true,
     imports: [CommonModule, AccionesMirPbrComponent, MatListModule, MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, TablaMatComponent, MultiplesFormatosPipe,
-        MatCheckboxModule, NgxUiLoaderModule],
+        MatCheckboxModule, NgxUiLoaderModule, FormsModule, ReactiveFormsModule],
     templateUrl: './componentes.component.html',
     styleUrls: ['./componentes.component.scss'],
     animations: [fuseAnimations],
@@ -42,30 +43,21 @@ export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
     @Output() avancesTrim = new EventEmitter<string[]>();
+
+    chkRestablecer: boolean;
     ngxLoader = 'loaderComponentes';
     avTrim: string[] = ['', '', '', ''];
     fecha = DateTime.now().toLocaleString();
     chkVisible: boolean[] = [false, false, false, false];
     datosTabla: IDatosTablaFormComun[] = [];
-    columnas: IGenerarColumnTabla[] =
-        [
-            {
-                etiqueta: 'Indicador',
-                def: 'idIndicador',
-                llaveDato: 'idIndicador',
-                width: '7%',
-                tipoDeDato: 'texto'
-            },
-            {
-                etiqueta: 'Descripcion',
-                def: 'dato',
-                llaveDato: 'dato',
-                width: 'auto',
-                tipoDeDato: 'texto'
-            }
-        ];
 
-    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private cdr: ChangeDetectorRef, private router: Router,
+    chkTrim0 = new FormControl(false);
+    chkTrim1 = new FormControl(false);
+    chkTrim2 = new FormControl(false);
+    chkTrim3 = new FormControl(false);
+    columnas: IGenerarColumnTabla[] = [];
+
+    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private router: Router, private cdr: ChangeDetectorRef,
                 private activatedRoute: ActivatedRoute, private componentesService: ComponentesService, private ngxUiLoaderService: NgxUiLoaderService)
     {
         effect(() =>
@@ -73,14 +65,37 @@ export class ComponentesComponent
             const mir = this.planeacionQuery.cuestionarioMir();
             if (isNil(mir) || isNil(mir.componente))
             {
-                this.avTrim = ['0', '0', '0', '0'];
-                this.avancesTrim.emit(this.avTrim);
+                this.avTrim = [...['0', '0', '0', '0']];
+                this.avancesTrim.emit([...this.avTrim]);
                 return;
             }
-
+            this.chkRestablecer = false;
+            this.cdr.markForCheck();
+            const colsBase: IGenerarColumnTabla[] =
+                [
+                    {
+                        etiqueta: 'Indicador',
+                        def: 'idIndicador',
+                        llaveDato: 'idIndicador',
+                        width: '7%',
+                        tipoDeDato: 'texto'
+                    },
+                    {
+                        etiqueta: 'Descripcion',
+                        def: 'dato',
+                        llaveDato: 'dato',
+                        width: 'auto',
+                        tipoDeDato: 'texto'
+                    }
+                ];
             const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
             const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
             const trimObjCalcular = ComponentesService.crearObjFormula(pbrS, mir.componente.ids, sumatorias, mir.componente.formComun);
+            this.chkTrim0.reset();
+            this.chkTrim1.reset();
+            this.chkTrim2.reset();
+            this.chkTrim3.reset();
+            this.columnas = [...colsBase];
             this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
 
             this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
@@ -161,7 +176,7 @@ export class ComponentesComponent
                 [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd)
             };
         const colAgregar = formConfig[tipoForm];
-        // e.checked ? this.columnas.push(...colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
+
         e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
     }
 }

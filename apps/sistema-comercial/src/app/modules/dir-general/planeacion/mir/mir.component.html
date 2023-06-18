@@ -1,6 +1,6 @@
 <mat-drawer-container class="w-full">
-    <mat-drawer class="w-96" [opened]="abrirPanel()" mode="side" autoFocus="true" position="end">
-        <ng-container *ngIf="abrirPanel()">
+    <mat-drawer class="w-96" [opened]="abrirPanel" mode="side" autoFocus="true" position="end">
+        <ng-container *ngIf="abrirPanel">
             <app-mod-mir/>
         </ng-container>
     </mat-drawer>
@@ -25,7 +25,7 @@
         </app-acciones-mir-pbr>
 
         <article class="flex flex-col flex-auto">
-            <app-lista-tab-mir [avancesTrimestrales]="avancesTrimestrales"/>
+            <app-lista-tab-mir [avancesTrimestrales]="avancesTrimestrales" (panelMir)="panelMirLista($event)"/>
             <app-componentes (avancesTrim)="avancesTrim($event)"/>
         </article>
     </mat-drawer-content>

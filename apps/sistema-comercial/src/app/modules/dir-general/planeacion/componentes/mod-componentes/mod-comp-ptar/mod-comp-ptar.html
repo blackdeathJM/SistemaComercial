@@ -90,7 +90,7 @@
                 <div class="flex flex-auto gap-4">
                     <mat-form-field class="flex-auto">
                         <mat-label>Formula para calcular avance trimestral</mat-label>
-                        <input matInput formControlName="formula">
+                        <input matInput formControlName="formula" (dblclick)="dblFormula()">
                         <mat-error>{{formTipoValores.controls.formula['errorMessage']}}</mat-error>
                     </mat-form-field>
                     <mat-form-field class="flex-shrink">

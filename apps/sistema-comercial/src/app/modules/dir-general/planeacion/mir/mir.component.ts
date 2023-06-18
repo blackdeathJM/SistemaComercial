@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, signal} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,9 +18,7 @@ import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.serv
 import {CellHook, CellHookData, Styles} from "jspdf-autotable";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
-import {IDatosTablaFormComun} from "#/libs/models/src/lib/tabla.interface";
 
-export const abrirPanelMir = signal<boolean>(false)
 @Component({
     selector: 'app-mir',
     standalone: true,
@@ -33,10 +31,10 @@ export const abrirPanelMir = signal<boolean>(false)
 })
 export default class MirComponent implements OnDestroy
 {
-    abrirPanel = abrirPanelMir;
+    abrirPanel = false;
     avancesTrimestrales: string[] = [];
 
-    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService)
+    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService, private cdr: ChangeDetectorRef)
     {
     }
 
@@ -121,9 +119,13 @@ export default class MirComponent implements OnDestroy
         this.avancesTrimestrales = e;
     }
 
+    panelMirLista(e: boolean): void
+    {
+        this.abrirPanel = e;
+    }
     ngOnDestroy(): void
     {
-        abrirPanelMir.set(false);
+        this.abrirPanel = false;
         this.planeacionQuery.centroGestor.set(null);
         this.planeacionQuery.cuestionarioMir.set(null);
         this.planeacionQuery.cuestionarioMirV.set([]);
