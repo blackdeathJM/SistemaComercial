@@ -40,7 +40,9 @@ import {ComponentesService} from "@s-dir-general/componentes/services/componente
 export class ModCompPtar
 {
     @Input({required: true}) idIndicadorMir: string = null;
+
     expander = false;
+
     readonly separador = [ENTER, COMMA] as const;
     locutor = inject(LiveAnnouncer);
     deshabilitarChips = false;
@@ -55,18 +57,18 @@ export class ModCompPtar
     filSumatorias: ISumatorias[] = [];
     tituloColumnas: string[] = ['idIndicador', 'dato'];
 
-    compDinamico: object[] = [];
+    datosTabla: object[] = [];
     columnas: IGenerarColumnTabla[] = [];
-
     objDatosFormula: object = {};
+    ids: string[] = [];
 
-    formComp: FormGroup;
     ctrlNombre: string = null;
     ctrlValor: string = null;
     ctrlDato: string = null;
     cargando = false;
     tipoValores = Object.values(TipoValores);
 
+    formComp: FormGroup;
     formTipoValores: FormGroup = this.rxFb.group({
         tipoValorTrim: [null, RxwebValidators.required({message: 'Es necesario seleccionar que tipo de valor son los trimestres'})],
         tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})],
@@ -85,7 +87,7 @@ export class ModCompPtar
         if (valor)
         {
             const generarUuid = uuidv4().toString().substring(0, 7).toUpperCase();
-            valor = valor + '-' + generarUuid;
+            valor = valor + '__' + generarUuid;
             this.objFormulario[generarUuid] = ['', RxwebValidators.required({message: 'Este campo es requerido'})];
             this.formComp = this.rxFb.group(this.objFormulario);
             this.tituloColumnas.push(valor);
@@ -126,7 +128,6 @@ export class ModCompPtar
             this.formComp.get('dato').setValue(pbr.dato);
             return;
         }
-
         this.formComp.get(this.ctrlNombre).setValue(pbr.idIndicador);
     }
 
@@ -141,16 +142,8 @@ export class ModCompPtar
         {
             this.formComp.get('idIndicador').setValue(sumatoria.idSumatoria);
             this.formComp.get('dato').setValue(sumatoria.nombreSumatoria);
-            // this.formComp.get('trim1').setValue(sumatoria.trim1);
-            // this.formComp.get('trim2').setValue(sumatoria.trim2);
-            // this.formComp.get('trim3').setValue(sumatoria.trim3);
-            // this.formComp.get('trim4').setValue(sumatoria.trim4);
             return;
         }
-        // this.formComp.get('trim1').setValue(sumatoria.trim1);
-        // this.formComp.get('trim2').setValue(sumatoria.trim2);
-        // this.formComp.get('trim3').setValue(sumatoria.trim3);
-        // this.formComp.get('trim4').setValue(sumatoria.trim4);
         this.formComp.get(this.ctrlNombre).setValue(sumatoria.idSumatoria);
     }
 
@@ -200,7 +193,7 @@ export class ModCompPtar
 
     conFoco(formCtrlNombre: string): void
     {
-        this.ctrlNombre = formCtrlNombre.split('-').pop();
+        this.ctrlNombre = formCtrlNombre.split('__').pop();
     }
 
     agregarLista(): void
@@ -210,19 +203,19 @@ export class ModCompPtar
             this.ngxToastService.satisfactorioToast('No se detactaron elementos en el formulario', 'Componente dinamico');
             return;
         }
-        const objecto: Record<string, string> = {};
-
+        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
+        const obj: Record<string, string> = {};
         this.tituloColumnas.forEach(x =>
         {
-            const idObtenido = x.split('-').pop();
+            const idObtenido = x.split('__').pop();
             const valorFormulario = this.formComp.get(idObtenido).value;
-            objecto[idObtenido] = valorFormulario;
-            this.objDatosFormula[valorFormulario] = valorFormulario;
+            console.log(idObtenido);
+            this.objDatosFormula[idObtenido + '__' + valorFormulario] = valorFormulario;
+            obj[idObtenido] = valorFormulario;
         });
 
-        console.log('-----', objecto);
-        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'sin formato');
-        this.compDinamico.push(objecto);
+        this.datosTabla.push(obj);
+        console.log('=========', this.objDatosFormula);
         this.deshabilitarChips = true;
         this.formComp.reset();
     }

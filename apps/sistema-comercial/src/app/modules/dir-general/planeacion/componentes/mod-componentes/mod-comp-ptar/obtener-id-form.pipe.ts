@@ -8,6 +8,6 @@ export class ObtenerIdFormPipe implements PipeTransform
 {
     transform(dato: string): string
     {
-        return dato.split('-').pop();
+        return dato.split('__').pop();
     }
 }

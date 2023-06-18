@@ -195,10 +195,9 @@ export class ComponentesService
     static colCompDinamico(columnas: string[], formato: string): IGenerarColumnTabla[]
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
-
         columnas.forEach(x =>
         {
-            const tituloColumna = x.split('-');
+            const tituloColumna = x.split('__');
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
 

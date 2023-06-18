@@ -37,6 +37,7 @@
                     <input placeholder="Nueva columna" [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separador" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="agregar($event)">
                 </mat-chip-grid>
             </mat-form-field>
+
             <form [formGroup]="formComp" *ngIf="formComp">
                 <div class="flex flex-auto gap-4">
                     <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
@@ -63,7 +64,7 @@
                         Acontinuacion puedes ver la iformacion que haz añadido, realiza tus calculos con los ids estos hacen referencia a todos sus trimestres que corresponden
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-tabla-mat [columnas]="columnas" [datos]="compDinamico"></app-tabla-mat>
+                <app-tabla-mat [columnas]="columnas" [datos]="datosTabla"></app-tabla-mat>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>
