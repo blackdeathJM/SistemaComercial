@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, inject, Input} from "@angular/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
-import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, Location, NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatIconModule} from "@angular/material/icon";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
@@ -19,13 +19,15 @@ import {v4 as uuidv4} from 'uuid';
 import {ObtenerIdFormPipe} from "@s-dir-general/componentes/mod-componentes/mod-comp-ptar/obtener-id-form.pipe";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {isNil} from "@angular-ru/cdk/utils";
-import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {ToastrService} from "ngx-toastr";
+import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
+import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-mod-comp-ptar',
@@ -79,7 +81,7 @@ export class ModCompPtar
     });
 
     constructor(public seleccionQuery: SeleccionQuery, private planeacionQuery: PlaneacionQuery, private rxFb: RxFormBuilder, private planeacionService: PlaneacionService,
-                private ngxToastService: ToastrService)
+                private toastrService: ToastrService, private localizacion: Location)
     {
 
     }
@@ -204,7 +206,7 @@ export class ModCompPtar
     {
         if (isNil(this.formDin))
         {
-            this.ngxToastService.warning('No se detactaron elementos en el formulario', 'Componente dinamico');
+            this.toastrService.warning('No se detactaron elementos en el formulario', 'Componente dinamico');
             return;
         }
         const objDatosTabla: Record<string, string> = {};
@@ -216,7 +218,7 @@ export class ModCompPtar
             //Se asignan los IdIndicador a un arreglo para tenerlos
             if (this.ids.includes(idObtenido))
             {
-                this.ngxToastService.warning(`No puedes utilizar ids dubplicado para asignarlos a la lista, si necesitas utilizar el mismo valor del id al momento
+                this.toastrService.warning(`No puedes utilizar ids dubplicado para asignarlos a la lista, si necesitas utilizar el mismo valor del id al momento
                 de realizar tu formula solo asignalo en la formula`, 'Lista componete dinamico')
                 return;
             }
@@ -237,13 +239,33 @@ export class ModCompPtar
         this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
         this.datosTabla.data.push(objDatosTabla);
         this.datosTabla.data = [...this.datosTabla.data];
-
+        this.toastrService.info('Se ha agregado un nuevo elemento a la lista', 'Componente dinamico');
         this.deshabilitarChips = true;
         this.formDin.reset();
     }
 
     regComponente(): void
     {
+        this.cargando = true;
+        const datos: TRegComponente =
+            {
+                _id: this.planeacionQuery.getActive()._id,
+                idIndicadorMir: this.idIndicadorMir,
+                ids: this.ids,
+                idsColsTabla: this.tituloColumnas,
+                tipoForm: TiposFormulario.DIN,
+                tipoValorTrim: this.formTipoValores.get('tipoValorTrim').value,
+                tipoValorAvance: this.formTipoValores.get('tipoValorAvance').value,
+                etiqueta: this.formTipoValores.get('etiqueta').value,
+                formula: this.formTipoValores.get('formula').value,
+                formDinamico: this.compDin
+            };
+        this.planeacionService.regCompDinamico(datos).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.localizacion.back();
+
+        })).subscribe();
     }
 
     trackByCtrls(indice: number, elemento: string): string | number

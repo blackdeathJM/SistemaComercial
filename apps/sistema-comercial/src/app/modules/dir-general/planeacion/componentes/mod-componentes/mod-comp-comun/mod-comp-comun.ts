@@ -42,6 +42,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 export class ModCompComun implements OnDestroy
 {
     @Input({required: true}) idIndicadorMir: string = null;
+
     protected readonly TiposFormulario = TiposFormulario;
     protected readonly asignacion = AsigFormsComponente;
     datos: IFormComun[] = [];
@@ -96,7 +97,7 @@ export class ModCompComun implements OnDestroy
     });
 
     constructor(public planeacionQuery: PlaneacionQuery, private fb: RxFormBuilder, private planeacionService: PlaneacionService, private ngxToast: NgxToastService, public seleccionQuery: SeleccionQuery,
-                private localizado: Location)
+                private localizacion: Location)
     {
         effect(() =>
         {
@@ -254,7 +255,7 @@ export class ModCompComun implements OnDestroy
             this.cargando = false;
             this.formComun.enable();
             this.formTrimAnt.enable();
-            this.localizado.back();
+            this.localizacion.back();
         })).subscribe();
     }
 
@@ -319,7 +320,7 @@ export class ModCompComun implements OnDestroy
 
     cancelar(): void
     {
-        this.localizado.back();
+        this.localizacion.back();
     }
 
     ngOnDestroy(): void

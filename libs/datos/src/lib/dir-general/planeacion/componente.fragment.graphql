@@ -6,6 +6,7 @@ fragment fragComponente on ComponenteType
     ids
     formula
     etiqueta
+    idsColsTabla
     formComun {
         ...fragFormComun
     }
