@@ -65,6 +65,10 @@ export class ComponenteDto implements IComponente
     @Field(() => [String], {nullable: true, defaultValue: []})
     ids: string[];
 
+    @IsArray({message: 'Las cabeceras de las columnas deben estar en un array'})
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    idsColsTabla: string[];
+
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: ''})
     etiqueta: string;

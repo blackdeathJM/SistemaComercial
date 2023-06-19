@@ -38,7 +38,7 @@
                 </mat-chip-grid>
             </mat-form-field>
 
-            <form [formGroup]="formComp" *ngIf="formComp">
+            <form [formGroup]="formDin" *ngIf="formDin">
                 <div class="flex flex-auto gap-4">
                     <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
                         <mat-label>{{formCtrlNombre}}</mat-label>
@@ -64,7 +64,7 @@
                         Acontinuacion puedes ver la iformacion que haz añadido, realiza tus calculos con los ids estos hacen referencia a todos sus trimestres que corresponden
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-tabla-mat [columnas]="columnas" [datos]="datosTabla"></app-tabla-mat>
+                <app-tabla-mat [columnas]="columnas" [datos]="datosTabla"/>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>
@@ -104,8 +104,8 @@
     </mat-card-content>
     <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
         <div class="flex flex-auto gap-4">
-            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()" [disabled]="cargando || formTipoValores.invalid">
-                <mat-icon svgIcon="mat_solid:save"></mat-icon>
+            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()">
+                <mat-icon svgIcon="mat_solid:save"/>
                 Registrar componente
             </button>
         </div>

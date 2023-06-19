@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="_origenDatos" class="bg-transparent">
+<table mat-table [dataSource]="_origenDatos.data" class="bg-transparent">
     <ng-container *ngFor="let columna of columnasTabla" [matColumnDef]="columna.def">
         <th mat-header-cell *matHeaderCellDef [width]="columna.width">{{columna.etiqueta}}</th>
         <td mat-cell class="text-amber-500" *matCellDef="let fila">{{fila[columna.def] | multiplesFormatos: columna.tipoDeDato}}</td>

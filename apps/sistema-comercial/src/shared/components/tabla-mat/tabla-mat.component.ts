@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
+import {isNumber} from "lodash-es";
 
 @Component({
     selector: 'app-tabla-mat',
@@ -15,7 +16,7 @@ import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 })
 export class TablaMatComponent
 {
-    @Input({required: true}) set datos(data: any[])
+    @Input({required: true}) set datos(data: MatTableDataSource<any>)
     {
         this._origenDatos = data;
     }
@@ -26,7 +27,7 @@ export class TablaMatComponent
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);
     }
 
-    _origenDatos: any[];
+    _origenDatos = new MatTableDataSource<any>([]);
     columnasAMostrar: string[] = [];
     columnasTabla: IGenerarColumnTabla[] = [];
 
@@ -42,7 +43,11 @@ export class TablaMatComponent
             {
                 return 'Total';
             }
-            return this._origenDatos.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
+            if (!isNumber(trim))
+            {
+                return '----'
+            }
+            return this._origenDatos.data.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
         }
         return '----';
     }

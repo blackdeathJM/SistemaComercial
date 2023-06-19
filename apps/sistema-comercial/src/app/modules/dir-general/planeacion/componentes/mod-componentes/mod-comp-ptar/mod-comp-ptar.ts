@@ -22,9 +22,10 @@ import {isNil} from "@angular-ru/cdk/utils";
 import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
-import {NgxToastService} from "@s-services/ngx-toast.service";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-mod-comp-ptar',
@@ -57,9 +58,9 @@ export class ModCompPtar
     filSumatorias: ISumatorias[] = [];
     tituloColumnas: string[] = ['idIndicador', 'dato'];
 
-    datosTabla: object[] = [];
+    datosTabla: MatTableDataSource<any> = new MatTableDataSource<any>();
     columnas: IGenerarColumnTabla[] = [];
-    objDatosFormula: object = {};
+    compDin: object[] = [];
     ids: string[] = [];
 
     ctrlNombre: string = null;
@@ -68,7 +69,8 @@ export class ModCompPtar
     cargando = false;
     tipoValores = Object.values(TipoValores);
 
-    formComp: FormGroup;
+    formDin: FormGroup;
+
     formTipoValores: FormGroup = this.rxFb.group({
         tipoValorTrim: [null, RxwebValidators.required({message: 'Es necesario seleccionar que tipo de valor son los trimestres'})],
         tipoValorAvance: [null, RxwebValidators.required({message: 'Es necesario seleccionar el tipo de valor para los avances trimestrales'})],
@@ -77,8 +79,10 @@ export class ModCompPtar
     });
 
     constructor(public seleccionQuery: SeleccionQuery, private planeacionQuery: PlaneacionQuery, private rxFb: RxFormBuilder, private planeacionService: PlaneacionService,
-                private ngxToastService: NgxToastService)
-    {}
+                private ngxToastService: ToastrService)
+    {
+
+    }
 
     agregar(e: MatChipInputEvent): void
     {
@@ -89,7 +93,7 @@ export class ModCompPtar
             const generarUuid = uuidv4().toString().substring(0, 7).toUpperCase();
             valor = valor + '__' + generarUuid;
             this.objFormulario[generarUuid] = ['', RxwebValidators.required({message: 'Este campo es requerido'})];
-            this.formComp = this.rxFb.group(this.objFormulario);
+            this.formDin = this.rxFb.group(this.objFormulario);
             this.tituloColumnas.push(valor);
         }
 
@@ -124,11 +128,11 @@ export class ModCompPtar
 
         if (this.ctrlNombre === 'idIndicador' || this.ctrlNombre === 'dato')
         {
-            this.formComp.get('idIndicador').setValue(pbr.idIndicador);
-            this.formComp.get('dato').setValue(pbr.dato);
+            this.formDin.get('idIndicador').setValue(pbr.idIndicador);
+            this.formDin.get('dato').setValue(pbr.dato);
             return;
         }
-        this.formComp.get(this.ctrlNombre).setValue(pbr.idIndicador);
+        this.formDin.get(this.ctrlNombre).setValue(pbr.idIndicador);
     }
 
     dobleClickSumatoria(sumatoria: ISumatorias): void
@@ -140,11 +144,11 @@ export class ModCompPtar
 
         if (this.ctrlNombre === 'idIndicador' || this.ctrlNombre === 'dato')
         {
-            this.formComp.get('idIndicador').setValue(sumatoria.idSumatoria);
-            this.formComp.get('dato').setValue(sumatoria.nombreSumatoria);
+            this.formDin.get('idIndicador').setValue(sumatoria.idSumatoria);
+            this.formDin.get('dato').setValue(sumatoria.nombreSumatoria);
             return;
         }
-        this.formComp.get(this.ctrlNombre).setValue(sumatoria.idSumatoria);
+        this.formDin.get(this.ctrlNombre).setValue(sumatoria.idSumatoria);
     }
 
     clickValorPbr(pbr: IPbrCuestionario): void
@@ -167,12 +171,12 @@ export class ModCompPtar
         }
         if (this.ctrlNombre === 'idIndicador' || this.ctrlNombre === 'dato')
         {
-            this.formComp.get('idIndicador').setValue(this.ctrlValor);
-            this.formComp.get('dato').setValue(this.ctrlDato);
+            this.formDin.get('idIndicador').setValue(this.ctrlValor);
+            this.formDin.get('dato').setValue(this.ctrlDato);
             return;
         }
 
-        this.formComp.get(this.ctrlNombre).setValue(this.ctrlValor);
+        this.formDin.get(this.ctrlNombre).setValue(this.ctrlValor);
     }
 
     asignarIdsParaFormula(): void
@@ -198,26 +202,44 @@ export class ModCompPtar
 
     agregarLista(): void
     {
-        if (isNil(this.formComp))
+        if (isNil(this.formDin))
         {
-            this.ngxToastService.satisfactorioToast('No se detactaron elementos en el formulario', 'Componente dinamico');
+            this.ngxToastService.warning('No se detactaron elementos en el formulario', 'Componente dinamico');
             return;
         }
-        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
-        const obj: Record<string, string> = {};
+        const objDatosTabla: Record<string, string> = {};
+        const objCompDin: Record<string, string> = {};
         this.tituloColumnas.forEach(x =>
         {
             const idObtenido = x.split('__').pop();
-            const valorFormulario = this.formComp.get(idObtenido).value;
-            console.log(idObtenido);
-            this.objDatosFormula[idObtenido + '__' + valorFormulario] = valorFormulario;
-            obj[idObtenido] = valorFormulario;
+            const valorFormulario = this.formDin.get(idObtenido).value;
+            //Se asignan los IdIndicador a un arreglo para tenerlos
+            if (this.ids.includes(idObtenido))
+            {
+                this.ngxToastService.warning(`No puedes utilizar ids dubplicado para asignarlos a la lista, si necesitas utilizar el mismo valor del id al momento
+                de realizar tu formula solo asignalo en la formula`, 'Lista componete dinamico')
+                return;
+            }
+            //Objecto que almacenara la matriz del objectos con él, id generando y que es almacenado en los ids de las columnas
+            objCompDin[idObtenido + '__' + valorFormulario] = valorFormulario;
+            //Objecto que asigna los va
+            objDatosTabla[idObtenido] = valorFormulario;
+
+            if (idObtenido === 'dato')
+            {
+                return;
+            }
+            this.ids.push(valorFormulario);
+            this.formTipoValores.get('formula').setValue(this.ids.join('+'));
         });
 
-        this.datosTabla.push(obj);
-        console.log('=========', this.objDatosFormula);
+        this.compDin.push(objCompDin);
+        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
+        this.datosTabla.data.push(objDatosTabla);
+        this.datosTabla.data = [...this.datosTabla.data];
+
         this.deshabilitarChips = true;
-        this.formComp.reset();
+        this.formDin.reset();
     }
 
     regComponente(): void

@@ -28,6 +28,7 @@ import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir
 import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {isEqual, pullAllWith} from "lodash-es";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
     selector: 'app-componentes',
@@ -49,7 +50,7 @@ export class ComponentesComponent
     avTrim: string[] = ['', '', '', ''];
     fecha = DateTime.now().toLocaleString();
     chkVisible: boolean[] = [false, false, false, false];
-    datosTabla: IDatosTablaFormComun[] = [];
+    datosTabla = new MatTableDataSource<IDatosTablaFormComun>([]);
 
     chkTrim0 = new FormControl(false);
     chkTrim1 = new FormControl(false);
@@ -96,7 +97,7 @@ export class ComponentesComponent
             this.chkTrim2.reset();
             this.chkTrim3.reset();
             this.columnas = [...colsBase];
-            this.datosTabla = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
+            this.datosTabla.data = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
 
             this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);

@@ -3,7 +3,7 @@ export enum TiposFormulario
     COMUN = 'comun',
     PERIODO_ANT = 'periodoAnt',
     CON_OTRO_ID_PBR = 'conOtroDatoPbr',
-    PTAR = 'ptar'
+    DIN = 'dinamico'
 }
 
 export enum AsigFormsComponente
@@ -33,7 +33,6 @@ export interface IFormComun
     trim2Ant: number;
     trim3Ant: number;
     trim4Ant: number;
-
     // Los datos de los trimestres se van a obtener dinamicamente
 }
 
@@ -43,6 +42,7 @@ export interface IComponente
     formComun: IFormComun[];
 
     ids: string[];
+    idsColsTabla: string[];
     formula: string;
 
     tipoValorTrim: string;
