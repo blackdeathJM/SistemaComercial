@@ -78,10 +78,4 @@ export class PlaneacionResolver
     {
         return this.planeacionService.reemplazarComp(args);
     }
-
-    @Mutation(() => PlaneacionDto)
-    async regCompDinamico(@Args('datos') datos: RegComponenteDto): Promise<PlaneacionDto>
-    {
-        return this.planeacionService.regCompDinamico(datos);
-    }
 }

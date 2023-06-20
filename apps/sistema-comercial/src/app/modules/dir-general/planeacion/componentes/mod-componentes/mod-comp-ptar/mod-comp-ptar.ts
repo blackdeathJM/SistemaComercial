@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, ElementRef, inject, Input, QueryList, Renderer2, ViewChildren} from "@angular/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
@@ -43,6 +43,7 @@ import {finalize} from "rxjs";
 export class ModCompPtar
 {
     @Input({required: true}) idIndicadorMir: string = null;
+    @ViewChildren('listaCtrls', {read: ElementRef}) listCtrls: QueryList<ElementRef>;
 
     expander = false;
 
@@ -62,13 +63,13 @@ export class ModCompPtar
 
     datosTabla: MatTableDataSource<any> = new MatTableDataSource<any>();
     columnas: IGenerarColumnTabla[] = [];
-    compDin: object[] = [];
     ids: string[] = [];
 
     ctrlNombre: string = null;
     ctrlValor: string = null;
     ctrlDato: string = null;
     cargando = false;
+    indiceCtrlActual = 0;
     tipoValores = Object.values(TipoValores);
 
     formDin: FormGroup;
@@ -81,7 +82,7 @@ export class ModCompPtar
     });
 
     constructor(public seleccionQuery: SeleccionQuery, private planeacionQuery: PlaneacionQuery, private rxFb: RxFormBuilder, private planeacionService: PlaneacionService,
-                private toastrService: ToastrService, private localizacion: Location)
+                private toastrService: ToastrService, private localizacion: Location, private render: Renderer2)
     {
 
     }
@@ -98,7 +99,6 @@ export class ModCompPtar
             this.formDin = this.rxFb.group(this.objFormulario);
             this.tituloColumnas.push(valor);
         }
-
         e.chipInput!.clear();
     }
 
@@ -135,6 +135,7 @@ export class ModCompPtar
             return;
         }
         this.formDin.get(this.ctrlNombre).setValue(pbr.idIndicador);
+        this.cambioDeFocoCtrlsInput();
     }
 
     dobleClickSumatoria(sumatoria: ISumatorias): void
@@ -151,6 +152,17 @@ export class ModCompPtar
             return;
         }
         this.formDin.get(this.ctrlNombre).setValue(sumatoria.idSumatoria);
+        this.cambioDeFocoCtrlsInput();
+    }
+
+    cambioDeFocoCtrlsInput(): void
+    {
+        const ctrlsInput = this.listCtrls.toArray();
+        if (this.indiceCtrlActual < ctrlsInput.length - 1)
+        {
+            const sigElemento = ctrlsInput[this.indiceCtrlActual + 1].nativeElement;
+            this.render.selectRootElement(sigElemento).focus();
+        }
     }
 
     clickValorPbr(pbr: IPbrCuestionario): void
@@ -197,9 +209,10 @@ export class ModCompPtar
     }
 
 
-    conFoco(formCtrlNombre: string): void
+    conFoco(formCtrlNombre: string, i: number): void
     {
         this.ctrlNombre = formCtrlNombre.split('__').pop();
+        this.indiceCtrlActual = i;
     }
 
     agregarLista(): void
@@ -209,7 +222,6 @@ export class ModCompPtar
             this.toastrService.warning('No se detactaron elementos en el formulario', 'Componente dinamico');
             return;
         }
-        const objDatosTabla: Record<string, string> = {};
         const objCompDin: Record<string, string> = {};
         this.tituloColumnas.forEach(x =>
         {
@@ -223,9 +235,7 @@ export class ModCompPtar
                 return;
             }
             //Objecto que almacenara la matriz del objectos con él, id generando y que es almacenado en los ids de las columnas
-            objCompDin[idObtenido + '__' + valorFormulario] = valorFormulario;
-            //Objecto que asigna los va
-            objDatosTabla[idObtenido] = valorFormulario;
+            objCompDin[idObtenido] = valorFormulario;
 
             if (idObtenido === 'dato')
             {
@@ -234,10 +244,8 @@ export class ModCompPtar
             this.ids.push(valorFormulario);
             this.formTipoValores.get('formula').setValue(this.ids.join('+'));
         });
-
-        this.compDin.push(objCompDin);
         this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
-        this.datosTabla.data.push(objDatosTabla);
+        this.datosTabla.data.push(objCompDin);
         this.datosTabla.data = [...this.datosTabla.data];
         this.toastrService.info('Se ha agregado un nuevo elemento a la lista', 'Componente dinamico');
         this.deshabilitarChips = true;
@@ -258,9 +266,9 @@ export class ModCompPtar
                 tipoValorAvance: this.formTipoValores.get('tipoValorAvance').value,
                 etiqueta: this.formTipoValores.get('etiqueta').value,
                 formula: this.formTipoValores.get('formula').value,
-                formDinamico: this.compDin
+                formDinamico: this.datosTabla.data
             };
-        this.planeacionService.regCompDinamico(datos).pipe(finalize(() =>
+        this.planeacionService.regComponente(datos).pipe(finalize(() =>
         {
             this.cargando = false;
             this.localizacion.back();

@@ -13,8 +13,6 @@ import {
     ReemplazarCompMutation,
     RegAvancePbrGQL,
     RegAvancePbrMutation,
-    RegCompDinamicoGQL,
-    RegCompDinamicoMutation,
     RegComponenteGQL,
     RegComponenteMutation,
     RegMirGQL,
@@ -61,7 +59,7 @@ export class PlaneacionService
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarComponenteGQL: EliminarComponenteGQL,
                 private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService, private regComponenteGQL: RegComponenteGQL,
                 private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL, private recalcularPbrGQL: RecalcularPbrGQL,
-                private reemplazarCompGQL: ReemplazarCompGQL, private regCompDinamicoGQL: RegCompDinamicoGQL)
+                private reemplazarCompGQL: ReemplazarCompGQL)
     {
     }
 
@@ -258,20 +256,6 @@ export class PlaneacionService
                 const {_id, ...cambios} = <IPlaneacion>res.data.reemplazarComp;
                 this.planeacionStore.update(_id, cambios);
                 this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
-            }
-        }));
-    }
-
-    regCompDinamico(datos: TRegComponente): Observable<SingleExecutionResult<RegCompDinamicoMutation>>
-    {
-        return this.regCompDinamicoGQL.mutate({datos}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
-        {
-            if (isNotNil(res) && isNotNil(res.data))
-            {
-                const {_id, ...cambios} = <IPlaneacion>res.data.regCompDinamico;
-                this.planeacionStore.update(_id, cambios);
-                this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
-                this.ngxToast.satisfactorioToast('Se ha registrado un nuevo componente con exito', 'Registro Componentes');
             }
         }));
     }

@@ -602,7 +602,6 @@ export type Mutation = {
   recalcularPbr: PlaneacionType;
   reemplazarComp: PlaneacionType;
   regAvancePbr: PlaneacionType;
-  regCompDinamico: PlaneacionType;
   regComponente: PlaneacionType;
   regDoc: DocumentoType;
   regInstalacion: UnionTele;
@@ -803,11 +802,6 @@ export type MutationReemplazarCompArgs = {
 
 export type MutationRegAvancePbrArgs = {
   datos: RegAvancesPbrInput;
-};
-
-
-export type MutationRegCompDinamicoArgs = {
-  datos: RegComponenteInput;
 };
 
 
@@ -1815,13 +1809,6 @@ export type ReemplazarCompMutationVariables = Exact<{
 
 
 export type ReemplazarCompMutation = { __typename?: 'Mutation', reemplazarComp: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, componente?: { __typename?: 'ComponenteType', tipoValorTrim?: string | null, tipoValorAvance?: string | null, tipoForm?: string | null, ids?: Array<string> | null, formula?: string | null, etiqueta?: string | null, idsColsTabla?: Array<string> | null, formDinamico?: Array<any> | null, formComun?: Array<{ __typename?: 'FormComunType', idIndicador?: string | null, idIndicadorAd?: string | null, trim1Ant?: number | null, trim2Ant?: number | null, trim3Ant?: number | null, trim4Ant?: number | null }> | null } | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
-
-export type RegCompDinamicoMutationVariables = Exact<{
-  datos: RegComponenteInput;
-}>;
-
-
-export type RegCompDinamicoMutation = { __typename?: 'Mutation', regCompDinamico: { __typename?: 'PlaneacionType', _id?: string | null, ano?: number | null, descripcion?: string | null, mirCuestionario?: Array<{ __typename?: 'MirCuestionarioType', idIndicador?: string | null, correo?: string | null, responsable?: string | null, idEmpleado?: string | null, nivel?: string | null, programaFinanciacion?: string | null, resumenNarrativo?: string | null, centroGestor?: string | null, nombreDelIndicador?: string | null, tipo?: string | null, dimension?: string | null, metodoCalculo?: string | null, unidadDeMedida?: string | null, frecuenciaMedicion?: string | null, mediosVerificacion?: string | null, supuestos?: string | null, definicionIndicador?: string | null, lineaBaseAno?: string | null, lineaBaseValor?: string | null, meta?: number | null, sentidoDelIndicador?: string | null, semefVerde?: number | null, semefVerdeV?: number | null, semefAmarillo?: number | null, semefAmarilloV?: number | null, semefRojo?: number | null, semefRojoV?: number | null, avanceTrim1?: number | null, avanceTrim2?: number | null, avanceTrim3?: number | null, avanceAnual?: number | null, avanceTrim4?: number | null, componente?: { __typename?: 'ComponenteType', tipoValorTrim?: string | null, tipoValorAvance?: string | null, tipoForm?: string | null, ids?: Array<string> | null, formula?: string | null, etiqueta?: string | null, idsColsTabla?: Array<string> | null, formDinamico?: Array<any> | null, formComun?: Array<{ __typename?: 'FormComunType', idIndicador?: string | null, idIndicadorAd?: string | null, trim1Ant?: number | null, trim2Ant?: number | null, trim3Ant?: number | null, trim4Ant?: number | null }> | null } | null }> | null, pbrCuestionario?: Array<{ __typename?: 'PbrType', idIndicador?: string | null, fechaCompleta?: string | null, variableOrigen?: string | null, dato?: string | null, unidad?: string | null, descripcion?: string | null, centroGestor?: string | null, idEmpleado?: string | null, correo?: string | null, responsable?: string | null, enero?: number | null, febrero?: number | null, marzo?: number | null, trim1?: number | null, abril?: number | null, mayo?: number | null, junio?: number | null, trim2?: number | null, julio?: number | null, agosto?: number | null, septiembre?: number | null, trim3?: number | null, octubre?: number | null, noviembre?: number | null, diciembre?: number | null, trim4?: number | null, total?: number | null, tipoOperacion?: string | null }> | null, pbrSumatoria?: Array<{ __typename?: 'PbrSumatoriaType', idSumatoria?: string | null, centroGestor?: string | null, descripcion?: string | null, ids?: Array<string> | null, nombreSumatoria?: string | null, total?: number | null, abril?: number | null, agosto?: number | null, ano?: number | null, diciembre?: number | null, enero?: number | null, febrero?: number | null, julio?: number | null, junio?: number | null, marzo?: number | null, mayo?: number | null, noviembre?: number | null, octubre?: number | null, septiembre?: number | null, trim1?: number | null, trim2?: number | null, trim3?: number | null, trim4?: number | null, sumTrim?: boolean | null, sumTotal?: boolean | null }> | null } };
 
 export type RegSeleccionMutationVariables = Exact<{
   input?: InputMaybe<SeleccionInput>;
@@ -3354,24 +3341,6 @@ export const ReemplazarCompDocument = gql`
   })
   export class ReemplazarCompGQL extends Apollo.Mutation<ReemplazarCompMutation, ReemplazarCompMutationVariables> {
     document = ReemplazarCompDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const RegCompDinamicoDocument = gql`
-    mutation regCompDinamico($datos: RegComponenteInput!) {
-  regCompDinamico(datos: $datos) {
-    ...fragPlaneacion
-  }
-}
-    ${FragPlaneacionFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class RegCompDinamicoGQL extends Apollo.Mutation<RegCompDinamicoMutation, RegCompDinamicoMutationVariables> {
-    document = RegCompDinamicoDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

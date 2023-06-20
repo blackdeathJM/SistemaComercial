@@ -76,11 +76,3 @@ mutation reemplazarComp($_id: ID!, $idIndicador: String!)
         ...fragPlaneacion
     }
 }
-
-mutation regCompDinamico($datos: RegComponenteInput!)
-{
-    regCompDinamico(datos: $datos)
-    {
-        ...fragPlaneacion
-    }
-}

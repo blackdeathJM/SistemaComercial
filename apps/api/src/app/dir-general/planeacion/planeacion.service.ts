@@ -247,7 +247,6 @@ export class PlaneacionService
             {$set: {'mirCuestionario.$.componente': resto}}, {new: true}).exec();
     }
 
-
     async eliminarComponente(args: EliminarElementoDto): Promise<PlaneacionDto>
     {
         const {_id, idIndicador, cuestionario} = args;
@@ -258,11 +257,5 @@ export class PlaneacionService
     {
         return await this.planeacion.findOneAndUpdate({_id: args._id, 'mirCuestionario.idIndicador': args.idIndicador},
             {$set: {'mirCuestionario.$.componente': null}}, {new: true}).exec();
-    }
-
-    async regCompDinamico(datos: TRegComponente): Promise<PlaneacionDto>
-    {
-        console.log('obtencion de objecto formulario dinamico', datos);
-        return null
     }
 }

@@ -98,11 +98,11 @@ export class ComponentesComponent
             this.chkTrim3.reset();
             this.columnas = [...colsBase];
             this.datosTabla.data = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
-
             this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
             this.avTrim[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
             this.avTrim[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
+
             this.avancesTrim.emit(this.avTrim);
         });
     }
@@ -136,26 +136,30 @@ export class ComponentesComponent
 
     imprimirComp(mirSelec: IMirCuestionario): void
     {
-        this.ngxUiLoaderService.startLoader(this.ngxLoader);
-        const componente = this.componenteRef.nativeElement;
-        componente.style.color = 'black';
-        html2canvas(componente).then(canvas =>
-        {
-            const img = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'pt', 'a4');
-            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
-            pdf.setFontSize(8);
-            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
-            const imgProps = pdf.getImageProperties(img);
-            const pdfAncho = pdf.internal.pageSize.getWidth();
-            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
-            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
-            pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
-            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
-            pdf.save('componente.pdf');
-            componente.style.color = '';
-            this.ngxUiLoaderService.stopLoader(this.ngxLoader);
-        });
+        const pbr = this.planeacionQuery.cuestionarioPbrV();
+        const sumatorias = this.planeacionQuery.sumatoriaPbrV();
+        const mirActivo = this.planeacionQuery.cuestionarioMir();
+        const probar = this.componentesService.construirDatosTablaDinamica(pbr, sumatorias, mirActivo.componente.ids, mirActivo.componente.idsColsTabla, mirActivo.componente.formDinamico);
+        // this.ngxUiLoaderService.startLoader(this.ngxLoader);
+        // const componente = this.componenteRef.nativeElement;
+        // componente.style.color = 'black';
+        // html2canvas(componente).then(canvas =>
+        // {
+        //     const img = canvas.toDataURL('image/png');
+        //     const pdf = new jsPDF('p', 'pt', 'a4');
+        //     pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+        //     pdf.setFontSize(8);
+        //     pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+        //     const imgProps = pdf.getImageProperties(img);
+        //     const pdfAncho = pdf.internal.pageSize.getWidth();
+        //     const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+        //     pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+        //     pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
+        //     pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
+        //     pdf.save('componente.pdf');
+        //     componente.style.color = '';
+        //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
+        // });
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], def: string[]): void

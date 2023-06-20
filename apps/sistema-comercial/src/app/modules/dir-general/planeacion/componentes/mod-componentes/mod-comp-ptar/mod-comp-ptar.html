@@ -42,7 +42,8 @@
                 <div class="flex flex-auto gap-4">
                     <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
                         <mat-label>{{formCtrlNombre}}</mat-label>
-                        <input matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre)" [readonly]="formCtrlNombre === 'dato'" (dblclick)="dblAsigValCtrl()">
+                        <input #listaCtrls [name]="formCtrlNombre" matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre, i)" [readonly]="formCtrlNombre === 'dato'"
+                               (dblclick)="dblAsigValCtrl()">
                     </mat-form-field>
                 </div>
             </form>
@@ -51,7 +52,7 @@
     <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
         <div class="flex flex-auto flex-col">
             <button mat-raised-button color="primary" class="flex-auto" (click)="agregarLista()" [disabled]="cargando">
-                <mat-icon svgIcon="feather:chevrons-up"></mat-icon>
+                <mat-icon svgIcon="feather:chevrons-up"/>
                 Agregar a lista
             </button>
         </div>
@@ -104,7 +105,7 @@
     </mat-card-content>
     <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
         <div class="flex flex-auto gap-4">
-            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()">
+            <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()" [disabled]="cargando || formTipoValores.invalid">
                 <mat-icon svgIcon="mat_solid:save"/>
                 Registrar componente
             </button>

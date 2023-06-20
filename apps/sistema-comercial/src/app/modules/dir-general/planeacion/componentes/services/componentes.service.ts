@@ -4,6 +4,7 @@ import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/p
 import {IDatosTablaFormComun, IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import * as math from 'mathjs';
+import {isEqual, pullAllWith} from "lodash-es";
 
 @Injectable({
     providedIn: 'root'
@@ -192,7 +193,64 @@ export class ComponentesService
         return tablaValores;
     }
 
-    static colCompDinamico(columnas: string[], formato: string): IGenerarColumnTabla[]
+    construirDatosTablaDinamica(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], ids: string[], idsTituloTabla: string[], formDin: object[]): any
+    {
+        const tituloColumna: IGenerarColumnTabla[] = [];
+        const objTabla: Record<string, string>[] = [];
+        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
+
+        /* ? Obtenemos los ids que formaran la tabla que biene compues por él, id que se asignó y obtenemos su valor de cada trimestre */
+        idsTituloTabla.forEach(x =>
+        {
+            // ? Separamos el texto de los ids de la tabla, ya que está compuesta por el título de la columna y por él, id que guarda que hace referencia al id del pbr para
+            const separarTitulo = x.split('__');
+            const cabecera = separarTitulo.shift();
+            const idGenerado = separarTitulo.pop();
+
+            // ? construir la estructura de la tabla buscando en el formDin
+            const longitud = formDin.length;
+            const idsPbr: string[] = [];
+
+            for (let i = 0; i < longitud; i++)
+            {
+                const valores: string[] = Object.values(formDin[i]);
+                console.log(valores);
+                idsPbr.push(...valores);
+            }
+            const idsEliminar: string[] = [];
+            idsPbr.forEach((id: string) =>
+            {
+                console.log(id);
+                //? Construimos el objecto que contrenda los datos para utilizar en la fórmula con mathjs
+                const resPbr = pbr.find(ele => ele.idIndicador === id);
+                if (resPbr)
+                {
+                    idsEliminar.push(id);
+                    objFormula[0][resPbr.idIndicador] = resPbr.trim1;
+                    objFormula[1][resPbr.idIndicador] = resPbr.trim2;
+                    objFormula[2][resPbr.idIndicador] = resPbr.trim3;
+                    objFormula[3][resPbr.idIndicador] = resPbr.trim4;
+                }
+            });
+            // ? Eliminamos los ids que ya fueron encontrados en el pbr para no tener que buscarlos en las sumatorias, ya que ahi no existen
+            pullAllWith(idsPbr, idsEliminar, isEqual);
+            // ? Asignamos los resultados al objeto para la fórmula
+            idsPbr.forEach((id) =>
+            {
+                const resSumatoria = sumatorias.find(ele => ele.idSumatoria === id);
+                if (resSumatoria)
+                {
+                    objFormula[0][resSumatoria.idSumatoria] = resSumatoria.trim1;
+                    objFormula[1][resSumatoria.idSumatoria] = resSumatoria.trim2;
+                    objFormula[2][resSumatoria.idSumatoria] = resSumatoria.trim3;
+                    objFormula[3][resSumatoria.idSumatoria] = resSumatoria.trim4;
+                }
+            });
+        });
+        return [];
+    }
+
+    static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
         columnas.forEach(x =>
@@ -205,10 +263,9 @@ export class ComponentesService
                 {
                     etiqueta,
                     def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                    formato,
+                    tipoDeDato,
                     llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                    width: etiqueta === 'dato' ? 'auto' : '7%'
-
+                    width: etiqueta === 'dato' ? 'auto' : '9%'
                 };
             columnasTabla.push(columnaTabla);
         });
