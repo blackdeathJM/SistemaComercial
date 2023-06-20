@@ -2,9 +2,9 @@ export interface IGenerarColumnTabla
 {
     etiqueta: string;
     def: string;
-    llaveDato: string;
-    formato?: string;
     width: string;
+    llaveDato?: string;
+    formato?: string;
     tipoDeDato?: string;
     html?: string;
 }

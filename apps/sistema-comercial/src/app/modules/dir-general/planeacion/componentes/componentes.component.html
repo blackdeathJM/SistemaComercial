@@ -62,16 +62,20 @@
                 <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </article>
             <div class="flex flex-auto gap-8 mt-2" *ngIf="mirSelec?.componente">
-                <mat-checkbox id="chkTrim0" [formControl]="chkTrim0" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['Trim 1', 'T. Ant 1', 'Ad 1'],['trim1', 'trim1Ant', 'trim1Ad'])">
+                <mat-checkbox id="chkTrim0" [formControl]="chkTrim0" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm,['Trim 1', 'T. Ant 1', 'Ad 1'],
+                ['trim1', 'trim1Ant', 'trim1Ad'])">
                     Trimestre 1
                 </mat-checkbox>
-                <mat-checkbox id="chkTrim1" [formControl]="chkTrim1" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['Trim 2', 'T. Ant 2', 'Ad 2'],['trim2', 'trim2Ant', 'trim2Ad'])">
+                <mat-checkbox id="chkTrim1" [formControl]="chkTrim1" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,['Trim 2', 'T. Ant 2', 'Ad 2'],
+                ['trim2', 'trim2Ant', 'trim2Ad'])">
                     Trimestre 2
                 </mat-checkbox>
-                <mat-checkbox id="chkTrim2" [formControl]="chkTrim2" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['trim 3', 'T. Ant 3', 'Ad 3'],['trim3', 'trim3Ant', 'trim3Ad'])">
+                <mat-checkbox id="chkTrim2" [formControl]="chkTrim2" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,['trim 3', 'T. Ant 3', 'Ad 3'],
+                ['trim3', 'trim3Ant', 'trim3Ad'])">
                     Trimestre 3
                 </mat-checkbox>
-                <mat-checkbox id="chkTrim3" [formControl]="chkTrim3" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm, ['trim 4', 'T. Ant 4', 'Ad 4'],['trim4', 'trim4Ant', 'trim4Ad'])">
+                <mat-checkbox id="chkTrim3" [formControl]="chkTrim3" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,['trim 4', 'T. Ant 4', 'Ad 4'],
+                ['trim4', 'trim4Ant', 'trim4Ad'])">
                     Trimestre 4
                 </mat-checkbox>
             </div>

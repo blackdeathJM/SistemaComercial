@@ -5,6 +5,7 @@ import {IDatosTablaFormComun, IGenerarColumnTabla} from '#/libs/models/src/lib/t
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import * as math from 'mathjs';
 import {isEqual, pullAllWith} from "lodash-es";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -105,7 +106,6 @@ export class ComponentesService
     construirDatosTabla(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaFormComun[]
     {
         const tablaValores: IDatosTablaFormComun[] = [];
-
         for (const i of form)
         {
             const datos: IDatosTablaFormComun = {
@@ -193,12 +193,13 @@ export class ComponentesService
         return tablaValores;
     }
 
-    construirDatosTablaDinamica(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], ids: string[], idsTituloTabla: string[], formDin: object[]): any
+    crearObjFormulaDinamico(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
     {
-        const tituloColumna: IGenerarColumnTabla[] = [];
-        const objTabla: Record<string, string>[] = [];
-        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
+        // ids: string[], idsTituloTabla: string[], formDin: object[]
+        const idsTituloTabla = mirActivo.componente.idsColsTabla;
+        const formDin = mirActivo.componente.formDinamico;
 
+        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
         /* ? Obtenemos los ids que formaran la tabla que biene compues por él, id que se asignó y obtenemos su valor de cada trimestre */
         idsTituloTabla.forEach(x =>
         {
@@ -206,21 +207,19 @@ export class ComponentesService
             const separarTitulo = x.split('__');
             const cabecera = separarTitulo.shift();
             const idGenerado = separarTitulo.pop();
-
             // ? construir la estructura de la tabla buscando en el formDin
             const longitud = formDin.length;
+
             const idsPbr: string[] = [];
 
             for (let i = 0; i < longitud; i++)
             {
                 const valores: string[] = Object.values(formDin[i]);
-                console.log(valores);
                 idsPbr.push(...valores);
             }
             const idsEliminar: string[] = [];
             idsPbr.forEach((id: string) =>
             {
-                console.log(id);
                 //? Construimos el objecto que contrenda los datos para utilizar en la fórmula con mathjs
                 const resPbr = pbr.find(ele => ele.idIndicador === id);
                 if (resPbr)
@@ -247,28 +246,50 @@ export class ComponentesService
                 }
             });
         });
-        return [];
+        return objFormula;
     }
 
-    static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
+    static colCompDinamico(columnas: string[], tipoDeDato: string, conValoresTrim: boolean = false): IGenerarColumnTabla[]
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
-        columnas.forEach(x =>
+        if (conValoresTrim)
         {
-            const tituloColumna = x.split('__');
-            const etiqueta = tituloColumna.shift();
-            const def = tituloColumna.pop();
+            columnas.forEach(x =>
+            {
+                const tituloColumna = x.split('__');
+                const etiqueta = tituloColumna.shift();
+                const def = tituloColumna.pop();
 
-            const columnaTabla: IGenerarColumnTabla =
-                {
-                    etiqueta,
-                    def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                    tipoDeDato,
-                    llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                    width: etiqueta === 'dato' ? 'auto' : '9%'
-                };
-            columnasTabla.push(columnaTabla);
-        });
+                const colTabla: IGenerarColumnTabla[] =
+                    [
+                        {
+                            etiqueta,
+                            def: etiqueta === 'idIndicador' ? etiqueta : def,
+                            llaveDato: etiqueta === 'idIndicador' ? etiqueta : def,
+                            tipoDeDato,
+                            width: 'auto'
+                        }
+                    ];
+            });
+        } else
+        {
+            columnas.forEach(x =>
+            {
+                const tituloColumna = x.split('__');
+                const etiqueta = tituloColumna.shift();
+                const def = tituloColumna.pop();
+                const columnaTabla: IGenerarColumnTabla =
+                    {
+                        etiqueta,
+                        def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                        tipoDeDato,
+                        llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                        width: etiqueta === 'dato' ? 'auto' : '9%'
+                    };
+                columnasTabla.push(columnaTabla);
+            });
+        }
+        console.log(columnasTabla);
         return columnasTabla;
     }
 }

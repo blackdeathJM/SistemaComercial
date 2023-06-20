@@ -17,8 +17,6 @@ import {finalize} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DateTime} from 'luxon';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
-import {jsPDF} from "jspdf";
-import html2canvas from "html2canvas";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {IDatosTablaFormComun, IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
@@ -71,7 +69,6 @@ export class ComponentesComponent
                 return;
             }
             this.chkRestablecer = false;
-            this.cdr.markForCheck();
             const colsBase: IGenerarColumnTabla[] =
                 [
                     {
@@ -98,6 +95,7 @@ export class ComponentesComponent
             this.chkTrim3.reset();
             this.columnas = [...colsBase];
             this.datosTabla.data = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
+
             this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
             this.avTrim[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
@@ -136,10 +134,6 @@ export class ComponentesComponent
 
     imprimirComp(mirSelec: IMirCuestionario): void
     {
-        const pbr = this.planeacionQuery.cuestionarioPbrV();
-        const sumatorias = this.planeacionQuery.sumatoriaPbrV();
-        const mirActivo = this.planeacionQuery.cuestionarioMir();
-        const probar = this.componentesService.construirDatosTablaDinamica(pbr, sumatorias, mirActivo.componente.ids, mirActivo.componente.idsColsTabla, mirActivo.componente.formDinamico);
         // this.ngxUiLoaderService.startLoader(this.ngxLoader);
         // const componente = this.componenteRef.nativeElement;
         // componente.style.color = 'black';
@@ -160,13 +154,20 @@ export class ComponentesComponent
         //     componente.style.color = '';
         //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
         // });
+
+        const pbr = this.planeacionQuery.cuestionarioPbrV();
+        const sumatorias = this.planeacionQuery.sumatoriaPbrV();
+        const mirActivo = this.planeacionQuery.cuestionarioMir();
+        const probar = this.componentesService.crearObjFormulaDinamico(pbr, sumatorias, mirActivo);
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], def: string[]): void
     {
         const mir = this.planeacionQuery.cuestionarioMir();
+
         const [trim, ant, ad] = etiqueta;
         const [defTrim, defAnt, defAd] = def;
+
         //Obtenemos el último caracter del ID asignando a cada checkbox para usarlo como índice del array que mostrara los avances trimestrales en el html
         this.chkVisible[parseInt(e.source.id.charAt(e.source.id.length - 1), 10)] = e.checked;
 
@@ -174,11 +175,14 @@ export class ComponentesComponent
         const colsAnt: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ant], [defAnt], ['6%'], [mir.componente.tipoValorTrim]);
         const colsAd: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ad], [defAd], ['6%'], [mir.componente.tipoValorTrim]);
 
+        const colsDin: IGenerarColumnTabla[] = TablaComponenteService.genColFormDinamico(mir, trim, defTrim);
+
         const formConfig =
             {
                 [TiposFormulario.COMUN]: colsComun,
                 [TiposFormulario.PERIODO_ANT]: colsComun.concat(colsAnt),
-                [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd)
+                [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd),
+                [TiposFormulario.DIN]: colsDin
             };
         const colAgregar = formConfig[tipoForm];
 
