@@ -46,10 +46,22 @@
 
                 <form class="flex-auto" [formGroup]="formDinamico" *ngIf="formDinamico">
                     <div class="flex flex-auto gap-4">
-                        <mat-form-field *ngFor="let formCtrlNombre of tituloCols; let i=index; trackBy: trackByCtrls" class="flex-auto">
-                            <mat-label>{{formCtrlNombre}}</mat-label>
-                            <input #listaCtrls [name]="formCtrlNombre" matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre, i)" (dblclick)="dblAsigValCtrl()">
-                        </mat-form-field>
+                        <div class="flex flex-auto flex-col" *ngFor="let ctrlNombre of tituloCols; let i=index; trackBy:trackByCtrls">
+                            <mat-form-field class="flex-auto">
+                                <mat-label>{{ctrlNombre}}</mat-label>
+                                <input #listaCtrls [name]="ctrlNombre" matInput formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.idIndicador}}" (focus)="conFoco(ctrlNombre, i, 'idIndicador')"
+                                       (dblclick)="dblAsigValCtrl()">
+                            </mat-form-field>
+                            <ng-container *ngIf="mostrarPeriodoAnt">
+                                <mat-form-field class="flex-shrink-0">
+                                    <mat-label>Trimestre anterior</mat-label>
+                                    <input matInput placeholder="T1" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant1}}" (focus)="focoTrimAnt(ctrlNombre, 'ant1')">
+                                    <input matInput placeholder="T2" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant2}}" (focus)="focoTrimAnt(ctrlNombre, 'ant2')">
+                                    <input matInput placeholder="T3" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant3}}" (focus)="focoTrimAnt(ctrlNombre, 'ant3')">
+                                    <input matInput placeholder="T4" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant4}}" (focus)="focoTrimAnt(ctrlNombre, 'ant4')">
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
                     </div>
                 </form>
                 <mat-checkbox color="primary" (change)="chkPeriodoAnt($event)">Utilizar valores del trimestre anterior</mat-checkbox>

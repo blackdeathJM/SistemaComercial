@@ -7,7 +7,7 @@ import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reac
 import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 import {MatTableDataSource} from "@angular/material/table";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
-import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -30,6 +30,17 @@ import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.compon
 import {fuseAnimations} from "@s-fuse/public-api";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {ToastrService} from "ngx-toastr";
+
+export enum PrefFormDin
+{
+    idIndicador = 'idIndicador',
+    dato = 'dato',
+    ant1 = 'ant1',
+    ant2 = 'ant2',
+    ant3 = 'ant3',
+    ant4 = 'ant4'
+}
 
 @Component({
     selector: 'app-mod-comp-dinamico',
@@ -54,27 +65,29 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     sub = new Subscription();
     filPbr: IPbrCuestionario[] = [];
     filSumatorias: ISumatorias[] = [];
-    tituloCols: string[] = ['idIndicador'];
+    tituloCols: string[] = [];
 
     datosTabla = new MatTableDataSource<any>([]);
     columnas: IGenerarColumnTabla[] = [];
     ids: string[] = [];
-
     ctrlNombre: string = null;
     ctrlValor: string = null;
     ctrlDato: string = null;
+    ctrlAnt1: number = 0;
+    ctrlAnt2: number = 0;
+    ctrlAnt3: number = 0;
+    ctrlAnt4: number = 0;
+
     indiceCtrlActual = 0;
+    mostrarPeriodoAnt = false;
     tipoValores = Object.keys(TipoValores);
     ctrlTooltip = '';
 
     mjsIdDuplicado: string = `No puedes agregar elementos que tengan el mismo id si requieres el mismo dato para realizar la formula solo necesitas aplicarlo en tu
                 formula cuantas veces necesites`;
-    validadorNumerico = [RxwebValidators.required({message: 'Este campo es requerido'}), RxwebValidators.numeric({
-        allowDecimal: true,
-        message: 'El valor debe ser numerico'
-    })];
 
     formDinamico: FormGroup;
+    tipoFormulario: TiposFormulario;
 
     formTipoValores: FormGroup = this.rxFb.group({
         tipoValorTrim: [null, RxwebValidators.required({message: 'Es necesario seleccionar que tipo de valor son los trimestres'})],
@@ -83,15 +96,8 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         etiqueta: ['']
     });
 
-    formTrimAnt: FormGroup = this.rxFb.group({
-        trim1Ant: [0, this.validadorNumerico],
-        trim2Ant: [0, this.validadorNumerico],
-        trim3Ant: [0, this.validadorNumerico],
-        trim4Ant: [0, this.validadorNumerico]
-    });
-
     constructor(private rxFb: RxFormBuilder, public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private location: Location, private activatedRoute: ActivatedRoute,
-                private render: Renderer2)
+                private render: Renderer2, private toastrService: ToastrService)
     {}
 
     ngOnInit(): void
@@ -101,11 +107,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             this.location.back();
         }
         this.sub.add(this.activatedRoute.params.subscribe(params => this.idIndicadorMir = params.idMir));
-
-        this.formDinamico = this.rxFb.group({
-            idIndicador: ['', RxwebValidators.required({message: 'Este campo es requerido'})],
-            dato: ['', RxwebValidators.required({message: 'Es requerida una descripcion'})]
-        });
+        this.formDinamico = new FormGroup({});
     }
 
     ngAfterContentInit(): void
@@ -122,12 +124,30 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     agregar(e: MatChipInputEvent)
     {
         let valor = (e.value || '').trim();
+        if (this.tituloCols.length === 8)
+        {
+            this.toastrService.warning('No puedes agregar mas columnas llegaste al limite', 'Limite de columnas');
+            return;
+        }
         if (valor)
         {
             const generarUuid = uuidv4().toString().substring(0, 7).toUpperCase()
             valor = valor + '__' + generarUuid;
-            const nvoCtrl = new FormControl('', RxwebValidators.required({message: 'Este campo es requerido'}));
-            this.formDinamico.addControl(generarUuid, nvoCtrl);
+
+            const ctrlId = new FormControl('', RxwebValidators.required({message: 'Este campo es requerido'}));
+            const ctrlDato = new FormControl('');
+            const trim1Ant = new FormControl(0, RxwebValidators.numeric({allowDecimal: true, message: 'Valor num'}));
+            const trim2Ant = new FormControl(0, RxwebValidators.numeric({allowDecimal: true, message: 'Valor num'}));
+            const trim3Ant = new FormControl(0, RxwebValidators.numeric({allowDecimal: true, message: 'Valor num'}));
+            const trim4Ant = new FormControl(0, RxwebValidators.numeric({allowDecimal: true, message: 'Valor num'}));
+
+            this.formDinamico.addControl(PrefFormDin.idIndicador + generarUuid, ctrlId);
+            this.formDinamico.addControl(PrefFormDin.dato + generarUuid, ctrlDato);
+            this.formDinamico.addControl(PrefFormDin.ant1 + generarUuid, trim1Ant);
+            this.formDinamico.addControl(PrefFormDin.ant2 + generarUuid, trim2Ant);
+            this.formDinamico.addControl(PrefFormDin.ant3 + generarUuid, trim3Ant);
+            this.formDinamico.addControl(PrefFormDin.ant4 + generarUuid, trim4Ant);
+
             this.tituloCols.push(valor);
         }
         e.chipInput!.clear();
@@ -158,14 +178,20 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         {
             return;
         }
+        this.formDinamico.get(this.ctrlNombre).setValue(pbr.idIndicador);
+        const ctrlId = this.ctrlNombre.replace(PrefFormDin.idIndicador, '');
+        this.formDinamico.get(PrefFormDin.dato + ctrlId).setValue(pbr.dato);
+        const valoresTrimAnt = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, pbr.idIndicador, false);
 
-        if (this.ctrlNombre === 'idIndicador' || this.ctrlNombre === 'dato')
+        if (isNil(valoresTrimAnt))
         {
-            this.formDinamico.get('idIndicador').setValue(pbr.idIndicador);
-            this.formDinamico.get('dato').setValue(pbr.dato);
             return;
         }
-        this.formDinamico.get(this.ctrlNombre).setValue(pbr.idIndicador);
+
+        this.formDinamico.get(PrefFormDin.ant1 + ctrlId).setValue(valoresTrimAnt.trim1);
+        this.formDinamico.get(PrefFormDin.ant2 + ctrlId).setValue(valoresTrimAnt.trim1);
+        this.formDinamico.get(PrefFormDin.ant3 + ctrlId).setValue(valoresTrimAnt.trim1);
+        this.formDinamico.get(PrefFormDin.ant4 + ctrlId).setValue(valoresTrimAnt.trim1);
         this.cambioDeFocoCtrlsInput();
     }
 
@@ -173,13 +199,6 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     {
         if (isNil(this.ctrlNombre))
         {
-            return;
-        }
-
-        if (this.ctrlNombre === 'idIndicador' || this.ctrlNombre === 'dato')
-        {
-            this.formDinamico.get('idIndicador').setValue(sumatoria.idSumatoria);
-            this.formDinamico.get('dato').setValue(sumatoria.nombreSumatoria);
             return;
         }
         this.formDinamico.get(this.ctrlNombre).setValue(sumatoria.idSumatoria);
@@ -198,11 +217,16 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.ctrlDato = sumatoria.nombreSumatoria;
     }
 
-    conFoco(formCtrlNombre: string, i: number): void
+    conFoco(formCtrlNombre: string, i: number, pref: string): void
     {
-        this.ctrlNombre = formCtrlNombre.split('__').pop();
+        this.ctrlNombre = pref + formCtrlNombre.split('__').pop();
         this.indiceCtrlActual = i;
         this.ctrlTooltip = this.ctrlDato;
+    }
+
+    focoTrimAnt(ctrlNombre: string, pref: string): void
+    {
+
     }
 
     dblAsigValCtrl(): void
@@ -211,18 +235,13 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         {
             return;
         }
-        if (this.ctrlNombre === 'idIndicador' || this.ctrlNombre === 'dato')
-        {
-            this.formDinamico.get('idIndicador').setValue(this.ctrlValor);
-            this.formDinamico.get('dato').setValue(this.ctrlDato);
-            return;
-        }
+
         this.formDinamico.get(this.ctrlNombre).setValue(this.ctrlValor);
     }
 
     agregarLista(): void
     {
-
+        console.log(this.formDinamico.value);
     }
 
     dblFormula(): void
@@ -253,7 +272,8 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
 
     chkPeriodoAnt(e: MatCheckboxChange): void
     {
-
+        this.mostrarPeriodoAnt = e.checked;
+        this.tipoFormulario = e.checked ? TiposFormulario.PERIODO_ANT : TiposFormulario.DIN;
     }
 
     trackByCtrls(indice: number, elemento: string): string | number
@@ -265,4 +285,6 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     {
         this.sub.unsubscribe();
     }
+
+    protected readonly PrefFormDin = PrefFormDin;
 }

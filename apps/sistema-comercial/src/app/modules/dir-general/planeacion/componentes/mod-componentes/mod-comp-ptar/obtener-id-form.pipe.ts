@@ -6,8 +6,8 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class ObtenerIdFormPipe implements PipeTransform
 {
-    transform(dato: string): string
+    transform(dato: string, pref: string): string
     {
-        return dato.split('__').pop();
+        return pref + dato.split('__').pop();
     }
 }

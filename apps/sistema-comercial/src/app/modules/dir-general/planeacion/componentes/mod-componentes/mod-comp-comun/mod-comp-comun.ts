@@ -273,7 +273,7 @@ export class ModCompComun implements OnDestroy
         if (this.tipoForm === TiposFormulario.PERIODO_ANT)
         {
             const id = this.formComun.get('idIndicador').value;
-            const periodoAnterior = this.planeacionQuery.filPorAno(this.planeacionQuery.getActive().ano, id, this.esSumatoria);
+            const periodoAnterior = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, id, this.esSumatoria);
 
             if (isNotNil(periodoAnterior))
             {
