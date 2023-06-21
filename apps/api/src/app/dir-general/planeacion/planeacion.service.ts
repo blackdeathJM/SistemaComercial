@@ -228,10 +228,7 @@ export class PlaneacionService
         };
         if (actualizar)
         {
-            return await this.planeacion.findOneAndUpdate({
-                '_id': _id,
-                'pbrSumatoria.idSumatoria': idSumatoria
-            }, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
+            return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrSumatoria.idSumatoria': idSumatoria}, {$set: {'pbrSumatoria.$': pbrSumatoria}}, {new: true}).exec();
         }
         return await this.planeacion.findByIdAndUpdate(_id, {$addToSet: {pbrSumatoria}}, {new: true}).exec();
     }

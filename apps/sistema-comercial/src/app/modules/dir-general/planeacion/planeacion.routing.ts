@@ -18,7 +18,7 @@ export const planeacionRouting: Routes =
                     },
                     {
                         path: 'mir/registro-componente/:_id/:idMir',
-                        loadComponent: () => import('@s-dir-general/planeacion/componentes/mod-componentes/mod-componentes.component').then(c => c.ModComponentesComponent)
+                        loadComponent: () => import('@s-dir-general/planeacion/componentes/mod-componentes/mod-comp-dinamico/mod-comp-dinamico.component').then(c => c.ModCompDinamicoComponent)
                     }
                 ]
         }

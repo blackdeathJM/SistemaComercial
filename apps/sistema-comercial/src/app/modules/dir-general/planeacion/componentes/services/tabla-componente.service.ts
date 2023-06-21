@@ -5,30 +5,32 @@ import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir
 @Injectable({providedIn: 'root'})
 export class TablaComponenteService
 {
-    static genColFormComun(etiqueta: string[], def: string[], width: string[], tipoDeDato: string[]): IGenerarColumnTabla[]
+    static genColFormComun(etiqueta: string[], width: string[], tipoDeDato: string, suf: string): IGenerarColumnTabla[]
     {
         const col: IGenerarColumnTabla[] = [];
+
         etiqueta.forEach((x, i) =>
         {
-            col.push({etiqueta: x, def: def[i], llaveDato: def[i], width: width[i], tipoDeDato: tipoDeDato[i]});
+            col.push({etiqueta: x + ' ' + suf, def: x + suf, width: width[i], tipoDeDato: tipoDeDato});
         });
         return col;
     }
 
-    static genColFormDinamico(mirActivo: IMirCuestionario, etiquetaTrim: string, defTrim: string): IGenerarColumnTabla[]
+    static genColFormDinamico(arregloDivider: string[], etiqueta: string, def: string, omitirIndicadorPrincipal = false): IGenerarColumnTabla[]
     {
         const col: IGenerarColumnTabla[] = [];
         //? Eliminamos los dos primeros elementos del arreglo, que son él, id y el dato, ya que esos están declarados como columnas base en el componentes.component.ts
-        const ids = mirActivo.componente.idsColsTabla.slice(2);
+        // const ids = omitirIndicadorPrincipal ? arregloDivider.slice(2) : arregloDivider;
 
-        ids.forEach((x) =>
-        {
-            const idsEnArreglo = x.split('__');
-            const etiqueta = idsEnArreglo.shift() + ' ' + etiquetaTrim;
-            const def = idsEnArreglo.pop() + defTrim;
-            col.push({etiqueta, def, width: '6%'});
-        });
-
+        const idsPrimeros = arregloDivider.slice(0, 2);
+        const idsOmitirPrimeros = arregloDivider.slice(2);
+        // ids.forEach((x) =>
+        // {
+        //     const idsEnArreglo = x.split('__');
+        //     const etiquetaComp = idsEnArreglo.shift() + ' ' + etiqueta;
+        //     const defComp = idsEnArreglo.pop() + def;
+        //     col.push({etiqueta: etiquetaComp, def: defComp, width: '6%'});
+        // });
         return col;
     }
 }

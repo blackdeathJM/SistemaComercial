@@ -68,6 +68,7 @@ export class ModCompPtar
     ctrlNombre: string = null;
     ctrlValor: string = null;
     ctrlDato: string = null;
+
     cargando = false;
     indiceCtrlActual = 0;
     tipoValores = Object.values(TipoValores);

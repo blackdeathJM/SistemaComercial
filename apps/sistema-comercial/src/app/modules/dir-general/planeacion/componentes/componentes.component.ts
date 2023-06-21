@@ -27,6 +27,8 @@ import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {isEqual, pullAllWith} from "lodash-es";
 import {MatTableDataSource} from "@angular/material/table";
+import html2canvas from "html2canvas";
+import {jsPDF} from "jspdf";
 
 @Component({
     selector: 'app-componentes',
@@ -54,6 +56,7 @@ export class ComponentesComponent
     chkTrim1 = new FormControl(false);
     chkTrim2 = new FormControl(false);
     chkTrim3 = new FormControl(false);
+
     columnas: IGenerarColumnTabla[] = [];
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private router: Router, private cdr: ChangeDetectorRef,
@@ -88,13 +91,17 @@ export class ComponentesComponent
                 ];
             const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
             const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
-            const trimObjCalcular = ComponentesService.crearObjFormula(pbrS, mir.componente.ids, sumatorias, mir.componente.formComun);
+
+            const trimObjCalcular = this.componentesService.objFormula(pbrS, sumatorias, mir);
+
             this.chkTrim0.reset();
             this.chkTrim1.reset();
             this.chkTrim2.reset();
             this.chkTrim3.reset();
+
             this.columnas = [...colsBase];
-            this.datosTabla.data = this.componentesService.construirDatosTabla(pbrS, mir.componente.formComun, sumatorias);
+
+            this.datosTabla.data = this.componentesService.datosTablaComun(pbrS, mir.componente.formComun, sumatorias);
 
             this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
             this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
@@ -134,58 +141,62 @@ export class ComponentesComponent
 
     imprimirComp(mirSelec: IMirCuestionario): void
     {
-        // this.ngxUiLoaderService.startLoader(this.ngxLoader);
-        // const componente = this.componenteRef.nativeElement;
-        // componente.style.color = 'black';
-        // html2canvas(componente).then(canvas =>
-        // {
-        //     const img = canvas.toDataURL('image/png');
-        //     const pdf = new jsPDF('p', 'pt', 'a4');
-        //     pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
-        //     pdf.setFontSize(8);
-        //     pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
-        //     const imgProps = pdf.getImageProperties(img);
-        //     const pdfAncho = pdf.internal.pageSize.getWidth();
-        //     const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
-        //     pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
-        //     pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
-        //     pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
-        //     pdf.save('componente.pdf');
-        //     componente.style.color = '';
-        //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
-        // });
-
-        const pbr = this.planeacionQuery.cuestionarioPbrV();
-        const sumatorias = this.planeacionQuery.sumatoriaPbrV();
-        const mirActivo = this.planeacionQuery.cuestionarioMir();
-        const probar = this.componentesService.crearObjFormulaDinamico(pbr, sumatorias, mirActivo);
+        this.ngxUiLoaderService.startLoader(this.ngxLoader);
+        const componente = this.componenteRef.nativeElement;
+        componente.style.color = 'black';
+        html2canvas(componente).then(canvas =>
+        {
+            const img = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+            pdf.setFontSize(8);
+            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+            const imgProps = pdf.getImageProperties(img);
+            const pdfAncho = pdf.internal.pageSize.getWidth();
+            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+            pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
+            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
+            pdf.save('componente.pdf');
+            componente.style.color = '';
+            this.ngxUiLoaderService.stopLoader(this.ngxLoader);
+        });
     }
 
-    cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], def: string[]): void
+    cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], suf: string): void
     {
         const mir = this.planeacionQuery.cuestionarioMir();
-
-        const [trim, ant, ad] = etiqueta;
-        const [defTrim, defAnt, defAd] = def;
-
         //Obtenemos el último caracter del ID asignando a cada checkbox para usarlo como índice del array que mostrara los avances trimestrales en el html
         this.chkVisible[parseInt(e.source.id.charAt(e.source.id.length - 1), 10)] = e.checked;
 
-        const colsComun: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([trim], [defTrim], ['6%'], [mir.componente.tipoValorTrim]);
-        const colsAnt: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ant], [defAnt], ['6%'], [mir.componente.tipoValorTrim]);
-        const colsAd: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ad], [defAd], ['6%'], [mir.componente.tipoValorTrim]);
+        const idIndicadorYDato = etiqueta.slice(0, 2);
+        const restoElementos = etiqueta.slice(2);
 
-        const colsDin: IGenerarColumnTabla[] = TablaComponenteService.genColFormDinamico(mir, trim, defTrim);
+        const cols: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun(restoElementos, ['6%'], mir.componente.tipoValorTrim, suf);
 
-        const formConfig =
-            {
-                [TiposFormulario.COMUN]: colsComun,
-                [TiposFormulario.PERIODO_ANT]: colsComun.concat(colsAnt),
-                [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd),
-                [TiposFormulario.DIN]: colsDin
-            };
-        const colAgregar = formConfig[tipoForm];
+        // const colsAnt: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ant], [defAnt], ['6%'], [mir.componente.tipoValorTrim]);
+        // const colsAd: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ad], [defAd], ['6%'], [mir.componente.tipoValorTrim]);
 
-        e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
+        // const colsDin: IGenerarColumnTabla[] = TablaComponenteService.genColFormDinamico(mir.componente.idsColsTabla, trim, defTrim);
+
+        // const formConfig =
+        //     {
+        //         [TiposFormulario.COMUN]: colsComun,
+        //         [TiposFormulario.PERIODO_ANT]: colsComun.concat(colsAnt),
+        //         [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd),
+        //         [TiposFormulario.DIN]: colsDin
+        //     };
+
+        // const colAgregar = formConfig[tipoForm];
+
+        if (e.checked)
+        {
+            this.columnas = [...this.columnas].concat(cols);
+            console.log('columnas ya formadas', this.columnas);
+        } else
+        {
+            // this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
+        }
+        // e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
     }
 }

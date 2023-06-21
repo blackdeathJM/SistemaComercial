@@ -52,46 +52,15 @@ export class ComponentesService
         return '';
     }
 
-    static crearObjFormula(pbr: IPbrCuestionario[], ids: string[], sumatorias: ISumatorias[], formComun: IFormComun[]): object[]
+    objFormula(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
     {
-        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
-        ids.forEach((id) =>
+        if (mirActivo.componente.tipoForm !== TiposFormulario.DIN)
         {
-            const idDivididoEnArray = id.split('__');
-            const nvoId = idDivididoEnArray.shift();
-            let sufijo = '__' + idDivididoEnArray.pop();
-            let trimestresAnt = [0, 0, 0, 0];
-
-            const pbrEncontrado = pbr.find(x => x.idIndicador === nvoId);
-            if (sufijo === '__undefined')
-            {
-                sufijo = '';
-            }
-            if (sufijo === '__Ant')
-            {
-                const valoresTrim = formComun.find(x => x.idIndicador === pbrEncontrado.idIndicador);
-                trimestresAnt[0] = valoresTrim.trim1Ant;
-                trimestresAnt[1] = valoresTrim.trim2Ant;
-                trimestresAnt[2] = valoresTrim.trim3Ant;
-                trimestresAnt[3] = valoresTrim.trim4Ant;
-            }
-            if (isNotNil(pbrEncontrado))
-            {
-                objFormula[0][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : pbrEncontrado.trim1;
-                objFormula[1][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : pbrEncontrado.trim2;
-                objFormula[2][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : pbrEncontrado.trim3;
-                objFormula[3][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : pbrEncontrado.trim4;
-            }
-            const sumatoria = sumatorias.find(x => x.idSumatoria === nvoId);
-            if (isNotNil(sumatoria))
-            {
-                objFormula[0][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : sumatoria.trim1;
-                objFormula[1][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : sumatoria.trim2;
-                objFormula[2][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : sumatoria.trim3;
-                objFormula[3][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : sumatoria.trim4;
-            }
-        });
-        return objFormula;
+            return this.objFormulaComun(pbr, sumatorias, mirActivo);
+        } else
+        {
+            return this.objFormulaDin(pbr, sumatorias, mirActivo);
+        }
     }
 
     static calcAvances(formula: string, obj: object): string
@@ -103,9 +72,10 @@ export class ComponentesService
         return math.evaluate(formula, obj);
     }
 
-    construirDatosTabla(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaFormComun[]
+    datosTablaComun(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaFormComun[]
     {
         const tablaValores: IDatosTablaFormComun[] = [];
+
         for (const i of form)
         {
             const datos: IDatosTablaFormComun = {
@@ -193,7 +163,80 @@ export class ComponentesService
         return tablaValores;
     }
 
-    crearObjFormulaDinamico(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
+    datosTablaDinamica(pbr: IPbrCuestionario, sumatorias: ISumatorias, form: object[], idsTabla: string[]): void
+    {
+
+    }
+
+    static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
+    {
+        const columnasTabla: IGenerarColumnTabla[] = [];
+        columnas.forEach(x =>
+        {
+            const tituloColumna = x.split('__');
+            const etiqueta = tituloColumna.shift();
+            const def = tituloColumna.pop();
+
+            const columnaTabla: IGenerarColumnTabla =
+                {
+                    etiqueta,
+                    def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                    tipoDeDato,
+                    llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                    width: etiqueta === 'dato' ? 'auto' : '9%'
+                };
+            columnasTabla.push(columnaTabla);
+        });
+        return columnasTabla;
+    }
+
+    private objFormulaComun(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
+    {
+        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
+        const ids = mirActivo.componente.ids;
+        const formComun = mirActivo.componente.formComun;
+
+
+        ids.forEach((id) =>
+        {
+            const idDivididoEnArray = id.split('__');
+            const nvoId = idDivididoEnArray.shift();
+            let sufijo = '__' + idDivididoEnArray.pop();
+            let trimestresAnt = [0, 0, 0, 0];
+
+            const pbrEncontrado = pbr.find(x => x.idIndicador === nvoId);
+            if (sufijo === '__undefined')
+            {
+                sufijo = '';
+            }
+            if (sufijo === '__Ant')
+            {
+                const valoresTrim = formComun.find(x => x.idIndicador === pbrEncontrado.idIndicador);
+                trimestresAnt[0] = valoresTrim.trim1Ant;
+                trimestresAnt[1] = valoresTrim.trim2Ant;
+                trimestresAnt[2] = valoresTrim.trim3Ant;
+                trimestresAnt[3] = valoresTrim.trim4Ant;
+            }
+            if (isNotNil(pbrEncontrado))
+            {
+                objFormula[0][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : pbrEncontrado.trim1;
+                objFormula[1][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : pbrEncontrado.trim2;
+                objFormula[2][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : pbrEncontrado.trim3;
+                objFormula[3][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : pbrEncontrado.trim4;
+            }
+            const sumatoria = sumatorias.find(x => x.idSumatoria === nvoId);
+            if (isNotNil(sumatoria))
+            {
+                objFormula[0][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : sumatoria.trim1;
+                objFormula[1][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : sumatoria.trim2;
+                objFormula[2][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : sumatoria.trim3;
+                objFormula[3][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : sumatoria.trim4;
+            }
+        });
+        return objFormula;
+    }
+
+    private objFormulaDin(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
     {
         // ids: string[], idsTituloTabla: string[], formDin: object[]
         const idsTituloTabla = mirActivo.componente.idsColsTabla;
@@ -247,49 +290,5 @@ export class ComponentesService
             });
         });
         return objFormula;
-    }
-
-    static colCompDinamico(columnas: string[], tipoDeDato: string, conValoresTrim: boolean = false): IGenerarColumnTabla[]
-    {
-        const columnasTabla: IGenerarColumnTabla[] = [];
-        if (conValoresTrim)
-        {
-            columnas.forEach(x =>
-            {
-                const tituloColumna = x.split('__');
-                const etiqueta = tituloColumna.shift();
-                const def = tituloColumna.pop();
-
-                const colTabla: IGenerarColumnTabla[] =
-                    [
-                        {
-                            etiqueta,
-                            def: etiqueta === 'idIndicador' ? etiqueta : def,
-                            llaveDato: etiqueta === 'idIndicador' ? etiqueta : def,
-                            tipoDeDato,
-                            width: 'auto'
-                        }
-                    ];
-            });
-        } else
-        {
-            columnas.forEach(x =>
-            {
-                const tituloColumna = x.split('__');
-                const etiqueta = tituloColumna.shift();
-                const def = tituloColumna.pop();
-                const columnaTabla: IGenerarColumnTabla =
-                    {
-                        etiqueta,
-                        def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                        tipoDeDato,
-                        llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                        width: etiqueta === 'dato' ? 'auto' : '9%'
-                    };
-                columnasTabla.push(columnaTabla);
-            });
-        }
-        console.log(columnasTabla);
-        return columnasTabla;
     }
 }
