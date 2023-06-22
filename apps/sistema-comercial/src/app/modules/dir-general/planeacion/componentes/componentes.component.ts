@@ -20,12 +20,10 @@ import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {IDatosTablaFormComun, IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
-import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {isEqual, pullAllWith} from "lodash-es";
 import {MatTableDataSource} from "@angular/material/table";
 import html2canvas from "html2canvas";
 import {jsPDF} from "jspdf";
@@ -198,5 +196,10 @@ export class ComponentesComponent
             // this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
         }
         // e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
+    }
+
+    valorFila<strig>($event: any): void
+    {
+
     }
 }

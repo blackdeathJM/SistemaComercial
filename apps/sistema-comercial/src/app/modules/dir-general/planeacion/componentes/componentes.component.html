@@ -38,7 +38,7 @@
                     <span class="border-b-2 col-span-full text-center">{{mirSelec?.metodoCalculo}}</span>
                 </section>
 
-                <app-tabla-mat class="m-4" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente"/>
+                <app-tabla-mat class="m-4" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente" [obtenerValor]="false" (valorFila)="valorFila($event)"/>
 
                 <mat-divider class="border-4 mb-4 border-b-fuchsia-700 dark:border-fuchsia-950"></mat-divider>
                 <section class="grid grid-cols-8 gap-4 text-lg">
@@ -80,11 +80,11 @@
         <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
             <div class="flex flex-auto gap-4">
                 <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoComponente()">
-                    <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                    <mat-icon svgIcon="heroicons_outline:plus"/>
                     Registrar nuevos calculos
                 </button>
                 <button mat-raised-button color="accent" class="flex-auto" (click)="imprimirComp(mirSelec)">
-                    <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                    <mat-icon svgIcon="heroicons_outline:printer"/>
                     Imprimir
                 </button>
             </div>

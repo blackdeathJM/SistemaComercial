@@ -171,8 +171,10 @@ export class ComponentesService
     static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
+        // const regex = /^(.+)__(.+)$/;
         columnas.forEach((x, i) =>
         {
+            // const coincidencia = x.match(regex);
             const tituloColumna = x.split('__');
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
@@ -181,11 +183,11 @@ export class ComponentesService
                     etiqueta,
                     def: def,
                     tipoDeDato,
+                    tooltip: '',
                     width: i === 1 ? 'auto' : '9%'
                 };
             columnasTabla.push(columnaTabla);
         });
-
         return columnasTabla;
     }
 

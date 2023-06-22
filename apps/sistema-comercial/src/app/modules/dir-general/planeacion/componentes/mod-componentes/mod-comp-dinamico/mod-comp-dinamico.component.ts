@@ -8,7 +8,7 @@ import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/p
 import {MatTableDataSource} from "@angular/material/table";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {TiposFormulario, TipoValoresTrim} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatListModule} from "@angular/material/list";
@@ -129,11 +129,12 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.metodoDeCalculo = mirBuscado.metodoCalculo;
     }
 
-    agCtrlForm(pref: PrefFormDin[], uuid: string, ctrl: FormControl[]): void
+    agCtrlForm(pref: PrefFormDin[], uuid: string, valorPorDefecto: string | number, validacion: Validators): void
     {
-        pref.forEach((v, i) =>
+        pref.forEach((v) =>
         {
-            this.formDinamico.addControl(v + uuid, ctrl[i]);
+            const nvoCtrl = new FormControl(valorPorDefecto, validacion);
+            this.formDinamico.addControl(v + uuid, nvoCtrl);
         });
     }
 
@@ -150,20 +151,10 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             const generarUuid = uuidv4().toString().substring(0, 7).toUpperCase()
             valor = valor + '__' + generarUuid;
             const validarNumero = RxwebValidators.numeric({allowDecimal: true, message: 'Valor numerico', persistZero: true});
+            const requerido = RxwebValidators.required({message: 'Requerido'});
 
-            const ctrlId = new FormControl('', RxwebValidators.required({message: 'Este campo es requerido'}));
-            const ctrlDato = new FormControl('');
-            const trim1Ant = new FormControl(0, validarNumero);
-            const trim2Ant = new FormControl(0, validarNumero);
-            const trim3Ant = new FormControl(0, validarNumero);
-            const trim4Ant = new FormControl(0, validarNumero);
-
-            this.formDinamico.addControl(PrefFormDin.idIndicador + generarUuid, ctrlId);
-            this.formDinamico.addControl(PrefFormDin.dato + generarUuid, ctrlDato);
-            this.formDinamico.addControl(PrefFormDin.ant1 + generarUuid, trim1Ant);
-            this.formDinamico.addControl(PrefFormDin.ant2 + generarUuid, trim2Ant);
-            this.formDinamico.addControl(PrefFormDin.ant3 + generarUuid, trim3Ant);
-            this.formDinamico.addControl(PrefFormDin.ant4 + generarUuid, trim4Ant);
+            this.agCtrlForm(Object.values(PrefFormDin).slice(0, 2), generarUuid, '', [requerido]);
+            this.agCtrlForm(Object.values(PrefFormDin).slice(2), generarUuid, 0, [validarNumero]);
 
             this.tituloCols.push(valor);
         }
@@ -193,11 +184,11 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     {
         pref.forEach((v, i) =>
         {
-            this.formDinamico.get(v + ctrlId[i]).setValue(valorAsig[i]);
+            this.formDinamico.get(v + ctrlId).setValue(valorAsig[i]);
         })
     }
 
-    dobleClickPbr(pbr: IPbrCuestionario)
+    dblPbr(pbr: IPbrCuestionario)
     {
         if (isNil(this.ctrlNombre))
         {
@@ -209,6 +200,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.asigValorMul([PrefFormDin.dato, PrefFormDin.trim1, PrefFormDin.trim2, PrefFormDin.trim3, PrefFormDin.trim4], ctrlId, [pbr.dato, pbr.trim1.toString(), pbr.trim2.toString(),
             pbr.trim3.toString(), pbr.trim4.toString()]);
         this.cambioDeFocoCtrlsInput();
+
         const valoresTrimAnt = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, pbr.idIndicador, false);
         if (isNil(valoresTrimAnt))
         {
@@ -218,7 +210,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             valoresTrimAnt.trim3.toString(), valoresTrimAnt.trim4.toString()])
     }
 
-    dobleClickSumatoria(sumatoria: ISumatorias)
+    dblSumatoria(sumatoria: ISumatorias)
     {
         if (isNil(this.ctrlNombre))
         {
@@ -234,10 +226,8 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         {
             return;
         }
-        this.formDinamico.get(PrefFormDin.ant1 + ctrlId).setValue(valoresSumatoria.trim1);
-        this.formDinamico.get(PrefFormDin.ant2 + ctrlId).setValue(valoresSumatoria.trim2);
-        this.formDinamico.get(PrefFormDin.ant3 + ctrlId).setValue(valoresSumatoria.trim3);
-        this.formDinamico.get(PrefFormDin.ant4 + ctrlId).setValue(valoresSumatoria.trim4);
+        this.asigValorMul([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], ctrlId, [sumatoria.trim1.toString(), sumatoria.trim2.toString(), sumatoria.trim3.toString(),
+            sumatoria.trim4.toString()]);
     }
 
     focoInput(formCtrlNombre: string, i: number, pref: string): void
@@ -285,41 +275,51 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, idCtrlForm) =>
         {
             const ctrlId = idCtrlForm.split('__').pop();
-            const idPbr = this.obtValoresForm(PrefFormDin.idIndicador, ctrlId);
-            const dato = this.obtValoresForm(PrefFormDin.dato, ctrlId);
-            const ant1 = this.obtValoresForm(PrefFormDin.ant1, ctrlId);
-            const ant2 = this.obtValoresForm(PrefFormDin.ant2, ctrlId);
-            const ant3 = this.obtValoresForm(PrefFormDin.ant3, ctrlId);
-            const ant4 = this.obtValoresForm(PrefFormDin.ant4, ctrlId);
-
-            obj[PrefFormDin.idIndicador + ctrlId] = idPbr;
-            obj[PrefFormDin.dato + ctrlId] = dato;
-            obj[PrefFormDin.ant1 + ctrlId] = ant1;
-            obj[PrefFormDin.ant2 + ctrlId] = ant2;
-            obj[PrefFormDin.ant3 + ctrlId] = ant3;
-            obj[PrefFormDin.ant4 + ctrlId] = ant4;
-            return obj;
+            const arregloValores = this.obtValoresForm(Object.values(PrefFormDin), ctrlId);
+            const valoresParaObj = this.formarObj(Object.values(PrefFormDin), ctrlId, arregloValores);
+            return {...obj, ...valoresParaObj};
         }, {});
         this.objFormulario.push(objDinamico);
-        this.deshabilitarChk = true;
-        this.deshabilitarChips = true;
         //? Crear la estructura para las columnas
-
         const asigPrefCols = this.tituloCols.flatMap((x, i) =>
         {
             const tituloEnArray = x.split('__');
             const titulo = tituloEnArray.shift();
             const id = tituloEnArray.pop();
-
             if (i == 0)
             {
-                return [titulo + '__' + PrefFormDin.idIndicador + id, titulo + '__' + PrefFormDin.dato + id];
+                return [titulo + '__' + PrefFormDin.idIndicador + id, 'Descripcion' + '__' + PrefFormDin.dato + id];
             }
             return [titulo + '__' + PrefFormDin.idIndicador + id];
         });
 
         this.columnas = ComponentesService.colCompDinamico(asigPrefCols, 'texto');
         this.datosTabla.data = [...this.objFormulario];
+        this.toastrService.info('Se ha agregado un nuevo registro a la lista', 'Lista elementos');
+        this.deshabilitarChk = true;
+        this.deshabilitarChips = true;
+        this.formDinamico.reset();
+    }
+
+    formarObj(pref: string[], ctrlId: string, valores: string[]): IDatosFormulario
+    {
+        const obj: IDatosFormulario = {};
+        pref.forEach((x, i) =>
+        {
+            obj[x + ctrlId] = valores[i];
+        });
+        return obj;
+    }
+
+    obtValoresForm(pref: string[], ctrlId: string): string[]
+    {
+        const valores: string[] = [];
+        pref.forEach((x) =>
+        {
+            const valor = this.formDinamico.get(x + ctrlId).value;
+            valores.push(valor);
+        });
+        return valores;
     }
 
     dblFormula(): void
@@ -329,9 +329,6 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
 
     regComponente(): void
     {
-        console.log('Columnas--', this.columnas);
-        console.log('Datos---', this.objFormulario);
-        console.log('formulario', this.formDinamico.value);
     }
 
     asignarIdsParaFormula(): void
@@ -351,10 +348,6 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         return arr.length !== new Set(arr).size;
     }
 
-    obtValoresForm(pref: string, ctrlId: string): string | number
-    {
-        return this.formDinamico.get(pref + ctrlId).value;
-    }
 
     trackByCtrls(indice: number, elemento: string): string | number
     {
@@ -364,5 +357,11 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
+    }
+
+    valorFila<T>(e: typeof this.objFormulario[0]): void
+    {
+        type obj = typeof this.objFormulario[0];
+        const res: obj = e as obj;
     }
 }
