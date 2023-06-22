@@ -71,28 +71,15 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 
         if (isNil(filtrarElAno))
         {
-            this.ngxToast.alertaToast('No se encontraron valores de un año anterior, puedes establecer valores manualmente', 'PBR');
             return null;
         }
 
         if (filSumatoria)
         {
-            const res = filtrarElAno.pbrSumatoria.find(value => value.idSumatoria === id);
-            if (isNil(res))
-            {
-                this.ngxToast.alertaToast('No se encontraron valores para la sumatoria', 'Sumatoria');
-                return null;
-            }
-            return res;
+            return filtrarElAno.pbrSumatoria.find(value => value.idSumatoria === id);
         } else
         {
-            const res = filtrarElAno.pbrCuestionario.find(value => value.idIndicador === id);
-            if (isNil(res))
-            {
-                this.ngxToast.alertaToast('No se encontraron valores para el PBR', 'PBR');
-                return null;
-            }
-            return res;
+            return filtrarElAno.pbrCuestionario.find(value => value.idIndicador === id);
         }
     }
 }

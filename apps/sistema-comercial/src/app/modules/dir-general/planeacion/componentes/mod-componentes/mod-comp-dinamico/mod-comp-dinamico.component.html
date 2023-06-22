@@ -10,12 +10,12 @@
                 </mat-form-field>
                 <div class="flex flex-auto gap-4">
                     <mat-selection-list class="flex-auto overflow-y-auto border-2 rounded-lg h-100" color="primary" multiple="false">
-                        <mat-list-option class="border-b-2" *ngFor="let pbr of filPbr" [value]="pbr" (dblclick)="dobleClickPbr(pbr)" (click)="clickValorPbr(pbr)">
+                        <mat-list-option class="border-b-2" *ngFor="let pbr of filPbr" [value]="pbr" (dblclick)="dobleClickPbr(pbr)">
                             {{pbr.idIndicador}} - {{pbr.dato}}</mat-list-option>
                     </mat-selection-list>
 
                     <mat-selection-list *ngIf="filSumatorias.length > 0" class="flex-auto overflow-y-auto border-2 rounded-lg h-100" color="primary" multiple="false">
-                        <mat-list-option class="border-b-2" *ngFor="let sumatoria of filSumatorias" value="pbr" (dblclick)="dobleClickSumatoria(sumatoria)" (click)="clickSumatoria(sumatoria)">
+                        <mat-list-option class="border-b-2" *ngFor="let sumatoria of filSumatorias" value="pbr" (dblclick)="dobleClickSumatoria(sumatoria)">
                             {{sumatoria.idSumatoria}} - {{sumatoria.nombreSumatoria}}</mat-list-option>
                     </mat-selection-list>
                 </div>
@@ -49,22 +49,29 @@
                         <div class="flex flex-auto flex-col" *ngFor="let ctrlNombre of tituloCols; let i=index; trackBy:trackByCtrls">
                             <mat-form-field class="flex-auto">
                                 <mat-label>{{ctrlNombre}}</mat-label>
-                                <input #listaCtrls [name]="ctrlNombre" matInput formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.idIndicador}}" (focus)="conFoco(ctrlNombre, i, 'idIndicador')"
-                                       (dblclick)="dblAsigValCtrl()">
+                                <input #listaCtrls [name]="ctrlNombre" matInput formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.idIndicador}}"
+                                       (focus)="focoInput(ctrlNombre, i, PrefFormDin.idIndicador)">
+                            </mat-form-field>
+                            <mat-form-field class="flex-shrink-0">
+                                <mat-label>Valores trimestre</mat-label>
+                                <input matInput class="text-center" [value]="trim1">
+                                <input matInput class="text-center" [value]="trim2">
+                                <input matInput class="text-center" [value]="trim3">
+                                <input matInput class="text-center" [value]="trim4">
                             </mat-form-field>
                             <ng-container *ngIf="mostrarPeriodoAnt">
                                 <mat-form-field class="flex-shrink-0">
                                     <mat-label>Trimestre anterior</mat-label>
-                                    <input matInput placeholder="T1" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant1}}" (focus)="focoTrimAnt(ctrlNombre, 'ant1')">
-                                    <input matInput placeholder="T2" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant2}}" (focus)="focoTrimAnt(ctrlNombre, 'ant2')">
-                                    <input matInput placeholder="T3" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant3}}" (focus)="focoTrimAnt(ctrlNombre, 'ant3')">
-                                    <input matInput placeholder="T4" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant4}}" (focus)="focoTrimAnt(ctrlNombre, 'ant4')">
+                                    <input matInput placeholder="T1" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant1}}">
+                                    <input matInput placeholder="T2" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant2}}">
+                                    <input matInput placeholder="T3" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant3}}">
+                                    <input matInput placeholder="T4" class="text-center" formControlName="{{ctrlNombre | obtenerIdForm: PrefFormDin.ant4}}">
                                 </mat-form-field>
                             </ng-container>
                         </div>
                     </div>
                 </form>
-                <mat-checkbox color="primary" (change)="chkPeriodoAnt($event)">Utilizar valores del trimestre anterior</mat-checkbox>
+                <mat-checkbox color="primary" (change)="chkPeriodoAnt($event)" [disabled]="deshabilitarChk">Utilizar valores del trimestre anterior</mat-checkbox>
             </section>
         </mat-card-content>
 
@@ -110,6 +117,13 @@
                             <mat-error>{{formTipoValores.controls.tipoValorAvance['errorMessage']}}</mat-error>
                         </mat-form-field>
                     </div>
+                    <fuse-alert [type]="'warn'" appearance="fill" class="mt-2">
+                        <span fuseAlertTitle>Importante</span>
+                        <ol>
+                            <li>Cada id agregado tendra hara referencia a todos sus trimestres por lo que solo necesitas el id para realizar tus calculos</li>
+                            <li>Si necesitas hacer calculos con valores anteriores utiliza el sufijo <strong>__Ant</strong> en el id que necesites</li>
+                        </ol>
+                    </fuse-alert>
                     <div class="flex flex-auto gap-4">
                         <mat-form-field class="flex-auto">
                             <mat-label>Formula para calcular avance trimestral</mat-label>
@@ -126,7 +140,7 @@
         </mat-card-content>
         <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
             <div class="flex flex-auto gap-4">
-                <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()" [disabled]="cargando || formTipoValores.invalid">
+                <button mat-raised-button color="primary" class="flex-auto" (click)="regComponente()" [disabled]="cargando">
                     <mat-icon svgIcon="mat_solid:save"/>
                     Registrar componente
                 </button>

@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {isNil} from "@angular-ru/cdk/utils";
-import {TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {TipoValoresTrim} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {CurrencyPipe, DecimalPipe, PercentPipe} from "@angular/common";
 
 @Pipe({
@@ -20,23 +20,23 @@ export class MultiplesFormatosPipe implements PipeTransform
 
         switch (tipoDeDato)
         {
-            case TipoValores.NUMERO:
+            case TipoValoresTrim.NUMERO:
                 mostrarValor = Math.round(Number(mostrarValor)).toString();
                 break;
-            case TipoValores.PORCENTAJE:
+            case TipoValoresTrim.PORCENTAJE:
                 mostrarValor = new PercentPipe('en-US').transform(parseFloat(mostrarValor) / 100, '1.2-2');
                 // mostrarValor = Number(mostrarValor).toFixed(2).toString() + '%';
                 break;
-            case TipoValores.DECIMAL:
+            case TipoValoresTrim.DECIMAL:
                 mostrarValor = new DecimalPipe('en-US').transform(mostrarValor, '1.2-2');
                 break;
-            case TipoValores.PESOS:
+            case TipoValoresTrim.PESOS:
                 mostrarValor = new CurrencyPipe('en-US').transform(mostrarValor, 'USD', 'symbol', '1.2-2');
                 break;
-            case TipoValores.MT3:
+            case TipoValoresTrim.MT3:
                 mostrarValor = new DecimalPipe('en-us').transform(mostrarValor, '1.2-2') + 'Mt3';
                 break;
-            case TipoValores.LTS:
+            case TipoValoresTrim.LTS:
                 mostrarValor = new DecimalPipe('en-us').transform(mostrarValor, '1.2-2') + 'Lts';
                 break;
         }

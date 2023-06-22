@@ -171,22 +171,21 @@ export class ComponentesService
     static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
-        columnas.forEach(x =>
+        columnas.forEach((x, i) =>
         {
             const tituloColumna = x.split('__');
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
-
             const columnaTabla: IGenerarColumnTabla =
                 {
                     etiqueta,
-                    def: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
+                    def: def,
                     tipoDeDato,
-                    llaveDato: etiqueta === 'idIndicador' || etiqueta === 'dato' ? etiqueta : def,
-                    width: etiqueta === 'dato' ? 'auto' : '9%'
+                    width: i === 1 ? 'auto' : '9%'
                 };
             columnasTabla.push(columnaTabla);
         });
+
         return columnasTabla;
     }
 

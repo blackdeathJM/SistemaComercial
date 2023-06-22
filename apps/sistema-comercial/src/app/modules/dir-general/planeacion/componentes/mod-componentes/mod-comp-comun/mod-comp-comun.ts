@@ -7,7 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {isNil, isNotNil} from "@angular-ru/cdk/utils";
-import {AsigFormsComponente, IFormComun, TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {AsigFormsComponente, IFormComun, TiposFormulario, TipoValoresTrim} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RxFormBuilder, RxReactiveFormsModule, RxwebValidators} from "@rxweb/reactive-form-validators";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
@@ -52,7 +52,7 @@ export class ModCompComun implements OnDestroy
 
     cargando = false;
     esSumatoria = false;
-    tipoValores = Object.values(TipoValores);
+    tipoValores = Object.values(TipoValoresTrim);
 
     deshabilitarRadioBtn = true;
     mjsIdDuplicado: string = `No puedes agregar elementos que tengan el mismo id si requieres el mismo dato para realizar la formula solo necesitas aplicarlo en tu

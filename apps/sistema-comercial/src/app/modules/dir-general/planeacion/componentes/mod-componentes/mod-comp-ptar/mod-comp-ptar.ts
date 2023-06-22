@@ -19,7 +19,7 @@ import {v4 as uuidv4} from 'uuid';
 import {ObtenerIdFormPipe} from "@s-dir-general/componentes/mod-componentes/mod-comp-ptar/obtener-id-form.pipe";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {isNil} from "@angular-ru/cdk/utils";
-import {TiposFormulario, TipoValores} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {TiposFormulario, TipoValoresTrim} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
@@ -71,7 +71,7 @@ export class ModCompPtar
 
     cargando = false;
     indiceCtrlActual = 0;
-    tipoValores = Object.values(TipoValores);
+    tipoValores = Object.values(TipoValoresTrim);
 
     formDin: FormGroup;
 
@@ -245,6 +245,7 @@ export class ModCompPtar
             this.ids.push(valorFormulario);
             this.formTipoValores.get('formula').setValue(this.ids.join('+'));
         });
+
         this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
         this.datosTabla.data.push(objCompDin);
         this.datosTabla.data = [...this.datosTabla.data];

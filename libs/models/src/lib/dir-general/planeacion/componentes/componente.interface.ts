@@ -13,7 +13,7 @@ export enum AsigFormsComponente
     formula
 }
 
-export enum TipoValores
+export enum TipoValoresTrim
 {
     PESOS = 'pesos',
     PORCENTAJE = 'porcentaje',
