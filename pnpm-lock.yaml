@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@angular-material-components/datetime-picker':
     specifier: ^9.0.0
-    version: 9.0.0(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/material@16.1.1)(@angular/platform-browser@16.1.2)
+    version: 9.0.0(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/material@16.1.2)(@angular/platform-browser@16.1.2)
   '@angular-ru/cdk':
     specifier: ^14.10.1
     version: 14.10.1
@@ -15,8 +15,8 @@ dependencies:
     specifier: ^16.1.2
     version: 16.1.2(@angular/core@16.1.2)
   '@angular/cdk':
-    specifier: ^16.1.1
-    version: 16.1.1(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
+    specifier: ^16.1.2
+    version: 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
   '@angular/common':
     specifier: 16.1.2
     version: 16.1.2(@angular/core@16.1.2)(rxjs@7.8.1)
@@ -33,11 +33,11 @@ dependencies:
     specifier: 16.1.2
     version: 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
   '@angular/material':
-    specifier: ^16.1.1
-    version: 16.1.1(@angular/animations@16.1.2)(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
+    specifier: ^16.1.2
+    version: 16.1.2(@angular/animations@16.1.2)(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
   '@angular/material-luxon-adapter':
-    specifier: ^16.1.1
-    version: 16.1.1(@angular/core@16.1.2)(@angular/material@16.1.1)(luxon@3.3.0)
+    specifier: ^16.1.2
+    version: 16.1.2(@angular/core@16.1.2)(@angular/material@16.1.2)(luxon@3.3.0)
   '@angular/platform-browser':
     specifier: 16.1.2
     version: 16.1.2(@angular/animations@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)
@@ -250,7 +250,7 @@ dependencies:
     version: 16.0.0(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/platform-browser@16.1.2)(@types/marked@5.0.0)(marked@5.1.0)(rxjs@7.8.1)(zone.js@0.13.1)
   ngx-material-file-input:
     specifier: ^4.0.1
-    version: 4.0.1(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/material@16.1.1)
+    version: 4.0.1(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/material@16.1.2)
   ngx-quill:
     specifier: 22.0.0
     version: 22.0.0(@angular/core@16.1.2)(quill@1.3.7)(rxjs@7.8.1)
@@ -859,7 +859,7 @@ packages:
       - supports-color
     dev: true
 
-  /@angular-material-components/datetime-picker@9.0.0(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/material@16.1.1)(@angular/platform-browser@16.1.2):
+  /@angular-material-components/datetime-picker@9.0.0(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/material@16.1.2)(@angular/platform-browser@16.1.2):
     resolution: {integrity: sha512-F+yf5kxzu62q1H2ZiVbKGfKHlszQhYN/avZyejCyq7bI7V9kg93BaTJ+ACOf9NEtM05USzrLXdiBGjEAMW82aQ==}
     peerDependencies:
       '@angular/cdk': ^15.0.1
@@ -869,11 +869,11 @@ packages:
       '@angular/material': ^15.0.1
       '@angular/platform-browser': ^15.0.1
     dependencies:
-      '@angular/cdk': 16.1.1(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
+      '@angular/cdk': 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
       '@angular/common': 16.1.2(@angular/core@16.1.2)(rxjs@7.8.1)
       '@angular/core': 16.1.2(rxjs@7.8.1)(zone.js@0.13.1)
       '@angular/forms': 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
-      '@angular/material': 16.1.1(@angular/animations@16.1.2)(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
+      '@angular/material': 16.1.2(@angular/animations@16.1.2)(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
       '@angular/platform-browser': 16.1.2(@angular/animations@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)
       tslib: 2.5.3
     dev: false
@@ -893,8 +893,8 @@ packages:
       '@angular/core': 16.1.2(rxjs@7.8.1)(zone.js@0.13.1)
       tslib: 2.5.3
 
-  /@angular/cdk@16.1.1(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1):
-    resolution: {integrity: sha512-nVIeooGspNLT8XySfGZ4e8HYO/TsFemrjNVKb3G9+7KxY4tvE5dkGbJjx5TStEQoSzjfNbCscO89lHIaQ7+aMA==}
+  /@angular/cdk@16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1):
+    resolution: {integrity: sha512-sUiaY6QgiplSuhzN7Fp5HUW3HPyz3g8ET45W0I2bSiSmSaDEATLWwVXfxSC4/ZL+YdZHoC9LkYKDSktPO2EDaA==}
     peerDependencies:
       '@angular/common': ^16.0.0 || ^17.0.0
       '@angular/core': ^16.0.0 || ^17.0.0
@@ -1055,24 +1055,24 @@ packages:
     engines: {node: ^16.14.0 || >=18.10.0}
     dev: true
 
-  /@angular/material-luxon-adapter@16.1.1(@angular/core@16.1.2)(@angular/material@16.1.1)(luxon@3.3.0):
-    resolution: {integrity: sha512-goBuiaByAVveltNoIS+oIE0w+1vsexZ7lYQfFkRholIPq9wJvL9eyzsOn6QbtcsRHYxCX0YCRNU6l6GZNDIvkg==}
+  /@angular/material-luxon-adapter@16.1.2(@angular/core@16.1.2)(@angular/material@16.1.2)(luxon@3.3.0):
+    resolution: {integrity: sha512-OIWCr6oeEoimHUyaoG/OoFeAAiIKAK6knjBd5XhutRYGsuFpAm/j30MXNwqjBxG//xJkKjFTL8X5RSsOGPDesA==}
     peerDependencies:
       '@angular/core': ^16.0.0 || ^17.0.0
-      '@angular/material': 16.1.1
+      '@angular/material': 16.1.2
       luxon: ^3.0.0
     dependencies:
       '@angular/core': 16.1.2(rxjs@7.8.1)(zone.js@0.13.1)
-      '@angular/material': 16.1.1(@angular/animations@16.1.2)(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
+      '@angular/material': 16.1.2(@angular/animations@16.1.2)(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
       luxon: 3.3.0
       tslib: 2.5.3
     dev: false
 
-  /@angular/material@16.1.1(@angular/animations@16.1.2)(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1):
-    resolution: {integrity: sha512-fVFsxYdCQ9PtDR2Cx6q7XqRFnMKz/OGUaC0pPa/RVuBnUbC+GaapDHd4Suy8NF/skX/xl46rZVEKrRumaWM8FA==}
+  /@angular/material@16.1.2(@angular/animations@16.1.2)(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1):
+    resolution: {integrity: sha512-lG88yMnlRkPqXxWpT4Uh3YxwQY3xzaV8dP/Rr3Qtlh0yhp2CEWBmC6Cu1VcHpq0G3VLapO61PIzxSj9125CN5Q==}
     peerDependencies:
       '@angular/animations': ^16.0.0 || ^17.0.0
-      '@angular/cdk': 16.1.1
+      '@angular/cdk': 16.1.2
       '@angular/common': ^16.0.0 || ^17.0.0
       '@angular/core': ^16.0.0 || ^17.0.0
       '@angular/forms': ^16.0.0 || ^17.0.0
@@ -1080,7 +1080,7 @@ packages:
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:
       '@angular/animations': 16.1.2(@angular/core@16.1.2)
-      '@angular/cdk': 16.1.1(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
+      '@angular/cdk': 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
       '@angular/common': 16.1.2(@angular/core@16.1.2)(rxjs@7.8.1)
       '@angular/core': 16.1.2(rxjs@7.8.1)(zone.js@0.13.1)
       '@angular/forms': 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
@@ -15268,7 +15268,7 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /ngx-material-file-input@4.0.1(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/material@16.1.1):
+  /ngx-material-file-input@4.0.1(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/material@16.1.2):
     resolution: {integrity: sha512-syYvwlAdbiUkXFRQENfJSYErQLzRY0xnUIIDgwMeOw8uIZp+FyuTrFpOqA2yBVumi/EKdi4afv6fSHrNwrKvbg==}
     peerDependencies:
       '@angular/cdk': ^14.0.0
@@ -15276,10 +15276,10 @@ packages:
       '@angular/core': ^14.0.0
       '@angular/material': ^14.0.0
     dependencies:
-      '@angular/cdk': 16.1.1(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
+      '@angular/cdk': 16.1.2(@angular/common@16.1.2)(@angular/core@16.1.2)(rxjs@7.8.1)
       '@angular/common': 16.1.2(@angular/core@16.1.2)(rxjs@7.8.1)
       '@angular/core': 16.1.2(rxjs@7.8.1)(zone.js@0.13.1)
-      '@angular/material': 16.1.1(@angular/animations@16.1.2)(@angular/cdk@16.1.1)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
+      '@angular/material': 16.1.2(@angular/animations@16.1.2)(@angular/cdk@16.1.2)(@angular/common@16.1.2)(@angular/core@16.1.2)(@angular/forms@16.1.2)(@angular/platform-browser@16.1.2)(rxjs@7.8.1)
       tslib: 2.5.3
     dev: false
 

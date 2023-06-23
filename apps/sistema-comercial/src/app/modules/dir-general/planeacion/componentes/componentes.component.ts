@@ -25,8 +25,6 @@ import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir
 import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
-import html2canvas from "html2canvas";
-import {jsPDF} from "jspdf";
 
 @Component({
     selector: 'app-componentes',
@@ -160,7 +158,7 @@ export class ComponentesComponent
         //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
         // });
         const mir = this.planeacionQuery.cuestionarioMir();
-        const prueba = this.componentesService.objFormulaDin([], [], mir)
+        // const prueba = this.componentesService.separarIdsFormularioConValAnt(mir);
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], suf: string): void

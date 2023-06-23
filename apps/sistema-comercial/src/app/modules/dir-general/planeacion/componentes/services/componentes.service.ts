@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {IFormComun, TiposFormulario} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
+import {IFormComun} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
 import {IDatosTablaFormComun, IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import * as math from 'mathjs';
-import {isEqual, pullAllWith} from "lodash-es";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {PrefFormDin} from "@s-dir-general/componentes/mod-componentes/mod-comp-dinamico/mod-comp-dinamico.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
+import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 
 export interface IDatosFormulario
 {
-    [key: string]: string;
+    [key: string]: string | number;
 }
 
 @Injectable({
@@ -234,38 +234,66 @@ export class ComponentesService
         return objFormula;
     }
 
-    objFormulaDin(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
+    datosTablaDinamica(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion): IDatosFormulario[]
     {
-        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
+        const obj: IDatosFormulario[] = [{}, {}, {}, {}];
+        const idsFormulaConTrim = this.separarIdsFormularioConValAnt(mirActivo);
+        const pbrEncontrados: string[][] = [];
+
+        idsFormulaConTrim.forEach((valor, indice) =>
+        {
+            const elementoPbr = pbrs.find(pbr => pbr.idIndicador === valor[0]);
+            if (elementoPbr)
+            {
+                const trimAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, valor[0], false);
+                pbrEncontrados.push(valor);
+                obj[0][valor[0]] = elementoPbr.trim1;
+                obj[0][valor[0] + '__ANT'] = trimAnt ? trimAnt.trim1 : valor[1];
+                obj[1][valor[0]] = elementoPbr.trim2;
+                obj[1][valor[0] + '__ANT'] = trimAnt.trim2 ? trimAnt.trim2 : valor[2];
+            }
+        });
+        return obj;
+    }
+
+    private separarIdsFormularioConValAnt(mirActivo: IMirCuestionario): string[][]
+    {
         //? Extraer todos los ids con prefijo __ant, porque todos los ids tendran su valor anterior no importa que no se use en la fórmula
         const ids = mirActivo.componente.idsFormula.map(elemento => elemento.split('__').shift());
+        //? Quitamos el sufijo de __ANT a los ids para solo dejar un, id
         const sinIdsDuplicados = [...new Set(ids)];
-        const elementosEnPbr: string[] = [];
-        const planeacionActiva = this.planeacionQuery.getActive();
-
+        //? Combinamos los ids del formulario con los ids de la fórmula, porque en los ids del formulario tenemos los valores de los trimestres anteriores
         const combinarIds = [...mirActivo.componente.idsFormulario, ...sinIdsDuplicados];
 
-        const dis = combinarIds.map(x => x.split('__'));
-        console.log('---', dis);
-        // sinIdsDuplicados.forEach((elemento, indice) =>
-        // {
-        //     const elementoEncontrado = pbr.find(ele => ele.idIndicador === elemento);
-        //     if (elementoEncontrado)
-        //     {
-        //         // Asignamos él, id para tener un array y después eliminarlos del resto de ids para y los find sean más optimos, ya que no tienen que realizar la busqueda de todos
-        //         // sino nadamas de los que sobren
-        //         elementosEnPbr.push(elementoEncontrado.idIndicador)
-        //         //Creamos el objeto para la fórmula
-        //         objFormula[0][elementoEncontrado.idIndicador] = elementoEncontrado.trim1;
-        //         const valorAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, planeacionActiva._id, false);
-        //         if (valorAnt)
-        //         {
-        //             objFormula[0][elementoEncontrado.idIndicador + '__ANT'] = elementoEncontrado.trim1;
-        //         }
-        //         objFormula[1][elementoEncontrado.idIndicador] = elementoEncontrado.trim1;
-        //         objFormula[0][elementoEncontrado.idIndicador] = elementoEncontrado.trim1;
-        //     }
-        // });
-        return objFormula;
+        const idsSeparadosEnArrayConValoresTrimAnt = combinarIds.map(x => x.split('__'));
+
+        const resultado: string[][] = idsSeparadosEnArrayConValoresTrimAnt.reduce((acc: string[][], elemento: string[]) =>
+        {
+            const indice = elemento[0];
+            const indiceExistente = acc.findIndex((item) => item[0] === indice);
+            if (indiceExistente === -1)
+            {
+                acc.push(elemento);
+            } else if (acc[indiceExistente].length === 1)
+            {
+                acc[indiceExistente] = elemento;
+            }
+            return acc;
+        }, []);
+
+        resultado.forEach((elemento) =>
+        {
+            if (elemento.length === 1)
+            {
+                elemento.push('0', '0', '0', '0');
+            } else
+            {
+                elemento.splice(1).forEach((valor, indice) =>
+                {
+                    elemento[indice + 1] = valor.replace('V', '');
+                });
+            }
+        });
+        return resultado;
     }
 }

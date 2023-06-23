@@ -64,7 +64,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     }
 
     // Filtrar planeacion por año para enctrar el CuestionarioPbr que el usuario está registrando y traer el año anterior
-    public filPeriodoAnt(anoActual: number, id: string, filSumatoria: boolean): IPbrCuestionario | ISumatorias
+    public filPeriodoAnt(anoActual: number, idIndicador: string, filSumatoria: boolean): IPbrCuestionario | ISumatorias
     {
         const planeacion = this.getAll().slice();
         const filtrarElAno = planeacion.find(value => value.ano === (anoActual - 1));
