@@ -5,8 +5,6 @@ import {IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNotNil} from '@angular-ru/cdk/utils';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 import {isNumber} from "lodash-es";
-import {KeysOfType, PlainObject, PlainObjectOf, PrimaryKey} from "@angular-ru/cdk/typings";
-import {generateQuickGuid} from "@angular-ru/cdk/string";
 
 @Component({
     selector: 'app-tabla-mat',
@@ -32,9 +30,11 @@ export class TablaMatComponent
     @Input({required: true}) obtenerValor: boolean = false;
 
     @Output() valorFila = new EventEmitter<any>();
+
     _origenDatos = new MatTableDataSource([]);
     columnasAMostrar: string[] = [];
     columnasTabla: IGenerarColumnTabla[] = [];
+    celdaSeleccionada = false;
 
     obtenerTotal(trim: string): string
     {
@@ -57,18 +57,9 @@ export class TablaMatComponent
         return '----';
     }
 
-    emitiValorCelda<T>(fila: T): void
+    dblEmitiValorCelda(fila: any): void
     {
-        const id: string = PrimaryKey[Symbol.hasInstance];
-        const uudi = generateQuickGuid().toUpperCase();
-
-
-        type tipos = KeysOfType<IGenerarColumnTabla, string | number | boolean>;
-        const a: PlainObject = {a: 1, b: '2A'};
-        const b: PlainObjectOf<number> = {a: 1, b: 2};
-        console.log('generar id', id);
-        console.log('plaint bo', a, b);
-        console.log(uudi);
-        console.log(fila);
+        this.celdaSeleccionada = !this.celdaSeleccionada;
+        this.valorFila.emit(fila);
     }
 }

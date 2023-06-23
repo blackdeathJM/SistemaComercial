@@ -41,9 +41,11 @@ export interface IComponente
     formDinamico: object[];
     formComun: IFormComun[];
 
-    ids: string[];
-    idsColsTabla: string[];
+    idsFormulario: string[];
+    idsFormula: string[];
+    colsTabla: string[];
     formula: string;
+    omitirPrimerId: boolean;
 
     tipoValorTrim: string;
     tipoValorAvance: string;

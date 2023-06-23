@@ -63,15 +63,23 @@ export class ComponenteDto implements IComponente
 
     @IsArray({message: 'Los ids debe ser un array'})
     @Field(() => [String], {nullable: true, defaultValue: []})
-    ids: string[];
+    idsFormulario: string[];
 
     @IsArray({message: 'Las cabeceras de las columnas deben estar en un array'})
     @Field(() => [String], {nullable: true, defaultValue: []})
-    idsColsTabla: string[];
+    colsTabla: string[];
+
+    @IsArray({message: 'Los ids de la formula deben estar en un array'})
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    idsFormula: string[];
 
     @IsOptional()
     @Field(() => String, {nullable: true, defaultValue: ''})
     etiqueta: string;
+
+    @IsOptional()
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    omitirPrimerId: boolean;
 }
 
 @InputType('RegComponenteInput')

@@ -90,7 +90,7 @@ export class ComponentesComponent
             const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
             const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
 
-            const trimObjCalcular = this.componentesService.objFormula(pbrS, sumatorias, mir);
+            // const trimObjCalcular = this.componentesService.objFormula(pbrS, sumatorias, mir);
 
             this.chkTrim0.reset();
             this.chkTrim1.reset();
@@ -101,10 +101,10 @@ export class ComponentesComponent
 
             this.datosTabla.data = this.componentesService.datosTablaComun(pbrS, mir.componente.formComun, sumatorias);
 
-            this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
-            this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
-            this.avTrim[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
-            this.avTrim[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
+            // this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
+            // this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
+            // this.avTrim[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
+            // this.avTrim[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
 
             this.avancesTrim.emit(this.avTrim);
         });
@@ -139,26 +139,28 @@ export class ComponentesComponent
 
     imprimirComp(mirSelec: IMirCuestionario): void
     {
-        this.ngxUiLoaderService.startLoader(this.ngxLoader);
-        const componente = this.componenteRef.nativeElement;
-        componente.style.color = 'black';
-        html2canvas(componente).then(canvas =>
-        {
-            const img = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'pt', 'a4');
-            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
-            pdf.setFontSize(8);
-            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
-            const imgProps = pdf.getImageProperties(img);
-            const pdfAncho = pdf.internal.pageSize.getWidth();
-            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
-            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
-            pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
-            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
-            pdf.save('componente.pdf');
-            componente.style.color = '';
-            this.ngxUiLoaderService.stopLoader(this.ngxLoader);
-        });
+        // this.ngxUiLoaderService.startLoader(this.ngxLoader);
+        // const componente = this.componenteRef.nativeElement;
+        // componente.style.color = 'black';
+        // html2canvas(componente).then(canvas =>
+        // {
+        //     const img = canvas.toDataURL('image/png');
+        //     const pdf = new jsPDF('p', 'pt', 'a4');
+        //     pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+        //     pdf.setFontSize(8);
+        //     pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+        //     const imgProps = pdf.getImageProperties(img);
+        //     const pdfAncho = pdf.internal.pageSize.getWidth();
+        //     const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+        //     pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+        //     pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
+        //     pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
+        //     pdf.save('componente.pdf');
+        //     componente.style.color = '';
+        //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
+        // });
+        const mir = this.planeacionQuery.cuestionarioMir();
+        const prueba = this.componentesService.objFormulaDin([], [], mir)
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], suf: string): void
@@ -196,10 +198,5 @@ export class ComponentesComponent
             // this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
         }
         // e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
-    }
-
-    valorFila<strig>($event: any): void
-    {
-
     }
 }

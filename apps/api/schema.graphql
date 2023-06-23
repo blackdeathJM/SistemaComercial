@@ -259,9 +259,11 @@ type ComponenteType {
   tipoValorAvance: String
   tipoForm: String
   formula: String
-  ids: [String!]
-  idsColsTabla: [String!]
+  idsFormulario: [String!]
+  colsTabla: [String!]
+  idsFormula: [String!]
   etiqueta: String
+  omitirPrimerId: Boolean
 }
 
 type MirCuestionarioType {
@@ -457,7 +459,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1687455269
+  tiempo: Int = 1687516103
   titulo: String
   usarRouter: Boolean = false
 }
@@ -589,9 +591,11 @@ input ComponenteInput {
   tipoValorAvance: String = null
   tipoForm: String = null
   formula: String = null
-  ids: [String!] = []
-  idsColsTabla: [String!] = []
+  idsFormulario: [String!] = []
+  colsTabla: [String!] = []
+  idsFormula: [String!] = []
   etiqueta: String = ""
+  omitirPrimerId: Boolean = false
 }
 
 input MirCuestionarioInput {
@@ -920,9 +924,11 @@ input RegComponenteInput {
   tipoValorAvance: String = null
   tipoForm: String = null
   formula: String = null
-  ids: [String!] = []
-  idsColsTabla: [String!] = []
+  idsFormulario: [String!] = []
+  colsTabla: [String!] = []
+  idsFormula: [String!] = []
   etiqueta: String = ""
+  omitirPrimerId: Boolean = false
   _id: ID
   idIndicadorMir: String
 }

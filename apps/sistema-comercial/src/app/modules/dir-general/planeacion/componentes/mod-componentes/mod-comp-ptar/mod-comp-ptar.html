@@ -40,11 +40,11 @@
 
             <form [formGroup]="formDin" *ngIf="formDin">
                 <div class="flex flex-auto gap-4">
-                    <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">
-                        <mat-label>{{formCtrlNombre}}</mat-label>
-                        <input #listaCtrls [name]="formCtrlNombre" matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre, i)" [readonly]="formCtrlNombre === 'dato'"
-                               (dblclick)="dblAsigValCtrl()">
-                    </mat-form-field>
+<!--                    <mat-form-field *ngFor="let formCtrlNombre of tituloColumnas; let i=index; trackBy: trackByCtrls" [ngClass]="formCtrlNombre === 'dato'? 'flex-auto' : 'basis-1/12'">-->
+<!--                        <mat-label>{{formCtrlNombre}}</mat-label>-->
+<!--                        <input #listaCtrls [name]="formCtrlNombre" matInput formControlName="{{formCtrlNombre | obtenerIdForm}}" (focus)="conFoco(formCtrlNombre, i)" [readonly]="formCtrlNombre === 'dato'"-->
+<!--                               (dblclick)="dblAsigValCtrl()">-->
+<!--                    </mat-form-field>-->
                 </div>
             </form>
         </section>

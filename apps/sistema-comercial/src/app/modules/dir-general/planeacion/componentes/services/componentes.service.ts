@@ -6,61 +6,63 @@ import {isNil, isNotNil} from '@angular-ru/cdk/utils';
 import * as math from 'mathjs';
 import {isEqual, pullAllWith} from "lodash-es";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {PrefFormDin} from "@s-dir-general/componentes/mod-componentes/mod-comp-dinamico/mod-comp-dinamico.component";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
+
+export interface IDatosFormulario
+{
+    [key: string]: string;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class ComponentesService
 {
-    static formula(ids: string[], tipoForm: TiposFormulario, form: IFormComun[]): string
+    constructor(private planeacionQuery: PlaneacionQuery) {}
+
+    static formarObj(pref: string[], ctrlId: string, valores: string[]): IDatosFormulario
     {
-
-        const formActions = {
-            [TiposFormulario.COMUN]: () =>
-            {
-                const valFormComun = form.map(x => x.idIndicador);
-                const valor = valFormComun.join('+');
-                const valoresInclEnFormula = ids.filter(id => !valFormComun.includes(id));
-                return `(${valor}) * 100 ${valoresInclEnFormula.join(' ')}`;
-            },
-            [TiposFormulario.PERIODO_ANT]: () =>
-            {
-                const valFormComun = form.map(x => x.idIndicador);
-                const valor = valFormComun.join('+');
-                const periodoAnt = form.map(x => x.idIndicador + '__Ant');
-                const unirValores = periodoAnt.join('+');
-                const excluirValoresAnt = ids.filter(id => !valFormComun.includes(id) && !periodoAnt.includes(id));
-                return `(((${valor}) - (${unirValores})) / (${unirValores})) * 100 ${excluirValoresAnt.join(' ')}`;
-            },
-            [TiposFormulario.CON_OTRO_ID_PBR]: () =>
-            {
-                const valFormComun = form.map(x => x.idIndicador);
-                const valor = valFormComun.join('+');
-                const valFormAd = form.map(x => x.idIndicadorAd);
-                const unirValorAd = valFormAd.join('+');
-                const excluirValoresAd = ids.filter(id => !valFormComun.includes(id) && !valFormAd.includes(id));
-                return `((${valor}) - (${unirValorAd}) / ${unirValorAd}) * 100 ${excluirValoresAd.join(' ')}`;
-            },
-        };
-
-        const formAction = formActions[tipoForm];
-        if (formAction)
+        const obj: IDatosFormulario = {};
+        pref.forEach((x, i) =>
         {
-            return formAction();
-        }
+            obj[x + ctrlId] = valores[i];
+        });
+        return obj;
+    };
 
-        return '';
+    static obtValoresForm(pref: string[], ctrlId: string, form: FormGroup): string[]
+    {
+        const valores: string[] = [];
+        pref.forEach(x =>
+        {
+            const valor = form.get(x + ctrlId).value;
+            valores.push(valor);
+        });
+        return valores;
     }
 
-    objFormula(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
+    static asigValForm(pref: string[], ctrlId: string, valorAsig: string[], form: FormGroup): void
     {
-        if (mirActivo.componente.tipoForm !== TiposFormulario.DIN)
+        pref.forEach((x, i) =>
         {
-            return this.objFormulaComun(pbr, sumatorias, mirActivo);
-        } else
+            form.get(x + ctrlId).setValue(valorAsig[i]);
+        });
+    }
+
+    static agCtrlForm(pref: PrefFormDin[], uuid: string, valorDef: string | number, validacion: Validators, form: FormGroup): void
+    {
+        pref.forEach((x) =>
         {
-            return this.objFormulaDin(pbr, sumatorias, mirActivo);
-        }
+            const nvoCtrl = new FormControl(valorDef, validacion);
+            form.addControl(x + uuid, nvoCtrl);
+        });
+    }
+
+    static hayDuplicados(arr: string[]): boolean
+    {
+        return arr.length !== new Set(arr).size;
     }
 
     static calcAvances(formula: string, obj: object): string
@@ -163,11 +165,6 @@ export class ComponentesService
         return tablaValores;
     }
 
-    datosTablaDinamica(pbr: IPbrCuestionario, sumatorias: ISumatorias, form: object[], idsTabla: string[]): void
-    {
-
-    }
-
     static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
@@ -194,7 +191,7 @@ export class ComponentesService
     private objFormulaComun(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
     {
         const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
-        const ids = mirActivo.componente.ids;
+        const ids = mirActivo.componente.idsFormulario;
         const formComun = mirActivo.componente.formComun;
 
 
@@ -237,59 +234,38 @@ export class ComponentesService
         return objFormula;
     }
 
-    private objFormulaDin(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
+    objFormulaDin(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
     {
-        // ids: string[], idsTituloTabla: string[], formDin: object[]
-        const idsTituloTabla = mirActivo.componente.idsColsTabla;
-        const formDin = mirActivo.componente.formDinamico;
-
         const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
-        /* ? Obtenemos los ids que formaran la tabla que biene compues por él, id que se asignó y obtenemos su valor de cada trimestre */
-        idsTituloTabla.forEach(x =>
-        {
-            // ? Separamos el texto de los ids de la tabla, ya que está compuesta por el título de la columna y por él, id que guarda que hace referencia al id del pbr para
-            const separarTitulo = x.split('__');
-            const cabecera = separarTitulo.shift();
-            const idGenerado = separarTitulo.pop();
-            // ? construir la estructura de la tabla buscando en el formDin
-            const longitud = formDin.length;
+        //? Extraer todos los ids con prefijo __ant, porque todos los ids tendran su valor anterior no importa que no se use en la fórmula
+        const ids = mirActivo.componente.idsFormula.map(elemento => elemento.split('__').shift());
+        const sinIdsDuplicados = [...new Set(ids)];
+        const elementosEnPbr: string[] = [];
+        const planeacionActiva = this.planeacionQuery.getActive();
 
-            const idsPbr: string[] = [];
+        const combinarIds = [...mirActivo.componente.idsFormulario, ...sinIdsDuplicados];
 
-            for (let i = 0; i < longitud; i++)
-            {
-                const valores: string[] = Object.values(formDin[i]);
-                idsPbr.push(...valores);
-            }
-            const idsEliminar: string[] = [];
-            idsPbr.forEach((id: string) =>
-            {
-                //? Construimos el objecto que contrenda los datos para utilizar en la fórmula con mathjs
-                const resPbr = pbr.find(ele => ele.idIndicador === id);
-                if (resPbr)
-                {
-                    idsEliminar.push(id);
-                    objFormula[0][resPbr.idIndicador] = resPbr.trim1;
-                    objFormula[1][resPbr.idIndicador] = resPbr.trim2;
-                    objFormula[2][resPbr.idIndicador] = resPbr.trim3;
-                    objFormula[3][resPbr.idIndicador] = resPbr.trim4;
-                }
-            });
-            // ? Eliminamos los ids que ya fueron encontrados en el pbr para no tener que buscarlos en las sumatorias, ya que ahi no existen
-            pullAllWith(idsPbr, idsEliminar, isEqual);
-            // ? Asignamos los resultados al objeto para la fórmula
-            idsPbr.forEach((id) =>
-            {
-                const resSumatoria = sumatorias.find(ele => ele.idSumatoria === id);
-                if (resSumatoria)
-                {
-                    objFormula[0][resSumatoria.idSumatoria] = resSumatoria.trim1;
-                    objFormula[1][resSumatoria.idSumatoria] = resSumatoria.trim2;
-                    objFormula[2][resSumatoria.idSumatoria] = resSumatoria.trim3;
-                    objFormula[3][resSumatoria.idSumatoria] = resSumatoria.trim4;
-                }
-            });
-        });
+        const dis = combinarIds.map(x => x.split('__'));
+        console.log('---', dis);
+        // sinIdsDuplicados.forEach((elemento, indice) =>
+        // {
+        //     const elementoEncontrado = pbr.find(ele => ele.idIndicador === elemento);
+        //     if (elementoEncontrado)
+        //     {
+        //         // Asignamos él, id para tener un array y después eliminarlos del resto de ids para y los find sean más optimos, ya que no tienen que realizar la busqueda de todos
+        //         // sino nadamas de los que sobren
+        //         elementosEnPbr.push(elementoEncontrado.idIndicador)
+        //         //Creamos el objeto para la fórmula
+        //         objFormula[0][elementoEncontrado.idIndicador] = elementoEncontrado.trim1;
+        //         const valorAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, planeacionActiva._id, false);
+        //         if (valorAnt)
+        //         {
+        //             objFormula[0][elementoEncontrado.idIndicador + '__ANT'] = elementoEncontrado.trim1;
+        //         }
+        //         objFormula[1][elementoEncontrado.idIndicador] = elementoEncontrado.trim1;
+        //         objFormula[0][elementoEncontrado.idIndicador] = elementoEncontrado.trim1;
+        //     }
+        // });
         return objFormula;
     }
 }

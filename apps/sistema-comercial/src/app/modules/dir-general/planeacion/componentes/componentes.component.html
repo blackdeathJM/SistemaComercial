@@ -38,9 +38,9 @@
                     <span class="border-b-2 col-span-full text-center">{{mirSelec?.metodoCalculo}}</span>
                 </section>
 
-                <app-tabla-mat class="m-4" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente" [obtenerValor]="false" (valorFila)="valorFila($event)"/>
+                <app-tabla-mat class="m-4" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente" [obtenerValor]="false"/>
 
-                <mat-divider class="border-4 mb-4 border-b-fuchsia-700 dark:border-fuchsia-950"></mat-divider>
+                <mat-divider class="border-4 mb-4 border-b-fuchsia-700 dark:border-fuchsia-950"/>
                 <section class="grid grid-cols-8 gap-4 text-lg">
                     <ng-container *ngIf="chkVisible[0]">
                         <span class="detalle-span">Avance trim 1</span>
@@ -62,16 +62,16 @@
                 <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </article>
             <div class="flex flex-auto gap-8 mt-2" *ngIf="mirSelec?.componente">
-                <mat-checkbox id="chkTrim0" [formControl]="chkTrim0" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm,mirSelec?.componente?.ids, 'T1')">
+                <mat-checkbox id="chkTrim0" [formControl]="chkTrim0" color="primary" (change)="cambioChkTrim($event, mirSelec?.componente?.tipoForm,mirSelec?.componente?.idsFormulario, 'T1')">
                     Trimestre 1
                 </mat-checkbox>
-                <mat-checkbox id="chkTrim1" [formControl]="chkTrim1" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,mirSelec?.componente?.ids, 'T2')">
+                <mat-checkbox id="chkTrim1" [formControl]="chkTrim1" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,mirSelec?.componente?.idsFormulario, 'T2')">
                     Trimestre 2
                 </mat-checkbox>
-                <mat-checkbox id="chkTrim2" [formControl]="chkTrim2" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,mirSelec?.componente?.ids, 'T3')">
+                <mat-checkbox id="chkTrim2" [formControl]="chkTrim2" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,mirSelec?.componente?.idsFormulario, 'T3')">
                     Trimestre 3
                 </mat-checkbox>
-                <mat-checkbox id="chkTrim3" [formControl]="chkTrim3" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,mirSelec?.componente?.ids, 'T4')">
+                <mat-checkbox id="chkTrim3" [formControl]="chkTrim3" color="primary" (change)="cambioChkTrim($event,mirSelec?.componente?.tipoForm,mirSelec?.componente?.idsFormulario, 'T4')">
                     Trimestre 4
                 </mat-checkbox>
             </div>

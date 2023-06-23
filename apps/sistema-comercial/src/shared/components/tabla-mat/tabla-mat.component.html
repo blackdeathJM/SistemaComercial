@@ -1,7 +1,8 @@
 <table mat-table [dataSource]="_origenDatos.data" class="bg-transparent">
     <ng-container *ngFor="let columna of columnasTabla" [matColumnDef]="columna.def">
         <th mat-header-cell *matHeaderCellDef [width]="columna.width">{{columna.etiqueta}}</th>
-        <td mat-cell class="text-amber-500" [ngClass]="obtenerValor? 'cursor-pointer': ''" *matCellDef="let fila" (dblclick)="emitiValorCelda(fila)">{{fila[columna.def] | multiplesFormatos: columna.tipoDeDato}}</td>
+        <td mat-cell class="text-amber-500" [ngClass]="obtenerValor? 'cursor-pointer': ''" *matCellDef="let fila"
+            (dblclick)="dblEmitiValorCelda(fila)">{{fila[columna.def] | multiplesFormatos: columna.tipoDeDato}}</td>
         <td mat-footer-cell *matFooterCellDef class="bg-card">{{obtenerTotal(columna.def) | multiplesFormatos: columna.tipoDeDato}}</td>
     </ng-container>
 

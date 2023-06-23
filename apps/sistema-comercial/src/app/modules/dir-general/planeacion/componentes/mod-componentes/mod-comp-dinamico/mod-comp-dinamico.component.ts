@@ -8,7 +8,7 @@ import {IPbrCuestionario, ISumatorias} from "#/libs/models/src/lib/dir-general/p
 import {MatTableDataSource} from "@angular/material/table";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
 import {TiposFormulario, TipoValoresTrim} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatListModule} from "@angular/material/list";
@@ -16,9 +16,9 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {FuseAlertModule} from "@s-fuse/alert";
-import {isNil} from "lodash-es";
+import {compact, isNil} from "lodash-es";
 import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
+import {finalize, Subscription} from "rxjs";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {MatIconModule} from "@angular/material/icon";
 import {v4 as uuidv4} from 'uuid';
@@ -31,7 +31,9 @@ import {fuseAnimations} from "@s-fuse/public-api";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ToastrService} from "ngx-toastr";
-import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
+import {ComponentesService, IDatosFormulario} from "@s-dir-general/componentes/services/componentes.service";
+import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
+import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 
 export enum PrefFormDin
 {
@@ -45,11 +47,6 @@ export enum PrefFormDin
     trim2 = 'trim2',
     trim3 = 'trim3',
     trim4 = 'trim4'
-}
-
-interface IDatosFormulario
-{
-    [key: string]: string;
 }
 
 @Component({
@@ -75,7 +72,6 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     cargando = false;
     locutor = inject(LiveAnnouncer);
     deshabilitarChips = false;
-    deshabilitarChk = false;
     sub = new Subscription();
 
     filPbr: IPbrCuestionario[] = [];
@@ -86,16 +82,19 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     datosTabla = new MatTableDataSource<any>([]);
     columnas: IGenerarColumnTabla[] = [];
 
-    idsUtilizadosEnFormula: string[] = [];
+    idsDelFormulario: string[] = [];
     ctrlNombre: string = null;
-    ctrlIdIndicadorPbr: string = null;
+    idParaFormula: string = null;
+    focoEnTxtformula = false;
 
     indiceCtrlActual = 0;
-    mostrarPeriodoAnt = false;
+    chkDeshabilitar = false;
+    chkPeriodoAntValores = false;
+    chkOmitirPrimerIdEnTabla = false;
     tipoValores = Object.keys(TipoValoresTrim);
 
     formDinamico: FormGroup;
-    tipoFormulario: TiposFormulario;
+    tipoFormulario: TiposFormulario = TiposFormulario.DIN;
 
     formTipoValores: FormGroup = this.rxFb.group({
         tipoValorTrim: [null, RxwebValidators.required({message: 'Es necesario seleccionar que tipo de valor son los trimestres'})],
@@ -105,7 +104,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     });
 
     constructor(private rxFb: RxFormBuilder, public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private location: Location, private activatedRoute: ActivatedRoute,
-                private render: Renderer2, private toastrService: ToastrService)
+                private render: Renderer2, private toastrService: ToastrService, private planeacionService: PlaneacionService)
     {}
 
     ngOnInit(): void
@@ -129,15 +128,6 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.metodoDeCalculo = mirBuscado.metodoCalculo;
     }
 
-    agCtrlForm(pref: PrefFormDin[], uuid: string, valorPorDefecto: string | number, validacion: Validators): void
-    {
-        pref.forEach((v) =>
-        {
-            const nvoCtrl = new FormControl(valorPorDefecto, validacion);
-            this.formDinamico.addControl(v + uuid, nvoCtrl);
-        });
-    }
-
     agregar(e: MatChipInputEvent)
     {
         let valor = (e.value || '').trim();
@@ -153,9 +143,8 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             const validarNumero = RxwebValidators.numeric({allowDecimal: true, message: 'Valor numerico', persistZero: true});
             const requerido = RxwebValidators.required({message: 'Requerido'});
 
-            this.agCtrlForm(Object.values(PrefFormDin).slice(0, 2), generarUuid, '', [requerido]);
-            this.agCtrlForm(Object.values(PrefFormDin).slice(2), generarUuid, 0, [validarNumero]);
-
+            ComponentesService.agCtrlForm(Object.values(PrefFormDin).slice(0, 2), generarUuid, '', [requerido], this.formDinamico);
+            ComponentesService.agCtrlForm(Object.values(PrefFormDin).slice(2), generarUuid, '0', [requerido, validarNumero], this.formDinamico);
             this.tituloCols.push(valor);
         }
         e.chipInput!.clear();
@@ -180,60 +169,100 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.filSumatorias = sumatoriasPorDepto.filter(x => x.centroGestor === e);
     }
 
-    asigValorMul(pref: string[], ctrlId: string, valorAsig: string[]): void
-    {
-        pref.forEach((v, i) =>
-        {
-            this.formDinamico.get(v + ctrlId).setValue(valorAsig[i]);
-        })
-    }
-
     dblPbr(pbr: IPbrCuestionario)
     {
-        if (isNil(this.ctrlNombre))
+        if (this.focoEnTxtformula)
         {
-            return;
-        }
-        this.asigValorMul([''], this.ctrlNombre, [pbr.idIndicador]);
-        const ctrlId = this.ctrlNombre.replace(PrefFormDin.idIndicador, '').trim();
-
-        this.asigValorMul([PrefFormDin.dato, PrefFormDin.trim1, PrefFormDin.trim2, PrefFormDin.trim3, PrefFormDin.trim4], ctrlId, [pbr.dato, pbr.trim1.toString(), pbr.trim2.toString(),
-            pbr.trim3.toString(), pbr.trim4.toString()]);
-        this.cambioDeFocoCtrlsInput();
-
-        const valoresTrimAnt = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, pbr.idIndicador, false);
-        if (isNil(valoresTrimAnt))
+            this.asigFormulaTxt(pbr.idIndicador);
+        } else
         {
-            return;
+            if (isNil(this.ctrlNombre))
+            {
+                return;
+            }
+            // this.asigValorAFormulario([''], this.ctrlNombre, [pbr.idIndicador]);
+            ComponentesService.asigValForm([''], this.ctrlNombre, [pbr.idIndicador], this.formDinamico);
+            const ctrlId = this.ctrlNombre.replace(PrefFormDin.idIndicador, '').trim();
+            ComponentesService.asigValForm([PrefFormDin.dato, PrefFormDin.trim1, PrefFormDin.trim2, PrefFormDin.trim3, PrefFormDin.trim4], ctrlId, [pbr.dato, pbr.trim1.toString(), pbr.trim2.toString(),
+                pbr.trim3.toString(), pbr.trim4.toString()], this.formDinamico);
+            this.cambioDeFocoCtrlsInput();
+            const valoresTrimAnt = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, pbr.idIndicador, false);
+            if (isNil(valoresTrimAnt))
+            {
+                return;
+            }
+            ComponentesService.asigValForm([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], ctrlId, [valoresTrimAnt.trim1.toString(), valoresTrimAnt.trim2.toString(),
+                valoresTrimAnt.trim3.toString(), valoresTrimAnt.trim4.toString()], this.formDinamico);
         }
-        this.asigValorMul([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], ctrlId, [valoresTrimAnt.trim1.toString(), valoresTrimAnt.trim2.toString(),
-            valoresTrimAnt.trim3.toString(), valoresTrimAnt.trim4.toString()])
     }
 
     dblSumatoria(sumatoria: ISumatorias)
     {
-        if (isNil(this.ctrlNombre))
+        if (this.focoEnTxtformula)
         {
-            return;
-        }
-        this.asigValorMul([''], this.ctrlNombre, [sumatoria.idSumatoria]);
-        const ctrlId = this.ctrlNombre.replace(PrefFormDin.idIndicador, '').trim();
-        this.asigValorMul([PrefFormDin.dato, PrefFormDin.trim1, PrefFormDin.trim2, PrefFormDin.trim3, PrefFormDin.trim4], ctrlId, [sumatoria.nombreSumatoria, sumatoria.trim1.toString(),
-            sumatoria.trim2.toString(), sumatoria.trim3.toString(), sumatoria.trim4.toString()])
-        this.cambioDeFocoCtrlsInput();
-        const valoresSumatoria = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, sumatoria.idSumatoria, true);
-        if (isNil(valoresSumatoria))
+            this.asigFormulaTxt(sumatoria.idSumatoria);
+        } else
         {
-            return;
+            if (isNil(this.ctrlNombre))
+            {
+                return;
+            }
+            ComponentesService.asigValForm([''], this.ctrlNombre, [sumatoria.idSumatoria], this.formDinamico);
+            const ctrlId = this.ctrlNombre.replace(PrefFormDin.idIndicador, '').trim();
+            ComponentesService.asigValForm([PrefFormDin.dato, PrefFormDin.trim1, PrefFormDin.trim2, PrefFormDin.trim3, PrefFormDin.trim4], ctrlId, [sumatoria.nombreSumatoria, sumatoria.trim1.toString(),
+                sumatoria.trim2.toString(), sumatoria.trim3.toString(), sumatoria.trim4.toString()], this.formDinamico);
+            this.cambioDeFocoCtrlsInput();
+            const valoresSumatoria = this.planeacionQuery.filPeriodoAnt(this.planeacionQuery.getActive().ano, sumatoria.idSumatoria, true);
+            if (isNil(valoresSumatoria))
+            {
+                return;
+            }
+            ComponentesService.asigValForm([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], ctrlId, [sumatoria.trim1.toString(), sumatoria.trim2.toString(), sumatoria.trim3.toString(),
+                sumatoria.trim4.toString()], this.formDinamico);
         }
-        this.asigValorMul([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], ctrlId, [sumatoria.trim1.toString(), sumatoria.trim2.toString(), sumatoria.trim3.toString(),
-            sumatoria.trim4.toString()]);
+    }
+
+    dblFormula(): void
+    {
+        this.formTipoValores.get('formula').reset();
+
+        this.idsDelFormulario.forEach(x =>
+        {
+            const idPbr = x.split('__').shift();
+            this.asigFormulaTxt(idPbr + ' + ');
+            if (this.chkPeriodoAntValores)
+            {
+                this.asigFormulaTxt(idPbr + '__ant' + ' + ');
+            }
+        });
+    }
+
+    asigFormulaTxt(valorAsig: string): void
+    {
+        const valorActual = this.formTipoValores.get('formula').value;
+        this.formTipoValores.get('formula').setValue(valorActual + valorAsig);
+    }
+
+    clkPbr(pbr: IPbrCuestionario): void
+    {
+        this.idParaFormula = pbr.idIndicador;
+    }
+
+    clkSumatoria(sumatoria: ISumatorias): void
+    {
+        this.idParaFormula = sumatoria.idSumatoria;
     }
 
     focoInput(formCtrlNombre: string, i: number, pref: string): void
     {
+        this.focoEnTxtformula = false;
         this.ctrlNombre = pref + formCtrlNombre.split('__').pop();
         this.indiceCtrlActual = i;
+    }
+
+    focoFormula(): void
+    {
+        this.focoEnTxtformula = true;
     }
 
     cambioDeFocoCtrlsInput(): void
@@ -246,6 +275,17 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         }
     }
 
+    chkPeriodoAnt(e: MatCheckboxChange): void
+    {
+        this.chkPeriodoAntValores = e.checked;
+        this.tipoFormulario = e.checked ? TiposFormulario.PERIODO_ANT : TiposFormulario.DIN;
+    }
+
+    chkOmitirPrimerId(e: MatCheckboxChange): void
+    {
+        this.chkOmitirPrimerIdEnTabla = e.checked;
+    }
+
     agregarLista(): void
     {
         if (this.formDinamico.invalid)
@@ -253,30 +293,37 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             this.toastrService.warning('Varifica que el formulario este completamente y correctamente llenado', 'Componente');
             return;
         }
+        // Asignar él, id obtenido del formulario y sus valores trimestrales
         const idsPbrDelFormulario: string[] = this.tituloCols.map((x) =>
         {
             const ctrlId = x.split('__').pop();
-            return this.formDinamico.get(PrefFormDin.idIndicador + ctrlId).value;
+            const idPbr = this.formDinamico.get(PrefFormDin.idIndicador + ctrlId).value;
+            const ant1 = this.formDinamico.get(PrefFormDin.ant1 + ctrlId).value;
+            const ant2 = this.formDinamico.get(PrefFormDin.ant2 + ctrlId).value;
+            const ant3 = this.formDinamico.get(PrefFormDin.ant3 + ctrlId).value;
+            const ant4 = this.formDinamico.get(PrefFormDin.ant4 + ctrlId).value;
+            return idPbr + '__V' + ant1 + '__V' + ant2 + '__V' + ant3 + '__V' + ant4;
         });
 
-        if (this.hayDuplicados(idsPbrDelFormulario))
+        if (ComponentesService.hayDuplicados(idsPbrDelFormulario))
         {
             this.toastrService.warning('Hay elementos duplicados en el formulario', 'Componente dinámico');
             return;
         }
-        const tempIdsGuardados = [...this.idsUtilizadosEnFormula, ...idsPbrDelFormulario];
-        if (this.hayDuplicados(tempIdsGuardados))
+        const tempIdsGuardados = [...this.idsDelFormulario, ...idsPbrDelFormulario];
+        if (ComponentesService.hayDuplicados(tempIdsGuardados))
         {
             this.toastrService.warning('Hay elementos duplicados en la lista', 'Componente dinámico');
             return;
         }
 
-        this.idsUtilizadosEnFormula.push(...idsPbrDelFormulario);
+        this.idsDelFormulario.push(...idsPbrDelFormulario);
+
         const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, idCtrlForm) =>
         {
             const ctrlId = idCtrlForm.split('__').pop();
-            const arregloValores = this.obtValoresForm(Object.values(PrefFormDin), ctrlId);
-            const valoresParaObj = this.formarObj(Object.values(PrefFormDin), ctrlId, arregloValores);
+            const arregloValores = ComponentesService.obtValoresForm(Object.values(PrefFormDin), ctrlId, this.formDinamico);
+            const valoresParaObj = ComponentesService.formarObj(Object.values(PrefFormDin), ctrlId, arregloValores);
             return {...obj, ...valoresParaObj};
         }, {});
         this.objFormulario.push(objDinamico);
@@ -296,58 +343,50 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.columnas = ComponentesService.colCompDinamico(asigPrefCols, 'texto');
         this.datosTabla.data = [...this.objFormulario];
         this.toastrService.info('Se ha agregado un nuevo registro a la lista', 'Lista elementos');
-        this.deshabilitarChk = true;
+        this.chkDeshabilitar = true;
         this.deshabilitarChips = true;
         this.formDinamico.reset();
     }
 
-    formarObj(pref: string[], ctrlId: string, valores: string[]): IDatosFormulario
-    {
-        const obj: IDatosFormulario = {};
-        pref.forEach((x, i) =>
-        {
-            obj[x + ctrlId] = valores[i];
-        });
-        return obj;
-    }
-
-    obtValoresForm(pref: string[], ctrlId: string): string[]
-    {
-        const valores: string[] = [];
-        pref.forEach((x) =>
-        {
-            const valor = this.formDinamico.get(x + ctrlId).value;
-            valores.push(valor);
-        });
-        return valores;
-    }
-
-    dblFormula(): void
-    {
-
-    }
-
     regComponente(): void
     {
+        this.cargando = true;
+        const {formula, tipoValorTrim, tipoValorAvance, etiqueta} = this.formTipoValores.value;
+
+        const eliminarCaracteresEspeciales = formula.replace(/[^\w\s]|(?<!\w)_(?!\w)/g, '');
+        const eliminarNumerosAdicionales = eliminarCaracteresEspeciales.replace(/\b\d+\b/g, '').split(' ');
+        const idsFormula: string[] = compact(eliminarNumerosAdicionales);
+
+        const datos: TRegComponente =
+            {
+                _id: this.planeacionQuery.getActive()._id,
+                idIndicadorMir: this.idIndicadorMir,
+                formula,
+                idsFormula,
+                colsTabla: this.tituloCols,
+                formDinamico: this.objFormulario,
+                tipoValorTrim,
+                tipoValorAvance,
+                etiqueta,
+                tipoForm: this.tipoFormulario,
+                idsFormulario: this.idsDelFormulario,
+                omitirPrimerId: this.chkOmitirPrimerIdEnTabla
+            };
+        this.formDinamico.disable();
+        this.formTipoValores.disable();
+        this.planeacionService.regComponente(datos).pipe(finalize(() =>
+        {
+            this.cargando = false;
+            this.formDinamico.enable();
+            this.formTipoValores.enable();
+            this.location.back();
+        })).subscribe();
     }
 
-    asignarIdsParaFormula(): void
+    regresar(): void
     {
-        const valorFormula = this.formTipoValores.get('formula').value;
-        this.formTipoValores.get('formula').setValue(valorFormula + this.ctrlIdIndicadorPbr);
+        this.location.back();
     }
-
-    chkPeriodoAnt(e: MatCheckboxChange): void
-    {
-        this.mostrarPeriodoAnt = e.checked;
-        this.tipoFormulario = e.checked ? TiposFormulario.PERIODO_ANT : TiposFormulario.DIN;
-    }
-
-    hayDuplicados(arr: string[]): boolean
-    {
-        return arr.length !== new Set(arr).size;
-    }
-
 
     trackByCtrls(indice: number, elemento: string): string | number
     {
@@ -357,11 +396,5 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     ngOnDestroy(): void
     {
         this.sub.unsubscribe();
-    }
-
-    valorFila<T>(e: typeof this.objFormulario[0]): void
-    {
-        type obj = typeof this.objFormulario[0];
-        const res: obj = e as obj;
     }
 }

@@ -3,10 +3,12 @@ fragment fragComponente on ComponenteType
     tipoValorTrim
     tipoValorAvance
     tipoForm
-    ids
+    idsFormula
+    idsFormulario
     formula
+    colsTabla
+    omitirPrimerId
     etiqueta
-    idsColsTabla
     formComun {
         ...fragFormComun
     }
