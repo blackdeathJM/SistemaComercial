@@ -76,10 +76,10 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
 
         if (filSumatoria)
         {
-            return filtrarElAno.pbrSumatoria.find(value => value.idSumatoria === id);
+            return filtrarElAno.pbrSumatoria.find(value => value.idSumatoria === idIndicador);
         } else
         {
-            return filtrarElAno.pbrCuestionario.find(value => value.idIndicador === id);
+            return filtrarElAno.pbrCuestionario.find(value => value.idIndicador === idIndicador);
         }
     }
 }

@@ -25,6 +25,8 @@ import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir
 import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
+import {Pbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr";
+import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
 
 @Component({
     selector: 'app-componentes',
@@ -158,7 +160,10 @@ export class ComponentesComponent
         //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
         // });
         const mir = this.planeacionQuery.cuestionarioMir();
-        // const prueba = this.componentesService.separarIdsFormularioConValAnt(mir);
+        const pbr: IPbrCuestionario[] = this.planeacionQuery.cuestionarioPbrV();
+        console.log('obj guardado', mir.componente.formDinamico);
+        const anidar = this.componentesService.anadirAColsCampos(mir);
+        const res = this.componentesService.objParaLaFormula(mir, pbr, this.planeacionQuery.getActive());
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], suf: string): void
@@ -190,7 +195,6 @@ export class ComponentesComponent
         if (e.checked)
         {
             this.columnas = [...this.columnas].concat(cols);
-            console.log('columnas ya formadas', this.columnas);
         } else
         {
             // this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);

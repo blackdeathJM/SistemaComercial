@@ -27,7 +27,7 @@ export class ComponentesService
         const obj: IDatosFormulario = {};
         pref.forEach((x, i) =>
         {
-            obj[x + ctrlId] = valores[i];
+            obj[x + valores[0]] = valores[i];
         });
         return obj;
     };
@@ -234,10 +234,26 @@ export class ComponentesService
         return objFormula;
     }
 
-    datosTablaDinamica(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion): IDatosFormulario[]
+    anadirAColsCampos(mirActivo: IMirCuestionario): string[]
+    {
+        //? Añadimos a las columnas que se mostraran en la tabla los campos que necesitamos
+        const colsTabla: string[] = [];
+        const datosForm: object = {};
+        mirActivo.componente.colsTabla.forEach((ele, i) =>
+        {
+            const elemArreglo = ele.split('__');
+            const primerEle = elemArreglo.shift();
+            const ultimoEle = elemArreglo.pop();
+            colsTabla.push(primerEle, 'trim1' + primerEle, 'trim2' + primerEle, 'trim3' + primerEle, 'trim4');
+        });
+        console.log(colsTabla);
+        return [];
+    }
+
+    objParaLaFormula(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion): IDatosFormulario[]
     {
         const obj: IDatosFormulario[] = [{}, {}, {}, {}];
-        const idsFormulaConTrim = this.separarIdsFormularioConValAnt(mirActivo);
+        const idsFormulaConTrim = this.separarIdsFormConValAnt(mirActivo);
         const pbrEncontrados: string[][] = [];
 
         idsFormulaConTrim.forEach((valor, indice) =>
@@ -250,22 +266,23 @@ export class ComponentesService
                 obj[0][valor[0]] = elementoPbr.trim1;
                 obj[0][valor[0] + '__ANT'] = trimAnt ? trimAnt.trim1 : valor[1];
                 obj[1][valor[0]] = elementoPbr.trim2;
-                obj[1][valor[0] + '__ANT'] = trimAnt.trim2 ? trimAnt.trim2 : valor[2];
+                obj[1][valor[0] + '__ANT'] = trimAnt ? trimAnt.trim2 : valor[2];
             }
         });
+        console.log('-------', obj);
         return obj;
     }
 
-    private separarIdsFormularioConValAnt(mirActivo: IMirCuestionario): string[][]
+    private separarIdsFormConValAnt(mirActivo: IMirCuestionario): string[][]
     {
         //? Extraer todos los ids con prefijo __ant, porque todos los ids tendran su valor anterior no importa que no se use en la fórmula
         const ids = mirActivo.componente.idsFormula.map(elemento => elemento.split('__').shift());
         //? Quitamos el sufijo de __ANT a los ids para solo dejar un, id
         const sinIdsDuplicados = [...new Set(ids)];
         //? Combinamos los ids del formulario con los ids de la fórmula, porque en los ids del formulario tenemos los valores de los trimestres anteriores
-        const combinarIds = [...mirActivo.componente.idsFormulario, ...sinIdsDuplicados];
-
-        const idsSeparadosEnArrayConValoresTrimAnt = combinarIds.map(x => x.split('__'));
+        const idsCombinados = [...mirActivo.componente.idsFormulario, ...sinIdsDuplicados];
+        console.log('ids combinados', idsCombinados)
+        const idsSeparadosEnArrayConValoresTrimAnt = idsCombinados.map(x => x.split('__'));
 
         const resultado: string[][] = idsSeparadosEnArrayConValoresTrimAnt.reduce((acc: string[][], elemento: string[]) =>
         {

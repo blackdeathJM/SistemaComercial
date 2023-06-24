@@ -319,13 +319,15 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
 
         this.idsDelFormulario.push(...idsPbrDelFormulario);
 
-        const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, idCtrlForm) =>
+        const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, idCtrlForm, i) =>
         {
+            //? creacion del obj del formulario
             const ctrlId = idCtrlForm.split('__').pop();
             const arregloValores = ComponentesService.obtValoresForm(Object.values(PrefFormDin), ctrlId, this.formDinamico);
             const valoresParaObj = ComponentesService.formarObj(Object.values(PrefFormDin), ctrlId, arregloValores);
             return {...obj, ...valoresParaObj};
         }, {});
+
         this.objFormulario.push(objDinamico);
         //? Crear la estructura para las columnas
         const asigPrefCols = this.tituloCols.flatMap((x, i) =>
