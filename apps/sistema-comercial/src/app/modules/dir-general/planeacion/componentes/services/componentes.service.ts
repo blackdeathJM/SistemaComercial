@@ -9,6 +9,7 @@ import {PrefFormDin} from "@s-dir-general/componentes/mod-componentes/mod-comp-d
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
+import {isEqual, pullAllWith} from "lodash-es";
 
 export interface IDatosFormulario
 {
@@ -27,7 +28,7 @@ export class ComponentesService
         const obj: IDatosFormulario = {};
         pref.forEach((x, i) =>
         {
-            obj[x + valores[0]] = valores[i];
+            obj[x + ctrlId] = valores[i];
         });
         return obj;
     };
@@ -169,10 +170,10 @@ export class ComponentesService
     {
         const columnasTabla: IGenerarColumnTabla[] = [];
         // const regex = /^(.+)__(.+)$/;
-        columnas.forEach((x, i) =>
+        columnas.forEach((titulo, i) =>
         {
             // const coincidencia = x.match(regex);
-            const tituloColumna = x.split('__');
+            const tituloColumna = titulo.split('__');
             const etiqueta = tituloColumna.shift();
             const def = tituloColumna.pop();
             const columnaTabla: IGenerarColumnTabla =
@@ -188,52 +189,6 @@ export class ComponentesService
         return columnasTabla;
     }
 
-    private objFormulaComun(pbr: IPbrCuestionario[], sumatorias: ISumatorias[], mirActivo: IMirCuestionario): object[]
-    {
-        const objFormula: Record<string, number>[] = [{}, {}, {}, {}];
-        const ids = mirActivo.componente.idsFormulario;
-        const formComun = mirActivo.componente.formComun;
-
-
-        ids.forEach((id) =>
-        {
-            const idDivididoEnArray = id.split('__');
-            const nvoId = idDivididoEnArray.shift();
-            let sufijo = '__' + idDivididoEnArray.pop();
-            let trimestresAnt = [0, 0, 0, 0];
-
-            const pbrEncontrado = pbr.find(x => x.idIndicador === nvoId);
-            if (sufijo === '__undefined')
-            {
-                sufijo = '';
-            }
-            if (sufijo === '__Ant')
-            {
-                const valoresTrim = formComun.find(x => x.idIndicador === pbrEncontrado.idIndicador);
-                trimestresAnt[0] = valoresTrim.trim1Ant;
-                trimestresAnt[1] = valoresTrim.trim2Ant;
-                trimestresAnt[2] = valoresTrim.trim3Ant;
-                trimestresAnt[3] = valoresTrim.trim4Ant;
-            }
-            if (isNotNil(pbrEncontrado))
-            {
-                objFormula[0][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : pbrEncontrado.trim1;
-                objFormula[1][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : pbrEncontrado.trim2;
-                objFormula[2][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : pbrEncontrado.trim3;
-                objFormula[3][(pbrEncontrado.idIndicador + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : pbrEncontrado.trim4;
-            }
-            const sumatoria = sumatorias.find(x => x.idSumatoria === nvoId);
-            if (isNotNil(sumatoria))
-            {
-                objFormula[0][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[0] : sumatoria.trim1;
-                objFormula[1][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[1] : sumatoria.trim2;
-                objFormula[2][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[2] : sumatoria.trim3;
-                objFormula[3][(sumatoria.idSumatoria + sufijo).trim()] = sufijo === '__Ant' ? trimestresAnt[3] : sumatoria.trim4;
-            }
-        });
-        return objFormula;
-    }
-
     anadirAColsCampos(mirActivo: IMirCuestionario): string[]
     {
         //? Añadimos a las columnas que se mostraran en la tabla los campos que necesitamos
@@ -244,17 +199,39 @@ export class ComponentesService
             const elemArreglo = ele.split('__');
             const primerEle = elemArreglo.shift();
             const ultimoEle = elemArreglo.pop();
-            colsTabla.push(primerEle, 'trim1' + primerEle, 'trim2' + primerEle, 'trim3' + primerEle, 'trim4');
+            colsTabla.push(primerEle, 'trim1' + primerEle, 'trim2' + primerEle, 'trim3');
         });
         console.log(colsTabla);
         return [];
     }
 
-    objParaLaFormula(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion): IDatosFormulario[]
+    datosTablaDinamica(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], sumatorias: ISumatorias[], idsDelFormulario: string[]): void
     {
+        const nvoObjConDatosActualizados: IDatosFormulario[] = [];
+        const llaves: string[][] = [];
+        const valores: string[][] = [];
+        mirActivo.componente.formDinamico.forEach((x) =>
+        {
+            llaves.push(Object.keys(x));
+            valores.push(Object.values(x));
+        });
+
+        const nuevoValores: string[] = [];
+
+        idsDelFormulario.forEach((x) =>
+        {
+
+        });
+        console.log('------------->>>', llaves);
+        console.log('-------------->><>', valores);
+    }
+
+    objParaLaFormula(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion, sumatorias: ISumatorias[]): IDatosFormulario[]
+    {
+        const PrefCalculo = '__ANT';
         const obj: IDatosFormulario[] = [{}, {}, {}, {}];
         const idsFormulaConTrim = this.separarIdsFormConValAnt(mirActivo);
-        const pbrEncontrados: string[][] = [];
+        const idsPbrEncontrados: string[][] = [];
 
         idsFormulaConTrim.forEach((valor, indice) =>
         {
@@ -262,14 +239,31 @@ export class ComponentesService
             if (elementoPbr)
             {
                 const trimAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, valor[0], false);
-                pbrEncontrados.push(valor);
-                obj[0][valor[0]] = elementoPbr.trim1;
-                obj[0][valor[0] + '__ANT'] = trimAnt ? trimAnt.trim1 : valor[1];
-                obj[1][valor[0]] = elementoPbr.trim2;
-                obj[1][valor[0] + '__ANT'] = trimAnt ? trimAnt.trim2 : valor[2];
+                idsPbrEncontrados.push(valor);
+
+                for (let i = 0; i < valor.length - 1; i++)
+                {
+                    const trim = i + 1;
+                    obj[i][valor[0]] = elementoPbr[`trim${trim}`];
+                    obj[i][valor[0] + PrefCalculo] = trimAnt ? trimAnt[`trim${trim}`] : valor[i + 1];
+                }
             }
         });
-        console.log('-------', obj);
+        const idsRestantes: string[][] = pullAllWith(idsFormulaConTrim, idsPbrEncontrados, isEqual);
+        idsRestantes.forEach((valor) =>
+        {
+            const elementoSumatoria = sumatorias.find(sumatoria => sumatoria.idSumatoria === valor[0]);
+            if (elementoSumatoria)
+            {
+                const trimAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, valor[0], true);
+                for (let i = 0; i < valor.length - 1; i++)
+                {
+                    const trim = i + 1;
+                    obj[i][valor[0]] = elementoSumatoria[`trim${trim}`];
+                    obj[i][valor[0] + PrefCalculo] = trimAnt ? trimAnt[`trim1${trim}`] : valor[i + 1];
+                }
+            }
+        });
         return obj;
     }
 

@@ -161,9 +161,10 @@ export class ComponentesComponent
         // });
         const mir = this.planeacionQuery.cuestionarioMir();
         const pbr: IPbrCuestionario[] = this.planeacionQuery.cuestionarioPbrV();
+        const sumatorias = this.planeacionQuery.sumatoriaPbrV();
         console.log('obj guardado', mir.componente.formDinamico);
         const anidar = this.componentesService.anadirAColsCampos(mir);
-        const res = this.componentesService.objParaLaFormula(mir, pbr, this.planeacionQuery.getActive());
+        this.componentesService.datosTablaDinamica(mir, pbr, sumatorias);
     }
 
     cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], suf: string): void

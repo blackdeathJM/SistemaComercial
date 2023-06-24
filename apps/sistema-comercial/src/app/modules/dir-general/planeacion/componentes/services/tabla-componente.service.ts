@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
-import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 
 @Injectable({providedIn: 'root'})
 export class TablaComponenteService
@@ -20,7 +19,7 @@ export class TablaComponenteService
     {
         const col: IGenerarColumnTabla[] = [];
         //? Eliminamos los dos primeros elementos del arreglo, que son él, id y el dato, ya que esos están declarados como columnas base en el componentes.component.ts
-        // const ids = omitirIndicadorPrincipal ? arregloDivider.slice(2) : arregloDivider;
+        // const ids = omitirIndicadorPrincipal? arregloDivider.slice(2) : arregloDivider;
 
         const idsPrimeros = arregloDivider.slice(0, 2);
         const idsOmitirPrimeros = arregloDivider.slice(2);

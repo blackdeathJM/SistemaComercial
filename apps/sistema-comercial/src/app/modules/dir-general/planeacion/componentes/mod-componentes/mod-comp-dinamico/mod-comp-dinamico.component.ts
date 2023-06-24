@@ -319,28 +319,27 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
 
         this.idsDelFormulario.push(...idsPbrDelFormulario);
 
-        const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, idCtrlForm, i) =>
+        const asigPrefCols: string[] = [];
+
+        const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, titulo, i) =>
         {
-            //? creacion del obj del formulario
-            const ctrlId = idCtrlForm.split('__').pop();
-            const arregloValores = ComponentesService.obtValoresForm(Object.values(PrefFormDin), ctrlId, this.formDinamico);
-            const valoresParaObj = ComponentesService.formarObj(Object.values(PrefFormDin), ctrlId, arregloValores);
+            //? Creacion del obj del formulario
+            const idColArreglo = titulo.split('__');
+            const primerValor = idColArreglo.shift();
+            const ultimoValor = idColArreglo.pop();
+            const arregloValores = ComponentesService.obtValoresForm(Object.values(PrefFormDin), ultimoValor, this.formDinamico);
+            const valoresParaObj = ComponentesService.formarObj(Object.values(PrefFormDin), ultimoValor, arregloValores);
+            if (i === 0)
+            {
+                asigPrefCols.push(primerValor + '__' + PrefFormDin.idIndicador + ultimoValor, 'Descripcion' + '__' + PrefFormDin.dato + ultimoValor);
+            } else
+            {
+                asigPrefCols.push(primerValor + '__' + PrefFormDin.idIndicador + ultimoValor);
+            }
             return {...obj, ...valoresParaObj};
         }, {});
 
         this.objFormulario.push(objDinamico);
-        //? Crear la estructura para las columnas
-        const asigPrefCols = this.tituloCols.flatMap((x, i) =>
-        {
-            const tituloEnArray = x.split('__');
-            const titulo = tituloEnArray.shift();
-            const id = tituloEnArray.pop();
-            if (i == 0)
-            {
-                return [titulo + '__' + PrefFormDin.idIndicador + id, 'Descripcion' + '__' + PrefFormDin.dato + id];
-            }
-            return [titulo + '__' + PrefFormDin.idIndicador + id];
-        });
 
         this.columnas = ComponentesService.colCompDinamico(asigPrefCols, 'texto');
         this.datosTabla.data = [...this.objFormulario];
@@ -355,9 +354,9 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         this.cargando = true;
         const {formula, tipoValorTrim, tipoValorAvance, etiqueta} = this.formTipoValores.value;
 
-        const eliminarCaracteresEspeciales = formula.replace(/[^\w\s]|(?<!\w)_(?!\w)/g, '');
-        const eliminarNumerosAdicionales = eliminarCaracteresEspeciales.replace(/\b\d+\b/g, '').split(' ');
-        const idsFormula: string[] = compact(eliminarNumerosAdicionales);
+        const sinCaracteresEspeciales = formula.replace(/[^\w\s]|(?<!\w)_(?!\w)/g, '');
+        const sinNumerosAdicionales = sinCaracteresEspeciales.replace(/\b\d+\b/g, '').split(' ');
+        const idsFormula: string[] = compact(sinNumerosAdicionales);
 
         const datos: TRegComponente =
             {
