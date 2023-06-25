@@ -2,14 +2,15 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 import {CommonModule} from '@angular/common';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
-import {isNotNil} from '@angular-ru/cdk/utils';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {isNotNil} from "@angular-ru/cdk/utils";
 import {isNumber} from "lodash-es";
 
 @Component({
     selector: 'app-tabla-mat',
     standalone: true,
-    imports: [CommonModule, MatTableModule, MatTableModule, MultiplesFormatosPipe],
+    imports: [CommonModule, MatTableModule, MatTableModule, MultiplesFormatosPipe, MatTooltipModule],
     templateUrl: './tabla-mat.component.html',
     styleUrls: ['./tabla-mat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,23 +37,18 @@ export class TablaMatComponent
     columnasTabla: IGenerarColumnTabla[] = [];
     celdaSeleccionada = false;
 
-    obtenerTotal(trim: string): string
+    obtenerTotal(def: string): string | number
     {
-        if (isNotNil(trim))
+        if (isNotNil(def))
         {
-            if (trim === 'idIndicador')
+            return this._origenDatos.data.map(value =>
             {
-                return '';
-            }
-            if (trim === 'dato')
-            {
-                return 'Total';
-            }
-            if (!isNumber(trim))
-            {
-                return '----'
-            }
-            return this._origenDatos.data.map(value => value[trim]).reduce((acc, act) => acc + act, 0);
+                if (isNumber(parseInt(value[def])))
+                {
+                    return parseFloat(value[def]);
+                }
+                return 0;
+            }).reduce((acc, act) => acc + act, 0);
         }
         return '----';
     }

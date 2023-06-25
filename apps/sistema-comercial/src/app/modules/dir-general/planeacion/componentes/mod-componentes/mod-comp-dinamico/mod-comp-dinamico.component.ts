@@ -16,7 +16,7 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {SeleccionQuery} from "@s-dir-general/selecciones/store/seleccion.query";
 import {FuseAlertModule} from "@s-fuse/alert";
-import {compact, isNil} from "lodash-es";
+import {compact, isEqual, isNil, pullAllWith} from "lodash-es";
 import {ActivatedRoute} from "@angular/router";
 import {finalize, Subscription} from "rxjs";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
@@ -31,23 +31,9 @@ import {fuseAnimations} from "@s-fuse/public-api";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ToastrService} from "ngx-toastr";
-import {ComponentesService, IDatosFormulario} from "@s-dir-general/componentes/services/componentes.service";
-import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
+import {ComponentesService, IDatosFormulario, PrefFormDin} from "@s-dir-general/componentes/services/componentes.service";
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
-
-export enum PrefFormDin
-{
-    idIndicador = 'idIndicador',
-    dato = 'dato',
-    ant1 = 'ant1',
-    ant2 = 'ant2',
-    ant3 = 'ant3',
-    ant4 = 'ant4',
-    trim1 = 'trim1',
-    trim2 = 'trim2',
-    trim3 = 'trim3',
-    trim4 = 'trim4'
-}
+import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 
 @Component({
     selector: 'app-mod-comp-dinamico',
@@ -105,7 +91,8 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
 
     constructor(private rxFb: RxFormBuilder, public planeacionQuery: PlaneacionQuery, public seleccionQuery: SeleccionQuery, private location: Location, private activatedRoute: ActivatedRoute,
                 private render: Renderer2, private toastrService: ToastrService, private planeacionService: PlaneacionService)
-    {}
+    {
+    }
 
     ngOnInit(): void
     {
@@ -140,7 +127,11 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
         {
             const generarUuid = uuidv4().toString().substring(0, 7).toUpperCase()
             valor = valor + '__' + generarUuid;
-            const validarNumero = RxwebValidators.numeric({allowDecimal: true, message: 'Valor numerico', persistZero: true});
+            const validarNumero = RxwebValidators.numeric({
+                allowDecimal: true,
+                message: 'Valor numerico',
+                persistZero: true
+            });
             const requerido = RxwebValidators.required({message: 'Requerido'});
 
             ComponentesService.agCtrlForm(Object.values(PrefFormDin).slice(0, 2), generarUuid, '', [requerido], this.formDinamico);
@@ -173,7 +164,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     {
         if (this.focoEnTxtformula)
         {
-            this.asigFormulaTxt(pbr.idIndicador);
+            this.asigFormulaTxt(pbr.idIndicador + ' + ');
         } else
         {
             if (isNil(this.ctrlNombre))
@@ -200,7 +191,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     {
         if (this.focoEnTxtformula)
         {
-            this.asigFormulaTxt(sumatoria.idSumatoria);
+            this.asigFormulaTxt(sumatoria.idSumatoria + ' + ');
         } else
         {
             if (isNil(this.ctrlNombre))
@@ -232,7 +223,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             this.asigFormulaTxt(idPbr + ' + ');
             if (this.chkPeriodoAntValores)
             {
-                this.asigFormulaTxt(idPbr + '__ant' + ' + ');
+                this.asigFormulaTxt(idPbr + '__ANT' + ' + ');
             }
         });
     }
@@ -319,7 +310,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
 
         this.idsDelFormulario.push(...idsPbrDelFormulario);
 
-        const asigPrefCols: string[] = [];
+        const cols: string[] = [];
 
         const objDinamico: IDatosFormulario = this.tituloCols.reduce((obj, titulo, i) =>
         {
@@ -327,26 +318,33 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
             const idColArreglo = titulo.split('__');
             const primerValor = idColArreglo.shift();
             const ultimoValor = idColArreglo.pop();
-            const arregloValores = ComponentesService.obtValoresForm(Object.values(PrefFormDin), ultimoValor, this.formDinamico);
-            const valoresParaObj = ComponentesService.formarObj(Object.values(PrefFormDin), ultimoValor, arregloValores);
+
+            const prefijos = Object.values(PrefFormDin);
+            const eliminaTrim = [PrefFormDin.trim1, PrefFormDin.trim2, PrefFormDin.trim3, PrefFormDin.trim4];
+            const nvosPref: string[] = pullAllWith(prefijos, eliminaTrim, isEqual);
+
+            const arregloValores = ComponentesService.obtValoresForm(nvosPref, ultimoValor, this.formDinamico);
+            const valoresParaObj = ComponentesService.formarObj(nvosPref, ultimoValor, arregloValores);
             if (i === 0)
             {
-                asigPrefCols.push(primerValor + '__' + PrefFormDin.idIndicador + ultimoValor, 'Descripcion' + '__' + PrefFormDin.dato + ultimoValor);
+                cols.push(primerValor + '__' + PrefFormDin.idIndicador + ultimoValor, 'Descripcion' + '__' + PrefFormDin.dato + ultimoValor);
             } else
             {
-                asigPrefCols.push(primerValor + '__' + PrefFormDin.idIndicador + ultimoValor);
+                cols.push(primerValor + '__' + PrefFormDin.idIndicador + ultimoValor);
             }
+            //Restablecer textos del formulario
+            ComponentesService.restCtrls([PrefFormDin.idIndicador], ultimoValor, this.formDinamico, '');
+            ComponentesService.restCtrls([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], ultimoValor, this.formDinamico, '0');
             return {...obj, ...valoresParaObj};
         }, {});
 
         this.objFormulario.push(objDinamico);
 
-        this.columnas = ComponentesService.colCompDinamico(asigPrefCols, 'texto');
+        this.columnas = ComponentesService.colCompDinamico(cols, 'texto');
         this.datosTabla.data = [...this.objFormulario];
         this.toastrService.info('Se ha agregado un nuevo registro a la lista', 'Lista elementos');
         this.chkDeshabilitar = true;
         this.deshabilitarChips = true;
-        this.formDinamico.reset();
     }
 
     regComponente(): void

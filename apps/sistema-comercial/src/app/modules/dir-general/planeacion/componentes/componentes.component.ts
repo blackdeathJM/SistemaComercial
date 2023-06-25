@@ -18,15 +18,17 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DateTime} from 'luxon';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
-import {IDatosTablaFormComun, IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
-import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
-import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
+import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
+import {ComponentesService, IDatosFormulario, PrefFormDin} from "@s-dir-general/componentes/services/componentes.service";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
-import {Pbr} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr";
-import {IPbrCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
+import {TiposFormulario} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {isEqual, pullAllWith} from "lodash-es";
+import {jsPDF} from "jspdf";
+import html2canvas from "html2canvas";
 
 @Component({
     selector: 'app-componentes',
@@ -42,13 +44,12 @@ export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
     @Output() avancesTrim = new EventEmitter<string[]>();
-
-    chkRestablecer: boolean;
+    protected readonly PrefFormDin = PrefFormDin;
     ngxLoader = 'loaderComponentes';
     avTrim: string[] = ['', '', '', ''];
     fecha = DateTime.now().toLocaleString();
     chkVisible: boolean[] = [false, false, false, false];
-    datosTabla = new MatTableDataSource<IDatosTablaFormComun>([]);
+    datosTabla = new MatTableDataSource<IDatosFormulario>([]);
 
     chkTrim0 = new FormControl(false);
     chkTrim1 = new FormControl(false);
@@ -69,43 +70,24 @@ export class ComponentesComponent
                 this.avancesTrim.emit([...this.avTrim]);
                 return;
             }
-            this.chkRestablecer = false;
-            const colsBase: IGenerarColumnTabla[] =
-                [
-                    {
-                        etiqueta: 'Indicador',
-                        def: 'idIndicador',
-                        llaveDato: 'idIndicador',
-                        width: '7%',
-                        tipoDeDato: 'texto'
-                    },
-                    {
-                        etiqueta: 'Descripcion',
-                        def: 'dato',
-                        llaveDato: 'dato',
-                        width: 'auto',
-                        tipoDeDato: 'texto'
-                    }
-                ];
             const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
             const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
-
-            // const trimObjCalcular = this.componentesService.objFormula(pbrS, sumatorias, mir);
-
+            const trimObjCalcular = this.componentesService.objParaLaFormula(mir, pbrS, planeacionQuery.getActive(), sumatorias);
             this.chkTrim0.reset();
             this.chkTrim1.reset();
             this.chkTrim2.reset();
             this.chkTrim3.reset();
-
+            this.chkVisible = [false, false, false, false];
+            const tituloEnArray = mir.componente.colsTabla[0].split('__');
+            const etiqueta = tituloEnArray.shift();
+            const def = tituloEnArray.pop();
+            const colsBase: IGenerarColumnTabla[] = TablaComponenteService.genCols([etiqueta, 'Descripcion'], [PrefFormDin.idIndicador + def, PrefFormDin.dato + def], ['10%', 'auto'], 'texto');
             this.columnas = [...colsBase];
-
-            this.datosTabla.data = this.componentesService.datosTablaComun(pbrS, mir.componente.formComun, sumatorias);
-
-            // this.avTrim[0] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
-            // this.avTrim[1] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
-            // this.avTrim[2] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
-            // this.avTrim[3] = ComponentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
-
+            this.avTrim[0] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[0]);
+            this.avTrim[1] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
+            this.avTrim[2] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
+            this.avTrim[3] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
+            this.datosTabla.data = this.componentesService.datosTablaDinamica(mir, pbrS, sumatorias, planeacionQuery.getActive());
             this.avancesTrim.emit(this.avTrim);
         });
     }
@@ -139,67 +121,52 @@ export class ComponentesComponent
 
     imprimirComp(mirSelec: IMirCuestionario): void
     {
-        // this.ngxUiLoaderService.startLoader(this.ngxLoader);
-        // const componente = this.componenteRef.nativeElement;
-        // componente.style.color = 'black';
-        // html2canvas(componente).then(canvas =>
-        // {
-        //     const img = canvas.toDataURL('image/png');
-        //     const pdf = new jsPDF('p', 'pt', 'a4');
-        //     pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
-        //     pdf.setFontSize(8);
-        //     pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
-        //     const imgProps = pdf.getImageProperties(img);
-        //     const pdfAncho = pdf.internal.pageSize.getWidth();
-        //     const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
-        //     pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
-        //     pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
-        //     pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
-        //     pdf.save('componente.pdf');
-        //     componente.style.color = '';
-        //     this.ngxUiLoaderService.stopLoader(this.ngxLoader);
-        // });
-        const mir = this.planeacionQuery.cuestionarioMir();
-        const pbr: IPbrCuestionario[] = this.planeacionQuery.cuestionarioPbrV();
-        const sumatorias = this.planeacionQuery.sumatoriaPbrV();
-        console.log('obj guardado', mir.componente.formDinamico);
-        const anidar = this.componentesService.anadirAColsCampos(mir);
-        this.componentesService.datosTablaDinamica(mir, pbr, sumatorias);
+        this.ngxUiLoaderService.startLoader(this.ngxLoader);
+        const componente = this.componenteRef.nativeElement;
+        componente.style.color = 'black';
+        html2canvas(componente).then(canvas =>
+        {
+            const img = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+            pdf.setFontSize(8);
+            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+            const imgProps = pdf.getImageProperties(img);
+            const pdfAncho = pdf.internal.pageSize.getWidth();
+            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+            pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
+            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
+            pdf.save('componente.pdf');
+            componente.style.color = '';
+            this.ngxUiLoaderService.stopLoader(this.ngxLoader);
+        });
     }
 
-    cambioChkTrim(e: MatCheckboxChange, tipoForm: string | null, etiqueta: string[], suf: string): void
+    cambioChkTrim(e: MatCheckboxChange, trim: PrefFormDin, trimAnt: PrefFormDin, suf: string, sufAnt: string): void
     {
         const mir = this.planeacionQuery.cuestionarioMir();
         //Obtenemos el último caracter del ID asignando a cada checkbox para usarlo como índice del array que mostrara los avances trimestrales en el html
         this.chkVisible[parseInt(e.source.id.charAt(e.source.id.length - 1), 10)] = e.checked;
-
-        const idIndicadorYDato = etiqueta.slice(0, 2);
-        const restoElementos = etiqueta.slice(2);
-
-        const cols: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun(restoElementos, ['6%'], mir.componente.tipoValorTrim, suf);
-
-        // const colsAnt: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ant], [defAnt], ['6%'], [mir.componente.tipoValorTrim]);
-        // const colsAd: IGenerarColumnTabla[] = TablaComponenteService.genColFormComun([ad], [defAd], ['6%'], [mir.componente.tipoValorTrim]);
-
-        // const colsDin: IGenerarColumnTabla[] = TablaComponenteService.genColFormDinamico(mir.componente.idsColsTabla, trim, defTrim);
-
-        // const formConfig =
-        //     {
-        //         [TiposFormulario.COMUN]: colsComun,
-        //         [TiposFormulario.PERIODO_ANT]: colsComun.concat(colsAnt),
-        //         [TiposFormulario.CON_OTRO_ID_PBR]: colsComun.concat(colsAd),
-        //         [TiposFormulario.DIN]: colsDin
-        //     };
-
-        // const colAgregar = formConfig[tipoForm];
-
-        if (e.checked)
+        mir.componente.colsTabla.forEach((col, indice) =>
         {
-            this.columnas = [...this.columnas].concat(cols);
-        } else
-        {
-            // this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
-        }
-        // e.checked ? this.columnas = [...this.columnas].concat(colAgregar) : this.columnas = pullAllWith([...this.columnas], colAgregar, isEqual);
+            const colArray = col.split('__');
+            const etiqueta = colArray.shift();
+            const idDinamico = colArray.pop();
+            if (indice === 0 && mir.componente.omitirPrimerId)
+            {
+                return;
+            }
+            const cols = TablaComponenteService.genCols([etiqueta + suf], [trim + idDinamico], ['10%'], mir.componente.tipoValorTrim);
+            const colsPeriodoAnt = TablaComponenteService.genCols([etiqueta + sufAnt,], [trimAnt + idDinamico], ['10%'], mir.componente.tipoValorTrim);
+
+            const formConfig =
+                {
+                    [TiposFormulario.DIN]: cols,
+                    [TiposFormulario.PERIODO_ANT]: cols.concat(colsPeriodoAnt)
+                }
+            const colsAgregar = formConfig[mir.componente.tipoForm];
+            e.checked ? this.columnas = [...this.columnas].concat(colsAgregar) : this.columnas = pullAllWith([...this.columnas], colsAgregar, isEqual);
+        });
     }
 }

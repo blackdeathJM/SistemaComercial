@@ -1,15 +1,28 @@
 import {Injectable} from '@angular/core';
-import {IFormComun} from '#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface';
 import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
-import {IDatosTablaFormComun, IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
-import {isNil, isNotNil} from '@angular-ru/cdk/utils';
+import {IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
+import {isNil} from '@angular-ru/cdk/utils';
 import * as math from 'mathjs';
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
-import {PrefFormDin} from "@s-dir-general/componentes/mod-componentes/mod-comp-dinamico/mod-comp-dinamico.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 import {isEqual, pullAllWith} from "lodash-es";
+import {ToastrService} from "ngx-toastr";
+
+export enum PrefFormDin
+{
+    idIndicador = 'idIndicador__',
+    dato = 'dato__',
+    ant1 = 'ant1__',
+    ant2 = 'ant2__',
+    ant3 = 'ant3__',
+    ant4 = 'ant4__',
+    trim1 = 'trim1__',
+    trim2 = 'trim2__',
+    trim3 = 'trim3__',
+    trim4 = 'trim4__'
+}
 
 export interface IDatosFormulario
 {
@@ -21,7 +34,7 @@ export interface IDatosFormulario
 })
 export class ComponentesService
 {
-    constructor(private planeacionQuery: PlaneacionQuery) {}
+    constructor(private planeacionQuery: PlaneacionQuery, private toastrService: ToastrService) {}
 
     static formarObj(pref: string[], ctrlId: string, valores: string[]): IDatosFormulario
     {
@@ -42,6 +55,14 @@ export class ComponentesService
             valores.push(valor);
         });
         return valores;
+    }
+
+    static restCtrls(pref: string[], ctrlIs: string, form: FormGroup, valorASet: string): void
+    {
+        pref.forEach(x =>
+        {
+            form.get(x + ctrlIs).setValue(valorASet);
+        });
     }
 
     static asigValForm(pref: string[], ctrlId: string, valorAsig: string[], form: FormGroup): void
@@ -66,104 +87,19 @@ export class ComponentesService
         return arr.length !== new Set(arr).size;
     }
 
-    static calcAvances(formula: string, obj: object): string
+    calcAvances(formula: string, obj: object): string
     {
-        if (isNil(formula) || Object.keys(obj).length === 0)
+        try
         {
-            return '0';
-        }
-        return math.evaluate(formula, obj);
-    }
-
-    datosTablaComun(pbr: IPbrCuestionario[], form: IFormComun[], sumatorias: ISumatorias[]): IDatosTablaFormComun[]
-    {
-        const tablaValores: IDatosTablaFormComun[] = [];
-
-        for (const i of form)
+            if (isNil(formula) || Object.keys(obj).length === 0)
+            {
+                return '0';
+            }
+            return math.evaluate(formula, obj);
+        } catch (e)
         {
-            const datos: IDatosTablaFormComun = {
-
-                idIndicador: '',
-                dato: '',
-                trim1: 0,
-                trim2: 0,
-                trim3: 0,
-                trim4: 0,
-
-                idIndicadorAd: '',
-                datoAd: '',
-                trim1Ad: 0,
-                trim2Ad: 0,
-                trim3Ad: 0,
-                trim4Ad: 0,
-
-                trim1Ant: 0,
-                trim2Ant: 0,
-                trim3Ant: 0,
-                trim4Ant: 0,
-            };
-
-            const pbrElemento = pbr.find(x => x.idIndicador === i.idIndicador);
-            if (isNotNil(pbrElemento))
-            {
-                Object.assign(datos, {
-                    idIndicador: pbrElemento.idIndicador,
-                    dato: pbrElemento.dato,
-                    trim1: pbrElemento.trim1,
-                    trim2: pbrElemento.trim2,
-                    trim3: pbrElemento.trim3,
-                    trim4: pbrElemento.trim4,
-
-                    trim1Ant: i.trim1Ant,
-                    trim2Ant: i.trim2Ant,
-                    trim3Ant: i.trim3Ant,
-                    trim4Ant: i.trim4Ant,
-                });
-            }
-
-            const pbrAd = pbr.find((x) => x.idIndicador === i.idIndicadorAd);
-            if (isNotNil(pbrAd))
-            {
-                Object.assign(datos,
-                    {
-                        idIndicadorAd: pbrAd.idIndicador,
-                        datoAd: pbrAd.dato,
-                        trim1Ad: pbrAd.trim1,
-                        trim2Ad: pbrAd.trim2,
-                        trim3Ad: pbrAd.trim3,
-                        trim4Ad: pbrAd.trim4
-                    });
-            }
-
-            const sumatoria = sumatorias.find(y => y.idSumatoria === i.idIndicador);
-            if (isNotNil(sumatoria))
-            {
-                Object.assign(datos, {
-                    idIndicador: sumatoria.idSumatoria,
-                    dato: sumatoria.nombreSumatoria,
-                    trim1: sumatoria.trim1,
-                    trim2: sumatoria.trim2,
-                    trim3: sumatoria.trim3,
-                    trim4: sumatoria.trim4
-                });
-            }
-            const sumatoriaAd = sumatorias.find(z => z.idSumatoria === i.idIndicadorAd);
-
-            if (isNotNil(sumatoriaAd))
-            {
-                Object.assign(datos,
-                    {
-                        idIndicadorAd: sumatoriaAd.idSumatoria,
-                        datoAd: sumatoriaAd.idSumatoria,
-                        trim1: sumatoriaAd.trim1,
-                        trim2: sumatoriaAd.trim2,
-                        trim3: sumatoriaAd.trim3,
-                        trim4: sumatoriaAd.trim4,
-                    });
-            }
-            tablaValores.push(datos);
+            this.toastrService.error(e);
         }
-        return tablaValores;
     }
 
     static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
@@ -175,7 +111,7 @@ export class ComponentesService
             // const coincidencia = x.match(regex);
             const tituloColumna = titulo.split('__');
             const etiqueta = tituloColumna.shift();
-            const def = tituloColumna.pop();
+            const def = tituloColumna.join('__');
             const columnaTabla: IGenerarColumnTabla =
                 {
                     etiqueta,
@@ -189,67 +125,88 @@ export class ComponentesService
         return columnasTabla;
     }
 
-    anadirAColsCampos(mirActivo: IMirCuestionario): string[]
+    datosTablaDinamica(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], sumatorias: ISumatorias[], planeacionActiva: IPlaneacion): IDatosFormulario[]
     {
-        //? Añadimos a las columnas que se mostraran en la tabla los campos que necesitamos
-        const colsTabla: string[] = [];
-        const datosForm: object = {};
-        mirActivo.componente.colsTabla.forEach((ele, i) =>
+        const objConDatosActualizados: IDatosFormulario[] = [];
+        const valorDinamicoProp = mirActivo.componente.colsTabla.map(x => x.split('__').pop());
+
+        for (const elemPbr of mirActivo.componente.formDinamico)
         {
-            const elemArreglo = ele.split('__');
-            const primerEle = elemArreglo.shift();
-            const ultimoEle = elemArreglo.pop();
-            colsTabla.push(primerEle, 'trim1' + primerEle, 'trim2' + primerEle, 'trim3');
-        });
-        console.log(colsTabla);
-        return [];
-    }
+            const datosActualizados: IDatosFormulario = {};
 
-    datosTablaDinamica(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], sumatorias: ISumatorias[], idsDelFormulario: string[]): void
-    {
-        const nvoObjConDatosActualizados: IDatosFormulario[] = [];
-        const llaves: string[][] = [];
-        const valores: string[][] = [];
-        mirActivo.componente.formDinamico.forEach((x) =>
-        {
-            llaves.push(Object.keys(x));
-            valores.push(Object.values(x));
-        });
+            for (const idDin of valorDinamicoProp)
+            {
+                const idElemBuscar: string = elemPbr[PrefFormDin.idIndicador + idDin];
+                const trimAnt: string[] = [elemPbr[PrefFormDin.ant1 + idDin], elemPbr[PrefFormDin.ant2 + idDin], elemPbr[PrefFormDin.ant3 + idDin], elemPbr[PrefFormDin.ant4 + idDin]];
 
-        const nuevoValores: string[] = [];
+                let existeEnPbr: boolean = false;
 
-        idsDelFormulario.forEach((x) =>
-        {
+                const pbr = pbrs.find(p => p.idIndicador === idElemBuscar);
+                if (pbr)
+                {
+                    existeEnPbr = true;
+                    const pbrAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, idElemBuscar, false);
+                    datosActualizados[PrefFormDin.idIndicador + idDin] = pbr.idIndicador;
+                    datosActualizados[PrefFormDin.dato + idDin] = pbr.dato;
+                    datosActualizados[PrefFormDin.trim1 + idDin] = pbr.trim1;
+                    datosActualizados[PrefFormDin.trim2 + idDin] = pbr.trim2;
+                    datosActualizados[PrefFormDin.trim3 + idDin] = pbr.trim3;
+                    datosActualizados[PrefFormDin.trim4 + idDin] = pbr.trim4;
+                    datosActualizados[PrefFormDin.ant1 + idDin] = pbrAnt ? pbrAnt.trim1 : trimAnt[0];
+                    datosActualizados[PrefFormDin.ant2 + idDin] = pbrAnt ? pbrAnt.trim2 : trimAnt[1];
+                    datosActualizados[PrefFormDin.ant3 + idDin] = pbrAnt ? pbrAnt.trim3 : trimAnt[2];
+                    datosActualizados[PrefFormDin.ant4 + idDin] = pbrAnt ? pbrAnt.trim4 : trimAnt[3];
+                }
 
-        });
-        console.log('------------->>>', llaves);
-        console.log('-------------->><>', valores);
+                if (!existeEnPbr)
+                {
+                    const sumatoria = sumatorias.find(s => s.idSumatoria === idElemBuscar);
+                    if (sumatoria)
+                    {
+                        const sumatoriaAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, idElemBuscar, true);
+                        datosActualizados[PrefFormDin.idIndicador + idDin] = sumatoria.idSumatoria;
+                        datosActualizados[PrefFormDin.dato + idDin] = sumatoria.nombreSumatoria;
+                        datosActualizados[PrefFormDin.trim1 + idDin] = sumatoria.trim1;
+                        datosActualizados[PrefFormDin.trim2 + idDin] = sumatoria.trim2;
+                        datosActualizados[PrefFormDin.trim3 + idDin] = sumatoria.trim3;
+                        datosActualizados[PrefFormDin.trim4 + idDin] = sumatoria.trim4;
+                        datosActualizados[PrefFormDin.ant1 + idDin] = sumatoriaAnt ? sumatoriaAnt.trim1 : trimAnt[0];
+                        datosActualizados[PrefFormDin.ant2 + idDin] = sumatoriaAnt ? sumatoriaAnt.trim2 : trimAnt[1];
+                        datosActualizados[PrefFormDin.ant3 + idDin] = sumatoriaAnt ? sumatoriaAnt.trim3 : trimAnt[2];
+                        datosActualizados[PrefFormDin.ant4 + idDin] = sumatoriaAnt ? sumatoriaAnt.trim4 : trimAnt[3];
+                    }
+                }
+            }
+
+            objConDatosActualizados.push(datosActualizados);
+        }
+        return objConDatosActualizados;
     }
 
     objParaLaFormula(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion, sumatorias: ISumatorias[]): IDatosFormulario[]
     {
-        const PrefCalculo = '__ANT';
+        const pref = '__ANT'
         const obj: IDatosFormulario[] = [{}, {}, {}, {}];
         const idsFormulaConTrim = this.separarIdsFormConValAnt(mirActivo);
         const idsPbrEncontrados: string[][] = [];
 
-        idsFormulaConTrim.forEach((valor, indice) =>
+        idsFormulaConTrim.forEach((valor) =>
         {
             const elementoPbr = pbrs.find(pbr => pbr.idIndicador === valor[0]);
             if (elementoPbr)
             {
                 const trimAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, valor[0], false);
                 idsPbrEncontrados.push(valor);
-
                 for (let i = 0; i < valor.length - 1; i++)
                 {
                     const trim = i + 1;
                     obj[i][valor[0]] = elementoPbr[`trim${trim}`];
-                    obj[i][valor[0] + PrefCalculo] = trimAnt ? trimAnt[`trim${trim}`] : valor[i + 1];
+                    obj[i][valor[0] + pref] = trimAnt ? trimAnt[`trim${trim}`] : valor[i + 1];
                 }
             }
         });
         const idsRestantes: string[][] = pullAllWith(idsFormulaConTrim, idsPbrEncontrados, isEqual);
+
         idsRestantes.forEach((valor) =>
         {
             const elementoSumatoria = sumatorias.find(sumatoria => sumatoria.idSumatoria === valor[0]);
@@ -260,7 +217,7 @@ export class ComponentesService
                 {
                     const trim = i + 1;
                     obj[i][valor[0]] = elementoSumatoria[`trim${trim}`];
-                    obj[i][valor[0] + PrefCalculo] = trimAnt ? trimAnt[`trim1${trim}`] : valor[i + 1];
+                    obj[i][valor[0] + pref] = trimAnt ? trimAnt[`trim1${trim}`] : valor[i + 1];
                 }
             }
         });
@@ -275,7 +232,6 @@ export class ComponentesService
         const sinIdsDuplicados = [...new Set(ids)];
         //? Combinamos los ids del formulario con los ids de la fórmula, porque en los ids del formulario tenemos los valores de los trimestres anteriores
         const idsCombinados = [...mirActivo.componente.idsFormulario, ...sinIdsDuplicados];
-        console.log('ids combinados', idsCombinados)
         const idsSeparadosEnArrayConValoresTrimAnt = idsCombinados.map(x => x.split('__'));
 
         const resultado: string[][] = idsSeparadosEnArrayConValoresTrimAnt.reduce((acc: string[][], elemento: string[]) =>

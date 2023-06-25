@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, ElementRef, inject, Input, QueryList, Renderer2, ViewChildren} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    inject,
+    Input,
+    QueryList,
+    Renderer2,
+    ViewChildren
+} from "@angular/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
@@ -19,11 +28,13 @@ import {v4 as uuidv4} from 'uuid';
 import {ObtenerIdFormPipe} from "@s-dir-general/componentes/mod-componentes/mod-comp-ptar/obtener-id-form.pipe";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {isNil} from "@angular-ru/cdk/utils";
-import {TiposFormulario, TipoValoresTrim} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
+import {
+    TiposFormulario,
+    TipoValoresTrim
+} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.interface";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TablaMatComponent} from "@s-shared/components/tabla-mat/tabla-mat.component";
 import {IGenerarColumnTabla} from "#/libs/models/src/lib/tabla.interface";
-import {ComponentesService} from "@s-dir-general/componentes/services/componentes.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {ToastrService} from "ngx-toastr";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
@@ -246,7 +257,7 @@ export class ModCompPtar
             this.formTipoValores.get('formula').setValue(this.ids.join('+'));
         });
 
-        this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
+        // this.columnas = ComponentesService.colCompDinamico(this.tituloColumnas, 'texto');
         this.datosTabla.data.push(objCompDin);
         this.datosTabla.data = [...this.datosTabla.data];
         this.toastrService.info('Se ha agregado un nuevo elemento a la lista', 'Componente dinamico');
