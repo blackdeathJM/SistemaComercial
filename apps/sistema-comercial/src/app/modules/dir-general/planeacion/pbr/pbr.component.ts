@@ -16,6 +16,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
 import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {fuseAnimations} from "@s-fuse/public-api";
+import {isNil} from "@angular-ru/cdk/utils";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-pbr',
@@ -32,7 +34,7 @@ export class PbrComponent implements OnDestroy
     abrirPanelPbr = false;
     pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
 
-    constructor(private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery, private ngxToast: NgxToastService, private mdr: MatDialog)
+    constructor(private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery, private toastrService: ToastrService, private mdr: MatDialog)
     {
 
     }
@@ -41,7 +43,7 @@ export class PbrComponent implements OnDestroy
     {
         if (!this.planeacionQuery.getActive())
         {
-            this.ngxToast.alertaToast('Debes seleccionar el año del ejercicio', 'Sumatorias');
+            this.toastrService.warning('Debes seleccionar el año del ejercicio', 'Sumatorias');
             return;
         }
         const data: IEditarSumatoriaPBR =
@@ -51,6 +53,7 @@ export class PbrComponent implements OnDestroy
             }
         this.mdr.open(ModSumatoriasComponent, {width: '40%', data, hasBackdrop: false, disableClose: true});
     }
+
     panelPbr(e: boolean): void
     {
         this.abrirPanelPbr = e;
@@ -63,7 +66,10 @@ export class PbrComponent implements OnDestroy
 
     imprimirTablaPbr(): void
     {
-
+        if (isNil(this.planeacionQuery.getActive()))
+        {
+            this.ngxToast.
+        }
     }
 
     ngOnDestroy(): void
