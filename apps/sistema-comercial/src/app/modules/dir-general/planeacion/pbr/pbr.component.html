@@ -1,7 +1,7 @@
 <mat-drawer-container class="w-full">
     <mat-drawer class="w-96" [opened]="abrirPanelPbr" [mode]="'side'" autoFocus="true" position="end">
         <ng-container *ngIf="abrirPanelPbr">
-            <app-mod-pbr (panelPbr)="panelPbr($event)"></app-mod-pbr>
+            <app-mod-pbr (panelPbr)="panelPbr($event)"/>
         </ng-container>
     </mat-drawer>
     <mat-drawer-content>
@@ -10,11 +10,11 @@
                 <ng-container acciones>
                     <div class="flex items-center content-center gap-4">
                         <button mat-flat-button color="accent" class="flex-auto" (click)="sumatoria()">
-                            <mat-icon svgIcon="mat_solid:calculate"></mat-icon>
+                            <mat-icon svgIcon="mat_solid:calculate"/>
                             Crear sumatorias
                         </button>
-                        <button mat-flat-button color="accent">
-                            <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                        <button mat-flat-button color="accent" (click)="imprimirTablaPbr()">
+                            <mat-icon svgIcon="heroicons_outline:printer"/>
                             Imprimir
                         </button>
                     </div>
@@ -22,8 +22,8 @@
             </app-acciones-mir-pbr>
 
             <article class="flex flex-auto flex-col">
-                <app-lista-pbr (panelPbr)="panelPbrDeLista($event)"></app-lista-pbr>
-                <app-lista-sum-pbr [sumatoriasPbr]="sum" *ngFor="let sum of pbrSumatorias()"></app-lista-sum-pbr>
+                <app-lista-pbr (panelPbr)="panelPbrDeLista($event)"/>
+                <app-lista-sum-pbr [sumatoriasPbr]="sum" *ngFor="let sum of pbrSumatorias()"/>
             </article>
         </section>
     </mat-drawer-content>

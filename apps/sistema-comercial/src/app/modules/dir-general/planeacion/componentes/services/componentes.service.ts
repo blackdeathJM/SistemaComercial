@@ -1,6 +1,4 @@
 import {Injectable} from '@angular/core';
-import {IPbrCuestionario, ISumatorias} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface';
-import {IGenerarColumnTabla} from '#/libs/models/src/lib/tabla.interface';
 import {isNil} from '@angular-ru/cdk/utils';
 import * as math from 'mathjs';
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
@@ -102,30 +100,7 @@ export class ComponentesService
         }
     }
 
-    static colCompDinamico(columnas: string[], tipoDeDato: string): IGenerarColumnTabla[]
-    {
-        const columnasTabla: IGenerarColumnTabla[] = [];
-        // const regex = /^(.+)__(.+)$/;
-        columnas.forEach((titulo, i) =>
-        {
-            // const coincidencia = x.match(regex);
-            const tituloColumna = titulo.split('__');
-            const etiqueta = tituloColumna.shift();
-            const def = tituloColumna.join('__');
-            const columnaTabla: IGenerarColumnTabla =
-                {
-                    etiqueta,
-                    def: def,
-                    tipoDeDato,
-                    tooltip: '',
-                    width: i === 1 ? 'auto' : '9%'
-                };
-            columnasTabla.push(columnaTabla);
-        });
-        return columnasTabla;
-    }
-
-    datosTablaDinamica(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], sumatorias: ISumatorias[], planeacionActiva: IPlaneacion): IDatosFormulario[]
+    datosTablaDinamica(mirActivo: IMirCuestionario, planeacionActiva: IPlaneacion): IDatosFormulario[]
     {
         const objConDatosActualizados: IDatosFormulario[] = [];
         const valorDinamicoProp = mirActivo.componente.colsTabla.map(x => x.split('__').pop());
@@ -141,7 +116,7 @@ export class ComponentesService
 
                 let existeEnPbr: boolean = false;
 
-                const pbr = pbrs.find(p => p.idIndicador === idElemBuscar);
+                const pbr = planeacionActiva.pbrCuestionario.find(p => p.idIndicador === idElemBuscar);
                 if (pbr)
                 {
                     existeEnPbr = true;
@@ -160,7 +135,7 @@ export class ComponentesService
 
                 if (!existeEnPbr)
                 {
-                    const sumatoria = sumatorias.find(s => s.idSumatoria === idElemBuscar);
+                    const sumatoria = planeacionActiva.pbrSumatoria.find(s => s.idSumatoria === idElemBuscar);
                     if (sumatoria)
                     {
                         const sumatoriaAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, idElemBuscar, true);
@@ -183,7 +158,7 @@ export class ComponentesService
         return objConDatosActualizados;
     }
 
-    objParaLaFormula(mirActivo: IMirCuestionario, pbrs: IPbrCuestionario[], planeacionActiva: IPlaneacion, sumatorias: ISumatorias[]): IDatosFormulario[]
+    objParaLaFormula(mirActivo: IMirCuestionario, planeacionActiva: IPlaneacion): IDatosFormulario[]
     {
         const pref = '__ANT'
         const obj: IDatosFormulario[] = [{}, {}, {}, {}];
@@ -192,7 +167,7 @@ export class ComponentesService
 
         idsFormulaConTrim.forEach((valor) =>
         {
-            const elementoPbr = pbrs.find(pbr => pbr.idIndicador === valor[0]);
+            const elementoPbr = planeacionActiva.pbrCuestionario.find(pbr => pbr.idIndicador === valor[0]);
             if (elementoPbr)
             {
                 const trimAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, valor[0], false);
@@ -209,7 +184,7 @@ export class ComponentesService
 
         idsRestantes.forEach((valor) =>
         {
-            const elementoSumatoria = sumatorias.find(sumatoria => sumatoria.idSumatoria === valor[0]);
+            const elementoSumatoria = planeacionActiva.pbrSumatoria.find(sumatoria => sumatoria.idSumatoria === valor[0]);
             if (elementoSumatoria)
             {
                 const trimAnt = this.planeacionQuery.filPeriodoAnt(planeacionActiva.ano, valor[0], true);

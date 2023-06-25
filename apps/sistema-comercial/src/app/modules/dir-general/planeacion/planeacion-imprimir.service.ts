@@ -9,10 +9,6 @@ applyPlugin(jsPDF);
 })
 export class PlaneacionImprimirService
 {
-    constructor()
-    {
-    }
-
     static imprimirTabla(columnas: object[], styles: Partial<Styles>, columnStyles: { [p: string]: Partial<Styles> }, cuerpo: Array<any>, subtitulo: string, didParseCell?: CellHook): void
     {
         const titulo = 'SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)';

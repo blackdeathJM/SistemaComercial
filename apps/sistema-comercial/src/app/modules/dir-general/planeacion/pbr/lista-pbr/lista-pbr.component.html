@@ -16,7 +16,7 @@
             </mat-expansion-panel>
         </mat-card-title>
         <mat-card-content *ngIf="elementoPbr() as elemento">
-            <section class="grid grid-cols-8 gap-4">
+            <section class="grid grid-cols-8 gap-4" #pbrImprimir>
                 <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{elemento?.idIndicador}}</span>
                 <span class="detalle-span">Variable de origen</span>
                 <span class="border-b-2">{{elemento?.variableOrigen}}</span>
@@ -70,40 +70,40 @@
                 <span class="detalle-span col-start-7">Acumulado final</span>
                 <span class="border-b-2">{{elemento?.total | number: '1.0-2'}}</span>
             </section>
-            <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
+            <ngx-ui-loader [loaderId]="loader"/>
         </mat-card-content>
 
         <mat-card-actions class="tarjeta-mat-acciones border-t-rose-500">
-                        <div class="flex flex-auto gap-4">
-                            <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="nvoElemento()">
-                                <mat-icon svgIcon="add"></mat-icon>
-                                Nuevo registro
-                            </button>
-                            <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg" (click)="editarPbr()">
-                                <mat-icon svgIcon="edit"></mat-icon>
-                                Editar registro
-                            </button>
-                            <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg" (click)="eliminarPbr()">
-                                <mat-icon svgIcon="mat_outline:delete"></mat-icon>
-                                Eliminar registro
-                            </button>
-                            <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">
-                                <mat-icon svgIcon="assignment"></mat-icon>
-                                Registrar avances
-                            </button>
-                            <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">
-                                <mat-icon svgIcon="mat_solid:arrow_back"></mat-icon>
-                                Anterior
-                            </button>
-                            <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">
-                                Siguiente
-                                <mat-icon svgIcon="mat_solid:arrow_forward"></mat-icon>
-                            </button>
-                            <button mat-flat-button color="accent" class="flex-auto">
-                                <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
-                                Imprimir
-                            </button>
-                        </div>
+            <div class="flex flex-auto gap-4">
+                <button class="flex-auto" mat-flat-button color="primary" [disabled]="desNuevoReg" (click)="nvoElemento()">
+                    <mat-icon svgIcon="add"/>
+                    Nuevo registro
+                </button>
+                <button class="flex-auto" mat-flat-button color="accent" [disabled]="desEditarReg" (click)="editarPbr()">
+                    <mat-icon svgIcon="edit"/>
+                    Editar registro
+                </button>
+                <button class="flex-auto" mat-flat-button color="warn" [disabled]="desEliminarReg" (click)="eliminarPbr()">
+                    <mat-icon svgIcon="mat_outline:delete"/>
+                    Eliminar registro
+                </button>
+                <button mat-flat-button color="accent" class="flex-auto" (click)="regAvances()">
+                    <mat-icon svgIcon="assignment"/>
+                    Registrar avances
+                </button>
+                <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">
+                    <mat-icon svgIcon="mat_solid:arrow_back"/>
+                    Anterior
+                </button>
+                <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">
+                    Siguiente
+                    <mat-icon svgIcon="mat_solid:arrow_forward"/>
+                </button>
+                <button mat-flat-button color="accent" class="flex-auto" (click)="imprimirPbr()">
+                    <mat-icon svgIcon="heroicons_outline:printer"/>
+                    Imprimir
+                </button>
+            </div>
         </mat-card-actions>
     </mat-card>
 </ng-container>

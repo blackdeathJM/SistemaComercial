@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -12,12 +12,12 @@ import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-regi
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
-import {$cast, isNil, isNotNil} from '@angular-ru/cdk/utils';
+import {$cast, isNil} from '@angular-ru/cdk/utils';
 import {ComponentesService} from '@s-dir-general/componentes/services/componentes.service';
-import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
-import {CellHook, CellHookData, Styles} from "jspdf-autotable";
 import {NgxToastService} from "@s-services/ngx-toast.service";
+import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {CellHook, CellHookData, Styles} from "jspdf-autotable";
 
 @Component({
     selector: 'app-mir',
@@ -34,7 +34,7 @@ export default class MirComponent implements OnDestroy
     abrirPanel = false;
     avancesTrimestrales: string[] = [];
 
-    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService, private cdr: ChangeDetectorRef)
+    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService)
     {
     }
 
@@ -55,6 +55,9 @@ export default class MirComponent implements OnDestroy
             this.ngxToast.alertaToast('Selecciona un año para poder continuar', 'MIR');
             return;
         }
+
+        const planeacionActiva = this.planeacionQuery.getActive();
+
         const columnas = [{header: 'Ind', dataKey: 'idIndicador'},
             {
                 header: 'Nivel', dataKey: 'nivel'
@@ -76,7 +79,6 @@ export default class MirComponent implements OnDestroy
                 dataKey: 'avanceTrim2'
             }, {header: 'A. Trim3', dataKey: 'avanceTrim3'}, {header: 'A. Trim4', dataKey: 'avanceTrim4'},
             {header: 'Glob', dataKey: 'avanceAnual'}];
-
         const styles: Partial<Styles> = {
             fontSize: 6,
             font: 'helvetica',
@@ -85,7 +87,6 @@ export default class MirComponent implements OnDestroy
             cellWidth: 'auto',
             lineWidth: .5
         };
-
         const columnStyles: { [p: string]: Partial<Styles> } = {
             resumenNarrativo: {cellWidth: 45},
             centroGestor: {cellWidth: 20},
@@ -94,7 +95,6 @@ export default class MirComponent implements OnDestroy
             supuestos: {cellWidth: 30},
             unidadDeMedida: {cellWidth: 15},
         };
-
         const ano = this.planeacionQuery.getActive().ano;
         const mirsActivo = this.planeacionQuery.compCuestionarioMir();
         const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
@@ -103,11 +103,21 @@ export default class MirComponent implements OnDestroy
             if (data.section === 'body')
             {
                 const mir = $cast<IMirCuestionario>(data.row.raw);
-                if (isNotNil(mir.componente))
+                if (mir)
                 {
-
+                    if (mir.componente && mir.componente.formula)
+                    {
+                        const objParaFormula = this.componentesService.objParaLaFormula(mir, planeacionActiva);
+                        const trimestres = [this.componentesService.calcAvances(mir.componente.formula, objParaFormula[0]), this.componentesService.calcAvances(mir.componente.formula, objParaFormula[1]),
+                            this.componentesService.calcAvances(mir.componente.formula, objParaFormula[2]), this.componentesService.calcAvances(mir.componente.formula, objParaFormula[3])]
+                        data.row.cells.avanceTrim1.text = [trimestres[0].toString()];
+                        data.row.cells.avanceTrim2.text = [trimestres[1].toString()];
+                        data.row.cells.avanceTrim3.text = [trimestres[2].toString()];
+                        data.row.cells.avanceTrim4.text = [trimestres[3].toString()];
+                        const sumar = parseFloat(trimestres[0]) + parseFloat(trimestres[1]) + parseFloat(trimestres[2]) + parseFloat(trimestres[3]);
+                        data.row.cells.avanceAnual.text = [sumar.toString()];
+                    }
                 }
-                data.row.cells.avanceTrim1.text = ['50'];
             }
         });
 
@@ -123,6 +133,7 @@ export default class MirComponent implements OnDestroy
     {
         this.abrirPanel = e;
     }
+
     ngOnDestroy(): void
     {
         this.abrirPanel = false;

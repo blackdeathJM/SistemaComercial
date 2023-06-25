@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {fuseAnimations} from '@s-fuse/public-api';
-import {NgxUiLoaderModule} from 'ngx-ui-loader';
+import {NgxUiLoaderModule, NgxUiLoaderService} from 'ngx-ui-loader';
 import {MatInputModule} from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {CalculosPipePbr} from '@s-dir-general/pbr/pipes/calculosPbr.pipe';
@@ -20,6 +20,9 @@ import {actCuestionario, ngxLoaderPbr, PlaneacionService, ValoresCamposMod} from
 import {ToastrService} from "ngx-toastr";
 import {ModAvancesPbrComponent} from "@s-general/pbr-usuario/mod-avances-pbr/mod-avances-pbr.component";
 import {isNil} from "@angular-ru/cdk/utils";
+import html2canvas from "html2canvas";
+import {jsPDF} from "jspdf";
+import {DateTime} from "luxon";
 
 @Component({
     selector: 'app-lista-pbr',
@@ -40,13 +43,15 @@ export class ListaPbrComponent
     @Input() desSumatoria: boolean = false;
 
     @Output() panelPbr = new EventEmitter<boolean>();
+
+    @ViewChild('pbrImprimir', {static: false}) pbrImprimirRef!: ElementRef;
     loader = ngxLoaderPbr();
     cuestionariosPbr = this.planeacionQuery.compCuestionarioPbr;
     elementoPbr = this.planeacionQuery.cuestionarioPbr;
 
     indice: number;
 
-    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService,
+    constructor(private mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private ngxUiLoaderService: NgxUiLoaderService,
                 private ngxToast: ToastrService)
     {
     }
@@ -119,5 +124,27 @@ export class ListaPbrComponent
             this.indice--;
         }
         this.planeacionQuery.cuestionarioPbr.set(arreglo[this.indice]);
+    }
+
+    imprimirPbr(): void
+    {
+        this.ngxUiLoaderService.startLoader(this.loader);
+        const pbrRef = this.pbrImprimirRef.nativeElement;
+        pbrRef.style.color = 'black';
+        html2canvas(pbrRef).then(canvas =>
+        {
+            const img = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+            pdf.setFontSize(8);
+            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCANTARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+            const imgProps = pdf.getImageProperties(img);
+            const pdfAncho = pdf.internal.pageSize.getWidth();
+            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+            pdf.save('PBR' + DateTime.now() + '.pdf');
+            pbrRef.style.color = '';
+            this.ngxUiLoaderService.stopLoader(this.loader);
+        });
     }
 }

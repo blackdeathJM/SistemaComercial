@@ -51,14 +51,6 @@ export class PbrComponent implements OnDestroy
             }
         this.mdr.open(ModSumatoriasComponent, {width: '40%', data, hasBackdrop: false, disableClose: true});
     }
-
-    ngOnDestroy(): void
-    {
-        this.planeacionQuery.centroGestor.set(null);
-        this.planeacionQuery.cuestionarioPbr.set(null);
-        this.planeacionQuery.cuestionarioPbrV.set([]);
-    }
-
     panelPbr(e: boolean): void
     {
         this.abrirPanelPbr = e;
@@ -67,5 +59,17 @@ export class PbrComponent implements OnDestroy
     panelPbrDeLista(e: boolean): void
     {
         this.abrirPanelPbr = e;
+    }
+
+    imprimirTablaPbr(): void
+    {
+
+    }
+
+    ngOnDestroy(): void
+    {
+        this.planeacionQuery.centroGestor.set(null);
+        this.planeacionQuery.cuestionarioPbr.set(null);
+        this.planeacionQuery.cuestionarioPbrV.set([]);
     }
 }

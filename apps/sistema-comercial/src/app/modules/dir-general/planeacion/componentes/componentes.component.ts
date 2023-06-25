@@ -70,9 +70,7 @@ export class ComponentesComponent
                 this.avancesTrim.emit([...this.avTrim]);
                 return;
             }
-            const pbrS = this.planeacionQuery.getActive().pbrCuestionario;
-            const sumatorias = this.planeacionQuery.getActive().pbrSumatoria;
-            const trimObjCalcular = this.componentesService.objParaLaFormula(mir, pbrS, planeacionQuery.getActive(), sumatorias);
+            const trimObjCalcular = this.componentesService.objParaLaFormula(mir, planeacionQuery.getActive());
             this.chkTrim0.reset();
             this.chkTrim1.reset();
             this.chkTrim2.reset();
@@ -87,7 +85,7 @@ export class ComponentesComponent
             this.avTrim[1] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[1]);
             this.avTrim[2] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[2]);
             this.avTrim[3] = this.componentesService.calcAvances(mir.componente.formula, trimObjCalcular[3]);
-            this.datosTabla.data = this.componentesService.datosTablaDinamica(mir, pbrS, sumatorias, planeacionQuery.getActive());
+            this.datosTabla.data = this.componentesService.datosTablaDinamica(mir, planeacionQuery.getActive());
             this.avancesTrim.emit(this.avTrim);
         });
     }
