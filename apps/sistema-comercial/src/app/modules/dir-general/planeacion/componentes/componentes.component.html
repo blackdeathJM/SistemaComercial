@@ -1,0 +1,93 @@
+<section class="flex flex-auto flex-col" *ngIf="planeacionQuery?.cuestionarioMir() as mirSelec">
+    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4 flex-auto" @zoomIn>
+        <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
+            <span class="text-xl">{{mirSelec?.nivel}}</span>
+        </mat-card-header>
+        <mat-card-content>
+            <article class="flex flex-col flex-auto" #componente ngxUiLoaderBlurred="50">
+                <section class="grid grid-cols-6 gap-4 m-4 text-lg">
+                    <span class="detalle-span">Fecha</span>
+                    <span class="border-b-2">{{fecha}}</span>
+                    <span class="detalle-span">ID INDICADOR</span>
+                    <span class="border-b-2">{{mirSelec?.idIndicador}}</span>
+                    <span class="detalle-span">Programa presupuestal</span>
+                    <span class="border-b-2">{{mirSelec?.programaFinanciacion}}</span>
+
+                    <span class="detalle-span font-semibold text-black col-span-full py-2 bg-blue-200 text-center">FUNCIONARIO RESPONSABLE</span>
+                    <span class="detalle-span">Responsable</span>
+                    <span class="border-b-2">{{mirSelec?.responsable}}</span>
+                    <span class="detalle-span">Centro gestor</span>
+                    <span class="border-b-2">{{mirSelec?.centroGestor}}</span>
+                    <span class="detalle-span">Correo electronico</span>
+                    <span class="border-b-2">{{mirSelec?.correo}}</span>
+
+                    <span class="detalle-span font-semibold text-black col-span-full py-2 bg-blue-200 text-center">INDICADOR</span>
+                    <span class="border-b-2 col-span-full text-center">{{mirSelec?.resumenNarrativo}}</span>
+
+                    <span class="detalle-span col-start-5">Unidad de medida</span>
+                    <span class="border-b-2">{{mirSelec?.unidadDeMedida}}</span>
+                    <span class="detalle-span col-start-5">Nivel</span>
+                    <span class="border-b-2">{{mirSelec?.nivel}}</span>
+                    <span class="detalle-span col-start-5">Linea base</span>
+                    <span class="border-b-2">{{mirSelec?.lineaBaseValor}}</span>
+                    <span class="detalle-span col-start-5">Meta</span>
+                    <span class="border-b-2">{{mirSelec?.meta}}</span>
+                    <span class="detalle-span col-start-5">Sentido del indicador</span>
+                    <span class="border-b-2">{{mirSelec?.sentidoDelIndicador}}</span>
+                    <span class="detalle-span font-semibold text-black py-2 col-span-full bg-blue-200 text-center">METODO DE CALCULO</span>
+                    <span class="border-b-2 col-span-full text-center">{{mirSelec?.metodoCalculo}}</span>
+                </section>
+
+                <app-tabla-mat class="m-4 overflow-x-auto" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente" [obtenerValor]="false"/>
+
+                <mat-divider class="border-4 mb-4 border-b-fuchsia-700 dark:border-fuchsia-950"/>
+                <section class="grid grid-cols-8 gap-4 text-lg">
+                    <ng-container *ngIf="chkVisible[0]">
+                        <span class="detalle-span">Avance trim 1</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                    <ng-container *ngIf="chkVisible[1]">
+                        <span class="detalle-span">Avance trim 2</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                    <ng-container *ngIf="chkVisible[2]">
+                        <span class="detalle-span">Avance trim 3</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                    <ng-container *ngIf="chkVisible[3]">
+                        <span class="detalle-span">Avance trim 4</span>
+                        <span class="border-b-2 text-green-700">{{avTrim[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
+                    </ng-container>
+                </section>
+                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
+            </article>
+            <div class="flex flex-auto gap-8 mt-2" *ngIf="mirSelec?.componente">
+                <mat-checkbox id="chkTrim0" [formControl]="chkTrim0" color="primary" (change)="cambioChkTrim($event, PrefFormDin.trim1, PrefFormDin.ant1, ' T1', ' A1')">
+                    Trimestre 1
+                </mat-checkbox>
+                <mat-checkbox id="chkTrim1" [formControl]="chkTrim1" color="primary" (change)="cambioChkTrim($event, PrefFormDin.trim2, PrefFormDin.ant2,' T2', ' A2')">
+                    Trimestre 2
+                </mat-checkbox>
+                <mat-checkbox id="chkTrim2" [formControl]="chkTrim2" color="primary" (change)="cambioChkTrim($event, PrefFormDin.trim3, PrefFormDin.ant3,' T3', ' A3')">
+                    Trimestre 3
+                </mat-checkbox>
+                <mat-checkbox id="chkTrim3" [formControl]="chkTrim3" color="primary" (change)="cambioChkTrim($event, PrefFormDin.trim4,PrefFormDin.ant4,' T4', ' A4')">
+                    Trimestre 4
+                </mat-checkbox>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+            <div class="flex flex-auto gap-4">
+                <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoComponente()">
+                    <mat-icon svgIcon="heroicons_outline:plus"/>
+                    Registrar nuevos calculos
+                </button>
+                <button mat-raised-button color="accent" class="flex-auto" (click)="imprimirComp(mirSelec)">
+                    <mat-icon svgIcon="heroicons_outline:printer"/>
+                    Imprimir
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</section>

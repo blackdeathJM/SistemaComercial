@@ -4,7 +4,6 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -12,6 +11,7 @@ import {TActInst, TRegInstalacion} from '#/libs/models/src/lib/tecnica-operativa
 import {Instalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria';
 import {finalize} from 'rxjs';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
+import {TelemetriaQuery} from '@s-dir-tecnica-operativa/store/telemetria.query';
 
 @Component({
     selector: 'app-mod-instalacion',
@@ -26,7 +26,7 @@ export class ModInstalacionComponent implements OnInit
     formInstalacion: FormGroup;
     cargando = false;
 
-    constructor(private entityTelemetria: EntityTelemetria, public mdr: MatDialogRef<ModInstalacionComponent>, private telemetriaService: TelemetriaService, private fb: RxFormBuilder,
+    constructor(private telemetriaQuery: TelemetriaQuery, public mdr: MatDialogRef<ModInstalacionComponent>, private telemetriaService: TelemetriaService, private fb: RxFormBuilder,
                 @Inject(MAT_DIALOG_DATA) private esActualizacion: boolean)
     {
 
@@ -37,7 +37,8 @@ export class ModInstalacionComponent implements OnInit
         this.formInstalacion = this.fb.formGroup(new Instalacion());
         if (this.esActualizacion)
         {
-            this.formInstalacion.patchValue(this.entityTelemetria.snapshot.instalacion.instalacion);
+            // this.formInstalacion.patchValue(this.entityTelemetria.snapshot.instalacion.instalacion);
+            this.formInstalacion.patchValue(this.telemetriaQuery.getActive().instalacion);
         }
     }
 
@@ -66,7 +67,8 @@ export class ModInstalacionComponent implements OnInit
         {
             const args: TActInst =
                 {
-                    _id: this.entityTelemetria.snapshot.instalacion._id,
+                    // _id: this.entityTelemetria.snapshot.instalacion._id,
+                    _id: this.telemetriaQuery.getActive()._id,
                     ...inst
                 };
             this.telemetriaService.actInst(args).pipe(finalize(() =>

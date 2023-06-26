@@ -10,6 +10,7 @@ import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
 import {ModDeptoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-depto/mod-depto.component';
+import {DeptoQuery} from '@s-dirAdmonFinanzas/departamento/store/depto.query';
 
 @Component({
     selector: 'app-departamento',
@@ -23,7 +24,8 @@ export class DepartamentoComponent implements OnInit, OnDestroy
 {
     controlBuscar: FormControl = new FormControl();
     private sub = new Subscription();
-    constructor(private dRef: MatDialog, private deptosService: DeptoService)
+
+    constructor(private dRef: MatDialog, private deptosService: DeptoService, private deptoQuery: DeptoQuery)
     {
     }
 
@@ -35,7 +37,8 @@ export class DepartamentoComponent implements OnInit, OnDestroy
 
     registro(): void
     {
-        this.dRef.open(ModDeptoComponent, {width: '40%', data: null});
+        this.deptoQuery.selectActive(null);
+        this.dRef.open(ModDeptoComponent, {width: '40%'});
     }
 
     ngOnDestroy(): void

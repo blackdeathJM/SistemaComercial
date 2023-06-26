@@ -21,17 +21,6 @@ export class EmpleadoService
         }
     }
 
-    async filtrarEmpleados(nombreCompleto: string): Promise<EmpleadoDto[]>
-    {
-        try
-        {
-            return await this.empleado.find({nombreCompleto: {$regex: nombreCompleto, $options: 'i'}}).exec();
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e.codeName});
-        }
-    }
-
     async empleadosSesion(): Promise<EmpleadoDto[]>
     {
         try
@@ -43,11 +32,18 @@ export class EmpleadoService
         }
     }
 
-    async crearEmpleado(datosEmpleado: RegEmpleadoDto): Promise<EmpleadoDto>
+    async crearActEmpledo(datosEmpleado: RegEmpleadoDto): Promise<EmpleadoDto>
     {
+        const {_id, ...resto} = datosEmpleado;
         try
         {
-            return await this.empleado.create(datosEmpleado);
+            if (_id)
+            {
+                return await this.empleado.findByIdAndUpdate(_id, {$set: {...resto}}, {new: true}).exec();
+            } else
+            {
+                return await this.empleado.create(resto);
+            }
         } catch (e)
         {
             throw new ConflictException({message: e.codeName});

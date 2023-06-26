@@ -1,9 +1,9 @@
-<section class="flex flex-auto gap-8">
+<section class="flex flex-auto gap-8" *ngIf="seleccionQuery.select() | async as seleccion">
     <div class="flex flex-auto flex-col">
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Centro gestor</mat-label>
-                <input matInput [formControl]="ctrlCentroGestor" appCapitalizar (keyup.enter)="agregarCentroGestor()">
+                <input matInput [formControl]="ctrlCentroGestor" appCapitalizar>
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>
@@ -18,7 +18,7 @@
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Unidad</mat-label>
-                <input matInput [formControl]="ctrlUnidad" (keyup.enter)="agregarCentroGestor()">
+                <input matInput [formControl]="ctrlUnidad">
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>
@@ -34,7 +34,7 @@
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Dimension</mat-label>
-                <input matInput [formControl]="ctrlDimension" (keyup.enter)="agregarCentroGestor()">
+                <input matInput [formControl]="ctrlDimension">
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>
@@ -49,7 +49,7 @@
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Tipo</mat-label>
-                <input matInput [formControl]="ctrlTipo" (keyup.enter)="agregarCentroGestor()">
+                <input matInput [formControl]="ctrlTipo">
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>
@@ -64,7 +64,7 @@
         <div class="flex flex-auto items-center gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Frecuencia</mat-label>
-                <input matInput [formControl]="ctrlFrecuencia" (keyup.enter)="agregarCentroGestor()">
+                <input matInput [formControl]="ctrlFrecuencia">
             </mat-form-field>
             <button mat-mini-fab color="primary" (click)="agregarCentroGestor()">
                 <mat-icon svgIcon="add"></mat-icon>

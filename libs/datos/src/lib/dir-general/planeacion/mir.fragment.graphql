@@ -1,8 +1,9 @@
-fragment fragMir on MirType
+fragment fragMir on MirCuestionarioType
 {
-    _id
-    ano
     idIndicador
+    correo
+    responsable
+    idEmpleado
     nivel
     programaFinanciacion
     resumenNarrativo
@@ -11,20 +12,27 @@ fragment fragMir on MirType
     tipo
     dimension
     metodoCalculo
-    mediosDeVerificacion
-    supuestos
     unidadDeMedida
     frecuenciaMedicion
+    mediosVerificacion
+    supuestos
+    definicionIndicador
     lineaBaseAno
     lineaBaseValor
     meta
     sentidoDelIndicador
     semefVerde
+    semefVerdeV
     semefAmarillo
+    semefAmarilloV
     semefRojo
+    semefRojoV
     avanceTrim1
     avanceTrim2
     avanceTrim3
-    avanceTrim4
     avanceAnual
+    avanceTrim4
+    componente {
+        ...fragComponente
+    }
 }

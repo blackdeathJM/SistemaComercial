@@ -47,7 +47,7 @@
             </section>
 
             <section class="relative overflow-y-auto pt-4 bg-zinc-800 mx-4" ngxUiLoaderBlurred>
-                <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b-2" *ngFor="let empleado of entityEmpleado.entitiesArray$ | async">
+                <div class="z-20 flex items-center px-6 py-4 md:px-8 border-b-2" *ngFor="let empleado of empleadoQuery.selectAll() | async">
                     <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                         <img class="object-cover w-full h-full" [src]="empleado?.avatar | imgDefecto" alt="Contact avatar"/>
                     </div>

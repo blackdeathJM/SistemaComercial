@@ -1,6 +1,6 @@
 <div class="flex flex-col flex-auto">
     <mat-form-field>
-        <mat-label>Agregar puesto para <span class="text-lg text-green-700">{{entityDepto.snapshot.depto.nombre}}</span></mat-label>
+        <mat-label>Agregar puesto para <span class="text-lg text-green-700">{{deptoQuery.getActive().nombre}}</span></mat-label>
         <input matInput type="text" appCapitalizar [formControl]="ctrlPuesto">
         <mat-error>{{ctrlPuesto['errorMessage']}}</mat-error>
     </mat-form-field>

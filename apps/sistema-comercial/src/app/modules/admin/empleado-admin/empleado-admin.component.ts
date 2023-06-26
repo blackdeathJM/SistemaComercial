@@ -1,13 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {EmpleadoService, ngxLoaderEmp} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {debounceTime, Subscription, switchMap} from 'rxjs';
 import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {MatDialog} from '@angular/material/dialog';
 import {RegistroSesionComponent} from '@s-admin/empleado-admin/registro-sesion/registro-sesion.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,6 +21,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {RolesService} from '@s-core/auth/store/roles.service';
 import {TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
 import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/data';
+import {EmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
 
 @Component({
     standalone: true,
@@ -50,25 +50,17 @@ import {defaultNavigation} from '#/apps/sistema-comercial/src/app/mock-api/commo
     templateUrl: './empleado-admin.component.html',
     styleUrls: ['./empleado-admin.component.scss']
 })
-export class EmpleadoAdminComponent implements OnInit, OnDestroy
+export class EmpleadoAdminComponent implements OnDestroy
 {
     ctrlBuscar: FormControl = new FormControl();
-    ngxLoader = ngxLoaderEmp;
-    sub = new Subscription();
+    ngxLoader = ngxLoaderEmp();
     abriPanel = false;
     deshabilitar = false;
     empleadoSeleccionado: IResolveEmpleado;
 
-    constructor(public empleadoService: EmpleadoService, public entityEmpleado: EntityEmpleadoStore, private mdr: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-                private rolesService: RolesService)
+    constructor(public empleadoService: EmpleadoService, private empleadoStore: EmpleadoStore, public empleadoQuery: EmpleadoQuery, private mdr: MatDialog, private router: Router,
+                private activatedRoute: ActivatedRoute, private rolesService: RolesService)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add(this.ctrlBuscar.valueChanges.pipe(debounceTime(1000), switchMap((res: string) =>
-            this.empleadoService.filtrarEmpleados(res, this.ngxLoader))).subscribe());
-        this.empleadoService.empleados(this.ngxLoader).subscribe();
     }
 
     listaRoles(empleado: IResolveEmpleado): void
@@ -85,7 +77,8 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
 
     crearSesion(empleado: IResolveEmpleado): void
     {
-        this.entityEmpleado.patchState({empleado});
+        // this.empleadoEntity.seleccionarEmpleado(empleado);
+        this.empleadoStore.setActive(empleado._id);
         this.mdr.open(RegistroSesionComponent, {width: '40%'});
     }
 
@@ -101,7 +94,6 @@ export class EmpleadoAdminComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     {
-        this.sub.unsubscribe();
         this.abriPanel = false;
     }
 }

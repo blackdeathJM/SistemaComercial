@@ -1,47 +1,79 @@
 <form [formGroup]="formPbr">
-    <section class="flex flex-auto flex-col p-4">
-        <mat-form-field>
-            <mat-label>Año</mat-label>
-            <input matInput formControlName="ano">
-            <mat-error>{{formPbr.controls.ano['errorMessage']}}</mat-error>
-        </mat-form-field>
-        <app-seleccionar-empleado class="flex-auto" formControlName="idEmpleado"></app-seleccionar-empleado>
-        <ng-container *ngIf="centrosGestores.length > 0">
+    <section class="flex flex-col px-4">
+        <div class="flex flex-auto gap-4 items-center content-center">
             <mat-form-field class="flex-auto">
-                <mat-label>Centro gestor</mat-label>
-                <mat-select formControlName="centroGestor">
-                    <mat-option *ngFor="let centro of centrosGestores" [value]="centro">{{centro}}</mat-option>
+                <mat-label>Selecciona empleado</mat-label>
+                <mat-select formControlName="idEmpleado" (selectionChange)="empleadoSele($event.value)">
+                    <div class="flex flex-col flex-auto">
+                        <mat-form-field>
+                            <input matInput placeholder="Filtrar empleados" (keyup)="filtrarEmpleados($event.target['value'])">
+                        </mat-form-field>
+                    </div>
+                    <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
                 </mat-select>
-                <mat-error>{{formPbr.controls.centroGestor['errorMessage']}}</mat-error>
+                <mat-error>{{formPbr.controls.idEmpleado['errorMessage']}}</mat-error>
             </mat-form-field>
-        </ng-container>
+            <button mat-mini-fab color="primary" (click)="actualizarResponsable()" matTooltip="Modifica el responsable para todo el centro gestor" *ngIf="actualizar">
+                <mat-icon svgIcon="people_alt"></mat-icon>
+            </button>
+        </div>
+        <mat-form-field>
+            <mat-label>Correo</mat-label>
+            <input matInput formControlName="correo">
+            <mat-error>{{formPbr.controls.correo['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Clave variable</mat-label>
+            <input matInput formControlName="idIndicador">
+            <mat-error>{{formPbr.controls.idIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
         <mat-form-field>
             <mat-label>Variable de origen</mat-label>
             <input matInput formControlName="variableOrigen">
             <mat-error>{{formPbr.controls.variableOrigen['errorMessage']}}</mat-error>
         </mat-form-field>
+
         <mat-form-field>
-            <mat-label>Clave variable</mat-label>
-            <input matInput formControlName="claveVariable">
-            <mat-error>{{formPbr.controls.claveVariable['errorMessage']}}</mat-error>
+            <mat-label>Unidad</mat-label>
+            <input matInput formControlName="unidad">
+            <mat-error>{{formPbr.controls.unidad['errorMessage']}}</mat-error>
         </mat-form-field>
+        <ng-container *ngIf="centrosGestores">
+            <ng-container *ngIf="centrosGestores.length > 0">
+                <mat-form-field class="flex-auto">
+                    <mat-label>Centro gestor</mat-label>
+                    <mat-select formControlName="centroGestor">
+                        <mat-option *ngFor="let centro of centrosGestores" [value]="centro">{{centro}}</mat-option>
+                    </mat-select>
+                    <mat-error>{{formPbr.controls.centroGestor['errorMessage']}}</mat-error>
+                </mat-form-field>
+            </ng-container>
+        </ng-container>
+
         <mat-form-field>
             <mat-label>Dato</mat-label>
             <input matInput formControlName="dato">
             <mat-error>{{formPbr.controls.dato['errorMessage']}}</mat-error>
         </mat-form-field>
+
         <mat-form-field>
             <mat-label>Descripcion</mat-label>
             <textarea matInput formControlName="descripcion"></textarea>
             <mat-error>{{formPbr.controls.descripcion['errorMessage']}}</mat-error>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Unidad</mat-label>
-            <mat-select formControlName="unidad">
-                <mat-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</mat-option>
-            </mat-select>
-            <mat-error>{{formPbr.controls.unidad['errorMessage']}}</mat-error>
-        </mat-form-field>
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Forma de calcular el trimestre</mat-label>
+                <mat-select formControlName="tipoOperacion">
+                    <mat-option [value]="tipoOperacion.suma">Sumatoria de los meses del trimestre</mat-option>
+                    <mat-option [value]="tipoOperacion.promedio">Promedio de los meses del trimestre</mat-option>
+                    <mat-option [value]="tipoOperacion.ultimo">Ultimo valor del mes</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-mini-fab color="warn" (click)="actLaFormaDeCalculo()" matTooltip="Modifica la forma de calculo para los trimestres de todo un centro gestor" *ngIf="actualizar">
+                <mat-icon svgIcon="mat_solid:calculate"></mat-icon>
+            </button>
+        </div>
     </section>
 </form>
 
@@ -51,9 +83,9 @@
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()" [disabled]="formPbr.invalid || cargando">
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regPbr()" [disabled]="cargando">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
-            Añadir registro
+            Guardar datos
         </button>
     </div>
 </mat-toolbar>

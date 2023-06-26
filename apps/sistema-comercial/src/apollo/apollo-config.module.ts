@@ -4,6 +4,7 @@ import {Apollo, ApolloModule} from 'apollo-angular';
 import {onError} from '@apollo/client/link/error';
 import {ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import {WebSocketLink} from '@apollo/client/link/ws';
+// import {WebSocketLink} from 'apollo-link-ws';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {createUploadLink} from 'apollo-upload-client';
 import {environment} from '@s-environments/environment';
@@ -12,7 +13,7 @@ import {setContext} from '@apollo/client/link/context';
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 @NgModule({
-    imports: [HttpClientModule, ApolloModule,]
+    imports: [HttpClientModule, ApolloModule]
 })
 export class ApolloConfigModule
 {
@@ -21,15 +22,16 @@ export class ApolloConfigModule
         // Para capturar los errores de consulta y/o de red
         const errorLink = onError(({graphQLErrors, networkError}) =>
         {
-            if (graphQLErrors)
+            if(graphQLErrors)
             {
-                graphQLErrors.map((value) =>
-                {
-                    console.log(value);
-                });
+                console.log('ModuleApollo', graphQLErrors);
+                // graphQLErrors.map((value) =>
+                // {
+                //     console.log(value);
+                // });
             }
 
-            if (networkError)
+            if(networkError)
             {
                 Swal.fire('Error de conexion', networkError.message, 'error').then();
             }
@@ -60,7 +62,7 @@ export class ApolloConfigModule
                 return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
             },
             wsClient,
-            http,
+            http
         );
 
         apollo.create({
@@ -69,11 +71,18 @@ export class ApolloConfigModule
                 watchQuery:
                     {
                         notifyOnNetworkStatusChange: true,
-                        fetchPolicy: 'cache-and-network',
+                        fetchPolicy: 'cache-and-network'
                     },
+                query: {
+                    fetchPolicy: 'network-only',
+                    notifyOnNetworkStatusChange: true
+                },
+                mutate: {
+                    fetchPolicy: 'network-only',
+                }
             },
             cache: new InMemoryCache(),
-            connectToDevTools: true,
+            connectToDevTools: true
         });
     }
 }

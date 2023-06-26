@@ -12,9 +12,9 @@ import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgxToastService} from '@s-services/ngx-toast.service';
-import {isNotNil} from '@angular-ru/cdk/utils';
 import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
+import {IDepto} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/deptos/depto.interface';
+import {DeptoQuery} from '@s-dirAdmonFinanzas/departamento/store/depto.query';
 
 @Component({
     standalone: true,
@@ -40,8 +40,9 @@ export class ModDeptoComponent implements OnInit
 {
     cargandoDatos = false;
     formDepto: FormGroup;
+    seleccionarUno: IDepto = null;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, private entityDepto: EntityDeptoStore)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, private deptoQuery: DeptoQuery)
     {
 
     }
@@ -49,9 +50,11 @@ export class ModDeptoComponent implements OnInit
     ngOnInit(): void
     {
         this.formDepto = this.fb.formGroup(new Depto());
-        if (isNotNil(this.entityDepto.snapshot.depto))
+        // this.deptoQuery.selectActive().subscribe(res => console.log(res));
+        this.seleccionarUno = this.deptoQuery.getActive();
+        if (this.seleccionarUno)
         {
-            this.formDepto.patchValue(this.entityDepto.snapshot.depto);
+            this.formDepto.patchValue(this.seleccionarUno);
         }
     }
 
@@ -59,9 +62,9 @@ export class ModDeptoComponent implements OnInit
     {
         this.cargandoDatos = true;
         // si vienen datos cuando se abre el modal cargamos los datos en el formulario para poder actualizarlos y si no realizamos un nuevo registro
-        if (isNotNil(this.entityDepto.snapshot.depto))
+        if (this.seleccionarUno)
         {
-            const input = {_id: this.entityDepto.snapshot.depto._id, ...this.formDepto.value};
+            const input = {_id: this.seleccionarUno._id, ...this.formDepto.value};
 
             this.deptoService.actualizarDepto(input).pipe(finalize(() =>
             {

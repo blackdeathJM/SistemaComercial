@@ -3,8 +3,7 @@ import {DateTime} from 'luxon';
 import {v4 as uuidv4} from 'uuid';
 import {deleteObject, ref, Storage, uploadBytesResumable, UploadTask} from '@angular/fire/storage';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
-import {Observable, ReplaySubject, throwError} from 'rxjs';
-import {IResolveEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface";
+import {Observable, of, ReplaySubject} from 'rxjs';
 
 export interface IObjFecha
 {
@@ -25,13 +24,6 @@ export class GeneralService
 
     constructor(private storage: Storage, private ngxToast: NgxToastService)
     {
-    }
-
-    static filtradoEmpleados(valor: string, estado: IResolveEmpleado[]): any[]
-    {
-        const filtrar = estado.filter(value => value.nombreCompleto.toLowerCase().includes(valor.toLowerCase()));
-
-        return [...filtrar];
     }
 
     static convertirUnix(fecha: IObjFecha, segundos: number): number
@@ -57,7 +49,7 @@ export class GeneralService
         const fechas = DateTime.fromObject({year: fecha.year, month: fecha.month, day: fecha.day, hour: new Date().getHours(), minute: new Date().getMinutes()}).toISODate();
     }
 
-    static fechaHoraActual(): number
+    static fechaHoraActualUnix(): number
     {
         // console.log(DateTime.local({zone: 'America/Mexico_City'}).toUnixInteger());
         // console.log(DateTime.utc({locale: 'es-MX'}).toUnixInteger())
@@ -107,5 +99,11 @@ export class GeneralService
             this.ngxToast.errorToast(e.message, 'Error al tratar de eliminar archivo');
         }
 
+    }
+
+    cacharError(error: any): Observable<any>
+    {
+        this.ngxToast.errorToast(error, 'Error en el servidor');
+        return of(null);
     }
 }

@@ -1,6 +1,7 @@
 import {IModificado} from '../../../common/common.interface';
 import {IAuth} from '../../../admin/empleado/auth/auth.interface';
 import {IDepto} from '../deptos/depto.interface';
+import {PartialType} from "@nestjs/graphql";
 
 export interface ITelefono
 {
@@ -45,5 +46,3 @@ export interface IResolveEmpleado extends IEmpleado
 {
     deptoEmpleado: IDepto;
 }
-
-export type TRegEmpleado = Omit<IEmpleado, '_id' | 'auth' | 'fechaBaja' | 'puesto'>;

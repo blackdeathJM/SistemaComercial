@@ -4,7 +4,6 @@ import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {RxReactiveFormsModule, RxFormBuilder} from '@rxweb/reactive-form-validators';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Medicion, Meses} from '#/libs/models/src/lib/tecnica-operativa/telemetria/medicion';
@@ -13,6 +12,7 @@ import {DeshabilitarCtrlDirective} from '@s-directives/deshabilitar-ctrl.directi
 import {toArray} from 'lodash-es';
 import {ITomarMedicion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/instalacion/instalacion.interface';
 import {finalize} from 'rxjs';
+import {TelemetriaQuery} from '@s-dir-tecnica-operativa/store/telemetria.query';
 
 @Component({
     selector: 'app-mod-nivel-din-est',
@@ -29,7 +29,7 @@ export class ModNivelDinEstComponent implements OnInit, AfterViewInit
     cargando = false;
     meses = toArray(Meses).filter(elemento => !['ano', 'accion'].includes(elemento));
 
-    constructor(@Inject(MAT_DIALOG_DATA) private data: IMedicionDinamicoEstatico, private telemetriaService: TelemetriaService, private entityTelemetria: EntityTelemetria, private fb: RxFormBuilder,
+    constructor(@Inject(MAT_DIALOG_DATA) private data: IMedicionDinamicoEstatico, private telemetriaService: TelemetriaService, private telemetriaQuery: TelemetriaQuery, private fb: RxFormBuilder,
                 public mdr: MatDialogRef<ModNivelDinEstComponent>)
     {
     }
@@ -39,11 +39,14 @@ export class ModNivelDinEstComponent implements OnInit, AfterViewInit
         this.formNiveles = this.fb.formGroup(new Medicion());
         if (this.data)
         {
-            const instalacion = this.entityTelemetria.selectOne(this.data._id);
+            // const instalacion = this.entityTelemetria.selectOne(this.data._id);
+            const instalacion = this.telemetriaQuery.getEntity(this.data._id);
             const nivel = this.data.tipoMedicion.split('.');
             const medicion = instalacion.instalacion[nivel[1]][this.data.indice];
             this.ano = medicion.ano;
-            this.formNiveles.patchValue(this.entityTelemetria.snapshot.instalacion.instalacion[nivel[1]][this.data.indice]);
+            // this.formNiveles.patchValue(this.entityTelemetria.snapshot.instalacion.instalacion[nivel[1]][this.data.indice]);
+
+            // this.formNiveles.patchValue(this.telemetriaQuery.[nivel[1]][this.data.indice]);
         }
     }
 

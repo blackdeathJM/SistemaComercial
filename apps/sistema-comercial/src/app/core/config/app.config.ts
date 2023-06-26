@@ -35,7 +35,7 @@ export interface AppConfig
  */
 export const appConfig: AppConfig = JSON.parse(localStorage.getItem(tema)) || {
     layout: 'classy',
-    scheme: 'light',
+    scheme: 'dark',
     screens: {
         sm: '600px',
         md: '960px',

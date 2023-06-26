@@ -9,12 +9,11 @@ export class JwtStrategy extends PassportStrategy(Strategy)
 {
     constructor(configService: ConfigService, private empleadoService: EmpleadoService)
     {
-        super({jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), ignoreExpiration: false, secretOrKey: configService.get('PALABRA_SECRETA')});
+        super({jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), ignoreExpiration: false, secretOrKey: configService.get('config.palabraSecreta')});
     }
 
     async validate(payload: any): Promise<{ _id: string; usuario: string }>
     {
-        console.log('jwt-strategy', payload);
         await this.empleadoService.validarUsuarioActivo(payload._id);
         return {_id: payload._id, usuario: payload.usuario};
     }

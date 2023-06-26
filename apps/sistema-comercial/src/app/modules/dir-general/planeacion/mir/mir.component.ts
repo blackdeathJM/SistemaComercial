@@ -1,69 +1,144 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModMirComponent} from '@s-dir-general/mir/mod-mir/mod-mir.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import {ModMultiplesSeleccionesComponent} from '@s-dir-general/mod-multiples-selecciones/mod-multiples-selecciones.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {NgxToastService} from '@s-services/ngx-toast.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {ListaTabMirComponent} from '@s-dir-general/mir/lista-tab-mir/lista-tab-mir.component';
-import {EntityMir} from '@s-dir-general/mir/store/mir.entity';
-import {MirService} from '@s-dir-general/mir/store/mir.service';
-import {TMirsPorAno, TMirsPorCentroGestor} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir-consultas.dto';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
-import {Subscription} from 'rxjs';
-import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
+import {ModInicialzarRegistroComponent} from '@s-dir-general/mod-inicialzar-registro/mod-inicialzar-registro.component';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {fuseAnimations} from '@s-fuse/public-api';
+import {ComponentesComponent} from '@s-dir-general/componentes/componentes.component';
+import {$cast, isNil} from '@angular-ru/cdk/utils';
+import {ComponentesService} from '@s-dir-general/componentes/services/componentes.service';
+import {NgxToastService} from "@s-services/ngx-toast.service";
+import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
+import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
+import {CellHook, CellHookData, Styles} from "jspdf-autotable";
 
 @Component({
     selector: 'app-mir',
     standalone: true,
-    imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent],
-    providers: [MirService],
+    imports: [CommonModule, MatSidenavModule, AccionesMirPbrComponent, ModMirComponent, MatButtonToggleModule, MatIconModule, ListaTabMirComponent, ComponentesComponent],
+    providers: [],
     templateUrl: './mir.component.html',
-    styleUrls: ['./mir.component.scss']
+    animations: [fuseAnimations],
+    styleUrls: ['./mir.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class MirComponent implements OnInit
+export default class MirComponent implements OnDestroy
 {
     abrirPanel = false;
-    sub = new Subscription();
+    avancesTrimestrales: string[] = [];
 
-    constructor(public mdr: MatDialog, private ngxToast: NgxToastService, private entityMir: EntityMir, private mirService: MirService, private seleccionService: SeleccionService)
+    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService)
     {
-    }
-
-    ngOnInit(): void
-    {
-        this.sub.add();
     }
 
     regSeleccion(): void
     {
-        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '60%'});
+        this.mdr.open(ModMultiplesSeleccionesComponent, {width: '70%'});
     }
 
-    porCentroGestor(e: [string, number]): void
+    inicializarPlaneacion(): void
     {
-        const consulta: TMirsPorCentroGestor =
-            {
-                centroGestor: e[0],
-                ano: e[1]
-            };
-        this.mirService.mirsPorCentroGestor(consulta).subscribe();
+        this.mdr.open(ModInicialzarRegistroComponent, {width: '40%'});
     }
 
-    buscarPorAno(ano: number): void
+    imprimirTablaMir(): void
     {
+        if (isNil(this.planeacionQuery.getActive()))
+        {
+            this.ngxToast.alertaToast('Selecciona un año para poder continuar', 'MIR');
+            return;
+        }
 
-        const actMir: TMirsPorAno =
+        const planeacionActiva = this.planeacionQuery.getActive();
+
+        const columnas = [{header: 'Ind', dataKey: 'idIndicador'},
             {
-                ano
-            };
-        this.mirService.mirsPorAno(actMir).subscribe();
+                header: 'Nivel', dataKey: 'nivel'
+            }, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
+            {header: 'Centro gestor', dataKey: 'centroGestor'}, {
+                header: 'Metodo de calculo',
+                dataKey: 'metodoCalculo'
+            }, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'},
+            {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {
+                header: 'L.B Año',
+                dataKey: 'lineaBaseAno'
+            }, {header: 'L.B. valor', dataKey: 'lineaBaseValor'}, {header: 'Meta', dataKey: 'meta'},
+            {header: 'Sentido Ind', dataKey: 'sentidoDelIndicador'}, {
+                header: 'Sem. Verde',
+                dataKey: 'semefVerdeV'
+            }, {header: 'Sem. Ama', dataKey: 'semefAmarilloV'}, {header: 'Sem. Rojo', dataKey: 'semefRojoV'},
+            {header: 'A. Trim1', dataKey: 'avanceTrim1'}, {
+                header: 'A. Trim2',
+                dataKey: 'avanceTrim2'
+            }, {header: 'A. Trim3', dataKey: 'avanceTrim3'}, {header: 'A. Trim4', dataKey: 'avanceTrim4'},
+            {header: 'Glob', dataKey: 'avanceAnual'}];
+        const styles: Partial<Styles> = {
+            fontSize: 6,
+            font: 'helvetica',
+            minCellWidth: 7,
+            overflow: 'linebreak',
+            cellWidth: 'auto',
+            lineWidth: .5
+        };
+        const columnStyles: { [p: string]: Partial<Styles> } = {
+            resumenNarrativo: {cellWidth: 45},
+            centroGestor: {cellWidth: 20},
+            metodoCalculo: {cellWidth: 45},
+            mediosVerificacion: {cellWidth: 30},
+            supuestos: {cellWidth: 30},
+            unidadDeMedida: {cellWidth: 15},
+        };
+        const ano = this.planeacionQuery.getActive().ano;
+        const mirsActivo = this.planeacionQuery.compCuestionarioMir();
+        const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
+        const didParseCell: CellHook = ((data: CellHookData) =>
+        {
+            if (data.section === 'body')
+            {
+                const mir = $cast<IMirCuestionario>(data.row.raw);
+                if (mir)
+                {
+                    if (mir.componente && mir.componente.formula)
+                    {
+                        const objParaFormula = this.componentesService.objParaLaFormula(mir, planeacionActiva);
+                        const trimestres = [this.componentesService.calcAvances(mir.componente.formula, objParaFormula[0]), this.componentesService.calcAvances(mir.componente.formula, objParaFormula[1]),
+                            this.componentesService.calcAvances(mir.componente.formula, objParaFormula[2]), this.componentesService.calcAvances(mir.componente.formula, objParaFormula[3])]
+                        data.row.cells.avanceTrim1.text = [trimestres[0].toString()];
+                        data.row.cells.avanceTrim2.text = [trimestres[1].toString()];
+                        data.row.cells.avanceTrim3.text = [trimestres[2].toString()];
+                        data.row.cells.avanceTrim4.text = [trimestres[3].toString()];
+                        const sumar = parseFloat(trimestres[0]) + parseFloat(trimestres[1]) + parseFloat(trimestres[2]) + parseFloat(trimestres[3]);
+                        data.row.cells.avanceAnual.text = [sumar.toString()];
+                    }
+                }
+            }
+        });
+
+        PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo, didParseCell);
     }
 
-    cerrarPanel(): void
+    avancesTrim(e: string[]): void
+    {
+        this.avancesTrimestrales = e;
+    }
+
+    panelMirLista(e: boolean): void
+    {
+        this.abrirPanel = e;
+    }
+
+    ngOnDestroy(): void
     {
         this.abrirPanel = false;
+        this.planeacionQuery.centroGestor.set(null);
+        this.planeacionQuery.cuestionarioMir.set(null);
+        this.planeacionQuery.cuestionarioMirV.set([]);
     }
 }

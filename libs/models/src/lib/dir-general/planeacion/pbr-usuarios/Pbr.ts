@@ -1,36 +1,107 @@
-import {TRegPbr} from './pbr-consultas.dto';
-import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 import {sanitize, upperCase} from '@rxweb/sanitizers';
+import {TRegAvancesPbr, TRegPbr} from './pbr.dto';
+import {email, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {TSumPbr} from './pbrSumatoria.dto';
 
 @sanitize
 export class Pbr implements TRegPbr
 {
-    @numeric({message: 'El valor debe ser numerico', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
-    @maxNumber({message: 'El valor maximo es 2050', value: 2050})
-    @minNumber({message: 'El valor minimo es 2020', value: 2020})
-    @prop({defaultValue: new Date().getFullYear()})
-    ano: number;
+    _id: string;
 
-    @required({message: 'Este campo es requerido'})
     @upperCase()
-    claveVariable: string;
+    @required()
+    idIndicador: string;
 
-    @required({message: 'Este campo es requerido'})
     @upperCase()
+    @required()
     variableOrigen: string;
 
-    @required({message: 'Este campo es requerido'})
+    @required()
     dato: string;
 
-    @required({message: 'Este campo es requerido'})
+    @required()
+    unidad: string;
+
+    @required()
+    descripcion: string;
+
+    @required()
+    centroGestor: string;
+
+    @required()
+    idEmpleado: string;
+
+    @prop()
+    responsable: string;
+
+    @required()
+    @email()
+    correo: string;
+
+    esActualizar: boolean;
+
+    @required()
+    tipoOperacion: string;
+}
+
+export class AvancesPbr implements TRegAvancesPbr
+{
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    enero: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    febrero: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    marzo: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    abril: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    mayo: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    junio: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    julio: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    agosto: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    septiembre: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    octubre: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    noviembre: number;
+
+    @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
+    diciembre: number;
+}
+
+export class RegSumPbr implements TSumPbr
+{
+    _id: string;
+
+    @required({message: 'El centro gestor es necesario'})
+    centroGestor: string;
+
+    @required({message: 'Es necesario que selecciones uno o varios campos que se vayan a sumar'})
+    ids: string[];
+
+    @required({message: 'Asigna un nombre a la sumatoria'})
+    nombreSumatoria: string;
+
+    @required({message: 'Es necesario que asignes una descripcion'})
     descripcion: string;
 
     @required({message: 'Este campo es requerido'})
-    unidad: string;
+    sumTrim: boolean;
 
-    @required({message: 'Este campo es requerido'})
-    centroGestor: string;
-
-    @required({message: 'Es necesario que selecciones un usuario'})
-    idEmpleado: string;
+    @prop()
+    sumTotal: boolean;
 }

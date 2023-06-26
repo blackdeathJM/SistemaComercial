@@ -1,64 +1,64 @@
-<form>
+<form [formGroup]="formAvances">
     <section class="flex flex-col flex-auto">
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Enero</mat-label>
-                <input matInput>
+                <input matInput formControlName="enero">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Febrero</mat-label>
-                <input matInput>
+                <input matInput formControlName="febrero">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Marzo</mat-label>
-                <input matInput>
+                <input matInput formControlName="marzo">
             </mat-form-field>
         </div>
 
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Abril</mat-label>
-                <input matInput>
+                <input matInput formControlName="abril">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Mayo</mat-label>
-                <input matInput>
+                <input matInput formControlName="mayo">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Junio</mat-label>
-                <input matInput>
+                <input matInput formControlName="junio">
             </mat-form-field>
         </div>
 
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Julio</mat-label>
-                <input matInput>
+                <input matInput formControlName="julio">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Agosto</mat-label>
-                <input matInput>
+                <input matInput formControlName="agosto">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Septiembre</mat-label>
-                <input matInput>
+                <input matInput formControlName="septiembre">
             </mat-form-field>
         </div>
 
         <div class="flex flex-auto gap-4">
             <mat-form-field class="flex-auto">
                 <mat-label>Octubre</mat-label>
-                <input matInput>
+                <input matInput formControlName="octubre">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Noviembre</mat-label>
-                <input matInput>
+                <input matInput formControlName="noviembre">
             </mat-form-field>
             <mat-form-field class="flex-auto">
                 <mat-label>Diciembre</mat-label>
-                <input matInput>
+                <input matInput formControlName="diciembre">
             </mat-form-field>
         </div>
     </section>
 </form>
-<app-registros></app-registros>
+<app-registros (cancelar)="this.mdr.close()" (registro)="regAvancePbr()" [cargando]="cargando || formAvances.invalid"></app-registros>

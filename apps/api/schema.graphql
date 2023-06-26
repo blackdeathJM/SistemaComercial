@@ -234,22 +234,116 @@ type TelemetriaType {
   motores: [MotorType!]
 }
 
-type EjercicioType {
-  forEnero: String
-  forFebrero: String
-  forMarzo: String
-  forAbril: String
-  forMayo: String
-  forJunio: String
-  forJulio: String
-  forAgosto: String
-  forSeptiembre: String
-  forOctubre: String
-  forNoviembre: String
-  forDiciembre: String
+type SeleccionType {
+  _id: ID
+  centroGestor: [String!]
+  unidad: [String!]
+  dimension: [String!]
+  frecuencia: [String!]
+  tipo: [String!]
+}
+
+type FormComunType {
+  idIndicador: String
+  idIndicadorAd: String
+  trim1Ant: Float
+  trim2Ant: Float
+  trim3Ant: Float
+  trim4Ant: Float
+}
+
+type ComponenteType {
+  formDinamico: [JSON!]
+  formComun: [FormComunType!]
+  tipoValorTrim: String
+  tipoValorAvance: String
+  tipoForm: String
+  formula: String
+  idsFormulario: [String!]
+  colsTabla: [String!]
+  idsFormula: [String!]
+  etiqueta: String
+  omitirPrimerId: Boolean
+}
+
+type MirCuestionarioType {
+  tipo: String
+  dimension: String
+  centroGestor: String
+  frecuenciaMedicion: String
+  idIndicador: String
+  lineaBaseAno: String
+  lineaBaseValor: String
+  meta: Float
+  metodoCalculo: String
+  supuestos: String
+  mediosVerificacion: String
+  nivel: String
+  nombreDelIndicador: String
+  definicionIndicador: String
+  semefVerde: Float
+  semefVerdeV: Float
+  semefAmarillo: Float
+  semefAmarilloV: Float
+  semefRojo: Float
+  semefRojoV: Float
+  programaFinanciacion: String
+  resumenNarrativo: String
+  sentidoDelIndicador: String
+  unidadDeMedida: String
+  avanceTrim1: Float
+  avanceTrim2: Float
+  avanceTrim3: Float
+  avanceTrim4: Float
+  avanceAnual: Float
+  correo: String
+  responsable: String
+  idEmpleado: String
+  componente: ComponenteType
+}
+
+type PbrType {
   ano: Int
+  fechaCompleta: String
+  enero: Float
+  febrero: Float
+  marzo: Float
+  abril: Float
+  mayo: Float
+  junio: Float
+  julio: Float
+  agosto: Float
+  septiembre: Float
+  octubre: Float
+  noviembre: Float
+  diciembre: Float
+  idEmpleado: ID
+  responsable: String
+  correo: String
+  descripcion: String
+  centroGestor: String
+  variableOrigen: String
+  trim1: Float
+  trim2: Float
+  trim3: Float
+  trim4: Float
+  dato: String
+  idIndicador: String
+  total: Float
+  unidad: String
+  tipoOperacion: String
+}
+
+type PbrSumatoriaType {
+  idSumatoria: String
+  centroGestor: String
+  descripcion: String
+  ids: [String!]
+  nombreSumatoria: String
+  total: Float
   abril: Float
   agosto: Float
+  ano: Float
   diciembre: Float
   enero: Float
   febrero: Float
@@ -260,69 +354,22 @@ type EjercicioType {
   noviembre: Float
   octubre: Float
   septiembre: Float
-  total: Float
+  sumTotal: Boolean
+  sumTrim: Boolean
   trim1: Float
   trim2: Float
   trim3: Float
   trim4: Float
 }
 
-type PbrType {
+type PlaneacionType {
   _id: ID
+  copia: Boolean
   ano: Int
-  claveVariable: String
-  variableOrigen: String
-  dato: String
   descripcion: String
-  ejercicio: EjercicioType
-  unidad: String
-  idEmpleado: ID
-  centroGestor: String
-  resPbrEmpleado: EmpleadoType!
-}
-
-type MirType {
-  _id: ID
-  ano: Int
-  tipo: String
-  dimension: String
-  centroGestor: String
-  frecuenciaMedicion: String
-  idIndicador: String
-  lineaBaseAno: Int
-  lineaBaseValor: String
-  meta: Float
-  metodoCalculo: String
-  mediosDeVerificacion: String
-  nivel: String
-  nombreDelIndicador: String
-  semefVerde: Float
-  semefAmarillo: Float
-  semefRojo: Float
-  programaFinanciacion: String
-  resumenNarrativo: String
-  sentidoDelIndicador: String
-  supuestos: String
-  unidadDeMedida: String
-  avanceTrim1: Float
-  avanceTrim2: Float
-  avanceTrim3: Float
-  avanceTrim4: Float
-  avanceAnual: Float
-  formulaTrim1: String
-  formulaTrim2: String
-  formulaTrim3: String
-  formulaTrim4: String
-  formulaAnual: String
-}
-
-type SeleccionType {
-  _id: ID
-  centroGestor: [String!]
-  unidad: [String!]
-  dimension: [String!]
-  frecuencia: [String!]
-  tipo: [String!]
+  mirCuestionario: [MirCuestionarioType!]
+  pbrCuestionario: [PbrType!]
+  pbrSumatoria: [PbrSumatoriaType!]
 }
 
 input ModificadoPorInput {
@@ -412,7 +459,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1680379340
+  tiempo: Int = 1687711266
   titulo: String
   usarRouter: Boolean = false
 }
@@ -519,22 +566,116 @@ input TelemetriaInput {
   motores: [MotorInput!] = []
 }
 
-input EjercicioInput {
-  forEnero: String = null
-  forFebrero: String = null
-  forMarzo: String = null
-  forAbril: String = null
-  forMayo: String = null
-  forJunio: String = null
-  forJulio: String = null
-  forAgosto: String = null
-  forSeptiembre: String = null
-  forOctubre: String = null
-  forNoviembre: String = null
-  forDiciembre: String = null
-  ano: Int = 2023
+input SeleccionInput {
+  _id: ID
+  centroGestor: [String!] = []
+  unidad: [String!] = []
+  dimension: [String!] = []
+  frecuencia: [String!] = []
+  tipo: [String!] = []
+}
+
+input FormComunInput {
+  idIndicador: String = null
+  idIndicadorAd: String = null
+  trim1Ant: Float = 0
+  trim2Ant: Float = 0
+  trim3Ant: Float = 0
+  trim4Ant: Float = 0
+}
+
+input ComponenteInput {
+  formDinamico: [JSON!] = []
+  formComun: [FormComunInput!] = []
+  tipoValorTrim: String = null
+  tipoValorAvance: String = null
+  tipoForm: String = null
+  formula: String = null
+  idsFormulario: [String!] = []
+  colsTabla: [String!] = []
+  idsFormula: [String!] = []
+  etiqueta: String = ""
+  omitirPrimerId: Boolean = false
+}
+
+input MirCuestionarioInput {
+  tipo: String = null
+  dimension: String = null
+  centroGestor: String = null
+  frecuenciaMedicion: String = null
+  idIndicador: String = null
+  lineaBaseAno: String = null
+  lineaBaseValor: String = null
+  meta: Float = 0
+  metodoCalculo: String = null
+  supuestos: String = null
+  mediosVerificacion: String = null
+  nivel: String = null
+  nombreDelIndicador: String = null
+  definicionIndicador: String = null
+  semefVerde: Float = 0
+  semefVerdeV: Float = 0
+  semefAmarillo: Float = 0
+  semefAmarilloV: Float = 0
+  semefRojo: Float = 0
+  semefRojoV: Float = 0
+  programaFinanciacion: String = null
+  resumenNarrativo: String = null
+  sentidoDelIndicador: String = null
+  unidadDeMedida: String = null
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
+  avanceAnual: Float = 0
+  correo: String = null
+  responsable: String
+  idEmpleado: String
+  componente: ComponenteInput = null
+}
+
+input PbrInput {
+  ano: Int = 0
+  fechaCompleta: String = null
+  enero: Float = 0
+  febrero: Float = 0
+  marzo: Float = 0
+  abril: Float = 0
+  mayo: Float = 0
+  junio: Float = 0
+  julio: Float = 0
+  agosto: Float = 0
+  septiembre: Float = 0
+  octubre: Float = 0
+  noviembre: Float = 0
+  diciembre: Float = 0
+  idEmpleado: ID
+  responsable: String
+  correo: String
+  descripcion: String
+  centroGestor: String
+  variableOrigen: String
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  dato: String
+  idIndicador: String
+  total: Float = 0
+  unidad: String
+  tipoOperacion: String = "suma"
+}
+
+input PbrSumatoriaInput {
+  idSumatoria: String = null
+  centroGestor: String
+  descripcion: String
+  ids: [String!] = []
+  nombreSumatoria: String
+  total: Float = 0
   abril: Float = 0
   agosto: Float = 0
+  ano: Float = 0
   diciembre: Float = 0
   enero: Float = 0
   febrero: Float = 0
@@ -545,79 +686,30 @@ input EjercicioInput {
   noviembre: Float = 0
   octubre: Float = 0
   septiembre: Float = 0
-  total: Float = 0
+  sumTotal: Boolean = false
+  sumTrim: Boolean = false
   trim1: Float = 0
   trim2: Float = 0
   trim3: Float = 0
   trim4: Float = 0
 }
 
-input PbrInput {
+input PlaneacionInput {
   _id: ID
+  copia: Boolean
   ano: Int = 2023
-  claveVariable: String = null
-  variableOrigen: String = null
-  dato: String = null
-  descripcion: String = null
-  ejercicio: EjercicioInput
-  unidad: String = null
-  idEmpleado: ID = null
-  centroGestor: String = null
-}
-
-input MirInput {
-  _id: ID
-  ano: Int = 2023
-  tipo: String = null
-  dimension: String = null
-  centroGestor: String = null
-  frecuenciaMedicion: String = null
-  idIndicador: String = null
-  lineaBaseAno: Int = 0
-  lineaBaseValor: String = null
-  meta: Float = 0
-  metodoCalculo: String = null
-  mediosDeVerificacion: String = null
-  nivel: String = null
-  nombreDelIndicador: String = null
-  semefVerde: Float = 0
-  semefAmarillo: Float = 0
-  semefRojo: Float = 0
-  programaFinanciacion: String = null
-  resumenNarrativo: String = null
-  sentidoDelIndicador: String = null
-  supuestos: String = null
-  unidadDeMedida: String = null
-  avanceTrim1: Float = 0
-  avanceTrim2: Float = 0
-  avanceTrim3: Float = 0
-  avanceTrim4: Float = 0
-  avanceAnual: Float = 0
-  formulaTrim1: String = null
-  formulaTrim2: String = null
-  formulaTrim3: String = null
-  formulaTrim4: String = null
-  formulaAnual: String = null
-}
-
-input SeleccionInput {
-  _id: ID
-  centroGestor: [String!] = []
-  unidad: [String!] = []
-  dimension: [String!] = []
-  frecuencia: [String!] = []
-  tipo: [String!] = []
+  descripcion: String
+  mirCuestionario: [MirCuestionarioInput!] = []
+  pbrCuestionario: [PbrInput!] = []
+  pbrSumatoria: [PbrSumatoriaInput!] = []
 }
 
 type Query {
-  pbrs(ano: Int = 2023, idEmpleado: ID = null, centroGestor: String = null): [PbrType!]
-  mirsPorCentroGestor(ano: Int = 2023, centroGestor: String = null): [MirType!]
-  mirsPorAno(ano: Int = 2023): [MirType!]
   selecciones: SeleccionType
+  filTodos: [PlaneacionType!]!
   rolesAsig(idEmpleado: ID): RolesType
   empleados: [EmpleadoType!]!
   empleadosSesion: [EmpleadoType!]!
-  filtrarEmpleados(consulta: String!): [EmpleadoType!]!
   deptos: [DeptoType!]!
   filtrarDeptos(nombre: String!): [DeptoType!]!
   docsUsuarioProceso(usuario: ID, enviadoPor: ID = null, esEnviadoPor: Boolean = false, proceso: String): [DocumentoType!]!
@@ -637,10 +729,17 @@ type Query {
 }
 
 type Mutation {
-  regPbr(input: RegPbrInput!): PbrType!
-  agregarMir(input: MirInput!): MirType!
-  mirsActAvances(input: MirsActAvancesInput!): MirType!
   regSeleccion(input: SeleccionInput): SeleccionType!
+  inicializarPlaneacion(input: PlaneacionInput!): PlaneacionType!
+  regMir(datos: RegMirInput!): PlaneacionType!
+  regPbr(datos: RegPbrInput!): PlaneacionType!
+  actualizarResponsable(_id: ID, idEmpleado: ID, idEmpleadoAnterior: ID, correo: String, responsable: String, cuestionario: String): PlaneacionType!
+  eliminarComponente(_id: ID, idIndicador: String, cuestionario: String): PlaneacionType!
+  regAvancePbr(datos: RegAvancesPbrInput!): PlaneacionType!
+  sumatoriaPbr(datos: SumPbrInput!, actualizar: Boolean!): PlaneacionType!
+  recalcularPbr(args: RecalcularPbrInput!): PlaneacionType!
+  regComponente(datos: RegComponenteInput!): PlaneacionType!
+  reemplazarComp(_id: ID, idIndicador: String): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -656,7 +755,7 @@ type Mutation {
   asigPermisoPrimerNivel(asig: ActRolesInput!): RolesType!
   asigPermisoSegNivel(asig: ActRolesInput!): RolesType!
   asigPermisoTercerNivel(asig: ActRolesInput!): RolesType!
-  crearEmpleado(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
+  crearActEmpledo(empleadoDatos: RegEmpleadoInput!): EmpleadoType!
   crearDepto(input: DeptoInput!): DeptoType!
   actualizarDepto(input: DeptoInput!): DeptoType!
   eliminarDepto(_id: String!): DeptoType!
@@ -678,25 +777,160 @@ type Mutation {
   agregarBomba(args: AgregarBombaInput!): TelemetriaType!
 }
 
-input RegPbrInput {
-  ano: Int = 2023
-  claveVariable: String = null
-  variableOrigen: String = null
-  dato: String = null
-  descripcion: String = null
-  unidad: String = null
-  idEmpleado: ID = null
+input RegMirInput {
+  tipo: String = null
+  dimension: String = null
   centroGestor: String = null
-}
-
-input MirsActAvancesInput {
-  _id: ID
-  lineaBaseAno: Int = 0
+  frecuenciaMedicion: String = null
+  idIndicador: String = null
+  lineaBaseAno: String = null
   lineaBaseValor: String = null
   meta: Float = 0
+  metodoCalculo: String = null
+  supuestos: String = null
+  mediosVerificacion: String = null
+  nivel: String = null
+  nombreDelIndicador: String = null
+  definicionIndicador: String = null
   semefVerde: Float = 0
+  semefVerdeV: Float = 0
   semefAmarillo: Float = 0
+  semefAmarilloV: Float = 0
   semefRojo: Float = 0
+  semefRojoV: Float = 0
+  programaFinanciacion: String = null
+  resumenNarrativo: String = null
+  sentidoDelIndicador: String = null
+  unidadDeMedida: String = null
+  avanceTrim1: Float = 0
+  avanceTrim2: Float = 0
+  avanceTrim3: Float = 0
+  avanceTrim4: Float = 0
+  avanceAnual: Float = 0
+  correo: String = null
+  responsable: String
+  idEmpleado: String
+  componente: ComponenteInput = null
+  _id: ID
+  esActualizar: Boolean = false
+}
+
+input RegPbrInput {
+  ano: Int = 0
+  fechaCompleta: String = null
+  enero: Float = 0
+  febrero: Float = 0
+  marzo: Float = 0
+  abril: Float = 0
+  mayo: Float = 0
+  junio: Float = 0
+  julio: Float = 0
+  agosto: Float = 0
+  septiembre: Float = 0
+  octubre: Float = 0
+  noviembre: Float = 0
+  diciembre: Float = 0
+  idEmpleado: ID
+  responsable: String
+  correo: String
+  descripcion: String
+  centroGestor: String
+  variableOrigen: String
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  dato: String
+  idIndicador: String
+  total: Float = 0
+  unidad: String
+  tipoOperacion: String = "suma"
+  _id: ID
+  esActualizar: Boolean = false
+}
+
+input RegAvancesPbrInput {
+  ano: Int = 0
+  fechaCompleta: String = null
+  enero: Float = 0
+  febrero: Float = 0
+  marzo: Float = 0
+  abril: Float = 0
+  mayo: Float = 0
+  junio: Float = 0
+  julio: Float = 0
+  agosto: Float = 0
+  septiembre: Float = 0
+  octubre: Float = 0
+  noviembre: Float = 0
+  diciembre: Float = 0
+  idEmpleado: ID
+  responsable: String
+  correo: String
+  descripcion: String
+  centroGestor: String
+  variableOrigen: String
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  dato: String
+  idIndicador: String
+  total: Float = 0
+  unidad: String
+  tipoOperacion: String = "suma"
+  _id: ID
+}
+
+input SumPbrInput {
+  idSumatoria: String = null
+  centroGestor: String
+  descripcion: String
+  ids: [String!] = []
+  nombreSumatoria: String
+  total: Float = 0
+  abril: Float = 0
+  agosto: Float = 0
+  ano: Float = 0
+  diciembre: Float = 0
+  enero: Float = 0
+  febrero: Float = 0
+  julio: Float = 0
+  junio: Float = 0
+  marzo: Float = 0
+  mayo: Float = 0
+  noviembre: Float = 0
+  octubre: Float = 0
+  septiembre: Float = 0
+  sumTotal: Boolean = false
+  sumTrim: Boolean = false
+  trim1: Float = 0
+  trim2: Float = 0
+  trim3: Float = 0
+  trim4: Float = 0
+  _id: ID
+}
+
+input RecalcularPbrInput {
+  centroGestor: String
+  tipoOperacion: String = "suma"
+  _id: ID
+}
+
+input RegComponenteInput {
+  formDinamico: [JSON!] = []
+  formComun: [FormComunInput!] = []
+  tipoValorTrim: String = null
+  tipoValorAvance: String = null
+  tipoForm: String = null
+  formula: String = null
+  idsFormulario: [String!] = []
+  colsTabla: [String!] = []
+  idsFormula: [String!] = []
+  etiqueta: String = ""
+  omitirPrimerId: Boolean = false
+  _id: ID
+  idIndicadorMir: String
 }
 
 input CambioContrasenaInput {
@@ -727,14 +961,17 @@ input ActRolesInput {
 }
 
 input RegEmpleadoInput {
+  _id: ID
   avatar: String = null
   activo: Boolean = true
   calle: String
   colonia: String
   correo: String = null
+  fechaBaja: Int = null
   fechaIngreso: Int
   nombreCompleto: String
   telefono: [TelefonoInput!] = null
+  auth: AuthInput = null
   modificadoPor: [ModificadoPorInput!] = []
   puesto: [PuestoInput!] = []
   deptoId: ID

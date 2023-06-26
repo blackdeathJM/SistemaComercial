@@ -15,18 +15,17 @@ import {
     RegInstalacionGQL,
     RegInstalacionMutation
 } from '#/libs/datos/src';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
 import {ITelemetria, TActInst, IAgregarBomba, IAgregarMotor, TRegInstalacion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {IErrores} from '#/libs/models/src/lib/errors/errores.interface';
 import {ITomarMedicion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/instalacion/instalacion.interface';
+import {TelemetriaStore} from '@s-dir-tecnica-operativa/store/telemetria.store';
 
 @Injectable({providedIn: 'root'})
 export class TelemetriaService
 {
-    constructor(private instalacionesGQL: InstalacionesGQL, private entityTelemetria: EntityTelemetria, private ngxLoader: NgxUiLoaderService, private regInstalacionGQL: RegInstalacionGQL,
+    constructor(private instalacionesGQL: InstalacionesGQL, private telemetriaStore: TelemetriaStore, private ngxLoader: NgxUiLoaderService, private regInstalacionGQL: RegInstalacionGQL,
                 private actInstGQL: ActInstGQL, private ngxToast: NgxToastService, private crearRegLecturaGQL: CrearRegLecturaGQL, private actLecturaGQL: ActLecturaGQL,
                 private agregarMotorGQL: AgregarMotorGQL, private agregarBombaGQL: AgregarBombaGQL)
     {
@@ -37,11 +36,13 @@ export class TelemetriaService
         this.ngxLoader.startLoader(ngxLoader);
         return this.instalacionesGQL.watch().valueChanges.pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
                 this.ngxLoader.stopLoader(ngxLoader);
-                const inst = $cast<ITelemetria[]>(res.data.instalaciones);
-                this.entityTelemetria.setAll(inst);
+                const inst = res.data.instalaciones as ITelemetria[];
+
+                // this.entityTelemetria.setAll(inst);
+                this.telemetriaStore.set(inst);
             }
         }));
     }
@@ -52,12 +53,14 @@ export class TelemetriaService
         {
             if (res.data.regInstalacion.__typename === 'ErroresType')
             {
-                const error = $cast<IErrores>(res.data.regInstalacion);
+                const error = res.data.regInstalacion as IErrores;
                 this.ngxToast.alertaToast(error.error, 'Error');
                 return;
             }
-            const changes = $cast<ITelemetria>(res.data.regInstalacion);
-            this.entityTelemetria.setOne(changes);
+            const changes = res.data.regInstalacion as ITelemetria;
+            // this.entityTelemetria.setOne(changes);
+            this.telemetriaStore.add(changes);
+
             this.ngxToast.satisfactorioToast('La instalacion fue registrada con exito', 'Registro de instalaciones');
         }));
     }
@@ -66,10 +69,12 @@ export class TelemetriaService
     {
         return this.actInstGQL.mutate({args}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const {_id, ...changes} = $cast<ITelemetria>(res.data.actInst);
-                this.entityTelemetria.updateOne({id: _id, changes});
+                const {_id, ...changes} = res.data.actInst as ITelemetria;
+
+                // this.entityTelemetria.updateOne({id: _id, changes});
+                this.telemetriaStore.update(_id, changes);
                 this.ngxToast.satisfactorioToast('La instalacion fue actualizada con exito', 'Actualizacion');
             }
         }));
@@ -84,8 +89,9 @@ export class TelemetriaService
                 this.ngxToast.alertaToast(res.data.crearRegLectura.error, 'No se puedo crear el registro');
                 return;
             }
-            const agregar = $cast<ITelemetria>(res.data.crearRegLectura);
-            this.entityTelemetria.setOne(agregar);
+            const agregar = res.data.crearRegLectura as ITelemetria;
+            // this.entityTelemetria.setOne(agregar);
+            this.telemetriaStore.add(agregar);
             this.ngxToast.satisfactorioToast('Se ha inicializado un nuevo registro de medicion', 'Inicializacion de mediciones');
 
         }));
@@ -95,10 +101,11 @@ export class TelemetriaService
     {
         return this.actLecturaGQL.mutate({args}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const {_id, ...changes} = $cast<ITelemetria>(res.data.actLectura);
-                this.entityTelemetria.updateOne({id: _id, changes});
+                const {_id, ...changes} = res.data.actLectura as ITelemetria;
+                // this.entityTelemetria.updateOne({id: _id, changes});
+                this.telemetriaStore.update(_id, changes);
                 this.ngxToast.satisfactorioToast('Medicion actualizada con exito', 'Nivel dinamico - Nivel estatico');
             }
         }));
@@ -108,10 +115,11 @@ export class TelemetriaService
     {
         return this.agregarMotorGQL.mutate({args}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const {_id, ...changes} = $cast<ITelemetria>(res.data.agregarMotor);
-                this.entityTelemetria.updateOne({id: _id, changes});
+                const {_id, ...changes} = res.data.agregarMotor as ITelemetria;
+                // this.entityTelemetria.updateOne({id: _id, changes});
+                this.telemetriaStore.update(_id, changes);
                 this.ngxToast.satisfactorioToast('Se ha agregado un motor correctamente', 'Nuevo motor');
             }
         }));
@@ -121,10 +129,11 @@ export class TelemetriaService
     {
         return this.agregarBombaGQL.mutate({args}).pipe(tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res.data)
             {
-                const {_id, ...changes} = $cast<ITelemetria>(res.data.agregarBomba);
-                this.entityTelemetria.updateOne({id: _id, changes});
+                const {_id, ...changes} = res.data.agregarBomba as ITelemetria;
+                // this.entityTelemetria.updateOne({id: _id, changes});
+                this.telemetriaStore.update(_id, changes);
                 this.ngxToast.satisfactorioToast('Se ha agregado una bomba correctamente', 'Nueva bomba');
             }
         }));

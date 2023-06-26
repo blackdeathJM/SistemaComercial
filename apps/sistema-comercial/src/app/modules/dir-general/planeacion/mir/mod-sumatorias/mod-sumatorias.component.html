@@ -1,0 +1,45 @@
+<form [formGroup]="formSum">
+    <section class="flex flex-auto flex-col">
+        <ng-container *ngIf="seleccionQuery.select() | async as centros">
+            <mat-form-field class="flex-auto mt-5">
+                <mat-label>Selecciona un centro gestor</mat-label>
+                <mat-select (valueChange)="filCentroGestor($event)" formControlName="centroGestor" placeholder="Filtrar por centro gestor">
+                    <mat-option *ngFor="let centro of centros.centroGestor; trackBy: trackByFn" [value]="centro">{{centro}}</mat-option>
+                </mat-select>
+                <mat-error>{{formSum.controls.centroGestor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="cuestionarioPbr">
+            <mat-form-field class="flex-auto mt-5">
+                <mat-label>Selecciona los campos que deseas sumar</mat-label>
+                <mat-select formControlName="ids" placeholder="Seleccionar" multiple>
+                    <mat-option *ngFor="let pbr of cuestionarioPbr()" [value]="pbr.idIndicador">{{pbr.dato}}</mat-option>
+                </mat-select>
+                <mat-error>{{formSum.controls.ids['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <mat-form-field>
+            <mat-label>nombre de la sumatoria</mat-label>
+            <input matInput formControlName="nombreSumatoria">
+            <mat-error>{{formSum.controls.nombreSumatoria['errorMessage']}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="descripcion">
+            <mat-error>{{formSum.controls.descripcion['errorMessage']}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Forma de calcular el trimestre</mat-label>
+            <mat-select formControlName="sumTrim">
+                <mat-option [value]="true">Sumatoria de los meses del trimestre</mat-option>
+                <mat-option [value]="false">Ultimo valor del mes</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+</form>
+
+<app-registros (cancelar)="mdr.close()" (registro)="resSumatoria()" [cargando]="cargando" [deshabilitar]="cargando || formSum.invalid"></app-registros>

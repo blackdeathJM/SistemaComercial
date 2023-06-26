@@ -1,207 +1,167 @@
-import {ObjectType, InputType, Field, ID, Float, Int} from '@nestjs/graphql';
-import {Schema, Prop, SchemaFactory} from '@nestjs/mongoose';
-import {IsNotEmpty, IsOptional, IsNumber} from 'class-validator';
-
-
-@ObjectType('EjercicioType')
-@InputType('EjercicioInput')
-export class EjercicioDto
-{
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forEnero: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forFebrero: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forMarzo: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forAbril: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forMayo: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forJunio: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forJulio: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forAgosto: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forSeptiembre: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forOctubre: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forNoviembre: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @IsOptional()
-    forDiciembre: string;
-
-    @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    ano: number;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    abril: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    agosto: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    diciembre: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    enero: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    febrero: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    julio: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    junio: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    marzo: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    mayo: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    noviembre: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    octubre: number;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false}, {message: 'El valor debe ser numerico'})
-    septiembre: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false})
-    total: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false})
-    trim1: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false})
-    trim2: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false})
-    trim3: number = 0;
-
-    @Field(() => Float, {nullable: true, defaultValue: 0.00})
-    @IsOptional()
-    @IsNumber({allowNaN: false, allowInfinity: false})
-    trim4: number = 0;
-
-}
-
-export type TEjercicio = EjercicioDto;
+import {ArgsType, Field, Float, ID, InputType, Int, ObjectType, PartialType, PickType} from '@nestjs/graphql';
+import {IPbrCuestionario} from './pbr.interface';
+import {IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {MirCuestionarioDto} from "../mir/mir.dto";
 
 @ObjectType('PbrType')
 @InputType('PbrInput')
-@Schema({collection: 'Pbr'})
-export class PbrDto
+export class PbrCuestionarioDto implements IPbrCuestionario
 {
-    @Field(() => ID, {nullable: true})
-    _id: string;
-
-    @Field(() => Int, {nullable: true, defaultValue: new Date().getFullYear()})
-    @Prop()
-    @IsNumber({allowNaN: false, allowInfinity: false, maxDecimalPlaces: 0}, {message: 'El año es requerido'})
+    @Field(() => Int, {nullable: true, defaultValue: 0})
+    @IsOptional()
     ano: number;
 
     @Field(() => String, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'Es necesaria la clave de la variable'})
-    claveVariable: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'Es necesaria la variable de origen'})
-    variableOrigen: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'Es necesario el dato'})
-    dato: string;
-
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'Es necesaria la descripcion'})
-    descripcion: string;
-
-    @Field(() => EjercicioDto, {nullable: true})
-    @Prop()
     @IsOptional()
-    ejercicio: EjercicioDto;
+    fechaCompleta: string;
 
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'Es necesaria la unidad de medida'})
-    unidad: string;
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    enero: number;
 
-    @Field(() => ID, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'El id del empleado es requerido'})
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    febrero: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    marzo: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    abril: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    mayo: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    junio: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    julio: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    agosto: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    septiembre: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    octubre: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    noviembre: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    diciembre: number;
+
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'El campo id del empleado es requerido'})
     idEmpleado: string;
 
-    @Field(() => String, {nullable: true, defaultValue: null})
-    @Prop()
-    @IsNotEmpty({message: 'Es necesario el centro gestor'})
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'Es necesario el nombre del responsable'})
+    responsable: string;
+
+    @Field(() => String, {nullable: true})
+    @IsOptional()
+    correo: string;
+
+    @Field(() => String, {nullable: true})
+    @IsOptional()
+    descripcion: string;
+
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El campo centro gestor es requerido'})
     centroGestor: string;
+
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El campo variable origen es requerido'})
+    variableOrigen: string;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    trim1: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    trim2: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    trim3: number;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    trim4: number;
+
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El dato es requerido'})
+    dato: string;
+
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'El id es requerido'})
+    idIndicador: string;
+
+    @Field(() => Float, {nullable: true, defaultValue: 0.00})
+    @IsNumber({allowNaN: true, allowInfinity: false, maxDecimalPlaces: 2})
+    total: number;
+
+    @Field(() => String, {nullable: true})
+    @IsNotEmpty({message: 'La unidad es requerida'})
+    unidad: string;
+
+    @IsNotEmpty({message: 'Es necesario el tipo de valor'})
+    @Field(() => String, {nullable: true, defaultValue: 'suma'})
+    tipoOperacion: string;
 }
 
-export type PbrType = PbrDto & Document;
-export const SCHEMA_PBR = SchemaFactory.createForClass(PbrDto);
+@InputType('RegPbrInput')
+export class RegPbrDto extends PartialType(PbrCuestionarioDto, InputType)
+{
+    @IsNotEmpty({message: 'Es necesario el id'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+
+    @IsOptional()
+    @Field(() => Boolean, {nullable: true, defaultValue: false})
+    esActualizar: boolean;
+}
+
+export type TRegPbr = RegPbrDto;
+
+@InputType('RegAvancesPbrInput')
+export class RegAvancesPbrDto extends PartialType(PbrCuestionarioDto, InputType)
+{
+    @Field(() => ID, {nullable: true})
+    @IsNotEmpty({message: 'El id es necesario'})
+    _id?: string;
+}
+
+export type TRegAvancesPbr = RegAvancesPbrDto;
+
+@ArgsType()
+export class ActFormaDeCalculoPbr extends PickType(MirCuestionarioDto, ['idIndicador', 'metodoCalculo', 'centroGestor'], ArgsType)
+{
+    @IsNotEmpty({message: 'Es necesario el identificado'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+}
+
+@InputType('RecalcularPbrInput')
+export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGestor', 'tipoOperacion'], InputType)
+{
+    @IsNotEmpty({message: 'El id es necesario'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+}
+
+export type TRecalcularPbr = RecalcularPbrDto;

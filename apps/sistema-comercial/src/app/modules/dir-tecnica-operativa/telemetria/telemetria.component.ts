@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
 import {ITelemetria} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 import {MatListModule} from '@angular/material/list';
@@ -14,6 +13,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {ModInstalacionComponent} from '@s-dir-tecnica-operativa/instalaciones/mod-instalacion/mod-instalacion.component';
 import {CtrlTelemetria} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-tecnica-operativa/telemetria';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
+import {TelemetriaStore} from '@s-dir-tecnica-operativa/store/telemetria.store';
+import {TelemetriaQuery} from "@s-dir-tecnica-operativa/store/telemetria.query";
 
 @Component({
     selector: 'app-telemetria',
@@ -39,7 +40,7 @@ export class TelemetriaComponent implements OnInit, OnDestroy
     ngxLoader = 'ngxLoaderInstalaciones';
     ctrlNvaInstalacion: CtrlTelemetria.ctrlNvaInstalacion;
 
-    constructor(public entityTelemetria: EntityTelemetria, private telemetriaService: TelemetriaService, private mdr: MatDialog)
+    constructor(public telemetriaStore: TelemetriaStore, public telemetriaQuery: TelemetriaQuery, private telemetriaService: TelemetriaService, private mdr: MatDialog)
     {
     }
 
@@ -50,7 +51,8 @@ export class TelemetriaComponent implements OnInit, OnDestroy
 
     seleccionarInstalacion(instalacion: ITelemetria): void
     {
-        this.entityTelemetria.patchState({instalacion: instalacion});
+        // this.entityTelemetria.patchState({instalacion: instalacion});
+        this.telemetriaStore.setActive(instalacion._id);
     }
 
     nvaInstalacion(): void
@@ -60,6 +62,6 @@ export class TelemetriaComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     {
-        this.entityTelemetria.reset();
+        this.telemetriaStore.reset();
     }
 }

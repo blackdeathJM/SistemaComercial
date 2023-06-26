@@ -1,7 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, InjectionToken, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FuseCardModule} from '@s-fuse/card';
-import {EntityMisDocumentosStore} from '@s-general/store/entity-mis-documentos.store';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {IResolveDocumento} from '#/libs/models/src/lib/general/documentos/documento.interface';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -16,6 +15,8 @@ import {TablaMatComponent} from '@s-shared/components/tabla-mat/tabla-mat.compon
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
 import {ImgDefectoPipe} from '#/apps/sistema-comercial/src/app/pipes/img-defecto.pipe';
+import {MisDocsQuery} from '@s-general/store/mis-docs.query';
+import {MisDocsStore} from '@s-general/store/mis-docs.store';
 
 export const LISTA_DOCS_TOKEN = new InjectionToken<ListaDocumentosComponent>('lista-docs-token');
 
@@ -37,14 +38,14 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
     columnasMostrar: string[] = ['nombreCompleto', 'asunto', 'identificadorDoc', 'dependencia', 'usuarios', 'proceso'];
     sub = new Subscription();
 
-    constructor(public entityMisDocumentos: EntityMisDocumentosStore, private misDocsService: MisDocumentosService)
+    constructor(public misDocsQuery: MisDocsQuery, private misDocsService: MisDocumentosService, private misDocsStore: MisDocsStore)
     {
     }
 
     ngOnInit(): void
     {
         this.sub.add(this.misDocsService.docUsuarioProceso('pendiente', false).subscribe());
-        this.sub.add(this.entityMisDocumentos.entitiesArray$.subscribe(r => this.dataSource.data = r));
+        this.sub.add(this.misDocsQuery.selectAll().subscribe(r => this.dataSource.data = r));
     }
 
     ngAfterViewInit(): void
@@ -55,7 +56,8 @@ export class ListaDocumentosComponent implements OnInit, AfterViewInit, OnDestro
     seleccionarDoc(documento: IResolveDocumento): void
     {
         // al seleccionar la fila parcho el estado para mostrar el detalle del documento en la venta que se despliega a la derecha
-        this.entityMisDocumentos.patchState({documento});
+        // this.entityMisDocumentos.patchState({documento});
+        this.misDocsStore.setActive(documento._id);
         // Al seleccionar el documento se abre la venta de la derecha
         this.misDocsService.setPanel = true;
     }

@@ -4,7 +4,7 @@
 <fuse-vertical-navigation class="dark:bg-gray-900 print:hidden" [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'"
                           [navigation]="navigation.default" [opened]="!isScreenSmall">
     <!-- Navigation header hook -->
-    <ng-container fuseVerticalNavigationContentHeader *ngIf="stateAuth.state$ | async as usuario">
+    <ng-container fuseVerticalNavigationContentHeader *ngIf="authQuery.select() | async as usuario">
         <div class="flex items-center w-full p-4 pl-6">
             <!-- Logo -->
             <div class="flex items-center justify-center">
@@ -18,13 +18,13 @@
         </div>
         <!-- User -->
         <div class="flex flex-col items-center basis-full p-4">
-            <img class="avatar w-36 h-36" [src]="usuario.avatar? usuario.avatar : imgPorDefecto" alt="">
+            <img class="avatar w-36 h-36" [src]="usuario?.avatar | imgDefecto" alt="">
             <div class="flex flex-col items-center justify-center w-full mt-2">
                 <div class="w-full whitespace-nowrap text-ellipsis overflow-hidden text-center leading-normal font-medium">
-                    {{usuario.nombreCompleto}}
+                    {{usuario?.nombreCompleto | defaultValue: '-----'}}
                 </div>
                 <div class="w-full mt-0.5 whitespace-nowrap text-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
-                    {{usuario.auth.usuario}}
+                    {{usuario?.auth?.usuario | defaultValue: '------'}}
                 </div>
             </div>
         </div>

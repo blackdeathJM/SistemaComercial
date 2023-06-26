@@ -1,78 +1,113 @@
-<section>
-    <mat-card class="bg-gray-300 dark:bg-gray-800 m-4" @zoomIn>
-        <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
-            <span class="text-xl">MIR</span>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-tab-group *ngIf="entityMir.entitiesArray$ | async as mirs" ngxUiLoaderBlurred [(selectedIndex)]="indice" (selectedIndexChange)="mirSeleccionado = mirs[indice]">
-                <mat-tab [label]="mir.idIndicador" *ngFor="let mir of mirs; trackBy:trackByFn">
-                    <div class="grid grid-cols-10 gap-4">
-                        <span class="detalle-span text-amber-900 dark:text-amber-400 col-span-2">Centro Gestor</span>
-                        <span class="border-b-2 col-span-3">{{mir?.centroGestor}}</span>
-                        <span class="detalle-span">Nivel</span>
-                        <span class="border-b-2">{{mir?.nivel}}</span>
-                        <span class="detalle-span col-span-2">Programa financiacion</span>
-                        <span class="border-b-2">{{mir?.programaFinanciacion}}</span>
+<ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
+    <article class="flex flex-col flex-auto">
+        <mat-card class="bg-gray-300 dark:bg-gray-800 m-4 flex-auto" @zoomIn>
+            <mat-card-header class="tarjeta-mat-cabecera border-b-green-400">
+                <span class="text-xl">{{planeacion?.descripcion}} - {{planeacion?.ano}}</span>
+            </mat-card-header>
+            <mat-card-title>
+                <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">
+                    <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
+                        <mat-panel-title>Elementos MIR</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-button-toggle-group>
+                        <div class="flex flex-auto flex-wrap">
+                            <mat-button-toggle class="rounded-none" *ngFor="let mir of planeacionQuery?.compCuestionarioMir(); trackBy:trackByFn; let i=index" [value]="mir" (change)="cambioDeSeleccion($event, i)">
+                                <span class="text-left">{{mir?.idIndicador}}</span>
+                            </mat-button-toggle>
+                        </div>
+                    </mat-button-toggle-group>
+                </mat-expansion-panel>
+            </mat-card-title>
+            <mat-card-content *ngIf="planeacionQuery?.cuestionarioMir() as mirSelec">
+                <div class="grid grid-cols-8 gap-4">
+                    <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{mirSelec?.idIndicador}}</span>
+                    <span class="detalle-span">Nivel</span>
+                    <span class="border-b-2">{{mirSelec?.nivel}}</span>
+                    <span class="detalle-span">Programa financiacion</span>
+                    <span class="border-b-2">{{mirSelec?.programaFinanciacion}}</span>
+                    <span class="detalle-span">CentroGestor</span>
+                    <span class="border-b-2 col-span-3">{{mirSelec?.centroGestor}}</span>
 
-                        <span class="detalle-span col-span-2">Supuestos</span>
-                        <span class="border-b-2 col-span-3">{{mir?.supuestos}}</span>
-                        <span class="detalle-span col-span-2">Nombre del indicador</span>
-                        <span class="border-b-2 col-span-3">{{mir?.nombreDelIndicador}}</span>
-                        <span class="detalle-span col-span-2">Metodo de calculo</span>
-                        <span class="border-b-2 col-span-3">{{mir?.metodoCalculo}}</span>
+                    <span class="detalle-span">Definicion del indicador</span>
+                    <span class="border-b-2">{{mirSelec?.definicionIndicador}}</span>
+                    <span class="detalle-span">Medios de verificacion</span>
+                    <span class="border-b-2">{{mirSelec?.mediosVerificacion}}</span>
+                    <span class="detalle-span">Supuestos</span>
+                    <span class="border-b-2 col-span-3">{{mirSelec?.supuestos}}</span>
 
-                        <span class="detalle-span col-span-2">Medios de verificacion</span>
-                        <span class="border-b-2 col-span-3">{{mir?.mediosDeVerificacion}}</span>
-                        <span class="detalle-span col-span-2">Resumen narrativo</span>
-                        <span class="border-b-2 col-span-8">{{mir?.mediosDeVerificacion}}</span>
+                    <span class="detalle-span">Resumen narrativo</span>
+                    <span class="border-b-2 col-span-7">{{mirSelec?.resumenNarrativo}}</span>
 
-                        <span class="detalle-span">Tipo</span>
-                        <span class="border-b-2">{{mir?.tipo}}</span>
-                        <span class="detalle-span">Dimension</span>
-                        <span class="border-b-2">{{mir?.dimension}}</span>
-                        <span class="detalle-span">U. Medida</span>
-                        <span class="border-b-2">{{mir?.unidadDeMedida}}</span>
-                        <span class="detalle-span">Frec. Med</span>
-                        <span class="border-b-2">{{mir?.frecuenciaMedicion}}</span>
-                        <span class="detalle-span">Sentido. Ind</span>
-                        <span class="border-b-2">{{mir?.sentidoDelIndicador}}</span>
+                    <span class="detalle-span">tipo</span>
+                    <span class="border-b-2">{{mirSelec?.tipo}}</span>
+                    <span class="detalle-span">Dimension</span>
+                    <span class="border-b-2">{{mirSelec?.dimension}}</span>
+                    <span class="detalle-span">Unidad medida</span>
+                    <span class="border-b-2">{{mirSelec?.unidadDeMedida}}</span>
+                    <span class="detalle-span">Frecuencia de med</span>
+                    <span class="border-b-2">{{mirSelec?.frecuenciaMedicion}}</span>
 
-                        <span class="detalle-span col-start-5">Linea base año</span>
-                        <span class="border-b-2">{{mir?.lineaBaseAno}}</span>
-                        <span class="detalle-span">Valor</span>
-                        <span class="border-b-2">{{mir?.lineaBaseValor}}</span>
-                        <span class="detalle-span">Meta</span>
-                        <span class="border-b-2">{{mir?.meta}}</span>
+                    <span class="detalle-span">Nombre del indicador</span>
+                    <span class="border-b-2 col-span-7">{{mirSelec?.nombreDelIndicador}}</span>
 
-                        <span class="detalle-span col-start-5">Sem. Verde</span>
-                        <span class="border-b-2 text-green-500 font-bold text-lg">{{mir?.semefVerde}}</span>
-                        <span class="detalle-span">Sem. Amarillo</span>
-                        <span class="border-b-2 text-amber-500 font-bold text-lg">{{mir?.semefAmarillo}}</span>
-                        <span class="detalle-span">Sem. Rojo</span>
-                        <span class="border-b-2 text-red-700 font-bold text-lg">{{mir?.semefRojo}}</span>
+                    <span class="detalle-span">Metodo de calculo</span>
+                    <span class="border-b-2 col-span-7 text-green-600">{{mirSelec?.metodoCalculo}}</span>
 
-                        <span class="detalle-span">Trimestre 1</span>
-                        <span class="border-b-2">{{mir?.avanceTrim1}}</span>
-                        <span class="detalle-span">Trimestre 2</span>
-                        <span class="border-b-2">{{mir?.avanceTrim2}}</span>
-                        <span class="detalle-span">Trimestre 3</span>
-                        <span class="border-b-2">{{mir?.avanceTrim3}}</span>
-                        <span class="detalle-span">Trimestre 4</span>
-                        <span class="border-b-2">{{mir?.avanceTrim4}}</span>
-                        <span class="detalle-span">Anual</span>
-                        <span class="border-b-2">{{mir?.avanceAnual}}</span>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-            <ngx-ui-loader [loaderId]="loader"></ngx-ui-loader>
-        </mat-card-content>
-        <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
-            <div class="flex flex-auto">
-                <button mat-raised-button color="primary" class="flex-auto" (click)="regAvances()" [disabled]="mirSeleccionado === null">
-                    <mat-icon svgIcon="feather:save"></mat-icon>
-                    Registrar o editar avances
-                </button>
-            </div>
-        </mat-card-actions>
-    </mat-card>
-</section>
+                    <span class="detalle-span">Linea base año</span>
+                    <span class="border-b-2">{{mirSelec?.lineaBaseAno}}</span>
+                    <span class="detalle-span">Linea base valor</span>
+                    <span class="border-b-2">{{mirSelec?.lineaBaseValor}}</span>
+                    <span class="detalle-span">Meta</span>
+                    <span class="border-b-2">{{mirSelec?.meta}}</span>
+                    <span class="detalle-span">Sentido del indicador</span>
+                    <span class="border-b-2">{{mirSelec?.sentidoDelIndicador}}</span>
+
+                    <span class="detalle-span col-start-3">Semaforo verde</span>
+                    <span class="border-b-2 text-green-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefVerdeV) / 100}}</span>
+                    <span class="detalle-span">Semaforo amarillo</span>
+                    <span class="border-b-2 text-amber-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefAmarilloV) / 100}}</span>
+                    <span class="detalle-span">Semaforo rojo</span>
+                    <span class="border-b-2 text-red-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefRojoV) / 100}}</span>
+
+                    <span class="detalle-span">Avance trim1</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span class="detalle-span">Avance trim2</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[1] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span class="detalle-span">Avance trim3</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[2] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                    <span class="detalle-span">Avance trim4</span>
+                    <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+
+
+                    <span class="detalle-span col-start-7">Avance anual</span>
+                    <span class="border-b-2">{{(_avancesTrimestrales[0] + _avancesTrimestrales[1] + _avancesTrimestrales[2] + _avancesTrimestrales[3]) | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>
+                </div>
+                <ngx-ui-loader [loaderId]="loader"/>
+            </mat-card-content>
+            <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
+                <div class="flex flex-auto gap-4">
+                    <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoElemento()">
+                        <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                        Nuevo registro
+                    </button>
+                    <button mat-raised-button color="accent" class="flex-auto" (click)="editarRegistro()">
+                        <mat-icon svgIcon="mat_outline:edit"></mat-icon>
+                        Editar registro
+                    </button>
+                    <button mat-raised-button color="warn" class="flex-auto" (click)="eliminarReg()">
+                        <mat-icon svgIcon="mat_outline:delete"></mat-icon>
+                        Eliminar registro
+                    </button>
+                    <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('anterior')">
+                        <mat-icon svgIcon="mat_solid:arrow_back"></mat-icon>
+                        Anterior
+                    </button>
+                    <button mat-flat-button color="primary" class="flex-auto" (click)="cambiarDireccion('siguiente')">
+                        Siguiente
+                        <mat-icon svgIcon="mat_solid:arrow_forward"></mat-icon>
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </article>
+</ng-container>

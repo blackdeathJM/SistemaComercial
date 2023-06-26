@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthEntity} from '@s-core/auth/store/auth.entity';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EmpleadosGuard implements CanActivate
 {
-    constructor(private stateAuth: StateAuth)
+    constructor(private stateAuth: AuthEntity)
     {
     }
 

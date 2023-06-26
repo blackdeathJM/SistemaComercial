@@ -8,7 +8,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     standalone: true,
-    exportAs: 'app-registros',
     selector: 'app-registros',
     templateUrl: './registros.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,

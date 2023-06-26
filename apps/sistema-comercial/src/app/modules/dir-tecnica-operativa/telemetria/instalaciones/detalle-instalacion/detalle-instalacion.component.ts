@@ -7,7 +7,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {NavegacionPipe} from '#/apps/sistema-comercial/src/app/pipes/navegacion.pipe';
 import {CtrlTelemetria} from '#/apps/sistema-comercial/src/app/mock-api/common/navigation/dir-tecnica-operativa/telemetria';
 import {MatDialog} from '@angular/material/dialog';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {ModInstalacionComponent} from '@s-dir-tecnica-operativa/instalaciones/mod-instalacion/mod-instalacion.component';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {ListaMedicionesDinamicaEstaticaComponent} from '@s-dir-tecnica-operativa/instalaciones/lista-mediciones-dinamica-estatica/lista-mediciones-dinamica-estatica.component';
@@ -18,7 +17,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {IMedicion} from '#/libs/models/src/lib/tecnica-operativa/telemetria/comun.interface';
 import {FuseAlertModule} from '@s-fuse/alert';
 import {ModNivelDinEstComponent} from '@s-dir-tecnica-operativa/instalaciones/mod-nivel-din-est/mod-nivel-din-est.component';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {TelemetriaQuery} from '@s-dir-tecnica-operativa/store/telemetria.query';
 
 export interface IMedicionDinamicoEstatico
 {
@@ -46,21 +45,30 @@ export class DetalleInstalacionComponent implements OnInit, OnDestroy
     _id: string;
     sub = new Subscription();
 
-    constructor(private mdf: MatDialog, public entityTelemetria: EntityTelemetria, private telemetriaService: TelemetriaService)
+    constructor(private mdf: MatDialog, public telemetriaQuery: TelemetriaQuery, private telemetriaService: TelemetriaService)
     {
     }
 
     ngOnInit(): void
     {
-        this.sub.add(this.entityTelemetria.state$.subscribe((res) =>
+        this.sub.add(this.telemetriaQuery.selectActive().subscribe((res) =>
         {
-            if (isNotNil(res.instalacion))
+            if (res.instalacion)
             {
-                this._id = res.instalacion._id;
-                this.dataSourceDinamico.data = res.instalacion.instalacion.nivelDinamico;
-                this.dataSourceEstatico.data = res.instalacion.instalacion.nivelEstatico;
+                this._id = res._id;
+                this.dataSourceDinamico.data = res.instalacion.nivelDinamico;
+                this.dataSourceEstatico.data = res.instalacion.nivelEstatico;
             }
         }));
+        // this.sub.add(this.entityTelemetria.state$.subscribe((res) =>
+        // {
+        //     if (res.instalacion)
+        //     {
+        //         this._id = res.instalacion._id;
+        //         this.dataSourceDinamico.data = res.instalacion.instalacion.nivelDinamico;
+        //         this.dataSourceEstatico.data = res.instalacion.instalacion.nivelEstatico;
+        //     }
+        // }));
     }
 
     editarInfo(): void

@@ -1,0 +1,78 @@
+query filTodos
+{
+    filTodos {
+        ...fragPlaneacion
+    }
+}
+
+mutation inicializarPlaneacion($input: PlaneacionInput!)
+{
+    inicializarPlaneacion(input: $input)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation regMir($datos: RegMirInput!)
+{
+    regMir(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation regPbr($datos: RegPbrInput!)
+{
+    regPbr(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation actualizarResponsable($_id: ID!, $idEmpleado: ID!, $correo: String, $responsable: String!, $idEmpleadoAnterior: ID!, $cuestionario: String!)
+{
+    actualizarResponsable(_id: $_id, idEmpleado: $idEmpleado, correo: $correo, responsable: $responsable, idEmpleadoAnterior: $idEmpleadoAnterior, cuestionario: $cuestionario)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation eliminarComponente($_id: ID!, $idIndicador: String!, $cuestionario: String!)
+{
+    eliminarComponente(_id: $_id, idIndicador: $idIndicador, cuestionario: $cuestionario)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation regAvancePbr($datos: RegAvancesPbrInput!)
+{
+    regAvancePbr(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation sumatoriaPbr($datos: SumPbrInput!, $actualizar: Boolean!)
+{
+    sumatoriaPbr(datos: $datos, actualizar: $actualizar)
+    {
+        ...fragPlaneacion
+    }
+}
+
+mutation recalcularPbr($args: RecalcularPbrInput!)
+{
+    recalcularPbr(args: $args)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation regComponente($datos: RegComponenteInput!)
+{
+    regComponente(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
+mutation reemplazarComp($_id: ID!, $idIndicador: String!)
+{
+    reemplazarComp(_id: $_id, idIndicador: $idIndicador)
+    {
+        ...fragPlaneacion
+    }
+}

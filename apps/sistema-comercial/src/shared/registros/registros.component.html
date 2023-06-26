@@ -5,6 +5,9 @@
             <span class="ml-3">Cancelar</span>
         </div>
     </button>
+    <ng-content>
+
+    </ng-content>
     <button mat-flat-button color="primary" type="button" class="flex-auto" (click)="reg()" [disabled]="_deshabilitar">
         <ng-container *ngIf="!_cargando; else cargando">
             <div class="flex items-center justify-center">

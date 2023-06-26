@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {AuthService} from '@s-core/auth/store/auth.service';
-import {StateAuth} from '@s-core/auth/store/auth.store';
 import {Subscription} from 'rxjs';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     selector: 'user',
@@ -12,22 +12,20 @@ import {Subscription} from 'rxjs';
 })
 export class UserComponent implements AfterViewInit, OnDestroy
 {
-    // @Select(StateAuth.sesionActual) usuario$: Observable<IDatosSesion>;
     @Input() showAvatar: boolean = true;
     sub = new Subscription();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, public stateAuth: StateAuth)
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private authService: AuthService, public authQuery: AuthQuery)
     {
     }
 
     ngAfterViewInit(): void
     {
-        this.sub.add(this.authService.rolCambiado(this.stateAuth.snapshot._id).subscribe());
+        this.sub.add(this.authService.rolCambiado(this.authQuery.getValue()._id).subscribe());
     }
 
     updateUserStatus(status: string): void
     {
-        // TODO: Actualizar el estado del usuario
         // if (!this.user)
         // {
         //     return;

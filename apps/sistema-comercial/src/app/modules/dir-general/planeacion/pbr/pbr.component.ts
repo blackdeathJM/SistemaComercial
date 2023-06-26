@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -7,47 +7,75 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {ModPbrComponent} from '@s-dir-general/pbr/mod-pbr/mod-pbr.component';
 import {MatListModule} from '@angular/material/list';
 import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.component';
-import {PbrService} from '@s-dir-general/pbr/store/pbr.service';
-import {TPbrs} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr-consultas.dto';
-import {$cast} from '@angular-ru/cdk/utils';
+import {MatButtonModule} from '@angular/material/button';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
+import {NgxToastService} from '@s-services/ngx-toast.service';
+import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
+import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
+import {fuseAnimations} from "@s-fuse/public-api";
+import {isNil} from "@angular-ru/cdk/utils";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-pbr',
     standalone: true,
-    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule, ListaPbrComponent],
-    providers: [PbrService],
+    imports: [CommonModule, AccionesMirPbrComponent, MatButtonToggleModule, MatIconModule, MatSidenavModule, ModPbrComponent, MatListModule,
+        ListaPbrComponent, MatButtonModule, ListaSumPbrComponent],
     templateUrl: './pbr.component.html',
     styleUrls: ['./pbr.component.scss'],
+    animations: [fuseAnimations],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PbrComponent
+export class PbrComponent implements OnDestroy
 {
-    abrirPanel = false;
-    dirComercial = false;
+    abrirPanelPbr = false;
+    pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
 
-    constructor(private pbrService: PbrService)
+    constructor(private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery, private toastrService: ToastrService, private mdr: MatDialog)
     {
+
     }
 
-    filtrarCentroGestor(e: [string, number]): void
+    sumatoria(): void
     {
-        const args: TPbrs =
+        if (!this.planeacionQuery.getActive())
+        {
+            this.toastrService.warning('Debes seleccionar el año del ejercicio', 'Sumatorias');
+            return;
+        }
+        const data: IEditarSumatoriaPBR =
             {
-                centroGestor: e[0],
-                ano: e[1],
-                idEmpleado: 'noAplica'
-            };
-        this.pbrService.pbrs(args).pipe().subscribe();
+                idSumatoria: null,
+                actualizar: false
+            }
+        this.mdr.open(ModSumatoriasComponent, {width: '40%', data, hasBackdrop: false, disableClose: true});
     }
 
-    porEmpleado(e: [(string | string[]), number]): void
+    panelPbr(e: boolean): void
     {
-        const pbrsEmpleado: TPbrs =
-            {
-                centroGestor: 'no-aplica',
-                idEmpleado: $cast<string>(e[0]),
-                ano: e[1]
-            };
-        this.pbrService.pbrs(pbrsEmpleado).subscribe();
+        this.abrirPanelPbr = e;
+    }
+
+    panelPbrDeLista(e: boolean): void
+    {
+        this.abrirPanelPbr = e;
+    }
+
+    imprimirTablaPbr(): void
+    {
+        if (isNil(this.planeacionQuery.getActive()))
+        {
+            this.ngxToast.
+        }
+    }
+
+    ngOnDestroy(): void
+    {
+        this.planeacionQuery.centroGestor.set(null);
+        this.planeacionQuery.cuestionarioPbr.set(null);
+        this.planeacionQuery.cuestionarioPbrV.set([]);
     }
 }

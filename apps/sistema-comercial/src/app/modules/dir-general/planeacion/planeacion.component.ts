@@ -1,9 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
-import {SeleccionService} from '@s-dir-general/selecciones/seleccion.service';
-import {forkJoin, Subscription} from 'rxjs';
+import {SeleccionService} from '@s-dir-general/selecciones/store/seleccion.service';
+import {forkJoin} from 'rxjs';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
+import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
+import {fuseAnimations} from "@s-fuse/public-api";
 
 @Component({
     selector: 'app-planeacion',
@@ -11,23 +13,21 @@ import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.serv
     imports: [CommonModule, RouterOutlet],
     templateUrl: './planeacion.component.html',
     styleUrls: ['./planeacion.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [fuseAnimations],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlaneacionComponent implements OnInit, OnDestroy
+export class PlaneacionComponent implements OnInit
 {
-    sub = new Subscription();
-
-    constructor(private seleccionService: SeleccionService, private empleadoService: EmpleadoService)
+    constructor(private seleccionService: SeleccionService, private empleadoService: EmpleadoService, private planeacionService: PlaneacionService)
     {
     }
 
     ngOnInit(): void
     {
-        this.sub.add(forkJoin([this.seleccionService.selecciones(), this.empleadoService.empleadosConSesion()]).subscribe());
-    }
-
-    ngOnDestroy(): void
-    {
-        this.sub.unsubscribe();
+        forkJoin([
+            this.seleccionService.selecciones(),
+            this.empleadoService.empleadosConSesion(),
+            this.planeacionService.filTodos()
+        ]).subscribe();
     }
 }

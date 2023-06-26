@@ -1,42 +1,60 @@
 fragment fragPbr on PbrType
 {
-    ano
-    _id
-    claveVariable
+    idIndicador
+    fechaCompleta
     variableOrigen
     dato
     unidad
     descripcion
-    ejercicio {
-        ano
-        enero
-        febrero
-        marzo
-        abril
-        mayo
-        junio
-        julio
-        agosto
-        septiembre
-        octubre
-        noviembre
-        diciembre
-        trim1
-        trim2
-        trim3
-        trim4
-        total
-        forEnero
-        forFebrero
-        forMarzo
-        forAbril
-        forMayo
-        forJunio
-        forJulio
-        forAgosto
-        forSeptiembre
-        forOctubre
-        forNoviembre
-        forDiciembre
-    }
+    centroGestor
+    idEmpleado
+    correo
+    responsable
+    enero
+    febrero
+    marzo
+    trim1
+    abril
+    mayo
+    junio
+    trim2
+    julio
+    agosto
+    septiembre
+    trim3
+    octubre
+    noviembre
+    diciembre
+    trim4
+    total
+    tipoOperacion
+}
+
+fragment fragSumPbr on PbrSumatoriaType
+{
+    idSumatoria
+    centroGestor
+    descripcion
+    ids
+    nombreSumatoria
+    total
+    abril
+    agosto
+    ano
+    diciembre
+    enero
+    febrero
+    julio
+    junio
+    marzo
+    mayo
+    noviembre
+    octubre
+    septiembre
+    trim1
+    trim2
+    trim3
+    trim4
+    sumTrim
+    sumTotal
 }

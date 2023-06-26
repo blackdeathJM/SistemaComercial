@@ -1,0 +1,15 @@
+fragment fragPlaneacion on PlaneacionType
+{
+    _id,
+    ano,
+    descripcion,
+    mirCuestionario {
+        ...fragMir
+    }
+    pbrCuestionario {
+        ...fragPbr
+    }
+    pbrSumatoria {
+        ...fragSumPbr
+    }
+}

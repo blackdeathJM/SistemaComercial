@@ -1,65 +1,93 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
+import {ReactiveFormConfig, RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
 import {Pbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
-import {TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr-consultas.dto';
-import {PbrService} from '@s-dir-general/pbr/store/pbr.service';
-import {finalize, Subscription} from 'rxjs';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-import {SeleccionStore} from '@s-dir-general/selecciones/seleccion.store';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
 import {SeleccionarEmpleadoComponent} from '@s-shared/components/seleccionar-empleado/seleccionar-empleado.component';
+import {EmpleadoQuery} from '@s-dirAdmonFinanzas/empleados/store/empleado.query';
+import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {finalize, Subscription} from 'rxjs';
+import {TRecalcularPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {actCuestionario, PlaneacionService, ValoresCamposMod} from '@s-dir-general/store/planeacion.service';
+import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {isNotNil} from "@angular-ru/cdk/utils";
+import {ConfirmacionService} from "@s-services/confirmacion.service";
 
 @Component({
     selector: 'app-mod-pbr',
     standalone: true,
-    imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule, MatOptionModule, MatSelectModule, SeleccionarEmpleadoComponent],
-    providers: [PbrService],
+    imports: [CommonModule, MatInputModule, MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, RxReactiveFormsModule,
+        MatOptionModule, MatSelectModule, SeleccionarEmpleadoComponent, MatTooltipModule],
+    providers: [],
     templateUrl: './mod-pbr.component.html',
     styleUrls: ['./mod-pbr.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModPbrComponent implements OnInit, OnDestroy
 {
-    @Output() panel = new EventEmitter<boolean>();
-    formPbr: FormGroup;
+    @Output() panelPbr = new EventEmitter<boolean>();
+    formPbr: FormGroup = this.fb.formGroup(new Pbr());
     cargando = false;
+    empleados: IResolveEmpleado[];
     centrosGestores: string[] = [];
-    unidades: string[] = [];
-    sub = new Subscription();
+    actualizar = false;
+    empleadoAnterior: string;
+    cuestionarioPbr = this.planeacionQuery.cuestionarioPbr;
+    tipoOperacion = TipoOperaciones;
+    sub: Subscription = new Subscription();
 
-    constructor(private fb: RxFormBuilder, private pbrService: PbrService, private seleccionStore: SeleccionStore, public entityEmpleado: EntityEmpleadoStore)
+    constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery,
+                private planeacionService: PlaneacionService, private confService: ConfirmacionService)
     {
+        ReactiveFormConfig.set({
+            'validationMessage': {
+                'required': 'Este campo es requerido',
+                'numeric': 'El valor debe ser numerico',
+                'email': 'El texto no cumple con la estructura de email'
+            }
+        });
+
+        effect(() =>
+        {
+            if (actCuestionario() && isNotNil(this.cuestionarioPbr()))
+            {
+                this.empleadoAnterior = this.cuestionarioPbr().idEmpleado;
+                this.formPbr.patchValue(this.cuestionarioPbr());
+                this.actualizar = true;
+            }
+        })
     }
 
     ngOnInit(): void
     {
-        this.formPbr = this.fb.formGroup(new Pbr());
-        this.seleccionStore.state$.subscribe((res) =>
+        this.sub.add(this.empleadoQuery.selectAll().subscribe(res => this.empleados = res));
+
+        this.sub.add(this.seleccionQuery.select().subscribe((res) =>
         {
             this.centrosGestores = res.centroGestor;
-            this.unidades = res.unidad;
-        });
+        }));
     }
 
     regPbr(): void
     {
         this.cargando = true;
-        const ano = parseInt(this.formPbr.get('ano').value, 10);
-        const input: TRegPbr =
+        const datos: TRegPbr =
             {
-                ...this.formPbr.value,
-                ano
+                _id: this.planeacionQuery.getActive()._id,
+                esActualizar: this.actualizar,
+                ...this.formPbr.value
             };
         this.formPbr.disable();
-
-        this.pbrService.regPbr(input).pipe(finalize(() =>
+        this.planeacionService.regPbr(datos).pipe(finalize(() =>
         {
             this.cargando = false;
             this.formPbr.enable();
@@ -71,12 +99,61 @@ export class ModPbrComponent implements OnInit, OnDestroy
                     ctrl.reset();
                 }
             });
+            this.panelPbr.emit(!this.actualizar);
         })).subscribe();
+    }
+
+    actLaFormaDeCalculo(): void
+    {
+        this.cargando = true;
+        this.confService.abrir().afterClosed().subscribe((config) =>
+        {
+            if (config === 'confirmed')
+            {
+                const args: TRecalcularPbr =
+                    {
+                        _id: this.planeacionQuery.getActive()._id,
+                        centroGestor: this.planeacionQuery.centroGestor(),
+                        tipoOperacion: this.formPbr.get('tipoOperacion').value
+                    };
+                this.formPbr.disable();
+                this.planeacionService.recalcularPbr(args).pipe(finalize(() =>
+                {
+                    this.cargando = false;
+                    this.formPbr.enable();
+                    this.panelPbr.emit(!this.actualizar);
+                })).subscribe();
+            }
+        });
+    }
+
+    empleadoSele(e: string): void
+    {
+        const empleado = this.empleadoQuery.getEntity(e);
+        if (empleado?.correo)
+        {
+            this.formPbr.get('correo').setValue(empleado.correo);
+        } else
+        {
+            this.formPbr.get('correo').reset();
+        }
+        this.formPbr.get('responsable').setValue(empleado.nombreCompleto);
+    }
+
+    filtrarEmpleados(e: string): void
+    {
+        this.empleados = this.empleadoQuery.filEmpleados(e);
+    }
+
+    actualizarResponsable(): void
+    {
+
+        this.planeacionService.actualizarResponsable(this.formPbr, this.empleadoAnterior, ValoresCamposMod.pbrCuestionario);
     }
 
     cerrar(): void
     {
-        this.panel.emit(false);
+        this.panelPbr.emit(false);
     }
 
     ngOnDestroy(): void

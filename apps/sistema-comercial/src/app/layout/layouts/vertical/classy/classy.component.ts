@@ -1,12 +1,11 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {IDatosSesion} from '#/libs/models/src/lib/admin/empleado/auth/auth.interface';
+import {Subject, takeUntil} from 'rxjs';
 import {NavigationService} from '@s-core/navigation/navigation.service';
 import {FuseNavigationService, FuseVerticalNavigationComponent} from '@s-fuse/navigation';
 import {FuseMediaWatcherService} from '@s-fuse/media-watcher';
 import {Navegation} from '@s-core/navigation/navigation.types';
-import {StateAuth} from '@s-core/auth/store/auth.store';
+import {AuthQuery} from '@s-core/auth/store/auth.query';
 
 @Component({
     selector: 'classy-layout',
@@ -15,13 +14,11 @@ import {StateAuth} from '@s-core/auth/store/auth.store';
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy
 {
-    usuario$: Observable<IDatosSesion>;
     isScreenSmall: boolean;
     navigation: Navegation;
-    imgPorDefecto = 'assets/images/avatars/avatarDefault.jpg';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public stateAuth: StateAuth,
+    constructor(private _activatedRoute: ActivatedRoute, private _router: Router, private _navigationService: NavigationService, public authQuery: AuthQuery,
                 private _fuseMediaWatcherService: FuseMediaWatcherService, private _fuseNavigationService: FuseNavigationService)
     {
     }
@@ -38,7 +35,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navegation) =>
             {
-                console.log('navegacion', navigation);
                 this.navigation = navigation;
             });
 

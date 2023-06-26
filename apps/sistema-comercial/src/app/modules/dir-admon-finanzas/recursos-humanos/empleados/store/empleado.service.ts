@@ -1,107 +1,108 @@
 import {Injectable} from '@angular/core';
 import {
-    ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearEmpleadoGQL, EmpleadosGQL, EmpleadosSesionGQL, FiltrarEmpleadosGQL,
-    FiltrarEmpleadosQuery
+    ActualizarAvatarGQL, ActualizarContrasenaAdminGQL, CrearActEmpledoGQL, CrearActEmpledoMutation, EmpleadosGQL, EmpleadosSesionGQL
 } from '#/libs/datos/src';
-import {Observable, tap} from 'rxjs';
-import {SingleExecutionResult} from '@apollo/client';
-import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {IResolveEmpleado, TRegEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
+import {catchError, finalize, Observable, tap} from 'rxjs';
+import {makeVar, SingleExecutionResult} from '@apollo/client';
+import {IResolveEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {IModificado} from '#/libs/models/src/lib/common/common.interface';
 import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {TOKEN} from '@s-auth/const';
 import {ILoginRespuesta} from '#/libs/models/src/lib/admin/empleado/auth/login.dto';
-import {StateAuth} from '@s-core/auth/store/auth.store';
 import {NgxUiLoaderService} from 'ngx-ui-loader';
+import {AuthStore} from '@s-core/auth/store/auth.store';
+import {EmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/empleado.store';
+import {GeneralService} from "@s-services/general.service";
+import {TRegEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto";
+import {isNotNil} from "@angular-ru/cdk/utils";
 
-export const ngxLoaderEmp = 'loaderEmpleados';
+export const ngxLoaderEmp = makeVar<string>('ngxLoaderEmpleados');
 
 @Injectable({providedIn: 'root'})
 export class EmpleadoService
 {
 
-    constructor(private empleadosGQL: EmpleadosGQL, private entityEmpleado: EntityEmpleadoStore, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
-                private actualizarAvtarGQL: ActualizarAvatarGQL, private stateAuth: StateAuth, private empleadosSesionGQL: EmpleadosSesionGQL, private crearEmpleadoGQL: CrearEmpleadoGQL,
-                private filtrarEmpleadosGQL: FiltrarEmpleadosGQL, private ngxLoader: NgxUiLoaderService)
+    constructor(private empleadosGQL: EmpleadosGQL, private actualizarContrasenaGQL: ActualizarContrasenaAdminGQL, private ngxToast: NgxToastService,
+                private actualizarAvtarGQL: ActualizarAvatarGQL, private empleadosSesionGQL: EmpleadosSesionGQL, private crearActEmpledoGQL: CrearActEmpledoGQL,
+                private ngxLoader: NgxUiLoaderService, private authStore: AuthStore, private empleadoStore: EmpleadoStore, private generalService: GeneralService)
     {
     }
 
-    empleados(loader: string): Observable<SingleExecutionResult>
+    empleados(): Observable<SingleExecutionResult>
     {
-        this.ngxLoader.startLoader(loader);
-        return this.empleadosGQL.watch().valueChanges.pipe(tap((res) =>
+        this.ngxLoader.startLoader(ngxLoaderEmp());
+        return this.empleadosGQL.watch().valueChanges.pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res && res.data)
             {
-                const empleados = $cast<IResolveEmpleado[]>(res.data.empleados);
-                this.entityEmpleado.setAll(empleados);
+                const empleados = res.data.empleados as IResolveEmpleado[];
+                // this.entityEmpleado.setAll(empleados);
+                this.empleadoStore.set(empleados);
             }
-            this.ngxLoader.stopLoader(loader);
+            this.ngxLoader.stopLoader(ngxLoaderEmp());
         }));
     }
 
     actualizarContrasena(_id: string, contrasena: string, modificadoPor: IModificado): Observable<SingleExecutionResult>
     {
-        return this.actualizarContrasenaGQL.mutate({datos: {_id, contrasena}, modificadoPor}).pipe(tap((res) =>
-        {
-            if (isNotNil(res.data))
+        return this.actualizarContrasenaGQL.mutate({datos: {_id, contrasena}, modificadoPor}).pipe(catchError(err => this.generalService.cacharError(err)),
+            tap((res) =>
             {
-                this.ngxToast.satisfactorioToast('La contrasena se ha cambiado con exito', 'Cambio de contrasena');
-            }
-        }));
+                if (res && res.data)
+                {
+                    this.ngxToast.satisfactorioToast('La contrasena se ha cambiado con exito', 'Cambio de contrasena');
+                }
+            }));
     }
 
     actualizarAvatar(_id: string, urlAvatar: string): Observable<SingleExecutionResult>
     {
-        return this.actualizarAvtarGQL.mutate({_id, url: urlAvatar}).pipe(tap((res) =>
+        return this.actualizarAvtarGQL.mutate({_id, url: urlAvatar}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (res && res.data)
             {
-                const nvosDatos = $cast<ILoginRespuesta>(res.data.actualizarAvatar);
+                const nvosDatos = res.data.actualizarAvatar as ILoginRespuesta;
                 localStorage.setItem(TOKEN, nvosDatos.token);
-                this.stateAuth.setState(nvosDatos.datosSesion);
+                // this.authEntity.setState(nvosDatos.datosSesion);
+                this.authStore.update(nvosDatos.datosSesion);
                 this.ngxToast.satisfactorioToast('Tu avatar se ha cambiado con exito', 'Cambio de avatar');
             }
         }));
     }
 
-    crearEmpleado(empleado: TRegEmpleado): Observable<SingleExecutionResult>
+    crearActEmpledo(empleado: TRegEmpleado): Observable<SingleExecutionResult<CrearActEmpledoMutation>>
     {
-        return this.crearEmpleadoGQL.mutate({empleadoDatos: empleado}).pipe(tap((res) =>
+        return this.crearActEmpledoGQL.mutate({empleadoDatos: empleado}).pipe(catchError(err => this.generalService.cacharError(err)), tap((res) =>
         {
-            if (isNotNil(res.data))
+            if (isNotNil(res) && isNotNil(res.data))
             {
-                const nvoEmpleado = $cast<IResolveEmpleado>(res.data.crearEmpleado);
-                this.entityEmpleado.addOne(nvoEmpleado);
-                this.ngxToast.satisfactorioToast('El empleado fue dado de alta con exito', 'Alta empleados');
+                const {_id, ...cambios} = res.data.crearActEmpledo as IResolveEmpleado;
+                // this.entityEmpleado.addOne(nvoEmpleado);
+                const existe = this.empleadoStore.getValue().ids.includes(_id);
+                if (existe)
+                {
+                    this.empleadoStore.update(_id, {...cambios});
+                    this.ngxToast.satisfactorioToast('Los datos fueron actualizados con exito', 'Actualizacion de empleados');
+                } else
+                {
+                    this.empleadoStore.add(res.data.crearActEmpledo);
+                    this.ngxToast.satisfactorioToast('El empleado fue dado de alta con exito', 'Alta empleados');
+                }
             }
         }));
     }
 
     empleadosConSesion(): Observable<SingleExecutionResult>
     {
-        return this.empleadosSesionGQL.fetch().pipe(tap((res) =>
-        {
-            if (isNotNil(res.data))
+        return this.empleadosSesionGQL.fetch().pipe(catchError(err => this.generalService.cacharError(err)),
+            tap((res) =>
             {
-                const empleadosSesion = $cast<IResolveEmpleado[]>(res.data.empleadosSesion);
-                this.entityEmpleado.setAll(empleadosSesion);
-            }
-        }));
-    }
-
-    filtrarEmpleados(consulta: string, loader: string): Observable<SingleExecutionResult<FiltrarEmpleadosQuery>>
-    {
-        this.ngxLoader.startLoader(loader);
-        return this.filtrarEmpleadosGQL.fetch({consulta}).pipe(tap((res) =>
-        {
-            if (isNotNil(res.data))
-            {
-                const filtroEmpleados = $cast<IResolveEmpleado[]>(res.data.filtrarEmpleados);
-                this.entityEmpleado.setAll(filtroEmpleados);
-            }
-            this.ngxLoader.stopLoader(loader);
-        }));
+                if (isNotNil(res) && isNotNil(res.data))
+                {
+                    const empleadosSesion = res.data.empleadosSesion as IResolveEmpleado[];
+                    // this.entityEmpleado.setAll(empleadosSesion);
+                    this.empleadoStore.set(empleadosSesion);
+                }
+            }));
     }
 }

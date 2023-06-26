@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {TelemetriaService} from '@s-dir-tecnica-operativa/store/telemetria.service';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
@@ -12,6 +11,7 @@ import {Motor} from '#/libs/models/src/lib/tecnica-operativa/telemetria/motor/mo
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {IAgregarMotor} from '#/libs/models/src/lib/tecnica-operativa/telemetria/telemetria.interface';
 import {finalize} from 'rxjs';
+import {TelemetriaQuery} from '@s-dir-tecnica-operativa/store/telemetria.query';
 
 @Component({
     selector: 'app-mod-motor',
@@ -26,7 +26,7 @@ export class ModMotorComponent implements OnInit
     formMotor: FormGroup;
     cargando = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) private esActualizacion: boolean, private entityTelemetria: EntityTelemetria, private telemetriaService: TelemetriaService, private fb: RxFormBuilder,
+    constructor(@Inject(MAT_DIALOG_DATA) private esActualizacion: boolean, private telemetriaQuery: TelemetriaQuery, private telemetriaService: TelemetriaService, private fb: RxFormBuilder,
                 public mdr: MatDialogRef<ModMotorComponent>)
     {
     }
@@ -43,7 +43,8 @@ export class ModMotorComponent implements OnInit
         const mediciones = ['amperaje', 'eficiencia', 'factPotencia', 'hp', 'voltaje'];
         const args: IAgregarMotor =
             {
-                _id: this.entityTelemetria.snapshot.instalacion._id,
+                // _id: this.entityTelemetria.snapshot.instalacion._id,
+                _id: this.telemetriaQuery.getActive()._id,
                 motor: {
                     fechaInstalacion: fechaInst.toISO(),
                     ...this.formMotor.value,

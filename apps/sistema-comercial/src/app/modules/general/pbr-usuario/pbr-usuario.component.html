@@ -1,6 +1,6 @@
 <section class="flex flex-auto flex-col">
-    <mat-form-field class="mx-4 mt-4">
-        <input matInput>
-    </mat-form-field>
-    <app-lista-pbr class="flex-auto"></app-lista-pbr>
+    <app-acciones-mir-pbr [habCentroGestor]="false"/>
+    <ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
+        <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true"/>
+    </ng-container>
 </section>

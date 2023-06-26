@@ -1,0 +1,25 @@
+fragment fragComponente on ComponenteType
+{
+    tipoValorTrim
+    tipoValorAvance
+    tipoForm
+    idsFormula
+    idsFormulario
+    formula
+    colsTabla
+    omitirPrimerId
+    etiqueta
+    formComun {
+        ...fragFormComun
+    }
+    formDinamico
+}
+fragment fragFormComun on FormComunType
+{
+    idIndicador
+    idIndicadorAd
+    trim1Ant
+    trim2Ant
+    trim3Ant
+    trim4Ant
+}

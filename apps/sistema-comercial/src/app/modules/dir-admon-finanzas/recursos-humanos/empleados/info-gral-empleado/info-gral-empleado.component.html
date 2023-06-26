@@ -1,5 +1,5 @@
 <article class="flex flex-col flex-auto">
-    <section class="flex-auto my-4 tarjeta-mat" *ngIf="empleado$ | async as empleado" @zoomIn>
+    <section class="flex-auto my-4" *ngIf="empleadoQuery.selectActive() | async as empleado" @zoomIn>
         <mat-card class="bg-gray-300 dark:bg-gray-800">
             <mat-card-header class="tarjeta-mat-cabecera border-b-cyan-500">
                 <span class="text-xl">Informacion personal</span>
@@ -12,28 +12,33 @@
                     <div class="flex-grow">
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                             <span class="text-end text-secondary border-b-2">Nombre</span>
-                            <span class="lg:col-span-3 border-b-2">{{empleado.nombreCompleto}}</span>
+                            <span class="lg:col-span-3 border-b-2">{{empleado?.nombreCompleto}}</span>
                             <span class="text-end text-secondary border-b-2">Calle</span>
-                            <span class="border-b-2">{{empleado.calle | defaultValue:'---'}}</span>
+                            <span class="border-b-2">{{empleado?.calle | defaultValue:'---'}}</span>
                             <span class="text-end text-secondary border-b-2">Colonia</span>
-                            <span class="border-b-2">{{empleado.colonia | defaultValue:'---'}}</span>
+                            <span class="border-b-2">{{empleado?.colonia | defaultValue:'---'}}</span>
                             <span class="text-end text-secondary border-b-2">Email</span>
-                            <span class="border-b-2">{{empleado.correo | defaultValue:'---'}}</span>
+                            <span class="border-b-2">{{empleado?.correo | defaultValue:'---'}}</span>
                             <span class="text-end text-secondary border-b-2">Telefono</span>
-                            <span class="border-b-2" *ngFor="let tel of empleado.telefono">{{tel.numero}}</span>
+                            <span class="border-b-2" *ngFor="let tel of empleado?.telefono">{{tel.numero}}</span>
                             <span class="text-end text-secondary border-b-2">Departamento</span>
-                            <span class="border-b-2">{{empleado.deptoEmpleado.nombre}}</span>
+                            <span class="border-b-2">{{empleado?.deptoEmpleado.nombre}}</span>
                             <span class="text-end text-secondary border-b-2">Fecha de ingreso</span>
-                            <span class="border-b-2">{{empleado.fechaIngreso | convertirTimestamUnix | defaultValue:'---'}}</span>
+                            <span class="border-b-2">{{empleado?.fechaIngreso | convertirTimestamUnix | defaultValue:'---'}}</span>
                         </div>
                     </div>
                 </div>
             </mat-card-content>
             <mat-card-actions class="tarjeta-mat-acciones border-t-cyan-500">
                 <div class="flex flex-row-reverse flex-auto">
-                    <button mat-raised-button color="primary">
+                    <button mat-raised-button color="primary" (click)="editarInfo(empleado)">
                         <mat-icon class="mr-5" svgIcon="edit"></mat-icon>
                         Editar informacion
+                    </button>
+
+                    <button mat-raised-button color="primary" (click)="checarActivo()">
+                        <mat-icon class="mr-5" svgIcon="add"></mat-icon>
+                        Boton de prueba
                     </button>
                 </div>
             </mat-card-actions>

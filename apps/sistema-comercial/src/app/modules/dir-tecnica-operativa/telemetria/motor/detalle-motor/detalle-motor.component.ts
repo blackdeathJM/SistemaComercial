@@ -5,9 +5,9 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {ListaMotoresComponent} from '@s-dir-tecnica-operativa/motor/lista-motores/lista-motores.component';
-import {EntityTelemetria} from '@s-dir-tecnica-operativa/store/telemetria.entity';
 import {DefaultValuePipeModule} from '@angular-ru/cdk/pipes';
 import {fuseAnimations} from '@s-fuse/public-api';
+import {TelemetriaQuery} from '@s-dir-tecnica-operativa/store/telemetria.query';
 
 @Component({
     selector: 'app-detalle-motor',
@@ -22,7 +22,7 @@ export class DetalleMotorComponent
 {
     indice: number;
 
-    constructor(public entityTelemetria: EntityTelemetria)
+    constructor(public telemetriaQuery: TelemetriaQuery)
     {
     }
 

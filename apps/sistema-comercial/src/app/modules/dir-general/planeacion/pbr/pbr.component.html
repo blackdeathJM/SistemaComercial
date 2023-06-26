@@ -1,37 +1,30 @@
 <mat-drawer-container class="w-full">
-    <mat-drawer class="w-96" [opened]="abrirPanel" [mode]="'side'" autoFocus="true" position="end">
-        <app-mod-pbr (panel)="abrirPanel=false"></app-mod-pbr>
+    <mat-drawer class="w-96" [opened]="abrirPanelPbr" [mode]="'side'" autoFocus="true" position="end">
+        <ng-container *ngIf="abrirPanelPbr">
+            <app-mod-pbr (panelPbr)="panelPbr($event)"/>
+        </ng-container>
     </mat-drawer>
     <mat-drawer-content>
         <section class="flex flex-col flex-auto">
-            <app-acciones-mir-pbr [habCentroGestor]="true" (porCentroGestor)="filtrarCentroGestor($event)" (porEmpleado)="porEmpleado($event)">
+            <app-acciones-mir-pbr [habCentroGestor]="true">
                 <ng-container acciones>
-                    <mat-button-toggle-group>
-                        <mat-button-toggle>
-                            <mat-icon svgIcon="heroicons_outline:collection"></mat-icon>
-                            Inicializar nuevo PBR
-                        </mat-button-toggle>
-                        <mat-button-toggle (click)="abrirPanel = true">
-                            <mat-icon svgIcon="add"></mat-icon>
-                            Nvo elemento PBR
-                        </mat-button-toggle>
-                        <mat-button-toggle>
-                            <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
-                            Formulas
-                        </mat-button-toggle>
-                        <mat-button-toggle>
-                            <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+                    <div class="flex items-center content-center gap-4">
+                        <button mat-flat-button color="accent" class="flex-auto" (click)="sumatoria()">
+                            <mat-icon svgIcon="mat_solid:calculate"/>
+                            Crear sumatorias
+                        </button>
+                        <button mat-flat-button color="accent" (click)="imprimirTablaPbr()">
+                            <mat-icon svgIcon="heroicons_outline:printer"/>
                             Imprimir
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
+                        </button>
+                    </div>
                 </ng-container>
             </app-acciones-mir-pbr>
 
-            <ng-container>
-                <article class="flex flex-auto flex-col">
-                    <app-lista-pbr [dirComercial]="dirComercial"></app-lista-pbr>
-                </article>
-            </ng-container>
+            <article class="flex flex-auto flex-col">
+                <app-lista-pbr (panelPbr)="panelPbrDeLista($event)"/>
+                <app-lista-sum-pbr [sumatoriasPbr]="sum" *ngFor="let sum of pbrSumatorias()"/>
+            </article>
         </section>
     </mat-drawer-content>
 </mat-drawer-container>

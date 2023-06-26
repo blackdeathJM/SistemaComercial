@@ -1,112 +1,92 @@
-import {IMir} from './mir.interface';
-import {maxNumber, minNumber, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
-import {sanitize, upperCase} from '@rxweb/sanitizers';
+import {email, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
+import {sanitize, toFloat, upperCase} from '@rxweb/sanitizers';
+import {TRegMir} from './mir.dto';
 
 @sanitize
-export class Mir implements IMir
+export class Mir implements TRegMir
 {
     @required()
-    @numeric({message: 'El año es requerido', allowDecimal: false, acceptValue: NumericValueType.PositiveNumber, persistZero: false})
-    @maxNumber({message: 'El valor maximo es 2050', value: 2050})
-    @minNumber({message: 'Solo puedes resgistrar desde el 2020', value: 2020})
-    ano: number;
+    idEmpleado: string;
 
-    @prop({defaultValue: 0.00})
-    avanceAnual: number;
+    @required()
+    @email()
+    correo: string;
 
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    avanceTrim1: number;
+    @prop()
+    responsable: string;
 
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    avanceTrim2: number;
-
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    avanceTrim3: number = 0;
-
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'El avance trimestral debe ser numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    avanceTrim4: number;
-
-    @required({message: 'El centro gestor es requerido'})
+    @required()
     centroGestor: string;
 
-    @required({message: 'La dimension es requerida'})
+    @required()
     dimension: string;
 
-    @required({message: 'Coloca la frecuencia de medicion'})
+    @prop({defaultValue: false})
+    esActualizar: boolean;
+
+    @required()
     frecuenciaMedicion: string;
 
+    @required()
+    definicionIndicador: string;
+
     @upperCase()
-    @required({message: 'Asigna un identificador'})
+    @required()
     idIndicador: string;
 
-    @prop({defaultValue: 0})
-    lineaBaseAno: number;
+    @prop()
+    lineaBaseAno: string;
 
-    @prop({defaultValue: null})
+    @prop()
     lineaBaseValor: string;
 
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
+    @prop()
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true, message: 'El valor de la meta debe ser numerico'})
+    @required()
     meta: number;
 
-    @required({message: 'Asigna el metodo de calculo'})
+    @required()
     metodoCalculo: string;
 
-    @required({message: 'Es necesario el calculo de verificacion'})
-    mediosDeVerificacion: string;
-
-    @required({message: 'Es necesario el nivel'})
-    nivel: string;
-
-    @required({message: 'Es necesario el nombre del indicador'})
-    nombreDelIndicador: string;
-
-    @required({message: 'Es necesario el programa de financiacion'})
-    programaFinanciacion: string;
-
-    @required({message: 'Es necesario el resumen narrativo'})
-    resumenNarrativo: string;
-
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
-    semefAmarillo: number;
-
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.Both})
-    semefRojo: number;
-
-    @prop({defaultValue: 0.00})
-    @numeric({message: 'La meta debe ser un valor numerico', allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
-    semefVerde: number = 0;
-
-    @required({message: 'Selecciona el sentido del indicador'})
-    sentidoDelIndicador: string;
-
-    @required({message: 'Es necesario colocar un supuesto'})
+    @required()
     supuestos: string;
 
-    @required({message: 'Coloca el tipo'})
+    @required()
+    mediosVerificacion: string;
+
+    @required()
+    nivel: string;
+
+    @required()
+    nombreDelIndicador: string;
+
+    @required()
+    programaFinanciacion: string;
+
+    @required()
+    resumenNarrativo: string;
+
+    @required()
+    sentidoDelIndicador: string;
+
+    @required()
     tipo: string;
 
-    @required({message: 'Asigna una unidad de medicion'})
+    @required()
     unidadDeMedida: string;
 
-    @prop({defaultValue: ''})
-    formulaTrim1: string;
+    @toFloat()
+    @required()
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true})
+    semefVerdeV: number;
 
-    @prop({defaultValue: ''})
-    formulaTrim2: string;
+    @toFloat()
+    @required()
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true})
+    semefAmarilloV: number;
 
-    @prop({defaultValue: ''})
-    formulaTrim3: string;
-
-    @prop({defaultValue: ''})
-    formulaTrim4: string;
-
-    @prop({defaultValue: ''})
-    formulaAnual: string;
+    @toFloat()
+    @required()
+    @numeric({acceptValue: NumericValueType.PositiveNumber, allowDecimal: true})
+    semefRojoV: number;
 }

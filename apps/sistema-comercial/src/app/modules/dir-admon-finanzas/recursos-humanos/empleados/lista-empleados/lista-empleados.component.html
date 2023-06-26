@@ -9,7 +9,7 @@
                 <mat-form-field class="flex-auto">
                     <mat-label>Filtrar por departamento</mat-label>
                     <mat-select placeholder="Buscar por departamento">
-                        <mat-option *ngFor="let depto of entityDepto.entitiesArray$ | async" [value]="depto._id">{{depto.nombre}}</mat-option>
+                        <mat-option *ngFor="let depto of deptoQuery.selectAll() | async" [value]="depto._id">{{depto.nombre}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <button mat-raised-button color="primary" [id]="agregarNuevo" (click)="nvoEmpleado()" [disabled]="agregarNuevo | navegacionPermiso: 'ctrl'">

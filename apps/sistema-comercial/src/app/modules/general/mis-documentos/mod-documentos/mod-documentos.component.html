@@ -22,7 +22,7 @@
                 <mat-form-field class="flex-auto">
                     <mat-label>Selecciona los usuarios a enviar el documento</mat-label>
                     <mat-select multiple formControlName="usuarios">
-                        <mat-option *ngFor="let empleado of entityEmpleado.entitiesArray$ | async" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                        <mat-option *ngFor="let empleado of empleadoQuery.selectAll() | async" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
                     </mat-select>
                     <mat-error>{{formDocs.controls.usuarios['errorMessage']}}</mat-error>
                 </mat-form-field>

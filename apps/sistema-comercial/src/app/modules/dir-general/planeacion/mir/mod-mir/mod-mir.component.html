@@ -1,15 +1,34 @@
 <form [formGroup]="formMir">
-    <section class="p-4 flex flex-col flex-auto gap-2">
+    <section class="px-4 flex flex-col flex-auto gap-2">
         <mat-form-field>
-            <mat-label>año</mat-label>
-            <input matInput formControlName="ano">
-            <mat-error>{{formMir.controls.ano['errorMessage']}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Indicador</mat-label>
+            <mat-label>Id indicador</mat-label>
             <input matInput formControlName="idIndicador" trim>
             <mat-error>{{formMir.controls.idIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
+
+        <div class="flex flex-auto gap-4 items-center content-center">
+            <mat-form-field class="flex-auto">
+                <mat-label>Selecciona empleado</mat-label>
+                <mat-select formControlName="idEmpleado" (selectionChange)="empleadoSele($event.value)">
+                    <div class="flex flex-col flex-auto">
+                        <mat-form-field>
+                            <input matInput placeholder="Filtrar empleados" (keyup)="filtrarEmpleados($event.target['value'])">
+                        </mat-form-field>
+                    </div>
+                    <mat-option *ngFor="let empleado of empleados" [value]="empleado._id">{{empleado.nombreCompleto}}</mat-option>
+                </mat-select>
+                <mat-error>{{formMir.controls.idEmpleado['errorMessage']}}</mat-error>
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="actualizarResponsable()" matTooltip="Modifica el responsable para todo el centro gestor" *ngIf="actualizar">
+                <mat-icon svgIcon="people_alt"></mat-icon>
+            </button>
+        </div>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="correo">
+            <mat-error>{{formMir.controls.correo['errorMessage']}}</mat-error>
+        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Nivel</mat-label>
             <input matInput formControlName="nivel">
@@ -52,14 +71,19 @@
             <mat-error>{{formMir.controls.dimension['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
+            <mat-label>Definicion del indicador</mat-label>
+            <textarea matInput formControlName="definicionIndicador"></textarea>
+            <mat-error>{{formMir.controls.definicionIndicador['errorMessage']}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
             <mat-label>Metodo de calculo</mat-label>
             <textarea matInput formControlName="metodoCalculo"></textarea>
             <mat-error>{{formMir.controls.metodoCalculo['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Medios de Verificacion</mat-label>
-            <textarea matInput formControlName="mediosDeVerificacion"></textarea>
-            <mat-error>{{formMir.controls.mediosDeVerificacion['errorMessage']}}</mat-error>
+            <mat-label>Medios de verificacion</mat-label>
+            <textarea matInput formControlName="mediosVerificacion"></textarea>
+            <mat-error>{{formMir.controls.mediosVerificacion['errorMessage']}}</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Supuestos</mat-label>
@@ -73,6 +97,7 @@
             </mat-select>
             <mat-error>{{formMir.controls.unidadDeMedida['errorMessage']}}</mat-error>
         </mat-form-field>
+
         <mat-form-field>
             <mat-label>Frecuencia de medicion</mat-label>
             <mat-select formControlName="frecuenciaMedicion">
@@ -80,6 +105,27 @@
             </mat-select>
             <mat-error>{{formMir.controls.frecuenciaMedicion['errorMessage']}}</mat-error>
         </mat-form-field>
+
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>Linea base año</mat-label>
+                <input matInput formControlName="lineaBaseAno"/>
+                <mat-error>{{formMir.controls.lineaBaseAno['errorMessage']}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="lineaBaseValor"/>
+                <mat-error>{{formMir.controls.lineaBaseValor['errorMessage']}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field>
+            <mat-label>Meta</mat-label>
+            <input matInput formControlName="meta"/>
+            <mat-error>{{formMir.controls.meta['errorMessage']}}</mat-error>
+        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Sentido del indicador</mat-label>
             <mat-select formControlName="sentidoDelIndicador">
@@ -87,6 +133,24 @@
             </mat-select>
             <mat-error>{{formMir.controls.sentidoDelIndicador['errorMessage']}}</mat-error>
         </mat-form-field>
+
+        <div class="flex flex-auto gap-4">
+            <mat-form-field class="flex-auto">
+                <mat-label>S.Verde</mat-label>
+                <input matInput formControlName="semefVerdeV">
+                <mat-icon svgIcon="feather:percent" matSuffix></mat-icon>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>S.Amarillo</mat-label>
+                <input matInput formControlName="semefAmarilloV">
+                <mat-icon svgIcon="feather:percent" matSuffix></mat-icon>
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+                <mat-label>S.Rojo</mat-label>
+                <input matInput formControlName="semefRojoV">
+                <mat-icon svgIcon="feather:percent" matSuffix></mat-icon>
+            </mat-form-field>
+        </div>
     </section>
 </form>
 
@@ -96,9 +160,9 @@
             <mat-icon svgIcon="mat_outline:close"></mat-icon>
             Cerrar
         </button>
-        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()" [disabled]="cargando">
+        <button mat-raised-button class="flex-auto" color="primary" (click)="regMir()" [disabled]="cargando || this.formMir.invalid">
             <mat-icon svgIcon="mat_outline:save"></mat-icon>
-            Añadir registro
+            Guardar registro
         </button>
     </div>
 </mat-toolbar>

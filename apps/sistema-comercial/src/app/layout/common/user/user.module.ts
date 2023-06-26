@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '@s-shared/shared.module';
 import {RouterLink} from '@angular/router';
 import {UserComponent} from '@s-layout/user/user.component';
+import {NgOptimizedImage} from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import {UserComponent} from '@s-layout/user/user.component';
         MatIconModule,
         MatMenuModule,
         SharedModule,
-        RouterLink
+        RouterLink,
+        NgOptimizedImage
     ],
     exports     : [
         UserComponent

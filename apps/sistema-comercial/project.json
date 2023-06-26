@@ -7,12 +7,13 @@
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:browser",
-            "outputs": [ "{options.outputPath}" ],
             "options": {
                 "outputPath": "dist/apps/sistema-comercial",
                 "index": "apps/sistema-comercial/src/index.html",
                 "main": "apps/sistema-comercial/src/main.ts",
-                "polyfills": "apps/sistema-comercial/src/polyfills.ts",
+                "polyfills": [
+                    "zone.js"
+                ],
                 "tsConfig": "apps/sistema-comercial/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
                 "allowedCommonJsDependencies": [
@@ -21,7 +22,31 @@
                     "subscriptions-transport-ws",
                     "flat",
                     "sweetalert2",
-                    "quill"
+                    "quill",
+                    "typed-function",
+                    "seedrandom",
+                    "javascript-natural-sort",
+                    "complex.js",
+                    "fraction.js",
+                    "escape-latex",
+                    "html2canvas",
+                    "core-js/modules/es.array.index-of.js",
+                    "core-js/modules/es.array.iterator.js",
+                    "core-js/modules/es.array.reduce.js",
+                    "core-js/modules/es.array.reverse.js",
+                    "core-js/modules/es.promise.js",
+                    "core-js/modules/es.regexp.to-string.js",
+                    "core-js/modules/es.string.ends-with.js",
+                    "core-js/modules/es.string.includes.js",
+                    "core-js/modules/es.string.match.js",
+                    "core-js/modules/es.string.replace.js",
+                    "core-js/modules/es.string.split.js",
+                    "core-js/modules/es.string.starts-with.js",
+                    "core-js/modules/es.string.trim.js",
+                    "core-js/modules/web.dom-collections.iterator.js",
+                    "raf",
+                    "rgbcolor",
+                    "jspdf-autotable"
                 ],
                 "assets": [
                     "apps/sistema-comercial/src/favicon-16x16.png",
@@ -34,7 +59,9 @@
                     }
                 ],
                 "stylePreprocessorOptions": {
-                    "includePaths": [ "apps/sistema-comercial/src/@fuse/styles" ]
+                    "includePaths": [
+                        "src/@fuse/styles"
+                    ]
                 },
                 "styles": [
                     "apps/sistema-comercial/src/@fuse/styles/tailwind.scss",
@@ -43,13 +70,9 @@
                     "apps/sistema-comercial/src/styles/styles.scss",
                     "apps/sistema-comercial/src/styles/vendors.scss",
                     "apps/sistema-comercial/src/styles/tailwind.scss",
-                    "node_modules/ngx-toastr/toastr.css",
                     "node_modules/ngx-lightbox/lightbox.css"
                 ],
-                "scripts":
-                [
-                    "node_modules/apexcharts/dist/apexcharts.min.js"
-                ]
+                "scripts": []
             },
             "configurations": {
                 "production": {
@@ -107,7 +130,9 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": [ "{workspaceRoot}/coverage/{projectRoot}" ],
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
             "options": {
                 "jestConfig": "jest.config.ts",
                 "passWithNoTest": true
@@ -115,7 +140,9 @@
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
-            "outputs": [ "{options.outputFile}" ],
+            "outputs": [
+                "{options.outputFile}"
+            ],
             "options": {
                 "lintFilePatterns": [
                     "apps/sistema-comercial/**/*.ts",

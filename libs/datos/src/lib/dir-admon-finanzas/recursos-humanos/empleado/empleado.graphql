@@ -32,26 +32,16 @@ query empleadosSesion
         }
     }
 }
-query filtrarEmpleados($consulta: String!)
+mutation crearActEmpledo($empleadoDatos: RegEmpleadoInput!)
 {
-    filtrarEmpleados(consulta: $consulta)
-    {
-        ...fragEmpleado
-        auth {
-            ...fragAuth
-        }
-        deptoEmpleado {
-            ...fragDeptos
-        }
-    }
-}
-mutation crearEmpleado($empleadoDatos: RegEmpleadoInput!)
-{
-    crearEmpleado(empleadoDatos: $empleadoDatos)
+    crearActEmpledo(empleadoDatos: $empleadoDatos)
     {
         ...fragEmpleado
         telefono {
             ...fragTelefono
+        }
+        deptoEmpleado {
+            ...fragDeptos
         }
     }
 }

@@ -1,29 +1,30 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {RxFormBuilder, RxReactiveFormsModule} from '@rxweb/reactive-form-validators';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {Empleado, Telefono} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {TRegEmpleado} from '#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface';
 import {MatSelectModule} from '@angular/material/select';
 import {CapitalizarDirective} from '@s-directives/capitalizar.directive';
 import {NgxTrimDirectiveModule} from 'ngx-trim-directive';
-import {GeneralService} from '#/apps/sistema-comercial/src/services/general.service';
-import {StateAuth} from '@s-core/auth/store/auth.store';
 import {finalize} from 'rxjs';
-import {NgxToastService} from '#/apps/sistema-comercial/src/services/ngx-toast.service';
 import {EmpleadoService} from '@s-dirAdmonFinanzas/empleados/store/empleado.service';
-import {DeptoService} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
-import {EntityEmpleadoStore} from '@s-dirAdmonFinanzas/empleados/store/entity-empleado.store';
-import {isNotNil} from '@angular-ru/cdk/utils';
+import {DeptoQuery} from "@s-dirAdmonFinanzas/departamento/store/depto.query";
+import {EmpleadoQuery} from "@s-dirAdmonFinanzas/empleados/store/empleado.query";
+import {isNil, isNotNil} from "@angular-ru/cdk/utils";
+import {AuthQuery} from "@s-core/auth/store/auth.query";
+import {DateTime} from "luxon";
+import {NgxToastService} from "@s-services/ngx-toast.service";
+import {IResolveEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.interface";
+import {Empleado, Telefono} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/Empleado";
+import {TRegEmpleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/empleado.dto";
+import {GeneralService} from "@s-services/general.service";
 
 @Component({
     selector: 'app-mod-registro-empleado',
@@ -61,8 +62,8 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
     minDate = new Date(this.anoActual, this.mesActual, this.diaActual - 5);
     maxDate = new Date(this.anoActual, this.mesActual, this.diaActual);
 
-    constructor(private fb: RxFormBuilder, public mdr: MatDialog, private stateAuth: StateAuth, private ngxToast: NgxToastService, public entityDepto: EntityDeptoStore,
-                private deptoService: DeptoService, private empleadoService: EmpleadoService, private entityEmpleado: EntityEmpleadoStore)
+    constructor(private fb: RxFormBuilder, public mdr: MatDialog, private ngxToast: NgxToastService, private empleadoService: EmpleadoService,
+                public deptoQuery: DeptoQuery, private empleadoQuery: EmpleadoQuery, @Inject(MAT_DIALOG_DATA) private data: IResolveEmpleado, private authQuery: AuthQuery)
     {
     }
 
@@ -84,15 +85,16 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
         empleado.telefono = new Array<Telefono>();
         this.formEmpleado = this.fb.formGroup(empleado);
         this.agregarTel();
-        if (isNotNil(this.entityEmpleado.snapshot.empleado))
-        {
-            this.formEmpleado.patchValue(this.entityEmpleado.snapshot.empleado);
-        }
     }
 
     ngAfterContentInit(): void
     {
-        this.deptoService.departamentos().subscribe();
+        if (isNotNil(this.empleadoQuery.getActive()))
+        {
+            const empleado = this.empleadoQuery.getEntity(this.data._id);
+            this.formEmpleado.patchValue(empleado);
+            this.formEmpleado.get('fechaIngreso').setValue(DateTime.fromSeconds(empleado.fechaIngreso));
+        }
     }
 
     agregarTel(): void
@@ -123,19 +125,21 @@ export class ModRegistroEmpleadoComponent implements OnInit, AfterContentInit
         const empleadoDatos: TRegEmpleado =
             {
                 fechaIngreso: GeneralService.convertirUnix(fechaIngreso.c, fechaIngreso.ts),
+                _id: isNil(this.empleadoQuery.getActive()) ? null : this.empleadoQuery.getActive()._id,
                 modificadoPor:
                     [
                         {
-                            usuario: this.stateAuth.snapshot._id,
-                            accion: 'Registro de nuevo empleado',
-                            fecha: GeneralService.fechaHoraActual(),
+                            usuario: this.authQuery.getValue()._id,
+                            accion: 'Modificado por',
+                            fecha: GeneralService.fechaHoraActualUnix(),
                             valorActual: {},
                             valorAnterior: {}
                         }
                     ],
                 ...resto
             };
-        this.empleadoService.crearEmpleado(empleadoDatos).pipe(finalize(() =>
+
+        this.empleadoService.crearActEmpledo(empleadoDatos).pipe(finalize(() =>
         {
             this.cargando = false;
             this.formEmpleado.enable();

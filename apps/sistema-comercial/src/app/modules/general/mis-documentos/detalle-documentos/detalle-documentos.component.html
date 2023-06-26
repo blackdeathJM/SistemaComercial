@@ -1,4 +1,4 @@
-<ng-container *ngIf="documento$ | async as documento">
+<ng-container *ngIf="misDocsQuery.selectActive() | async as documento">
     <ng-container *ngIf="documento">
         <div class="flex flex-col flex-auto p-6 md:p-8">
             <!-- Close button -->
@@ -52,7 +52,7 @@
                 <div class="flex items-center justify-between py-3">
                     <div class="text-secondary">Tipo de documento:</div>
                     <div>{{documento?.tipoDoc | defaultValue: '-'}}</div>
-                    <div class="px-1.5 rounded text-secondary font-semibold leading-5 text-white bg-blue-800" *ngIf="documento.esInterno">Documento interno</div>
+                    <div class="px-1.5 rounded text-secondary font-semibold leading-5 bg-blue-800" *ngIf="documento.esInterno">Documento interno</div>
                 </div>
 
                 <div class="flex items-center justify-between py-3">

@@ -12,39 +12,31 @@ export class SeleccionService
 
     async regSeleccion(input: SeleccionDto): Promise<SeleccionDto>
     {
-        try
+        const {_id, ...resto} = input;
+        let id = '';
+        const contarDocumentos = await this.seleccion.countDocuments().exec();
+        if (contarDocumentos === 0)
         {
-            let _id: string = '';
-            const contarDocumentos = await this.seleccion.countDocuments().exec();
-            if (contarDocumentos === 0)
-            {
-                const valoresDefecto: TAgregarSeleccion =
-                    {
-                        centroGestor: [], unidad: [], dimension: [], frecuencia: [], tipo: []
-                    };
-                const res = await this.seleccion.create(valoresDefecto);
-                _id = res.id;
-            }
-            const actualizacion = {};
-            const llaves = Object.keys(input);
-            llaves.splice(llaves.indexOf('_id'), 1);
-            llaves.forEach((value, index, array) =>
-            {
-                if (!input[value].includes('sinDatos'))
-                {
-                    Object.assign(actualizacion, {[value]: input[value].pop()});
-                }
-            });
-
-            if (input._id !== '')
-            {
-                _id = input._id;
-            }
-            return await this.seleccion.findByIdAndUpdate(_id, {$push: actualizacion}, {new: true});
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e});
+            const valoresDefecto: TAgregarSeleccion = {
+                centroGestor: [], unidad: [], dimension: [], frecuencia: [], tipo: []
+            };
+            const res = await new this.seleccion(valoresDefecto).save();
+            id = res._id;
         }
+        const actualizacion = {};
+        for (const key in resto)
+        {
+            if (resto[key].indexOf('sinDatos') === -1)
+            {
+                actualizacion[key] = resto[key].shift();
+            }
+        }
+        if (_id !== null)
+        {
+            id = _id;
+        }
+
+        return await this.seleccion.findByIdAndUpdate(id, {$push: actualizacion}, {new: true}).exec();
     }
 
     async selecciones(): Promise<SeleccionDto>

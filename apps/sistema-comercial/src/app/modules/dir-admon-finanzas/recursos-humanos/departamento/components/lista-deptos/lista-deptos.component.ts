@@ -6,7 +6,6 @@ import {CommonModule} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {ModDeptoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-depto/mod-depto.component';
 import {NgxUiLoaderModule} from 'ngx-ui-loader';
-import {EntityDeptoStore} from '@s-dirAdmonFinanzas/departamento/store/entity-depto.store';
 import {DeptoService, loaderDeptos} from '@s-dirAdmonFinanzas/departamento/store/depto.service';
 import {FuseCardModule} from '@s-fuse/card';
 import {MatCardModule} from '@angular/material/card';
@@ -15,6 +14,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ModPuestoComponent} from '@s-dirAdmonFinanzas/departamento/components/mod-puesto/mod-puesto.component';
+import {DeptoStore} from '@s-dirAdmonFinanzas/departamento/store/depto.store';
+import {DeptoQuery} from '@s-dirAdmonFinanzas/departamento/store/depto.query';
 
 @Component({
     standalone: true,
@@ -40,7 +41,7 @@ export class ListaDeptosComponent implements OnInit
 {
     idLoader = loaderDeptos;
 
-    constructor(public deptoService: DeptoService, private dRef: MatDialog, public entityDepto: EntityDeptoStore)
+    constructor(public deptoService: DeptoService, private dRef: MatDialog, private deptoStore: DeptoStore, public deptoQuery: DeptoQuery)
     {
 
     }
@@ -50,20 +51,19 @@ export class ListaDeptosComponent implements OnInit
         this.deptoService.departamentos().subscribe();
     }
 
-    trackByFn(index: number, item: IDepto): string | number
+    editar(data: IDepto): void
     {
-        return item._id || index;
-    }
-
-    editar(depto: IDepto): void
-    {
-        this.entityDepto.patchState({depto});
+        this.deptoStore.setActive(data._id);
         this.dRef.open(ModDeptoComponent, {width: '40%'});
     }
 
-    nuevoPuesto(depto: IDepto): void
+    nuevoPuesto(data: IDepto): void
     {
-        this.entityDepto.patchState({depto});
-        this.dRef.open(ModPuestoComponent, {width: '40%'});
+        this.dRef.open(ModPuestoComponent, {width: '40%', data: data._id});
+    }
+
+    trackByFn(index: number, item: IDepto): string | number
+    {
+        return item._id || index;
     }
 }

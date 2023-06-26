@@ -6,7 +6,7 @@
                 <ngx-mat-file-input formControlName="docArchivo"></ngx-mat-file-input>
                 <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>
             </mat-form-field>
-            <mat-form-field *ngIf="entityMisDocumentos.snapshot.documento.folio">
+            <mat-form-field *ngIf="misDocsQuery.getActive().folio">
                 <mat-label>Acuse</mat-label>
                 <ngx-mat-file-input formControlName="acuseArchivo"></ngx-mat-file-input>
                 <mat-icon svgIcon="mat_outline:attachment" matSuffix></mat-icon>

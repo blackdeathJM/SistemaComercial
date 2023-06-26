@@ -1,9 +1,5 @@
 import {Routes} from '@angular/router';
-import {PlaneacionComponent} from '@s-dir-general/planeacion.component';
-import MirComponent from '@s-dir-general/mir/mir.component';
-import {PbrComponent} from '@s-dir-general/pbr/pbr.component';
-import {AsigCentroGestorComponent} from '@s-dir-general/asig-centro-gestor/asig-centro-gestor.component';
-
+import {PlaneacionComponent} from "@s-dir-general/planeacion.component";
 
 export const planeacionRouting: Routes =
     [
@@ -14,15 +10,15 @@ export const planeacionRouting: Routes =
                 [
                     {
                         path: 'mir',
-                        component: MirComponent
+                        loadComponent: () => import('@s-dir-general/mir/mir.component')
                     },
                     {
-                        path: 'pbr',
-                        component: PbrComponent
+                        path: 'avance-de-actividades',
+                        loadComponent: () => import('@s-dir-general/pbr/pbr.component').then(c => c.PbrComponent)
                     },
                     {
-                        path: 'asignacion-centro-gestor',
-                        component: AsigCentroGestorComponent
+                        path: 'mir/registro-componente/:_id/:idMir',
+                        loadComponent: () => import('@s-dir-general/planeacion/componentes/mod-componentes/mod-comp-dinamico/mod-comp-dinamico.component').then(c => c.ModCompDinamicoComponent)
                     }
                 ]
         }

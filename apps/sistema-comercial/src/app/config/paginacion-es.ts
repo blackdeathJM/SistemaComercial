@@ -4,14 +4,9 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 @Injectable()
 export class PaginacionEs extends MatPaginatorIntl
 {
-    tiemsPerPageLabel = 'Reg por pagina';
+    itemsPorPagina = 'Reg por pagina';
     nextPageLabel = 'Pagina sig';
     previousPageLabel = 'Pagina ant';
-
-    constructor()
-    {
-        super();
-    }
 
     getRangeLabel = (page: number, pageSize: number, length: number): string =>
     {

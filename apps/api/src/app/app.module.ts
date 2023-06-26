@@ -13,18 +13,22 @@ import {TecnicaOperativaModule} from '#api/apps/api/src/app/tecnica-operativa/te
 import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo';
 import {DirAdmonFinanzasModule} from '#api/apps/api/src/app/dir-admon-finanzas/dir-admon-finanzas.module';
 import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.module';
+import {APP_FILTER} from '@nestjs/core';
+import {ExcepcionesMongoose} from '#api/apps/api/src/exceptions/excepciones';
+import * as process from "process";
 
 @Module({
     imports:
         [
             ConfigModule.forRoot({
-                envFilePath: ['.env'], load: [config], expandVariables: true, isGlobal: true
+                envFilePath: `${process.env.NODE_ENV}.env`, load: [config], expandVariables: true, isGlobal: true
             }),
             GraphQLModule.forRoot<ApolloDriverConfig>({
                 driver: ApolloDriver,
                 installSubscriptionHandlers: true,
                 subscriptions: {
-                    'graphql-ws': true
+                    'graphql-ws': true,
+                    'subscriptions-transport-ws': true
                 },
                 resolvers:
                     {
@@ -33,17 +37,27 @@ import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.mo
                 autoSchemaFile: 'apps/api/schema.graphql',
                 buildSchemaOptions:
                     {
-                        dateScalarMode: 'isoDate',
+                        dateScalarMode: 'isoDate'
                     },
                 playground: false,
                 context: ({req}) => ({req}),
+                formatError: error =>
+                {
+                    return {
+                        message: error.message,
+                        path: error.path,
+                        locations: error.locations,
+                        extensions: error.extensions
+                    };
+                },
+                autoTransformHttpErrors: true
             }),
             MongooseModule.forRootAsync({
                 imports: [ConfigModule],
                 inject: [ConfigService],
                 useFactory: async (configService: ConfigService) => (
                     {
-                        uri: configService.get('URI_MONGO'),
+                        uri: configService.get('config.uriMongo'),
                         useNewUrlParser: true
                     }
                 )
@@ -55,7 +69,7 @@ import {DirGeneralModule} from '#api/apps/api/src/app/dir-general/dir-general.mo
             GeneralModule,
             TecnicaOperativaModule
         ],
-    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService],
+    providers: [{provide: 'PUB_SUB', useValue: new PubSub()}, AppService, {provide: APP_FILTER, useClass: ExcepcionesMongoose}],
     exports: [AppService]
 })
 export class AppModule

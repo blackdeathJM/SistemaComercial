@@ -16,20 +16,6 @@ export const PLANEACION: FuseNavigationItem =
         acceso: true,
         children:
             [
-                // {
-                //     id: 'depto-asigCentroGestor',
-                //     title: 'Asignacion. C.G',
-                //     type: 'basic',
-                //     icon: 'mat_solid:6_ft_apart',
-                //     oculto: false,
-                //     hidden: (item: FuseNavigationItem): boolean => item.oculto,
-                //     badge: {},
-                //     controles: [],
-                //     disabled: false,
-                //     puedeAsigPermisos: true,
-                //     acceso: true,
-                //     link: dirGeneral + 'planeacion/asignacion-centro-gestor'
-                // },
                 {
                     id: 'depto-mir',
                     title: 'MIR',
@@ -46,7 +32,7 @@ export const PLANEACION: FuseNavigationItem =
                 },
                 {
                     id: 'depto-pbr',
-                    title: 'PBR',
+                    title: 'Avance de actividades',
                     type: 'basic',
                     icon: 'add_to_photos',
                     oculto: false,
@@ -56,7 +42,7 @@ export const PLANEACION: FuseNavigationItem =
                     disabled: false,
                     puedeAsigPermisos: true,
                     acceso: true,
-                    link: dirGeneral + 'planeacion/pbr'
+                    link: dirGeneral + 'planeacion/avance-de-actividades'
                 }
             ]
     };
