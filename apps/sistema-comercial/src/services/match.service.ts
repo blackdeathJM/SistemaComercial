@@ -9,7 +9,6 @@ class MatchService
     constructor(private authQuery: AuthQuery, private ngxToast: NgxToastService)
     {
     }
-
     accesoRutas(role: string): boolean
     {
         if (this.authQuery.getValue().auth.usuario === Constantes.admin)

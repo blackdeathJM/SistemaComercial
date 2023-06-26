@@ -9,7 +9,6 @@
                         <div class="flex flex-auto items-center justify-between" matListItemLine>
                             <span class="flex-0 mr-2">{{exp['title']}}</span>
                             <div class="flex-auto border-b-2"></div>
-
                             <mat-checkbox [checked]="exp['acceso']" color="primary" [disabled]="deshabilitarLista || (exp['id'] | navegacionPermiso: 'asigPermisos')"
                                           *ngIf="exp['type'] === 'basic'" matTooltip="Acceso a ruta"
                                           (change)="actRutas($event, grupo, exp,null,null, empleado, 1)">

@@ -26,16 +26,7 @@ export class UserComponent implements AfterViewInit, OnDestroy
 
     updateUserStatus(status: string): void
     {
-        // if (!this.user)
-        // {
-        //     return;
-        // }
-        //
-        // // Update the user
-        // this._userService.update({
-        //     ...this.user,
-        //     status
-        // }).subscribe();
+
     }
 
     signOut(): void

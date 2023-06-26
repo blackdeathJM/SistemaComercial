@@ -7,7 +7,6 @@ import {Directive, ViewContainerRef} from '@angular/core';
 })
 export class ComponenteDinamicoDirective
 {
-
     constructor(public refAlContenedor: ViewContainerRef)
     {
     }

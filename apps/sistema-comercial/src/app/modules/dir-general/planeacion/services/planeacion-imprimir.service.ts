@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {jsPDF} from 'jspdf'
-import autoTable, {applyPlugin, CellHook, Styles} from "jspdf-autotable";
+import autoTable, {applyPlugin, CellHook, ColumnInput, Styles} from "jspdf-autotable";
 
 applyPlugin(jsPDF);
 
@@ -9,7 +9,7 @@ applyPlugin(jsPDF);
 })
 export class PlaneacionImprimirService
 {
-    static imprimirTabla(columnas: object[], styles: Partial<Styles>, columnStyles: { [p: string]: Partial<Styles> }, cuerpo: Array<any>, subtitulo: string, didParseCell?: CellHook): void
+    static imprimirTabla(columnas: ColumnInput[], styles: Partial<Styles>, columnStyles: { [p: string]: Partial<Styles> }, cuerpo: Array<any>, subtitulo: string, didParseCell?: CellHook): void
     {
         const titulo = 'SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)';
         const doc = new jsPDF({
