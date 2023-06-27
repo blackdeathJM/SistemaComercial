@@ -20,12 +20,7 @@ export const generalRouting: Routes =
                         loadComponent: () => import('@s-general/ordenes-atencion/ordenes-atencion.component').then(c => c.OrdenesAtencionComponent)
                     },
                     {
-                        path: 'permisos',
-                        loadComponent: () => import('@s-general/sesion/sesion.component').then(c => c.SesionComponent)
-                    },
-                    {
                         path: 'avance-de-actividades',
-                        // loadComponent: () => import('@s-general/avance-actividades-pbr/avance-actividades-pbr.component').then(a => a.AvanceActividadesPbrComponent)
                         loadComponent: () => import('@s-general/pbr-usuario/pbr-usuario.component').then(a => a.PbrUsuarioComponent)
                     }
                 ]

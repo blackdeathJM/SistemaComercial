@@ -15,9 +15,10 @@ import {ComponentesComponent} from '@s-dir-general/componentes/componentes.compo
 import {$cast, isNil} from '@angular-ru/cdk/utils';
 import {ComponentesService} from '@s-dir-general/componentes/services/componentes.service';
 import {NgxToastService} from "@s-services/ngx-toast.service";
-import {PlaneacionImprimirService} from "@s-dir-general/planeacion-imprimir.service";
+import {PlaneacionImprimirService} from "@s-dir-general/services/planeacion-imprimir.service";
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
-import {CellHook, CellHookData, Styles} from "jspdf-autotable";
+import {CellHook, CellHookData, ColumnInput, Styles} from "jspdf-autotable";
+import {STYLES} from "@s-dir-general/models/pdf-imprimir";
 
 @Component({
     selector: 'app-mir',
@@ -33,6 +34,8 @@ export default class MirComponent implements OnDestroy
 {
     abrirPanel = false;
     avancesTrimestrales: string[] = [];
+    const
+    estilos: Partial<Styles> = STYLES;
 
     constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService)
     {
@@ -56,37 +59,13 @@ export default class MirComponent implements OnDestroy
             return;
         }
 
-        const planeacionActiva = this.planeacionQuery.getActive();
-
-        const columnas = [{header: 'Ind', dataKey: 'idIndicador'},
-            {
-                header: 'Nivel', dataKey: 'nivel'
-            }, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
-            {header: 'Centro gestor', dataKey: 'centroGestor'}, {
-                header: 'Metodo de calculo',
-                dataKey: 'metodoCalculo'
-            }, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'},
-            {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {
-                header: 'L.B Año',
-                dataKey: 'lineaBaseAno'
-            }, {header: 'L.B. valor', dataKey: 'lineaBaseValor'}, {header: 'Meta', dataKey: 'meta'},
-            {header: 'Sentido Ind', dataKey: 'sentidoDelIndicador'}, {
-                header: 'Sem. Verde',
-                dataKey: 'semefVerdeV'
-            }, {header: 'Sem. Ama', dataKey: 'semefAmarilloV'}, {header: 'Sem. Rojo', dataKey: 'semefRojoV'},
-            {header: 'A. Trim1', dataKey: 'avanceTrim1'}, {
-                header: 'A. Trim2',
-                dataKey: 'avanceTrim2'
-            }, {header: 'A. Trim3', dataKey: 'avanceTrim3'}, {header: 'A. Trim4', dataKey: 'avanceTrim4'},
+        const columnas: ColumnInput[] = [{header: 'Ind', dataKey: 'idIndicador'}, {header: 'Nivel', dataKey: 'nivel'}, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
+            {header: 'Centro gestor', dataKey: 'centroGestor'}, {header: 'Metodo de calculo', dataKey: 'metodoCalculo'}, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'},
+            {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {header: 'L.B Año', dataKey: 'lineaBaseAno'}, {header: 'L.B. valor', dataKey: 'lineaBaseValor'}, {header: 'Meta', dataKey: 'meta'},
+            {header: 'Sentido Ind', dataKey: 'sentidoDelIndicador'}, {header: 'Sem. Verde', dataKey: 'semefVerdeV'}, {header: 'Sem. Ama', dataKey: 'semefAmarilloV'}, {header: 'Sem. Rojo', dataKey: 'semefRojoV'},
+            {header: 'A. Trim1', dataKey: 'avanceTrim1'}, {header: 'A. Trim2', dataKey: 'avanceTrim2'}, {header: 'A. Trim3', dataKey: 'avanceTrim3'}, {header: 'A. Trim4', dataKey: 'avanceTrim4'},
             {header: 'Glob', dataKey: 'avanceAnual'}];
-        const styles: Partial<Styles> = {
-            fontSize: 6,
-            font: 'helvetica',
-            minCellWidth: 7,
-            overflow: 'linebreak',
-            cellWidth: 'auto',
-            lineWidth: .5
-        };
+
         const columnStyles: { [p: string]: Partial<Styles> } = {
             resumenNarrativo: {cellWidth: 45},
             centroGestor: {cellWidth: 20},
@@ -95,9 +74,7 @@ export default class MirComponent implements OnDestroy
             supuestos: {cellWidth: 30},
             unidadDeMedida: {cellWidth: 15},
         };
-        const ano = this.planeacionQuery.getActive().ano;
-        const mirsActivo = this.planeacionQuery.compCuestionarioMir();
-        const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + ano;
+        const subtitulo = 'FICHA TECNICA DEL INDICADOR ' + this.planeacionQuery.getActive().ano;
         const didParseCell: CellHook = ((data: CellHookData) =>
         {
             if (data.section === 'body')
@@ -107,7 +84,7 @@ export default class MirComponent implements OnDestroy
                 {
                     if (mir.componente && mir.componente.formula)
                     {
-                        const objParaFormula = this.componentesService.objParaLaFormula(mir, planeacionActiva);
+                        const objParaFormula = this.componentesService.objParaLaFormula(mir, this.planeacionQuery.getActive());
                         const trimestres = [this.componentesService.calcAvances(mir.componente.formula, objParaFormula[0]), this.componentesService.calcAvances(mir.componente.formula, objParaFormula[1]),
                             this.componentesService.calcAvances(mir.componente.formula, objParaFormula[2]), this.componentesService.calcAvances(mir.componente.formula, objParaFormula[3])]
                         data.row.cells.avanceTrim1.text = [trimestres[0].toString()];
@@ -121,7 +98,7 @@ export default class MirComponent implements OnDestroy
             }
         });
 
-        PlaneacionImprimirService.imprimirTabla(columnas, styles, columnStyles, mirsActivo, subtitulo, didParseCell);
+        PlaneacionImprimirService.imprimirTabla(columnas, this.estilos, columnStyles, this.planeacionQuery.compCuestionarioMir(), subtitulo, didParseCell);
     }
 
     avancesTrim(e: string[]): void

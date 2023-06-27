@@ -18,7 +18,6 @@ export class InitialDataResolver implements Resolve<any>
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any>
     {
-        console.log('Resolve en appResolve');
         return forkJoin([
             this._navigationService.get(),
             this._messagesService.getAll(),

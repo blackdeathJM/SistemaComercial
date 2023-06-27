@@ -34,7 +34,7 @@ import {ComponentesService, IDatosFormulario, PrefFormDin} from "@s-dir-general/
 import {PlaneacionService} from "@s-dir-general/store/planeacion.service";
 import {TRegComponente} from "#/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 import {TablaComponenteService} from "@s-dir-general/componentes/services/tabla-componente.service";
-import {ObtenerIdFormPipe} from "@s-dir-general/componentes/services/obtener-id-form.pipe";
+import {ObtenerIdFormPipe} from "@s-dir-general/componentes/pipes/obtener-id-form.pipe";
 
 @Component({
     selector: 'app-mod-comp-dinamico',

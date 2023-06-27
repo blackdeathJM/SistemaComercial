@@ -1,25 +1,35 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     ActCtrlPrimerNivelGQL,
-    ActCtrlPrimerNivelMutation, ActCtrlSegundoNivelGQL, ActCtrlSegundoNivelMutation, ActCtrlTercerNivelGQL, ActCtrlTercerNivelMutation,
+    ActCtrlPrimerNivelMutation,
+    ActCtrlSegundoNivelGQL,
+    ActCtrlSegundoNivelMutation,
+    ActCtrlTercerNivelGQL,
+    ActCtrlTercerNivelMutation,
     ActPrimerNivelGQL,
     ActPrimerNivelMutation,
     ActSegundoNivelGQL,
     ActSegundoNivelMutation,
     ActTercerNivelGQL,
-    ActTercerNivelMutation, AsigPermisoPrimerNivelGQL, AsigPermisoPrimerNivelMutation, AsigPermisoSegNivelGQL, AsigPermisoSegNivelMutation, AsigPermisoTercerNivelGQL, AsigPermisoTercerNivelMutation,
+    ActTercerNivelMutation,
+    AsigPermisoPrimerNivelGQL,
+    AsigPermisoPrimerNivelMutation,
+    AsigPermisoSegNivelGQL,
+    AsigPermisoSegNivelMutation,
+    AsigPermisoTercerNivelGQL,
+    AsigPermisoTercerNivelMutation,
     CrearRolesGQL,
     CrearRolesMutation,
     RolesAsigGQL,
     RolesAsigQuery
 } from '#/libs/datos/src';
-import { makeVar, SingleExecutionResult } from '@apollo/client';
-import { catchError, finalize, Observable, tap } from 'rxjs';
-import { IActRoles, IRoles, TCrearRol } from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { RolesStore } from '@s-core/auth/store/roles.store';
-import { $cast, isNotNil } from '@angular-ru/cdk/utils';
-import { GeneralService } from '@s-services/general.service';
+import {makeVar, SingleExecutionResult} from '@apollo/client';
+import {catchError, finalize, Observable, tap} from 'rxjs';
+import {IActRoles, IRoles, TCrearRol} from '#/libs/models/src/lib/admin/empleado/auth/roles.interface';
+import {NgxUiLoaderService} from 'ngx-ui-loader';
+import {RolesStore} from '@s-core/auth/store/roles.store';
+import {$cast, isNotNil} from '@angular-ru/cdk/utils';
+import {GeneralService} from '@s-services/general.service';
 
 export const ngxRoles = makeVar('ngxRoles');
 

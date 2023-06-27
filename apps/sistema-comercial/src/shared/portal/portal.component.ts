@@ -17,7 +17,6 @@ import {Portal, PortalService} from '#/apps/sistema-comercial/src/services/porta
 export class PortalComponent implements OnInit
 {
     portal: Portal;
-
     constructor(private portalService: PortalService)
     {
     }

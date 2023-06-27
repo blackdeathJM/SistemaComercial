@@ -129,22 +129,25 @@ export class ListaPbrComponent
     imprimirPbr(): void
     {
         this.ngxUiLoaderService.startLoader(this.loader);
-        const pbrRef = this.pbrImprimirRef.nativeElement;
-        pbrRef.style.color = 'black';
-        html2canvas(pbrRef).then(canvas =>
+        if (this.pbrImprimirRef?.nativeElement)
         {
-            const img = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'pt', 'a4');
-            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
-            pdf.setFontSize(8);
-            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCANTARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
-            const imgProps = pdf.getImageProperties(img);
-            const pdfAncho = pdf.internal.pageSize.getWidth();
-            const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
-            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
-            pdf.save('PBR' + DateTime.now() + '.pdf');
-            pbrRef.style.color = '';
-            this.ngxUiLoaderService.stopLoader(this.loader);
-        });
+            const pbrRef = this.pbrImprimirRef?.nativeElement;
+            pbrRef.style.color = 'black';
+            html2canvas(pbrRef).then(canvas =>
+            {
+                const img = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
+                pdf.setFontSize(8);
+                pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCANTARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
+                const imgProps = pdf.getImageProperties(img);
+                const pdfAncho = pdf.internal.pageSize.getWidth();
+                const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
+                pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
+                pdf.save('PBR' + DateTime.now() + '.pdf');
+                pbrRef.style.color = '';
+                this.ngxUiLoaderService.stopLoader(this.loader);
+            });
+        }
     }
 }

@@ -10,7 +10,6 @@ import {ListaPbrComponent} from '@s-dir-general/pbr/lista-pbr/lista-pbr.componen
 import {MatButtonModule} from '@angular/material/button';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {PlaneacionStore} from '@s-dir-general/store/planeacion.store';
-import {NgxToastService} from '@s-services/ngx-toast.service';
 import {ListaSumPbrComponent} from "@s-dir-general/mir/lista-tab-mir/lista-sum-pbr/lista-sum-pbr.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
@@ -18,6 +17,9 @@ import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {fuseAnimations} from "@s-fuse/public-api";
 import {isNil} from "@angular-ru/cdk/utils";
 import {ToastrService} from "ngx-toastr";
+import {CellHook, CellHookData, ColumnInput, Styles} from "jspdf-autotable";
+import {STYLES} from "@s-dir-general/models/pdf-imprimir";
+import {PlaneacionImprimirService} from "@s-dir-general/services/planeacion-imprimir.service";
 
 @Component({
     selector: 'app-pbr',
@@ -33,6 +35,7 @@ export class PbrComponent implements OnDestroy
 {
     abrirPanelPbr = false;
     pbrSumatorias = this.planeacionQuery.compSumatoriasPbr;
+    estilos: Partial<Styles> = STYLES;
 
     constructor(private planeacionStore: PlaneacionStore, public planeacionQuery: PlaneacionQuery, private toastrService: ToastrService, private mdr: MatDialog)
     {
@@ -68,8 +71,47 @@ export class PbrComponent implements OnDestroy
     {
         if (isNil(this.planeacionQuery.getActive()))
         {
-            this.ngxToast.
+            this.toastrService.warning('Selecciona un año para poder continuar', 'PBR');
         }
+
+        const columnasPbr: ColumnInput[] = [{header: 'Indicador', dataKey: 'idIndicador'}, {header: 'V. Origen', dataKey: 'variableOrigen'}, {header: 'Dato', dataKey: 'dato'}, {header: 'unidad', dataKey: 'unidad'},
+            {header: 'descripcion', dataKey: 'descripcion'}, {header: 'Ene', dataKey: 'enero'}, {header: 'Feb', dataKey: 'febrero'}, {header: 'Mar', dataKey: 'marzo', key: 'marzo'}, {header: 'Trim-1', dataKey: 'trim1'},
+            {header: 'Abr', dataKey: 'abril'}, {header: 'May', dataKey: 'mayo'}, {header: 'Jun', dataKey: 'junio'}, {header: 'Trim-2', dataKey: 'trim2'},
+            {header: 'Jul', dataKey: 'julio'}, {header: 'Ago', dataKey: 'agosto'}, {header: 'Sep', dataKey: 'septiembre'}, {header: 'Trim-3', dataKey: 'trim3'},
+            {header: 'Oct', dataKey: 'octubre'}, {header: 'Nov', dataKey: 'noviembre'}, {header: 'Dic', dataKey: 'diciembre'}, {header: 'Trim-4', dataKey: 'trim4'}, {header: 'Total', dataKey: 'total'}];
+
+        const columnStyles: { [p: string]: Partial<Styles> } =
+            {
+                idIndicador: {cellWidth: 20},
+                variableOrigen: {cellWidth: 10},
+                dato: {cellWidth: 50},
+                unidad: {cellWidth: 20},
+                descripcion: {cellWidth: 'auto'},
+                enero: {cellWidth: 9.5},
+                febrero: {cellWidth: 9.5},
+                marzo: {cellWidth: 9.5},
+                trim1: {cellWidth: 9.5},
+                abril: {cellWidth: 9.5},
+                mayo: {cellWidth: 9.5},
+                junio: {cellWidth: 9.5},
+                trim2: {cellWidth: 9.5},
+                julio: {cellWidth: 9.5},
+                agosto: {cellWidth: 9.5},
+                septiembre: {cellWidth: 9.5},
+                trim3: {cellWidth: 9.5},
+                octubre: {cellWidth: 9.5},
+                noviembre: {cellWidth: 9.5},
+                diciembre: {cellWidth: 9.5},
+                trim4: {cellWidth: 9.5},
+                total: {cellWidth: 9.5}
+            };
+        const subtitulo = 'PRESUPUESTO BASADO EN RESULTADOS ' + this.planeacionQuery.getActive().ano;
+        const didParseCell: CellHook = ((data: CellHookData) =>
+        {
+
+        });
+
+        PlaneacionImprimirService.imprimirTabla(columnasPbr, this.estilos, columnStyles, this.planeacionQuery.compCuestionarioPbr(), subtitulo, didParseCell);
     }
 
     ngOnDestroy(): void

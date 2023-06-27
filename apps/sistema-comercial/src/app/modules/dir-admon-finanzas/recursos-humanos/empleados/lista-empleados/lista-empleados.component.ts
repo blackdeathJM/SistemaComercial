@@ -58,8 +58,6 @@ export class ListaEmpleadosComponent implements AfterViewInit
 
     seleccionar(empleado: IResolveEmpleado): void
     {
-        console.log(empleado);
-        // this.entityEmpleado.patchState({empleado});
         this.empleadoStore.setActive(empleado._id);
     }
 
