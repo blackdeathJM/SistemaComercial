@@ -12,7 +12,7 @@ export const environment = {
     // wsGraphql: 'ws://26.229.251.212:3333/graphql',
     // plugins: []
     production: true,
-    apiGraphql: 'http://26.229.251.212:3333/graphql',
-    wsGraphql: 'ws://26.229.251.212:3333/graphql',
+    apiGraphql: 'https://siscompax-api.onrender.com/graphql',
+    wsGraphql: 'wss://siscompax-api.onrender.com/graphql',
     plugins: []
 };
