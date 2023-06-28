@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {catchError, of, tap} from 'rxjs';
+import {catchError, finalize, of} from 'rxjs';
 import {fuseAnimations} from '@s-fuse/public-api';
 import {FuseAlertType} from '@s-fuse/alert';
 import {AuthService} from '@s-core/auth/store/auth.service';
@@ -50,7 +50,10 @@ export class AuthSignInComponent implements OnInit
         this.showAlert = false;
 
         // Sign in
-        this.authService.login(this.signInForm.value).pipe(catchError(() =>
+        this.authService.login(this.signInForm.value).pipe(finalize(() =>
+        {
+            this.signInForm.enable();
+        }),catchError(() =>
         {
             this.signInForm.enable();
             this.signInNgForm.resetForm();
