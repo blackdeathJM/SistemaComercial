@@ -15,8 +15,12 @@
         "experimentalDecorators": true,
         "outDir": "../../dist/out-tsc",
         "paths": {
-            "#/*": [ "./*" ],
-            "@s-apollo/*": [ "apps/sistema-comercial/src/apollo/*" ],
+            "#/*": [
+                "./*"
+            ],
+            "@s-apollo/*": [
+                "apps/sistema-comercial/src/apollo/*"
+            ],
             "@s-fuse/*": [
                 "apps/sistema-comercial/src/@fuse/animations/*",
                 "apps/sistema-comercial/src/@fuse/components/*",
@@ -29,8 +33,12 @@
                 "apps/sistema-comercial/src/@fuse/validators/*",
                 "apps/sistema-comercial/src/@fuse/version/*"
             ],
-            "@s-shared/*": [ "apps/sistema-comercial/src/shared/*" ],
-            "@s-services/*": [ "apps/sistema-comercial/src/services/*" ],
+            "@s-shared/*": [
+                "apps/sistema-comercial/src/shared/*"
+            ],
+            "@s-services/*": [
+                "apps/sistema-comercial/src/services/*"
+            ],
             "@s-core/*": [
                 "apps/sistema-comercial/src/app/core/*",
                 "apps/sistema-comercial/src/app/auth/*",
@@ -71,7 +79,9 @@
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/*",
                 "apps/sistema-comercial/src/app/modules/dir-tecnica-operativa/telemetria/*"
             ],
-            "@s-error/*": [ "apps/sistema-comercial/src/app/modules/error/*" ],
+            "@s-error/*": [
+                "apps/sistema-comercial/src/app/modules/error/*"
+            ],
             "@s-general/*": [
                 "apps/sistema-comercial/src/app/modules/general/*",
                 "apps/sistema-comercial/src/app/modules/general/mis-documentos/*",
@@ -91,16 +101,20 @@
                 "apps/sistema-comercial/src/assets/images/*",
                 "apps/sistema-comercial/src/assets/styles/*"
             ],
-            "@s-directives/*": [ "apps/sistema-comercial/src/directives/*" ],
-            "@s-environments/*": [ "apps/sistema-comercial/src/environments/*" ]
+            "@s-directives/*": [
+                "apps/sistema-comercial/src/directives/*"
+            ],
+            "@s-environments/*": [
+                "apps/sistema-comercial/src/environments/*"
+            ]
         },
-        "types": [ ]
+        "types": []
     },
     "files": [
         "src/main.ts",
         "src/polyfills.ts"
     ],
     "include": [
-        "src/**/*.d.ts"
+        "**/*.d.ts"
     ]
 }
