@@ -10,8 +10,8 @@
         "build": "nx build",
         "g": "npx graphql-codegen --config libs/datos/codegen.yml",
         "api": "cross-env NODE_ENV=dev nx serve api",
-        "build:api": "cross-env NODE_ENV=prod nx serve api",
-        "start:api": "node dist/apps/api/main",
+        "build:api": "cross-env NODE_ENV=prod nx build api",
+        "start": "node dist/apps/api/main",
         "lint": "nx lint"
     },
     "dependencies": {
@@ -127,6 +127,7 @@
         "@babel/cli": "^7.22.5",
         "@babel/core": "^7.22.5",
         "@datorama/akita-ngdevtools": "^7.0.0",
+        "@flydotio/dockerfile": "^0.2.16",
         "@graphql-codegen/cli": "^4.0.1",
         "@graphql-codegen/fragment-matcher": "^5.0.0",
         "@graphql-codegen/typescript": "^4.0.1",
