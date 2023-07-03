@@ -49,9 +49,8 @@ export class AuthService
     {
         try
         {
-            const empleados = await this.empleado.find().exec();
-            console.log('emplea====>>>', empleados);
             const empleado = await this.empleado.findOne({'auth.usuario': username}).exec();
+            console.log(empleado);
             const validar = await bcrypt.compare(password, empleado.auth.contrasena);
             if (validar)
             {
