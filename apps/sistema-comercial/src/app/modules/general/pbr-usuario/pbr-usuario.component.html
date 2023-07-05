@@ -1,6 +1,6 @@
 <section class="flex flex-auto flex-col">
     <app-acciones-mir-pbr [habCentroGestor]="false"/>
     <ng-container *ngIf="planeacionQuery.selectActive() | async as planeacion">
-        <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true"/>
+        <app-lista-pbr class="flex-auto" [desEditarReg]="true" [desNuevoReg]="true" [desEliminarReg]="true" [habilitarCtrls]="false"/>
     </ng-container>
 </section>

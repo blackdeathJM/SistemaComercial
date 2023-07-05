@@ -6,14 +6,6 @@
                     <span fuseAlertTitle>{{definicionIndicador}}</span>
                     {{metodoCalculo}}
                 </fuse-alert>
-                <mat-tab-group [(selectedIndex)]="indice" (selectedIndexChange)="cambioIndice($event)">
-                    <mat-tab label="Formulario comun">
-                        <app-mod-comp-comun [idIndicadorMir]="idIndicadorMir"></app-mod-comp-comun>
-                    </mat-tab>
-                    <mat-tab label="Formulario dinamico">
-                        <app-mod-comp-ptar [idIndicadorMir]="idIndicadorMir"></app-mod-comp-ptar>
-                    </mat-tab>
-                </mat-tab-group>
             </article>
         </div>
     </article>

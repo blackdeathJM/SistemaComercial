@@ -1,7 +1,6 @@
 import {AfterContentInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule, Location} from '@angular/common';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {ModCompComun} from "@s-dir-general/componentes/mod-componentes/mod-comp-comun/mod-comp-comun";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
@@ -17,13 +16,12 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {isNil} from "@angular-ru/cdk/utils";
 import {Subscription} from "rxjs";
 import {FuseAlertModule} from "@s-fuse/alert";
-import {ModCompPtar} from "@s-dir-general/componentes/mod-componentes/mod-comp-ptar/mod-comp-ptar";
 
 @Component({
     selector: 'app-mod-componentes',
     standalone: true,
-    imports: [CommonModule, MatButtonToggleModule, ModCompComun, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatButtonModule, MatIconModule, MatTooltipModule, FuseAlertModule,
-        ModCompPtar],
+    imports: [CommonModule, MatButtonToggleModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatListModule, MatTabsModule, MatButtonModule, MatIconModule, MatTooltipModule,
+        FuseAlertModule],
     templateUrl: './mod-componentes.component.html',
     styleUrls: ['./mod-componentes.component.scss'],
     animations: [fuseAnimations],
