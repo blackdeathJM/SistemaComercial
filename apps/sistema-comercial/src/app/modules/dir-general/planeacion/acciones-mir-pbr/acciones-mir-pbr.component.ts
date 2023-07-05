@@ -8,6 +8,8 @@ import {SeleccionQuery} from '@s-dir-general/selecciones/store/seleccion.query';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {PlaneacionStore} from "@s-dir-general/store/planeacion.store";
+import {usuarioFil} from "@s-dir-general/store/planeacion.service";
+import {AuthQuery} from "@s-core/auth/store/auth.query";
 
 @Component({
     selector: 'app-acciones-mir-pbr',
@@ -21,15 +23,22 @@ export class AccionesMirPbrComponent
 {
     @Input() habCentroGestor = false;
 
-    constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore)
+    constructor(public seleccionQuery: SeleccionQuery, public planeacionQuery: PlaneacionQuery, private planeacionStore: PlaneacionStore, private authQuery: AuthQuery)
     {
     }
 
     seleccionarPlaneacion(e: IPlaneacion): void
     {
         this.planeacionStore.setActive(e._id);
+        if (usuarioFil())
+        {
+            const filUsuario = e.mirCuestionario.filter(usuario => usuario.idEmpleado === this.authQuery.getValue()._id);
+            this.planeacionQuery.cuestionarioMirV.set(filUsuario);
+        } else
+        {
+            this.planeacionQuery.cuestionarioMirV.set(e.mirCuestionario);
+        }
 
-        this.planeacionQuery.cuestionarioMirV.set(e.mirCuestionario);
         this.planeacionQuery.cuestionarioPbrV.set(e.pbrCuestionario);
         this.planeacionQuery.sumatoriaPbrV.set(e.pbrSumatoria);
     }

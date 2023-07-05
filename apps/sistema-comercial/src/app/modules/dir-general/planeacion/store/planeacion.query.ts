@@ -22,11 +22,7 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
     sumatoriaPbrV: WritableSignal<ISumatorias[]> = signal<ISumatorias[]>([]);
     sumatoriaPbr: WritableSignal<ISumatorias> = signal<ISumatorias>(null);
 
-    centroGestor: WritableSignal<string> = signal<string>(null);
-
-    desactivarBtnFormAd = makeVar<boolean>(true);
-    // abrirPanelPbr = makeVar<boolean>(false);
-    asigForm = makeVar<number>(0);
+    centroGestor: WritableSignal<string> = signal<string>('');
 
     compCuestionarioPbr: Signal<IPbrCuestionario[]> = computed((): IPbrCuestionario[] =>
     {

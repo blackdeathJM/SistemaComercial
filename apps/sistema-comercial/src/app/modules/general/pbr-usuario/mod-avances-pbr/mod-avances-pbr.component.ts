@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, Inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {RegistrosComponent} from '@s-shared/registros/registros.component';
@@ -7,7 +7,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {AvancesPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
 import {PlaneacionService} from '@s-dir-general/store/planeacion.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TRegAvancesPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {finalize} from 'rxjs';
 import {isNotNil} from "@angular-ru/cdk/utils";
@@ -24,7 +24,9 @@ export class ModAvancesPbrComponent
 {
     formAvances: FormGroup = this.fb.formGroup(new AvancesPbr());
     cargando = false;
-    constructor(private fb: RxFormBuilder, private planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModAvancesPbrComponent>, private planeacionService: PlaneacionService)
+
+    constructor(private fb: RxFormBuilder, private planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModAvancesPbrComponent>, private planeacionService: PlaneacionService,
+                @Inject(MAT_DIALOG_DATA) private habilitarCtrl: boolean)
     {
         effect(() =>
         {
@@ -36,6 +38,10 @@ export class ModAvancesPbrComponent
                 {
                     const ctrlNombre = this.formAvances.get(x);
                     const ctrlValor = this.formAvances.get(x).value;
+                    if (habilitarCtrl)
+                    {
+                        return ;
+                    }
                     if (ctrlValor !== 0)
                     {
                         ctrlNombre.disable();
@@ -50,7 +56,20 @@ export class ModAvancesPbrComponent
         const pbr = this.planeacionQuery.cuestionarioPbr();
         const planeacion = this.planeacionQuery.getActive();
         this.cargando = true;
-        const {enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre} = this.formAvances.value;
+        //Se comentó esta línea porque el formulario reactivo no obtiene los valores cuando está deshabilitado y recordar que se deshabilita cuando los valores son diferentes de 0
+        // const {enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre} = this.formAvances.value;
+        const enero = this.formAvances.get('enero').value;
+        const febrero = this.formAvances.get('febrero').value;
+        const marzo = this.formAvances.get('marzo').value;
+        const abril = this.formAvances.get('abril').value;
+        const mayo = this.formAvances.get('mayo').value;
+        const junio = this.formAvances.get('junio').value;
+        const julio = this.formAvances.get('julio').value;
+        const agosto = this.formAvances.get('agosto').value;
+        const septiembre = this.formAvances.get('septiembre').value;
+        const octubre = this.formAvances.get('octubre').value;
+        const noviembre = this.formAvances.get('noviembre').value;
+        const diciembre = this.formAvances.get('diciembre').value;
         const datos: TRegAvancesPbr =
             {
                 _id: planeacion._id,
@@ -71,7 +90,6 @@ export class ModAvancesPbrComponent
                 diciembre: +diciembre
             };
         this.formAvances.disable();
-
         this.planeacionService.regAvancePbr(datos).pipe(finalize(() =>
         {
             this.cargando = false;

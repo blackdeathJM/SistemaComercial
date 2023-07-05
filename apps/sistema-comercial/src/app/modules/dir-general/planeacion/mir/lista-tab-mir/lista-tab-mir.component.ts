@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
@@ -20,12 +20,13 @@ import {isNil} from '@angular-ru/cdk/utils';
 import {NgxToastService} from '@s-services/ngx-toast.service';
 import {IMirCuestionario} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface';
 import {MultiplesFormatosPipe} from "@s-shared/pipes/multiples-formatos.pipe";
+import {ListaMirSeleccionComponent} from "@s-dir-general/mir/lista-mir-seleccion/lista-mir-seleccion.component";
 
 @Component({
     selector: 'app-lista-tab-mir',
     standalone: true,
     imports: [CommonModule, MatTabsModule, MatCardModule, MatInputModule, MatButtonModule, MatIconModule, NgxUiLoaderModule, FormsModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule,
-        MatDividerModule, MatExpansionModule, MultiplesFormatosPipe],
+        MatDividerModule, MatExpansionModule, MultiplesFormatosPipe, ListaMirSeleccionComponent],
     providers: [],
     templateUrl: './lista-tab-mir.component.html',
     styleUrls: ['./lista-tab-mir.component.scss'],
@@ -49,12 +50,12 @@ export class ListaTabMirComponent
     {
     }
 
-    cambioDeSeleccion(e: MatButtonToggleChange, i: number): void
-    {
-        this.indice = i;
-        const cuestionarioMir = e.value as IMirCuestionario;
-        this.planeacionQuery.cuestionarioMir.set(cuestionarioMir);
-    }
+    // cambioDeSeleccion(e: MatButtonToggleChange, i: number): void
+    // {
+    //     this.indice = i;
+    //     const cuestionarioMir = e.value as IMirCuestionario;
+    //     this.planeacionQuery.cuestionarioMir.set(cuestionarioMir);
+    // }
 
     nuevoElemento(): void
     {
@@ -81,16 +82,6 @@ export class ListaTabMirComponent
         this.planeacionService.eliminarElemento(this.planeacionQuery.cuestionarioMir().idIndicador, ValoresCamposMod.mirCuestionario);
     }
 
-    validarMir(): boolean
-    {
-        if (isNil(this.planeacionQuery.cuestionarioMir()))
-        {
-            this.ngxToast.alertaToast('No hay elemento seleccionado para poder continuar', 'PBR')
-            return true;
-        }
-        return false;
-    }
-
     cambiarDireccion(dir: string): void
     {
         const arregloMir = this.planeacionQuery.compCuestionarioMir();
@@ -105,8 +96,13 @@ export class ListaTabMirComponent
         this.planeacionQuery.cuestionarioMir.set(arregloMir[this.indice]);
     }
 
-    trackByFn(index: number): number
+    private validarMir(): boolean
     {
-        return index;
+        if (isNil(this.planeacionQuery.cuestionarioMir()))
+        {
+            this.ngxToast.alertaToast('No hay elemento seleccionado para poder continuar', 'PBR')
+            return true;
+        }
+        return false;
     }
 }

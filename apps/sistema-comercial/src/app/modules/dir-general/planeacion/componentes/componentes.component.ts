@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -43,6 +43,7 @@ import html2canvas from "html2canvas";
 export class ComponentesComponent
 {
     @ViewChild('componente', {static: false}) componenteRef!: ElementRef;
+    @Input({required: true}) desRegComp = false;
     @Output() avancesTrim = new EventEmitter<string[]>();
     protected readonly PrefFormDin = PrefFormDin;
     ngxLoader = 'loaderComponentes';
@@ -59,23 +60,24 @@ export class ComponentesComponent
     columnas: IGenerarColumnTabla[] = [];
 
     constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private router: Router, private cdr: ChangeDetectorRef,
-                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService, private ngxUiLoaderService: NgxUiLoaderService)
+                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService, private ngxUiLoaderService: NgxUiLoaderService, private renderer: Renderer2)
     {
         effect(() =>
         {
             const mir = this.planeacionQuery.cuestionarioMir();
             if (isNil(mir) || isNil(mir.componente))
             {
-                this.avTrim = [...['0', '0', '0', '0']];
-                this.avancesTrim.emit([...this.avTrim]);
+                this.avTrim = ['0', '0', '0', '0'];
+                this.avancesTrim.emit(this.avTrim);
                 return;
             }
-            const trimObjCalcular = this.componentesService.objParaLaFormula(mir, planeacionQuery.getActive());
             this.chkTrim0.reset();
             this.chkTrim1.reset();
             this.chkTrim2.reset();
             this.chkTrim3.reset();
             this.chkVisible = [false, false, false, false];
+
+            const trimObjCalcular = this.componentesService.objParaLaFormula(mir, planeacionQuery.getActive());
             const tituloEnArray = mir.componente.colsTabla[0].split('__');
             const etiqueta = tituloEnArray.shift();
             const def = tituloEnArray.pop();
@@ -121,22 +123,36 @@ export class ComponentesComponent
     {
         this.ngxUiLoaderService.startLoader(this.ngxLoader);
         const componente = this.componenteRef.nativeElement;
-        componente.style.color = 'black';
-        html2canvas(componente).then(canvas =>
+
+        const spans = componente.querySelectorAll('span');
+        spans.forEach(span =>
+        {
+            span.style.color = 'black';
+        });
+
+        html2canvas(componente, {}).then(canvas =>
         {
             const img = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'pt', 'a4');
-            pdf.addImage('assets/images/logo/presidencia.png', 'png', 10, 10, 28, 28, 'logo', 'FAST');
-            pdf.setFontSize(8);
-            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO DE DOLORES HIDALGO, GUANAJUATO(SIMAPAS)', pdf.internal.pageSize.width / 2, 20, {align: 'center'});
-            const imgProps = pdf.getImageProperties(img);
             const pdfAncho = pdf.internal.pageSize.getWidth();
+
+            pdf.addImage('assets/images/logo/simapasPresidencia150X84.png', 'png', 25, 30, 150, 84, 'logo', 'FAST');
+            pdf.setFontSize(10);
+            pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO', 350, 40, {align: 'center'});
+            pdf.text('DOLORES HIDALGO, (SIMAPAS)., GUANAJUATO', 350, 60, {align: 'center'});
+
+            const imgProps = pdf.getImageProperties(img);
             const pdfAlto = (imgProps.height * pdfAncho) / imgProps.width;
-            pdf.addImage(img, 'PNG', 0, 40, pdfAncho, pdfAlto);
-            pdf.line(10, pdfAlto + 50, pdfAncho - 20, pdfAlto + 50);
-            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 130, {align: 'right', baseline: 'middle', renderingMode: 'fill'});
+
+            pdf.addImage(img, 'PNG', 30, 120, pdfAncho - 60, pdfAlto);
+            pdf.text(mirSelec.centroGestor, pdfAncho - 100, pdfAlto + 260, {align: 'center', baseline: 'middle', renderingMode: 'fill'});
+            pdf.setFont('helvetica', 'bold');
+            pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 270, {align: 'center', baseline: 'middle', renderingMode: 'fill'});
             pdf.save('componente.pdf');
-            componente.style.color = '';
+            spans.forEach(span =>
+            {
+                span.style.color = '';
+            });
             this.ngxUiLoaderService.stopLoader(this.ngxLoader);
         });
     }
