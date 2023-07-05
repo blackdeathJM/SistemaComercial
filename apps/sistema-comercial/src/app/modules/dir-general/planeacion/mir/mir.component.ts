@@ -19,6 +19,39 @@ import {PlaneacionImprimirService} from "@s-dir-general/services/planeacion-impr
 import {IMirCuestionario} from "#/libs/models/src/lib/dir-general/planeacion/mir/mir.interface";
 import {CellHook, CellHookData, ColumnInput, Styles} from "jspdf-autotable";
 import {STYLES} from "@s-dir-general/models/pdf-imprimir";
+import {GeneralService} from "@s-services/general.service";
+import {Workbook} from "exceljs";
+import * as fs from 'file-saver';
+
+export enum EncabezadoMir
+{
+    idIndicador = 'Indicador',
+    nivel = 'Nivel',
+    programaFinanciacion = 'Programa financiacion',
+    resumenNarrativo = 'Resumen narrativo',
+    centroGestor = 'Centro Gestor',
+    nombreDelIndicador = 'Nom. Ind',
+    tipo = 'Tipo',
+    dimension = 'Dimension',
+    definicionIndicador = 'Def. Ind',
+    metodoCalculo = 'Met. Calc',
+    mediosVerificacion = 'Medios Verificacion',
+    supuestos = 'Supuestos',
+    unidadDeMedida = 'U. Med',
+    frecuenciaMedicion = 'Frec. Med',
+    lineaBaseAno = 'L. B. A',
+    lineaBaseValor = 'L. B. V',
+    meta = 'Meta',
+    sentidoDelIndicador = 'S. Ind',
+    semefVerdeV = 'S. Verde',
+    semfAmarilloV = 'S. Amarillo',
+    semfRojoV = ' S. Rojo',
+    avanceTrim1 = 'Av. Trim 1',
+    avanceTrim2 = 'Av. Trim 2',
+    avanceTrim3 = 'Av. Trim 3',
+    avanceTrim4 = 'Av. Trim 4',
+    avanceAnual = 'Global'
+}
 
 @Component({
     selector: 'app-mir',
@@ -37,7 +70,7 @@ export default class MirComponent implements OnDestroy
     const
     estilos: Partial<Styles> = STYLES;
 
-    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService)
+    constructor(public mdr: MatDialog, public planeacionQuery: PlaneacionQuery, private componentesService: ComponentesService, private ngxToast: NgxToastService, private generalService: GeneralService)
     {
     }
 
@@ -53,12 +86,10 @@ export default class MirComponent implements OnDestroy
 
     imprimirTablaMir(): void
     {
-        if (isNil(this.planeacionQuery.getActive()))
+        if (this.validarImprimirExp())
         {
-            this.ngxToast.alertaToast('Selecciona un año para poder continuar', 'MIR');
             return;
         }
-
         const columnas: ColumnInput[] = [{header: 'Ind', dataKey: 'idIndicador'}, {header: 'Nivel', dataKey: 'nivel'}, {header: 'Resumen narrativo', dataKey: 'resumenNarrativo'},
             {header: 'Centro gestor', dataKey: 'centroGestor'}, {header: 'Metodo de calculo', dataKey: 'metodoCalculo'}, {header: 'Medios de verificacion', dataKey: 'mediosVerificacion'},
             {header: 'U. Medida', dataKey: 'unidadDeMedida'}, {header: 'L.B Año', dataKey: 'lineaBaseAno'}, {header: 'L.B. valor', dataKey: 'lineaBaseValor'}, {header: 'Meta', dataKey: 'meta'},
@@ -99,6 +130,35 @@ export default class MirComponent implements OnDestroy
         });
 
         PlaneacionImprimirService.imprimirTabla(columnas, this.estilos, columnStyles, this.planeacionQuery.compCuestionarioMir(), subtitulo, didParseCell);
+    }
+
+    exportarExcel(): void
+    {
+        const libroMir = new Workbook();
+        const hojaMir = libroMir.addWorksheet('MIR');
+
+        hojaMir.addRow(Object.keys(EncabezadoMir));
+        this.planeacionQuery.compCuestionarioMir().forEach((valor) =>
+        {
+            hojaMir.addRow([valor.idIndicador, valor.nivel, valor.programaFinanciacion, valor.resumenNarrativo, valor.centroGestor, valor.nombreDelIndicador, valor.tipo, valor.dimension, valor.definicionIndicador,
+                valor.metodoCalculo, valor.mediosVerificacion, valor.supuestos, valor.unidadDeMedida, valor.frecuenciaMedicion, valor.lineaBaseAno, valor.lineaBaseValor, valor.meta, valor.sentidoDelIndicador,
+                valor.semefVerdeV, valor.semefAmarilloV, valor.semefRojoV, valor.avanceTrim1, valor.avanceTrim2, valor.avanceTrim3, valor.avanceTrim4, valor.avanceAnual]);
+        });
+
+        libroMir.xlsx.writeBuffer().then((datos) =>
+        {
+            const blob = new Blob([datos], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+            fs.saveAs(blob, 'mir.xlsx');
+        });
+    }
+
+    private validarImprimirExp(): boolean
+    {
+        if (isNil(this.planeacionQuery.getActive()))
+        {
+            this.ngxToast.alertaToast('Selecciona un año para poder continuar', 'MIR');
+            return true;
+        }
     }
 
     avancesTrim(e: string[]): void
