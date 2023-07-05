@@ -24,20 +24,21 @@ export class MultiplesFormatosPipe implements PipeTransform
                 mostrarValor = Math.round(Number(mostrarValor)).toString();
                 break;
             case TipoValoresTrim.PORCENTAJE:
-                mostrarValor = new PercentPipe('en-US').transform(parseFloat(mostrarValor) / 100, '1.2-2');
+                mostrarValor = new PercentPipe('en-US').transform(+mostrarValor / 100, '1.0-2');
+                mostrarValor += ' %';
                 // mostrarValor = Number(mostrarValor).toFixed(2).toString() + '%';
                 break;
             case TipoValoresTrim.DECIMAL:
-                mostrarValor = new DecimalPipe('en-US').transform(mostrarValor, '1.2-2');
+                mostrarValor = new DecimalPipe('en-US').transform(mostrarValor, '1.0-2');
                 break;
             case TipoValoresTrim.PESOS:
-                mostrarValor = new CurrencyPipe('en-US').transform(mostrarValor, 'USD', 'symbol', '1.2-2');
+                mostrarValor = new CurrencyPipe('en-US').transform(mostrarValor, 'USD', 'symbol', '1.0-2');
                 break;
             case TipoValoresTrim.MT3:
-                mostrarValor = new DecimalPipe('en-us').transform(mostrarValor, '1.2-2') + 'Mt3';
+                mostrarValor = new DecimalPipe('en-us').transform(mostrarValor, '1.0-2') + ' Mt3';
                 break;
             case TipoValoresTrim.LTS:
-                mostrarValor = new DecimalPipe('en-us').transform(mostrarValor, '1.2-2') + 'Lts';
+                mostrarValor = new DecimalPipe('en-us').transform(mostrarValor, '1.0-2') + ' Lts';
                 break;
         }
         return mostrarValor;

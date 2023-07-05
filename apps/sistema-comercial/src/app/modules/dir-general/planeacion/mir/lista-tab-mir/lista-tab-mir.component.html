@@ -5,19 +5,9 @@
                 <span class="text-xl">{{planeacion?.descripcion}} - {{planeacion?.ano}}</span>
             </mat-card-header>
             <mat-card-title>
-                <mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2">
-                    <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
-                        <mat-panel-title>Elementos MIR</mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-button-toggle-group>
-                        <div class="flex flex-auto flex-wrap">
-                            <mat-button-toggle class="rounded-none" *ngFor="let mir of planeacionQuery?.compCuestionarioMir(); trackBy:trackByFn; let i=index" [value]="mir" (change)="cambioDeSeleccion($event, i)">
-                                <span class="text-left">{{mir?.idIndicador}}</span>
-                            </mat-button-toggle>
-                        </div>
-                    </mat-button-toggle-group>
-                </mat-expansion-panel>
+                <app-lista-mir-seleccion [mirs]="planeacionQuery.compCuestionarioMir()"/>
             </mat-card-title>
+
             <mat-card-content *ngIf="planeacionQuery?.cuestionarioMir() as mirSelec">
                 <div class="grid grid-cols-8 gap-4">
                     <span class="border-b-2 text-xl text-green-600 text-center col-span-full">{{mirSelec?.idIndicador}}</span>
@@ -63,11 +53,11 @@
                     <span class="border-b-2">{{mirSelec?.sentidoDelIndicador}}</span>
 
                     <span class="detalle-span col-start-3">Semaforo verde</span>
-                    <span class="border-b-2 text-green-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefVerdeV) / 100}}</span>
+                    <span class="border-b-2 text-green-600 text-lg">{{((mirSelec?.meta * mirSelec?.semefVerdeV) / 100) | number: '1.0-2'}}</span>
                     <span class="detalle-span">Semaforo amarillo</span>
-                    <span class="border-b-2 text-amber-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefAmarilloV) / 100}}</span>
+                    <span class="border-b-2 text-amber-600 text-lg">{{((mirSelec?.meta * mirSelec?.semefAmarilloV) / 100) | number: '1.0-2'}}</span>
                     <span class="detalle-span">Semaforo rojo</span>
-                    <span class="border-b-2 text-red-600 text-lg">{{(mirSelec?.meta * mirSelec?.semefRojoV) / 100}}</span>
+                    <span class="border-b-2 text-red-600 text-lg">{{((mirSelec?.meta * mirSelec?.semefRojoV) / 100) | number: '1.0-2'}}</span>
 
                     <span class="detalle-span">Avance trim1</span>
                     <span class="border-b-2 text-cyan-500">{{_avancesTrimestrales[0] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}}</span>

@@ -7,6 +7,7 @@ import {PlaneacionQuery} from "@s-dir-general/store/planeacion.query";
 import {IPlaneacion} from "#/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 import {isEqual, pullAllWith} from "lodash-es";
 import {ToastrService} from "ngx-toastr";
+import {jsPDF} from "jspdf";
 
 export enum PrefFormDin
 {
@@ -197,6 +198,15 @@ export class ComponentesService
             }
         });
         return obj;
+    }
+
+    imprimirComponentes(mirs: IMirCuestionario[]): void
+    {
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        pdf.addImage('assets/images/logo/simapasPresidencia150X84.png', 'png', 25, 30, 150, 84, 'logo', 'FAST');
+        pdf.setFontSize(10);
+        pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO', 350, 40, {align: 'center'});
+        pdf.text('DOLORES HIDALGO, (SIMAPAS)., GUANAJUATO', 350, 60, {align: 'center'});
     }
 
     private separarIdsFormConValAnt(mirActivo: IMirCuestionario): string[][]

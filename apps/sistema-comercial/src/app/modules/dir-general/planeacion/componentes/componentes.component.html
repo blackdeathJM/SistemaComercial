@@ -38,7 +38,7 @@
                     <span class="border-b-2 col-span-full text-center">{{mirSelec?.metodoCalculo}}</span>
                 </section>
 
-                <app-tabla-mat class="m-4 overflow-x-auto" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente" [obtenerValor]="false"/>
+                <app-tabla-mat class="m-4 overflow-x-auto" [datos]="datosTabla" [columnas]="columnas" *ngIf="mirSelec.componente" [obtenerValor]="false" [filaTotalVisible]="false"/>
 
                 <mat-divider class="border-4 mb-4 border-b-fuchsia-700 dark:border-fuchsia-950"/>
                 <section class="grid grid-cols-8 gap-4 text-lg">
@@ -79,7 +79,7 @@
 
         <mat-card-actions class="tarjeta-mat-acciones border-t-green-400">
             <div class="flex flex-auto gap-4">
-                <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoComponente()">
+                <button mat-raised-button color="primary" class="flex-auto" (click)="nuevoComponente()" [disabled]="desRegComp">
                     <mat-icon svgIcon="heroicons_outline:plus"/>
                     Registrar nuevo componente
                 </button>
