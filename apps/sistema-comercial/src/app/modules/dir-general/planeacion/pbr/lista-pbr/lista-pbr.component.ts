@@ -41,7 +41,7 @@ export class ListaPbrComponent
     @Input() desEditarReg: boolean = false;
     @Input() desEliminarReg: boolean = false;
     @Input() desSumatoria: boolean = false;
-
+    @Input() habilitarCtrls = false;
     @Output() panelPbr = new EventEmitter<boolean>();
 
     @ViewChild('pbrImprimir', {static: false}) pbrImprimirRef!: ElementRef;
@@ -78,7 +78,7 @@ export class ListaPbrComponent
         {
             return;
         }
-        this.mdr.open(ModAvancesPbrComponent, {width: '40%'});
+        this.mdr.open(ModAvancesPbrComponent, {width: '40%', data: this.habilitarCtrls});
     }
 
     nvoElemento(): void

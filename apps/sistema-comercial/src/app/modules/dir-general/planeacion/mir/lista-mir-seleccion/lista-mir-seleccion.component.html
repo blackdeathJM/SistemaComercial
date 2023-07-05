@@ -1,0 +1,12 @@
+<mat-expansion-panel class="mb-4 border-b-cyan-400 border-b-2 bg-zinc-900" *ngIf="_mirs.length >0">
+    <mat-expansion-panel-header class="border-b-2 border-b-cyan-400">
+        <mat-panel-title>Elementos MIR</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-button-toggle-group>
+        <div class="flex flex-auto flex-wrap">
+            <mat-button-toggle class="rounded-none bg-zinc-900" *ngFor="let mir of _mirs; trackBy:trackByFn; let i=index" [value]="mir" (change)="cambioDeSeleccion($event, i)">
+                <span class="text-left">{{mir?.idIndicador}}</span>
+            </mat-button-toggle>
+        </div>
+    </mat-button-toggle-group>
+</mat-expansion-panel>

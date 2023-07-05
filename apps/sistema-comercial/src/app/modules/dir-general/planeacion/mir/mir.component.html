@@ -8,7 +8,7 @@
         <app-acciones-mir-pbr [habCentroGestor]="true">
             <ng-container acciones>
                 <mat-button-toggle-group>
-                    <mat-button-toggle (click)="regSeleccion()" value="bold">
+                    <mat-button-toggle (click)="regSeleccion()">
                         <mat-icon svgIcon="add"/>
                         Agregar lista de opciones
                     </mat-button-toggle>
@@ -26,7 +26,7 @@
 
         <article class="flex flex-col flex-auto">
             <app-lista-tab-mir [avancesTrimestrales]="avancesTrimestrales" (panelMir)="panelMirLista($event)"/>
-            <app-componentes (avancesTrim)="avancesTrim($event)"/>
+            <app-componentes (avancesTrim)="avancesTrim($event)" [desRegComp]="false"/>
         </article>
     </mat-drawer-content>
 </mat-drawer-container>

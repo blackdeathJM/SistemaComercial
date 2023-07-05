@@ -28,6 +28,8 @@ export class TablaMatComponent
         this.columnasAMostrar = this.columnasTabla.map(col => col.def);
     }
 
+    @Input({required: true}) filaTotalVisible: boolean;
+
     @Input({required: true}) obtenerValor: boolean = false;
 
     @Output() valorFila = new EventEmitter<any>();

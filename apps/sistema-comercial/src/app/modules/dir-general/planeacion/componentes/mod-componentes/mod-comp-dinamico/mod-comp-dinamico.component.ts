@@ -337,7 +337,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
                 etiquetas.push(primerValor);
                 def.push(PrefFormDin.idIndicador + idCol);
             }
-            //Restablecer textos del formulario
+            //Restablecer formulario
             ComponentesService.restCtrls([PrefFormDin.idIndicador], idCol, this.formDinamico, '');
             ComponentesService.restCtrls([PrefFormDin.ant1, PrefFormDin.ant2, PrefFormDin.ant3, PrefFormDin.ant4], idCol, this.formDinamico, '0');
             return {...obj, ...valoresParaObj};

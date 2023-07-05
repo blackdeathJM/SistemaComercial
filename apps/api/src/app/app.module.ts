@@ -3,7 +3,7 @@ import {GraphQLModule} from '@nestjs/graphql';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PubSub} from 'graphql-subscriptions';
 import {ConfigModule, ConfigService} from '@nestjs/config';
-import config from '../config/config';
+import config, {VariablesEntorno} from '../config/config';
 import {AdminModule} from './admin/admin.module';
 import {GeneralModule} from './general/general.module';
 import {SubirArchivoModule} from './upload/subirArchivo.module';
@@ -57,7 +57,7 @@ import * as process from "process";
                 inject: [ConfigService],
                 useFactory: async (configService: ConfigService) => (
                     {
-                        uri: configService.get('config.uriMongo'),
+                        uri: configService.get(VariablesEntorno.urlDB),
                         useNewUrlParser: true
                     }
                 )
