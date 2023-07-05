@@ -27,10 +27,6 @@
                 "libs/models/src/lib/admin/empleado/*",
                 "libs/models/src/lib/general/documentos/*",
                 "libs/models/src/lib/scalars/*"
-            ],
-            "@sistema-comercial/services/*": [
-                "libs/services/src/lib/pipes/*",
-                "libs/services/src/lib/services/*"
             ]
         },
         "rootDir": "."
