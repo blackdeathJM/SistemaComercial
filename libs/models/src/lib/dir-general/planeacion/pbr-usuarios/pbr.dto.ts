@@ -171,7 +171,7 @@ export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGesto
 export type TRecalcularPbr = RecalcularPbrDto;
 
 @InputType('AsigActividadInput')
-export class AsigActividadDto extends PickType(PbrCuestionarioDto, ['idEmpleado'], InputType)
+export class AsigActividadDto
 {
     @IsNotEmpty({message: 'Es necesario el id del ejercicio'})
     @Field(() => ID, {nullable: true})

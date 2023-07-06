@@ -39,6 +39,7 @@ export class PbrUsuarioComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         usuarioFil(false);
+        this.planeacionQuery.cuestionarioPbrV.set([]);
     }
 
     asignarActividad(): void

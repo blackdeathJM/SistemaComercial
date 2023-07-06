@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
 import {
-    ActualizarResponsableGQL,
+    ActualizarResponsableGQL, AsigActividadGQL, AsigActividadMutation,
     EliminarComponenteGQL,
     FilTodosGQL,
     FilTodosQuery,
@@ -31,7 +31,7 @@ import {NgxUiLoaderService} from 'ngx-ui-loader';
 import {TRegMir} from '#/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {IPlaneacion} from '#/libs/models/src/lib/dir-general/planeacion/planeacion.interface';
 import {$cast, isNotNil} from '@angular-ru/cdk/utils';
-import {TRecalcularPbr, TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {TAsigActividad, TRecalcularPbr, TRegAvancesPbr, TRegPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {FormGroup} from '@angular/forms';
 import {ConfirmacionService} from '@s-services/confirmacion.service';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -59,7 +59,7 @@ export class PlaneacionService
                 private generalService: GeneralService, private ngxLoader: NgxUiLoaderService, private regMirGQL: RegMirGQL, private eliminarComponenteGQL: EliminarComponenteGQL,
                 private regPbrGQL: RegPbrGQL, private actualizarResponsableGQL: ActualizarResponsableGQL, private confirmacionService: ConfirmacionService, private regComponenteGQL: RegComponenteGQL,
                 private planeacionQuery: PlaneacionQuery, private regAvancePbrGQL: RegAvancePbrGQL, private sumatoriaPbrGQL: SumatoriaPbrGQL, private recalcularPbrGQL: RecalcularPbrGQL,
-                private reemplazarCompGQL: ReemplazarCompGQL)
+                private reemplazarCompGQL: ReemplazarCompGQL, private asigActividadGQL: AsigActividadGQL)
     {
     }
 
@@ -256,6 +256,20 @@ export class PlaneacionService
                 const {_id, ...cambios} = <IPlaneacion>res.data.reemplazarComp;
                 this.planeacionStore.update(_id, cambios);
                 this.planeacionQuery.cuestionarioMirV.set(cambios.mirCuestionario);
+            }
+        }));
+    }
+
+    asigActividad(datos: TAsigActividad): Observable<SingleExecutionResult<AsigActividadMutation>>
+    {
+        return this.asigActividadGQL.mutate({datos}).pipe(tap((res) =>
+        {
+            if (res && res.data)
+            {
+                const {_id, ...cambios} = res.data.asigActividad as IPlaneacion;
+                this.planeacionStore.update(_id, cambios);
+                this.planeacionQuery.cuestionarioPbrV.set(cambios.pbrCuestionario);
+                this.ngxToast.satisfactorioToast('Actividad asignada con exito', 'Asignacion de actividades');
             }
         }));
     }

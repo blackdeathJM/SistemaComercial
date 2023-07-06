@@ -120,7 +120,7 @@ export class RegSumPbr implements TSumPbr
 
 export class AsigActividad implements TAsigActividad
 {
-    @required({message: 'El id es requerido'})
+    @prop()
     _id: string;
 
     @prop()
