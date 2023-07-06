@@ -11,6 +11,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TRegAvancesPbr} from '#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {finalize} from 'rxjs';
 import {isNotNil} from "@angular-ru/cdk/utils";
+import {TipoOperaciones} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-mod-avances-pbr',
@@ -24,9 +26,10 @@ export class ModAvancesPbrComponent
 {
     formAvances: FormGroup = this.fb.formGroup(new AvancesPbr());
     cargando = false;
+    tipoOperacion: TipoOperaciones;
 
     constructor(private fb: RxFormBuilder, private planeacionQuery: PlaneacionQuery, public mdr: MatDialogRef<ModAvancesPbrComponent>, private planeacionService: PlaneacionService,
-                @Inject(MAT_DIALOG_DATA) private habilitarCtrl: boolean)
+                @Inject(MAT_DIALOG_DATA) private habilitarCtrl: boolean, private toastrService: ToastrService)
     {
         effect(() =>
         {
@@ -34,19 +37,36 @@ export class ModAvancesPbrComponent
             if (isNotNil(pbr))
             {
                 this.formAvances.patchValue(pbr);
+                const valoresMeses: number[] = [];
                 Object.keys(this.formAvances.controls).forEach(x =>
                 {
                     const ctrlNombre = this.formAvances.get(x);
                     const ctrlValor = this.formAvances.get(x).value;
                     if (habilitarCtrl)
                     {
-                        return ;
+                        return;
                     }
+
                     if (ctrlValor !== 0)
                     {
+                        valoresMeses.push(ctrlValor);
                         ctrlNombre.disable();
                     }
                 });
+
+                if (pbr.tipoOperacion === TipoOperaciones.unicoValor)
+                {
+                    this.tipoOperacion = pbr.tipoOperacion;
+                    if (habilitarCtrl)
+                    {
+                        return;
+                    }
+
+                    if (valoresMeses.length > 1)
+                    {
+                        this.formAvances.disable();
+                    }
+                }
             }
         })
     }
@@ -70,6 +90,18 @@ export class ModAvancesPbrComponent
         const octubre = this.formAvances.get('octubre').value;
         const noviembre = this.formAvances.get('noviembre').value;
         const diciembre = this.formAvances.get('diciembre').value;
+        const meses: number[] = [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre];
+        const mesesConValor: number[] = meses.filter(valorMes => valorMes !== 0);
+
+        if (TipoOperaciones.unicoValor === this.tipoOperacion)
+        {
+            if (mesesConValor.length > 1)
+            {
+                this.toastrService.warning(`Solo se puede tener un valor, porque en el tipo de calculo esta establecida como unico valor, no se puede continuar`, 'Registro de avandces');
+                return;
+            }
+        }
+
         const datos: TRegAvancesPbr =
             {
                 _id: planeacion._id,

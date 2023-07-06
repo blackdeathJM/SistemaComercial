@@ -6,18 +6,24 @@ import {EmpleadoQuery} from "@s-dirAdmonFinanzas/empleados/store/empleado.query"
 import {EmpleadoService} from "@s-dirAdmonFinanzas/empleados/store/empleado.service";
 import {Empleado} from "#/libs/models/src/lib/dir-admon-finanzas/recursos-humanos/empleado/Empleado";
 import {RegistrosComponent} from "@s-shared/registros/registros.component";
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {RxFormBuilder, RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
+import {AsigActividad} from "#/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/Pbr";
 
 @Component({
     selector: 'app-mod-asig-actividad',
     standalone: true,
-    imports: [CommonModule, MatListModule, RegistrosComponent],
+    imports: [CommonModule, MatListModule, RegistrosComponent, ReactiveFormsModule, RxReactiveFormsModule],
     templateUrl: './mod-asig-actividad.component.html',
     styles: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModAsigActividadComponent implements OnInit
 {
-    constructor(public planeacionQuery: PlaneacionQuery, public empleadoQuery: EmpleadoQuery, private empleadoService: EmpleadoService) {}
+    formAsigActividad: FormGroup = this.rxFb.formGroup(new AsigActividad());
+    cargando = false;
+
+    constructor(public planeacionQuery: PlaneacionQuery, public empleadoQuery: EmpleadoQuery, private empleadoService: EmpleadoService, private rxFb: RxFormBuilder) {}
 
     ngOnInit(): void
     {
@@ -34,5 +40,12 @@ export class ModAsigActividadComponent implements OnInit
     registro(): void
     {
 
+    }
+
+    protected readonly FormGroup = FormGroup;
+
+    selecActividad(e: Event): void
+    {
+        console.log(e)
     }
 }

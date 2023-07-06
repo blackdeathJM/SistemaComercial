@@ -10,6 +10,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
 import {
+    AsigActividadDto,
     RecalcularPbrDto,
     RegAvancesPbrDto,
     RegPbrDto
@@ -254,5 +255,21 @@ export class PlaneacionService
     {
         return await this.planeacion.findOneAndUpdate({_id: args._id, 'mirCuestionario.idIndicador': args.idIndicador},
             {$set: {'mirCuestionario.$.componente': null}}, {new: true}).exec();
+    }
+
+    async asigActividad(datos: AsigActividadDto): Promise<PlaneacionDto>
+    {
+        const {_id} = datos;
+        const res = await this.planeacion.findById(_id).exec();
+        const cuestionario = [...res.pbrCuestionario];
+        const nuevosDatos = cuestionario.map((ele) =>
+        {
+            if (datos.idsIndicador.includes(ele.idIndicador))
+            {
+                return {...ele, asignarActividad: datos.idEmpleadoAsig};
+            }
+            return ele;
+        });
+        return await this.planeacion.findOneAndUpdate({_id}, {pbrCuestionario: nuevosDatos}).exec();
     }
 }

@@ -320,6 +320,7 @@ type PbrType {
   idEmpleado: ID
   responsable: String
   correo: String
+  asignarActividad: ID
   descripcion: String
   centroGestor: String
   variableOrigen: String
@@ -459,7 +460,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1688576682
+  tiempo: Int = 1688644642
   titulo: String
   usarRouter: Boolean = false
 }
@@ -652,6 +653,7 @@ input PbrInput {
   idEmpleado: ID
   responsable: String
   correo: String
+  asignarActividad: ID = null
   descripcion: String
   centroGestor: String
   variableOrigen: String
@@ -740,6 +742,7 @@ type Mutation {
   recalcularPbr(args: RecalcularPbrInput!): PlaneacionType!
   regComponente(datos: RegComponenteInput!): PlaneacionType!
   reemplazarComp(_id: ID, idIndicador: String): PlaneacionType!
+  asigActividad(datos: AsigActividadInput!): PlaneacionType!
   registroSesion(_id: String!, auth: AuthInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   actualizarContrasenaAdmin(datos: CambioContrasenaInput!, modificadoPor: ModificadoPorInput!): EmpleadoType!
   login(login: LoginInput!): LoginRespuestaType
@@ -833,6 +836,7 @@ input RegPbrInput {
   idEmpleado: ID
   responsable: String
   correo: String
+  asignarActividad: ID = null
   descripcion: String
   centroGestor: String
   variableOrigen: String
@@ -867,6 +871,7 @@ input RegAvancesPbrInput {
   idEmpleado: ID
   responsable: String
   correo: String
+  asignarActividad: ID = null
   descripcion: String
   centroGestor: String
   variableOrigen: String
@@ -931,6 +936,13 @@ input RegComponenteInput {
   omitirPrimerId: Boolean = false
   _id: ID
   idIndicadorMir: String
+}
+
+input AsigActividadInput {
+  idEmpleado: ID
+  _id: ID
+  idsIndicador: [String!] = []
+  idEmpleadoAsig: ID
 }
 
 input CambioContrasenaInput {

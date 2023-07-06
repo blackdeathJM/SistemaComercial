@@ -1,6 +1,6 @@
 import {ArgsType, Field, Float, ID, InputType, Int, ObjectType, PartialType, PickType} from '@nestjs/graphql';
 import {IPbrCuestionario} from './pbr.interface';
-import {IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import {IsArray, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 import {MirCuestionarioDto} from "../mir/mir.dto";
 
 @ObjectType('PbrType')
@@ -74,6 +74,10 @@ export class PbrCuestionarioDto implements IPbrCuestionario
     @Field(() => String, {nullable: true})
     @IsOptional()
     correo: string;
+
+    @IsOptional()
+    @Field(() => ID, {nullable: true, defaultValue: null})
+    asignarActividad: string
 
     @Field(() => String, {nullable: true})
     @IsOptional()
@@ -165,3 +169,21 @@ export class RecalcularPbrDto extends PickType(PbrCuestionarioDto, ['centroGesto
 }
 
 export type TRecalcularPbr = RecalcularPbrDto;
+
+@InputType('AsigActividadInput')
+export class AsigActividadDto extends PickType(PbrCuestionarioDto, ['idEmpleado'], InputType)
+{
+    @IsNotEmpty({message: 'Es necesario el id del ejercicio'})
+    @Field(() => ID, {nullable: true})
+    _id: string;
+
+    @IsArray({message: 'Es necesario una matriz de idIndicador'})
+    @Field(() => [String], {nullable: true, defaultValue: []})
+    idsIndicador: string[];
+
+    @IsNotEmpty({message: 'Es necesario el id del empleado que se asignara la actividad'})
+    @Field(() => ID, {nullable: true})
+    idEmpleadoAsig: string;
+}
+
+export type TAsigActividad = AsigActividadDto;

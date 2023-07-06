@@ -2,7 +2,7 @@ import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {ActualizarResponsableDto, EliminarElementoDto, PlaneacionDto, ReemplazarCompDto} from '#api/libs/models/src/lib/dir-general/planeacion/planeacion.dto';
 import {PlaneacionService} from '#api/apps/api/src/app/dir-general/planeacion/planeacion.service';
 import {RegMirDto} from '#api/libs/models/src/lib/dir-general/planeacion/mir/mir.dto';
-import {RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
+import {AsigActividadDto, RecalcularPbrDto, RegAvancesPbrDto, RegPbrDto} from '#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.dto';
 import {SumPbrDto} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbrSumatoria.dto";
 import {RegComponenteDto} from "#api/libs/models/src/lib/dir-general/planeacion/componentes/componente.dto";
 
@@ -77,5 +77,11 @@ export class PlaneacionResolver
     async reemplazarComp(@Args() args: ReemplazarCompDto): Promise<PlaneacionDto>
     {
         return this.planeacionService.reemplazarComp(args);
+    }
+
+    @Mutation(() => PlaneacionDto)
+    async asigActividad(@Args('datos') datos: AsigActividadDto): Promise<PlaneacionDto>
+    {
+        return await this.planeacionService.asigActividad(datos);
     }
 }

@@ -79,6 +79,7 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     chkDeshabilitar = false;
     chkPeriodoAntValores = false;
     chkOmitirPrimerIdEnTabla = false;
+    chkValorUnico = false;
     tipoValores = Object.keys(TipoValoresTrim);
 
     formDinamico: FormGroup;
@@ -277,6 +278,11 @@ export class ModCompDinamicoComponent implements OnInit, AfterContentInit, OnDes
     chkOmitirPrimerId(e: MatCheckboxChange): void
     {
         this.chkOmitirPrimerIdEnTabla = e.checked;
+    }
+
+    chkUnicoValor(e: MatCheckboxChange)
+    {
+        this.chkValorUnico = e.checked;
     }
 
     agregarLista(): void

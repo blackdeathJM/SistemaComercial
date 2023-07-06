@@ -8,7 +8,6 @@ import {usuarioFil} from "@s-dir-general/store/planeacion.service";
 import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {AuthQuery} from "@s-core/auth/store/auth.query";
-import {makeVar} from "@apollo/client";
 
 @Injectable({providedIn: 'root'})
 export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>

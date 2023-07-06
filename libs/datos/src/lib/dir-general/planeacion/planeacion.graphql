@@ -76,3 +76,10 @@ mutation reemplazarComp($_id: ID!, $idIndicador: String!)
         ...fragPlaneacion
     }
 }
+mutation asigActividad($datos: AsigActividadInput!)
+{
+    asigActividad(datos: $datos)
+    {
+        ...fragPlaneacion
+    }
+}
