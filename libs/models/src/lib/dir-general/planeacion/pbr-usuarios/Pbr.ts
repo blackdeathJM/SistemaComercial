@@ -1,5 +1,5 @@
 import {sanitize, upperCase} from '@rxweb/sanitizers';
-import {TRegAvancesPbr, TRegPbr} from './pbr.dto';
+import {TAsigActividad, TRegAvancesPbr, TRegPbr} from './pbr.dto';
 import {email, numeric, NumericValueType, prop, required} from '@rxweb/reactive-form-validators';
 import {TSumPbr} from './pbrSumatoria.dto';
 
@@ -46,39 +46,51 @@ export class Pbr implements TRegPbr
 
 export class AvancesPbr implements TRegAvancesPbr
 {
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     enero: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     febrero: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     marzo: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     abril: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     mayo: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     junio: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     julio: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     agosto: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     septiembre: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     octubre: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     noviembre: number;
 
+    @required({message: 'El campo es requerido'})
     @numeric({allowDecimal: true, acceptValue: NumericValueType.PositiveNumber})
     diciembre: number;
 }
@@ -104,4 +116,19 @@ export class RegSumPbr implements TSumPbr
 
     @prop()
     sumTotal: boolean;
+}
+
+export class AsigActividad implements TAsigActividad
+{
+    @prop()
+    _id: string;
+
+    @prop()
+    idEmpleado: string;
+
+    @required({message: 'Es necesario seleccionar un usuario'})
+    idEmpleadoAsig: string;
+
+    @required({message: 'Es necesario seleccionar el elemento a asignar'})
+    idsIndicador: string[];
 }

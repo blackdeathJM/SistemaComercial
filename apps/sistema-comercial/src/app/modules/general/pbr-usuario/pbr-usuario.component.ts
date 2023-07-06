@@ -29,7 +29,7 @@ export class PbrUsuarioComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        //Obtenermos el usuario que ha iniciado sesion y la asignamos a una variable para usarla en el componente lista del pbr
+        //Obtenemos el usuario que ha iniciado sesion y la asignamos a una variable para usarla en el componente lista del pbr
         usuarioFil(true);
         // Obtenermos de la coleccion todos los años para poderlos seleccionar recoredad que toda la información se maneja en una sola coleccion,
         // mirCuestionario, pbrCuestionario, sumatorias etc.
@@ -39,6 +39,7 @@ export class PbrUsuarioComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
         usuarioFil(false);
+        this.planeacionQuery.cuestionarioPbrV.set([]);
     }
 
     asignarActividad(): void

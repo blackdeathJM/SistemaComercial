@@ -28,6 +28,8 @@ export interface IPbrCuestionario extends IMeses
     idEmpleado: string;
     correo: string;
     responsable: string;
+    //Id del usuario que se le asignara actividad
+    asignarActividad: string;
     trim1: number;
     trim2: number;
     trim3: number;
@@ -40,5 +42,6 @@ export enum TipoOperaciones
 {
     suma = 'suma',
     promedio = 'promedio',
-    ultimo = 'ultimo'
+    ultimo = 'ultimo',
+    unicoValor = 'unicoValor'
 }

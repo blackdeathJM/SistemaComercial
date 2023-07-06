@@ -8,7 +8,6 @@ import {usuarioFil} from "@s-dir-general/store/planeacion.service";
 import {isNil} from "@angular-ru/cdk/utils";
 import {NgxToastService} from "@s-services/ngx-toast.service";
 import {AuthQuery} from "@s-core/auth/store/auth.query";
-import {makeVar} from "@apollo/client";
 
 @Injectable({providedIn: 'root'})
 export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
@@ -29,7 +28,15 @@ export class PlaneacionQuery extends QueryEntity<IPlaneacionState, IPlaneacion>
         const cuestionarioOriginal: IPbrCuestionario[] = this.cuestionarioPbrV().slice();
         if (usuarioFil())
         {
-            return cuestionarioOriginal.filter(value => value.idEmpleado === this.authQuery.getValue()._id);
+            const filResponsable = cuestionarioOriginal.filter(value => value.idEmpleado === this.authQuery.getValue()._id);
+            const filAsig = cuestionarioOriginal.filter(actAsignada => actAsignada.asignarActividad === this.authQuery.getValue()._id);
+            if (filAsig.length > 0)
+            {
+                return filAsig;
+            } else
+            {
+                return filResponsable;
+            }
         }
         return cuestionarioOriginal.filter(value => value.centroGestor === this.centroGestor());
     });

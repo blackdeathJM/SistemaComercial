@@ -5,12 +5,11 @@ import {Model} from "mongoose";
 import {IPlaneacion} from "#api/libs/models/src/lib/dir-general/planeacion/planeacion.interface";
 import {isEmpty} from "lodash";
 import {TipoOperaciones} from "#api/libs/models/src/lib/dir-general/planeacion/pbr-usuarios/pbr.interface";
-import {ComponenteService} from "#api/apps/api/src/app/dir-general/planeacion/componente.service";
 
 @Injectable()
 export class CalculosPbrService
 {
-    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>, private componenteService: ComponenteService)
+    constructor(@InjectModel(PlaneacionDto.name) private planeacion: Model<TPlaneacionType>)
     {
     }
 
@@ -83,7 +82,6 @@ export class CalculosPbrService
                 total = voltearValores.reverse().find(value => value !== 0);
                 break;
             case  TipoOperaciones.promedio:
-
                 trimestres.forEach(value =>
                 {
                     const resultado = value.reduce((acc, act) => acc + act);
@@ -91,6 +89,16 @@ export class CalculosPbrService
                 });
                 const sumarMeses = meses.reduce((acc, act) => acc + act);
                 total = sumarMeses / meses.length;
+                break;
+            case TipoOperaciones.unicoValor:
+                meses.forEach((valorDelMes) =>
+                {
+                    if (valorDelMes !== 0)
+                    {
+                        total = valorDelMes;
+                    }
+                });
+                valoresTrim.push(total, total, total, total);
                 break;
         }
         return await this.planeacion.findOneAndUpdate({'_id': _id, 'pbrCuestionario.idIndicador': idIndicador},

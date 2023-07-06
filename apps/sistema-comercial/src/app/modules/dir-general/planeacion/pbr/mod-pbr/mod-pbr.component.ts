@@ -35,14 +35,15 @@ import {ConfirmacionService} from "@s-services/confirmacion.service";
 export class ModPbrComponent implements OnInit, OnDestroy
 {
     @Output() panelPbr = new EventEmitter<boolean>();
+    protected tipoOperacion = TipoOperaciones;
     formPbr: FormGroup = this.fb.formGroup(new Pbr());
+
     cargando = false;
     empleados: IResolveEmpleado[];
     centrosGestores: string[] = [];
     actualizar = false;
     empleadoAnterior: string;
     cuestionarioPbr = this.planeacionQuery.cuestionarioPbr;
-    tipoOperacion = TipoOperaciones;
     sub: Subscription = new Subscription();
 
     constructor(private fb: RxFormBuilder, private seleccionQuery: SeleccionQuery, public empleadoQuery: EmpleadoQuery, private planeacionQuery: PlaneacionQuery,
@@ -86,6 +87,7 @@ export class ModPbrComponent implements OnInit, OnDestroy
                 esActualizar: this.actualizar,
                 ...this.formPbr.value
             };
+
         this.formPbr.disable();
         this.planeacionService.regPbr(datos).pipe(finalize(() =>
         {
