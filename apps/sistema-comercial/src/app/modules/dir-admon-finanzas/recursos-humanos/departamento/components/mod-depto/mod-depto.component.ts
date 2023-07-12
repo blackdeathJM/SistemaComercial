@@ -42,7 +42,7 @@ export class ModDeptoComponent implements OnInit
     formDepto: FormGroup;
     seleccionarUno: IDepto = null;
 
-    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private ngxToast: NgxToastService, private deptoService: DeptoService, private deptoQuery: DeptoQuery)
+    constructor(private fb: RxFormBuilder, public dRef: MatDialog, private deptoService: DeptoService, private deptoQuery: DeptoQuery)
     {
 
     }

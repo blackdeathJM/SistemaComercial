@@ -22,4 +22,5 @@ fragment fragEmpleado on EmpleadoType
     activo
     correo
     deptoId
+    planeacionCentroGestor
 }
