@@ -128,7 +128,7 @@ export class DocumentosService
             try
             {
                 const registro = await this.documento.create(datos);
-
+                console.log(registro);
                 registro.usuarios.map(async (usuario) =>
                 {
                     const notificacion: INotificacion =
@@ -244,14 +244,6 @@ export class DocumentosService
     async subirDocs(args: DocsSubirDto, filesDocs: UploadDto, filesAcuse: UploadDto): Promise<DocumentoDto>
     {
         const urlAchivos: Record<string, string | number> = {};
-        if (filesDocs)
-        {
-            // codigo por si el documento se va a subir de manera local
-        }
-        if (filesAcuse)
-        {
-
-        }
         if (args.docUrl)
         {
             urlAchivos['docUrl'] = args.docUrl;

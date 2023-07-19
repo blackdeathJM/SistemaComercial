@@ -1,13 +1,11 @@
 import {Injectable, InternalServerErrorException, PipeTransform} from '@nestjs/common';
-import {DocumentoDto, DocRegDto, DocumentoType} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
-import {InjectModel} from '@nestjs/mongoose';
-import {Model} from 'mongoose';
+import {DocRegDto} from '#api/libs/models/src/lib/general/documentos/documento.Dto';
 import {DocumentosService} from './documentos.service';
 
 @Injectable()
 export class DocsSeguimientoPipe implements PipeTransform
 {
-    constructor(@InjectModel(DocumentoDto.name) private documento: Model<DocumentoType>, private docService: DocumentosService)
+    constructor(private docService: DocumentosService)
     {
     }
 
