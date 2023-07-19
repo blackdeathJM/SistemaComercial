@@ -71,6 +71,6 @@ export interface IDocFolio
 export interface IResolveDocumento extends IDocumento
 {
     resolveEmpleado: IEmpleado;
-    resolverEmpleadoFolio: IEmpleado;
+    resolveEmpleadoFolio: IEmpleado;
     resolveEmpleadoEnviado: IEmpleado[];
 }

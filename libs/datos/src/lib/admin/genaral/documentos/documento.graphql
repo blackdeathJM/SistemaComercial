@@ -11,7 +11,7 @@ mutation regDoc($datos: DocRegInput!, $files: UploadInput)
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
     }
@@ -25,7 +25,7 @@ mutation subirDocs($args: DocsSubirInput!, $files: UploadInput, $filesAcuse: Upl
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -44,7 +44,7 @@ query docsUsuarioProceso($usuario: ID, $esEnviadoPor: Boolean, $enviadoPor: ID, 
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -67,7 +67,7 @@ mutation docActFolio($args: DocActFolioInput!)
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -86,7 +86,7 @@ mutation docFinalizar($_id: String!)
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -104,7 +104,7 @@ mutation reasignarUsuario($usuarios: DocReasignarUsuarioInput!)
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -123,7 +123,7 @@ query docsFechas($usuario: ID!, $enviadoPor: ID!, $fechaInicial: Int, $fechaFina
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -141,7 +141,7 @@ query docsBusquedaGral($usuario: ID!, $consulta: String!, $enviadoPor: ID!, $esE
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -159,7 +159,7 @@ query docsRef($_id: ID!, $usuario: ID!)
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {
@@ -177,7 +177,7 @@ mutation docRefFolio($entradas: DocRefFolioInput!)
             nombreCompleto
             avatar
         }
-        resolverEmpleadoFolio {
+        resolveEmpleadoFolio {
             nombreCompleto
         }
         resolveEmpleadoEnviado {

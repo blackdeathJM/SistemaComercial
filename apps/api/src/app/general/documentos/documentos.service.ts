@@ -49,6 +49,7 @@ export class DocumentosService
         try
         {
             // Buscar documentos por usuarios, ano, proceso,
+            console.log(buscar);
             return await this.documento.find({...buscar}, {}, {sort: {fechaRecepcion: -1}}).exec();
         } catch (e)
         {
@@ -128,7 +129,6 @@ export class DocumentosService
             try
             {
                 const registro = await this.documento.create(datos);
-                console.log(registro);
                 registro.usuarios.map(async (usuario) =>
                 {
                     const notificacion: INotificacion =

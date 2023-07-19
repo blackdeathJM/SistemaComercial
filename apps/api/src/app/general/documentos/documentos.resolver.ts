@@ -56,7 +56,7 @@ export class DocumentosResolver
     }
 
     @ResolveField(() => EmpleadoDto, {nullable: true})
-    async resolverEmpleadoFolio(@Parent() parent: DocumentoDto): Promise<EmpleadoDto>
+    async resolveEmpleadoFolio(@Parent() parent: DocumentoDto): Promise<EmpleadoDto>
     {
         return await this.empleadoService.buscarEmpleadoPorId(parent.usuarioFolio);
     }
