@@ -47,6 +47,7 @@ export class AuthResolver
     @Subscription(() => LoginRespuestaDto, {
         filter: (payload, variables) => payload.datosSesion._id.toString() === variables._id, resolve: value => value
     })
+    
     rolCambiado(@Args('_id') _id: string): AsyncIterator<LoginRespuestaDto>
     {
         return subRoles.asyncIterator('rolCambiado');

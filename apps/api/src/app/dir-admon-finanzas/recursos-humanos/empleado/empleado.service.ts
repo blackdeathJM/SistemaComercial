@@ -35,8 +35,8 @@ export class EmpleadoService
     async crearActEmpledo(datosEmpleado: RegEmpleadoDto): Promise<EmpleadoDto>
     {
         const {_id, ...resto} = datosEmpleado;
-        try
-        {
+        try{
+
             if (_id)
             {
                 return await this.empleado.findByIdAndUpdate(_id, {$set: {...resto}}, {new: true}).exec();

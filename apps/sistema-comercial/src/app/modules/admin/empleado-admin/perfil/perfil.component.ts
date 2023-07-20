@@ -36,7 +36,6 @@ export class PerfilComponent implements OnInit
 {
     srcImagen: string = null;
     img: File = null;
-    usuario: IDatosSesion;
     usuarioSesionActual: IDatosSesion = null;
     deshabilitar = false;
     formCambioContrasena = this.fb.group({
@@ -45,7 +44,7 @@ export class PerfilComponent implements OnInit
             RxwebValidators.compare({fieldName: 'txtContrasena', message: 'Las contrasenas no son iguales'})]]
     });
 
-    constructor(private fb: RxFormBuilder, private actualizarAvatarGql: ActualizarAvatarGQL, private actualizarContrasena: ActualizarContrasenaAdminGQL,
+    constructor(private fb: RxFormBuilder,
                 private generalService: GeneralService, private authQuery: AuthQuery, private empleadoService: EmpleadoService, private ngxToast: NgxToastService)
     {
     }
