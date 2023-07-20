@@ -34,7 +34,8 @@
         <ng-container matColumnDef="proceso">
             <th *matHeaderCellDef>Estatus</th>
             <td *matCellDef="let doc">
-                <mat-icon [ngClass]="doc.proceso === 'pendiente'? 'text-red-700': 'text-green-700'" [svgIcon]="doc.proceso === 'pendiente'? 'warning': 'done'"></mat-icon>
+                <mat-icon [ngClass]="doc.proceso === 'pendiente'? 'text-red-700': 'text-green-700'" [svgIcon]="doc.proceso === 'pendiente'? 'warning': 'done'">
+                </mat-icon>
             </td>
         </ng-container>
 

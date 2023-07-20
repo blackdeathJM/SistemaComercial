@@ -49,6 +49,7 @@ export class DocumentosService
         try
         {
             // Buscar documentos por usuarios, ano, proceso,
+            console.log(buscar);
             return await this.documento.find({...buscar}, {}, {sort: {fechaRecepcion: -1}}).exec();
         } catch (e)
         {
@@ -128,7 +129,6 @@ export class DocumentosService
             try
             {
                 const registro = await this.documento.create(datos);
-
                 registro.usuarios.map(async (usuario) =>
                 {
                     const notificacion: INotificacion =
@@ -244,14 +244,6 @@ export class DocumentosService
     async subirDocs(args: DocsSubirDto, filesDocs: UploadDto, filesAcuse: UploadDto): Promise<DocumentoDto>
     {
         const urlAchivos: Record<string, string | number> = {};
-        if (filesDocs)
-        {
-            // codigo por si el documento se va a subir de manera local
-        }
-        if (filesAcuse)
-        {
-
-        }
         if (args.docUrl)
         {
             urlAchivos['docUrl'] = args.docUrl;
