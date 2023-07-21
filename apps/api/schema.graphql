@@ -105,7 +105,7 @@ type DocumentoType {
   usuarios: [String!]
   esRef: Boolean
   resolveEmpleado: EmpleadoType
-  resolverEmpleadoFolio: EmpleadoType
+  resolveEmpleadoFolio: EmpleadoType
   resolveEmpleadoEnviado: [EmpleadoType!]
 }
 
@@ -460,7 +460,7 @@ input NotificacionInput {
   imagen: String = null
   leido: Boolean = false
   link: String = null
-  tiempo: Int = 1689848326
+  tiempo: Int = 1689933861
   titulo: String
   usarRouter: Boolean = false
 }
