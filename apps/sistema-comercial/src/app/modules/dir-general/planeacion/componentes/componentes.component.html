@@ -59,7 +59,6 @@
                         <span class="border-b-2 text-green-700">{{avTrim[3] | multiplesFormatos: mirSelec?.componente?.tipoValorAvance}} <small>{{mirSelec?.componente?.etiqueta}}</small></span>
                     </ng-container>
                 </section>
-                <ngx-ui-loader [loaderId]="ngxLoader"></ngx-ui-loader>
             </article>
             <div class="flex flex-auto gap-8 mt-2" *ngIf="mirSelec?.componente">
                 <mat-checkbox id="chkTrim0" [formControl]="chkTrim0" color="primary" (change)="cambioChkTrim($event, PrefFormDin.trim1, PrefFormDin.ant1, ' T1', ' A1')">
