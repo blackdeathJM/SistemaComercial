@@ -171,33 +171,21 @@ export class DocumentosService
     async docRefFolio(entradas: DocRefFolioDto): Promise<DocumentoDto[]>
     {
         const docsAsig: IDocumento[] = [];
-        try
+        const {_id, folio, ref, usuarioFolio} = entradas;
+        //buscamos el documento por el seguimiento y actualizamos los campos dando por finalizado el documento
+        await ref.map(async (seguimiento) =>
         {
-            const {_id, folio, ref, usuarioFolio} = entradas;
-            //buscamos el documento por el seguimiento y actualizamos los campos dando por finalizado el documento
-            await ref.map(async (seguimiento) =>
+            const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio, proceso: 'terminado'}},
+                {new: true}).exec();
+            if (docsAsignados)
             {
-                try
-                {
-                    const docsAsignados = await this.documento.findOneAndUpdate({seguimiento}, {$set: {folio, esRef: true, usuarioFolio, proceso: 'terminado'}},
-                        {new: true}).exec();
-                    if (docsAsignados)
-                    {
-                        docsAsig.push(docsAsignados);
-                    }
-                } catch (e)
-                {
-                    throw new ConflictException({message: e});
-                }
-            });
-            // Buscamos el documento principal y seteamos el arreglo de referencias
-            const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {new: true}).exec();
-            docsAsig.push(docFolioPrincipal);
-            return docsAsig;
-        } catch (e)
-        {
-            throw new InternalServerErrorException({message: e.codeName});
-        }
+                docsAsig.push(docsAsignados);
+            }
+        });
+        // Buscamos el documento principal y seteamos el arreglo de referencias
+        const docFolioPrincipal = await this.documento.findByIdAndUpdate(_id, {$set: {ref}}, {new: true}).exec();
+        docsAsig.push(docFolioPrincipal);
+        return docsAsig;
     }
 
     async docActFolio(args: DocActFolioDto): Promise<DocumentoDto>
