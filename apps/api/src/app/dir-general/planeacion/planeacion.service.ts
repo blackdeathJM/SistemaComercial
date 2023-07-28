@@ -83,10 +83,7 @@ export class PlaneacionService
 
         if (esActualizar)
         {
-            return await this.planeacion.findOneAndUpdate({
-                _id,
-                'mirCuestionario.idIndicador': resto.idIndicador
-            }, {$set: {'mirCuestionario.$': resto}}, {new: true}).exec();
+            return await this.planeacion.findOneAndUpdate({_id,'mirCuestionario.idIndicador': resto.idIndicador}, {$set: {'mirCuestionario.$': resto}}, {new: true}).exec();
         }
         return await this.planeacion.findByIdAndUpdate(_id, {$push: {mirCuestionario: resto}}, {new: true}).exec();
     }

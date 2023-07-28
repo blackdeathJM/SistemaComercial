@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AccionesMirPbrComponent} from '@s-dir-general/acciones-mir-pbr/acciones-mir-pbr.component';
 import {PlaneacionQuery} from '@s-dir-general/store/planeacion.query';
@@ -59,8 +59,8 @@ export class ComponentesComponent
 
     columnas: IGenerarColumnTabla[] = [];
 
-    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private router: Router, private cdr: ChangeDetectorRef,
-                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService, private ngxUiLoaderService: NgxUiLoaderService, private renderer: Renderer2)
+    constructor(public planeacionQuery: PlaneacionQuery, private confirmacionService: ConfirmacionService, private planeacionService: PlaneacionService, private router: Router,
+                private activatedRoute: ActivatedRoute, private componentesService: ComponentesService, private ngxUiLoaderService: NgxUiLoaderService)
     {
         effect(() =>
         {
@@ -125,7 +125,7 @@ export class ComponentesComponent
         const componente = this.componenteRef.nativeElement;
 
         const spans = componente.querySelectorAll('span');
-        spans.forEach(span =>
+        spans.forEach((span: { style: { color: string; }; }) =>
         {
             span.style.color = 'black';
         });
@@ -149,7 +149,7 @@ export class ComponentesComponent
             pdf.setFont('helvetica', 'bold');
             pdf.text(mirSelec.responsable, pdfAncho - 100, pdfAlto + 270, {align: 'center', baseline: 'middle', renderingMode: 'fill'});
             pdf.save('componente.pdf');
-            spans.forEach(span =>
+            spans.forEach((span: { style: { color: string; }; }) =>
             {
                 span.style.color = '';
             });
