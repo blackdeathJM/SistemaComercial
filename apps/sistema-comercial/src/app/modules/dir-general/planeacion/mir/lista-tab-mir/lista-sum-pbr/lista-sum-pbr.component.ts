@@ -11,7 +11,7 @@ import {IEditarSumatoriaPBR} from "@s-dir-general/store/planeacion.interface";
 import {MatDialog} from "@angular/material/dialog";
 import {ModSumatoriasComponent} from "@s-dir-general/mir/mod-sumatorias/mod-sumatorias.component";
 import {MatTabsModule} from "@angular/material/tabs";
-import {NgxUiLoaderModule, NgxUiLoaderService} from "ngx-ui-loader";
+import {NgxUiLoaderModule} from "ngx-ui-loader";
 import html2canvas from "html2canvas";
 import {jsPDF} from "jspdf";
 import {DateTime} from "luxon";
@@ -35,7 +35,7 @@ export class ListaSumPbrComponent
     @ViewChild('sumatoriaImprimir') sumatoriaImprimirRef!: ElementRef;
     _sumatoria: ISumatorias = null;
 
-    constructor(private mdr: MatDialog, private ngxUiLoaderService: NgxUiLoaderService)
+    constructor(private mdr: MatDialog)
     {
     }
 

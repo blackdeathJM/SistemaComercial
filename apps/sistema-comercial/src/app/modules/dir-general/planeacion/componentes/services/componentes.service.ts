@@ -199,16 +199,6 @@ export class ComponentesService
         });
         return obj;
     }
-
-    imprimirComponentes(mirs: IMirCuestionario[]): void
-    {
-        const pdf = new jsPDF('p', 'pt', 'a4');
-        pdf.addImage('assets/images/logo/simapasPresidencia150X84.png', 'png', 25, 30, 150, 84, 'logo', 'FAST');
-        pdf.setFontSize(10);
-        pdf.text('SISTEMA MUNICIPAL DE AGUA POTABLE, ALCATARILLADO Y SANEAMIENTO', 350, 40, {align: 'center'});
-        pdf.text('DOLORES HIDALGO, (SIMAPAS)., GUANAJUATO', 350, 60, {align: 'center'});
-    }
-
     private separarIdsFormConValAnt(mirActivo: IMirCuestionario): string[][]
     {
         //? Extraer todos los ids con prefijo __ant, porque todos los ids tendran su valor anterior no importa que no se use en la fórmula
